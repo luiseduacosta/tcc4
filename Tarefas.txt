@@ -1,0 +1,9 @@
+1) Centro de documentação:
+* ingressar as monografias
+2) Graduação
+* Corrigir informação faltante (aluno sem monografia, monografia sem aluno, etc.)
+3) Pessoal
+* Corrigir a informação sobre os docentes em particular data de ingresso, egresso, causa de egresso)
+4) O banco de dados poderia ter uma opção de calendário de defesas de TCC (feito!). 
+5) Refazer a declaração de TCC para o professor e a banca e ata de defesa de TCC?
+6) Também poderia ter as orientações de TCC em curso, destacando os estudanates que ainda estão sem orientação
