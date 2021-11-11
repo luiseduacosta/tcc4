@@ -31,7 +31,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php // pr($area); ?>            
                 <tr>
                     <td><?= $area->has('areamonografia') ? $this->Html->link(h($area->areamonografia->area), ['controller' => 'areamonografias', 'action' => 'view', $area->areamonografia_id]): "" ?></td>
-                    <td><?= $this->Number->format($area->qarea) ?></td>
+                    <td><?= $area->qarea ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

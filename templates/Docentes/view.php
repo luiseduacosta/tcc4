@@ -165,12 +165,12 @@ $user = $this->getRequest()->getAttribute('identity');
 
         </table>
         <div class="row">
-            <p><?= __('Observacoes') ?></p>
+            <p><?= __('Observações') ?></p>
             <?= $this->Text->autoParagraph(h($docente->observacoes)); ?>
         </div>
     <?php endif; ?>
     <div class="related">
-        <h4><?= __('Related Monografias') ?></h4>
+        <h4><?= __('Monografias') ?></h4>
         <?php if (!empty($docente->monografias)): ?>
             <table cellpadding="0" cellspacing="0">
                 <tr>

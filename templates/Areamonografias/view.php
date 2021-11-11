@@ -31,7 +31,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
     </table>
     <div class="related">
-        <h4><?= __('Related Monografias') ?></h4>
+        <h4><?= __('Monografias') ?></h4>
         <?php if (!empty($area['monografias'])): ?>
             <table cellpadding="0" cellspacing="0">
                 <tr>
@@ -62,7 +62,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php endif; ?>
     </div>
     <div class="related">
-        <h4><?= __('Related Docentes') ?></h4>
+        <h4><?= __('Docentes') ?></h4>
         <?php if (!empty($area['docentes'])): ?>
             <table cellpadding="0" cellspacing="0">
                 <tr>

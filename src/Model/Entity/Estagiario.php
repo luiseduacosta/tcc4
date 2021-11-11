@@ -38,6 +38,7 @@ class Estagiario extends Entity
      */
     protected $_accessible = [
         'aluno_id' => true,
+        'alunonovo_id' => true,
         'registro' => true,
         'turno' => true,
         'nivel' => true,
@@ -52,6 +53,12 @@ class Estagiario extends Entity
         'ch' => true,
         'observacoes' => true,
         'aluno' => true,
+        'estudante' => true,
+        'instituicaoestagio' => true,
+        'supervisor' => true,
         'docente' => true,
+        'areaestagio' => true,
+        'avaliacao' => true,
+        'folhadeatividade' => true,            
     ];
 }

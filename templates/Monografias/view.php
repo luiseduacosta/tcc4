@@ -1,6 +1,7 @@
 <?php
 $user = $this->getRequest()->getAttribute('identity');
 // pr($monografia);
+// die();
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Monografia $monografia
@@ -16,8 +17,10 @@ $user = $this->getRequest()->getAttribute('identity');
         <?= $this->element('menu_esquerdo') ?>
     </ul>
 </nav>
+
 <div class="monografias view large-9 medium-8 columns content">
     <h3><?= h($monografia->titulo) ?></h3>
+
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Titulo') ?></th>
@@ -92,6 +95,5 @@ $user = $this->getRequest()->getAttribute('identity');
             <th scope="row"><?= __('Convidado') ?></th>
             <td><?= h($monografia->convidado) ?></td>
         </tr>
-
     </table>
 </div>

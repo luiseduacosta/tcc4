@@ -63,6 +63,8 @@ AuthorizationServiceProviderInterface
         // Call parent to load bootstrap from files.
         parent::bootstrap();
 
+        $this->addPlugin('CakePdf');
+
         if (PHP_SAPI === 'cli') {
             $this->bootstrapCli();
         }
@@ -126,6 +128,7 @@ AuthorizationServiceProviderInterface
         $this->addPlugin('Migrations');
 
         // Load more plugins here
+        $this->addPlugin('DebugKit');
     }
 
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface {

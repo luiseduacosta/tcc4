@@ -116,7 +116,7 @@ class EstagiariosController extends AppController {
             $estudantes[$i]['nivel'] = $c_estagiario->nivel;
             $estudantes[$i]['periodo'] = $c_estagiario->periodo;
 
-            if ($c_estagiario->tccestudante['monografia_id']):
+            if (isset($c_estagiario->tccestudante['monografia_id']) && $c_estagiario->tccestudante['monografia_id']):
                 $estudantes[$i]['id'] = $c_estagiario->tccestudante->id;
                 $estudantes[$i]['nome'] = $c_estagiario->tccestudante->nome;
 

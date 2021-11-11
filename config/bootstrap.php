@@ -43,6 +43,7 @@ use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use Cake\Routing\Router;
 use Cake\Utility\Security;
+use Cake\Utility\Inflector;
 
 /*
  * See https://github.com/josegonzalez/php-dotenv for API details.
@@ -239,3 +240,29 @@ setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 \Cake\I18n\Date::setToStringFormat('dd/MM/yyyy');
 \Cake\I18n\FrozenTime::setToStringFormat('HH:mm:ss');
 \Cake\I18n\FrozenDate::setToStringFormat('dd/MM/yyyy');
+
+Inflector::rules('irregular', ['supervisor' => 'supervisores']);
+Inflector::rules('irregular', ['muralinscricao' => 'muralinscricoes']);
+Inflector::rules('irregular', ['areainstituicao' => 'areainstituicoes']);
+Inflector::rules('irregular', ['professor' => 'professores']);
+Inflector::rules('irregular', ['configuracao' => 'configuracoes']);
+Inflector::rules('irregular', ['avaliacao' => 'avaliacoes']);
+
+$this->addPlugin('CakePdf', ['bootstrap' => true, 'routes' => true]);
+
+Configure::write('CakePdf', [
+    'engine' => [
+        'className' => 'CakePdf.DomPdf',
+        'options' => [
+            'isRemoteEnabled' => true
+        ]
+    ],
+    'margin' => [
+        'bottom' => 10,
+        'left' => 10,
+        'right' => 10,
+        'top' => 10
+    ],
+    'orientation' => 'portrait',
+    'download' => true
+]);

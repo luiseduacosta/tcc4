@@ -63,8 +63,9 @@ class MonografiasController extends AppController {
         ]);
         // pr($monografia);
         // die();
-        $baseUrl = Router::url('/', true);
-        $this->set(compact('monografia', 'baseUrl'));
+        // $baseUrl = Router::url('/', true);
+
+        $this->set(compact('monografia'));
     }
 
     /**
@@ -511,7 +512,7 @@ class MonografiasController extends AppController {
         die();
     }
 
-    public function download($dre = null, $id) {
+    public function download($dre = null, $id = null) {
 
         $this->Authorization->skipAuthorization();
         $this->autoRender = false;

@@ -29,6 +29,9 @@ class AgendamentotccsController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index() {
+
+        $this->Authorization->skipAuthorization();
+
         $this->paginate['contain'] = ['Estudantes', 'Docentes', 'Docentes1', 'Docentes2'];
         $this->paginate['sortWhitelist'] = ['Alunos.nome',
             'Docentes.nome',

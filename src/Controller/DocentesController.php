@@ -41,6 +41,7 @@ class DocentesController extends AppController {
      */
     public function index0() {
 
+        $this->Authorization->skipAuthorization();
         $docentes = $this->paginate($this->Docentes);
         // $this->Authorization->authorize($docentes);
         $this->set(compact('docentes'));
@@ -53,6 +54,7 @@ class DocentesController extends AppController {
      */
     public function index1() {
 
+        $this->Authorization->skipAuthorization();
         $docentes = $this->paginate($this->Docentes);
         // $this->Authorization->authorize($docentes);
         $this->set(compact('docentes'));
@@ -65,6 +67,7 @@ class DocentesController extends AppController {
      */
     public function index2() {
 
+        $this->Authorization->skipAuthorization();
         $docentes = $this->paginate($this->Docentes);
         // $this->Authorization->authorize($docentes);
         $this->set(compact('docentes'));
@@ -77,6 +80,7 @@ class DocentesController extends AppController {
      */
     public function index3() {
 
+        $this->Authorization->skipAuthorization();
         $docentes = $this->paginate($this->Docentes);
         // $this->Authorization->authorize($docentes);
         $this->set(compact('docentes'));
