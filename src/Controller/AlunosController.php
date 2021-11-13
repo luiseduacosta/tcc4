@@ -59,6 +59,8 @@ class AlunosController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add() {
+
+        $this->Authorization->skipAuthorization();
         $aluno = $this->Alunos->newEmptyEntity();
         if ($this->request->is('post')) {
             $aluno = $this->Alunos->patchEntity($aluno, $this->request->getData());
@@ -80,6 +82,8 @@ class AlunosController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null) {
+
+        $this->Authorization->skipAuthorization();
         $aluno = $this->Alunos->get($id, [
             'contain' => [],
         ]);
@@ -103,6 +107,8 @@ class AlunosController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
+
+        $this->Authorization->skipAuthorization();
         $this->request->allowMethod(['post', 'delete']);
         $aluno = $this->Alunos->get($id);
         if ($this->Alunos->delete($aluno)) {

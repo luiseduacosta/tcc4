@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-        <?php if (isset($user->role) && $user->role == 'admin'): ?> 
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?> 
             <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
         <?php endif; ?>
     </ul>
@@ -29,7 +29,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <td><?= $this->Number->format($user->id) ?></td>
                     <td><?= h($user->username) ?></td>
-                    <td><?= h($user->role) ?></td>
+                    <td><?= h($user->categoria) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>

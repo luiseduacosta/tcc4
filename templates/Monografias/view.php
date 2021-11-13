@@ -10,7 +10,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?= $this->Html->link(__('Edit Monografia'), ['action' => 'edit', $monografia->id], ['class' => 'button float-right']) ?> </li>
             <li><?= $this->Form->postLink(__('Delete Monografia'), ['action' => 'delete', $monografia->id], ['confirm' => __('Are you sure you want to delete # {0}?', $monografia->id)], ['class' => 'button float-right']) ?> </li>
         <?php endif; ?>

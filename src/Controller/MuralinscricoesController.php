@@ -19,6 +19,7 @@ class MuralinscricoesController extends AppController {
      */
     public function index($periodo = NULL) {
 
+        $this->Authorization->skipAuthorization();
         if (empty($periodo)) {
             $this->loadModel('Configuracao');
             $periodoconfiguracao = $this->Configuracao->get(1);
@@ -60,6 +61,7 @@ class MuralinscricoesController extends AppController {
      */
     public function view($id = null) {
 
+        $this->Authorization->skipAuthorization();
         $muralinscricao = $this->Muralinscricoes->get($id, [
             'contain' => ['Estudantes', 'Alunos', 'Muralestagios']
         ]);
@@ -73,6 +75,7 @@ class MuralinscricoesController extends AppController {
      */
     public function add($id = NULL) {
 
+        $this->Authorization->skipAuthorization();
         $muralinscricao = $this->Muralinscricoes->newEmptyEntity();
         if ($this->request->is('post')) {
             // die('is post');
@@ -80,7 +83,10 @@ class MuralinscricoesController extends AppController {
                 $dre = $this->request->getSession()->read('numero');
                 // pr($dre);
                 /* Verifica se já fez inscricações para essa mesma vaga de estágio */
-                $verifica = $this->Muralinscricoes->find()->contain([])->where(['id_instituicao' => $id, 'id_aluno' => $dre])->select(['id']);
+                $verifica = $this->Muralinscricoes->find()
+                ->contain([])
+                ->where(['id_instituicao' => $id, 'id_aluno' => $dre])
+                ->select(['id']);
                 $verifica_id = $verifica->first();
                 // pr($verifica_id);
                 if ($verifica_id) {
@@ -176,6 +182,7 @@ class MuralinscricoesController extends AppController {
      */
     public function edit($id = null) {
 
+        $this->Authorization->skipAuthorization();
         $muralinscricao = $this->Muralinscricoes->get($id, [
             'contain' => [],
         ]);
@@ -211,6 +218,7 @@ class MuralinscricoesController extends AppController {
      */
     public function delete($id = null) {
 
+        $this->Authorization->skipAuthorization();
         // pr($id);
         $registro = $this->Muralinscricoes->find()->where(['id' => $id])->select(['alunonovo_id']);
         // pr($registro);

@@ -6,12 +6,19 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 // pr($agendamentotccs);
 ?>
-<div class="agendamentotccs index content">
-    <?php if (isset($user->role) && $user->role == 'admin'): ?>
-        <?= $this->Html->link(__('Novo Agendamento de Tcc'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <?php endif; ?>
-    <?= $this->element('menu_esquerdo') ?>
-    <h3><?= __('Agendamento de Oficina de TCC') ?></h3>
+
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Ações') ?></li>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+        <?= $this->Html->link(__('Novo agendamento de TCC'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+        <?php endif; ?>
+        <?= $this->element('menu_esquerdo') ?>
+    </ul>
+</nav>
+
+<div class="agendamentotccs index content container">
+    <h3><?= __('Oficinas de TCC') ?></h3>
     <div class="table-responsive">
         <table>
             <thead>
@@ -24,9 +31,9 @@ $user = $this->getRequest()->getAttribute('identity');
                     <th><?= $this->Paginator->sort('horario') ?></th>
                     <th><?= $this->Paginator->sort('sala') ?></th>
                     <th><?= $this->Paginator->sort('titulo') ?></th>
-                    <?php if (isset($user->role) && $user->role == 'admin'): ?>
+                    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                         <th><?= $this->Paginator->sort('avaliacao') ?></th>
-                        <th class="actions"><?= __('Actions') ?></th>
+                        <th class="actions"><?= __('Ações') ?></th>
                     <?php endif; ?>
                 </tr>
             </thead>
@@ -41,7 +48,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <td><?= h($agendamentotcc->horario->i18nFormat('HH:mm:ss')) ?></td>
                         <td><?= $this->Number->format($agendamentotcc->sala) ?></td>
                         <td><?= h($agendamentotcc->titulo) ?></td>
-                        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+                        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                             <td><?= h($agendamentotcc->avaliacao) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('View'), ['action' => 'view', $agendamentotcc->id]) ?>

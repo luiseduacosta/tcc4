@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -18,20 +19,19 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\User[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null, $options = [])
  */
-class UsersTable extends Table
-{
+class UsersTable extends Table {
+
     /**
      * Initialize method
      *
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config): Void
-    {
+    public function initialize(array $config): Void {
         parent::initialize($config);
 
         $this->setTable('users');
-        $this->setDisplayField('id');
+        $this->setDisplayField('email');
         $this->setPrimaryKey('id');
     }
 
@@ -41,25 +41,24 @@ class UsersTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator): Validator
-    {
+    public function validationDefault(Validator $validator): Validator {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+                ->integer('id')
+                ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->scalar('username')
-            ->maxLength('username', 15)
-            ->notEmptyString('username');
+                ->scalar('email')
+                ->maxLength('email', 50)
+                ->notEmptyString('email');
 
         $validator
-            ->scalar('password')
-            ->maxLength('password', 50)
-            ->notEmptyString('password');
+                ->scalar('password')
+                ->maxLength('password', 80)
+                ->notEmptyString('password');
 
         $validator
-            ->scalar('role')
-            ->notEmptyString('role');
+                ->scalar('role')
+                ->notEmptyString('role');
 
         return $validator;
     }
@@ -71,10 +70,10 @@ class UsersTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules): RulesChecker
-    {
+    public function buildRules(RulesChecker $rules): RulesChecker {
         $rules->add($rules->isUnique(['username']));
 
         return $rules;
     }
+
 }

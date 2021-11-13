@@ -30,7 +30,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Role') ?></th>
-            <td><?= h($user->role) ?></td>
+            <td><?= h($user->categoria) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>

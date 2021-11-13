@@ -18,6 +18,7 @@ class AreainstituicoesController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
         $areainstituicoes = $this->paginate($this->Areainstituicoes);
 
         $this->set(compact('areainstituicoes'));
@@ -32,6 +33,7 @@ class AreainstituicoesController extends AppController
      */
     public function view($id = null)
     {
+        $this->Authorization->skipAuthorization();
         $areainstituicao = $this->Areainstituicoes->get($id, [
             'contain' => [],
         ]);
@@ -46,6 +48,7 @@ class AreainstituicoesController extends AppController
      */
     public function add()
     {
+        $this->Authorization->skipAuthorization();
         $areainstituicao = $this->Areainstituicoes->newEmptyEntity();
         if ($this->request->is('post')) {
             $areainstituicao = $this->Areainstituicoes->patchEntity($areainstituicao, $this->request->getData());
@@ -68,6 +71,7 @@ class AreainstituicoesController extends AppController
      */
     public function edit($id = null)
     {
+        $this->Authorization->skipAuthorization();
         $areainstituicao = $this->Areainstituicoes->get($id, [
             'contain' => [],
         ]);
@@ -92,6 +96,7 @@ class AreainstituicoesController extends AppController
      */
     public function delete($id = null)
     {
+        $this->Authorization->skipAuthorization();
         $this->request->allowMethod(['post', 'delete']);
         $areainstituicao = $this->Areainstituicoes->get($id);
         if ($this->Areainstituicoes->delete($areainstituicao)) {

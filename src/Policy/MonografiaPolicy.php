@@ -20,7 +20,7 @@ class MonografiaPolicy
      */
     public function canAdd(IdentityInterface $user, Monografia $monografia)
     {
-        return isset($user->role) && $user->role == 'admin';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
@@ -32,7 +32,7 @@ class MonografiaPolicy
      */
     public function canEdit(IdentityInterface $user, Monografia $monografia)
     {
-        return isset($user->role) && $user->role == 'admin';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
@@ -44,7 +44,7 @@ class MonografiaPolicy
      */
     public function canDelete(IdentityInterface $user, Monografia $monografia)
     {
-        return isset($user->role) && $user->role == 'admin';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**

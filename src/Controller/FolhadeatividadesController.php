@@ -19,6 +19,7 @@ class FolhadeatividadesController extends AppController {
      */
     public function index($id = NULL) {
 
+        $this->Authorization->skipAuthorization();
         if (is_null($id)) {
             $this->Flash->error(__('Selecione o estagiário e o período da folha de atividades'));
             return $this->redirect('/estagiarios/index');
@@ -49,6 +50,8 @@ class FolhadeatividadesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
+
+        $this->Authorization->skipAuthorization();
         $folhadeatividade = $this->Folhadeatividades->get($id, [
             'contain' => ['Estagiarios'],
         ]);
@@ -63,6 +66,7 @@ class FolhadeatividadesController extends AppController {
      */
     public function add($id = NULL) {
 
+        $this->Authorization->skipAuthorization();
         if (is_null($id)) {
             $this->Flash->error(__('Selecione o estágio'));
             return $this->redirect('/estudantes/view?registro=' . $this->getRequest()->getSession()->read('numero'));
@@ -114,6 +118,8 @@ class FolhadeatividadesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null) {
+
+        $this->Authorization->skipAuthorization();
         $folhadeatividade = $this->Folhadeatividades->get($id, [
             'contain' => [],
         ]);
@@ -145,6 +151,8 @@ class FolhadeatividadesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
+
+        $this->Authorization->skipAuthorization();
         $this->request->allowMethod(['post', 'delete']);
         $folhadeatividade = $this->Folhadeatividades->get($id);
         if ($this->Folhadeatividades->delete($folhadeatividade)) {
@@ -158,6 +166,7 @@ class FolhadeatividadesController extends AppController {
 
     public function selecionafolhadeatividades($id = NULL) {
 
+        $this->Authorization->skipAuthorization();
         /* No login foi capturado o id do estagiário */
         $id = $this->getRequest()->getSession()->read('estagiario_id');
         $this->layout = false;
@@ -178,6 +187,7 @@ class FolhadeatividadesController extends AppController {
 
     public function folhadeatividadespdf($id = NULL) {
 
+        $this->Authorization->skipAuthorization();
         $this->layout = false;
         if (is_null($id)) {
             $this->Flash->error(__('Selecione o estagiário e o período da folha de atividades'));

@@ -10,7 +10,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?php if (isset($user->role) && $user->role == 'admin'): ?>
+            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                 <?= $this->Html->link(__('Agendar Oficina'), ['action' => 'add'], ['class' => 'button float-right']) ?>
                 <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id], ['class' => 'button float-right']) ?>
                 <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Are you sure you want to delete # {0}?', $agendamentotcc->id)], ['class' => 'button float-right']) ?>

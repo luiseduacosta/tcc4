@@ -12,8 +12,8 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+        <li class="heading"><?= __('Ações') ?></li>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?= $this->Html->link(__('Nova Monografia'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
         <?php endif; ?>
         <?= $this->element('menu_esquerdo') ?>
@@ -64,7 +64,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= $this->Html->link(h($monografia->docente->nome), ['controller' => 'docentes', 'action' => 'view', $monografia->docente->id]) ?></td>
                     <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografia->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia->id]) : '' ?></td>
                     <?php if (!empty($monografia->url)): ?>
-                        <td><a href="<?= $baseUrl . 'monografias/'. $monografia->url ?>">Download</a></td>
+                        <td><a href="<?= $baseUrl . 'monografias/' . $monografia->url ?>">Download</a></td>
                     <?php endif; ?>
                 </tr>
             <?php endforeach; ?>

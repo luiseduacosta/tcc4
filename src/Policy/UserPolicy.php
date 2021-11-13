@@ -21,7 +21,7 @@ class UserPolicy
     public function canAdd(IdentityInterface $user, User $resourse)
     {
 
-        return $user->role == 'admin';
+        return $user->categoria == '1';
     }
 
     /**
@@ -33,7 +33,7 @@ class UserPolicy
      */
     public function canEdit(IdentityInterface $user, User $resource)
     {
-        return $user->role == 'admin';
+        return $user->categoria == '1';
     }
 
     /**
@@ -45,7 +45,7 @@ class UserPolicy
      */
     public function canDelete(IdentityInterface $user, User $resource)
     {
-        return $user->role == 'admin';
+        return $user->categoria == '1';
     }
 
     /**
@@ -57,7 +57,7 @@ class UserPolicy
      */
     public function canView(IdentityInterface $user, User $resource)
     {
-        return $user->role == 'admin';
+        return $user->categoria == '1';
     }
 
     /**
@@ -69,7 +69,7 @@ class UserPolicy
      */
     public function canIndex(IdentityInterface $user, User $resource)
     {
-        return $user->role == 'admin';
+        return $user->categoria == '1';
     }
 
 }

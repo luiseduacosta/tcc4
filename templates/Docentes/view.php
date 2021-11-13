@@ -9,7 +9,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?= $this->Html->link(__('Edit Docente'), ['action' => 'edit', $docente->id]) ?> </li>
             <li><?= $this->Form->postLink(__('Delete Docente'), ['action' => 'delete', $docente->id], ['confirm' => __('Are you sure you want to delete # {0}?', $docente->id)]) ?> </li>
         <?php endif; ?>
@@ -18,7 +18,7 @@ $user = $this->getRequest()->getAttribute('identity');
 </nav>
 <div class="docentes view large-9 medium-8 columns content">
     <h3><?= h($docente->nome) ?></h3>
-    <?php if (isset($user->role) && $user->role == 'admin'): ?>
+    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
         <table class="vertical-table">
             <tr><td colspan="2">Dados pessoais</td></tr>
             <tr>

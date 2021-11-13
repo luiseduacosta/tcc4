@@ -18,6 +18,7 @@ class InstituicaoestagiosController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
         $this->paginate = [
             'contain' => ['Supervisores', 'Areainstituicoes', 'Areaestagios'],
         ];
@@ -35,6 +36,7 @@ class InstituicaoestagiosController extends AppController
      */
     public function view($id = null)
     {
+        $this->Authorization->skipAuthorization();
         $instituicaoestagio = $this->Instituicaoestagios->get($id, [
             'contain' => ['Areainstituicoes', 'Supervisores', 'Estagiarios' => ['Alunos', 'Estudantes', 'Instituicaoestagios', 'Docentes', 'Supervisores', 'Areaestagios'], 'Muralestagios', 'Visitas'],
         ]);
@@ -49,6 +51,7 @@ class InstituicaoestagiosController extends AppController
      */
     public function add()
     {
+        $this->Authorization->skipAuthorization();
         $instituicaoestagio = $this->Instituicaoestagios->newEmptyEntity();
         if ($this->request->is('post')) {
             $instituicaoestagio = $this->Instituicaoestagios->patchEntity($instituicaoestagio, $this->request->getData());
@@ -73,6 +76,7 @@ class InstituicaoestagiosController extends AppController
      */
     public function edit($id = null)
     {
+        $this->Authorization->skipAuthorization();
         $instituicaoestagio = $this->Instituicaoestagios->get($id, [
             'contain' => ['Supervisores'],
         ]);
@@ -99,6 +103,7 @@ class InstituicaoestagiosController extends AppController
      */
     public function delete($id = null)
     {
+        $this->Authorization->skipAuthorization();
         $this->request->allowMethod(['post', 'delete']);
         $instituicaoestagio = $this->Instituicaoestagios->get($id);
         if ($this->Instituicaoestagios->delete($instituicaoestagio)) {

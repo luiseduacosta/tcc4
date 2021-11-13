@@ -78,6 +78,7 @@ AuthorizationServiceProviderInterface
         }
 
         // Load more plugins here
+        $this->addPlugin('Authorization');
     }
 
     /**
@@ -140,7 +141,7 @@ AuthorizationServiceProviderInterface
         // Load identifiers, ensure we check email and password fields
         $authenticationService->loadIdentifier('Authentication.Password', [
             'fields' => [
-                'username' => 'username',
+                'username' => 'email',
                 'password' => 'password',
             ]
         ]);
@@ -150,7 +151,7 @@ AuthorizationServiceProviderInterface
         // Configure form data check to pick email and password
         $authenticationService->loadAuthenticator('Authentication.Form', [
             'fields' => [
-                'username' => 'username',
+                'username' => 'email',
                 'password' => 'password',
             ],
             'loginUrl' =>  \Cake\Routing\Router::url('/users/login'),

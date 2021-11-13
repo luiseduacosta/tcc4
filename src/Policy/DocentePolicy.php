@@ -20,7 +20,7 @@ class DocentePolicy
      */
     public function canAdd(IdentityInterface $user, Docente $docente)
     {
-        return isset($user->role) && $user->role == 'admin';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
@@ -32,7 +32,7 @@ class DocentePolicy
      */
     public function canEdit(IdentityInterface $user, Docente $docente)
     {
-        return isset($user->role) && $user->role == 'admin';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
@@ -44,7 +44,7 @@ class DocentePolicy
      */
     public function canDelete(IdentityInterface $user, Docente $docente)
     {
-        return isset($user->role) && $user->role == 'admin';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
