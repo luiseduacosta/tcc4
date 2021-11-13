@@ -56,6 +56,8 @@ class AgendamentotccsController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
+
+        $this->Authorization->skipAuthorization();
         $agendamentotcc = $this->Agendamentotccs->get($id, [
             'contain' => ['Estudantes', 'Docentes', 'Docentes1', 'Docentes2'],
         ]);
@@ -71,6 +73,7 @@ class AgendamentotccsController extends AppController {
     public function add() {
 
         $agendamentotcc = $this->Agendamentotccs->newEmptyEntity();
+        $this->Authorization->authorize($agendamentotcc);
         if ($this->request->is('post')) {
             // pr($this->request->getData());
             $dados = $this->request->getData();
@@ -110,9 +113,11 @@ class AgendamentotccsController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null) {
+
         $agendamentotcc = $this->Agendamentotccs->get($id, [
             'contain' => ['Estudantes', 'Docentes', 'Docentes1', 'Docentes2'],
         ]);
+        $this->Authorization->authorize($agendamentotcc);
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             /* Ajusta o horário */
@@ -155,8 +160,10 @@ class AgendamentotccsController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
+
         $this->request->allowMethod(['post', 'delete']);
         $agendamentotcc = $this->Agendamentotccs->get($id);
+        $this->Authorization->authorize($agendamentotcc);
         if ($this->Agendamentotccs->delete($agendamentotcc)) {
             $this->Flash->success(__('The agendamentotcc has been deleted.'));
         } else {

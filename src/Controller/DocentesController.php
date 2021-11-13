@@ -19,7 +19,7 @@ class DocentesController extends AppController {
     public function beforeFilter(\Cake\Event\EventInterface $event) {
 
         parent::beforeFilter($event);
-        $this->Authentication->addUnauthenticatedActions(['index', 'view']);
+        // $this->Authentication->addUnauthenticatedActions(['index', 'view']);
     }
 
     /**
@@ -29,8 +29,8 @@ class DocentesController extends AppController {
      */
     public function index() {
 
-        $this->Authorization->skipAuthorization();
         $docentes = $this->paginate($this->Docentes);
+        $this->Authorization->authorize($this->Docentes);
         $this->set(compact('docentes'));
     }
 
@@ -41,8 +41,8 @@ class DocentesController extends AppController {
      */
     public function index0() {
 
-        $this->Authorization->skipAuthorization();
         $docentes = $this->paginate($this->Docentes);
+        $this->Authorization->authorize($this->Docentes);
         // $this->Authorization->authorize($docentes);
         $this->set(compact('docentes'));
     }
@@ -54,8 +54,8 @@ class DocentesController extends AppController {
      */
     public function index1() {
 
-        $this->Authorization->skipAuthorization();
         $docentes = $this->paginate($this->Docentes);
+        $this->Authorization->authorize($this->Docentes);
         // $this->Authorization->authorize($docentes);
         $this->set(compact('docentes'));
     }
@@ -67,9 +67,8 @@ class DocentesController extends AppController {
      */
     public function index2() {
 
-        $this->Authorization->skipAuthorization();
         $docentes = $this->paginate($this->Docentes);
-        // $this->Authorization->authorize($docentes);
+        $this->Authorization->authorize($this->Docentes);
         $this->set(compact('docentes'));
     }
 
@@ -80,9 +79,8 @@ class DocentesController extends AppController {
      */
     public function index3() {
 
-        $this->Authorization->skipAuthorization();
         $docentes = $this->paginate($this->Docentes);
-        // $this->Authorization->authorize($docentes);
+        $this->Authorization->authorize($this->Docentes);
         $this->set(compact('docentes'));
     }
 
@@ -95,10 +93,10 @@ class DocentesController extends AppController {
      */
     public function view($id = null) {
 
-        $this->Authorization->skipAuthorization();
         $docente = $this->Docentes->get($id, [
             'contain' => ['Monografias', 'Areamonografias'],
         ]);
+        $this->Authorization->authorize($docente);
         $this->set('docente', $docente);
     }
 

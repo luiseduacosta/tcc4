@@ -18,8 +18,7 @@ class UserPolicy
      * @param App\Model\Entity\User $resource
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, User $resourse)
-    {
+    public function canAdd(IdentityInterface $user, User $resourse) {
 
         return $user->categoria == '1';
     }
@@ -31,8 +30,7 @@ class UserPolicy
      * @param App\Model\Entity\User $resource
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, User $resource)
-    {
+    public function canEdit(IdentityInterface $user, User $resource) {
         return $user->categoria == '1';
     }
 
@@ -43,8 +41,7 @@ class UserPolicy
      * @param App\Model\Entity\User $resource
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, User $resource)
-    {
+    public function canDelete(IdentityInterface $user, User $resource) {
         return $user->categoria == '1';
     }
 
@@ -55,8 +52,7 @@ class UserPolicy
      * @param App\Model\Entity\User $resource
      * @return bool
      */
-    public function canView(IdentityInterface $user, User $resource)
-    {
+    public function canView(IdentityInterface $user, User $resource) {
         return $user->categoria == '1';
     }
 
@@ -67,8 +63,7 @@ class UserPolicy
      * @param App\Model\Entity\User $resource
      * @return bool
      */
-    public function canIndex(IdentityInterface $user, User $resource)
-    {
+    public function canIndex(IdentityInterface $user, User $resource) {
         return $user->categoria == '1';
     }
 

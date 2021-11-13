@@ -63,7 +63,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <ul>
                     <?php $user = $this->getRequest()->getAttribute('identity'); ?>
                     <?php if (isset($user) && !empty($user)): ?>
-                        <li class = 'button float-right'><?= 'Usuário: ' . $user->role ?></li>
+                        <li class = 'button float-right'><?= 'Usuário: ' . $user->email ?></li>
                     <?php else: ?>
                         <li class = 'button float-right'><?= 'Usuário: ' . 'Visitante' ?></li>
                     <?php endif; ?>

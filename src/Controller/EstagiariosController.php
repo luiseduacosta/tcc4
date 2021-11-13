@@ -88,7 +88,7 @@ class EstagiariosController extends AppController {
                 'contain' => ['Tccestudantes', 'Estudantes'],
             ]);
         endif;
-
+        $this->Authorization->authorize($this->Estagiarios);
         // debug($estagiarios);
         // die('estagiarios');
         $periodos = $this->Estagiarios->find('all', [
@@ -167,11 +167,10 @@ class EstagiariosController extends AppController {
      */
     public function view($id = null) {
 
-        $this->Authorization->skipAuthorization();
         $estagiario = $this->Estagiarios->get($id, [
             'contain' => ['Estudantes', 'Docentes'],
         ]);
-
+        $this->Authorization->authorize($estagiario);
         $this->set('estagiario', $estagiario);
     }
 
@@ -290,8 +289,8 @@ class EstagiariosController extends AppController {
 
         if ($this->request->is('ajax')):
             $this->autoRender = false;
-            $dre = $this->Estagiarios->get($id);
-            $registro = $dre->registro;
+            $estagiario = $this->Estagiarios->get($id);
+            $registro = $estagiario->registro;
             if ($registro):
                 return $this->response
                                 ->withType('application/json')

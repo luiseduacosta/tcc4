@@ -109,7 +109,7 @@ $user = $this->getRequest()->getAttribute('identity');
             </tr>
             <tr>
                 <th scope="row"><?= __('Mestrado ano conclusão') ?></th>
-                <td><?= $this->Number->format($docente->mestradoanoconclusao) ?></td>
+                <td><?= $docente->mestradoanoconclusao ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Doutorado área') ?></th>
@@ -128,7 +128,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <tr><td colspan="2">Dados funcionais</td></tr>
             <tr>
                 <th scope="row"><?= __('Siape') ?></th>
-                <td><?= $this->Number->format($docente->siape) ?></td>
+                <td><?= $docente->siape ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Departamento') ?></th>

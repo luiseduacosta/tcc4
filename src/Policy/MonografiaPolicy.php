@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Policy;
@@ -9,8 +10,8 @@ use Authorization\IdentityInterface;
 /**
  * Monografia policy
  */
-class MonografiaPolicy
-{
+class MonografiaPolicy {
+
     /**
      * Check if $user can create Monografia
      *
@@ -18,8 +19,7 @@ class MonografiaPolicy
      * @param App\Model\Entity\Monografia $monografia
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, Monografia $monografia)
-    {
+    public function canAdd(IdentityInterface $user, Monografia $monografia) {
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -30,8 +30,8 @@ class MonografiaPolicy
      * @param App\Model\Entity\Monografia $monografia
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, Monografia $monografia)
-    {
+    public function canEdit(IdentityInterface $user, Monografia $monografia) {
+
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -42,8 +42,8 @@ class MonografiaPolicy
      * @param App\Model\Entity\Monografia $monografia
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, Monografia $monografia)
-    {
+    public function canDelete(IdentityInterface $user, Monografia $monografia) {
+
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -54,35 +54,21 @@ class MonografiaPolicy
      * @param App\Model\Entity\Monografia $monografia
      * @return bool
      */
-    public function canView(IdentityInterface $user, Monografia $monografia)
-    {
+    public function canView(IdentityInterface $user, Monografia $monografia) {
 
         return true;
     }
-    
-     /**
+
+    /**
      * Check if $user can busca Monografia
      *
      * @param Authorization\IdentityInterface $user The user.
      * @param App\Model\Entity\Monografia $monografia
      * @return bool
      */
-    public function canBusca(IdentityInterface $user, Monografia $monografia)
-    {
+    public function canBusca(IdentityInterface $user, Monografia $monografia) {
 
         return true;
     }
-    
-    /**
-     * Check if $user can index Monografia
-     *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Monografia $monografia
-     * @return bool
-     */
-    public function canIndex(IdentityInterface $user, Monografia $monografia)
-    {
 
-        return true;
-    }
 }
