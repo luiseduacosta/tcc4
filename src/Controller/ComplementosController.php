@@ -19,7 +19,7 @@ class ComplementosController extends AppController
     public function index()
     {
         $complementos = $this->paginate($this->Complementos);
-
+        $this->Authorization->authorize($this->Complementos);
         $this->set(compact('complementos'));
     }
 
@@ -35,7 +35,7 @@ class ComplementosController extends AppController
         $complemento = $this->Complementos->get($id, [
             'contain' => ['Estagiarios'],
         ]);
-
+        $this->Authorization->authorize($complemento);
         $this->set(compact('complemento'));
     }
 
@@ -47,6 +47,7 @@ class ComplementosController extends AppController
     public function add()
     {
         $complemento = $this->Complementos->newEmptyEntity();
+        $this->Authorization->authorize($complemento);        
         if ($this->request->is('post')) {
             $complemento = $this->Complementos->patchEntity($complemento, $this->request->getData());
             if ($this->Complementos->save($complemento)) {
@@ -71,6 +72,7 @@ class ComplementosController extends AppController
         $complemento = $this->Complementos->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($complemento);        
         if ($this->request->is(['patch', 'post', 'put'])) {
             $complemento = $this->Complementos->patchEntity($complemento, $this->request->getData());
             if ($this->Complementos->save($complemento)) {
@@ -94,6 +96,7 @@ class ComplementosController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $complemento = $this->Complementos->get($id);
+        $this->Authorization->authorize($complemento);
         if ($this->Complementos->delete($complemento)) {
             $this->Flash->success(__('The complemento has been deleted.'));
         } else {

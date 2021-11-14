@@ -20,9 +20,14 @@ class AvaliacoesController extends AppController {
     public function index($id = NULL) {
 
         /* O id enviado pelo submenu_navegacao corresponde ao estagiario_id */
+        $this->Authorization->skipAuthorization();
         if (is_null($id)) {
             $this->Flash->error(__('Selecionar estagiário, período e nível de estágio a ser avaliado'));
-            return $this->redirect('/estudantes/view?registro=' . $this->getRequest()->getSession()->read('numero'));
+            if ($this->getRequest()->getSession()->read('numero')):
+                return $this->redirect('/estudantes/view?registro=' . $this->getRequest()->getSession()->read('numero'));
+            else:
+                return $this->redirect('/estudantes/index');
+            endif;
         } else {
             $registroquery = $this->Avaliacoes->Estagiarios->find()
                     ->where(['Estagiarios.id' => $id]);
@@ -33,15 +38,15 @@ class AvaliacoesController extends AppController {
             $estagiariosquery = $this->Estagiarios->find()
                     ->contain(['Estudantes', 'Instituicaoestagios', 'Supervisores', 'Avaliacoes'])
                     ->where(['Estagiarios.alunonovo_id' => $registro->alunonovo_id]);
-            $estagiario = $estagiariosquery->all();
+            $estagiarios = $estagiariosquery->all();
             // pr($estagiario);
             // die();
             $this->set('id', $id);
-            $this->set('estagiario', $estagiario);
+            $this->set('estagiario', $estagiarios);
         }
     }
 
-     /**
+    /**
      * Supervisoravaliacao method
      *
      * @return \Cake\Http\Response|null|void Renders view
@@ -49,10 +54,15 @@ class AvaliacoesController extends AppController {
     public function supervisoravaliacao($id = NULL) {
 
         /* O submenu_navegacao envia o cress */
+        $this->Authorization->skipAuthorization();
         $cress = $this->getRequest()->getQuery('cress');
         if (is_null($cress)) {
             $this->Flash->error(__('Selecionar estagiário, período e nível de estágio a ser avaliado'));
-            return $this->redirect('/estudantes/view?registro=' . $this->getRequest()->getSession()->read('numero'));
+            if ($this->getRequest()->getSession()->read('numero')):
+                return $this->redirect('/estudantes/view?registro=' . $this->getRequest()->getSession()->read('numero'));
+            else:
+                return $this->redirect('/estudantes/index');
+            endif;
         } else {
             $estagiarioquery = $this->Avaliacoes->Estagiarios->find()
                     ->contain(['Supervisores', 'Estudantes', 'Docentes', 'Folhadeatividades'])
@@ -73,9 +83,11 @@ class AvaliacoesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
+
         $avaliacao = $this->Avaliacoes->get($id, [
             'contain' => ['Estagiarios' => ['Estudantes', 'Docentes', 'Instituicaoestagios', 'Supervisores']],
         ]);
+        $this->Authorization->authorize($avaliacao);
 
         $this->set(compact('avaliacao'));
     }
@@ -89,7 +101,11 @@ class AvaliacoesController extends AppController {
 
         if (is_null($id)) {
             $this->Flash->error(__('Selecione um nível e período de estágio do estudante'));
-            return $this->redirect('/Estudantes/view?registro=' . $this->getRequest()->getSession()->read('numero'));
+            if ($this->getRequest()->getSession()->read('numero')):
+                return $this->redirect('/Estudantes/view?registro=' . $this->getRequest()->getSession()->read('numero'));
+            else:
+                return $this->redirect('/Estudantes/index');
+            endif;
         } else {
             $avaliacaoquery = $this->Avaliacoes->find()->where(['estagiario_id' => $id]);
             // pr($avaliacaoquery);
@@ -105,6 +121,7 @@ class AvaliacoesController extends AppController {
         // pr($this->request->getData());
         // die();
         $avaliacao = $this->Avaliacoes->newEmptyEntity();
+        $this->Authorization->authorize($avaliacao);        
         if ($this->request->is('post')) {
             $avaliacao = $this->Avaliacoes->patchEntity($avaliacao, $this->request->getData());
             // pr($avaliacao);
@@ -133,9 +150,11 @@ class AvaliacoesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null) {
+        
         $avaliacao = $this->Avaliacoes->get($id, [
             'contain' => ['Estagiarios' => 'Estudantes'],
         ]);
+        $this->Authorization->authorize($avaliacao);
         // pr($avaliacao->estagiario);
         $estagiario = $avaliacao->estagiario;
         // die();
@@ -160,8 +179,10 @@ class AvaliacoesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
+        
         $this->request->allowMethod(['post', 'delete']);
         $avaliacao = $this->Avaliacoes->get($id);
+        $this->Authorization->authorize($avaliacao);
         if ($this->Avaliacoes->delete($avaliacao)) {
             $this->Flash->success(__('The avaliacao has been deleted.'));
         } else {
@@ -174,11 +195,11 @@ class AvaliacoesController extends AppController {
     public function selecionaavaliacao($id = NULL) {
 
         /* No login foi capturado o id do estagiário */
+        $this->Authorization->skipAuthorization();        
         $id = $this->getRequest()->getSession()->read('estagiario_id');
         if (is_null($id)) {
             $this->Flash->error(__('Selecionar o estudante estagiário'));
             return $this->redirect('/estudantes/index');
-            $this->cakeError('error404');
         } else {
             $this->loadModel('Estagiarios');
             $estagiarioquery = $this->Estagiarios->find()
@@ -195,6 +216,7 @@ class AvaliacoesController extends AppController {
     public function imprimeavaliacaopdf($id = NULL) {
 
         /* No login foi capturado o id do estagiário */
+        $this->Authorization->skipAuthorization();        
         $this->layout = false;
         if (is_null($id)) {
             $this->Flash->error(__('Por favor selecionar a folha de avaliação do estágio do estudante'));

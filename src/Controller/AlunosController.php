@@ -19,9 +19,8 @@ class AlunosController extends AppController {
      */
     public function index() {
 
-        $this->Authorization->skipAuthorization();
         $alunos = $this->paginate($this->Alunos);
-
+        $this->Authorization->authorize($this->Alunos);
         $this->set(compact('alunos'));
     }
 
@@ -33,23 +32,24 @@ class AlunosController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
-        
-        $this->Authorization->skipAuthorization();
-        $registro = $this->getRequest()->getQuery('registro');
-        if ($registro) {
-            $aluno = $this->Alunos->find()->where(['alunos.registro' => $registro])->select('alunos.id');
-            $identificacao = $aluno->first();
-            $id = $identificacao->id;
-        } elseif ($id) {
-            $id = $id;
-        } else {
-            echo "Sem parámentros para localizar o aluno";
-            $this->Flash->error(__('Sem parámentros para localizar o/a aluno/a'));
-            $this->redirect('/alunos/index');
+
+        if (is_null($id)) {
+            $registro = $this->getRequest()->getQuery('registro');
+            $alunoquery = $this->Alunos->find()->where(['alunos.registro' => $registro])->select('alunos.id');
+            $aluno = $alunoquery->first();
+
+            if (empty($aluno)) {
+                echo "Sem parámentros para localizar o aluno";
+                $this->Flash->error(__('Sem parámentros para localizar o/a aluno/a'));
+                return $this->redirect('/alunos/index');
+            } else {
+                $id = $aluno->id;
+            }
         }
         $aluno = $this->Alunos->get($id, [
             'contain' => ['Estagiarios' => ['Instituicaoestagios', 'Alunos', 'Estudantes', 'Supervisores', 'Docentes', 'Areaestagios'], 'Muralinscricoes' => 'Muralestagios'],
         ]);
+        $this->Authorization->authorize($aluno);
         $this->set(compact('aluno'));
     }
 
@@ -60,8 +60,8 @@ class AlunosController extends AppController {
      */
     public function add() {
 
-        $this->Authorization->skipAuthorization();
         $aluno = $this->Alunos->newEmptyEntity();
+        $this->Authorization->authorize($aluno);
         if ($this->request->is('post')) {
             $aluno = $this->Alunos->patchEntity($aluno, $this->request->getData());
             if ($this->Alunos->save($aluno)) {
@@ -83,10 +83,10 @@ class AlunosController extends AppController {
      */
     public function edit($id = null) {
 
-        $this->Authorization->skipAuthorization();
         $aluno = $this->Alunos->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($aluno);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $aluno = $this->Alunos->patchEntity($aluno, $this->request->getData());
             if ($this->Alunos->save($aluno)) {
@@ -108,9 +108,9 @@ class AlunosController extends AppController {
      */
     public function delete($id = null) {
 
-        $this->Authorization->skipAuthorization();
         $this->request->allowMethod(['post', 'delete']);
         $aluno = $this->Alunos->get($id);
+        $this->Authorization->authorize($aluno);
         if ($this->Alunos->delete($aluno)) {
             $this->Flash->success(__('The aluno has been deleted.'));
         } else {

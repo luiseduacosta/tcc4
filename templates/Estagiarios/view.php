@@ -1,5 +1,5 @@
 <?php
-pr($estagiario);
+// pr($estagiario);
 $user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
@@ -20,12 +20,12 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 <div class="estagiarios view large-9 medium-8 columns content">
-    <h3><?= h($estagiario->aluno->nome) ?></h3>
+    <h3><?= h($estagiario->estudante->nome) ?></h3>
     <table class="vertical-table">
         <tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($estagiario->id) ?></td>
+            <td><?= $estagiario->id ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Registro') ?></th>
@@ -51,8 +51,9 @@ $user = $this->getRequest()->getAttribute('identity');
             <th scope="row"><?= __('Periodo') ?></th>
             <td><?= h($estagiario->periodo) ?></td>
         </tr>
+        <tr>
         <th scope="row"><?= __('Tc') ?></th>
-        <td><?= $this->Number->format($estagiario->tc) ?></td>
+        <td><?= $estagiario->tc ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Tc Solicitacao') ?></th>
@@ -61,15 +62,15 @@ $user = $this->getRequest()->getAttribute('identity');
 
         <tr>
             <th scope="row"><?= __('Id Instituicao') ?></th>
-            <td><?= $this->Number->format($estagiario->id_instituicao) ?></td>
+            <td><?= $estagiario->id_instituicao ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id Supervisor') ?></th>
-            <td><?= $this->Number->format($estagiario->id_supervisor) ?></td>
+            <td><?= $estagiario->id_supervisor ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id Area') ?></th>
-            <td><?= $this->Number->format($estagiario->id_area) ?></td>
+            <td><?= $estagiario->id_area ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Nota') ?></th>

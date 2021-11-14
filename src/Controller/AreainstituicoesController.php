@@ -16,11 +16,10 @@ class AreainstituicoesController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
-    {
-        $this->Authorization->skipAuthorization();
-        $areainstituicoes = $this->paginate($this->Areainstituicoes);
+    public function index() {
 
+        $areainstituicoes = $this->paginate($this->Areainstituicoes);
+        $this->Authorization->authorize($this->Areainstituicoes);
         $this->set(compact('areainstituicoes'));
     }
 
@@ -31,13 +30,11 @@ class AreainstituicoesController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
-        $this->Authorization->skipAuthorization();
+    public function view($id = null) {
         $areainstituicao = $this->Areainstituicoes->get($id, [
             'contain' => [],
         ]);
-
+        $this->Authorization->authorize($areainstituicao);
         $this->set(compact('areainstituicao'));
     }
 
@@ -46,10 +43,10 @@ class AreainstituicoesController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
-        $this->Authorization->skipAuthorization();
+    public function add() {
+        
         $areainstituicao = $this->Areainstituicoes->newEmptyEntity();
+        $this->Authorization->authorize($areainstituicao);
         if ($this->request->is('post')) {
             $areainstituicao = $this->Areainstituicoes->patchEntity($areainstituicao, $this->request->getData());
             if ($this->Areainstituicoes->save($areainstituicao)) {
@@ -69,12 +66,12 @@ class AreainstituicoesController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
-        $this->Authorization->skipAuthorization();
+    public function edit($id = null) {
+        
         $areainstituicao = $this->Areainstituicoes->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($areainstituicao);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $areainstituicao = $this->Areainstituicoes->patchEntity($areainstituicao, $this->request->getData());
             if ($this->Areainstituicoes->save($areainstituicao)) {
@@ -94,11 +91,11 @@ class AreainstituicoesController extends AppController
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
-        $this->Authorization->skipAuthorization();
+    public function delete($id = null) {
+
         $this->request->allowMethod(['post', 'delete']);
         $areainstituicao = $this->Areainstituicoes->get($id);
+        $this->Authorization->authorize($areainstituicao);
         if ($this->Areainstituicoes->delete($areainstituicao)) {
             $this->Flash->success(__('The areainstituicao has been deleted.'));
         } else {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -9,17 +10,17 @@ namespace App\Controller;
  * @property \App\Model\Table\ConfiguracaoTable $Configuracao
  * @method \App\Model\Entity\Configuracao[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class ConfiguracaoController extends AppController
-{
+class ConfiguracaoController extends AppController {
+
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
-    {
-        $configuracao = $this->paginate($this->Configuracao);
+    public function index() {
 
+        $configuracao = $this->paginate($this->Configuracao);
+        $this->Authorization->authorize($this->Configuracao);
         $this->set(compact('configuracao'));
     }
 
@@ -30,12 +31,11 @@ class ConfiguracaoController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $configuracao = $this->Configuracao->get($id, [
             'contain' => [],
         ]);
-
+        $this->Authorization->authorize($configuracao);
         $this->set(compact('configuracao'));
     }
 
@@ -44,9 +44,9 @@ class ConfiguracaoController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $configuracao = $this->Configuracao->newEmptyEntity();
+        $this->Authorization->authorize($configuracao);
         if ($this->request->is('post')) {
             $configuracao = $this->Configuracao->patchEntity($configuracao, $this->request->getData());
             if ($this->Configuracao->save($configuracao)) {
@@ -66,11 +66,11 @@ class ConfiguracaoController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $configuracao = $this->Configuracao->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($configuracao);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $configuracao = $this->Configuracao->patchEntity($configuracao, $this->request->getData());
             if ($this->Configuracao->save($configuracao)) {
@@ -90,10 +90,10 @@ class ConfiguracaoController extends AppController
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $configuracao = $this->Configuracao->get($id);
+        $this->Authorization->authorize($configuracao);
         if ($this->Configuracao->delete($configuracao)) {
             $this->Flash->success(__('The configuracao has been deleted.'));
         } else {
@@ -102,4 +102,5 @@ class ConfiguracaoController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

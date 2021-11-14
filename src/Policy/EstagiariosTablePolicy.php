@@ -12,10 +12,10 @@ use Authorization\IdentityInterface;
 class EstagiariosTablePolicy {
     
     /**
-     * Check if $user can index Areamonografias
+     * Check if $user can index Estagiarios
      *
      * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Monografia $monografia
+     * @param App\Model\EstagiariosTable\Estagiarios $estagiarios
      * @return bool
      */
     public function canIndex(IdentityInterface $user, EstagiariosTable $estagiarios) {
