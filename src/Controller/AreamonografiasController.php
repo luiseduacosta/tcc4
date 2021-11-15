@@ -44,17 +44,17 @@ class AreamonografiasController extends AppController {
 
         $this->Authorization->skipAuthorization();
         $area = $this->Areamonografias->get($id, [
-            'contain' => ['Docentes', 'Monografias'],
+            'contain' => ['Docentemonografias', 'Monografias'],
         ]);
         // pr($area->monografias);
-        $this->loadModel('Docentes');
+        $this->loadModel('Docentemonografias');
         $this->loadModel('Tccestudantes');
         $i = 0;
         foreach ($area->monografias as $monografias):
             // pr($monografias['id']);
             // die();
-            $docente = $this->Docentes->find('all', [
-                'conditions' => ['Docentes.id' => $monografias['docente_id']]]);
+            $docente = $this->Docentemonografias->find('all', [
+                'conditions' => ['docentemonografias.id' => $monografias['docente_id']]]);
             $docentenome = $docente->first();
 
             $tccestudante = $this->Tccestudantes->find('all', [
@@ -111,13 +111,13 @@ class AreamonografiasController extends AppController {
         if ($this->request->is('post')) {
             $area = $this->Areamonografias->patchEntity($area, $this->request->getData());
             if ($this->Areamonografias->save($area)) {
-                $this->Flash->success(__('The area has been saved.'));
+                $this->Flash->success(__('Registro de area inserido.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The area could not be saved. Please, try again.'));
+            $this->Flash->error(__('Não foi possível inserir o registro de área. Tente novamente.'));
         }
-        $docentes = $this->Areamonografias->Docentes->find('list', ['limit' => 200]);
+        $docentes = $this->Areamonografias->Docentemonografias->find('list', ['limit' => 200]);
         $this->set(compact('area', 'docentes'));
     }
 
@@ -138,13 +138,13 @@ class AreamonografiasController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $area = $this->Areamonografias->patchEntity($area, $this->request->getData());
             if ($this->Areamonografias->save($area)) {
-                $this->Flash->success(__('The area has been saved.'));
+                $this->Flash->success(__('Área atualizada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The area could not be saved. Please, try again.'));
+            $this->Flash->error(__('Registro área não foi atualizado. Tente novamente.'));
         }
-        $docentes = $this->Areamonografias->Docentes->find('list', ['limit' => 200]);
+        $docentes = $this->Areamonografias->Docentemonografias->find('list', ['limit' => 200]);
         $this->set(compact('area', 'docentes'));
     }
 
@@ -162,9 +162,9 @@ class AreamonografiasController extends AppController {
         $this->Authorization->authorize($areamonografia);
 
         if ($this->Areamonografias->delete($areamonografia)) {
-            $this->Flash->success(__('The area has been deleted.'));
+            $this->Flash->success(__('Registro área excluído.'));
         } else {
-            $this->Flash->error(__('The area could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Registro área não foi excluído. Tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -9,20 +10,20 @@ namespace App\Controller;
  * @property \App\Model\Table\InstituicaoestagiosTable $Instituicaoestagios
  * @method \App\Model\Entity\Instituicaoestagio[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class InstituicaoestagiosController extends AppController
-{
+class InstituicaoestagiosController extends AppController {
+
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
-    {
-        $this->Authorization->skipAuthorization();
+    public function index() {
+
         $this->paginate = [
             'contain' => ['Supervisores', 'Areainstituicoes', 'Areaestagios'],
         ];
         $instituicaoestagios = $this->paginate($this->Instituicaoestagios);
+        $this->Authorization->authorize($this->Instituicaoestagios);
 
         $this->set(compact('instituicaoestagios'));
     }
@@ -34,13 +35,12 @@ class InstituicaoestagiosController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
-        $this->Authorization->skipAuthorization();
+    public function view($id = null) {
+
         $instituicaoestagio = $this->Instituicaoestagios->get($id, [
             'contain' => ['Areainstituicoes', 'Supervisores', 'Estagiarios' => ['Alunos', 'Estudantes', 'Instituicaoestagios', 'Docentes', 'Supervisores', 'Areaestagios'], 'Muralestagios', 'Visitas'],
         ]);
-
+        $this->Authorization->authorize($instituicaoestagio);
         $this->set(compact('instituicaoestagio'));
     }
 
@@ -49,10 +49,11 @@ class InstituicaoestagiosController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
-        $this->Authorization->skipAuthorization();
+    public function add() {
+
         $instituicaoestagio = $this->Instituicaoestagios->newEmptyEntity();
+        $this->Authorization->authorize($instituicaoestagio);
+
         if ($this->request->is('post')) {
             $instituicaoestagio = $this->Instituicaoestagios->patchEntity($instituicaoestagio, $this->request->getData());
             if ($this->Instituicaoestagios->save($instituicaoestagio)) {
@@ -74,12 +75,12 @@ class InstituicaoestagiosController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
-        $this->Authorization->skipAuthorization();
+    public function edit($id = null) {
+
         $instituicaoestagio = $this->Instituicaoestagios->get($id, [
             'contain' => ['Supervisores'],
         ]);
+        $this->Authorization->authorize($instituicaoestagio);        
         if ($this->request->is(['patch', 'post', 'put'])) {
             $instituicaoestagio = $this->Instituicaoestagios->patchEntity($instituicaoestagio, $this->request->getData());
             if ($this->Instituicaoestagios->save($instituicaoestagio)) {
@@ -101,11 +102,11 @@ class InstituicaoestagiosController extends AppController
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
-        $this->Authorization->skipAuthorization();
+    public function delete($id = null) {
+
         $this->request->allowMethod(['post', 'delete']);
         $instituicaoestagio = $this->Instituicaoestagios->get($id);
+        $this->Authorization->authorize($instituicaoestagio);        
         if ($this->Instituicaoestagios->delete($instituicaoestagio)) {
             $this->Flash->success(__('The instituicaoestagio has been deleted.'));
         } else {
@@ -114,4 +115,5 @@ class InstituicaoestagiosController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

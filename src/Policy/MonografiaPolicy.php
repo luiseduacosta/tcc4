@@ -31,7 +31,6 @@ class MonografiaPolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Monografia $monografia) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -43,7 +42,6 @@ class MonografiaPolicy {
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Monografia $monografia) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -55,8 +53,7 @@ class MonografiaPolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Monografia $monografia) {
-
-        return true;
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
@@ -67,8 +64,7 @@ class MonografiaPolicy {
      * @return bool
      */
     public function canBusca(IdentityInterface $user, Monografia $monografia) {
-
-        return true;
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
 }

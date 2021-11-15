@@ -9,6 +9,17 @@ use Authorization\IdentityInterface;
 /**
  * Agendamentotccs policy
  */
-class AgendamentotccsTablePolicy
-{
+class AgendamentotccsTablePolicy {
+    
+    /**
+     * Check if $user can index Agendamentotccs
+     *
+     * @param Authorization\IdentityInterface $user The user.
+     * @param App\Model\AgendamentotccsTable\Agendamentotccs $agendamentotccs
+     * @return bool
+     */
+    public function canIndex(IdentityInterface $user, AgendamentotccsTable $agendamentotccs) {
+        return isset($user->categoria) && $user->categoria == '1';
+    }
+
 }

@@ -31,7 +31,7 @@ class EstagiariosController extends AppController {
      * @return \Cake\Http\Response|null
      */
     public function indexold() {
-        // echo "index" . "<br>";
+
         $this->Authorization->skipAuthorization();
         $this->paginate = [
             'conditions' => ['nivel' => 4],

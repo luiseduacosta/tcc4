@@ -7,11 +7,11 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+        <li class="heading"><?= __('Ações') ?></li>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Novo Aluno'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
+            <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
         <?php endif; ?>
-        <?php echo $this->element('menu_esquerdo'); ?>
+        <?php echo $this->element('menu_monografias'); ?>
     </ul>
 </nav>
 <div class="alunos index large-9 medium-8 columns content">

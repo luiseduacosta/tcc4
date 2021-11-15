@@ -1,16 +1,17 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Policy;
 
-use App\Model\Table\EstagiariosTable;
+use App\Model\Table\EstagiariomonografiasTable;
 use Authorization\IdentityInterface;
 
 /**
  * Estagiarios policy
  */
-class EstagiariosTablePolicy {
-    
+class EstagiariomonografiasTablePolicy {
+
     /**
      * Check if $user can index Estagiarios
      *
@@ -18,9 +19,8 @@ class EstagiariosTablePolicy {
      * @param App\Model\EstagiariosTable\Estagiarios $estagiarios
      * @return bool
      */
-    public function canIndex(IdentityInterface $user, EstagiariosTable $estagiarios) {
-
-        return true;
+    public function canIndex(IdentityInterface $user, EstagiariomonografiasTable $estagiariomonografias) {
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
 }

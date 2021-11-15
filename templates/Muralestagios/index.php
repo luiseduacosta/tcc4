@@ -25,25 +25,27 @@
 </script>
 <?php
 // $this->request->getSession()->write('id_categoria', 1);
-$session = $this->getRequest()->getSession();
-// echo $this->request->getSession()->read('id_categoria');
+// $session = $this->getRequest()->getSession();
+// echo $this->getRequest()->getAttribute('identity');
+// pr(is_null($this->getRequest()->getAttribute('identity')));
 // die();
 ?>
 
 <div class="row justify-content-center">
     <div class="col-auto">
-        <?php if ($session->read('id_categoria') == 1): ?>
+        <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
+            <h1 style="text-align: center;">Mural de estágios da ESS/UFRJ. Período: <?= $periodo; ?></h1>
+        <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
             <?= $this->Form->create($muralestagios, ['class' => 'form-inline']); ?>
             <?= $this->Form->input('periodo', ['id' => 'MuralestagioPeriodo', 'type' => 'select', 'label' => ['text' => 'Período'], 'options' => $periodos, 'empty' => [$periodo => $periodo]], ['class' => 'form-control']); ?>
             <?= $this->Form->end(); ?>
-        <?php else: ?>
-            <h1 style="text-align: center;">Mural de estágios da ESS/UFRJ. Período: <?= '2020-1'; ?></h1>
         <?php endif; ?>
     </div>
 </div>
 
 <div class="muralestagios index container">
-    <?php if ($session->read('id_categoria') == 1): ?>
+    <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
+    <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
         <?= $this->Html->link(__('Novo mural'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <?php endif; ?>
     <h3><?= __('Mural de estagios') ?></h3>
@@ -59,7 +61,8 @@ $session = $this->getRequest()->getSession();
                     <th><?= $this->Paginator->sort('cargaHoraria', 'CH') ?></th>
                     <th><?= $this->Paginator->sort('dataInscricao', 'Inscrição') ?></th>
                     <th><?= $this->Paginator->sort('dataSelecao', 'Seleção') ?></th>
-                    <?php if ($session->read('id_categoria') == 1): ?>
+                    <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
+                    <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
                         <th class="actions"><?= __('Ações') ?></th>
                     <?php endif; ?>
                 </tr>
@@ -73,13 +76,14 @@ $session = $this->getRequest()->getSession();
                         <td><?= h($muralestagio->beneficios) ?></td>
                         <td><?= (h($muralestagio->final_de_semana) == 0) ? 'Não' : 'Sim' ?></td>
                         <td><?= $muralestagio->cargaHoraria ?></td>
-                        <td><?= $muralestagio->dataInscricao ? h(date('d-m-Y', strtotime($muralestagio->dataInscricao))) : '' ?></td>
-                        <td><?= $muralestagio->dataSelecao ? h(date('d-m-Y', strtotime($muralestagio->dataSelecao))) : '' ?></td>
-                        <?php if ($session->read('id_categoria') == 1): ?>
+                        <td><?= isset($muralestagio->dataInscricao) ? date('d-m-Y', strtotime($muralestagio->dataInscricao)) : '' ?></td>
+                        <td><?= isset($muralestagio->dataSelecao) ? date('d-m-Y', strtotime($muralestagio->dataSelecao)) : '' ?></td>
+                        <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
+                        <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
                             <td class="actions">
-                                <?= $this->Html->link(__('View'), ['action' => 'view', $muralestagio->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $muralestagio->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $muralestagio->id], ['confirm' => __('Tem certeza quer quer excluir este registro # {0}?', $muralestagio->id)]) ?>
+                                <?= $this->Html->link(__('Ver'), ['action' => 'view', $muralestagio->id]) ?>
+                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $muralestagio->id]) ?>
+                                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $muralestagio->id], ['confirm' => __('Tem certeza quer quer excluir este registro # {0}?', $muralestagio->id)]) ?>
                             </td>
                         <?php endif; ?>
                     </tr>

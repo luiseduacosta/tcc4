@@ -20,7 +20,7 @@ class EstudantesController extends AppController {
         // Você não deve adicionar a ação de "login" a lista de permissões.
         // Isto pode causar problemas com o funcionamento normal do AuthComponent.
         // $this->Auth->allow(['logout']);
-        $this->Authentication->addUnauthenticatedActions(['index', 'index1', 'index2', 'view']);
+        // $this->Authentication->addUnauthenticatedActions(['index', 'index1', 'index2', 'view']);
     }
 
     /**
@@ -29,8 +29,6 @@ class EstudantesController extends AppController {
      * @return \Cake\Http\Response|null
      */
     public function index() {
-
-        $this->Authorization->skipAuthorization();
 
         $parameters = $this->request->getQueryParams();
         if (isset($parameters) && !empty($parameters)):
@@ -50,6 +48,7 @@ class EstudantesController extends AppController {
         endif;
 
         $alunos = $this->paginate($this->Estudantes, ['order' => ['nome' => 'asc']]);
+        $this->Authorization->authorize($this->Estudantes);
         $this->set(compact('alunos'));
     }
 
@@ -60,8 +59,6 @@ class EstudantesController extends AppController {
      */
     public function index1() {
 
-        $this->Authorization->skipAuthorization();
-
         $parameters = $this->request->getQueryParams();
         if (isset($parameters) && !empty($parameters)):
             // pr($parameters);
@@ -80,6 +77,7 @@ class EstudantesController extends AppController {
         endif;
 
         $alunos = $this->paginate($this->Estudantes, ['order' => ['registro' => 'asc']]);
+        $this->Authorization->authorize($this->Estudantes);
         $this->set(compact('alunos'));
     }
 
@@ -90,8 +88,6 @@ class EstudantesController extends AppController {
      */
     public function index2() {
 
-        $this->Authorization->skipAuthorization();
-
         $parameters = $this->request->getQueryParams();
         if (isset($parameters) && !empty($parameters)):
             // pr($parameters);
@@ -110,6 +106,7 @@ class EstudantesController extends AppController {
         endif;
 
         $alunos = $this->paginate($this->Estudantes, ['order' => ['registro' => 'asc']]);
+        $this->Authorization->authorize($this->Estudantes);
         $this->set(compact('alunos'));
     }
 
@@ -121,12 +118,12 @@ class EstudantesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
-        $this->Authorization->skipAuthorization();
-        $aluno = $this->Estudantes->get($id, [
+
+        $estudante = $this->Estudantes->get($id, [
             'contain' => [],
         ]);
-
-        $this->set('aluno', $aluno);
+        $this->Authorization->authorize($estudante);
+        $this->set('aluno', $estudante);
     }
 
     /**
@@ -135,6 +132,7 @@ class EstudantesController extends AppController {
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add() {
+
         $estudante = $this->Estudante->newEmptyEntity();
         $this->Authorization->authorize($estudante);
 
@@ -162,10 +160,8 @@ class EstudantesController extends AppController {
         $estudante = $this->Estudantes->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($estudante);
         // pr($estudante);
-        // pr($this->request->getData());
-        // die();
-        // $this->Authorization->authorize($estudante);
         // die();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $estudanteatualiza = $this->Estudantes->patchEntity($estudante, $this->request->getData());
@@ -188,9 +184,11 @@ class EstudantesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
+
         $this->request->allowMethod(['post', 'delete']);
         $estudante = $this->Estudantes->get($id);
         $this->Authorization->authorize($estudante);
+
         if ($this->Estudantes->delete($estudante)) {
             $this->Flash->success(__('The aluno has been deleted.'));
         } else {

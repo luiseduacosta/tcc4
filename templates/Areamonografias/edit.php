@@ -12,13 +12,13 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?=
             $this->Form->postLink(
-                    __('Delete'),
+                    __('Excluir'),
                     ['action' => 'delete', $area->id],
-                    ['confirm' => __('Are you sure you want to delete # {0}?', $area->id)]
+                    ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $area->id)]
             )
             ?></li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo'); ?>
+        <?= $this->element('menu_monografias'); ?>
     </ul>
 </nav>
 <div class="areas form large-9 medium-8 columns content">

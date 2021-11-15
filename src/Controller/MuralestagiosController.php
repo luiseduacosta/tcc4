@@ -12,6 +12,13 @@ namespace App\Controller;
  */
 class MuralestagiosController extends AppController {
 
+    public function beforeFilter(\Cake\Event\EventInterface $event) {
+
+        parent::beforeFilter($event);
+        // Permitir aos usuários visitantes possam ver o mural.
+        $this->Authentication->addUnauthenticatedActions(['index']);
+    }
+
     /**
      * Index method
      *
@@ -19,14 +26,13 @@ class MuralestagiosController extends AppController {
      */
     public function index($periodo = NULL) {
 
-        $this->Authorization->skipAuthorization();
-        // pr($periodo);
 
-        if (empty($periodo)) {
-          $this->loadModel('Configuracao');
-          $periodoconfiguracao = $this->Configuracao->find();
-          $periodo = $periodoconfiguracao->first();
-          $periodo = $periodo->mural_periodo_atual;
+        $this->Authorization->skipAuthorization();
+        if (is_null($periodo) || empty($periodo)) {
+            $this->loadModel('Configuracao');
+            $periodoconfiguracao = $this->Configuracao->find();
+            $periodo = $periodoconfiguracao->first();
+            $periodo = $periodo->mural_periodo_atual;
         }
 
         if ($periodo) {
@@ -37,6 +43,7 @@ class MuralestagiosController extends AppController {
         } else {
             $muralestagios = $this->Muralestagios->find('all');
         }
+
         $this->set('muralestagios', $this->paginate($muralestagios));
 
         /* Todos os periódos */
@@ -45,7 +52,7 @@ class MuralestagiosController extends AppController {
             'valueField' => 'periodo'
         ]);
         $periodos = $periodototal->toArray();
-        
+
         $this->set('periodos', $periodos);
         $this->set('periodo', $periodo);
     }
@@ -77,14 +84,16 @@ class MuralestagiosController extends AppController {
      */
     public function add() {
 
-      if (empty($periodo)) {
-        $this->loadModel('Configuracao');
-        $periodoconfiguracao = $this->Configuracao->find();
-        $periodo = $periodoconfiguracao->first();
-        $periodo = $periodo->mural_periodo_atual;
-      }
+        if (empty($periodo)) {
+            $this->loadModel('Configuracao');
+            $periodoconfiguracao = $this->Configuracao->find();
+            $periodo = $periodoconfiguracao->first();
+            $periodo = $periodo->mural_periodo_atual;
+        }
 
         $muralestagio = $this->Muralestagios->newEmptyEntity();
+        $this->Authorization->authorize($muralestagio);
+
         if ($this->request->is('post')) {
             // pr($this->request->getData('instituicaoestagio_id'));
             $instituicaoquery = $this->Muralestagios->Instituicaoestagios->find()
@@ -119,27 +128,32 @@ class MuralestagiosController extends AppController {
      */
     public function edit($id = null) {
 
-      $query = $this->Muralestagios->find('all', [
-          'fields' => ['periodo'],
-          'group' => ['periodo'],
-          'order' => ['periodo']
-      ]);
-      $periodos = $query->all()->toArray();
-      foreach ($query as $c_periodo) {
-          $periodostotal[$c_periodo->periodo] = $c_periodo->periodo;
-      }
+        $query = $this->Muralestagios->find('all', [
+            'fields' => ['periodo'],
+            'group' => ['periodo'],
+            'order' => ['periodo']
+        ]);
+        $periodos = $query->all()->toArray();
+        foreach ($query as $c_periodo) {
+            $periodostotal[$c_periodo->periodo] = $c_periodo->periodo;
+        }
 
         $muralestagio = $this->Muralestagios->get($id, [
             'contain' => ['Instituicaoestagios'],
         ]);
+        $this->Authorization->authorize($muralestagio);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
+            
             $muralestagio = $this->Muralestagios->patchEntity($muralestagio, $this->request->getData());
             if ($this->Muralestagios->save($muralestagio)) {
-                $this->Flash->success(__('The muralestagio has been saved.'));
+                $this->Flash->success(__('Registro muralestagio atualizado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The muralestagio could not be saved. Please, try again.'));
+            // $erro = $muralestagio->getErrors();
+            // pr($erro);
+            $this->Flash->error(__('Registro muralestagio não foi atualizado. Tente novamente.'));
         }
         $instituicaoestagios = $this->Muralestagios->Instituicaoestagios->find('list');
         $areaestagios = $this->Muralestagios->Areaestagios->find('list', ['limit' => 200]);
@@ -155,8 +169,11 @@ class MuralestagiosController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
+
         $this->request->allowMethod(['post', 'delete']);
         $muralestagio = $this->Muralestagios->get($id);
+        $this->Authorization->authorize($muralestagio);
+
         if ($this->Muralestagios->delete($muralestagio)) {
             $this->Flash->success(__('The muralestagio has been deleted.'));
         } else {

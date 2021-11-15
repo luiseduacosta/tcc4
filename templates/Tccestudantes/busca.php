@@ -12,7 +12,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?= $this->Html->link(__('Novo estudante'), ['action' => 'add']) ?></li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
+        <?= $this->element('menu_monografias') ?>
     </ul>
 </nav>
 <div class="tccestudantes index large-9 medium-8 columns content">

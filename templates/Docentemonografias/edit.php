@@ -7,21 +7,21 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+        <li class="heading"><?= __('Ações') ?></li>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?=
                 $this->Form->postLink(
-                        __('Delete'),
-                        ['action' => 'delete', $docente->id],
-                        ['confirm' => __('Are you sure you want to delete # {0}?', $docente->id)]
+                        __('Excluir'),
+                        ['action' => 'delete', $docentemonografia->id],
+                        ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $docentemonografia->id)]
                 )
                 ?></li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo'); ?>
+        <?= $this->element('menu_monografias'); ?>
     </ul>
 </nav>
 <div class="docentes form large-9 medium-8 columns content">
-    <?= $this->Form->create($docente) ?>
+    <?= $this->Form->create($docentemonografia) ?>
     <fieldset>
         <legend><?= __('Editar Docente') ?></legend>
         <?php

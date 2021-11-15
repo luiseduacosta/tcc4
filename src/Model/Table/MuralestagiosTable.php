@@ -150,11 +150,11 @@ class MuralestagiosTable extends Table {
                 ->scalar('periodo')
                 ->maxLength('periodo', 6)
                 ->allowEmptyString('periodo');
-
+/*
         $validator
                 ->date('datafax')
                 ->allowEmptyDate('datafax');
-
+*/
         $validator
                 ->scalar('localInscricao')
                 ->notEmptyString('localInscricao');

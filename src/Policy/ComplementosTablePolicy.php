@@ -20,7 +20,6 @@ class ComplementosTablePolicy
      * @return bool
      */
     public function canIndex(IdentityInterface $user, ComplementosTable $complementos) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
     

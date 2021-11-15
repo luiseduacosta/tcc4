@@ -1,7 +1,6 @@
 <?php
 $user = $this->getRequest()->getAttribute('identity');
 // pr($area);
-// pr($areamonografia)
 // die("Areas");
 /**
  * @var \App\View\AppView $this
@@ -10,12 +9,12 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+        <li class="heading"><?= __('Ações') ?></li>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Edit Area'), ['action' => 'edit', $area->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Delete Area'), ['action' => 'delete', $area->id], ['confirm' => __('Are you sure you want to delete # {0}?', $area->id)]) ?> </li>
+            <li><?= $this->Html->link(__('Editar área'), ['action' => 'edit', $area->id]) ?> </li>
+            <li><?= $this->Form->postLink(__('Excluir área'), ['action' => 'delete', $area->id], ['confirm' => __('Are you sure you want to delete # {0}?', $area->id)]) ?> </li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
+        <?= $this->element('menu_monografias') ?>
     </ul>
 </nav>
 <div class="areas view large-9 medium-8 columns content">
@@ -27,7 +26,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($area->id) ?></td>
+            <td><?= $area->id ?></td>
         </tr>
     </table>
     <div class="related">
@@ -55,7 +54,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
                         <td><?= $this->Html->link(h($monografias['titulo']), ['controller' => 'monografias', 'action' => 'view', $monografias['id']]) ?></td>
                         <td><?= h($monografias['periodo']) ?></td>
-                        <td><?= $this->Html->link(h($monografias['docente']), ['controller' => 'docentes', 'action' => 'view', $monografias['docente_id']]) ?></td>
+                        <td><?= $this->Html->link(h($monografias['docente']), ['controller' => 'docentemonografias', 'action' => 'view', $monografias['docente_id']]) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </table>

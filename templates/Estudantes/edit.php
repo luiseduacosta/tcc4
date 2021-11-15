@@ -12,19 +12,19 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?=
                 $this->Form->postLink(
-                        __('Delete'),
+                        __('Excluir'),
                         ['action' => 'delete', $estudante->id],
-                        ['confirm' => __('Are you sure you want to delete # {0}?', $estudante->id), 'class' => 'side-nav-item']
+                        ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $estudante->id), 'class' => 'side-nav-item']
                 )
                 ?>
-            </li>    
+            </li>
         <?php endif; ?>
         <li>
             <?= $this->Html->link(__('Estudantes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </li>
-        <?= $this->element('menu_esquerdo'); ?>       
+        <?= $this->element('menu_monografias'); ?>
     </ul>
-</nav>    
+</nav>
 <div class="column-responsive column-80">
     <div class="alunos form content">
         <?= $this->Form->create($estudante) ?>
@@ -53,4 +53,4 @@ $user = $this->getRequest()->getAttribute('identity');
         <?= $this->Form->end() ?>
     </div>
 </div>
-</div>
+

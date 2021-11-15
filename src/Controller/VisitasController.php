@@ -9,8 +9,7 @@ namespace App\Controller;
  * @property \App\Model\Table\VisitasTable $Visitas
  * @method \App\Model\Entity\Visita[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class VisitasController extends AppController
-{
+class VisitasController extends AppController {
     /**
      * Index method
      *
@@ -18,12 +17,11 @@ class VisitasController extends AppController
      */
     public function index() {
 
-        $this->Authorization->skipAuthorization();
         $this->paginate = [
             'contain' => ['Instituicaoestagios'],
         ];
         $visitas = $this->paginate($this->Visitas);
-
+        $this->Authorization->authorize($this->Visitas);
         $this->set(compact('visitas'));
     }
 
@@ -36,11 +34,10 @@ class VisitasController extends AppController
      */
     public function view($id = null) {
 
-        $this->Authorization->skipAuthorization();
         $visita = $this->Visitas->get($id, [
             'contain' => ['Instituicaoestagios'],
         ]);
-
+        $this->Authorization->authorize($visita);
         $this->set(compact('visita'));
     }
 
@@ -51,8 +48,9 @@ class VisitasController extends AppController
      */
     public function add() {
 
-        $this->Authorization->skipAuthorization();
         $visita = $this->Visitas->newEmptyEntity();
+        $this->Authorization->authorize($visita);
+        
         if ($this->request->is('post')) {
             $visita = $this->Visitas->patchEntity($visita, $this->request->getData());
             if ($this->Visitas->save($visita)) {
@@ -75,10 +73,11 @@ class VisitasController extends AppController
      */
     public function edit($id = null) {
 
-        $this->Authorization->skipAuthorization();
         $visita = $this->Visitas->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($visita);
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
             $visita = $this->Visitas->patchEntity($visita, $this->request->getData());
             if ($this->Visitas->save($visita)) {
@@ -101,9 +100,10 @@ class VisitasController extends AppController
      */
     public function delete($id = null) {
         
-        $this->Authorization->skipAuthorization();
         $this->request->allowMethod(['post', 'delete']);
         $visita = $this->Visitas->get($id);
+        $this->Authorization->authorize($visita);
+        
         if ($this->Visitas->delete($visita)) {
             $this->Flash->success(__('The visita has been deleted.'));
         } else {

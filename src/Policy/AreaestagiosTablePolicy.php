@@ -19,7 +19,6 @@ class AreaestagiosTablePolicy {
      * @return bool
      */
     public function canIndex(IdentityInterface $user, AreaestagiosTable $areaestagios) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
     

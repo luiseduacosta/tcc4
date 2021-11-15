@@ -19,7 +19,6 @@ class MuralinscricoesController extends AppController {
      */
     public function index($periodo = NULL) {
 
-        $this->Authorization->skipAuthorization();
         if (empty($periodo)) {
             $this->loadModel('Configuracao');
             $periodoconfiguracao = $this->Configuracao->get(1);
@@ -42,7 +41,8 @@ class MuralinscricoesController extends AppController {
         }
 
         $muralinscricoes = $this->paginate($this->Muralinscricoes);
-
+        $this->Authorization->authorize($this->Muralinscricoes);
+        
         $periodototal = $this->Muralinscricoes->find('list', [
             'keyField' => 'periodo',
             'valueField' => 'periodo'
@@ -61,10 +61,10 @@ class MuralinscricoesController extends AppController {
      */
     public function view($id = null) {
 
-        $this->Authorization->skipAuthorization();
         $muralinscricao = $this->Muralinscricoes->get($id, [
             'contain' => ['Estudantes', 'Alunos', 'Muralestagios']
         ]);
+        $this->Authorization->authorize($muralinscricao);        
         $this->set(compact('muralinscricao'));
     }
 
@@ -75,8 +75,9 @@ class MuralinscricoesController extends AppController {
      */
     public function add($id = NULL) {
 
-        $this->Authorization->skipAuthorization();
         $muralinscricao = $this->Muralinscricoes->newEmptyEntity();
+        $this->Authorization->authorize($muralinscricao);
+
         if ($this->request->is('post')) {
             // die('is post');
             if ($this->request->getSession()->read('id_categoria') == 2):
@@ -182,19 +183,18 @@ class MuralinscricoesController extends AppController {
      */
     public function edit($id = null) {
 
-        $this->Authorization->skipAuthorization();
         $muralinscricao = $this->Muralinscricoes->get($id, [
-            'contain' => [],
+            'contain' => ['Estudantes'],
         ]);
-
+        $this->Authorization->authorize($muralinscricao);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $muralinscricao = $this->Muralinscricoes->patchEntity($muralinscricao, $this->request->getData());
             if ($this->Muralinscricoes->save($muralinscricao)) {
-                $this->Flash->success(__('The muralinscricao has been saved.'));
+                $this->Flash->success(__('Registro muralinscricao atualizado.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $id]);
             }
-            $this->Flash->error(__('The muralinscricao could not be saved. Please, try again.'));
+            $this->Flash->error(__('Registro muralinscricao não foi atualizado. Tente novamente.'));
         }
 
         $periodototal = $this->Muralinscricoes->find('list', [
@@ -218,8 +218,6 @@ class MuralinscricoesController extends AppController {
      */
     public function delete($id = null) {
 
-        $this->Authorization->skipAuthorization();
-        // pr($id);
         $registro = $this->Muralinscricoes->find()->where(['id' => $id])->select(['alunonovo_id']);
         // pr($registro);
         $registro_id = $registro->first();
@@ -227,6 +225,8 @@ class MuralinscricoesController extends AppController {
         // die();
         $this->request->allowMethod(['post', 'delete']);
         $muralinscricao = $this->Muralinscricoes->get($id);
+        $this->Authorization->authorize($muralinscricao);
+        
         if ($this->Muralinscricoes->delete($muralinscricao)) {
             $this->Flash->success(__('Inscrição excluída.'));
         } else {

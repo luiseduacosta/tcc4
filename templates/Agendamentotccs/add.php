@@ -7,10 +7,11 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 <div class="row">
-    <aside class="column">
+    <aside class="large-3 medium-4 columns">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
+            <h4 class="heading"><?= __('Ações') ?></h4>
             <?= $this->Html->link(__('Agendamento de TCCs'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?= $this->element('menu_monografias') ?>
         </div>
     </aside>
     <div class="column-responsive column-80">

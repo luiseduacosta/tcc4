@@ -48,7 +48,7 @@ class AreamonografiasTable extends Table {
             'foreignKey' => 'areamonografia_id',
         ]);
           
-        $this->belongsToMany('Docentes', [
+        $this->belongsToMany('Docentemonografias', [
             'targetForeignKey' => 'docente_id',            
             'foreignKey' => 'areamonografia_id',
             'joinTable' => 'areamonografias_docentes',

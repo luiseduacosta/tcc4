@@ -8,22 +8,22 @@
     <div class="row">
         <aside class="column">
             <div class="side-nav">
-                <h4 class="heading"><?= __('Actions') ?></h4>
+                <h4 class="heading"><?= __('Ações') ?></h4>
                 <?=
                 $this->Form->postLink(
-                        __('Delete'),
+                        __('Excluir'),
                         ['action' => 'delete', $muralestagio->id],
-                        ['confirm' => __('Are you sure you want to delete # {0}?', $muralestagio->id), 'class' => 'side-nav-item']
+                        ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralestagio->id), 'class' => 'side-nav-item']
                 )
                 ?>
-<?= $this->Html->link(__('List Muralestagios'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+<?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             </div>
         </aside>
         <div class="column-responsive column-80">
             <div class="muralestagios form content">
                     <?= $this->Form->create($muralestagio) ?>
                 <fieldset>
-                    <legend><?= __('Edit Muralestagio') ?></legend>
+                    <legend><?= __('Editar Muralestagio') ?></legend>
                     <?php
                     echo $this->Form->control('id_estagio', ['type' => 'hidden', 'label' => ['text' => 'Instituição'] ,'options' => $instituicaoestagios, 'empty' => true, 'readonly']);
                     echo $this->Form->control('instituicao', ['label' => ['text' => 'Instituição'], 'readonly']);
@@ -44,7 +44,7 @@
                     echo $this->Form->control('contato');
                     echo $this->Form->control('email');
                     echo $this->Form->control('periodo', ['label' => ['text' => 'Período'], 'options' => $periodostotal]);
-                    echo $this->Form->control('datafax', ['type' => 'hidden', 'empty' => true]);
+                    echo $this->Form->control('datafax', ['empty' => true]);
                     echo $this->Form->control('localInscricao', ['label' => ['text' => 'Local da inscrição'], 'options' => ['0' => 'Somente no mural da Coordenação de Estágio/ESS', '1' => 'Diretamente na Instituição e na Coordenação de Estágio/ESS']]);
                     echo $this->Form->control('outras', ['label' => ['text' => 'Outras informações']]);
                     ?>

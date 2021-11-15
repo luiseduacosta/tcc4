@@ -33,7 +33,7 @@ class TccestudantesTable extends Table {
         parent::initialize($config);
 
         $this->setTable('tccestudantes');
-        $this->setDisplayField('id');
+        $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 
         // Tccestudantes tem um campo monografia_id

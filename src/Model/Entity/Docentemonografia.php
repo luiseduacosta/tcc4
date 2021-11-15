@@ -46,8 +46,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Monografia[] $monografias
  * @property \App\Model\Entity\Areamonografia[] $areamonografias
  */
-class Docente extends Entity
-{
+class Docentemonografia extends Entity {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *

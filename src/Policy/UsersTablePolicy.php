@@ -20,7 +20,6 @@ class UsersTablePolicy {
      * @return bool
      */
     public function canIndex(IdentityInterface $user, UsersTable $users) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
 

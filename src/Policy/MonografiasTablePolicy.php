@@ -20,9 +20,7 @@ class MonografiasTablePolicy {
      * @return bool
      */
     public function canIndex(IdentityInterface $user, Monografia $monografia) {
-
-        return true;
-        
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
 }

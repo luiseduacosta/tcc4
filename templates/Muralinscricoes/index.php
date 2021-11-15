@@ -22,13 +22,11 @@
 </script>
 
 <?php
-$session = $this->request->getSession();
-$session->write('id_categoria', 1);
 ?>
 
 <div class="row justify-content-center">
     <div class="col-auto">
-        <?php if ($session->read('id_categoria') == 1): ?>
+        <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
             <?= $this->Form->create($muralinscricoes, ['class' => 'form-inline']); ?>
             <?= $this->Form->input('periodo', ['id' => 'MuralinscricoesPeriodo', 'type' => 'select', 'label' => ['text' => 'Período ', 'style' => 'display: inline;'], 'options' => $periodos, 'empty' => [$periodo => $periodo]], ['class' => 'form-control']); ?>
             <?= $this->Form->end(); ?>
@@ -37,7 +35,6 @@ $session->write('id_categoria', 1);
         <?php endif; ?>
     </div>
 </div>
-
 
 <div class="muralinscricoes index content">
     <?= $this->Html->link(__('Nova inscrição'), ['action' => 'add'], ['class' => 'button float-right']) ?>
@@ -69,9 +66,9 @@ $session->write('id_categoria', 1);
                         <td><?= h($muralinscricao->periodo) ?></td>
                         <td><?= h($muralinscricao->timestamp) ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $muralinscricao->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $muralinscricao->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $muralinscricao->id], ['confirm' => __('Are you sure you want to delete # {0}?', $muralinscricao->id)]) ?>
+                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $muralinscricao->id]) ?>
+                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $muralinscricao->id]) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $muralinscricao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id)]) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -7,17 +7,17 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+        <li class="heading"><?= __('Ações') ?></li>
         <li>
-        <?= $this->Html->link(__('Alunos estagiários'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+        <?= $this->Html->link(__('Estudantes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </li>
-        <?= $this->element('menu_esquerdo'); ?>
+        <?= $this->element('menu_monografias'); ?>
     </ul>
 </nav>    
 <div class="alunos form large-9 medium-8 columns content">
     <?= $this->Form->create($estudante) ?>
     <fieldset>
-        <legend><?= __('Add Aluno') ?></legend>
+        <legend><?= __('Novo Estudante') ?></legend>
         <?php
         echo $this->Form->control('nome');
         echo $this->Form->control('registro');

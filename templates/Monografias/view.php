@@ -14,7 +14,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <li><?= $this->Html->link(__('Edit Monografia'), ['action' => 'edit', $monografia->id], ['class' => 'button float-right']) ?> </li>
             <li><?= $this->Form->postLink(__('Delete Monografia'), ['action' => 'delete', $monografia->id], ['confirm' => __('Are you sure you want to delete # {0}?', $monografia->id)], ['class' => 'button float-right']) ?> </li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
+        <?= $this->element('menu_monografias') ?>
     </ul>
 </nav>
 
@@ -49,7 +49,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Docente') ?></th>
-            <td><?= $this->Html->link($monografia->docente->nome, ['controller' => 'docentes', 'action' => 'view', $monografia->docente_id]) ?></td>
+            <td><?= $this->Html->link($monografia->docentemonografia->nome, ['controller' => 'docentemonografias', 'action' => 'view', $monografia->docente_id]) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Data') ?></th>
@@ -76,20 +76,20 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php if ($monografia->co_orienta_id > 0): ?>
             <tr>
                 <th scope="row"><?= __('Co Orienta Id', ['label' => 'Co-orientador']) ?></th>
-                <td><?= $monografia->has('co_orienta_id > 0') ? $this->Html->link($monografia->co_orienta_id, ['controller' => 'docentes', 'action' => 'view', $monografia->co_orienta_id]) : '' ?></td>
+                <td><?= isset($monografia->co_orienta_id) ? $this->Html->link($monografia->co_orienta_id, ['controller' => 'docentemonografias', 'action' => 'view', $monografia->co_orienta_id]) : '' ?></td>
             </tr>
         <?php endif ?>
         <tr>
             <th scope="row"><?= __('Banca1') ?></th>
-            <td><?= h($monografia->has('banca1 != 0') ? $monografia->banca1 : $monografia->docente->nome) ?></td>
+            <td><?= isset($monografia->banca1) ? $monografia->docentemonografia->nome : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Banca2') ?></th>
-            <td><?= h($monografia->has('banca2 != 0') ? $monografia->docentes1->nome : '') ?></td>
+            <td><?= isset($monografia->banca2) && !empty($monografia->banca2) ? $monografia->docentemonografias1->nome : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Banca3') ?></th>
-            <td><?= h($monografia->has('banca3 != 0') ? $monografia->docentes2->nome : '') ?></td>
+            <td><?= isset($monografia->banca3) && !empty($monografia->banca3) ? $monografia->docentemonografias2->nome : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Convidado') ?></th>

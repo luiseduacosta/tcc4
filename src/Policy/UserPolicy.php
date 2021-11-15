@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Policy;
@@ -9,8 +10,8 @@ use Authorization\IdentityInterface;
 /**
  * User policy
  */
-class UserPolicy
-{
+class UserPolicy {
+
     /**
      * Check if $user can create User
      *
@@ -19,8 +20,7 @@ class UserPolicy
      * @return bool
      */
     public function canAdd(IdentityInterface $user, User $resourse) {
-
-        return $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
@@ -31,7 +31,7 @@ class UserPolicy
      * @return bool
      */
     public function canEdit(IdentityInterface $user, User $resource) {
-        return $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
@@ -42,7 +42,7 @@ class UserPolicy
      * @return bool
      */
     public function canDelete(IdentityInterface $user, User $resource) {
-        return $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
@@ -53,7 +53,7 @@ class UserPolicy
      * @return bool
      */
     public function canView(IdentityInterface $user, User $resource) {
-        return $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
@@ -64,7 +64,7 @@ class UserPolicy
      * @return bool
      */
     public function canIndex(IdentityInterface $user, User $resource) {
-        return $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
 }

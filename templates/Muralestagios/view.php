@@ -8,14 +8,14 @@
 ?>
 <div class="container">
     <div class="row">
-        <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
+        <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
             <aside class="column">
                 <div class="side-nav">
                     <h4 class="heading"><?= __('Ações') ?></h4>
-                    <?= $this->Html->link(__('Editar mural de estágio'), ['action' => 'edit', $muralestagio->id], ['class' => 'side-nav-item']) ?>
-                    <?= $this->Form->postLink(__('Excluir mural de estágio'), ['action' => 'delete', $muralestagio->id], ['confirm' => __('Are you sure you want to delete # {0}?', $muralestagio->id), 'class' => 'side-nav-item']) ?>
-                    <?= $this->Html->link(__('Listar mural de estágios'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-                    <?= $this->Html->link(__('Novo mural de estágio'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+                    <?= $this->Html->link(__('Novo'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $muralestagio->id], ['class' => 'side-nav-item']) ?>
+                    <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $muralestagio->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $muralestagio->id), 'class' => 'side-nav-item']) ?>
                 </div>
             </aside>
         <?php endif; ?>
@@ -149,7 +149,7 @@
                     <tr>
                         <th><?= __('E-mail') ?></th>
                         <td><?= h($muralestagio->email) ?></td>
-                    </tr>                    
+                    </tr>
                     <tr>
                         <th><?= __('Período') ?></th>
                         <td><?= h($muralestagio->periodo) ?></td>
@@ -172,7 +172,7 @@
                     </tr>
                     <tr>
                         <th><?= __('Vagas') ?></th>
-                        <td><?= $this->Number->format($muralestagio->vagas) ?></td>
+                        <td><?= $muralestagio->vagas ?></td>
                     </tr>
                     <tr>
                         <th><?= __('Carga horária') ?></th>
@@ -213,7 +213,7 @@
 
                     <?php endif; ?>
 
-                    <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
+                    <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
                         <tr>
                             <td colspan = 2 style="text-align: center">
                                 <?= $this->Form->create(null, ['url' => '/muralinscricoes/add/' . $muralestagio->id, 'type' => 'post']); ?>
@@ -231,7 +231,7 @@
                             </td>
                         </tr>
 
-                    <?php elseif (($this->getRequest()->getSession()->read('id_categoria') == 2) || ($this->getRequest()->getSession()->read('id_categoria') == 3) || ($this->getRequest()->getSession()->read('id_categoria') == 4)): ?>
+                    <?php elseif (($this->getRequest()->getAttribute('identity')['categoria'] == 2) || ($this->getRequest()->getSession()->read('id_categoria') == 3) || ($this->getRequest()->getSession()->read('id_categoria') == 4)): ?>
                         <!--
                         Para os outros usuários as inscrições dependem da data de encerramento
                         //-->
@@ -265,7 +265,7 @@
 
                 </table>
             </div>
-            
+
             <div id="inscricoes" class="tab-pane container fade">
                 <h3><?= __('Inscrições para seleção de estágio') ?></h3>
                 <?php if (!empty($muralestagio->muralinscricoes)): ?>
@@ -277,7 +277,7 @@
                             <th><?= __('Vaga de estágio') ?></th>
                             <th><?= __('Data') ?></th>
                             <th><?= __('Periodo') ?></th>
-                            <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
+                            <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                                 <th><?= __('Timestamp') ?></th>
                                 <th class="actions"><?= __('Ações') ?></th>
                             <?php endif; ?>
@@ -287,11 +287,11 @@
                                 <?php // pr($muralinscricoes) ?>
                                 <td><?= h($muralinscricoes->id) ?></td>
                                 <td><?= h($muralinscricoes->id_aluno) ?></td>
-                                <td><?= ($this->getRequest()->getSession()->read('id_categoria') == 1) ? $this->Html->link($muralinscricoes->estudante->nome, ['controller' => 'Estudantes', 'action' => 'view', $muralinscricoes->alunonovo_id]) : $muralinscricoes->estudante->nome; ?></td>
+                                <td><?= ($this->getRequest()->getAttribute('identity')['categoria'] == 1) ? $this->Html->link($muralinscricoes->estudante->nome, ['controller' => 'Estudantes', 'action' => 'view', $muralinscricoes->alunonovo_id]) : $muralinscricoes->estudante->nome; ?></td>
                                 <td><?= $this->Html->link($muralinscricoes->muralestagio->instituicao, ['controller' => 'muralestagios', 'action' => 'view', $muralinscricoes->id_instituicao]) ?></td>
                                 <td><?= date('d-m-Y', strtotime(h($muralinscricoes->data))) ?></td>
                                 <td><?= h($muralinscricoes->periodo) ?></td>
-                                <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
+                                <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                                     <td><?= date('d-m-Y', strtotime($muralinscricoes->timestamp)) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link(__('Ver'), ['controller' => 'Muralinscricoes', 'action' => 'view', $muralinscricoes->id]) ?>

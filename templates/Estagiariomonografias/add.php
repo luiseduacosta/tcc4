@@ -39,14 +39,14 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <?= $this->element('menu_esquerdo') ?>
+        <li class="heading"><?= __('Ações') ?></li>
+        <?= $this->element('menu_monografias') ?>
     </ul>
 </nav>
 <div class="estagiarios form large-9 medium-8 columns content">
-    <?= $this->Form->create($estagiario) ?>
+    <?= $this->Form->create($estagiariomonografia) ?>
     <fieldset>
-        <legend><?= __('Add Estagiario') ?></legend>
+        <legend><?= __('Estagiario') ?></legend>
         <?php
         echo $this->Form->control('aluno_id', ['options' => $alunos, 'empty' => 'Seleciona estudante']);
         echo $this->Form->control('registro');

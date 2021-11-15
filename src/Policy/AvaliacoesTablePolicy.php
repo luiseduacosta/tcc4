@@ -19,7 +19,6 @@ class AvaliacoesTablePolicy {
      * @return bool
      */
     public function canIndex(IdentityInterface $user, AvaliacoesTable $avaliacoes) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
 }

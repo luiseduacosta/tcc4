@@ -11,7 +11,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
         <aside class="column">
             <div class="side-nav">
                 <h4 class="heading"><?= __('Ações') ?></h4>
-                <?php if ($usuario->get('categoria') == 1): ?>
+                <?php if ($usuario->categoria == 1): ?>
                     <?= $this->Html->link(__('Editar inscrição'), ['action' => 'edit', $muralinscricao->id], ['class' => 'side-nav-item']) ?>
                     <?= $this->Html->link(__('Listar inscrições'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
                     <?= $this->Html->link(__('Nova inscrição'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>

@@ -19,9 +19,11 @@ class ConfiguracaoTablePolicy {
      * @return bool
      */
     public function canIndex(IdentityInterface $user, ConfiguracaoTable $configuracao) {
-
-        return isset($user->categoria) && $user->categoria == '1';
+        
+        if (isset($user->categoria) && $user->categoria == '1') {
+            return true;
+        }
+        return ;
     }
-
     
 }

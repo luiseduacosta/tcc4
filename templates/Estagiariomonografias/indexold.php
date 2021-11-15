@@ -8,11 +8,11 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+        <li class="heading"><?= __('Ações') ?></li>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('New Estagiario'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
+            <li><?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo'); ?>
+        <?= $this->element('menu_monografias'); ?>
     </ul>
 </nav>
 <div class="estagiarios index large-9 medium-8 columns content">
@@ -34,7 +34,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php foreach ($estagiarios as $estagiario): ?>
                 <?php // pr($estagiario->tccestudante->id) ?>
                 <tr>
-                    <td><?= $this->Number->format($estagiario->id) ?></td>
+                    <td><?= $estagiario->id ?></td>
                     <td><?= $this->Html->link($estagiario->tccestudante->nome, ['controller' => 'Tccestudantes', 'action' => 'view', $estagiario->tccestudante->id]) ?></td>
                     <td><?= h($estagiario->registro) ?></td>
                     <td><?= h($estagiario->turno) ?></td>

@@ -31,7 +31,6 @@ class AreainstituicaoPolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Areainstituicao $areainstituicao) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
 

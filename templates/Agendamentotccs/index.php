@@ -11,14 +11,14 @@ $user = $this->getRequest()->getAttribute('identity');
     <ul class="side-nav">
         <li class="heading"><?= __('Ações') ?></li>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-        <?= $this->Html->link(__('Novo agendamento de TCC'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+            <?= $this->Html->link(__('Novo agendamento de TCC'), ['action' => 'add'], ['class' => 'button float-right']) ?>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
+        <?php echo $this->element('menu_monografias') ?>
     </ul>
 </nav>
 
 <div class="agendamentotccs index content container">
-    <h3><?= __('Oficinas de TCC') ?></h3>
+    <h3><?= __('Defesas de TCC') ?></h3>
     <div class="table-responsive">
         <table>
             <thead>
@@ -43,7 +43,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <td><?= $agendamentotcc->has('estudante') ? $this->Html->link($agendamentotcc->estudante->nome, ['controller' => 'Agendamentotccs', 'action' => 'view', $agendamentotcc->id]) : '' ?></td>
                         <td><?= $agendamentotcc->has('docente') ? $this->Html->link($agendamentotcc->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docente->id]) : '' ?></td>
                         <td><?= $agendamentotcc->has('docentes1') ? $this->Html->link($agendamentotcc->docentes1->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes1->id]) : '' ?></td>
-                        <td><?= $agendamentotcc->has('docentes2') ? $this->Html->link($agendamentotcc->docentes2->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes2->id]) : '' ?></td>'
+                        <td><?= $agendamentotcc->has('docentes2') ? $this->Html->link($agendamentotcc->docentes2->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes2->id]) : '' ?></td>
                         <td><?= h($agendamentotcc->data->format('d-m-Y')) ?></td>
                         <td><?= h($agendamentotcc->horario->i18nFormat('HH:mm:ss')) ?></td>
                         <td><?= $this->Number->format($agendamentotcc->sala) ?></td>
@@ -51,24 +51,14 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                             <td><?= h($agendamentotcc->avaliacao) ?></td>
                             <td class="actions">
-                                <?= $this->Html->link(__('View'), ['action' => 'view', $agendamentotcc->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $agendamentotcc->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Are you sure you want to delete # {0}?', $agendamentotcc->id)]) ?>
-                            <?php endif; ?>
-                        </td>
+                                <?= $this->Html->link(__('Ver'), ['action' => 'view', $agendamentotcc->id]) ?>
+                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id]) ?>
+                                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $agendamentotcc->id)]) ?>
+                            </td>
+                        <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
     </div>
 </div>

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
-use App\Model\Entity\Estagiario;
+use App\Model\Entity\Estagiariomonografia;
 use Authorization\IdentityInterface;
 
 /**
  * Estagiario policy
  */
-class EstagiarioPolicy {
+class EstagiariomonografiaPolicy {
 
     /**
      * Check if $user can create Estagiario
@@ -19,8 +19,7 @@ class EstagiarioPolicy {
      * @param App\Model\Entity\Estagiario $estagiario
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, Estagiario $estagiario) {
-
+    public function canAdd(IdentityInterface $user, Estagiariomonografia $estagiariomonografia) {
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -31,8 +30,7 @@ class EstagiarioPolicy {
      * @param App\Model\Entity\Estagiario $estagiario
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, Estagiario $estagiario) {
-
+    public function canEdit(IdentityInterface $user, Estagiariomonografia $estagiariomonografia) {
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -44,7 +42,6 @@ class EstagiarioPolicy {
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Estagiario $estagiario) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -56,9 +53,7 @@ class EstagiarioPolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Estagiario $estagiario) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
-
 
 }

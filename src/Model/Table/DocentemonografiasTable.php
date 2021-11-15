@@ -22,7 +22,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Docente[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Docente findOrCreate($search, callable $callback = null, $options = [])
  */
-class DocentesTable extends Table {
+class DocentemonografiasTable extends Table {
 
     /**
      * Initialize method
@@ -34,6 +34,7 @@ class DocentesTable extends Table {
         parent::initialize($config);
 
         $this->setTable('docentes');
+        $this->setAlias('docentemonografias');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 

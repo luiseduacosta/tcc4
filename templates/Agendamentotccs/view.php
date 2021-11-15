@@ -7,17 +7,18 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($agendamentotcc);
 ?>
 <div class="row">
-    <aside class="column">
+    <aside class="large-3 medium-4 columns">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
+            <h4 class="heading"><?= __('Ações') ?></h4>
             <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                <?= $this->Html->link(__('Agendar Oficina'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+                <?= $this->Html->link(__('Agendar defesa'), ['action' => 'add'], ['class' => 'button float-right']) ?>
                 <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id], ['class' => 'button float-right']) ?>
                 <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Are you sure you want to delete # {0}?', $agendamentotcc->id)], ['class' => 'button float-right']) ?>
             <?php endif; ?>
             <?= $this->Html->link(__('Agendamentos marcados'), ['action' => 'index'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link(__('Ata da Oficna'), ['action' => 'index'], ['class' => 'button float-right']) ?>
+            <?= $this->Html->link(__('Ata da Defesa'), ['action' => 'index'], ['class' => 'button float-right']) ?>
             <?= $this->Html->link(__('Declarações de participção'), ['action' => 'index'], ['class' => 'button float-right']) ?>
+            <?= $this->element('menu_monografias') ?>
         </div>
     </aside>
     <div class="column-responsive column-80">

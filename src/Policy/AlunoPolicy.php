@@ -20,7 +20,6 @@ class AlunoPolicy {
      * @return bool
      */
     public function canAdd(IdentityInterface $user, Aluno $aluno) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -32,7 +31,6 @@ class AlunoPolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Aluno $aluno) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -44,7 +42,6 @@ class AlunoPolicy {
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Aluno $aluno) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -56,7 +53,6 @@ class AlunoPolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Aluno $aluno) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
 

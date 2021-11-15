@@ -35,13 +35,13 @@ class MonografiasController extends AppController {
     public function index() {
 
         $this->Authorization->skipAuthorization();
-        $this->paginate['contain'] = ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']];
+        $this->paginate['contain'] = ['Docentemonografias', 'Docentemonografias1', 'Docentemonografias2', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']];
         $this->paginate['sortWhitelist'] = [
             'Monografias.titulo',
             'Monografias.periodo',
             'Monografias.url',
             'Tccestudantes.nome',
-            'Docentes.nome',
+            'Docentemonografias.nome',
             'Areamonografias.area'];
         $monografias = $this->paginate($this->Monografias);
         $baseUrl = Router::url('/', true);
@@ -59,7 +59,7 @@ class MonografiasController extends AppController {
 
         $this->Authorization->skipAuthorization();
         $monografia = $this->Monografias->get($id, [
-            'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes'],
+            'contain' => ['Docentemonografias', 'Docentemonografias1', 'Docentemonografias2', 'Areamonografias', 'Tccestudantes'],
         ]);
         // pr($monografia);
         // die();
@@ -144,7 +144,7 @@ class MonografiasController extends AppController {
         $estudantes = $this->estudantes();
         // pr($estudantes);
         /* Deveria ser somente para professores ativos */
-        $professores = $this->Monografias->Docentes->find('list',
+        $professores = $this->Monografias->Docentemonografias->find('list',
                 ['keyField' => 'id', 'valueField' => 'nome']);
         // $professores->where(['dataegresso IS NULL']);
         $professores->order(['nome']);
@@ -166,7 +166,7 @@ class MonografiasController extends AppController {
     public function edit($id = null) {
 
         $monografia = $this->Monografias->get($id, [
-            'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes'],
+            'contain' => ['Docentemonografias', 'Docentemonografias1', 'Docentemonografias2', 'Areamonografias', 'Tccestudantes'],
         ]);
 
         $this->Authorization->authorize($monografia);

@@ -19,8 +19,7 @@ class AreaestagioPolicy {
      * @param \App\Model\Entity\Areaestagio $areaestagio
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, Areaestagio $areaestagio) {
-        
+    public function canAdd(IdentityInterface $user, Areaestagio $areaestagio) {       
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -32,7 +31,6 @@ class AreaestagioPolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Areaestagio $areaestagio) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -44,7 +42,6 @@ class AreaestagioPolicy {
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Areaestagio $areaestagio) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -56,7 +53,6 @@ class AreaestagioPolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Areaestagio $areaestagio) {
-
         return isset($user->categoria) && $user->categoria == '1';
     }
 

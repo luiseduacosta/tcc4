@@ -8,15 +8,15 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+        <li class="heading"><?= __('Ações') ?></li>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Edit Estagiario'), ['action' => 'edit', $estagiario->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Delete Estagiario'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $estagiario->id)]) ?> </li>
-            <li><?= $this->Html->link(__('New Estagiario'), ['action' => 'add']) ?> </li>
-            <li><?= $this->Html->link(__('New Aluno'), ['controller' => 'Alunos', 'action' => 'add']) ?> </li>
-            <li><?= $this->Html->link(__('New Docente'), ['controller' => 'Docentes', 'action' => 'add']) ?> </li>
+            <li><?= $this->Html->link(__('Editar estagiário'), ['action' => 'edit', $estagiario->id]) ?> </li>
+            <li><?= $this->Form->postLink(__('Excluir estagiário'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $estagiario->id)]) ?> </li>
+            <li><?= $this->Html->link(__('Novo estagiário'), ['action' => 'add']) ?> </li>
+            <li><?= $this->Html->link(__('Novo estudante'), ['controller' => 'Estudantes', 'action' => 'add']) ?> </li>
+            <li><?= $this->Html->link(__('Novo docente'), ['controller' => 'Docentemonografias', 'action' => 'add']) ?> </li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
+        <?= $this->element('menu_monografias') ?>
     </ul>
 </nav>
 <div class="estagiarios view large-9 medium-8 columns content">

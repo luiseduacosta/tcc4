@@ -46,21 +46,21 @@ class MonografiasTable extends Table {
         $this->setPrimaryKey('id');
 
         // Monografia tem um campo docente_id
-        $this->belongsTo('Docentes', [
-            'className' => 'Docentes',
+        $this->belongsTo('Docentemonografias', [
+            'className' => 'Docentemonografias',
             'foreignKey' => 'docente_id',
         ]);
 
         // Banca 1 é o docente_id //
         // Banca 2 é um docente
-        $this->belongsTo('Docentes1', [
-            'className' => 'Docentes',
+        $this->belongsTo('Docentemonografias1', [
+            'className' => 'Docentemonografias',
             'foreignKey' => 'banca2',
         ]);
 
         // Banca 3 é um docente
-        $this->belongsTo('Docentes2', [
-            'className' => 'Docentes',
+        $this->belongsTo('Docentemonografias2', [
+            'className' => 'Docentemonografias',
             'foreignKey' => 'banca3',
         ]);
 

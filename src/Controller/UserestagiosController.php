@@ -25,11 +25,12 @@ class UserestagiosController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index() {
+
         $this->paginate = [
             'contain' => ['Estudantes', 'Supervisores', 'Docentes'],
         ];
         $userestagios = $this->paginate($this->Userestagios);
-
+        $this->Authorization->authorize($this->Userestagios);
         $this->set(compact('userestagios'));
     }
 
@@ -41,10 +42,11 @@ class UserestagiosController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
+
         $userestagio = $this->Userestagios->get($id, [
             'contain' => ['Estudantes', 'Supervisores', 'Docentes'],
         ]);
-
+        $this->Authorization->authorize($uerestagio);
         $this->set(compact('userestagio'));
     }
 
@@ -56,8 +58,8 @@ class UserestagiosController extends AppController {
     public function add() {
 
         $userestagio = $this->Userestagios->newEmptyEntity();
-        // pr($this->request->getData());
-        // die();
+        $this->Authorization->authorize($uerestagio);        
+
         if ($this->request->is('post')) {
 
             if ($this->request->getData('categoria') == 2):
@@ -235,9 +237,12 @@ class UserestagiosController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null) {
+
         $userestagio = $this->Userestagios->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($uerestagio);
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
             $userestagio = $this->Userestagios->patchEntity($userestagio, $this->request->getData());
             if ($this->Userestagios->save($userestagio)) {
@@ -261,8 +266,11 @@ class UserestagiosController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
+
         $this->request->allowMethod(['post', 'delete']);
         $userestagio = $this->Userestagios->get($id);
+        $this->Authorization->authorize($uerestagio);
+        
         if ($this->Userestagios->delete($userestagio)) {
             $this->Flash->success(__('Usuário excluído.'));
             return $this->redirect(['action' => 'login']);
@@ -276,6 +284,7 @@ class UserestagiosController extends AppController {
     public function login() {
 
         $this->request->allowMethod(['get', 'post']);
+        $this->Authorization->skipAuthorization();
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
@@ -415,6 +424,8 @@ class UserestagiosController extends AppController {
     }
 
     public function logout() {
+        
+        $this->Authorization->skipAuthorization();        
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
@@ -435,6 +446,7 @@ class UserestagiosController extends AppController {
 
     public function preencher() {
 
+        $this->Authorization->skipAuthorization();
         $user = $this->Userestagios->find('all');
         foreach ($user as $c_user) {
             // pr($c_user->categoria);

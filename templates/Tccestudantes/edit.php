@@ -18,7 +18,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 )
                 ?></li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>    
+        <?= $this->element('menu_monografias') ?>    
     </ul>
 </nav>
 <div class="tccestudantes form large-9 medium-8 columns content">

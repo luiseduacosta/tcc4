@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -9,18 +10,17 @@ namespace App\Controller;
  * @property \App\Model\Table\SupervisoresTable $Supervisores
  * @method \App\Model\Entity\Supervisor[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class SupervisoresController extends AppController
-{
+class SupervisoresController extends AppController {
+
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
-    {
-        $this->Authorization->skipAuthorization();
-        $supervisores = $this->paginate($this->Supervisores);
+    public function index() {
 
+        $supervisores = $this->paginate($this->Supervisores);
+        $this->Authorization->authorize($this->Supervisores);
         $this->set(compact('supervisores'));
     }
 
@@ -32,7 +32,7 @@ class SupervisoresController extends AppController
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
-        
+
         $this->Authorization->skipAuthorization();
         if (is_null($id)):
             $cress = $this->getRequest()->getQuery('cress');
@@ -41,11 +41,11 @@ class SupervisoresController extends AppController
             $supervisor = $supervisorquery->first();
             $id = $supervisor->id;
         endif;
-        
+
         $supervisor = $this->Supervisores->get($id, [
             'contain' => ['Instituicaoestagios' => ['Areainstituicoes'], 'Estagiarios' => ['Estudantes', 'Supervisores', 'Docentes', 'Instituicaoestagios']],
         ]);
-
+        $this->Authorization->authorize($supervisor);
         $this->set(compact('supervisor'));
     }
 
@@ -54,9 +54,11 @@ class SupervisoresController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
+
         $supervisor = $this->Supervisores->newEmptyEntity();
+        $this->Authorization->authorize($supervisor);
+
         if ($this->request->is('post')) {
             $supervisor = $this->Supervisores->patchEntity($supervisor, $this->request->getData());
             if ($this->Supervisores->save($supervisor)) {
@@ -77,11 +79,13 @@ class SupervisoresController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
+
         $supervisor = $this->Supervisores->get($id, [
             'contain' => ['Instituicaoestagios'],
         ]);
+        $this->Authorization->authorize($supervisor);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $supervisor = $this->Supervisores->patchEntity($supervisor, $this->request->getData());
             if ($this->Supervisores->save($supervisor)) {
@@ -102,10 +106,12 @@ class SupervisoresController extends AppController
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
+
         $this->request->allowMethod(['post', 'delete']);
         $supervisor = $this->Supervisores->get($id);
+        $this->Authorization->authorize($supervisor);
+
         if ($this->Supervisores->delete($supervisor)) {
             $this->Flash->success(__('The supervisor has been deleted.'));
         } else {
@@ -114,4 +120,5 @@ class SupervisoresController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

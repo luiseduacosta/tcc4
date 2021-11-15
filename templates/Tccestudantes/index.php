@@ -13,7 +13,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
         <?php endif; ?>
-        <?php echo $this->element('menu_esquerdo'); ?>        
+        <?php echo $this->element('menu_monografias'); ?>        
     </ul>
 </nav>
 

@@ -15,10 +15,9 @@ declare(strict_types=1);
  * @since     3.3.0
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
-
 /*
-* Redirect \Cake\Routing\Router::url('/users/login')
-*/
+ * Redirect \Cake\Routing\Router::url('/users/login')
+ */
 
 namespace App;
 
@@ -35,7 +34,6 @@ use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
-
 use Authorization\AuthorizationService;
 use Authorization\AuthorizationServiceInterface;
 use Authorization\AuthorizationServiceProviderInterface;
@@ -49,10 +47,7 @@ use Psr\Http\Message\ResponseInterface;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication 
-implements AuthenticationServiceProviderInterface, 
-AuthorizationServiceProviderInterface
-{
+class Application extends BaseApplication implements AuthenticationServiceProviderInterface, AuthorizationServiceProviderInterface {
 
     /**
      * Load all the application configuration and bootstrap logic.
@@ -107,7 +102,19 @@ AuthorizationServiceProviderInterface
                 // add Authentication after RoutingMiddleware
                 ->add(new AuthenticationMiddleware($this))
                 // Add authorization **after** authentication
-                ->add(new AuthorizationMiddleware($this));
+                // ->add(new AuthorizationMiddleware($this));
+                ->add(new AuthorizationMiddleware($this, [
+                            'unauthorizedHandler' => [
+                                'className' => 'Authorization.Redirect',
+                                'url' => '/users/login',
+                                'queryParam' => 'redirectUrl',
+                                'exceptions' => [
+                                    MissingIdentityException::class,
+                                    OtherException::class,
+                                    ForbiddenException::class,
+                                ],
+                            ],
+        ]));
 
         return $middlewareQueue;
     }
@@ -154,7 +161,7 @@ AuthorizationServiceProviderInterface
                 'username' => 'email',
                 'password' => 'password',
             ],
-            'loginUrl' =>  \Cake\Routing\Router::url('/users/login'),
+            'loginUrl' => \Cake\Routing\Router::url('/users/login'),
         ]);
 
         return $authenticationService;

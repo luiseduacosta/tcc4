@@ -20,7 +20,6 @@ class TccestudantePolicy {
      * @return bool
      */
     public function canAdd(IdentityInterface $user, Tccestudante $tccestudante) {
-        
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -32,7 +31,6 @@ class TccestudantePolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Tccestudante $tccestudante) {
-        
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -44,7 +42,6 @@ class TccestudantePolicy {
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Tccestudante $tccestudante) {
-        
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -56,8 +53,7 @@ class TccestudantePolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Tccestudante $tccestudante) {
-        
-        return true;
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
 }

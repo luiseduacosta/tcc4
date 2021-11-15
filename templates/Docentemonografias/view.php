@@ -8,33 +8,33 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+        <li class="heading"><?= __('Ações') ?></li>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Edit Docente'), ['action' => 'edit', $docente->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Delete Docente'), ['action' => 'delete', $docente->id], ['confirm' => __('Are you sure you want to delete # {0}?', $docente->id)]) ?> </li>
+            <li><?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docentemonografia->id]) ?> </li>
+            <li><?= $this->Form->postLink(__('Excluir Docente'), ['action' => 'delete', $docentemonografia->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $docentemonografia->id)]) ?> </li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo'); ?>
+        <?= $this->element('menu_monografias'); ?>
     </ul>
 </nav>
 <div class="docentes view large-9 medium-8 columns content">
-    <h3><?= h($docente->nome) ?></h3>
+    <h3><?= h($docentemonografia->nome) ?></h3>
     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
         <table class="vertical-table">
             <tr><td colspan="2">Dados pessoais</td></tr>
             <tr>
                 <th scope="row"><?= __('Nome') ?></th>
-                <td><?= h($docente->nome) ?></td>
+                <td><?= h($docentemonografia->nome) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('CṔF') ?></th>
-                <td><?= h($docente->cpf) ?></td>
+                <td><?= h($docentemonografia->cpf) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Sexo') ?></th>
                 <td>
-                <?php if ($docente->sexo == '1'): ?>
+                <?php if ($docentemonografia->sexo == '1'): ?>
                 <?= 'Masculino'; ?>
-                <?php elseif ($docente->sexo == '2'): ?>
+                <?php elseif ($docentemonografia->sexo == '2'): ?>
                 <?= 'Feminino'; ?>
                 <?php else: ?>
                 <?= "s/d" ?>
@@ -43,142 +43,142 @@ $user = $this->getRequest()->getAttribute('identity');
             </tr>
             <tr>
                 <th scope="row"><?= __('Data de nascimento') ?></th>
-                <td><?= h($docente->datanascimento) ?></td>
+                <td><?= h($docentemonografia->datanascimento) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Local de nascimento') ?></th>
-                <td><?= h($docente->localnascimento) ?></td>
+                <td><?= h($docentemonografia->localnascimento) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Telefone') ?></th>
-                <td><?= h('(' . h($docente->ddd_telefone) . ')' . h($docente->telefone)) ?></td>
+                <td><?= h('(' . h($docentemonografia->ddd_telefone) . ')' . h($docentemonografia->telefone)) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Celular') ?></th>
-                <td><?= h('(' . h($docente->ddd_celular) . ')' . h($docente->celular)) ?></td>
+                <td><?= h('(' . h($docentemonografia->ddd_celular) . ')' . h($docentemonografia->celular)) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('E-mail') ?></th>
-                <td><?= h($docente->email) ?></td>
+                <td><?= h($docentemonografia->email) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Site') ?></th>
-                <td><?= $docente->has('homepage') ? $this->Html->link($docente->homepage, $docente->homepage): '' ?></td>
+                <td><?= isset($docentemonografia->homepage) ? $this->Html->link($docentemonografia->homepage, $docentemonografia->homepage): '' ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Rede social') ?></th>
-                <td><?= $docente->has('redesocial') ? $this->Html->link($docente->redesocial, $docente->redesocial) : '' ?></td>
+                <td><?= isset($docentemonografia->redesocial) ? $this->Html->link($docentemonografia->redesocial, $docentemonografia->redesocial) : '' ?></td>
             </tr>
 
             <tr><td colspan="2">Dados acadêmicos</td></tr>
             <tr>
                 <th scope="row"><?= __('Curriculo lattes') ?></th>
-                <td><a href="<?= 'http://lattes.cnpq.br/' . $docente->curriculolattes ?>">Currículo</a></td>
+                <td><a href="<?= 'http://lattes.cnpq.br/' . $docentemonografia->curriculolattes ?>">Currículo</a></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Atualização lattes') ?></th>
-                <td><?= h($docente->atualizacaolattes) ?></td>
+                <td><?= h($docentemonografia->atualizacaolattes) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Curriculo Sigma') ?></th>
-                <td><?= h($docente->curriculosigma) ?></td>
+                <td><?= h($docentemonografia->curriculosigma) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Diretório de Grupos de Pesquisa') ?></th>
-                 <td><a href='http://dgp.cnpq.br/dgp/espelhogrupo/<?= $docente->pesquisadordgp ?>'>Grupo de pesquisa</a></td>
+                 <td><a href='http://dgp.cnpq.br/dgp/espelhogrupo/<?= $docentemonografia->pesquisadordgp ?>'>Grupo de pesquisa</a></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Formação profissional') ?></th>
-                <td><?= h($docente->formacaoprofissional) ?></td>
+                <td><?= h($docentemonografia->formacaoprofissional) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Universidade de graduação') ?></th>
-                <td><?= h($docente->universidadedegraduacao) ?></td>
+                <td><?= h($docentemonografia->universidadedegraduacao) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Ano formação') ?></th>
-                <td><?= h($docente->anoformacao) ?></td>
+                <td><?= h($docentemonografia->anoformacao) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Mestrado área') ?></th>
-                <td><?= h($docente->mestradoarea) ?></td>
+                <td><?= h($docentemonografia->mestradoarea) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Mestrado universidade') ?></th>
-                <td><?= h($docente->mestradouniversidade) ?></td>
+                <td><?= h($docentemonografia->mestradouniversidade) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Mestrado ano conclusão') ?></th>
-                <td><?= $docente->mestradoanoconclusao ?></td>
+                <td><?= $docentemonografia->mestradoanoconclusao ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Doutorado área') ?></th>
-                <td><?= h($docente->doutoradoarea) ?></td>
+                <td><?= h($docentemonografia->doutoradoarea) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Doutorado universidade') ?></th>
-                <td><?= h($docente->doutoradouniversidade) ?></td>
+                <td><?= h($docentemonografia->doutoradouniversidade) ?></td>
             </tr>
 
             <tr>
                 <th scope="row"><?= __('Doutorado ano conclusão') ?></th>
-                <td><?= h($docente->doutoradoanoconclusao) ?></td>
+                <td><?= h($docentemonografia->doutoradoanoconclusao) ?></td>
             </tr>
 
             <tr><td colspan="2">Dados funcionais</td></tr>
             <tr>
                 <th scope="row"><?= __('Siape') ?></th>
-                <td><?= $docente->siape ?></td>
+                <td><?= $docentemonografia->siape ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Departamento') ?></th>
-                <td><?= h($docente->departamento) ?></td>
+                <td><?= h($docentemonografia->departamento) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Forma de ingresso') ?></th>
-                <td><?= h($docente->formaingresso) ?></td>
+                <td><?= h($docentemonografia->formaingresso) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Data de ingresso') ?></th>
-                <td><?= h($docente->dataingresso) ?></td>
+                <td><?= h($docentemonografia->dataingresso) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Tipo de cargo') ?></th>
-                <td><?= h($docente->tipocargo) ?></td>
+                <td><?= h($docentemonografia->tipocargo) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Classe e nível') ?></th>
-                <td><?= h($docente->categoria) ?></td>
+                <td><?= h($docentemonografia->categoria) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Regime de trabalho') ?></th>
-                <td><?= h($docente->regimetrabalho) ?></td>
+                <td><?= h($docentemonografia->regimetrabalho) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Data de egresso') ?></th>
-                <td><?= h($docente->dataegresso) ?></td>
+                <td><?= h($docentemonografia->dataegresso) ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Motivo de egresso') ?></th>
-                <td><?= h($docente->motivoegresso) ?></td>
+                <td><?= h($docentemonografia->motivoegresso) ?></td>
             </tr>
 
         </table>
         <div class="row">
             <p><?= __('Observações') ?></p>
-            <?= $this->Text->autoParagraph(h($docente->observacoes)); ?>
+            <?= $this->Text->autoParagraph(h($docentemonografia->observacoes)); ?>
         </div>
     <?php endif; ?>
     <div class="related">
         <h4><?= __('Monografias') ?></h4>
-        <?php if (!empty($docente->monografias)): ?>
+        <?php if (!empty($docentemonografia->monografias)): ?>
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <th scope="col"><?= __('Titulo') ?></th>
                     <th scope="col"><?= __('Periodo') ?></th>
                     <th scope="col"><?= __('Pdf') ?></th>
                 </tr>
-                <?php foreach ($docente->monografias as $monografias): ?>
+                <?php foreach ($docentemonografia->monografias as $monografias): ?>
                     <tr>
                         <td><?= $this->Html->link($monografias->titulo, ['controller' => 'monografias', 'action' => 'view', $monografias->id]) ?></td>
                         <td><?= h($monografias->periodo) ?></td>
@@ -189,17 +189,17 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php endif; ?>
     </div>
     <div class="related">
-        <h4><?= __('Related Docentes Areas') ?></h4>
-        <?php if (!empty($docente->areamonografias)): ?>
+        <h4><?= __('Áreas do docente') ?></h4>
+        <?php if (!empty($docentemonografia->areamonografias)): ?>
             <?php // pr($docente->areas);?>
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <th scope="col"><?= __('Área') ?></th>
                 </tr>
-                <?php foreach ($docente->areamonografias as $docentesAreas): ?>
+                <?php foreach ($docentemonografia->areamonografias as $docentesareas): ?>
                     <?php // pr($docentesAreas);?>
                     <tr>
-                        <td><?= $this->Html->link($docentesAreas->area, ['controller' => 'areamonografias', 'action' => 'view', $docentesAreas->id]) ?></td>
+                        <td><?= $this->Html->link($docentesareas->area, ['controller' => 'areamonografias', 'action' => 'view', $docentesareas->id]) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </table>

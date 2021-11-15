@@ -9,11 +9,11 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+        <li class="heading"><?= __('Ações') ?></li>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('New Estagiario'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
+            <li><?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
+        <?= $this->element('menu_monografias') ?>
     </ul>
 </nav>
 <div class="estagiarios index large-9 medium-8 columns content">
@@ -32,8 +32,8 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th scope="col"><?= $this->Paginator->sort('turno') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('nivel') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('periodo') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('titulo') ?></th>                
-                <th scope="col"><?= $this->Paginator->sort('periodo_monog') ?></th>                                
+                <th scope="col"><?= $this->Paginator->sort('titulo') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('periodo_monog') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -44,12 +44,12 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php if (!empty($c_estudante['id'])): ?>
                         <td><?= $this->Html->link($c_estudante['nome'], ['controller' => 'Tccestudantes', 'action' => 'view', $c_estudante['id']]) ?></td>
                     <?php else: ?>
-                        <td><?= h($c_estudante['nome']) ?></td>                
+                        <td><?= h($c_estudante['nome']) ?></td>
                     <?php endif; ?>
                     <td><?= h($c_estudante['turno']) ?></td>
                     <td><?= h($c_estudante['nivel']) ?></td>
                     <td><?= h($c_estudante['periodo']) ?></td>
-                    <td><?= $this->Html->link($c_estudante['titulo'], ['controller' => 'Monografias', 'action' => 'view', $c_estudante['monografia_id']]) ?></td>                
+                    <td><?= $this->Html->link($c_estudante['titulo'], ['controller' => 'Monografias', 'action' => 'view', $c_estudante['monografia_id']]) ?></td>
                     <td><?= h($c_estudante['periodo_monog']) ?></td>
                 </tr>
             <?php endforeach; ?>

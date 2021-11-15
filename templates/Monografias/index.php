@@ -16,7 +16,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?= $this->Html->link(__('Nova Monografia'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
+        <?= $this->element('menu_monografias') ?>
     </ul>
 </nav>
 <div class="monografias index large-9 medium-8 columns content">
@@ -61,7 +61,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         endif;
                         ?>
                     </td>
-                    <td><?= $this->Html->link(h($monografia->docente->nome), ['controller' => 'docentes', 'action' => 'view', $monografia->docente->id]) ?></td>
+                    <td><?= $this->Html->link(h($monografia->docentemonografia->nome), ['controller' => 'docentemonografias', 'action' => 'view', $monografia->docentemonografia->id]) ?></td>
                     <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografia->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia->id]) : '' ?></td>
                     <?php if (!empty($monografia->url)): ?>
                         <td><a href="<?= $baseUrl . 'monografias/' . $monografia->url ?>">Download</a></td>

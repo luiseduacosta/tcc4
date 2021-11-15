@@ -6,14 +6,14 @@
 // pr($alunonovos);
 // pr($alunoestagios);
 // die();
-$id_categoria = $this->getRequest()->getSession()->read('id_categoria');
+$categoria = $this->getRequest()->getAttribute('identity')['categoria'];
 // die();
 ?>
 <div class="row">
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('List Muralinscricoes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <h4 class="heading"><?= __('Ações') ?></h4>
+            <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column-responsive column-80">
@@ -22,7 +22,7 @@ $id_categoria = $this->getRequest()->getSession()->read('id_categoria');
             <fieldset>
                 <legend><?= __('Inscrição para seleção de estágio') ?></legend>
                 <?php
-                if ($id_categoria == 1):
+                if (isset($categoria) && $categoria == 1):
                     echo $this->Form->control('id_aluno', ['label' => 'Registro', 'placeholder' => 'Digite o DRE', 'options' => $estudantes, 'empty' => true]);
                     echo $this->Form->control('id_instituicao', ['label' => 'Mural de estágio', 'options' => $muralestagios, 'empty' => [$muralestagios_id->id => $muralestagios_id->instituicao]], 'readonly');
                     echo $this->Form->control('data', ['value' => date('d-m-Y', strtotime(now())), 'readonly']);
@@ -31,7 +31,7 @@ $id_categoria = $this->getRequest()->getSession()->read('id_categoria');
                     echo $this->Form->control('alunonovo_id', ['label' => 'Estudante', 'options' => [$alunonovos->id => $alunonovos->nome], 'value' => $alunonovos->id, 'readonly']);
                     echo $this->Form->control('aluno_id', ['label' => 'Aluno', 'options' => [$alunoestagio->id => $alunoestagio->nome]]);
                     // die(pr($id_categoria));
-                elseif ($id_categoria == 2):
+                elseif (isset($categoria) && $categoria == 2):
                     echo $this->Form->control('id_aluno', ['label' => 'Registro', 'value' => $alunonovos->registro, 'readonly']);
                     echo $this->Form->control('id_instituicao', ['label' => 'Mural de estágio', 'options' => [$muralestagios_id->id => $muralestagios_id->instituicao]], 'readonly');
                     echo $this->Form->control('data', ['type' => 'hidden', 'value' => date('Y-m-d')]);

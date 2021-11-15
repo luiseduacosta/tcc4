@@ -19,8 +19,7 @@ class AreamonografiasTablePolicy {
      * @return bool
      */
     public function canIndex(IdentityInterface $user, AreamonografiasTable $areamonografias) {
-
-        return true;
+        return isset($user->categoria) && $user->categoria == '1';
     }
     
 }

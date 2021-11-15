@@ -38,6 +38,7 @@ class FolhadeatividadesController extends AppController {
             'order' => ['dia'],
         ];
         $folhadeatividades = $this->paginate($this->Folhadeatividades);
+        $this->Authorization->authorize($this->Folhadeatividades);
 
         $this->set(compact('folhadeatividades', 'id', 'estagiario'));
     }
@@ -51,11 +52,10 @@ class FolhadeatividadesController extends AppController {
      */
     public function view($id = null) {
 
-        $this->Authorization->skipAuthorization();
         $folhadeatividade = $this->Folhadeatividades->get($id, [
             'contain' => ['Estagiarios'],
         ]);
-
+        $this->Authorization->authorize($folhadeatividade);
         $this->set(compact('folhadeatividade'));
     }
 
@@ -66,7 +66,6 @@ class FolhadeatividadesController extends AppController {
      */
     public function add($id = NULL) {
 
-        $this->Authorization->skipAuthorization();
         if (is_null($id)) {
             $this->Flash->error(__('Selecione o estágio'));
             return $this->redirect('/estudantes/view?registro=' . $this->getRequest()->getSession()->read('numero'));
@@ -83,6 +82,8 @@ class FolhadeatividadesController extends AppController {
         }
 
         $folhadeatividade = $this->Folhadeatividades->newEmptyEntity();
+        $this->Authorization->authorize($folhadeatividade);
+
         if ($this->request->is('post')) {
             $folhadeatividade = $this->Folhadeatividades->patchEntity($folhadeatividade, $this->request->getData());
             // pr($this->request->getData());
@@ -119,10 +120,11 @@ class FolhadeatividadesController extends AppController {
      */
     public function edit($id = null) {
 
-        $this->Authorization->skipAuthorization();
         $folhadeatividade = $this->Folhadeatividades->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($folhadeatividade);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $folhadeatividade = $this->Folhadeatividades->patchEntity($folhadeatividade, $this->request->getData());
             if ($this->Folhadeatividades->save($folhadeatividade)) {
@@ -152,9 +154,10 @@ class FolhadeatividadesController extends AppController {
      */
     public function delete($id = null) {
 
-        $this->Authorization->skipAuthorization();
         $this->request->allowMethod(['post', 'delete']);
         $folhadeatividade = $this->Folhadeatividades->get($id);
+        $this->Authorization->authorize($folhadeatividade);
+
         if ($this->Folhadeatividades->delete($folhadeatividade)) {
             $this->Flash->success(__('The folhadeatividade has been deleted.'));
         } else {
@@ -180,7 +183,7 @@ class FolhadeatividadesController extends AppController {
                     ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('numero')]);
             $estagiario = $estagiarioquery->all();
             $this->set('estagiario', $estagiario);
-            }
+        }
         // pr($estagiarios);
         // die();
     }
@@ -205,7 +208,7 @@ class FolhadeatividadesController extends AppController {
         $estagiario = $estagiarioquery->first();
         // pr($estagiario);
         // die();
-        
+
         $this->viewBuilder()->enableAutoLayout(false);
         $this->viewBuilder()->setClassName('CakePdf.Pdf');
         $this->viewBuilder()->setOption(
