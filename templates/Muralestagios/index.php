@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Muralestagio[]|\Cake\Collection\CollectionInterface $muralestagios
  */
 // pr($periodo);
+// pr($muralestagios);
 ?>
 <?php
 /*
@@ -76,8 +77,8 @@
                         <td><?= h($muralestagio->beneficios) ?></td>
                         <td><?= (h($muralestagio->final_de_semana) == 0) ? 'Não' : 'Sim' ?></td>
                         <td><?= $muralestagio->cargaHoraria ?></td>
-                        <td><?= isset($muralestagio->dataInscricao) ? date('d-m-Y', strtotime($muralestagio->dataInscricao)) : '' ?></td>
-                        <td><?= isset($muralestagio->dataSelecao) ? date('d-m-Y', strtotime($muralestagio->dataSelecao)) : '' ?></td>
+                        <td><?= isset($muralestagio->dataInscricao) ? $muralestagio->dataInscricao : '' ?></td>
+                        <td><?= isset($muralestagio->dataSelecao) ? $muralestagio->dataSelecao : '' ?></td>
                         <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
                         <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
                             <td class="actions">

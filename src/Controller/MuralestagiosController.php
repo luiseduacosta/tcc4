@@ -26,7 +26,6 @@ class MuralestagiosController extends AppController {
      */
     public function index($periodo = NULL) {
 
-
         $this->Authorization->skipAuthorization();
         if (is_null($periodo) || empty($periodo)) {
             $this->loadModel('Configuracao');

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
-use App\Model\Table\DocentesTable;
+use App\Model\Table\DocentemonografiasTable;
 use Authorization\IdentityInterface;
 use Authorization\Policy\Result;
 /**
- * Docentes policy
+ * Docentemonografias policy
  */
 class DocentemonografiasTablePolicy {
 
@@ -19,7 +19,7 @@ class DocentemonografiasTablePolicy {
      * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canIndex(IdentityInterface $user, \App\Model\Table\DocentemonografiasTable $docentemonografias) {
+    public function canIndex(IdentityInterface $user, DocentemonografiasTable $docentemonografias) {
 
          if (isset($user->categoria) && $user->categoria == '1') {
              return true;
@@ -34,7 +34,7 @@ class DocentemonografiasTablePolicy {
      * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canIndex0(IdentityInterface $user, \App\Model\Table\DocentemonografiasTable $docentemonografias) {
+    public function canIndex0(IdentityInterface $user, DocentemonografiasTable $docentemonografias) {
 
         if ($user->categoria == '1') {
             return true;
@@ -49,7 +49,7 @@ class DocentemonografiasTablePolicy {
      * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canIndex1(IdentityInterface $user, \App\Model\Table\DocentemonografiasTable $docentemonografias) {
+    public function canIndex1(IdentityInterface $user, DocentemonografiasTable $docentemonografias) {
 
         if ($user->categoria == '1') {
             return true;
@@ -64,7 +64,7 @@ class DocentemonografiasTablePolicy {
      * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canIndex2(IdentityInterface $user, \App\Model\Table\DocentemonografiasTable $docentemonografias) {
+    public function canIndex2(IdentityInterface $user, DocentemonografiasTable $docentemonografias) {
 
         if ($user->categoria == '1') {
             return true;
@@ -79,7 +79,7 @@ class DocentemonografiasTablePolicy {
      * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canIndex3(IdentityInterface $user, \App\Model\Table\DocentemonografiasTable $docentemonografias) {
+    public function canIndex3(IdentityInterface $user, DocentemonografiasTable $docentemonografias) {
 
         if ($user->categoria == '1') {
             return true;
