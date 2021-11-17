@@ -6,9 +6,10 @@
 ?>
 <div class="container">
     <div class="row">
+        <?php echo $this->element('menu_mural') ?>
         <aside class="column">
             <div class="side-nav">
-                <h4 class="heading"><?= __('Actions') ?></h4>
+                <h4 class="heading"><?= __('Ações') ?></h4>
                 <?= $this->Html->link(__('Listar supervisores'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             </div>
         </aside>

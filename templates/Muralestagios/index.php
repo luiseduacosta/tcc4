@@ -33,6 +33,7 @@
 ?>
 
 <div class="row justify-content-center">
+    <?php echo $this->element('menu_mural') ?>
     <div class="col-auto">
         <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
             <h1 style="text-align: center;">Mural de estágios da ESS/UFRJ. Período: <?= $periodo; ?></h1>

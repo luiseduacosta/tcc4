@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Muralinscricao[]|\Cake\Collection\CollectionInterface $muralinscricoes
  */
 // pr($muralinscricoes);
-
 ?>
 
 <script type="text/javascript">
@@ -25,6 +24,7 @@
 ?>
 
 <div class="row justify-content-center">
+    <?php echo $this->element('menu_mural') ?>
     <div class="col-auto">
         <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
             <?= $this->Form->create($muralinscricoes, ['class' => 'form-inline']); ?>

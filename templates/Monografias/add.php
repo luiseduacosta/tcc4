@@ -1,5 +1,4 @@
 <?php
-
 $user = $this->getRequest()->getAttribute('identity');
 // pr($estudantes);
 /**
@@ -9,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+        <li class="heading"><?= __('Ações') ?></li>
         <?= $this->element('menu_monografias'); ?>
     </ul>
 </nav>

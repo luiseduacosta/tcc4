@@ -16,7 +16,7 @@ class MuralestagiosController extends AppController {
 
         parent::beforeFilter($event);
         // Permitir aos usuários visitantes possam ver o mural.
-        $this->Authentication->addUnauthenticatedActions(['index']);
+        $this->Authentication->addUnauthenticatedActions(['index', 'view']);
     }
 
     /**

@@ -8,6 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($user['categoria']);
 ?>
 <div class="supervisores index container">
+    <?php echo $this->element('menu_mural') ?>
     <?php if ($user['categoria'] == 1): ?>
         <?= $this->Html->link(__('Cadastra supervisora'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <?php endif; ?>

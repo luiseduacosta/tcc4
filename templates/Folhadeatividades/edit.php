@@ -7,6 +7,7 @@
 ?>
 <div class="container">
     <div class="row">
+        <?php echo $this->element('menu_mural') ?>
         <aside class="column">
             <div class="side-nav">
                 <h4 class="heading"><?= __('Açoes') ?></h4>
@@ -17,12 +18,12 @@
                         ['confirm' => __('Tem certeza que quer excluir esta atividade # {0}?', $folhadeatividade->id), 'class' => 'side-nav-item']
                 )
                 ?>
-<?= $this->Html->link(__('Lista de atividades'), ['action' => 'index', $estagiario->estagiario->id], ['class' => 'side-nav-item']) ?>
+                <?= $this->Html->link(__('Lista de atividades'), ['action' => 'index', $estagiario->estagiario->id], ['class' => 'side-nav-item']) ?>
             </div>
         </aside>
         <div class="column-responsive column-80">
             <div class="folhadeatividades form content">
-                    <?= $this->Form->create($folhadeatividade) ?>
+                <?= $this->Form->create($folhadeatividade) ?>
                 <fieldset>
                     <legend><?= __('Edita atividade') ?></legend>
                     <?php
@@ -53,8 +54,8 @@
                     echo $this->Form->control('atividade');
                     ?>
                 </fieldset>
-<?= $this->Form->button(__('Submit')) ?>
-<?= $this->Form->end() ?>
+                <?= $this->Form->button(__('Submit')) ?>
+                <?= $this->Form->end() ?>
             </div>
         </div>
     </div>

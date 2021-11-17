@@ -9,16 +9,16 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+        <li class="heading"><?= __('Ações') ?></li>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
+            <li><?= $this->Html->link(__('Novo Estudante de TCC'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
         <?php endif; ?>
         <?php echo $this->element('menu_monografias'); ?>        
     </ul>
 </nav>
 
 <div class="tccestudantes index large-9 medium-8 columns content">
-    <h3><?= __('Estudantes') ?></h3>
+    <h3><?= __('Estudantes de TCC') ?></h3>
 
     <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
     <?= $this->Form->control('nome', ['label' => 'Busca por nome']) ?>

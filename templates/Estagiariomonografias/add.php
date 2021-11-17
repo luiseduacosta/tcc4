@@ -46,7 +46,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="estagiarios form large-9 medium-8 columns content">
     <?= $this->Form->create($estagiariomonografia) ?>
     <fieldset>
-        <legend><?= __('Estagiario') ?></legend>
+        <legend><?= __('Estagiário') ?></legend>
         <?php
         echo $this->Form->control('aluno_id', ['options' => $alunos, 'empty' => 'Seleciona estudante']);
         echo $this->Form->control('registro');

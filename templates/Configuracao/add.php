@@ -5,6 +5,7 @@
  */
 ?>
 <div class="row">
+    <?php echo $this->element('menu_mural') ?>
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
@@ -17,13 +18,13 @@
             <fieldset>
                 <legend><?= __('Configuração') ?></legend>
                 <?php
-                    echo $this->Form->control('mural_periodo_atual');
-                    echo $this->Form->control('termo_compromisso_periodo');
-                    echo $this->Form->control('termo_compromisso_inicio');
-                    echo $this->Form->control('termo_compromisso_final');
-                    echo $this->Form->control('curso_turma_atual');
-                    echo $this->Form->control('curso_abertura_inscricoes');
-                    echo $this->Form->control('curso_encerramento_inscricoes');
+                echo $this->Form->control('mural_periodo_atual');
+                echo $this->Form->control('termo_compromisso_periodo');
+                echo $this->Form->control('termo_compromisso_inicio');
+                echo $this->Form->control('termo_compromisso_final');
+                echo $this->Form->control('curso_turma_atual');
+                echo $this->Form->control('curso_abertura_inscricoes');
+                echo $this->Form->control('curso_encerramento_inscricoes');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

@@ -5,13 +5,14 @@
  */
 ?>
 <div class="row">
+    <?php echo $this->element('menu_mural') ?>
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Visita'), ['action' => 'edit', $visita->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Visita'), ['action' => 'delete', $visita->id], ['confirm' => __('Are you sure you want to delete # {0}?', $visita->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Visitas'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Visita'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+            <h4 class="heading"><?= __('Ações') ?></h4>
+            <?= $this->Html->link(__('Editar visita'), ['action' => 'edit', $visita->id], ['class' => 'side-nav-item']) ?>
+            <?= $this->Form->postLink(__('Excluir visita'), ['action' => 'delete', $visita->id], ['confirm' => __('Tem certeza que quer excluir este registro {0}?', $visita->id), 'class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Listar visitas'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Nova visita'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column-responsive column-80">
@@ -19,7 +20,11 @@
             <h3><?= h($visita->id) ?></h3>
             <table>
                 <tr>
-                    <th><?= __('Instituicaoestagio') ?></th>
+                    <th><?= __('Id') ?></th>
+                    <td><?= $this->Number->format($visita->id) ?></td>
+                </tr>                
+                <tr>
+                    <th><?= __('Instituição') ?></th>
                     <td><?= $visita->has('instituicaoestagio') ? $this->Html->link($visita->instituicaoestagio->id, ['controller' => 'Instituicaoestagios', 'action' => 'view', $visita->instituicaoestagio->id]) : '' ?></td>
                 </tr>
                 <tr>
@@ -27,16 +32,12 @@
                     <td><?= h($visita->motivo) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Responsavel') ?></th>
+                    <th><?= __('Responsável') ?></th>
                     <td><?= h($visita->responsavel) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Avaliacao') ?></th>
+                    <th><?= __('Avaliação') ?></th>
                     <td><?= h($visita->avaliacao) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($visita->id) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Data') ?></th>
@@ -44,7 +45,7 @@
                 </tr>
             </table>
             <div class="text">
-                <strong><?= __('Descricao') ?></strong>
+                <strong><?= __('Descrição') ?></strong>
                 <blockquote>
                     <?= $this->Text->autoParagraph(h($visita->descricao)); ?>
                 </blockquote>

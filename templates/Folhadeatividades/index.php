@@ -28,6 +28,7 @@ if ($professora) {
 ?>
 
 <div class="folhadeatividades index container">
+    <?php echo $this->element('menu_mural') ?>
     <?= $this->Html->link(__('Cadastra nova atividade'), ['action' => 'add/' . $id], ['class' => 'button float-right']) ?>
     <?= $this->Html->link(__('Imprime folha de atividades'), ['action' => 'folhadeatividadespdf/' . $id], ['class' => 'button float-left']) ?>
     <h3 class="text-center"><?= __('Folha de atividades da(o) estagiária(o) ' . $estagiario->estudante->nome) ?></h3>

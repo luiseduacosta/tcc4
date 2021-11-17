@@ -5,6 +5,7 @@
  */
 ?>
 <div class="row">
+    <?php echo $this->element('menu_mural') ?>
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Ações') ?></h4>
@@ -17,22 +18,22 @@
             <fieldset>
                 <legend><?= __('Novo estagiário') ?></legend>
                 <?php
-                    echo $this->Form->control('aluno_id', ['options' => $alunos]);
-                    echo $this->Form->control('estudante_id', ['options' => $estudantes, 'empty' => true]);
-                    echo $this->Form->control('registro');
-                    echo $this->Form->control('ajuste2020', ['label' => ['text' => 'Ajuste 2020']]);
-                    echo $this->Form->control('turno');
-                    echo $this->Form->control('nivel');
-                    echo $this->Form->control('tc');
-                    echo $this->Form->control('tc_solicitacao', ['empty' => true]);
-                    echo $this->Form->control('instituicaoestagio_id', ['options' => $instituicaoestagios]);
-                    echo $this->Form->control('supervisor_id', ['options' => $supervisores, 'empty' => true]);
-                    echo $this->Form->control('docente_id', ['options' => $docentes, 'empty' => true]);
-                    echo $this->Form->control('periodo');
-                    echo $this->Form->control('areaestagio_id', ['options' => $areaestagios, 'empty' => true]);
-                    echo $this->Form->control('nota');
-                    echo $this->Form->control('ch');
-                    echo $this->Form->control('observacoes');
+                echo $this->Form->control('aluno_id', ['options' => $alunos]);
+                echo $this->Form->control('estudante_id', ['options' => $estudantes, 'empty' => true]);
+                echo $this->Form->control('registro');
+                echo $this->Form->control('ajuste2020', ['label' => ['text' => 'Ajuste 2020']]);
+                echo $this->Form->control('turno');
+                echo $this->Form->control('nivel');
+                echo $this->Form->control('tc');
+                echo $this->Form->control('tc_solicitacao', ['empty' => true]);
+                echo $this->Form->control('instituicaoestagio_id', ['options' => $instituicaoestagios]);
+                echo $this->Form->control('supervisor_id', ['options' => $supervisores, 'empty' => true]);
+                echo $this->Form->control('docente_id', ['options' => $docentes, 'empty' => true]);
+                echo $this->Form->control('periodo');
+                echo $this->Form->control('areaestagio_id', ['options' => $areaestagios, 'empty' => true]);
+                echo $this->Form->control('nota');
+                echo $this->Form->control('ch');
+                echo $this->Form->control('observacoes');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

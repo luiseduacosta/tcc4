@@ -5,8 +5,9 @@
  */
 ?>
 <div class="visitas index content">
-    <?= $this->Html->link(__('New Visita'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Visitas') ?></h3>
+    <?php echo $this->element('menu_mural') ?>
+    <?= $this->Html->link(__('Nova visita'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <h3><?= __('Visitas instituicionais') ?></h3>
     <div class="table-responsive">
         <table>
             <thead>
@@ -22,19 +23,19 @@
             </thead>
             <tbody>
                 <?php foreach ($visitas as $visita): ?>
-                <tr>
-                    <td><?= $this->Number->format($visita->id) ?></td>
-                    <td><?= $visita->has('instituicaoestagio') ? $this->Html->link($visita->instituicaoestagio->instituicao, ['controller' => 'Instituicaoestagios', 'action' => 'view', $visita->instituicaoestagio->id]) : '' ?></td>
-                    <td><?= date('d-m-Y', strtotime(h($visita->data))) ?></td>
-                    <td><?= h($visita->motivo) ?></td>
-                    <td><?= h($visita->responsavel) ?></td>
-                    <td><?= h($visita->avaliacao) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $visita->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $visita->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $visita->id], ['confirm' => __('Are you sure you want to delete # {0}?', $visita->id)]) ?>
-                    </td>
-                </tr>
+                    <tr>
+                        <td><?= $visita->id ?></td>
+                        <td><?= $visita->has('instituicaoestagio') ? $this->Html->link($visita->instituicaoestagio->instituicao, ['controller' => 'Instituicaoestagios', 'action' => 'view', $visita->instituicaoestagio->id]) : '' ?></td>
+                        <td><?= date('d-m-Y', strtotime(h($visita->data))) ?></td>
+                        <td><?= h($visita->motivo) ?></td>
+                        <td><?= h($visita->responsavel) ?></td>
+                        <td><?= h($visita->avaliacao) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $visita->id]) ?>
+                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $visita->id]) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $visita->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $visita->id)]) ?>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>

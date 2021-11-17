@@ -6,6 +6,7 @@
 ?>
 <div class="container">
     <div class="row">
+        <?php echo $this->element('menu_mural') ?>
         <?php
         $user = $this->getRequest()->getAttribute('identity');
         if (isset($user) && $user->categoria == 1):
@@ -13,14 +14,14 @@
             <aside class="column">
                 <div class="side-nav">
                     <h4 class="heading"><?= __('Ações') ?></h4>
-    <?= $this->Html->link(__('Listar usuários do mural de estagios'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+                    <?= $this->Html->link(__('Listar usuários do mural de estagios'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
                 </div>
             </aside>
         <?php endif;
         ?>
         <div class="column-responsive column-80">
             <div class="userestagios form content">
-<?= $this->Form->create($userestagio) ?>
+                <?= $this->Form->create($userestagio) ?>
                 <fieldset>
                     <legend><?= __('Cadastro de novo usuário') ?></legend>
                     <?php
@@ -35,7 +36,7 @@
                     ?>
                 </fieldset>
                 <?= $this->Form->button(__('Submit')) ?>
-<?= $this->Form->end() ?>
+                <?= $this->Form->end() ?>
             </div>
         </div>
     </div>

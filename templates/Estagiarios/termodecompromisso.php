@@ -8,6 +8,7 @@
 // die();
 ?>
 
+<?php echo $this->element('menu_mural') ?>
 <?php if (isset($estudanteestagiario) && $estudanteestagiario): ?>
     <div class="container">
         <h3><?= __('Estágios cursados') ?></h3>

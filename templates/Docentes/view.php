@@ -7,15 +7,16 @@
 ?>
 <div class="container">
     <div class="row">
+        <?php echo $this->element('menu_mural') ?>
         <aside class="column">
             <div class="side-nav">
                 <h4 class="heading"><?= __('Ações') ?></h4>
-                <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
+                <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                     <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docente->id], ['class' => 'side-nav-item']) ?>
                     <?= $this->Form->postLink(__('Excluir Docente'), ['action' => 'delete', $docente->id], ['confirm' => __('Are you sure you want to delete # {0}?', $docente->id), 'class' => 'side-nav-item']) ?>
                     <?= $this->Html->link(__('Listar Docentes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
                     <?= $this->Html->link(__('Novo Docente'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-                <?php elseif ($this->getRequest()->getSession()->read('id_categoria') == 3): ?>
+                <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == 3): ?>
                     <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docente->id], ['class' => 'side-nav-item']) ?>
                 <?php endif; ?>
             </div>
@@ -185,14 +186,14 @@
                 </blockquote>
             </div>
         </div>
-        
+
         <div id="estagiarios" class="tab-pane container fade">
             <h4><?= __('Estagiarios') ?></h4>
             <?php if (!empty($docente->estagiarios)) : ?>
                 <div class="table-responsive">
                     <table>
                         <tr>
-                            <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
+                            <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                                 <th><?= __('Id') ?></th>
                             <?php endif; ?>
                             <th><?= __('Estudante') ?></th>
@@ -210,7 +211,7 @@
                         </tr>
                         <?php foreach ($docente->estagiarios as $estagiarios) : ?>
                             <tr>
-                                <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
+                                <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                                     <td><?= h($estagiarios->id) ?></td>
                                 <?php endif; ?>
                                 <td><?= h($estagiarios->estudante->nome) ?></td>

@@ -5,6 +5,7 @@
  */
 ?>
 <div class="complementos index content container">
+    <?php echo $this->element('menu_mural') ?>
     <?= $this->Html->link(__('Novo registro'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Complemento de estagiário') ?></h3>
     <div class="table-responsive">
@@ -18,15 +19,15 @@
             </thead>
             <tbody>
                 <?php foreach ($complementos as $complemento): ?>
-                <tr>
-                    <td><?= $complemento->id ?></td>
-                    <td><?= h($complemento->periodo_especial) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $complemento->id]) ?>
-                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $complemento->id]) ?>
-                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $complemento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $complemento->id)]) ?>
-                    </td>
-                </tr>
+                    <tr>
+                        <td><?= $complemento->id ?></td>
+                        <td><?= h($complemento->periodo_especial) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $complemento->id]) ?>
+                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $complemento->id]) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $complemento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $complemento->id)]) ?>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>

@@ -13,7 +13,7 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @var \App\View\AppView $this
  */
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'Monografias de TCC e Mural de estágios da ESS/UFRJ';
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,28 +25,22 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <?= $this->fetch('title') ?>
         </title>
         <?= $this->Html->meta('icon') ?>
-
+        
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
 
-        <!--
-        Cake 4.0
-        <?= $this->Html->css('milligram.min.css') ?>
-        <?= $this->Html->css('cake.css') ?>
-        -->
+        <?php echo $this->Html->css('base') ?>
+        <?php echo $this->Html->css('bootstrap.min') ?>
+        <?php // echo $this->Html->css('cake') ?>
+        <?php // echo $this->Html->css('home') ?>
+        <?php // echo $this->Html->css('milligram.min') ?>
+        <?php echo $this->Html->css('normalize.min') ?>
+        <?php // echo $this->Html->css('style') ?>
 
-        <!--
-        Cake 3.0
-        -->
-        <?= $this->Html->css('base.css') ?>
-        <?= $this->Html->css('style.css') ?>
+        <?= $this->Html->script(['jquery-3.6.0.js', 'popper.min.js', 'bootstrap.min.js', 'bootstrap.bundle.min.js']) ?>        
 
         <?= $this->fetch('meta') ?>
         <?= $this->fetch('css') ?>
-        <?=
-        $this->Html->script([
-            'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'])
-        ?>
         <?= $this->fetch('script') ?>
     </head>
     <body>

@@ -6,6 +6,7 @@
 ?>
 <div class='container'>
     <div class="row">
+        <?php echo $this->element('menu_mural') ?>
         <aside class="column">
             <div class="side-nav">
                 <h4 class="heading"><?= __('Ações') ?></h4>
@@ -19,7 +20,7 @@
                     <legend><?= __('Nova instituição de estágio') ?></legend>
                     <?php
                     echo $this->Form->control('instituicao', ['label' => ['text' => 'Instituição']]);
-                    echo $this->Form->control('areainstituicoes_id', ['label' => ['text' => 'Área da instituição'],'options' => $areainstituicoes, 'empty' => true]);
+                    echo $this->Form->control('areainstituicoes_id', ['label' => ['text' => 'Área da instituição'], 'options' => $areainstituicoes, 'empty' => true]);
                     echo $this->Form->control('area', ['label' => ['text' => 'Área']]);
                     echo $this->Form->control('natureza', ['label' => ['text' => 'Natureza']]);
                     echo $this->Form->control('cnpj', ['label' => ['text' => 'CNPJ']]);

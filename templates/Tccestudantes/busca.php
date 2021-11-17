@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+        <li class="heading"><?= __('Ações') ?></li>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?= $this->Html->link(__('Novo estudante'), ['action' => 'add']) ?></li>
         <?php endif; ?>

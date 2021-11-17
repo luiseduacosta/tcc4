@@ -10,12 +10,14 @@
 <script>
     CKEDITOR.replace('observacoes')
 </script>
-<div class="row">
-    <div class='container'>
+
+<div class='container'>
+    <div class="row">
+        <?php echo $this->element('menu_mural') ?>
         <aside class="column">
             <div class="side-nav">
                 <h4 class="heading"><?= __('Ações') ?></h4>
-                <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
+                <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                     <?= $this->Html->link(__('Listar Estagiarios'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
                     <?= $this->Html->link(__('Inserir Estagiario'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
                     <?= $this->Html->link(__('Editar Estagiario'), ['action' => 'edit', $estagiario->id], ['class' => 'side-nav-item']) ?>
@@ -24,7 +26,7 @@
                 <?= $this->Html->link(__('Imprimir Termo de compromisso'), ['action' => 'termodecompromissopdf', $estagiario->id], ['class' => 'side-nav-item']) ?>
                 <?= $this->Html->link(__('Preencher Folha de atividades'), ['controller' => 'folhadeatividades', 'action' => 'index', $estagiario->id], ['class' => 'side-nav-item']) ?>
                 <?= $this->Html->link(__('Imprimir Folha de atividades'), ['action' => 'folhadeatividadespdf', $estagiario->id], ['class' => 'side-nav-item']) ?>
-                <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1 || $this->getRequest()->getSession()->read('id_categoria') == 4): ?>
+                <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1 || $this->getRequest()->getAttribute('identity')['categoria'] == 4): ?>
                     <?= $this->Html->link(__('Preencher Avaliação discente'), ['controller' => 'avaliacoes', 'action' => 'index', $estagiario->id], ['class' => 'side-nav-item']) ?>
                 <?php endif; ?>
                 <?= $this->Html->link(__('Imprimir Avaliação discente'), ['action' => 'avaliacaodiscentepdf', $estagiario->id], ['class' => 'side-nav-item']) ?>
@@ -46,7 +48,7 @@
                     </tr>
                     <tr>
                         <th><?= __('Estudante') ?></th>
-                        <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
+                        <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                             <td><?= $estagiario->has('estudante') ? $this->Html->link($estagiario->estudante->nome, ['controller' => 'Estudantes', 'action' => 'view', $estagiario->estudante->id]) : '' ?></td>
                         <?php else: ?>
                             <td><?= $estagiario->has('estudante') ? $estagiario->estudante->nome : '' ?></td>
@@ -66,7 +68,7 @@
                     </tr>
                     <tr>
                         <th><?= __('Instituição') ?></th>
-                        <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
+                        <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                             <td><?= $estagiario->has('instituicaoestagio') ? $this->Html->link($estagiario->instituicaoestagio->instituicao, ['controller' => 'Instituicaoestagios', 'action' => 'view', $estagiario->instituicaoestagio->id]) : '' ?></td>
                         <?php else: ?>
                             <td><?= $estagiario->has('instituicaoestagio') ? $estagiario->instituicaoestagio->instituicao : '' ?></td>
@@ -74,7 +76,7 @@
                     </tr>
                     <tr>
                         <th><?= __('Supervisor(a)') ?></th>
-                        <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
+                        <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                             <td><?= $estagiario->has('supervisor') ? $this->Html->link($estagiario->supervisor->nome, ['controller' => 'Supervisores', 'action' => 'view', $estagiario->supervisor->id]) : '' ?></td>
                         <?php else: ?>
                             <td><?= $estagiario->has('supervisor') ? $estagiario->supervisor->nome : '' ?></td>
@@ -82,7 +84,7 @@
                     </tr>
                     <tr>
                         <th><?= __('Docente') ?></th>
-                        <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
+                        <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                             <td><?= $estagiario->has('docente') ? $this->Html->link($estagiario->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $estagiario->docente->id]) : '' ?></td>
                         <?php else: ?>
                             <td><?= $estagiario->has('docente') ? $estagiario->docente->nome : '' ?></td>

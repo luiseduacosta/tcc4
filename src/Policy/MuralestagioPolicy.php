@@ -53,7 +53,8 @@ class MuralestagioPolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Muralestagio $muralestagio) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return true;
+        //return isset($user->categoria) && $user->categoria == '1';
     }
 
 }

@@ -113,9 +113,7 @@ class EstagiariosController extends AppController {
     public function termodecompromisso($id = NULL) {
 
         $this->Authorization->skipAuthorization();
-        // pr($id);
-        // die();
-        if ($this->getRequest()->getSession()->read('id_categoria') == 1):
+        if ($this->getRequest()->getAttribute('identity')['categoria'] == 1):
             if (empty($id)) {
                 $this->Flash->error(__('Selecionar o registro do estudante e o nível e período de estágio'));
                 return $this->redirect('/estudantes/index');
@@ -124,8 +122,6 @@ class EstagiariosController extends AppController {
                 $estagiario_id = $id;
             }
         endif;
-        // pr($registro);
-        // die();
         if ($this->request->getData()) {
             pr($this->request->getData());
             // die();
@@ -313,7 +309,8 @@ class EstagiariosController extends AppController {
         $this->Authorization->skipAuthorization();
         $this->layout = false;
         if (is_null($id)) {
-            $this->cakeError('error404');
+            $this->Flash->error(__('Selecionar o registro do estudante e o nível e período de estágio'));
+            return $this->redirect('/estudantes/index');
         } else {
             $estagiario = $this->Estagiarios->find()
                     ->contain(['Alunos', 'Estudantes', 'Supervisores', 'Instituicaoestagios'])
@@ -366,6 +363,8 @@ class EstagiariosController extends AppController {
         $this->Authorization->skipAuthorization();
         $this->layout = false;
         if (is_null($id)) {
+            $this->Flash->error(__('Selecionar o estudante estagiário'));
+            return $this->redirect('/estudantes/index');
             $this->cakeError('error404');
         } else {
             $estagiarioquery = $this->Estagiarios->find()
@@ -436,7 +435,11 @@ class EstagiariosController extends AppController {
         $this->layout = false;
         if (is_null($id)) {
             $this->Flash->error(__('Por favor selecionar o estágio do estudante'));
-            return $this->redirect('/estudantes/view?registro=' . $this->getRequest()->getSession()->read('numero'));
+            if ($this->getRequest()->getSession()->read('numero')):
+                return $this->redirect('/estudantes/view?registro=' . $this->getRequest()->getSession()->read('numero'));
+            else:
+                return $this->redirect('/estudantes/index');
+            endif;
         } else {
             $estagiarioquery = $this->Estagiarios->find()
                     ->contain(['Estudantes', 'Supervisores', 'Instituicaoestagios', 'Docentes'])
@@ -486,6 +489,8 @@ class EstagiariosController extends AppController {
         $this->Authorization->skipAuthorization();
         $this->layout = false;
         if (is_null($id)) {
+            $this->Flash->error(__('Selecionar o estudante estagiário'));
+            return $this->redirect('/estudantes/index');
             $this->cakeError('error404');
         } else {
             $estagiarioquery = $this->Estagiarios->find()
@@ -520,6 +525,8 @@ class EstagiariosController extends AppController {
     public function edit($id = null) {
 
         if (is_null($id)) {
+            $this->Flash->error(__('Selecionar o estudante estagiário'));
+            return $this->redirect('/estudantes/index');
             $this->cakeError('error404');
         } else {
             $estagiario = $this->Estagiarios->get($id, [
@@ -571,6 +578,10 @@ class EstagiariosController extends AppController {
 
         $this->Authorization->skipAuthorization();
         $siape = $this->getRequest()->getQuery('siape');
+        if (!isset($siape) && empty($siape)):
+            $this->Flash->error(__('Somente docentes podem realizar esta operação'));
+            return $this->redirect('/userestagios/logout');
+        endif;
 
         $idquery = $this->Estagiarios->Docentes->find()
                 ->contain([

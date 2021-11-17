@@ -5,8 +5,9 @@
  */
 ?>
 <div class="areainstituicoes index content">
-    <?= $this->Html->link(__('New Areainstituicao'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Areainstituicoes') ?></h3>
+    <?php echo $this->element('menu_mural') ?>
+    <?= $this->Html->link(__('Nova área instituição'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <h3><?= __('Área instituicoes') ?></h3>
     <div class="table-responsive">
         <table>
             <thead>
@@ -18,15 +19,15 @@
             </thead>
             <tbody>
                 <?php foreach ($areainstituicoes as $areainstituicao): ?>
-                <tr>
-                    <td><?= $this->Number->format($areainstituicao->id) ?></td>
-                    <td><?= h($areainstituicao->area) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $areainstituicao->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $areainstituicao->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $areainstituicao->id], ['confirm' => __('Are you sure you want to delete # {0}?', $areainstituicao->id)]) ?>
-                    </td>
-                </tr>
+                    <tr>
+                        <td><?= $areainstituicao->id ?></td>
+                        <td><?= h($areainstituicao->area) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $areainstituicao->id]) ?>
+                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $areainstituicao->id]) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $areainstituicao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $areainstituicao->id)]) ?>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>

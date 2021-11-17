@@ -6,8 +6,8 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="container">
-
     <div class="row">
+        <?php echo $this->element('menu_mural') ?>
         <aside class="column">
             <div class="side-nav">
                 <h4 class="heading"><?= __('Ações') ?></h4>

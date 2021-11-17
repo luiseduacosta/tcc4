@@ -7,6 +7,7 @@
 // die();
 ?>
 <div class="avaliacaoes index container">
+    <?php echo $this->element('menu_mural') ?>
     <h3><?= __('Estágios cursados pela(o) estudande ') ?></h3>
     <div class="table-responsive">
         <table>
@@ -26,8 +27,8 @@
             </thead>
             <tbody>
                 <?php foreach ($estagiario as $c_estagiario): ?>
-                <?php // pr($c_estagiario); ?>
-                <?php // die(); ?>
+                    <?php // pr($c_estagiario); ?>
+                    <?php // die(); ?>
                     <tr>
                         <td><?= isset($c_estagiario->id) ? $this->Html->link($c_estagiario->id, ['controller' => 'estagiarios', 'action' => 'view', $c_estagiario->id]) : '' ?></td>
                         <td><?= $this->Html->link('Imprime folha de avaliação', ['controller' => 'avaliacoes', 'action' => 'imprimeavaliacaopdf', $c_estagiario->id], ['class' => 'btn btn-success']) ?></td>
@@ -39,11 +40,11 @@
                         <td><?= $c_estagiario->ch ?></td>
                         <td><?= $c_estagiario->nota ?></td>
                         <?php if (isset($c_estagiario->id)): ?>
-                        <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $c_estagiario->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $c_estagiario->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $c_estagiario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $c_estagiario->id)]) ?>
-                        </td>
+                            <td class="actions">
+                                <?= $this->Html->link(__('View'), ['action' => 'view', $c_estagiario->id]) ?>
+                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $c_estagiario->id]) ?>
+                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $c_estagiario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $c_estagiario->id)]) ?>
+                            </td>
                         <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>

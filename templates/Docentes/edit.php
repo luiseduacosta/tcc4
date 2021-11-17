@@ -6,20 +6,21 @@
 ?>
 <div class="container">
     <div class="row">
-        <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
-        <aside class="column">
-            <div class="side-nav">
-                <h4 class="heading"><?= __('Ações') ?></h4>
-                <?=
-                $this->Form->postLink(
-                        __('Excluir'),
-                        ['action' => 'delete', $docente->id],
-                        ['confirm' => __('Tem certeza de excluir # {0}?', $docente->id), 'class' => 'side-nav-item']
-                )
-                ?>
-                <?= $this->Html->link(__('Listar docentes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            </div>
-        </aside>
+        <?php echo $this->element('menu_mural') ?>
+        <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
+            <aside class="column">
+                <div class="side-nav">
+                    <h4 class="heading"><?= __('Ações') ?></h4>
+                    <?=
+                    $this->Form->postLink(
+                            __('Excluir'),
+                            ['action' => 'delete', $docente->id],
+                            ['confirm' => __('Tem certeza de excluir # {0}?', $docente->id), 'class' => 'side-nav-item']
+                    )
+                    ?>
+                    <?= $this->Html->link(__('Listar docentes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+                </div>
+            </aside>
         <?php endif; ?>
         <div class="column-responsive column-80">
             <div class="docentes form content">

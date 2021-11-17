@@ -5,28 +5,31 @@
  */
 ?>
 <div class="row">
+    <?php echo $this->element('menu_mural') ?>
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $areainstituicao->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $areainstituicao->id), 'class' => 'side-nav-item']
-            ) ?>
-            <?= $this->Html->link(__('List Areainstituicoes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <h4 class="heading"><?= __('Ações') ?></h4>
+            <?=
+            $this->Form->postLink(
+                    __('Excluir'),
+                    ['action' => 'delete', $areainstituicao->id],
+                    ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $areainstituicao->id), 'class' => 'side-nav-item']
+            )
+            ?>
+<?= $this->Html->link(__('Listar área instituições'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column-responsive column-80">
         <div class="areainstituicoes form content">
-            <?= $this->Form->create($areainstituicao) ?>
+                <?= $this->Form->create($areainstituicao) ?>
             <fieldset>
-                <legend><?= __('Edit Areainstituicao') ?></legend>
+                <legend><?= __('Editar área instituição') ?></legend>
                 <?php
-                    echo $this->Form->control('area');
+                echo $this->Form->control('area');
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
+<?= $this->Form->button(__('Submit')) ?>
+<?= $this->Form->end() ?>
         </div>
     </div>
 </div>

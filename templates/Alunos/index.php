@@ -6,9 +6,11 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 <div class="alunos index content">
+    <?php echo $this->element('menu_mural') ?>
     <?php if ($user->categoria == '1'): ?>
         <?= $this->Html->link(__('New Aluno'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <?php endif; ?>
+
     <h3><?= __('Alunos') ?></h3>
     <div class="table-responsive">
         <table>

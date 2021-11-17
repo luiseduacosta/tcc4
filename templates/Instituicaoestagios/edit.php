@@ -6,6 +6,7 @@
 ?>
 <div class='container'>
     <div class="row">
+        <?php echo $this->element('menu_mural') ?>
         <aside class="column">
             <div class="side-nav">
                 <h4 class="heading"><?= __('Actions') ?></h4>
@@ -16,12 +17,12 @@
                         ['confirm' => __('Are you sure you want to delete # {0}?', $instituicaoestagio->id), 'class' => 'side-nav-item']
                 )
                 ?>
-<?= $this->Html->link(__('List Instituicaoestagios'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+                <?= $this->Html->link(__('List Instituicaoestagios'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             </div>
         </aside>
         <div class="column-responsive column-80">
             <div class="instituicaoestagios form content">
-                    <?= $this->Form->create($instituicaoestagio) ?>
+                <?= $this->Form->create($instituicaoestagio) ?>
                 <fieldset>
                     <legend><?= __('Edit Instituicaoestagio') ?></legend>
                     <?php
@@ -49,8 +50,8 @@
                     echo $this->Form->control('supervisores._ids', ['options' => $supervisores]);
                     ?>
                 </fieldset>
-<?= $this->Form->button(__('Submit')) ?>
-<?= $this->Form->end() ?>
+                <?= $this->Form->button(__('Submit')) ?>
+                <?= $this->Form->end() ?>
             </div>
         </div>
     </div>

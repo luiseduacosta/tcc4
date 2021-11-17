@@ -6,6 +6,7 @@
 ?>
 <div class="container">
     <div class="row">
+        <?php echo $this->element('menu_mural') ?>
         <aside class="column">
             <div class="side-nav">
                 <h4 class="heading"><?= __('Ações') ?></h4>
@@ -31,7 +32,7 @@
                         <th><?= __('Período do termo de compromisso') ?></th>
                         <td><?= h($configuracao->termo_compromisso_periodo) ?></td>
                     </tr>
-                   <tr>
+                    <tr>
                         <th><?= __('Data de início do termo de compromisso') ?></th>
                         <td><?= h($configuracao->termo_compromisso_inicio) ?></td>
                     </tr>
@@ -39,7 +40,7 @@
                         <th><?= __('Data de finalização do termo de compromisso') ?></th>
                         <td><?= h($configuracao->termo_compromisso_final) ?></td>
                     </tr>
-                     <tr>
+                    <tr>
                         <th><?= __('Curso Turma Atual') ?></th>
                         <td><?= $configuracao->curso_turma_atual ?></td>
                     </tr>

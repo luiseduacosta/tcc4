@@ -27,6 +27,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="row justify-content-center">
+    <?php echo $this->element('menu_mural') ?>
     <div class="col-auto">
         <?php if ($usuario->categoria == 1): ?>
             <?= $this->Form->create($estagiarios, ['class' => 'form-inline']); ?>

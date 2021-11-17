@@ -10,6 +10,7 @@ $categoria = $this->getRequest()->getAttribute('identity')['categoria'];
 // die();
 ?>
 <div class="row">
+    <?php echo $this->element('menu_mural') ?>
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Ações') ?></h4>
@@ -30,7 +31,7 @@ $categoria = $this->getRequest()->getAttribute('identity')['categoria'];
                     echo $this->Form->control('timestamp', ['type' => 'hidden']);
                     echo $this->Form->control('alunonovo_id', ['label' => 'Estudante', 'options' => [$alunonovos->id => $alunonovos->nome], 'value' => $alunonovos->id, 'readonly']);
                     echo $this->Form->control('aluno_id', ['label' => 'Aluno', 'options' => [$alunoestagio->id => $alunoestagio->nome]]);
-                    // die(pr($id_categoria));
+                // die(pr($id_categoria));
                 elseif (isset($categoria) && $categoria == 2):
                     echo $this->Form->control('id_aluno', ['label' => 'Registro', 'value' => $alunonovos->registro, 'readonly']);
                     echo $this->Form->control('id_instituicao', ['label' => 'Mural de estágio', 'options' => [$muralestagios_id->id => $muralestagios_id->instituicao]], 'readonly');

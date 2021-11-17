@@ -27,13 +27,14 @@
 ?>
 
 <div class="row justify-content-center">
+    <?php echo $this->element('menu_mural') ?>
     <div class="col-auto">
         <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
             <?= $this->Form->create($estagiarios, ['class' => 'form-inline']); ?>
             <?php echo $this->Form->input('periodo', ['id' => 'Periodo', 'type' => 'select', 'label' => ['text' => 'Período ', 'style' => 'display: inline;'], 'options' => $periodos, 'empty' => [$periodo => $periodo]], ['class' => 'form-control']); ?>
             <?= $this->Form->end(); ?>
         <?php else: ?>
-            <h1 style="text-align: center;">Estudantes estagiários professor(a): <?php // echo $estagiariosestudante->nome;     ?></h1>
+            <h1 style="text-align: center;">Estudantes estagiários professor(a): <?php // echo $estagiariosestudante->nome;      ?></h1>
         <?php endif; ?>
     </div>
 </div>

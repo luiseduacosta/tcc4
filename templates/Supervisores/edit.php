@@ -6,22 +6,23 @@
 ?>
 <div class="container">
     <div class="row">
+        <?php echo $this->element('menu_mural') ?>
         <aside class="column">
             <div class="side-nav">
-                <h4 class="heading"><?= __('Actions') ?></h4>
+                <h4 class="heading"><?= __('Ações') ?></h4>
                 <?=
                 $this->Form->postLink(
-                        __('Delete'),
+                        __('Excluir'),
                         ['action' => 'delete', $supervisor->id],
-                        ['confirm' => __('Are you sure you want to delete # {0}?', $supervisor->id), 'class' => 'side-nav-item']
+                        ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $supervisor->id), 'class' => 'side-nav-item']
                 )
                 ?>
-<?= $this->Html->link(__('List Supervisores'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+                <?= $this->Html->link(__('Listar supervisores'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             </div>
         </aside>
         <div class="column-responsive column-80">
             <div class="supervisores form content">
-                    <?= $this->Form->create($supervisor) ?>
+                <?= $this->Form->create($supervisor) ?>
                 <fieldset>
                     <legend><?= __('Edit Supervisor') ?></legend>
                     <?php
@@ -47,11 +48,11 @@
                     echo $this->Form->control('num_inscricao');
                     echo $this->Form->control('curso_turma');
                     echo $this->Form->control('observacoes');
-                    echo $this->Form->control('instituicaoestagios._ids', ['label' => ['text' => 'Instituição'],'options' => $instituicaoestagios]);
+                    echo $this->Form->control('instituicaoestagios._ids', ['label' => ['text' => 'Instituição'], 'options' => $instituicaoestagios]);
                     ?>
                 </fieldset>
-<?= $this->Form->button(__('Submit')) ?>
-<?= $this->Form->end() ?>
+                <?= $this->Form->button(__('Submit')) ?>
+                <?= $this->Form->end() ?>
             </div>
         </div>
     </div>

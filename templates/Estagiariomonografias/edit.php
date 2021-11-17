@@ -1,5 +1,4 @@
 <?php
-
 $user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
