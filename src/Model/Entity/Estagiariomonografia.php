@@ -25,7 +25,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Aluno $aluno
  * @property \App\Model\Entity\Docente $docente
  */
-class Estagiario extends Entity
+class Estagiariomonografia extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

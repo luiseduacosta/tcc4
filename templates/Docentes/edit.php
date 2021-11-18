@@ -4,21 +4,24 @@
  * @var \App\Model\Entity\Docente $docente
  */
 ?>
+
+<div class="row justify-content-center">
+    <?= $this->element('menu_mural') ?>
+</div>
+
 <div class="container">
     <div class="row">
-        <?php echo $this->element('menu_mural') ?>
         <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
             <aside class="column">
                 <div class="side-nav">
-                    <h4 class="heading"><?= __('Ações') ?></h4>
                     <?=
                     $this->Form->postLink(
                             __('Excluir'),
                             ['action' => 'delete', $docente->id],
-                            ['confirm' => __('Tem certeza de excluir # {0}?', $docente->id), 'class' => 'side-nav-item']
+                            ['confirm' => __('Tem certeza de excluir # {0}?', $docente->id), 'class' => 'btn btn-danger float-right']
                     )
                     ?>
-                    <?= $this->Html->link(__('Listar docentes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+                    <?= $this->Html->link(__('Listar docentes'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
                 </div>
             </aside>
         <?php endif; ?>

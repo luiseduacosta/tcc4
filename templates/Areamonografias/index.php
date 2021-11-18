@@ -8,16 +8,15 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Area[]|\Cake\Collection\CollectionInterface $areas
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Nova Área'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
-        <?php endif; ?>
-        <?= $this->element('menu_monografias') ?>
-    </ul>
-</nav>
-<div class="areas index large-9 medium-8 columns content">
+<div class="row justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>        
+</div>
+
+<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+    <?= $this->Html->link(__('Nova Área'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
+<?php endif; ?>
+
+<div class="container justify-content-center">
     <h3><?= __('Áreas') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
@@ -28,9 +27,9 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($areas as $area): ?>
-            <?php // pr($area); ?>            
+                <?php // pr($area); ?>            
                 <tr>
-                    <td><?= $area->has('areamonografia') ? $this->Html->link(h($area->areamonografia->area), ['controller' => 'areamonografias', 'action' => 'view', $area->areamonografia_id]): "" ?></td>
+                    <td><?= $area->has('areamonografia') ? $this->Html->link(h($area->areamonografia->area), ['controller' => 'areamonografias', 'action' => 'view', $area->areamonografia_id]) : "" ?></td>
                     <td><?= $area->qarea ?></td>
                 </tr>
             <?php endforeach; ?>

@@ -7,16 +7,17 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Monografia $monografia
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Editar monografia'), ['action' => 'edit', $monografia->id], ['class' => 'button float-right']) ?> </li>
-            <li><?= $this->Form->postLink(__('Excluir monografia'), ['action' => 'delete', $monografia->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $monografia->id)], ['class' => 'button float-right']) ?> </li>
-        <?php endif; ?>
-        <?= $this->element('menu_monografias') ?>
-    </ul>
-</nav>
+
+<div class="row justify-content-center">
+    <?= $this->element('menu_monografias') ?>
+</div>
+
+<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+        <?= $this->Html->link(__('Editar monografia'), ['action' => 'edit', $monografia->id], ['class' => 'btn btn-primary']) ?>
+        <?= $this->Form->postLink(__('Excluir monografia'), ['action' => 'delete', $monografia->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $monografia->id), 'class' => 'btn btn-danger float-right']) ?>
+    <?php endif; ?>
+<?php endif; ?>
 
 <div class="monografias view large-9 medium-8 columns content">
     <h3><?= h($monografia->titulo) ?></h3>

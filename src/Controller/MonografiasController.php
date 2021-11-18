@@ -209,7 +209,7 @@ class MonografiasController extends AppController {
 
         // $estudantes = $this->estudantes();
 
-        $docentes = $this->Monografias->Docentes->find('list', [
+        $docentes = $this->Monografias->Docentemonografias->find('list', [
             'keyField' => 'id', 'valueField' => 'nome'], ['limit' => 200]);
         $docentes->order(['nome' => 'asc']);
 
@@ -234,9 +234,9 @@ class MonografiasController extends AppController {
         $this->Authorization->authorize($monografia);
 
         if ($this->Monografias->delete($monografia)) {
-            $this->Flash->success(__('The monografia has been deleted.'));
+            $this->Flash->success(__('Registro monografia excluído.'));
         } else {
-            $this->Flash->error(__('The monografia could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Registro monografia não foi excluído. Tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -253,7 +253,7 @@ class MonografiasController extends AppController {
                 $this->getRequest()->getSession()->write('busca', $busca);
                 $this->paginate = [
                     'conditions' => ['titulo LIKE' => "%" . $busca . "%"],
-                    'contain' => ['Docentes', 'Areamonografias', 'Tccestudantes']
+                    'contain' => ['Docentemoografias', 'Areamonografias', 'Tccestudantes']
                 ];
             // die();
             endif;
@@ -267,11 +267,11 @@ class MonografiasController extends AppController {
             if (!empty($busca)):
                 $this->paginate = [
                     'conditions' => ['titulo LIKE' => "%" . $busca . "%"],
-                    'contain' => ['Docentes', 'Areamonografias', 'Tccestudantes']
+                    'contain' => ['Docentemonografias', 'Areamonografias', 'Tccestudantes']
                 ];
             else:
                 $this->paginate = [
-                    'contain' => ['Docentes', 'Areamonografias', 'Tccestudantes']
+                    'contain' => ['Docentemonografias', 'Areamonografias', 'Tccestudantes']
                 ];
             endif;
         endif;

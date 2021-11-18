@@ -168,7 +168,7 @@ class EstagiariomonografiasController extends AppController {
     public function view($id = null) {
 
         $estagiariomonografia = $this->Estagiariomonografias->get($id, [
-            'contain' => ['Estudantes', 'Docentes'],
+            'contain' => ['Estudantes', 'Docentemonografias'],
         ]);
         $this->Authorization->authorize($estagiariomonografia);
         $this->set('estagiariomonografia', $estagiariomonografia);
@@ -197,7 +197,7 @@ class EstagiariomonografiasController extends AppController {
             'limit' => 200
         ]);
 
-        $docentes = $this->Estagiariomonografias->Docentes->find('list', [
+        $docentes = $this->Estagiariomonografias->Docentemonografias->find('list', [
             'keyField' => 'id', 'valueField' => 'nome',
             'limit' => 200
         ]);

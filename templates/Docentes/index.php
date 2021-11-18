@@ -4,10 +4,13 @@
  * @var \App\Model\Entity\Docente[]|\Cake\Collection\CollectionInterface $docentes
  */
 ?>
+
+<div class="row justify-content-center">
+    <?= $this->element('menu_mural') ?>
+</div>
+
 <div class="docentes index content container">
-    <?php echo $this->element('menu_mural') ?>
-    <?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Docentes') ?></h3>
+    <?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
     <div class="table-responsive">
         <table>
             <thead>

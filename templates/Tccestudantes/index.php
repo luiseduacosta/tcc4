@@ -6,16 +6,13 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Tccestudante[]|\Cake\Collection\CollectionInterface $tccestudantes
  */
 ?>
+<div class="row justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>        
+</div>
 
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Novo Estudante de TCC'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
-        <?php endif; ?>
-        <?php echo $this->element('menu_monografias'); ?>        
-    </ul>
-</nav>
+<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+    <li><?= $this->Html->link(__('Novo Estudante de TCC'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?></li>
+<?php endif; ?>
 
 <div class="tccestudantes index large-9 medium-8 columns content">
     <h3><?= __('Estudantes de TCC') ?></h3>
@@ -41,7 +38,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= $this->Number->format($tccestudante->id) ?></td>
                     <td><?= h($tccestudante->registro) ?></td>
                     <td><?= $this->Html->link(h($tccestudante->nome), ['controller' => 'tccestudantes', 'action' => 'view', $tccestudante->id]) ?></td>
-                    <td><?= $tccestudante->has('monografia')? $this->Html->link(h($tccestudante->monografia->titulo), ['controller' => 'monografias', 'action' => 'view', $tccestudante->monografia->id]): "" ?></td>
+                    <td><?= $tccestudante->has('monografia') ? $this->Html->link(h($tccestudante->monografia->titulo), ['controller' => 'monografias', 'action' => 'view', $tccestudante->monografia->id]) : "" ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

@@ -4,20 +4,16 @@
  * @var \App\Model\Entity\Configuracao $configuracao
  */
 ?>
+
+<div class="row justify-content-center">
+    <?= $this->element('menu_mural') ?>
+</div>
+
 <div class="container">
     <div class="row">
-        <?php echo $this->element('menu_mural') ?>
         <aside class="column">
             <div class="side-nav">
-                <h4 class="heading"><?= __('Ações') ?></h4>
-                <?=
-                $this->Form->postLink(
-                        __('Excluir'),
-                        ['action' => 'delete', $configuracao->id],
-                        ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $configuracao->id), 'class' => 'side-nav-item']
-                )
-                ?>
-                <?= $this->Html->link(__('Listar configuração'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+                <?= $this->Html->link(__('Listar configuração'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
             </div>
         </aside>
         <div class="column-responsive column-80">

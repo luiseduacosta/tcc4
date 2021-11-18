@@ -6,27 +6,28 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 // pr($agendamentotcc);
 ?>
+
+<div class="row justify-content-center">
+    <?= $this->element('menu_monografias') ?>
+</div>
+
 <div class="row">
-    <aside class="large-3 medium-4 columns">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Ações') ?></h4>
-            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                <?= $this->Html->link(__('Agendar defesa'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id], ['class' => 'button float-right']) ?>
-                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Are you sure you want to delete # {0}?', $agendamentotcc->id)], ['class' => 'button float-right']) ?>
-            <?php endif; ?>
-            <?= $this->Html->link(__('Agendamentos marcados'), ['action' => 'index'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link(__('Ata da Defesa'), ['action' => 'index'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link(__('Declarações de participção'), ['action' => 'index'], ['class' => 'button float-right']) ?>
-            <?= $this->element('menu_monografias') ?>
-        </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="agendamentotccs view content">
+    <div class="side-nav">
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <?= $this->Html->link(__('Agendar defesa'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $agendamentotcc->id), 'class' => 'btn btn-danger float-right']) ?>
+        <?php endif; ?>
+        <?= $this->Html->link(__('Agendamentos marcados'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+        <?= $this->Html->link(__('Ata da Defesa'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+        <?= $this->Html->link(__('Declarações de participção'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+    </div>
+    <div class="container">
+        <div class="agendamentotccs view container">
             <h3><?= h($agendamentotcc->estudante->nome) ?></h3>
             <table>
                 <tr>
-                    <th><?= __('Aluno') ?></th>
+                    <th><?= __('Estudante') ?></th>
                     <td><?= $agendamentotcc->has('estudante') ? $this->Html->link($agendamentotcc->estudante->nome, ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->estudante->id]) : '' ?></td>
                 </tr>
                 <tr>

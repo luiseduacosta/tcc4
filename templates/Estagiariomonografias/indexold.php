@@ -6,15 +6,15 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Estagiario[]|\Cake\Collection\CollectionInterface $estagiarios
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
-        <?php endif; ?>
-        <?= $this->element('menu_monografias'); ?>
-    </ul>
-</nav>
+
+<div class="row justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>        
+</div>
+
+<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+    <?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
+<?php endif; ?>
+
 <div class="estagiarios index large-9 medium-8 columns content">
     <h3><?= __('Estagiarios') ?></h3>
     <table cellpadding="0" cellspacing="0">

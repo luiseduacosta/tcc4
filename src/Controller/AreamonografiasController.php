@@ -131,7 +131,7 @@ class AreamonografiasController extends AppController {
     public function edit($id = null) {
 
         $area = $this->Areamonografias->get($id, [
-            'contain' => ['Docentes'],
+            'contain' => ['Docentemonografias'],
         ]);
         $this->Authorization->authorize($area);
 

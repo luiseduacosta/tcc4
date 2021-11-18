@@ -5,19 +5,22 @@
  */
 // pr($docente);
 ?>
+
+<div class="row justify-content-center">
+    <?= $this->element('menu_mural') ?>
+</div>
+
 <div class="container">
     <div class="row">
-        <?php echo $this->element('menu_mural') ?>
         <aside class="column">
             <div class="side-nav">
-                <h4 class="heading"><?= __('Ações') ?></h4>
                 <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
-                    <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docente->id], ['class' => 'side-nav-item']) ?>
-                    <?= $this->Form->postLink(__('Excluir Docente'), ['action' => 'delete', $docente->id], ['confirm' => __('Are you sure you want to delete # {0}?', $docente->id), 'class' => 'side-nav-item']) ?>
-                    <?= $this->Html->link(__('Listar Docentes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-                    <?= $this->Html->link(__('Novo Docente'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+                    <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docente->id], ['class' => 'btn btn-primary']) ?>
+                    <?= $this->Form->postLink(__('Excluir Docente'), ['action' => 'delete', $docente->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $docente->id), 'class' => 'btn btn-danger float-right']) ?>
+                    <?= $this->Html->link(__('Listar Docentes'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+                    <?= $this->Html->link(__('Novo Docente'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
                 <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == 3): ?>
-                    <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docente->id], ['class' => 'side-nav-item']) ?>
+                    <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docente->id], ['class' => 'btn btn-primary']) ?>
                 <?php endif; ?>
             </div>
         </aside>

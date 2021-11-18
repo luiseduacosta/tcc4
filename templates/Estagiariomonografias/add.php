@@ -37,12 +37,10 @@ $user = $this->getRequest()->getAttribute('identity');
     });
 </script>
 
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?= $this->element('menu_monografias') ?>
-    </ul>
-</nav>
+<div class="row justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>        
+</div>
+
 <div class="estagiarios form large-9 medium-8 columns content">
     <?= $this->Form->create($estagiariomonografia) ?>
     <fieldset>

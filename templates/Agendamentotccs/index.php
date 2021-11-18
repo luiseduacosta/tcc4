@@ -6,16 +6,13 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 // pr($agendamentotccs);
 ?>
+<div class="row justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>        
+</div>
 
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <?= $this->Html->link(__('Novo agendamento de TCC'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-        <?php endif; ?>
-        <?php echo $this->element('menu_monografias') ?>
-    </ul>
-</nav>
+<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+    <?= $this->Html->link(__('Novo agendamento de TCC'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
+<?php endif; ?>
 
 <div class="agendamentotccs index content container">
     <h3><?= __('Defesas de TCC') ?></h3>

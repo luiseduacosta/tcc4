@@ -1,88 +1,81 @@
 <?php
-// pr($estagiario);
+// pr($estagiariomonografia);
+// die();
 $user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estagiario $estagiario
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Editar estagiário'), ['action' => 'edit', $estagiario->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Excluir estagiário'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $estagiario->id)]) ?> </li>
-            <li><?= $this->Html->link(__('Novo estagiário'), ['action' => 'add']) ?> </li>
-            <li><?= $this->Html->link(__('Novo estudante'), ['controller' => 'Estudantes', 'action' => 'add']) ?> </li>
-            <li><?= $this->Html->link(__('Novo docente'), ['controller' => 'Docentemonografias', 'action' => 'add']) ?> </li>
-        <?php endif; ?>
-        <?= $this->element('menu_monografias') ?>
-    </ul>
-</nav>
+
+<div class="row justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>        
+</div>
+
 <div class="estagiarios view large-9 medium-8 columns content">
-    <h3><?= h($estagiario->estudante->nome) ?></h3>
+    <h3><?= h($estagiariomonografia->estudante->nome) ?></h3>
     <table class="vertical-table">
         <tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
-            <td><?= $estagiario->id ?></td>
+            <td><?= $estagiariomonografia->id ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Registro') ?></th>
-            <td><?= h($estagiario->registro) ?></td>
+            <td><?= h($estagiariomonografia->registro) ?></td>
         </tr>
 
         <th scope="row"><?= __('Estudante') ?></th>
-        <td><?= $estagiario->has('aluno') ? $this->Html->link($estagiario->aluno->nome, ['controller' => 'Alunos', 'action' => 'view', $estagiario->aluno->id]) : '' ?></td>
+        <td><?= $estagiariomonografia->has('estudante') ? $this->Html->link($estagiariomonografia->estudante->nome, ['controller' => 'Estudantemonografia', 'action' => 'view', $estagiariomonografia->estudante->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Turno') ?></th>
-            <td><?= h($estagiario->turno) ?></td>
+            <td><?= h($estagiariomonografia->turno) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Nivel') ?></th>
-            <td><?= h($estagiario->nivel) ?></td>
+            <td><?= h($estagiariomonografia->nivel) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Docente') ?></th>
-            <td><?= $estagiario->has('docente') ? $this->Html->link($estagiario->docente->id, ['controller' => 'Docentes', 'action' => 'view', $estagiario->docente->id]) : '' ?></td>
+            <td><?= $estagiariomonografia->has('docentemonografia') ? $this->Html->link($estagiariomonografia->docentemonografia->id, ['controller' => 'Docentesmonografia', 'action' => 'view', $estagiariomonografia->docentemonografia->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Periodo') ?></th>
-            <td><?= h($estagiario->periodo) ?></td>
+            <td><?= h($estagiariomonografia->periodo) ?></td>
         </tr>
         <tr>
-        <th scope="row"><?= __('Tc') ?></th>
-        <td><?= $estagiario->tc ?></td>
+            <th scope="row"><?= __('Tc') ?></th>
+            <td><?= $estagiariomonografia->tc ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Tc Solicitacao') ?></th>
-            <td><?= h($estagiario->tc_solicitacao) ?></td>
+            <td><?= h($estagiariomonografia->tc_solicitacao) ?></td>
         </tr>
 
         <tr>
             <th scope="row"><?= __('Id Instituicao') ?></th>
-            <td><?= $estagiario->id_instituicao ?></td>
+            <td><?= $estagiariomonografia->id_instituicao ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id Supervisor') ?></th>
-            <td><?= $estagiario->id_supervisor ?></td>
+            <td><?= $estagiariomonografia->id_supervisor ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id Area') ?></th>
-            <td><?= $estagiario->id_area ?></td>
+            <td><?= $estagiariomonografia->id_area ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Nota') ?></th>
-            <td><?= $this->Number->format($estagiario->nota) ?></td>
+            <td><?= $this->Number->format($estagiariomonografia->nota) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Ch') ?></th>
-            <td><?= $this->Number->format($estagiario->ch) ?></td>
+            <td><?= $this->Number->format($estagiariomonografia->ch) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Observacoes') ?></th>
-            <td><?= h($estagiario->observacoes) ?></td>
+            <td><?= h($estagiariomonografia->observacoes) ?></td>
         </tr>
         <tr>
 

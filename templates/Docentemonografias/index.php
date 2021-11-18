@@ -5,23 +5,23 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Docente[]|\Cake\Collection\CollectionInterface $docentes
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
-        <?php endif; ?>
-        <?= $this->element('menu_monografias') ?>
-    </ul>
-</nav>
+
+<div class="row justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>        
+</div>
+
+<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+    <?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
+<?php endif; ?>
+
 <div class="docentes index large-9 medium-8 columns content">
     <h3><?= __('Docentes') ?></h3>
     <p>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <?= $this->Html->link('Dados funcionais', ['controller' => 'docentemonografias', 'action' => 'index0'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link('Dados pessoais', ['controller' => 'docentemonografias', 'action' => 'index1'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link('Dados graduação', ['controller' => 'docentemonografias', 'action' => 'index2'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link('Dados pósgraduação', ['controller' => 'docentemonografias', 'action' => 'index3'], ['class' => 'button float-right']) ?>
+            <?= $this->Html->link('Dados funcionais', ['controller' => 'docentemonografias', 'action' => 'index0'], ['class' => 'button']) ?>
+            <?= $this->Html->link('Dados pessoais', ['controller' => 'docentemonografias', 'action' => 'index1'], ['class' => 'button']) ?>
+            <?= $this->Html->link('Dados graduação', ['controller' => 'docentemonografias', 'action' => 'index2'], ['class' => 'button']) ?>
+            <?= $this->Html->link('Dados pósgraduação', ['controller' => 'docentemonografias', 'action' => 'index3'], ['class' => 'button']) ?>
         <?php endif; ?>
     </p>
     <table cellpadding="0" cellspacing="0">
@@ -32,6 +32,9 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th scope="col"><?= $this->Paginator->sort('homepage', 'Site') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('curriculolattes', 'Lattes') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('motivoegresso', 'Motivo egresso') ?></th>
+                <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                    <th class="actions"><?= __('Ações') ?></th>
+                <?php endif; ?>
             </tr>
         </thead>
         <tbody>
@@ -46,6 +49,13 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?php endif; ?>
                     </td>
                     <td><?= h($docentemonografia->motivoegresso) ?></td>
+                    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                        <td class="actions">
+                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $docentemonografia->id, 'class' => 'nav-link']) ?>
+                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $docentemonografia->id, 'class' => 'nav-link']) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $docentemonografia->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $docentemonografia->id), 'class' => 'nav-link']) ?>
+                        </td>
+                    <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>

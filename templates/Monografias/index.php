@@ -10,16 +10,15 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Monografia[]|\Cake\Collection\CollectionInterface $monografias
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Nova Monografia'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
-        <?php endif; ?>
-        <?= $this->element('menu_monografias') ?>
-    </ul>
-</nav>
-<div class="monografias index large-9 medium-8 columns content">
+<div class="row justify-content-center">
+    <?= $this->element('menu_monografias') ?>
+</div>
+
+<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+    <?= $this->Html->link(__('Nova Monografia'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
+<?php endif; ?>
+
+<div class="monografias index large-9 medium-8 columns container">
     <h3><?= __('Monografias') ?></h3>
     <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
     <?= $this->Form->control('titulo', ['label' => 'Busca por título']) ?>

@@ -7,16 +7,15 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Area $area
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Editar área'), ['action' => 'edit', $area->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Excluir área'), ['action' => 'delete', $area->id], ['confirm' => __('Are you sure you want to delete # {0}?', $area->id)]) ?> </li>
-        <?php endif; ?>
-        <?= $this->element('menu_monografias') ?>
-    </ul>
-</nav>
+<div class="row justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>        
+</div>
+
+<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+    <?= $this->Html->link(__('Editar área'), ['action' => 'edit', $area->id], ['class' => 'btn btn-primary'] ) ?>
+    <?= $this->Form->postLink(__('Excluir área'), ['action' => 'delete', $area->id], ['confirm' => __('Are you sure you want to delete # {0}?', $area->id), 'class' => 'btn btn-danger float-rigth']) ?>
+<?php endif; ?>
+
 <div class="areas view large-9 medium-8 columns content">
     <h3><?= h($area->area) ?></h3>
     <table class="vertical-table">
@@ -43,11 +42,11 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php // pr($monografias['estudante']); ?>
                     <tr>
                         <?php if (is_array($monografias['estudante']) && (sizeof($monografias['estudante']) > 1)): ?>
-                        <td>
-                            <?php for ($i = 0; $i < sizeof($monografias['estudante']); $i++): ?>
-                                <?= $this->Html->link(h($monografias['estudante'][$i]), ['controller' => 'tccestudantes', 'action' => 'view', $monografias['estudante_id'][$i]]) ?>
-                            <?php endfor; ?>
-                        </td>
+                            <td>
+                                <?php for ($i = 0; $i < sizeof($monografias['estudante']); $i++): ?>
+                                    <?= $this->Html->link(h($monografias['estudante'][$i]), ['controller' => 'tccestudantes', 'action' => 'view', $monografias['estudante_id'][$i]]) ?>
+                                <?php endfor; ?>
+                            </td>
                         <?php else: ?>
                             <td><?= $this->Html->link(h($monografias['estudante']), ['controller' => 'tccestudantes', 'action' => 'view', $monografias['estudante_id']]) ?></td>
                         <?php endif; ?>

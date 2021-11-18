@@ -6,16 +6,16 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Docente $docente
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docentemonografia->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Excluir Docente'), ['action' => 'delete', $docentemonografia->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $docentemonografia->id)]) ?> </li>
-        <?php endif; ?>
-        <?= $this->element('menu_monografias'); ?>
-    </ul>
-</nav>
+
+<div class="row justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>        
+</div>
+
+<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+    <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docentemonografia->id], ['class' => 'btn btn-primary']) ?>
+    <?= $this->Form->postLink(__('Excluir Docente'), ['action' => 'delete', $docentemonografia->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $docentemonografia->id), 'class' => 'btn btn-danger float-right']) ?>
+<?php endif; ?>
+
 <div class="docentes view large-9 medium-8 columns content">
     <h3><?= h($docentemonografia->nome) ?></h3>
     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
@@ -32,14 +32,14 @@ $user = $this->getRequest()->getAttribute('identity');
             <tr>
                 <th scope="row"><?= __('Sexo') ?></th>
                 <td>
-                <?php if ($docentemonografia->sexo == '1'): ?>
-                <?= 'Masculino'; ?>
-                <?php elseif ($docentemonografia->sexo == '2'): ?>
-                <?= 'Feminino'; ?>
-                <?php else: ?>
-                <?= "s/d" ?>
-                <?php endif; ?>
-              </td>
+                    <?php if ($docentemonografia->sexo == '1'): ?>
+                        <?= 'Masculino'; ?>
+                    <?php elseif ($docentemonografia->sexo == '2'): ?>
+                        <?= 'Feminino'; ?>
+                    <?php else: ?>
+                        <?= "s/d" ?>
+                    <?php endif; ?>
+                </td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Data de nascimento') ?></th>
@@ -63,7 +63,7 @@ $user = $this->getRequest()->getAttribute('identity');
             </tr>
             <tr>
                 <th scope="row"><?= __('Site') ?></th>
-                <td><?= isset($docentemonografia->homepage) ? $this->Html->link($docentemonografia->homepage, $docentemonografia->homepage): '' ?></td>
+                <td><?= isset($docentemonografia->homepage) ? $this->Html->link($docentemonografia->homepage, $docentemonografia->homepage) : '' ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Rede social') ?></th>
@@ -85,7 +85,7 @@ $user = $this->getRequest()->getAttribute('identity');
             </tr>
             <tr>
                 <th scope="row"><?= __('Diretório de Grupos de Pesquisa') ?></th>
-                 <td><a href='http://dgp.cnpq.br/dgp/espelhogrupo/<?= $docentemonografia->pesquisadordgp ?>'>Grupo de pesquisa</a></td>
+                <td><a href='http://dgp.cnpq.br/dgp/espelhogrupo/<?= $docentemonografia->pesquisadordgp ?>'>Grupo de pesquisa</a></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Formação profissional') ?></th>
