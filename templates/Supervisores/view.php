@@ -6,19 +6,16 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
         <?php echo $this->element('menu_mural') ?>
-        <aside class="column">
-            <div class="side-nav">
-                <h4 class="heading"><?= __('Ações') ?></h4>
-                <?= $this->Html->link(__('Editar supervisor(a)'), ['action' => 'edit', $supervisor->id], ['class' => 'side-nav-item']) ?>
-                <?= $this->Html->link(__('Listar supervisores(as)'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-                <?php if ($user['categoria'] == 1): ?>
-                    <?= $this->Html->link(__('Cadastrar supervisor(a)'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-                    <?= $this->Form->postLink(__('Exclur supervisor(a)'), ['action' => 'delete', $supervisor->id], ['confirm' => __('Are you sure you want to delete # {0}?', $supervisor->id), 'class' => 'side-nav-item']) ?>
-                <?php endif; ?>
-            </div>
-        </aside>
+    </div>
+    <div class="row">
+        <?= $this->Html->link(__('Editar supervisor(a)'), ['action' => 'edit', $supervisor->id], ['class' => 'btn btn-primary']) ?>
+        <?= $this->Html->link(__('Listar supervisores(as)'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+        <?php if ($user['categoria'] == 1): ?>
+            <?= $this->Html->link(__('Cadastrar supervisor(a)'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Form->postLink(__('Exclur supervisor(a)'), ['action' => 'delete', $supervisor->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $supervisor->id), 'class' => 'btn btn-danger']) ?>
+        <?php endif; ?>
     </div>
 
     <div class="row">

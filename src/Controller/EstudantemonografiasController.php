@@ -7,11 +7,11 @@ namespace App\Controller;
 /**
  * Alunos Controller
  *
- * @property \App\Model\Table\AlunosTable $Alunos
+ * @property \App\Model\Table\EstudantesTable $Estudantes
  *
- * @method \App\Model\Entity\Aluno[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Estudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class EstudantesController extends AppController {
+class EstudantemonografiasController extends AppController {
 
     public function beforeFilter(\Cake\Event\EventInterface $event) {
 
@@ -49,7 +49,7 @@ class EstudantesController extends AppController {
             $direcao = 'asc';
         endif;
 
-        $alunos = $this->paginate($this->Estudantes, ['order' => ['nome' => 'asc']]);
+        $alunos = $this->paginate($this->Estudantemonografias, ['order' => ['nome' => 'asc']]);
         $this->set(compact('alunos'));
     }
 
@@ -79,7 +79,7 @@ class EstudantesController extends AppController {
             $direcao = 'asc';
         endif;
 
-        $alunos = $this->paginate($this->Estudantes, ['order' => ['registro' => 'asc']]);
+        $alunos = $this->paginate($this->Estudantemonografias, ['order' => ['registro' => 'asc']]);
         $this->set(compact('alunos'));
     }
 
@@ -109,7 +109,7 @@ class EstudantesController extends AppController {
             $direcao = 'asc';
         endif;
 
-        $alunos = $this->paginate($this->Estudantes, ['order' => ['registro' => 'asc']]);
+        $alunos = $this->paginate($this->Estudantemonografias, ['order' => ['registro' => 'asc']]);
         $this->set(compact('alunos'));
     }
 
@@ -121,11 +121,25 @@ class EstudantesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
-        $this->Authorization->skipAuthorization();
-        $aluno = $this->Estudantes->get($id, [
-            'contain' => [],
-        ]);
 
+        $this->Authorization->skipAuthorization();
+
+        $this->loadModel('Tccestudantes');
+        $tccestudantequery = $this->Tccestudantes->find()->select(['registro'])->where(['id' => $id]);
+        $tccestudante = $tccestudantequery->first();
+
+        if ($tccestudante):
+            $query = $this->Estudantemonografias->find()
+                    ->where(['registro' => $tccestudante->registro]);
+            $aluno = $query->first();
+            if (empty($aluno)):
+                $this->Flash->error(__('Não há estudante cadastrado'));
+                return $this->redirect(['controller' => 'tccestudantes', 'action' => 'view', $id]);
+            endif;
+        else:
+            $this->Flash->error(__('Não há estudante cadastrado'));
+            return $this->redirect(['controller' => 'tccestudantes', 'action' => 'view', $id]);
+        endif;
         $this->set('aluno', $aluno);
     }
 
@@ -139,8 +153,8 @@ class EstudantesController extends AppController {
         $this->Authorization->authorize($estudante);
 
         if ($this->request->is('post')) {
-            $estudante = $this->Estudantes->patchEntity($estudante, $this->request->getData());
-            if ($this->Estudantes->save($aluno)) {
+            $estudante = $this->Estudantemonografias->patchEntity($estudante, $this->request->getData());
+            if ($this->Estudantemonografias->save($aluno)) {
                 $this->Flash->success(__('The aluno has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -159,7 +173,7 @@ class EstudantesController extends AppController {
      */
     public function edit($id = null) {
 
-        $estudante = $this->Estudantes->get($id, [
+        $estudante = $this->Estudantemonografias->get($id, [
             'contain' => [],
         ]);
         // pr($estudante);
@@ -168,9 +182,9 @@ class EstudantesController extends AppController {
         // $this->Authorization->authorize($estudante);
         // die();
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $estudanteatualiza = $this->Estudantes->patchEntity($estudante, $this->request->getData());
+            $estudanteatualiza = $this->Estudantemonografias->patchEntity($estudante, $this->request->getData());
             // debug($estudanteatualiza);
-            if ($this->Estudantes->save($estudanteatualiza)) {
+            if ($this->Estudantemonografias->save($estudanteatualiza)) {
                 $this->Flash->success(__('The aluno has been saved.'));
 
                 return $this->redirect(['action' => 'view', $id]);
@@ -189,9 +203,9 @@ class EstudantesController extends AppController {
      */
     public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
-        $estudante = $this->Estudantes->get($id);
+        $estudante = $this->Estudantemonografias->get($id);
         $this->Authorization->authorize($estudante);
-        if ($this->Estudantes->delete($estudante)) {
+        if ($this->Estudantemonografias->delete($estudante)) {
             $this->Flash->success(__('The aluno has been deleted.'));
         } else {
             $this->Flash->error(__('The aluno could not be deleted. Please, try again.'));

@@ -53,6 +53,10 @@ class EstudantePolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Estudante $estudante) {
+        
+        if ($estudante->registro == $user->numero)
+            return true;
+        
         return isset($user->categoria) && $user->categoria == '1';
     }
 

@@ -32,15 +32,28 @@ $user = $this->getRequest()->getAttribute('identity');
                 </tr>
                 <tr>
                     <th><?= __('Docente') ?></th>
-                    <td><?= $agendamentotcc->has('docente') ? $this->Html->link($agendamentotcc->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docente->id]) : '' ?></td>
+                    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                        <td><?= $agendamentotcc->has('docente') ? $this->Html->link($agendamentotcc->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docente->id]) : '' ?></td>
+                    <?php else: ?>
+                        <td><?= $agendamentotcc->has('docente') ? $agendamentotcc->docente->nome : '' ?></td>                    
+                    <?php endif; ?>
                 </tr>
+
                 <tr>
                     <th><?= __('Banca1') ?></th>
-                    <td><?= $agendamentotcc->has('docentes1') ? $this->Html->link($agendamentotcc->docentes1->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes1->id]) : '' ?></td>
+                    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                        <td><?= $agendamentotcc->has('docentes1') ? $this->Html->link($agendamentotcc->docentes1->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes1->id]) : '' ?></td>
+                    <?php else: ?>
+                        <td><?= $agendamentotcc->has('docentes1') ? $agendamentotcc->docentes1->nome : '' ?></td>                    
+                    <?php endif; ?>
                 </tr>
                 <tr>
                     <th><?= __('Banca2') ?></th>
-                    <td><?= $agendamentotcc->has('docentes2') ? $this->Html->link($agendamentotcc->docentes2->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes2->id]) : '' ?></td>
+                    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                        <td><?= $agendamentotcc->has('docentes2') ? $this->Html->link($agendamentotcc->docentes2->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes2->id]) : '' ?></td>
+                    <?php else: ?>
+                        <td><?= $agendamentotcc->has('docentes2') ? $agendamentotcc->docentes2->nome : '' ?></td>                    
+                    <?php endif; ?>
                 </tr>
                 <tr>
                     <th><?= __('Convidado') ?></th>
@@ -62,10 +75,12 @@ $user = $this->getRequest()->getAttribute('identity');
                     <th><?= __('Horario') ?></th>
                     <td><?= h($agendamentotcc->horario->i18nFormat('HH:mm:ss')) ?></td>
                 </tr>
-                <tr>
-                    <th><?= __('Avaliacao') ?></th>
-                    <td><?= h($agendamentotcc->avaliacao) ?></td>
-                </tr>
+                <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                    <tr>
+                        <th><?= __('Avaliacao') ?></th>
+                        <td><?= h($agendamentotcc->avaliacao) ?></td>
+                    </tr>
+                <?php endif; ?>
             </table>
         </div>
     </div>

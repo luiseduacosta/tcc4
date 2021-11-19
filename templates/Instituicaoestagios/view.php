@@ -6,18 +6,17 @@
 // pr($instituicaoestagio);
 ?>
 <div class="container">
-    <div class="row">
+
+    <div class="row justify-content-center">
         <?php echo $this->element('menu_mural') ?>
+    </div>
+
+    <div class="row">
         <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
-            <aside class="column">
-                <div class="side-nav">
-                    <h4 class="heading"><?= __('Ações') ?></h4>
-                    <?= $this->Html->link(__('Editar Instituição de estágio'), ['action' => 'edit', $instituicaoestagio->id], ['class' => 'side-nav-item']) ?>
-                    <?= $this->Form->postLink(__('Excluir Instituição de estágio'), ['action' => 'delete', $instituicaoestagio->id], ['confirm' => __('Are you sure you want to delete # {0}?', $instituicaoestagio->id), 'class' => 'side-nav-item']) ?>
-                    <?= $this->Html->link(__('Listar instituições de estágio'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-                    <?= $this->Html->link(__('Nova Instituição de estágio'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-                </div>
-            </aside>
+            <?= $this->Html->link(__('Editar Instituição de estágio'), ['action' => 'edit', $instituicaoestagio->id], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Listar instituições de estágio'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Nova Instituição de estágio'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Form->postLink(__('Excluir Instituição de estágio'), ['action' => 'delete', $instituicaoestagio->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $instituicaoestagio->id), 'class' => 'btn btn-danger float-right']) ?>
         <?php endif; ?>
     </div>
 

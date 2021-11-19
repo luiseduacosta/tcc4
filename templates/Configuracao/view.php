@@ -11,11 +11,11 @@
 
 <div class="container">
     <div class="row justify-content-end">
-        <?= $this->Html->link(__('Editar configurações'), ['action' => 'edit', $configuracao->id], ['class' => 'btn btn-primary float-right']) ?>
+        <?= $this->Html->link(__('Editar configurações'), ['action' => 'edit', $configuracao->id], ['class' => 'btn btn-primary float-left']) ?>
     </div>
     <div class="column-responsive column-80">
         <div class="configuracao view content">
-            <h3><?= h($configuracao->id) ?></h3>
+            <h3><?= 'Configurações' ?></h3>
             <table>
                 <tr>
                     <th><?= __('Id') ?></th>
@@ -52,5 +52,4 @@
             </table>
         </div>
     </div>
-</div>
 </div>

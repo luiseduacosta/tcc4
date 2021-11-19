@@ -7,34 +7,34 @@
 <div class="instituicaoestagios index container">
     <?php echo $this->element('menu_mural') ?>
     <?= $this->Html->link(__('Cadastra nova instituição de estágio'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Instituicaoestagios') ?></h3>
+    <h3><?= __('Instituições') ?></h3>
     <div class="table-responsive">
         <table>
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('instituicao') ?></th>
-                    <th><?= $this->Paginator->sort('areainstituicoes_id') ?></th>
-                    <th><?= $this->Paginator->sort('area') ?></th>
-                    <th><?= $this->Paginator->sort('natureza') ?></th>
+                    <th><?= $this->Paginator->sort('areainstituicoes_id', 'Área institucional') ?></th>
+                    <th><?= $this->Paginator->sort('area', 'Área') ?></th>
+                    <th><?= $this->Paginator->sort('natureza', 'Natureza') ?></th>
                     <th><?= $this->Paginator->sort('cnpj') ?></th>
                     <th><?= $this->Paginator->sort('email') ?></th>
-                    <th><?= $this->Paginator->sort('url') ?></th>
-                    <th><?= $this->Paginator->sort('endereco') ?></th>
+                    <th><?= $this->Paginator->sort('url', 'URL') ?></th>
+                    <th><?= $this->Paginator->sort('endereco', 'Endereço') ?></th>
                     <th><?= $this->Paginator->sort('bairro') ?></th>
                     <th><?= $this->Paginator->sort('municipio') ?></th>
                     <th><?= $this->Paginator->sort('cep') ?></th>
                     <th><?= $this->Paginator->sort('telefone') ?></th>
                     <th><?= $this->Paginator->sort('fax') ?></th>
-                    <th><?= $this->Paginator->sort('beneficio') ?></th>
+                    <th><?= $this->Paginator->sort('beneficio', 'Benefício') ?></th>
                     <th><?= $this->Paginator->sort('fim_de_semana') ?></th>
-                    <th><?= $this->Paginator->sort('localInscricao') ?></th>
-                    <th><?= $this->Paginator->sort('convenio') ?></th>
+                    <th><?= $this->Paginator->sort('localInscricao', 'Local de inscrição') ?></th>
+                    <th><?= $this->Paginator->sort('convenio', 'Convênio') ?></th>
                     <th><?= $this->Paginator->sort('expira') ?></th>
                     <th><?= $this->Paginator->sort('seguro') ?></th>
-                    <th><?= $this->Paginator->sort('avaliacao') ?></th>
-                    <th><?= $this->Paginator->sort('observacoes') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
+                    <th><?= $this->Paginator->sort('avaliacao', 'Avaliação') ?></th>
+                    <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
+                    <th class="actions"><?= __('Ações') ?></th>
                 </tr>
             </thead>
             <tbody>

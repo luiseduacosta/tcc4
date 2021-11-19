@@ -8,18 +8,16 @@ $usuario = $this->getRequest()->getAttribute('identity');
 // die();
 ?>
 <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
         <?php echo $this->element('menu_mural') ?>
+    </div>
+
+    <div class="row">
         <?php if (isset($usuario) && $usuario->categoria == '1'): ?>
-            <aside class="column">
-                <div class="side-nav">
-                    <h4 class="heading"><?= __('Ações') ?></h4>
-                    <?= $this->Html->link(__('Novo'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $muralestagio->id], ['class' => 'side-nav-item']) ?>
-                    <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $muralestagio->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $muralestagio->id), 'class' => 'side-nav-item']) ?>
-                </div>
-            </aside>
+            <?= $this->Html->link(__('Novo'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $muralestagio->id], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $muralestagio->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $muralestagio->id), 'class' => 'btn btn-danger']) ?>
         <?php endif; ?>
     </div>
 

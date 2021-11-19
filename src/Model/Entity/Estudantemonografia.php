@@ -52,7 +52,6 @@ class Estudantemonografia extends Entity
         'municipio' => true,
         'bairro' => true,
         'observacoes' => true,
-        'estagiarios' => true,
-        'muralinscricoes' => true,
-    ];
+        'estagiariomonografia' => true,
+     ];
 }

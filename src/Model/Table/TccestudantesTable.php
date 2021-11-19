@@ -42,10 +42,6 @@ class TccestudantesTable extends Table {
             'joinType' => 'INNER'
         ]);
 
-        $this->hasMany('Estudantes', [
-            'foreignKey' => 'registro',
-            'bindingKey' => 'registro',
-        ]);
     }
 
     /**

@@ -57,8 +57,8 @@ class UserestagiosController extends AppController {
      */
     public function add() {
 
+        $this->Authorization->skipAuthorization();
         $userestagio = $this->Userestagios->newEmptyEntity();
-        $this->Authorization->authorize($uerestagio);        
 
         if ($this->request->is('post')) {
 
@@ -286,7 +286,10 @@ class UserestagiosController extends AppController {
         $this->request->allowMethod(['get', 'post']);
         $this->Authorization->skipAuthorization();
         $result = $this->Authentication->getResult();
+        // pr($result);
+        // die();
         // regardless of POST or GET, redirect if user is logged in
+
         if ($result->isValid()) {
             // pr($this->request->getAttribute('authentication'));
             /* Parece desnecessário fazer isto */

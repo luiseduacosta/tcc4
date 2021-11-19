@@ -6,16 +6,15 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Tccestudante $tccestudante
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $tccestudante->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Excluir Estudante'), ['action' => 'delete', $tccestudante->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $tccestudante->id)]) ?> </li>
-        <?php endif; ?>
-        <?= $this->element('menu_monografias') ?>
-    </ul>
-</nav>
+<div class="row justify-content-center">
+    <?php echo $this->element('menu_monografias') ?>
+</div>
+
+<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+    <?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $tccestudante->id, 'class' => 'btn btn-primary']) ?>
+    <?= $this->Form->postLink(__('Excluir Estudante'), ['action' => 'delete', $tccestudante->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $tccestudante->id), 'class' => 'btn btn-danger float-rigth']) ?>
+<?php endif; ?>
+
 <div class="tccestudantes view large-9 medium-8 columns content">
     <h3><?= h($tccestudante->Nome) ?></h3>
     <table class="vertical-table">
@@ -29,7 +28,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Nome') ?></th>
-            <td><?= h($tccestudante->nome) ?></td>
+            <td><?= $this->Html->link(h($tccestudante->nome), ['controller' => 'estudantemonografias', 'action' => 'view', $tccestudante->id]) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Monografia') ?></th>

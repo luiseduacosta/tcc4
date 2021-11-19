@@ -20,15 +20,7 @@ class EstudantesTablePolicy {
      * @return bool
      */
     public function canIndex(IdentityInterface $user, EstudantesTable $estudantes) {
-        return isset($user->categoria) && $user->categoria == '1';
-    }
-
-    public function canIndex1(IdentityInterface $user, EstudantesTable $estudantes) {
-        return isset($user->categoria) && $user->categoria == '1';
-    }
-
-    public function canIndex2(IdentityInterface $user, EstudantesTable $estudantes) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && ($user->categoria == '1') || ($user->categoria == '2');
     }
 
 }

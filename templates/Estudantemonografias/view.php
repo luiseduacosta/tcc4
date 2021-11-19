@@ -5,22 +5,21 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Aluno $aluno
  */
+// pr($aluno);
+// die();
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
+<div class="row justify-content-center">
+    <?= $this->element('menu_monografias') ?>
+</div>
 
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'side-nav-item']) ?></li>
-            <li><?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $aluno->id], ['class' => 'side-nav-item']) ?></li>
-            <li><?= $this->Form->postLink(__('Excluir Estudante'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $aluno->id), 'class' => 'side-nav-item']) ?></li>
-        <?php endif; ?>
+<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+    <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'side-nav-item']) ?></li>
+    <li><?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $aluno->id], ['class' => 'side-nav-item']) ?></li>
+    <li><?= $this->Form->postLink(__('Excluir Estudante'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $aluno->id), 'class' => 'side-nav-item']) ?></li>
+<?php endif; ?>
 
-        <li>
-            <?= $this->Html->link(__('Listar Estudantes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-        </li>
-    </ul>
-</nav>
+<?= $this->Html->link(__('Listar Estudantes'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+
 <div class="alunos view large-9 medium-8 columns content">
     <div class="alunos view content">
         <h3><?= h($aluno->nome) ?></h3>

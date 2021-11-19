@@ -21,7 +21,6 @@ class EstudantesController extends AppController {
 
         $estudantes = $this->paginate($this->Estudantes);
         $this->Authorization->authorize($this->Estudantes);
-
         $this->set(compact('estudantes'));
     }
 
@@ -34,6 +33,7 @@ class EstudantesController extends AppController {
      */
     public function view($id = null) {
 
+        $this->Authorization->skipAuthorization();
         if (!$id) {
             $registro = $this->getRequest()->getQuery('registro');
             // pr($registro);
@@ -75,10 +75,12 @@ class EstudantesController extends AppController {
         $this->Authorization->authorize($estudante);
 
         /* Verifico se já está cadastrado */
-        $estudantequery = $this->Estudantes->find()->where(['registro' => $this->request->getData('registro')]);
-        $estudantecadastrado = $estudantequery->first();
-        if ($estudantecadastrado):
-            return $this->redirect(['view' => $estudantecadastrado->id]);
+        if ($this->request->getData('registro')):
+            $estudantequery = $this->Estudantes->find()->where(['registro' => $this->request->getData('registro')]);
+            $estudantecadastrado = $estudantequery->first();
+            if ($estudantecadastrado):
+                return $this->redirect(['view' => $estudantecadastrado->id]);
+            endif;
         endif;
 
         if ($this->request->is('post')) {

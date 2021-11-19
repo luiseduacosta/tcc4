@@ -237,9 +237,9 @@ date_default_timezone_set('America/Sao_Paulo');
 setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 
 \Cake\I18n\Time::setToStringFormat('HH:mm:ss');
-\Cake\I18n\Date::setToStringFormat('dd/MM/yyyy');
+\Cake\I18n\Date::setToStringFormat('dd-MM-yyyy');
 \Cake\I18n\FrozenTime::setToStringFormat('HH:mm:ss');
-\Cake\I18n\FrozenDate::setToStringFormat('dd/MM/yyyy');
+\Cake\I18n\FrozenDate::setToStringFormat('dd-MM-yyyy');
 
 Inflector::rules('irregular', ['supervisor' => 'supervisores']);
 Inflector::rules('irregular', ['muralinscricao' => 'muralinscricoes']);

@@ -5,15 +5,13 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Aluno[]|\Cake\Collection\CollectionInterface $alunos
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
-        <?php endif; ?>
-        <?php echo $this->element('menu_monografias'); ?>
-    </ul>
-</nav>
+<div class="row justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>
+</div>
+<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+    <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?></li>
+<?php endif; ?>
+
 <div class="alunos index large-9 medium-8 columns content">
     <h3>
         <?= __('Estudantes') ?>
@@ -39,7 +37,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php foreach ($alunos as $aluno): ?>
                 <tr>
                     <td><?= h($aluno->registro) ?></td>
-                    <td><?= $this->Html->link($aluno->nome, ['controller' => 'estudantes', 'action' => 'view', $aluno->id]) ?></td>
+                    <td><?= $this->Html->link($aluno->nome, ['controller' => 'estudantemonografias', 'action' => 'view', $aluno->id]) ?></td>
                     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                         <?php if ($aluno->telefone): ?>
                             <td><?= '(' . h($aluno->codigo_telefone) . ')' . h($aluno->telefone) ?></td>

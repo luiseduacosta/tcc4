@@ -26,7 +26,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
 
         <th scope="row"><?= __('Estudante') ?></th>
-        <td><?= $estagiariomonografia->has('estudante') ? $this->Html->link($estagiariomonografia->estudante->nome, ['controller' => 'Estudantemonografia', 'action' => 'view', $estagiariomonografia->estudante->id]) : '' ?></td>
+        <td><?= $estagiariomonografia->has('estudante') ? $this->Html->link($estagiariomonografia->estudantemonografia->nome, ['controller' => 'estudantemonografias', 'action' => 'view', $estagiariomonografia->estudantemonografia->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Turno') ?></th>
