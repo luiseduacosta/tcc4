@@ -31,7 +31,7 @@ class EstagiarioPolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Estagiario $estagiario) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '3';
     }
 
     /**
@@ -53,7 +53,7 @@ class EstagiarioPolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Estagiario $estagiario) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return true;
     }
 
 }

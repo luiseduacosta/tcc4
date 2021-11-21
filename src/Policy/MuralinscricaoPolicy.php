@@ -20,7 +20,7 @@ class MuralinscricaoPolicy {
      * @return bool
      */
     public function canAdd(IdentityInterface $user, Muralinscricao $muralinscricao) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '2';
     }
 
     /**
@@ -42,7 +42,7 @@ class MuralinscricaoPolicy {
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Muralinscricao $muralinscricao) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '2';
     }
 
     /**
@@ -53,7 +53,7 @@ class MuralinscricaoPolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Muralinscricao $muralinscricao) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return true;
     }
 
 }

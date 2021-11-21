@@ -1,4 +1,5 @@
 <?php
+$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Supervisor $supervisor
@@ -10,13 +11,15 @@
     </div>
     <div class="row">
         <?= $this->Html->link(__('Listar supervisores'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-        <?=
-        $this->Form->postLink(
-                __('Excluir'),
-                ['action' => 'delete', $supervisor->id],
-                ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $supervisor->id), 'class' => 'btn btn-danger']
-        )
-        ?>
+        <?php if ($user->categoria == '1'): ?>
+            <?=
+            $this->Form->postLink(
+                    __('Excluir'),
+                    ['action' => 'delete', $supervisor->id],
+                    ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $supervisor->id), 'class' => 'btn btn-danger']
+            )
+            ?>
+        <?php endif; ?>
     </div>
     <div class="column-responsive column-80">
         <div class="supervisores form content">

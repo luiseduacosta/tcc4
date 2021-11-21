@@ -53,7 +53,7 @@ class InstituicaoestagioPolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Instituicaoestagio $instituicaoestagio) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return true;
     }
 
 }

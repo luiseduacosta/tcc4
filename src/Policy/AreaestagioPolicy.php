@@ -53,7 +53,7 @@ class AreaestagioPolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Areaestagio $areaestagio) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return true;
     }
 
 }

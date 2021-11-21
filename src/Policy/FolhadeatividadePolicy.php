@@ -20,7 +20,7 @@ class FolhadeatividadePolicy {
      * @return bool
      */
     public function canAdd(IdentityInterface $user, Folhadeatividade $folhadeatividade) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '2';
     }
 
     /**
@@ -31,7 +31,7 @@ class FolhadeatividadePolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Folhadeatividade $folhadeatividade) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '2';
     }
 
     /**
@@ -42,7 +42,7 @@ class FolhadeatividadePolicy {
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Folhadeatividade $folhadeatividade) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '2';
     }
 
     /**
@@ -53,7 +53,7 @@ class FolhadeatividadePolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Folhadeatividade $folhadeatividade) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return true;
     }
 
 }

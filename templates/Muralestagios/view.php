@@ -256,7 +256,9 @@ $usuario = $this->getRequest()->getAttribute('identity');
                         <?php else: ?>
                             <tr>
                                 <td colspan = 2>
-                                    <p style="text-align: center; color: red">Inscrições encerradas!</p>
+                                    <div class='row justify-content-center'>
+                                        <p class='btn btn-danger'>Inscrições encerradas!</p>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endif; ?>

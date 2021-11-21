@@ -7,23 +7,22 @@ $usuario = $this->getRequest()->getAttribute('identity');
 // pr($usuario->get('categoria'));
 ?>
 <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
         <?php echo $this->element('menu_mural') ?>
-        <aside class="column">
-            <div class="side-nav">
-                <h4 class="heading"><?= __('Ações') ?></h4>
+</div>
+            <div class="row">
                 <?php if ($usuario->categoria == 1): ?>
                     <?= $this->Html->link(__('Editar inscrição'), ['action' => 'edit', $muralinscricao->id], ['class' => 'side-nav-item']) ?>
                     <?= $this->Html->link(__('Listar inscrições'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
                     <?= $this->Html->link(__('Nova inscrição'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+                    <?= $this->Form->postLink(__('Excluir inscrição'), ['action' => 'delete', $muralinscricao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'btn btn-danger']) ?>
                 <?php elseif ($usuario->get('categoria') == 2): ?>
-                    <?= $this->Form->postLink(__('Excluir inscrição'), ['action' => 'delete', $muralinscricao->id], ['confirm' => __('Are you sure you want to delete # {0}?', $muralinscricao->id), 'class' => 'side-nav-item']) ?>
+                    <?= $this->Form->postLink(__('Excluir inscrição'), ['action' => 'delete', $muralinscricao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'btn btn-danger']) ?>
                 <?php endif; ?>
             </div>
-        </aside>
         <div class="column-responsive column-80">
             <div class="muralinscricoes view content">
-                <h3><?= h($muralinscricao->id) ?></h3>
+                <h3><?= h($muralinscricao->estudante->nome) ?></h3>
                 <table>
                     <tr>
                         <th><?= __('Id') ?></th>

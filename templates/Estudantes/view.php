@@ -1,4 +1,5 @@
 <?php
+$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estudante $estudante
@@ -12,7 +13,10 @@
 <div class="container">
 
     <div class="row">
-        <?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $estudante->id], ['class' => 'btn btn-primary float right']) ?>
+        <?php if ($user->categoria == '1' || $user->categoria == '2'): ?>
+            <?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $estudante->id], ['class' => 'btn btn-primary float right']) ?>
+            <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'estagiarios', 'action' => 'termodecompromisso', $estudante->id], ['class' => 'btn btn-primary float right']) ?>
+        <?php endif; ?>
         <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
             <?= $this->Html->link(__('Listar Estudantes'), ['action' => 'index'], ['class' => 'btn btn-primary float right']) ?>
             <?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'btn btn-primary float right']) ?>
@@ -178,7 +182,7 @@
                             <th><?= __('CH') ?></th>
                             <th><?= __('Observações') ?></th>
                             <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
-                                <th class="actions"><?= __('Actions') ?></th>
+                                <th class="actions"><?= __('Ações') ?></th>
                             <?php endif; ?>
                         </tr>
                         <?php foreach ($estudante->estagiarios as $estagiarios) : ?>
@@ -217,9 +221,9 @@
                                 <td><?= h($estagiarios->observacoes) ?></td>
                                 <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                                     <td class="actions">
-                                        <?= $this->Html->link(__('View'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
-                                        <?= $this->Html->link(__('Edit'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
-                                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Are you sure you want to delete # {0}?', $estagiarios->id)]) ?>
+                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
+                                        <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
+                                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Are you sure you want to delete # {0}?', $estagiarios->id)]) ?>
                                     </td>
                                 <?php endif; ?>
                             </tr>

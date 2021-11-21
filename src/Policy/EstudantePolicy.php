@@ -20,9 +20,9 @@ class EstudantePolicy {
      * @return bool
      */
     public function canAdd(IdentityInterface $user, Estudante $estudante) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '2';
     }
-    
+
     /**
      * Check if $user can update Docente
      *
@@ -31,7 +31,7 @@ class EstudantePolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Estudante $estudante) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '2';
     }
 
     /**
@@ -53,11 +53,11 @@ class EstudantePolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Estudante $estudante) {
-        
-        if ($estudante->registro == $user->numero)
+
+        if ($estudante->registro == $user->numero) {
             return true;
-        
-        return isset($user->categoria) && $user->categoria == '1';
+        }
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '4';
     }
 
 }

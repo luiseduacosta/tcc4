@@ -5,17 +5,16 @@
  */
 ?>
 <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
         <?php echo $this->element('menu_mural') ?>
-        <aside class="column">
-            <div class="side-nav">
-                <h4 class="heading"><?= __('Ações') ?></h4>
-                <?= $this->Html->link(__('Edita atividade'), ['action' => 'edit', $folhadeatividade->id], ['class' => 'side-nav-item']) ?>
-                <?= $this->Form->postLink(__('Excluir atividade'), ['action' => 'delete', $folhadeatividade->id], ['confirm' => __('Are you sure you want to delete # {0}?', $folhadeatividade->id), 'class' => 'side-nav-item']) ?>
-                <?= $this->Html->link(__('Listar atividades'), ['action' => 'index', $folhadeatividade->estagiario_id], ['class' => 'side-nav-item']) ?>
-                <?= $this->Html->link(__('Nova atividade'), ['action' => 'add', $folhadeatividade->estagiario_id], ['class' => 'side-nav-item']) ?>
+</div>
+<div class='row'>
+<?= $this->Html->link(__('Edita atividade'), ['action' => 'edit', $folhadeatividade->id], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Listar atividades'), ['action' => 'index', $folhadeatividade->estagiario_id], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Nova atividade'), ['action' => 'add', $folhadeatividade->estagiario_id], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Form->postLink(__('Excluir atividade'), ['action' => 'delete', $folhadeatividade->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $folhadeatividade->id), 'class' => 'btn btn-danger float-rigth']) ?>
             </div>
-        </aside>
+
         <div class="column-responsive column-80">
             <div class="folhadeatividades view content">
                 <h3><?= h($folhadeatividade->atividade) ?></h3>

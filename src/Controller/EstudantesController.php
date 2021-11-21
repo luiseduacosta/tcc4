@@ -36,7 +36,7 @@ class EstudantesController extends AppController {
         $this->Authorization->skipAuthorization();
         if (!$id) {
             $registro = $this->getRequest()->getQuery('registro');
-            // pr($registro);
+
             if ($registro) {
                 $estudante = $this->Estudantes->find()->select('id')->where(['registro' => $registro]);
                 if (!$estudante->first()) {

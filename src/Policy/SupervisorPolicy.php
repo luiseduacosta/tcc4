@@ -20,7 +20,7 @@ class SupervisorPolicy {
      * @return bool
      */
     public function canAdd(IdentityInterface $user, Supervisor $supervisor) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '4';
     }
 
     /**
@@ -31,7 +31,7 @@ class SupervisorPolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Supervisor $supervisor) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '4';
     }
 
     /**
@@ -53,7 +53,7 @@ class SupervisorPolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Supervisor $supervisor) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '4';
     }
 
 }

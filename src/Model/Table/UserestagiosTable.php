@@ -29,8 +29,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Userestagio[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\Userestagio[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
-class UserestagiosTable extends Table
-{
+class UserestagiosTable extends Table {
+
     /**
      * Initialize method
      *

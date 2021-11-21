@@ -20,7 +20,7 @@ class SupervisoresTablePolicy {
      * @return bool
      */
     public function canIndex(IdentityInterface $user, SupervisoresTable $supervisores) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '4';
     }
 
 }

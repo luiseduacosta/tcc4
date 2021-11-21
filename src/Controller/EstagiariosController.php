@@ -123,7 +123,7 @@ class EstagiariosController extends AppController {
             }
         endif;
         if ($this->request->getData()) {
-            pr($this->request->getData());
+            // pr($this->request->getData());
             // die();
         }
 
@@ -174,7 +174,7 @@ class EstagiariosController extends AppController {
             if ($this->Estagiarios->save($estagiario)) {
                 // pr($this->Estagiarios->save($estagiario));
                 // die();
-                $this->Flash->success(__('Estágio criado ou atualizado.'));
+                $this->Flash->success(__('Estágio inserido ou atualizado.'));
 
                 // Se foi uma atualização retorna para o id
                 if ($this->request->getData('id')) {
@@ -205,7 +205,7 @@ class EstagiariosController extends AppController {
                     // pr($this->Alunos->getLastInsertID());
                     $aluno = $this->Alunos->find()->orderDesc('id')->first();
                     $aluno_id = $aluno->toArray()['id'];
-                    // pr($aluno_id);
+                    pr($aluno_id);
                     // die('aluno_id');
                     $estagiario = $this->Estagiarios->get($ultimo_id, [
                         'contain' => []
@@ -365,7 +365,6 @@ class EstagiariosController extends AppController {
         if (is_null($id)) {
             $this->Flash->error(__('Selecionar o estudante estagiário'));
             return $this->redirect('/estudantes/index');
-            $this->cakeError('error404');
         } else {
             $estagiarioquery = $this->Estagiarios->find()
                     ->contain(['Estudantes', 'Supervisores', 'Instituicaoestagios'])
@@ -595,7 +594,6 @@ class EstagiariosController extends AppController {
                 ])
                 ->where(['siape' => $siape]);
 
-        // die();
         // $estagiariosfolha = $idquery->distinct(['estagiario_id']);
         $estagiarios = $idquery->first();
         // pr($estagiarios);

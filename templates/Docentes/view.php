@@ -1,4 +1,5 @@
 <?php
+$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Docente $docente
@@ -12,18 +13,14 @@
 
 <div class="container">
     <div class="row">
-        <aside class="column">
-            <div class="side-nav">
-                <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
-                    <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docente->id], ['class' => 'btn btn-primary']) ?>
-                    <?= $this->Form->postLink(__('Excluir Docente'), ['action' => 'delete', $docente->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $docente->id), 'class' => 'btn btn-danger float-right']) ?>
-                    <?= $this->Html->link(__('Listar Docentes'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-                    <?= $this->Html->link(__('Novo Docente'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
-                <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == 3): ?>
-                    <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docente->id], ['class' => 'btn btn-primary']) ?>
-                <?php endif; ?>
-            </div>
-        </aside>
+        <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
+            <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docente->id], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Form->postLink(__('Excluir Docente'), ['action' => 'delete', $docente->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $docente->id), 'class' => 'btn btn-danger float-right']) ?>
+            <?= $this->Html->link(__('Listar Docentes'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Novo Docente'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
+        <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == 3): ?>
+            <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docente->id], ['class' => 'btn btn-primary']) ?>
+        <?php endif; ?>
     </div>
 
     <div class="row">
@@ -231,7 +228,9 @@
                                 <td class="actions">
                                     <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
                                     <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
-                                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiarios->id)]) ?>
+                                    <?php if ($user->categoria == '1'): ?>
+                                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiarios->id)]) ?>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

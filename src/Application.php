@@ -141,7 +141,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface {
         $authenticationService = new AuthenticationService([
-            'unauthenticatedRedirect' => \Cake\Routing\Router::url('/monografias/index'),
+            'unauthenticatedRedirect' => \Cake\Routing\Router::url('/userestagios/login'),
             'queryParam' => 'redirect',
         ]);
 
@@ -161,7 +161,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 'username' => 'email',
                 'password' => 'password',
             ],
-            'loginUrl' => \Cake\Routing\Router::url('/users/login'),
+            'loginUrl' => \Cake\Routing\Router::url('/userestagios/login'),
         ]);
 
         return $authenticationService;
