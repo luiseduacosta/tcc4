@@ -59,11 +59,15 @@ $user = $this->getRequest()->getAttribute('identity');
                         <td><?= h($supervisor->cpf) ?></td>
                     </tr>
                     <tr>
+                        <th><?= __('Cargo na instituição') ?></th>
+                        <td><?= h($supervisor->cargo) ?></td>
+                    </tr>
+                    <tr>
                         <th><?= __('Cep') ?></th>
                         <td><?= h($supervisor->cep) ?></td>
                     </tr>
                     <tr>
-                        <th><?= __('Endereco') ?></th>
+                        <th><?= __('Endereço') ?></th>
                         <td><?= h($supervisor->endereco) ?></td>
                     </tr>
                     <tr>
@@ -71,11 +75,11 @@ $user = $this->getRequest()->getAttribute('identity');
                         <td><?= h($supervisor->bairro) ?></td>
                     </tr>
                     <tr>
-                        <th><?= __('Municipio') ?></th>
+                        <th><?= __('Município') ?></th>
                         <td><?= h($supervisor->municipio) ?></td>
                     </tr>
                     <tr>
-                        <th><?= __('Email') ?></th>
+                        <th><?= __('E-mail') ?></th>
                         <td><?= h($supervisor->email) ?></td>
                     </tr>
                     <tr>
@@ -95,7 +99,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <td><?= h($supervisor->celular) ?></td>
                     </tr>
                     <tr>
-                        <th><?= __('Escola') ?></th>
+                        <th><?= __('Escola de formação em Serviço Social') ?></th>
                         <td><?= h($supervisor->escola) ?></td>
                     </tr>
                     <tr>
@@ -107,23 +111,19 @@ $user = $this->getRequest()->getAttribute('identity');
                         <td><?= h($supervisor->outros_estudos) ?></td>
                     </tr>
                     <tr>
-                        <th><?= __('Area Curso') ?></th>
+                        <th><?= __('Área do curso de outros estudos') ?></th>
                         <td><?= h($supervisor->area_curso) ?></td>
                     </tr>
                     <tr>
-                        <th><?= __('Ano Curso') ?></th>
+                        <th><?= __('Ano do curso de outros estudos') ?></th>
                         <td><?= h($supervisor->ano_curso) ?></td>
                     </tr>
                     <tr>
-                        <th><?= __('Cargo') ?></th>
-                        <td><?= h($supervisor->cargo) ?></td>
-                    </tr>
-                    <tr>
-                        <th><?= __('Curso Turma') ?></th>
+                        <th><?= __('Turma do Curso de supervisores da ESS') ?></th>
                         <td><?= h($supervisor->curso_turma) ?></td>
                     </tr>
                     <tr>
-                        <th><?= __('Num Inscricao') ?></th>
+                        <th><?= __('Número de inscrição no Curso de supervisores da ESS') ?></th>
                         <td><?= $supervisor->num_inscricao ?></td>
                     </tr>
                 </table>

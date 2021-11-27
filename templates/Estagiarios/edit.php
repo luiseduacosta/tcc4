@@ -19,12 +19,12 @@
                 <h4 class="heading"><?= __('Ações') ?></h4>
                 <?=
                 $this->Form->postLink(
-                        __('Delete'),
+                        __('Excluir'),
                         ['action' => 'delete', $estagiario->id],
-                        ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $estagiario->id), 'class' => 'side-nav-item']
+                        ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $estagiario->id), 'class' => 'btn btn-danger']
                 )
                 ?>
-<?= $this->Html->link(__('Listar Estagiários'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+<?= $this->Html->link(__('Listar Estagiários'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
             </div>
         </aside>
         <div class="column-responsive column-80">

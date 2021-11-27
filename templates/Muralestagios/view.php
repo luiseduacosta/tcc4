@@ -231,7 +231,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
                             </td>
                         </tr>
 
-                    <?php elseif ((isset($usuario) && $usuario->categoria == 2) || (isset($usuario) && $usuario->categoria == 3) || (isset($usuario) && $usuario->categoria == 4)): ?>
+                    <?php elseif (isset($usuario) && $usuario->categoria == 2): ?>
                         <!--
                         Para os outros usuários as inscrições dependem da data de encerramento
                         //-->

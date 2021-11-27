@@ -96,11 +96,11 @@ class EstagiariosController extends AppController {
             }
             $this->Flash->error(__('The estagiario could not be saved. Please, try again.'));
         }
-        $alunos = $this->Estagiarios->Alunos->find('list', ['limit' => 200]);
-        $estudantes = $this->Estagiarios->Estudantes->find('list', ['limit' => 200]);
-        $instituicaoestagios = $this->Estagiarios->Instituicaoestagios->find('list', ['limit' => 200]);
-        $supervisores = $this->Estagiarios->Supervisores->find('list', ['limit' => 200]);
-        $docentes = $this->Estagiarios->Docentes->find('list', ['limit' => 200]);
+        $alunos = $this->Estagiarios->Alunos->find('list');
+        $estudantes = $this->Estagiarios->Estudantes->find('list');
+        $instituicaoestagios = $this->Estagiarios->Instituicaoestagios->find('list');
+        $supervisores = $this->Estagiarios->Supervisores->find('list');
+        $docentes = $this->Estagiarios->Docentes->find('list', ['limit' => 300]);
         $areaestagios = $this->Estagiarios->Areaestagios->find('list', ['limit' => 200]);
         $this->set(compact('estagiario', 'alunos', 'estudantes', 'instituicaoestagios', 'supervisores', 'docentes', 'areaestagios'));
     }
@@ -134,6 +134,7 @@ class EstagiariosController extends AppController {
             $periodoatual = $periodo->mural_periodo_atual;
         }
 
+        // pr($id);
         /* Se tem o id então é uma atualização */
         if ($this->request->getData('id')) {
             // die('Atualiza');
@@ -147,15 +148,23 @@ class EstagiariosController extends AppController {
             // die('Insere');
             $estagiario = $this->Estagiarios->newEmptyEntity();
 
-            $this->loadModel('Estudantes');
-            $estudante = $this->Estudantes->find()->where(['estudantes.registro' => $this->getRequest()->getSession()->read('numero')])->first();
-            $estudante_id = $estudante->toArray()['id'];
-            // pr($estudante_id);
-            // die();
-            $dadosinsere = $this->request->getData();
-            $dadosinsere['alunonovo_id'] = $estudante_id;
+            if ($this->getRequest()->getAttribute('identity')['categoria'] == 2):
+                $this->loadModel('Estudantes');
+                // pr($this->getRequest()->getAttribute('identity')['numero']);
+                $estudante = $this->Estudantes->find()->where(['estudantes.registro' => $this->getRequest()->getAttribute('identity')['numero']])->first();
+                $estudante_id = $estudante->toArray()['id'];
+                // pr($estudante);
+                // die();
+                $dadosinsere = $this->request->getData();
+                $dadosinsere['alunonovo_id'] = $estudante_id;
             // pr($dadosinsere);
             // die();
+            else:
+                // $estagiarioquery = $this->Estudantes->find()->where(['estudantes.id' => $id])->first();
+                $estudante_id = $id;
+                $dadosinsere = $this->request->getData();
+                $dadosinsere['alunonovo_id'] = $estudante_id;
+            endif;
         }
         // pr($dadosinsere);
         // die();
@@ -182,13 +191,17 @@ class EstagiariosController extends AppController {
                     $ultimo_id = $this->request->getData('id');
                 } else {
                     // die('criação');
-                    $id = $this->Estagiarios->find()->orderDesc('id')->first();
-                    $ultimo_id = $id->id;
+                    $estagiario_id = $this->Estagiarios->find()->orderDesc('id')->first();
+                    $ultimo_id = $estagiario_id->id;
                     // pr($ultimo_id);
                     // die();
                     // Inserir dados de estudante em aluno //
                     $this->loadModel('Estudantes');
-                    $queryestudantesemestagio = $this->Estudantes->find()->where(['estudantes.registro' => $this->getRequest()->getSession()->read('numero')])->first();
+                    if ($this->getRequest()->getAttribute('identity')['categoria'] == 2):
+                        $queryestudantesemestagio = $this->Estudantes->find()->where(['estudantes.registro' => $this->getRequest()->getSession()->read('numero')])->first();
+                    elseif ($this->getRequest()->getAttribute('identity')['categoria'] == 1):
+                        $queryestudantesemestagio = $this->Estudantes->find()->where(['estudantes.id' => $id])->first();
+                    endif;
                     $estudantesemestagio = $queryestudantesemestagio->toArray();
                     // pr($estudantesemestagio);
                     // die();
@@ -229,11 +242,19 @@ class EstagiariosController extends AppController {
         }
         // die("Inserção ou atualização");
         // Coleto dados para enviar para o formulário
-        $estagios = $this->Estagiarios->find()
-                ->contain(['Alunos', 'Estudantes', 'Supervisores', 'Docentes', 'Instituicaoestagios'])
-                ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('numero')])
-                ->order(['Estagiarios.nivel']);
 
+        if ($this->getRequest()->getAttribute('identity')['categoria'] == 2):
+            $estagios = $this->Estagiarios->find()
+                    ->contain(['Alunos', 'Estudantes', 'Supervisores', 'Docentes', 'Instituicaoestagios'])
+                    ->where(['Estagiarios.registro' => $this->getRequest()->getAttribute('identity')['numero']])
+                    ->order(['Estagiarios.nivel']);
+
+        elseif ($this->getRequest()->getAttribute('identity')['categoria'] == 1):
+            $estagios = $this->Estagiarios->find()
+                    ->contain(['Alunos', 'Estudantes', 'Supervisores', 'Docentes', 'Instituicaoestagios'])
+                    ->where(['Estagiarios.alunonovo_id' => $id])
+                    ->order(['Estagiarios.nivel']);
+        endif;
         $ultimoestagio = $estagios->last();
         // pr($ultimoestagio);
         // die();
@@ -266,10 +287,23 @@ class EstagiariosController extends AppController {
         } else {
             // Se não é estagiário então capturo a informação do estudante
             $this->loadModel('Estudantes');
-            $estudante = $this->Estudantes->find()
-                    ->contain('')
-                    ->where(['registro' => $this->getRequest()->getSession()->read('numero')])
-                    ->select(['id', 'registro', 'nome']);
+
+            if ($this->getRequest()->getAttribute('identity')['categoria'] == 2):
+
+                $estudante = $this->Estudantes->find()
+                        ->contain('')
+                        ->where(['registro' => $this->getRequest()->getSession()->read('numero')])
+                        ->select(['id', 'registro', 'nome']);
+
+            elseif ($this->getRequest()->getAttribute('identity')['categoria'] == 1):
+
+                $estudante = $this->Estudantes->find()
+                        ->contain('')
+                        ->where(['id' => $id])
+                        ->select(['id', 'registro', 'nome']);
+
+            endif;
+
             $estudante_semestagio = $estudante->first();
             $this->set('estudante_semestagio', $estudante_semestagio);
         }
@@ -526,7 +560,6 @@ class EstagiariosController extends AppController {
         if (is_null($id)) {
             $this->Flash->error(__('Selecionar o estudante estagiário'));
             return $this->redirect('/estudantes/index');
-            $this->cakeError('error404');
         } else {
             $estagiario = $this->Estagiarios->get($id, [
                 'contain' => [],
@@ -541,7 +574,7 @@ class EstagiariosController extends AppController {
 
                 return $this->redirect(['action' => 'view', $id]);
             }
-            $this->Flash->error(__('The estagiario could not be saved. Please, try again.'));
+            $this->Flash->error(__('Registro estagiario não foi atualizado. Tente novamente.'));
         }
         $alunos = $this->Estagiarios->Alunos->find('list');
         $estudantes = $this->Estagiarios->Estudantes->find('list');

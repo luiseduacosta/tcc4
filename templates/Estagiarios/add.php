@@ -18,8 +18,8 @@
             <fieldset>
                 <legend><?= __('Novo estagiário') ?></legend>
                 <?php
-                echo $this->Form->control('aluno_id', ['options' => $alunos]);
-                echo $this->Form->control('estudante_id', ['options' => $estudantes, 'empty' => true]);
+                echo $this->Form->control('estudante_id', ['options' => $estudantes, 'empty' => false]);
+                echo $this->Form->control('aluno_id', ['options' => $alunos, 'empty' => true]);
                 echo $this->Form->control('registro');
                 echo $this->Form->control('ajuste2020', ['label' => ['text' => 'Ajuste 2020']]);
                 echo $this->Form->control('turno');

@@ -131,7 +131,7 @@
                             <?php echo $this->Html->link("Avaliação discente", "/avaliacoes/supervisoravaliacao?cress=" . $this->getRequest()->getAttribute('identity')['numero'], ['class' => 'nav-link', 'style' => 'background-color: #2b6c9c; color: white; width: 100px']); ?>
                         </li>
                         <li class="nav-item">
-                            <?php echo $this->Html->link("Meus dados", "/Supervisores/view?cress=" . $this->getRequest()->getSession()->read('numero'), ['class' => 'nav-link', 'style' => 'background-color: #2b6c9c; color: white']); ?>
+                            <?php echo $this->Html->link("Meus dados", "/Supervisores/view?cress=" . $this->getRequest()->getAttribute('identity')['numero'], ['class' => 'nav-link', 'style' => 'background-color: #2b6c9c; color: white']); ?>
                         </li>
                         <li class = "nav-item">
                             <?php echo $this->Html->link('Sair', '/Userestagios/logout/', ['class' => 'nav-link', 'style' => 'background-color: #2b6c9c; color: white']); ?>
