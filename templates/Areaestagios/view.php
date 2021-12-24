@@ -3,6 +3,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Areaestagio $areaestagio
  */
+// pr($areaestagio);
+// die();
 ?>
 <div class="row">
     <?php echo $this->element('menu_mural') ?>
@@ -10,10 +12,10 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Ações') ?></h4>
-            <?= $this->Html->link(__('Editar área de estágio'), ['action' => 'edit', $areaestagio->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Excluir área de estágio'), ['action' => 'delete', $areaestagio->id], ['confirm' => __('Are you sure you want to delete # {0}?', $areaestagio->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('Listar área de estágios'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('Nova área de estágio'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Editar área de estágio'), ['action' => 'edit', $areaestagio->id], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Form->postLink(__('Excluir área de estágio'), ['action' => 'delete', $areaestagio->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $areaestagio->id), 'class' => 'btn btn-danger']) ?>
+            <?= $this->Html->link(__('Listar área de estágios'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Nova área de estágio'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
         </div>
     </aside>
     <div class="column-responsive column-80">
@@ -36,8 +38,8 @@
                         <table>
                             <tr>
                                 <th><?= __('Id') ?></th>
-                                <th><?= __('Aluno Id') ?></th>
-                                <th><?= __('Estudante Id') ?></th>
+                                <th><?= __('Aluno') ?></th>
+                                <th><?= __('Estudante') ?></th>
                                 <th><?= __('Registro') ?></th>
                                 <th><?= __('Ajuste curricular 2020') ?></th>
                                 <th><?= __('Turno') ?></th>
@@ -121,7 +123,7 @@
                                 <tr>
                                     <td><?= h($muralestagios->id) ?></td>
                                     <td><?= h($muralestagios->id_estagio) ?></td>
-                                    <td><?= $muralestagios->instituicao = ($muralestagios->id_estagio > 0) ? $this->Html->link(h($muralestagios->instituicao), ['controller' => 'instituicaoestagios', 'action' => 'view', $muralestagios->id_estagio]) : '' ?></td>
+                                    <td><?= $muralestagios->id_estagio > 0 ? $this->Html->link(h($muralestagios->instituicao), ['controller' => 'instituicaoestagios', 'action' => 'view', $muralestagios->id_estagio]) : $muralestagios->instituicao ?></td>
                                     <td><?= h($muralestagios->convenio) ?></td>
                                     <td><?= h($muralestagios->vagas) ?></td>
                                     <td><?= h($muralestagios->beneficios) ?></td>

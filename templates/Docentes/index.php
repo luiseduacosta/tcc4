@@ -5,12 +5,10 @@
  */
 ?>
 
-<div class="row justify-content-center">
-    <?= $this->element('menu_mural') ?>
-</div>
-
 <div class="docentes index content container">
+    <?= $this->element('menu_mural') ?>
     <?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
+    <h3><?= __('Professores(as)') ?></h3>
     <div class="table-responsive">
         <table>
             <thead>

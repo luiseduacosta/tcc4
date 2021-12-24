@@ -7,7 +7,7 @@
 <div class="userestagios index container">
     <?php echo $this->element('menu_mural') ?>
     <?= $this->Html->link(__('Novo usuário de estágio'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Usuário de estágios') ?></h3>
+    <h3><?= __('Usuários de estágio') ?></h3>
     <div class="table-responsive">
         <table>
             <thead>
@@ -32,11 +32,13 @@
                         <td><?= $userestagio->has('estudante') ? $this->Html->link($userestagio->estudante->nome, ['controller' => 'Estudantes', 'action' => 'view', $userestagio->estudante->id]) : '' ?></td>
                         <td><?= $userestagio->has('supervisor') ? $this->Html->link($userestagio->supervisor->nome, ['controller' => 'Supervisores', 'action' => 'view', $userestagio->supervisor->id]) : '' ?></td>
                         <td><?= $userestagio->has('docente') ? $this->Html->link($userestagio->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $userestagio->docente->id]) : '' ?></td>
+                        <?php if ($userestagio->categoria != '1'): ?>
                         <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $userestagio->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $userestagio->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $userestagio->id], ['confirm' => __('Are you sure you want to delete # {0}?', $userestagio->id)]) ?>
+                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $userestagio->id]) ?>
+                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $userestagio->id]) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $userestagio->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $userestagio->id)]) ?>
                         </td>
+                        <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

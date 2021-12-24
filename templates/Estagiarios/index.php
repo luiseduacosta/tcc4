@@ -27,7 +27,6 @@ $usuario = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="row justify-content-center">
-    <?php echo $this->element('menu_mural') ?>
     <div class="col-auto">
         <?php if ($usuario->categoria == 1): ?>
             <?= $this->Form->create($estagiarios, ['class' => 'form-inline']); ?>
@@ -40,10 +39,14 @@ $usuario = $this->getRequest()->getAttribute('identity');
 </div>
 
 <div class="estagiarios index content">
+    <?= $this->element('menu_mural') ?>
+    
     <?php if ($usuario->categoria == 1): ?>
         <?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <?php endif; ?>
+    
     <h3><?= __('Estagiarios') ?></h3>
+
     <div class="table-responsive">
         <table>
             <thead>

@@ -1,7 +1,7 @@
-<?php // pr($t_seguro);       ?>
-<?php // pr($periodos);       ?>
-<?php // pr($periodoselecionado);       ?>
-<?php // die();       ?>
+<?php // pr($t_seguro);         ?>
+<?php // pr($periodos);         ?>
+<?php // pr($periodoselecionado); ?>
+<?php // die();         ?>
 
 <script>
 
@@ -19,14 +19,19 @@
 
 </script>
 
-<div class="container">
-    <?php echo $this->element('menu_mural') ?>
-    <div class='table-responsive'>
-
+<div class="row justify-content-left">
+    <div class="col-auto">
         <?php echo $this->Form->create(null, ['url' => 'index'], ['class' => 'form-inline']); ?>
-        <?php echo $this->Form->input('periodo', ['id' => 'periodo', 'type' => 'select', 'label' => ['style' => 'display:inline;'], 'options' => $periodos, 'selected' => $periodoselecionado, 'empty' => array($periodoselecionado => 'Período'), 'class' => 'form-control']); ?>
+        <?php echo $this->Form->input('periodo', ['id' => 'periodo', 'type' => 'select', 'label' => ['text' => 'Período'], 'options' => $periodos, 'selected' => $periodoselecionado, 'empty' => [$periodoselecionado => $periodoselecionado], 'class' => 'form-control']); ?>
         <?php echo $this->Form->end(); ?>
+    </div>
+</div>
 
+<div class="container">
+
+    <?php echo $this->element('menu_mural') ?>
+
+    <div class='table-responsive'>
         <table class='table table-hover table-striped table-responsive'>
             <thead class='thead-light'>
             <caption style='caption-side: top'>Planilha para seguro de vida dos estudantes estagiários</caption>

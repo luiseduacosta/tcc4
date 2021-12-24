@@ -12,7 +12,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php if ($user['categoria'] == 1): ?>
         <?= $this->Html->link(__('Cadastra supervisora'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <?php endif; ?>
-    <h3><?= __('Supervisores') ?></h3>
+    <h3><?= __('Supervisores(as)') ?></h3>
     <div class="table-responsive">
         <table>
             <thead>

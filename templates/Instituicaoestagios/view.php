@@ -160,9 +160,9 @@
                                     <td><?= h($supervisores->observacoes) ?></td>
                                     <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                                         <td class="actions">
-                                            <?= $this->Html->link(__('View'), ['controller' => 'Supervisores', 'action' => 'view', $supervisores->id]) ?>
-                                            <?= $this->Html->link(__('Edit'), ['controller' => 'Supervisores', 'action' => 'edit', $supervisores->id]) ?>
-                                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'Supervisores', 'action' => 'delete', $supervisores->id], ['confirm' => __('Are you sure you want to delete # {0}?', $supervisores->id)]) ?>
+                                            <?= $this->Html->link(__('Ver'), ['controller' => 'Supervisores', 'action' => 'view', $supervisores->id]) ?>
+                                            <?= $this->Html->link(__('Editar'), ['controller' => 'Supervisores', 'action' => 'edit', $supervisores->id]) ?>
+                                            <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Supervisores', 'action' => 'delete', $supervisores->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $supervisores->id)]) ?>
                                         </td>
                                     <?php endif; ?>
                                 </tr>
