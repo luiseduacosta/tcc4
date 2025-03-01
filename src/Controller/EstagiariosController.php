@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use phpDocumentor\Reflection\Types\Null_;
 
 /**
  * Estagiarios Controller
@@ -109,14 +110,13 @@ class EstagiariosController extends AppController {
         // pr($estagiarios);
         $ordem = null;
         foreach ($estagiarios as $c_estagiario):
-            // pr($c_estagiario);
-            // die();
+            // pr($c_estagiario->tccestudante->monografia_id);
             $estudantes[$i]['registro'] = $c_estagiario->registro;
             $estudantes[$i]['turno'] = $c_estagiario->turno;
             $estudantes[$i]['nivel'] = $c_estagiario->nivel;
             $estudantes[$i]['periodo'] = $c_estagiario->periodo;
 
-            if ($c_estagiario->tccestudante['monografia_id']):
+            if (!empty($c_estagiario->tccestudante)):
                 $estudantes[$i]['id'] = $c_estagiario->tccestudante->id;
                 $estudantes[$i]['nome'] = $c_estagiario->tccestudante->nome;
 
