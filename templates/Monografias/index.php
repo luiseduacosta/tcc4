@@ -10,24 +10,37 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Monografia[]|\Cake\Collection\CollectionInterface $monografias
  */
 ?>
+<<<<<<< HEAD
 
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Ações') ?></li>
+=======
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+>>>>>>> b58a44b (Fix issue)
         <?php if (isset($user->role) && $user->role == 'admin'): ?>
             <li><?= $this->Html->link(__('Nova Monografia'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
         <?php endif; ?>
         <?= $this->element('menu_esquerdo') ?>
     </ul>
 </nav>
+<<<<<<< HEAD
 
+=======
+>>>>>>> b58a44b (Fix issue)
 <div class="monografias index large-9 medium-8 columns content">
     <h3><?= __('Monografias') ?></h3>
     <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
     <?= $this->Form->control('titulo', ['label' => 'Busca por título']) ?>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
+<<<<<<< HEAD
     <table class='table'>
+=======
+    <table>
+>>>>>>> b58a44b (Fix issue)
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('Monografias.titulo', 'Título') ?></th>

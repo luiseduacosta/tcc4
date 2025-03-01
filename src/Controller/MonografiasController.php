@@ -511,7 +511,11 @@ class MonografiasController extends AppController {
         die();
     }
 
+<<<<<<< HEAD
     public function download($dre, $id) {
+=======
+    public function download($dre = null, $id) {
+>>>>>>> b58a44b (Fix issue)
 
         $this->Authorization->skipAuthorization();
         $this->autoRender = false;
