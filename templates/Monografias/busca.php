@@ -6,15 +6,15 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Monografia[]|\Cake\Collection\CollectionInterface $monografias
  */
 ?>
-
-<div class="row justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>        
-</div>
-
-<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-    <?= $this->Html->link(__('Nova Monografia'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
-<?php endif; ?>
-
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+            <li><?= $this->Html->link(__('Nova Monografia'), ['action' => 'add']) ?></li>
+        <?php endif; ?>
+        <?= $this->element('menu_esquerdo') ?>
+    </ul>
+</nav>
 <div class="monografias index large-9 medium-8 columns content">
     <h3><?= __('Monografias') ?></h3>
 
@@ -54,7 +54,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         endif;
                         ?>
                     </td> 
-                    <td><?= $this->Html->link(h($monografia->docentemonografia->nome), ['controller' => 'docentes', 'action' => 'view', $monografia->docentemonografia->id]) ?></td>
+                    <td><?= $this->Html->link(h($monografia->docente->nome), ['controller' => 'docentes', 'action' => 'view', $monografia->docente->id]) ?></td>
                     <td><?= $monografia->has('area') ? $this->Html->link($monografia->area->area, ['controller' => 'Areas', 'action' => 'view', $monografia->area->id]) : '' ?></td>
                     <td><?= $this->Html->link($monografia->url, '/monografias/' . $monografia->url, ['download' => $monografia->url]) ?></td>
                 </tr>

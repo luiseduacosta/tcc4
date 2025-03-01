@@ -1,59 +1,48 @@
 <?php
+
+$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estagiario $estagiario
  */
 ?>
-
-<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-<script>
-    CKEDITOR.replace('observacoes')
-</script>
-
-<div class="container">
-    <div class="row">
-        <?php echo $this->element('menu_mural') ?>
-
-        <aside class="column">
-            <div class="side-nav">
-                <h4 class="heading"><?= __('Ações') ?></h4>
-                <?=
-                $this->Form->postLink(
-                        __('Excluir'),
-                        ['action' => 'delete', $estagiario->id],
-                        ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $estagiario->id), 'class' => 'btn btn-danger']
-                )
-                ?>
-<?= $this->Html->link(__('Listar Estagiários'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-            </div>
-        </aside>
-        <div class="column-responsive column-80">
-            <div class="estagiarios form content">
-                    <?= $this->Form->create($estagiario) ?>
-                <fieldset>
-                    <legend><?= __('Editar Estagiário') ?></legend>
-                    <?php
-                    echo $this->Form->control('id_aluno', ['label' => ['text' => 'Aluno(a)'], 'options' => $alunos]);
-                    echo $this->Form->control('alunonovo_id', ['label' => ['text' => 'Estudante'], 'options' => $estudantes]);
-                    echo $this->Form->control('registro');
-                    echo $this->Form->control('ajuste2020', ['label' => ['text' => 'Ajuste 2020'], 'options' => ['0' => 'Não', '1' => 'Sim']]);
-                    echo $this->Form->control('turno', ['options' => ['D' => 'Diurno', 'N' => 'Noturno', 'I' => 'Indeterminado']]);
-                    echo $this->Form->control('nivel');
-                    echo $this->Form->control('tc');
-                    echo $this->Form->control('tc_solicitacao', ['label' => ['text' => 'Data TC']]);
-                    echo $this->Form->control('id_instituicao', ['label' => ['text' => 'Instituição'], 'options' => $instituicaoestagios, 'empty' => true]);
-                    echo $this->Form->control('id_supervisor', ['label' => ['text' => 'Supervisor(a)'], 'options' => $supervisores, 'empty' => true]);
-                    echo $this->Form->control('id_professor', ['label' => ['text' => 'Professor(a)'], 'options' => $docentes, 'empty' => true]);
-                    echo $this->Form->control('periodo', ['label' => ['text' => 'Período']]);
-                    echo $this->Form->control('id_area', ['label' => ['text' => 'Área'], 'options' => $areaestagios, 'empty' => true]);
-                    echo $this->Form->control('nota');
-                    echo $this->Form->control('ch', ['label' => ['text' => 'CH']]);
-                    echo $this->Form->control('observacoes', ['label' => ['text' => 'Observações'], 'name' => 'observacoes', 'class' => 'form-control']);
-                    ?>
-                </fieldset>
-<?= $this->Form->button(__('Submit')) ?>
-<?= $this->Form->end() ?>
-            </div>
-        </div>
-    </div>
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+        <li><?= $this->Form->postLink(
+                __('Delete'),
+                ['action' => 'delete', $estagiario->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $estagiario->id)]
+            )
+        ?></li>
+        <?php endif; ?>
+        <?= $this->element('menu_esquerdo') ?>
+        <li><?= $this->Html->link(__('New Aluno'), ['controller' => 'Alunos', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('New Docente'), ['controller' => 'Docentes', 'action' => 'add']) ?></li>
+    </ul>
+</nav>
+<div class="estagiarios form large-9 medium-8 columns content">
+    <?= $this->Form->create($estagiario) ?>
+    <fieldset>
+        <legend><?= __('Edit Estagiario') ?></legend>
+        <?php
+            echo $this->Form->control('aluno_id', ['options' => $alunos]);
+            echo $this->Form->control('registro');
+            echo $this->Form->control('turno');
+            echo $this->Form->control('nivel');
+            echo $this->Form->control('tc');
+            echo $this->Form->control('tc_solicitacao', ['empty' => true]);
+            echo $this->Form->control('instituicao_id');
+            echo $this->Form->control('supervisor_id');
+            echo $this->Form->control('docente_id', ['options' => $docentes, 'empty' => true]);
+            echo $this->Form->control('periodo');
+            echo $this->Form->control('id_area', ['label' => 'Área', 'options' => $areas, 'empty' => true]);
+            echo $this->Form->control('nota');
+            echo $this->Form->control('ch', ['label' => 'Carga horária']);
+            echo $this->Form->control('observacoes');
+        ?>
+    </fieldset>
+    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->end() ?>
 </div>

@@ -1,27 +1,23 @@
 <?php
 $user = $this->getRequest()->getAttribute('identity');
 // pr($monografia);
-// die();
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Monografia $monografia
  */
 ?>
-
-<div class="row justify-content-center">
-    <?= $this->element('menu_monografias') ?>
-</div>
-
-<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-        <?= $this->Html->link(__('Editar monografia'), ['action' => 'edit', $monografia->id], ['class' => 'btn btn-primary']) ?>
-        <?= $this->Form->postLink(__('Excluir monografia'), ['action' => 'delete', $monografia->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $monografia->id), 'class' => 'btn btn-danger float-right']) ?>
-    <?php endif; ?>
-<?php endif; ?>
-
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+            <li><?= $this->Html->link(__('Edit Monografia'), ['action' => 'edit', $monografia->id], ['class' => 'button float-right']) ?> </li>
+            <li><?= $this->Form->postLink(__('Delete Monografia'), ['action' => 'delete', $monografia->id], ['confirm' => __('Are you sure you want to delete # {0}?', $monografia->id)], ['class' => 'button float-right']) ?> </li>
+        <?php endif; ?>
+        <?= $this->element('menu_esquerdo') ?>
+    </ul>
+</nav>
 <div class="monografias view large-9 medium-8 columns content">
     <h3><?= h($monografia->titulo) ?></h3>
-
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Titulo') ?></th>
@@ -50,7 +46,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Docente') ?></th>
-            <td><?= $this->Html->link($monografia->docentemonografia->nome, ['controller' => 'docentemonografias', 'action' => 'view', $monografia->docente_id]) ?></td>
+            <td><?= $this->Html->link($monografia->docente->nome, ['controller' => 'docentes', 'action' => 'view', $monografia->docente_id]) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Data') ?></th>
@@ -77,24 +73,25 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php if ($monografia->co_orienta_id > 0): ?>
             <tr>
                 <th scope="row"><?= __('Co Orienta Id', ['label' => 'Co-orientador']) ?></th>
-                <td><?= isset($monografia->co_orienta_id) ? $this->Html->link($monografia->co_orienta_id, ['controller' => 'docentemonografias', 'action' => 'view', $monografia->co_orienta_id]) : '' ?></td>
+                <td><?= $monografia->has('co_orienta_id > 0') ? $this->Html->link($monografia->co_orienta_id, ['controller' => 'docentes', 'action' => 'view', $monografia->co_orienta_id]) : '' ?></td>
             </tr>
         <?php endif ?>
         <tr>
             <th scope="row"><?= __('Banca1') ?></th>
-            <td><?= isset($monografia->banca1) ? $monografia->docentemonografia->nome : '' ?></td>
+            <td><?= h($monografia->has('banca1 != 0') ? $monografia->banca1 : $monografia->docente->nome) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Banca2') ?></th>
-            <td><?= isset($monografia->banca2) && !empty($monografia->banca2) ? $monografia->docentemonografias1->nome : '' ?></td>
+            <td><?= h($monografia->has('banca2 != 0') ? $monografia->docentes1->nome : '') ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Banca3') ?></th>
-            <td><?= isset($monografia->banca3) && !empty($monografia->banca3) ? $monografia->docentemonografias2->nome : '' ?></td>
+            <td><?= h($monografia->has('banca3 != 0') ? $monografia->docentes2->nome : '') ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Convidado') ?></th>
             <td><?= h($monografia->convidado) ?></td>
         </tr>
+
     </table>
 </div>

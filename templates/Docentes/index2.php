@@ -28,24 +28,36 @@ $user = $this->getRequest()->getAttribute('identity');
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('departamento') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('homepage', 'Site') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('curriculolattes', 'Lattes') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('motivoegresso', 'Motivo egresso') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('atualizacaolattes', 'Atualização') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('pesquisadordgp') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('formacaoprofissional', 'Formação') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('universidadedegraduacao', 'Universidade') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('anoformacao', 'Ano') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($docentes as $docente): ?>
                 <tr>
                     <td><?= $this->Html->link(h($docente->nome), ['controller' => 'docentes', 'action' => 'view', $docente->id]) ?></td>
-                    <td><?= h($docente->departamento) ?></td>
-                    <td><?= h($docente->homepage) ?></td>
                     <td>
                         <?php if ($docente->curriculolattes): ?>
                             <a href="<?= 'http://lattes.cnpq.br/' . $docente->curriculolattes ?>">Lattes</a>
                         <?php endif; ?>
                     </td>
-                    <td><?= h($docente->motivoegresso) ?></td>
+                    <td>
+                        <?php if ($docente->atualizacaolattes): ?>
+                            <?= h($docente->atualizacaolattes) ?>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <?php if ($docente->pesquisadordgp): ?>
+                            <a href='<?= 'http://dgp.cnpq.br/dgp/espelhogrupo/' . $docente->pesquisadordgp ?>'>Grupo de pesquisa Lattes</a>
+                        <?php endif; ?>
+                    </td>
+                    <td><?= h($docente->formacaoprofissional) ?></td>
+                    <td><?= h($docente->universidadedegraduacao) ?></td>
+                    <td><?= h($docente->anoformacao) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

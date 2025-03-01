@@ -4,23 +4,81 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Controller\AppController;
+use Cake\Event\Event;
+
 /**
  * Docentes Controller
  *
  * @property \App\Model\Table\DocentesTable $Docentes
+ *
  * @method \App\Model\Entity\Docente[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocentesController extends AppController {
 
+    public function beforeFilter(\Cake\Event\EventInterface $event) {
+
+        parent::beforeFilter($event);
+        $this->Authentication->addUnauthenticatedActions(['index', 'view']);
+    }
+
     /**
-     * Index method
+     * Index0 method
      *
-     * @return \Cake\Http\Response|null|void Renders view
+     * @return \Cake\Http\Response|null
      */
     public function index() {
 
+        $this->Authorization->skipAuthorization();
         $docentes = $this->paginate($this->Docentes);
-        $this->Authorization->authorize($this->Docentes);
+        $this->set(compact('docentes'));
+    }
+
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function index0() {
+
+        $docentes = $this->paginate($this->Docentes);
+        // $this->Authorization->authorize($docentes);
+        $this->set(compact('docentes'));
+    }
+
+    /**
+     * Index1 method
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function index1() {
+
+        $docentes = $this->paginate($this->Docentes);
+        // $this->Authorization->authorize($docentes);
+        $this->set(compact('docentes'));
+    }
+
+    /**
+     * Index2 method
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function index2() {
+
+        $docentes = $this->paginate($this->Docentes);
+        // $this->Authorization->authorize($docentes);
+        $this->set(compact('docentes'));
+    }
+
+    /**
+     * Index3 method
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function index3() {
+
+        $docentes = $this->paginate($this->Docentes);
+        // $this->Authorization->authorize($docentes);
         $this->set(compact('docentes'));
     }
 
@@ -28,46 +86,27 @@ class DocentesController extends AppController {
      * View method
      *
      * @param string|null $id Docente id.
-     * @return \Cake\Http\Response|null|void Renders view
+     * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
 
-        if (is_null($id)) {
-            $siape = $this->getRequest()->getQuery('siape');
-            if (isset($siape)):
-                $idquery = $this->Docentes->find()->where(['siape' => $siape]);
-                $id = $idquery->first();
-                $id = $id->id;
-            endif;
-        }
-
+        $this->Authorization->skipAuthorization();
         $docente = $this->Docentes->get($id, [
-            'contain' => ['Estagiarios' => ['Estudantes', 'Supervisores', 'Instituicaoestagios']]
+            'contain' => ['Monografias', 'Areamonografias'],
         ]);
-        $this->Authorization->authorize($docente);
-        $this->set(compact('docente'));
+        $this->set('docente', $docente);
     }
 
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add() {
 
-        $siape = $this->getRequest()->getQuery('siape');
-        $email = $this->getRequest()->getQuery('email');
-
         $docente = $this->Docentes->newEmptyEntity();
         $this->Authorization->authorize($docente);
-        if ($siape):
-            $docente->siape = $siape;
-        endif;
-        if ($email):
-            $docente->email = $email;
-        endif;
-
         if ($this->request->is('post')) {
             $docente = $this->Docentes->patchEntity($docente, $this->request->getData());
             if ($this->Docentes->save($docente)) {
@@ -84,7 +123,7 @@ class DocentesController extends AppController {
      * Edit method
      *
      * @param string|null $id Docente id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null) {
@@ -93,14 +132,16 @@ class DocentesController extends AppController {
             'contain' => [],
         ]);
         $this->Authorization->authorize($docente);
+        pr($this->request->getData());
+        // die();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $docente = $this->Docentes->patchEntity($docente, $this->request->getData());
             if ($this->Docentes->save($docente)) {
-                $this->Flash->success(__('Registro do docente atualizado.'));
+                $this->Flash->success(__('The docente has been saved.'));
 
-                return $this->redirect(['action' => 'view', $id]);
+                return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Registro do docente no foi atualizado. Tente novamente.'));
+            $this->Flash->error(__('The docente could not be saved. Please, try again.'));
         }
         $this->set(compact('docente'));
     }
@@ -109,7 +150,7 @@ class DocentesController extends AppController {
      * Delete method
      *
      * @param string|null $id Docente id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
+     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
@@ -117,6 +158,7 @@ class DocentesController extends AppController {
         $this->request->allowMethod(['post', 'delete']);
         $docente = $this->Docentes->get($id);
         $this->Authorization->authorize($docente);
+
         if ($this->Docentes->delete($docente)) {
             $this->Flash->success(__('The docente has been deleted.'));
         } else {

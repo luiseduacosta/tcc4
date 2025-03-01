@@ -35,12 +35,7 @@ class AppView extends View
      *
      * @return void
      */
-    public function initialize(): void      
+    public function initialize(): void
     {
-        parent::initialize();
-        $this->loadHelper('Html');
-        $this->loadHelper('Form');
-        $this->loadHelper('Flash');
-        $this->loadHelper('Time');
     }
 }

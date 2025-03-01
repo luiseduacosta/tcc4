@@ -8,24 +8,24 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+        <li class="heading"><?= __('Actions') ?></li>
+        <?php if (isset($user->role) && $user->role == 'admin'): ?>
             <li><?=
-                $this->Form->postLink(
-                        __('Excluir'),
-                        ['action' => 'delete', $monografia->id],
-                        ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $monografia->id)],
-                        ['class' => 'button float-right']
-                )
-                ?></li>
+            $this->Form->postLink(
+                    __('Delete'),
+                    ['action' => 'delete', $monografia->id],
+                    ['confirm' => __('Are you sure you want to delete # {0}?', $monografia->id)],
+                    ['class' => 'button float-right']
+            )
+            ?></li>
         <?php endif; ?>
-        <?= $this->element('menu_monografias'); ?>
+        <?= $this->element('menu_esquerdo'); ?>
     </ul>
 </nav>
 <div class="monografias form large-9 medium-8 columns content">
     <?= $this->Form->create($monografia, ['type' => 'file']) ?>
     <fieldset>
-        <legend><?= __('Editar monografia') ?></legend>
+        <legend><?= __('Edit Monografia') ?></legend>
         <?php
         echo $this->Form->control('catalogo', ['type' => 'hidden']);
         echo $this->Form->textarea('titulo', ['rows' => '2', 'cols' => '50']);

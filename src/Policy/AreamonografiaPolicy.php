@@ -20,7 +20,7 @@ class AreamonografiaPolicy {
      * @return bool
      */
     public function canAdd(IdentityInterface $user, Areamonografia $areamonografia) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->role) && $user->role == 'admin';
     }
 
     /**
@@ -31,7 +31,7 @@ class AreamonografiaPolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Areamonografia $areamonografia) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->role) && $user->role == 'admin';
     }
 
     /**
@@ -42,7 +42,7 @@ class AreamonografiaPolicy {
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Areamonografia $areamonografia) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->role) && $user->role == 'admin';
     }
 
     /**
@@ -53,7 +53,7 @@ class AreamonografiaPolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Areamonografia $areamonografia) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return true;
     }
 
 }

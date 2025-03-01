@@ -8,56 +8,52 @@ use App\Model\Entity\Estudante;
 use Authorization\IdentityInterface;
 
 /**
- * Estagiarios policy
+ * Aluno policy
  */
 class EstudantePolicy {
 
     /**
-     * Check if $user can index Estagiarios
+     * Check if $user can create Aluno
      *
      * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\EstagiariosTable\Estagiarios $estagiarios
+     * @param App\Model\Entity\Estudante $estudante
      * @return bool
      */
     public function canAdd(IdentityInterface $user, Estudante $estudante) {
-        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '2';
+        return isset($user->role) && $user->role == 'admin';
     }
 
     /**
-     * Check if $user can update Docente
+     * Check if $user can update Aluno
      *
      * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Docente $docente
+     * @param App\Model\Entity\Estudante $estudante
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Estudante $estudante) {
-        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '2';
+        return isset($user->role) && $user->role == 'admin';
     }
 
     /**
-     * Check if $user can delete Docente
+     * Check if $user can delete Aluno
      *
      * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Docente $docente
+     * @param App\Model\Entity\Estudante $estudante
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Estudante $estudante) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->role) && $user->role == 'admin';
     }
 
     /**
-     * Check if $user can view Docente
+     * Check if $user can view Aluno
      *
      * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Docente $docente
+     * @param App\Model\Entity\Estudante $estudante
      * @return bool
      */
     public function canView(IdentityInterface $user, Estudante $estudante) {
-
-        if ($estudante->registro == $user->numero) {
-            return true;
-        }
-        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '4';
+        return true;
     }
 
 }

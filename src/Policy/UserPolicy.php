@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Policy;
@@ -10,8 +9,8 @@ use Authorization\IdentityInterface;
 /**
  * User policy
  */
-class UserPolicy {
-
+class UserPolicy
+{
     /**
      * Check if $user can create User
      *
@@ -19,8 +18,10 @@ class UserPolicy {
      * @param App\Model\Entity\User $resource
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, User $resourse) {
-        return isset($user->categoria) && $user->categoria == '1';
+    public function canAdd(IdentityInterface $user, User $resourse)
+    {
+
+        return $user->role == 'admin';
     }
 
     /**
@@ -30,8 +31,9 @@ class UserPolicy {
      * @param App\Model\Entity\User $resource
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, User $resource) {
-        return isset($user->categoria) && $user->categoria == '1';
+    public function canEdit(IdentityInterface $user, User $resource)
+    {
+        return $user->role == 'admin';
     }
 
     /**
@@ -41,8 +43,9 @@ class UserPolicy {
      * @param App\Model\Entity\User $resource
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, User $resource) {
-        return isset($user->categoria) && $user->categoria == '1';
+    public function canDelete(IdentityInterface $user, User $resource)
+    {
+        return $user->role == 'admin';
     }
 
     /**
@@ -52,8 +55,9 @@ class UserPolicy {
      * @param App\Model\Entity\User $resource
      * @return bool
      */
-    public function canView(IdentityInterface $user, User $resource) {
-        return isset($user->categoria) && $user->categoria == '1';
+    public function canView(IdentityInterface $user, User $resource)
+    {
+        return $user->role == 'admin';
     }
 
     /**
@@ -63,8 +67,9 @@ class UserPolicy {
      * @param App\Model\Entity\User $resource
      * @return bool
      */
-    public function canIndex(IdentityInterface $user, User $resource) {
-        return isset($user->categoria) && $user->categoria == '1';
+    public function canIndex(IdentityInterface $user, User $resource)
+    {
+        return $user->role == 'admin';
     }
 
 }

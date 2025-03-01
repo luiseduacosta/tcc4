@@ -6,16 +6,12 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 // pr($agendamentotccs);
 ?>
-<div class="row justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>
-</div>
-
-<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-    <?= $this->Html->link(__('Novo agendamento de TCC'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
-<?php endif; ?>
-
-<div class="agendamentotccs index content container">
-    <h3><?= __('Defesas de TCC') ?></h3>
+<div class="agendamentotccs index content">
+    <?php if (isset($user->role) && $user->role == 'admin'): ?>
+        <?= $this->Html->link(__('Novo Agendamento de Tcc'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?php endif; ?>
+    <?= $this->element('menu_esquerdo') ?>
+    <h3><?= __('Agendamento de Oficina de TCC') ?></h3>
     <div class="table-responsive">
         <table>
             <thead>
@@ -28,9 +24,9 @@ $user = $this->getRequest()->getAttribute('identity');
                     <th><?= $this->Paginator->sort('horario') ?></th>
                     <th><?= $this->Paginator->sort('sala') ?></th>
                     <th><?= $this->Paginator->sort('titulo') ?></th>
-                    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                    <?php if (isset($user->role) && $user->role == 'admin'): ?>
                         <th><?= $this->Paginator->sort('avaliacao') ?></th>
-                        <th class="actions"><?= __('Ações') ?></th>
+                        <th class="actions"><?= __('Actions') ?></th>
                     <?php endif; ?>
                 </tr>
             </thead>
@@ -38,42 +34,34 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?php foreach ($agendamentotccs as $agendamentotcc): ?>
                     <tr>
                         <td><?= $agendamentotcc->has('estudante') ? $this->Html->link($agendamentotcc->estudante->nome, ['controller' => 'Agendamentotccs', 'action' => 'view', $agendamentotcc->id]) : '' ?></td>
-
-                        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                            <td><?= $agendamentotcc->has('docente') ? $this->Html->link($agendamentotcc->docente->nome, ['controller' => 'Docentemonografias', 'action' => 'view', $agendamentotcc->docente->id]) : '' ?></td>
-                        <?php else: ?>
-                            <td><?= $agendamentotcc->has('docente') ? $agendamentotcc->docente->nome : '' ?></td>
-                        <?php endif; ?>
-
-                        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                            <td><?= $agendamentotcc->has('docentes1') ? $this->Html->link($agendamentotcc->docentes1->nome, ['controller' => 'Docentemonografias', 'action' => 'view', $agendamentotcc->docentes1->id]) : '' ?></td>
-                        <?php else: ?>
-                            <td><?= $agendamentotcc->has('docentes1') ? $agendamentotcc->docentes1->nome : '' ?></td>
-                        <?php endif; ?>
-
-                        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                            <td><?= $agendamentotcc->has('docentes2') ? $this->Html->link($agendamentotcc->docentes2->nome, ['controller' => 'Docentemonografias', 'action' => 'view', $agendamentotcc->docentes2->id]) : '' ?></td>
-                        <?php else: ?>
-                            <td><?= $agendamentotcc->has('docentes2') ? $agendamentotcc->docentes2->nome : '' ?></td>                            
-                        <?php endif; ?>
-                            
+                        <td><?= $agendamentotcc->has('docente') ? $this->Html->link($agendamentotcc->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docente->id]) : '' ?></td>
+                        <td><?= $agendamentotcc->has('docentes1') ? $this->Html->link($agendamentotcc->docentes1->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes1->id]) : '' ?></td>
+                        <td><?= $agendamentotcc->has('docentes2') ? $this->Html->link($agendamentotcc->docentes2->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes2->id]) : '' ?></td>'
                         <td><?= h($agendamentotcc->data->format('d-m-Y')) ?></td>
                         <td><?= h($agendamentotcc->horario->i18nFormat('HH:mm:ss')) ?></td>
-
                         <td><?= $this->Number->format($agendamentotcc->sala) ?></td>
-
                         <td><?= h($agendamentotcc->titulo) ?></td>
-                        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                        <?php if (isset($user->role) && $user->role == 'admin'): ?>
                             <td><?= h($agendamentotcc->avaliacao) ?></td>
                             <td class="actions">
-                                <?= $this->Html->link(__('Ver'), ['action' => 'view', $agendamentotcc->id]) ?>
-                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id]) ?>
-                                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $agendamentotcc->id)]) ?>
-                            </td>
-                        <?php endif; ?>
+                                <?= $this->Html->link(__('View'), ['action' => 'view', $agendamentotcc->id]) ?>
+                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $agendamentotcc->id]) ?>
+                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Are you sure you want to delete # {0}?', $agendamentotcc->id)]) ?>
+                            <?php endif; ?>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
+    </div>
+    <div class="paginator">
+        <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . __('first')) ?>
+            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next(__('next') . ' >') ?>
+            <?= $this->Paginator->last(__('last') . ' >>') ?>
+        </ul>
+        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
     </div>
 </div>

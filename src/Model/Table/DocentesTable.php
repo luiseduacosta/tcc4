@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -12,23 +10,17 @@ use Cake\Validation\Validator;
 /**
  * Docentes Model
  *
- * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
- * @property \App\Model\Table\MuralestagiosTable&\Cake\ORM\Association\HasMany $Muralestagios
- * @property \App\Model\Table\UserestagiosTable&\Cake\ORM\Association\HasMany $Userestagios
+ * @property \App\Model\Table\MonografiasTable&\Cake\ORM\Association\HasMany $Monografias
+ * @property \App\Model\Table\ProfessoresAreasTable&\Cake\ORM\Association\HasMany $ProfessoresAreas
  *
- * @method \App\Model\Entity\Docente newEmptyEntity()
- * @method \App\Model\Entity\Docente newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\Docente[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Docente get($primaryKey, $options = [])
- * @method \App\Model\Entity\Docente findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\Docente patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Docente[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Docente newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Docente[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Docente|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Docente saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Docente[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Docente[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Docente[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Docente[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Docente patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Docente[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Docente findOrCreate($search, callable $callback = null, $options = [])
  */
 class DocentesTable extends Table {
 
@@ -38,31 +30,22 @@ class DocentesTable extends Table {
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config): void {
+    public function initialize(array $config): Void {
         parent::initialize($config);
 
         $this->setTable('docentes');
-        $this->setAlias('docentes');
-        $this->setDisplayField('nome');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Estagiarios', [
-            'foreignKey' => 'id_professor',
+        $this->hasMany('Monografias', [
+            'foreignKey' => 'docente_id',
         ]);
-        $this->hasMany('Muralestagios', [
-            'foreignKey' => 'id_professor',
+
+        $this->belongsToMany('Areamonografias', [
+            'targetForeignKey' => 'areamonografia_id',
+            'foreignKey' => 'docente_id',
+            'joinTable' => 'areamonografias_docentes'
         ]);
-        /*
-          $this->hasMany('Userestagios', [
-          'foreignKey' => 'docente_id',
-          ]);
-         */
-    }
-
-    public function beforeFind($event, $query, $options, $primary) {
-
-        $query->order(['nome' => 'ASC']);
-        return $query;
     }
 
     /**
@@ -209,7 +192,6 @@ class DocentesTable extends Table {
 
         $validator
                 ->scalar('tipocargo')
-                ->maxLength('tipocargo', 10)
                 ->allowEmptyString('tipocargo');
 
         $validator
@@ -219,12 +201,10 @@ class DocentesTable extends Table {
 
         $validator
                 ->scalar('regimetrabalho')
-                ->maxLength('regimetrabalho', 5)
                 ->allowEmptyString('regimetrabalho');
 
         $validator
                 ->scalar('departamento')
-                ->maxLength('departamento', 30)
                 ->allowEmptyString('departamento');
 
         $validator
@@ -241,6 +221,19 @@ class DocentesTable extends Table {
                 ->allowEmptyString('observacoes');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker {
+        $rules->add($rules->isUnique(['email']));
+
+        return $rules;
     }
 
 }

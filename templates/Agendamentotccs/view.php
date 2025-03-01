@@ -6,54 +6,39 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 // pr($agendamentotcc);
 ?>
-
-<div class="row justify-content-center">
-    <?= $this->element('menu_monografias') ?>
-</div>
-
 <div class="row">
-    <div class="side-nav">
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <?= $this->Html->link(__('Agendar defesa'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
-            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id], ['class' => 'btn btn-primary']) ?>
-            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $agendamentotcc->id), 'class' => 'btn btn-danger float-right']) ?>
-        <?php endif; ?>
-        <?= $this->Html->link(__('Agendamentos marcados'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-        <?= $this->Html->link(__('Ata da Defesa'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-        <?= $this->Html->link(__('Declarações de participção'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-    </div>
-    <div class="container">
-        <div class="agendamentotccs view container">
+    <aside class="column">
+        <div class="side-nav">
+            <h4 class="heading"><?= __('Actions') ?></h4>
+            <?php if (isset($user->role) && $user->role == 'admin'): ?>
+                <?= $this->Html->link(__('Agendar Oficina'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id], ['class' => 'button float-right']) ?>
+                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Are you sure you want to delete # {0}?', $agendamentotcc->id)], ['class' => 'button float-right']) ?>
+            <?php endif; ?>
+            <?= $this->Html->link(__('Agendamentos marcados'), ['action' => 'index'], ['class' => 'button float-right']) ?>
+            <?= $this->Html->link(__('Ata da Oficna'), ['action' => 'index'], ['class' => 'button float-right']) ?>
+            <?= $this->Html->link(__('Declarações de participção'), ['action' => 'index'], ['class' => 'button float-right']) ?>
+        </div>
+    </aside>
+    <div class="column-responsive column-80">
+        <div class="agendamentotccs view content">
             <h3><?= h($agendamentotcc->estudante->nome) ?></h3>
             <table>
                 <tr>
-                    <th><?= __('Estudante') ?></th>
+                    <th><?= __('Aluno') ?></th>
                     <td><?= $agendamentotcc->has('estudante') ? $this->Html->link($agendamentotcc->estudante->nome, ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->estudante->id]) : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Docente') ?></th>
-                    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                        <td><?= $agendamentotcc->has('docente') ? $this->Html->link($agendamentotcc->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docente->id]) : '' ?></td>
-                    <?php else: ?>
-                        <td><?= $agendamentotcc->has('docente') ? $agendamentotcc->docente->nome : '' ?></td>                    
-                    <?php endif; ?>
+                    <td><?= $agendamentotcc->has('docente') ? $this->Html->link($agendamentotcc->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docente->id]) : '' ?></td>
                 </tr>
-
                 <tr>
                     <th><?= __('Banca1') ?></th>
-                    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                        <td><?= $agendamentotcc->has('docentes1') ? $this->Html->link($agendamentotcc->docentes1->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes1->id]) : '' ?></td>
-                    <?php else: ?>
-                        <td><?= $agendamentotcc->has('docentes1') ? $agendamentotcc->docentes1->nome : '' ?></td>                    
-                    <?php endif; ?>
+                    <td><?= $agendamentotcc->has('docentes1') ? $this->Html->link($agendamentotcc->docentes1->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes1->id]) : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Banca2') ?></th>
-                    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                        <td><?= $agendamentotcc->has('docentes2') ? $this->Html->link($agendamentotcc->docentes2->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes2->id]) : '' ?></td>
-                    <?php else: ?>
-                        <td><?= $agendamentotcc->has('docentes2') ? $agendamentotcc->docentes2->nome : '' ?></td>                    
-                    <?php endif; ?>
+                    <td><?= $agendamentotcc->has('docentes2') ? $this->Html->link($agendamentotcc->docentes2->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes2->id]) : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Convidado') ?></th>
@@ -75,12 +60,10 @@ $user = $this->getRequest()->getAttribute('identity');
                     <th><?= __('Horario') ?></th>
                     <td><?= h($agendamentotcc->horario->i18nFormat('HH:mm:ss')) ?></td>
                 </tr>
-                <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                    <tr>
-                        <th><?= __('Avaliacao') ?></th>
-                        <td><?= h($agendamentotcc->avaliacao) ?></td>
-                    </tr>
-                <?php endif; ?>
+                <tr>
+                    <th><?= __('Avaliacao') ?></th>
+                    <td><?= h($agendamentotcc->avaliacao) ?></td>
+                </tr>
             </table>
         </div>
     </div>

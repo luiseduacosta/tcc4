@@ -28,24 +28,24 @@ $user = $this->getRequest()->getAttribute('identity');
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('departamento') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('homepage', 'Site') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('curriculolattes', 'Lattes') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('motivoegresso', 'Motivo egresso') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('mestradoarea', "Área") ?></th>
+                <th scope="col"><?= $this->Paginator->sort('mestradouniversidade', 'Universidade') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('mestradoanoconclusao', 'Conclusão') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('doutoradoarea', "Área") ?></th>
+                <th scope="col"><?= $this->Paginator->sort('doutoradouniversidade', "Universidade") ?></th>
+                <th scope="col"><?= $this->Paginator->sort('doutoradoanoconclusao', "Conclusão") ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($docentes as $docente): ?>
                 <tr>
                     <td><?= $this->Html->link(h($docente->nome), ['controller' => 'docentes', 'action' => 'view', $docente->id]) ?></td>
-                    <td><?= h($docente->departamento) ?></td>
-                    <td><?= h($docente->homepage) ?></td>
-                    <td>
-                        <?php if ($docente->curriculolattes): ?>
-                            <a href="<?= 'http://lattes.cnpq.br/' . $docente->curriculolattes ?>">Lattes</a>
-                        <?php endif; ?>
-                    </td>
-                    <td><?= h($docente->motivoegresso) ?></td>
+                    <td><?= h($docente->mestradoarea) ?></td>
+                    <td><?= h($docente->mestradouniversidade) ?></td>
+                    <td><?= h($docente->mestradoanoconclusao) ?></td>
+                    <td><?= h($docente->doutoradoarea) ?></td>
+                    <td><?= h($docente->doutoradouniversidade) ?></td>
+                    <td><?= h($docente->doutoradoanoconclusao) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

@@ -28,9 +28,14 @@ $user = $this->getRequest()->getAttribute('identity');
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('siape') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('departamento') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('homepage', 'Site') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('curriculolattes', 'Lattes') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('dataingresso', 'Data ingresso') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('formaingresso', 'Forma ingresso') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('tipocargo', 'Tipo de cargo') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('categoria', 'Categoria') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('regimetrabalho', 'Regime de trabalho') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('dataegresso', 'Data de egresso') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('motivoegresso', 'Motivo egresso') ?></th>
             </tr>
         </thead>
@@ -38,13 +43,14 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php foreach ($docentes as $docente): ?>
                 <tr>
                     <td><?= $this->Html->link(h($docente->nome), ['controller' => 'docentes', 'action' => 'view', $docente->id]) ?></td>
+                    <td><?= h($docente->siape) ?></td>
                     <td><?= h($docente->departamento) ?></td>
-                    <td><?= h($docente->homepage) ?></td>
-                    <td>
-                        <?php if ($docente->curriculolattes): ?>
-                            <a href="<?= 'http://lattes.cnpq.br/' . $docente->curriculolattes ?>">Lattes</a>
-                        <?php endif; ?>
-                    </td>
+                    <td><?= h($docente->dataingresso) ?></td>
+                    <td><?= h($docente->formaingresso) ?></td>
+                    <td><?= h($docente->tipocargo) ?></td>
+                    <td><?= h($docente->categoria) ?></td>
+                    <td><?= h($docente->regimetrabalho) ?></td>
+                    <td><?= h($docente->dataegresso) ?></td>
                     <td><?= h($docente->motivoegresso) ?></td>
                 </tr>
             <?php endforeach; ?>

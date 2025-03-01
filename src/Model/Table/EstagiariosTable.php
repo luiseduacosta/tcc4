@@ -36,44 +36,35 @@ class EstagiariosTable extends Table {
         $this->setTable('estagiarios');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
-/*
+
         $this->belongsTo('Estudantes', [
             'className' => 'Estudantes',
             'foreignKey' => FALSE,
             'conditions' => 'Estagiarios.registro = Estudantes.registro',
             'joinType' => 'LEFT',
         ]);
-*/
-        $this->belongsTo('Alunos', [
-                'foreignKey' => 'id_aluno',
-                'joinType' => 'INNER',
-        ]);
-        $this->belongsTo('Estudantes', [
-                'foreignKey' => 'alunonovo_id',
-        ]);
-        $this->belongsTo('Supervisores', [
-                'foreignKey' => 'id_supervisor',
-            ]);  
+
         $this->belongsTo('Docentes', [
-            'foreignKey' => 'id_professor',
+            'foreignKey' => 'docente_id',
         ]);
-        $this->belongsTo('Instituicaoestagios', [
-                'foreignKey' => 'id_instituicao',
-            ]);    
+
         $this->belongsTo('Areaestagios', [
-            'foreignKey' => 'id_area',
+            'foreignKey' => 'area_id',
         ]);
+
         $this->belongsTo('Tccestudantes', [
             'className' => 'Tccestudantes',
             'foreignKey' => FALSE,
             'conditions' => 'Estagiarios.registro = Tccestudantes.registro',
             'joinType' => 'LEFT'
-        ]);        
-        $this->hasOne('Avaliacoes', [
-                'foreignKey' => 'estagiario_id',
         ]);
-        $this->hasOne('Folhadeatividades', [
-                'foreignKey' => 'estagiario_id',
+        
+        $this->belongsTo('Supervisores', [
+            'foreignKey' => 'supervisor_id',
+        ]);
+
+        $this->belongsTo('Instituicaoestagos', [
+            'foreignKey' => 'instituicao_id',
         ]);
     }
 

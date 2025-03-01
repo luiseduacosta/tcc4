@@ -15,9 +15,10 @@ declare(strict_types=1);
  * @since     3.3.0
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 /*
- * Redirect \Cake\Routing\Router::url('/users/login')
- */
+* Redirect \Cake\Routing\Router::url('/users/login')
+*/
 
 namespace App;
 
@@ -34,6 +35,7 @@ use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
+
 use Authorization\AuthorizationService;
 use Authorization\AuthorizationServiceInterface;
 use Authorization\AuthorizationServiceProviderInterface;
@@ -47,7 +49,10 @@ use Psr\Http\Message\ResponseInterface;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication implements AuthenticationServiceProviderInterface, AuthorizationServiceProviderInterface {
+class Application extends BaseApplication 
+implements AuthenticationServiceProviderInterface, 
+AuthorizationServiceProviderInterface
+{
 
     /**
      * Load all the application configuration and bootstrap logic.
@@ -57,8 +62,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     public function bootstrap(): void {
         // Call parent to load bootstrap from files.
         parent::bootstrap();
-
-        $this->addPlugin('CakePdf');
 
         if (PHP_SAPI === 'cli') {
             $this->bootstrapCli();
@@ -73,7 +76,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         }
 
         // Load more plugins here
-        $this->addPlugin('Authorization');
     }
 
     /**
@@ -102,19 +104,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 // add Authentication after RoutingMiddleware
                 ->add(new AuthenticationMiddleware($this))
                 // Add authorization **after** authentication
-                // ->add(new AuthorizationMiddleware($this));
-                ->add(new AuthorizationMiddleware($this, [
-                            'unauthorizedHandler' => [
-                                'className' => 'Authorization.Redirect',
-                                'url' => '/users/login',
-                                'queryParam' => 'redirectUrl',
-                                'exceptions' => [
-                                    MissingIdentityException::class,
-                                    OtherException::class,
-                                    ForbiddenException::class,
-                                ],
-                            ],
-        ]));
+                ->add(new AuthorizationMiddleware($this));
 
         return $middlewareQueue;
     }
@@ -136,19 +126,18 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         $this->addPlugin('Migrations');
 
         // Load more plugins here
-        $this->addPlugin('DebugKit');
     }
 
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface {
         $authenticationService = new AuthenticationService([
-            'unauthenticatedRedirect' => \Cake\Routing\Router::url('/userestagios/login'),
+            'unauthenticatedRedirect' => \Cake\Routing\Router::url('/monografias/index'),
             'queryParam' => 'redirect',
         ]);
 
         // Load identifiers, ensure we check email and password fields
         $authenticationService->loadIdentifier('Authentication.Password', [
             'fields' => [
-                'username' => 'email',
+                'username' => 'username',
                 'password' => 'password',
             ]
         ]);
@@ -158,10 +147,10 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         // Configure form data check to pick email and password
         $authenticationService->loadAuthenticator('Authentication.Form', [
             'fields' => [
-                'username' => 'email',
+                'username' => 'username',
                 'password' => 'password',
             ],
-            'loginUrl' => \Cake\Routing\Router::url('/userestagios/login'),
+            'loginUrl' =>  \Cake\Routing\Router::url('/users/login'),
         ]);
 
         return $authenticationService;

@@ -35,13 +35,13 @@ class MonografiasController extends AppController {
     public function index() {
 
         $this->Authorization->skipAuthorization();
-        $this->paginate['contain'] = ['Docentemonografias', 'Docentemonografias1', 'Docentemonografias2', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']];
+        $this->paginate['contain'] = ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']];
         $this->paginate['sortWhitelist'] = [
             'Monografias.titulo',
             'Monografias.periodo',
             'Monografias.url',
             'Tccestudantes.nome',
-            'Docentemonografias.nome',
+            'Docentes.nome',
             'Areamonografias.area'];
         $monografias = $this->paginate($this->Monografias);
         $baseUrl = Router::url('/', true);
@@ -59,13 +59,12 @@ class MonografiasController extends AppController {
 
         $this->Authorization->skipAuthorization();
         $monografia = $this->Monografias->get($id, [
-            'contain' => ['Docentemonografias', 'Docentemonografias1', 'Docentemonografias2', 'Areamonografias', 'Tccestudantes'],
+            'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes'],
         ]);
         // pr($monografia);
         // die();
-        // $baseUrl = Router::url('/', true);
-
-        $this->set(compact('monografia'));
+        $baseUrl = Router::url('/', true);
+        $this->set(compact('monografia', 'baseUrl'));
     }
 
     /**
@@ -144,7 +143,7 @@ class MonografiasController extends AppController {
         $estudantes = $this->estudantes();
         // pr($estudantes);
         /* Deveria ser somente para professores ativos */
-        $professores = $this->Monografias->Docentemonografias->find('list',
+        $professores = $this->Monografias->Docentes->find('list',
                 ['keyField' => 'id', 'valueField' => 'nome']);
         // $professores->where(['dataegresso IS NULL']);
         $professores->order(['nome']);
@@ -166,7 +165,7 @@ class MonografiasController extends AppController {
     public function edit($id = null) {
 
         $monografia = $this->Monografias->get($id, [
-            'contain' => ['Docentemonografias', 'Docentemonografias1', 'Docentemonografias2', 'Areamonografias', 'Tccestudantes'],
+            'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes'],
         ]);
 
         $this->Authorization->authorize($monografia);
@@ -209,7 +208,7 @@ class MonografiasController extends AppController {
 
         // $estudantes = $this->estudantes();
 
-        $docentes = $this->Monografias->Docentemonografias->find('list', [
+        $docentes = $this->Monografias->Docentes->find('list', [
             'keyField' => 'id', 'valueField' => 'nome'], ['limit' => 200]);
         $docentes->order(['nome' => 'asc']);
 
@@ -234,9 +233,9 @@ class MonografiasController extends AppController {
         $this->Authorization->authorize($monografia);
 
         if ($this->Monografias->delete($monografia)) {
-            $this->Flash->success(__('Registro monografia excluído.'));
+            $this->Flash->success(__('The monografia has been deleted.'));
         } else {
-            $this->Flash->error(__('Registro monografia não foi excluído. Tente novamente.'));
+            $this->Flash->error(__('The monografia could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -253,7 +252,7 @@ class MonografiasController extends AppController {
                 $this->getRequest()->getSession()->write('busca', $busca);
                 $this->paginate = [
                     'conditions' => ['titulo LIKE' => "%" . $busca . "%"],
-                    'contain' => ['Docentemoografias', 'Areamonografias', 'Tccestudantes']
+                    'contain' => ['Docentes', 'Areamonografias', 'Tccestudantes']
                 ];
             // die();
             endif;
@@ -267,11 +266,11 @@ class MonografiasController extends AppController {
             if (!empty($busca)):
                 $this->paginate = [
                     'conditions' => ['titulo LIKE' => "%" . $busca . "%"],
-                    'contain' => ['Docentemonografias', 'Areamonografias', 'Tccestudantes']
+                    'contain' => ['Docentes', 'Areamonografias', 'Tccestudantes']
                 ];
             else:
                 $this->paginate = [
-                    'contain' => ['Docentemonografias', 'Areamonografias', 'Tccestudantes']
+                    'contain' => ['Docentes', 'Areamonografias', 'Tccestudantes']
                 ];
             endif;
         endif;
@@ -512,7 +511,7 @@ class MonografiasController extends AppController {
         die();
     }
 
-    public function download($dre = null, $id = null) {
+    public function download($dre, $id) {
 
         $this->Authorization->skipAuthorization();
         $this->autoRender = false;

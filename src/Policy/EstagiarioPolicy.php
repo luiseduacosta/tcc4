@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Policy;
@@ -10,8 +9,8 @@ use Authorization\IdentityInterface;
 /**
  * Estagiario policy
  */
-class EstagiarioPolicy {
-
+class EstagiarioPolicy
+{
     /**
      * Check if $user can create Estagiario
      *
@@ -19,8 +18,9 @@ class EstagiarioPolicy {
      * @param App\Model\Entity\Estagiario $estagiario
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, Estagiario $estagiario) {
-        return isset($user->categoria) && $user->categoria == '1';
+    public function canAdd(IdentityInterface $user, Estagiario $estagiario)
+    {
+        return isset($user->role) && $user->role == 'admin';
     }
 
     /**
@@ -30,8 +30,9 @@ class EstagiarioPolicy {
      * @param App\Model\Entity\Estagiario $estagiario
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, Estagiario $estagiario) {
-        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '3';
+    public function canEdit(IdentityInterface $user, Estagiario $estagiario)
+    {
+        return isset($user->role) && $user->role == 'admin';
     }
 
     /**
@@ -41,8 +42,9 @@ class EstagiarioPolicy {
      * @param App\Model\Entity\Estagiario $estagiario
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, Estagiario $estagiario) {
-        return isset($user->categoria) && $user->categoria == '1';
+    public function canDelete(IdentityInterface $user, Estagiario $estagiario)
+    {
+        return isset($user->role) && $user->role == 'admin';
     }
 
     /**
@@ -52,8 +54,10 @@ class EstagiarioPolicy {
      * @param App\Model\Entity\Estagiario $estagiario
      * @return bool
      */
-    public function canView(IdentityInterface $user, Estagiario $estagiario) {
-        return true;
+    public function canView(IdentityInterface $user, Estagiario $estagiario)
+    {
+        return false;
     }
 
-}
+    
+    }

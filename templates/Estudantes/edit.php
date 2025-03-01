@@ -1,53 +1,56 @@
 <?php
+$user = $this->getRequest()->getAttribute('identity');
+
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Estudante $estudante
+ * @var \App\Model\Entity\Aluno $aluno
  */
-$usuario = $this->getRequest()->getAttribute('identity');
 ?>
-<div class='container'>
-    <div class="row justify-content-center">
-        <?php echo $this->element('menu_mural') ?>
-    </div>
-    <div class="row">
-        <?php if ($usuario->get('categoria') == 1): ?>
-            <?= $this->Html->link(__('List Estudantes'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-            <?=
-            $this->Form->postLink(
-                    __('Excluir'),
-                    ['action' => 'delete', $estudante->id],
-                    ['confirm' => __('Tem certeza que quer excluir este registro {0}?', $estudante->id), 'class' => 'btn btn-danger']
-            )
-            ?>
-        <?php endif; ?>
-    </div>
-    <div class="column-responsive column-80">
-        <div class="estudantes form content">
-            <?= $this->Form->create($estudante) ?>
-            <fieldset>
-                <legend><?= __('Editar Estudante') ?></legend>
-                <?php
-                echo $this->Form->control('nome');
-                echo $this->Form->control('registro');
-                echo $this->Form->control('codigo_telefone');
-                echo $this->Form->control('telefone');
-                echo $this->Form->control('codigo_celular');
-                echo $this->Form->control('celular');
-                echo $this->Form->control('email');
-                echo $this->Form->control('cpf');
-                echo $this->Form->control('identidade');
-                echo $this->Form->control('orgao');
-                echo $this->Form->control('nascimento', ['empty' => true]);
-                echo $this->Form->control('endereco');
-                echo $this->Form->control('cep');
-                echo $this->Form->control('municipio');
-                echo $this->Form->control('bairro');
-                echo $this->Form->control('observacoes', ['label' => ['text' => 'Observações']]);
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+            <li><?=
+                $this->Form->postLink(
+                        __('Delete'),
+                        ['action' => 'delete', $estudante->id],
+                        ['confirm' => __('Are you sure you want to delete # {0}?', $estudante->id), 'class' => 'side-nav-item']
+                )
                 ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
-        </div>
+            </li>    
+        <?php endif; ?>
+        <li>
+            <?= $this->Html->link(__('Estudantes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+        </li>
+        <?= $this->element('menu_esquerdo'); ?>       
+    </ul>
+</nav>    
+<div class="column-responsive column-80">
+    <div class="alunos form content">
+        <?= $this->Form->create($estudante) ?>
+        <fieldset>
+            <legend><?= __('Editar estudante') ?></legend>
+            <?php
+            echo $this->Form->control('nome');
+            echo $this->Form->control('registro');
+            echo $this->Form->control('codigo_telefone');
+            echo $this->Form->control('telefone');
+            echo $this->Form->control('codigo_celular');
+            echo $this->Form->control('celular');
+            echo $this->Form->control('email');
+            echo $this->Form->control('cpf');
+            echo $this->Form->control('identidade');
+            echo $this->Form->control('orgao');
+            echo $this->Form->control('nascimento', ['empty' => true]);
+            echo $this->Form->control('endereco');
+            echo $this->Form->control('cep');
+            echo $this->Form->control('municipio');
+            echo $this->Form->control('bairro');
+            echo $this->Form->control('observacoes');
+            ?>
+        </fieldset>
+        <?= $this->Form->button(__('Submit')) ?>
+        <?= $this->Form->end() ?>
     </div>
 </div>
 </div>

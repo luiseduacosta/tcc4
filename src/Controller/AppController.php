@@ -60,7 +60,7 @@ class AppController extends Controller {
         parent::beforeFilter($event);
         // for all controllers in our application, make index and view and busca
         // actions public, skipping the authentication check
-        // $this->Authentication->addUnauthenticatedActions(['index', 'view', 'busca', 'download']);
+        $this->Authentication->addUnauthenticatedActions(['index', 'view', 'busca', 'download']);
     }
 
 }

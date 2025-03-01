@@ -33,7 +33,7 @@ class TccestudantesTable extends Table {
         parent::initialize($config);
 
         $this->setTable('tccestudantes');
-        $this->setDisplayField('nome');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         // Tccestudantes tem um campo monografia_id
@@ -42,6 +42,10 @@ class TccestudantesTable extends Table {
             'joinType' => 'INNER'
         ]);
 
+        $this->hasMany('Estudantes', [
+            'foreignKey' => 'registro',
+            'bindingKey' => 'registro',
+        ]);
     }
 
     /**

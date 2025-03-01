@@ -10,21 +10,24 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Monografia[]|\Cake\Collection\CollectionInterface $monografias
  */
 ?>
-<div class="row justify-content-center">
-    <?= $this->element('menu_monografias') ?>
-</div>
 
-<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-    <?= $this->Html->link(__('Nova Monografia'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
-<?php endif; ?>
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Ações') ?></li>
+        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+            <li><?= $this->Html->link(__('Nova Monografia'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
+        <?php endif; ?>
+        <?= $this->element('menu_esquerdo') ?>
+    </ul>
+</nav>
 
-<div class="monografias index large-9 medium-8 columns container">
+<div class="monografias index large-9 medium-8 columns content">
     <h3><?= __('Monografias') ?></h3>
     <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
     <?= $this->Form->control('titulo', ['label' => 'Busca por título']) ?>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-    <table cellpadding="0" cellspacing="0">
+    <table class='table'>
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('Monografias.titulo', 'Título') ?></th>
@@ -60,10 +63,10 @@ $user = $this->getRequest()->getAttribute('identity');
                         endif;
                         ?>
                     </td>
-                    <td><?= $this->Html->link(h($monografia->docentemonografia->nome), ['controller' => 'docentemonografias', 'action' => 'view', $monografia->docentemonografia->id]) ?></td>
+                    <td><?= $this->Html->link(h($monografia->docente->nome), ['controller' => 'docentes', 'action' => 'view', $monografia->docente->id]) ?></td>
                     <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografia->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia->id]) : '' ?></td>
                     <?php if (!empty($monografia->url)): ?>
-                        <td><a href="<?= $baseUrl . 'monografias/' . $monografia->url ?>">Download</a></td>
+                        <td><a href="<?= $baseUrl . 'monografias/'. $monografia->url ?>">Download</a></td>
                     <?php endif; ?>
                 </tr>
             <?php endforeach; ?>

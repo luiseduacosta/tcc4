@@ -47,7 +47,7 @@ class UsersController extends AppController {
 
         // display error if user submitted and authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
-            $this->Flash->error(__('Erro!'));
+            $this->Flash->error(__('Invalid username or password'));
         }
     }
 

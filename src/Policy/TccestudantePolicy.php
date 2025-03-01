@@ -20,7 +20,7 @@ class TccestudantePolicy {
      * @return bool
      */
     public function canAdd(IdentityInterface $user, Tccestudante $tccestudante) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->role) && $user->role == 'admin';
     }
 
     /**
@@ -31,7 +31,7 @@ class TccestudantePolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Tccestudante $tccestudante) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->role) && $user->role == 'admin';
     }
 
     /**
@@ -42,7 +42,7 @@ class TccestudantePolicy {
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Tccestudante $tccestudante) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->role) && $user->role == 'admin';
     }
 
     /**
@@ -53,7 +53,7 @@ class TccestudantePolicy {
      * @return bool
      */
     public function canView(IdentityInterface $user, Tccestudante $tccestudante) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return true;
     }
 
 }
