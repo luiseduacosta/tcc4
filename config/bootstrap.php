@@ -124,9 +124,9 @@ ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
  */
 $isCli = PHP_SAPI === 'cli';
 if ($isCli) {
-    (new ConsoleErrorTrap(Configure::read('Error')))->register();
-} else {
     (new ErrorTrap(Configure::read('Error')))->register();
+} else {
+    (new ExceptionTrap(Configure::read('Error')))->register();
 }
 
 /*

@@ -16,8 +16,10 @@ use Cake\Event\Event;
  */
 class DocentesController extends AppController {
 
+    public $Docentes = null;
+    
     public function beforeFilter(\Cake\Event\EventInterface $event) {
-
+        
         parent::beforeFilter($event);
         $this->Authentication->addUnauthenticatedActions(['index', 'view']);
     }

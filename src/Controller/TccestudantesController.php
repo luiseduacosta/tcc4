@@ -14,21 +14,21 @@ use Cake\Event\Event;
  *
  * @method \App\Model\Entity\Tccestudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class TccestudantesController extends AppController
-{
+class TccestudantesController extends AppController {
+
+    public $Tccestudantes = null;
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null
      */
-    public function index()
-    {
+    public function index() {
         $this->Authorization->skipAuthorization();
         $this->paginate = [
             'order' => ['nome'],
             'contain' => ['Monografias'],
-            'sortWhitelist' => ['Tccestudantes.id', 'Tccestudantes.registro', 'Tccestudantes.nome', 'Monografias.titulo']
+            'sortableFields' => ['Tccestudantes.id', 'Tccestudantes.registro', 'Tccestudantes.nome', 'Monografias.titulo']
         ];
 
         $tccestudantes = $this->paginate($this->Tccestudantes);
@@ -44,8 +44,7 @@ class TccestudantesController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         // echo $id;
         $this->Authorization->skipAuthorization();
         $tccestudante = $this->Tccestudantes->get($id, [
@@ -60,8 +59,7 @@ class TccestudantesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add($estudante_id = null, $monografia_id = null)
-    {
+    public function add($estudante_id = null, $monografia_id = null) {
 
         // echo "Estudante id " . $estudante_id . '<br />';
         // echo "Monografia id " . $monografia_id;
@@ -69,21 +67,21 @@ class TccestudantesController extends AppController
         if ($estudante_id):
             $registro = $estudante_id;
 
-        /* Nome do aluno */
-        $this->loadModel('Estudantes');
-        $resultado = $this->Estudantes->find('all');
-        $resultado->where(['registro' => $estudante_id]);
-        $resultado->select(['nome']);
-        $resultado->first();
-        $nome = $resultado->first()->nome;
-        // die();
-        $this->set(compact('registro', 'nome'));
+            /* Nome do aluno */
+            $this->loadModel('Estudantes');
+            $resultado = $this->Estudantes->find('all');
+            $resultado->where(['registro' => $estudante_id]);
+            $resultado->select(['nome']);
+            $resultado->first();
+            $nome = $resultado->first()->nome;
+            // die();
+            $this->set(compact('registro', 'nome'));
         endif;
 
         /* Titulo e id das monografias */
         $monografias = $this->Tccestudantes->Monografias->find(
-            'list',
-            ['keyField' => 'id', 'valueField' => 'titulo']
+                'list',
+                ['keyField' => 'id', 'valueField' => 'titulo']
         );
         $monografias->order(['titulo' => 'asc']);
         // pr($monografias);
@@ -114,8 +112,7 @@ class TccestudantesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $tccestudante = $this->Tccestudantes->get($id, [
             'contain' => ['Monografias'],
         ]);
@@ -123,8 +120,8 @@ class TccestudantesController extends AppController
         // die();
         $this->Authorization->authorize($tccestudante);
         $monografias = $this->Tccestudantes->Monografias->find(
-            'list',
-            ['keyField' => 'id', 'valueField' => 'titulo']
+                'list',
+                ['keyField' => 'id', 'valueField' => 'titulo']
         );
         $monografias->order(['titulo' => 'asc']);
         // pr($monografias);
@@ -149,8 +146,7 @@ class TccestudantesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         // pr($id);
         // die();
         $this->request->allowMethod(['post', 'delete']);
@@ -166,25 +162,24 @@ class TccestudantesController extends AppController
     }
 
     /**
-    * Busca Method
-    *
-    * @param null
-    * @return string $estudantes
-    */
-    public function busca()
-    {
+     * Busca Method
+     *
+     * @param null
+     * @return string $estudantes
+     */
+    public function busca() {
         $this->Authorization->skipAuthorization();
 
         if ($this->request->is('post')) {
             // echo "Post" . "<br>";
             if ($this->request->getData()):
                 $dados = $this->request->getData();
-            $busca = $dados['nome'];
-            // echo $busca;
-            // die();
-            $this->getRequest()->getSession()->write('estudante', $busca);
-            // $this->request->session()->write('estudante', $busca);
-            $this->paginate = [
+                $busca = $dados['nome'];
+                // echo $busca;
+                // die();
+                $this->getRequest()->getSession()->write('estudante', $busca);
+                // $this->request->session()->write('estudante', $busca);
+                $this->paginate = [
                     'conditions' => ['nome LIKE' => "%" . $busca . "%"],
                     'order' => ['nome'],
                     'contain' => ['Monografias']
@@ -195,19 +190,20 @@ class TccestudantesController extends AppController
         if (!isset($busca)):
 
             $busca = $this->getRequest()->getSession()->read('estudante');
-        // echo $busca;
-        // die();
-        if (!empty($busca)):
+            // echo $busca;
+            // die();
+            if (!empty($busca)):
                 $this->paginate = [
                     'conditions' => ['nome LIKE' => "%" . $busca . "%"],
                     'order' => ['nome'],
                     'contain' => ['Monografias']
-                ]; else:
+                ];
+            else:
                 $this->paginate = [
                     'order' => ['nome'],
                     'contain' => ['Monografias']
                 ];
-        endif;
+            endif;
         endif;
 
         $estudantes = $this->paginate($this->Tccestudantes);
