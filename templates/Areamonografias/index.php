@@ -8,18 +8,25 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Area[]|\Cake\Collection\CollectionInterface $areas
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
-            <li><?= $this->Html->link(__('Nova Área'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
-        <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
-    </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerAreamonografia"
+            aria-controls="navbarTogglerAreamonografia" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerAreamongrafia">
+        <ul class="navbar-nav ms-auto mt-lg-0">
+            <?php if (isset($user->role) && $user->role == 'admin'): ?>
+                <li><?= $this->Html->link(__('Nova Área'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
+            <?php endif; ?>
+        </ul>
+    </div>
 </nav>
-<div class="areas index large-9 medium-8 columns content">
+
+<?= $this->element('menu_esquerdo') ?>
+
+<div class="table-responsive">
     <h3><?= __('Áreas') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+    <table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-responsive">
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('area') ?></th>
@@ -28,22 +35,25 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($areas as $area): ?>
-            <?php // pr($area); ?>            
+                <?php // pr(count($area->monografias)); ?>
                 <tr>
-                    <td><?= $area->has('areamonografia') ? $this->Html->link(h($area->areamonografia->area), ['controller' => 'areamonografias', 'action' => 'view', $area->areamonografia_id]): "" ?></td>
-                    <td><?= $this->Number->format($area->qarea) ?></td>
+                    <td><?= $this->Html->link(h($area->area), ['controller' => 'areamonografias', 'action' => 'view', $area->id]) ?></td>
+                    <td><?= $this->Number->format(count($area->monografias)) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <?= $this->element('templates') ?>
+
     <div class="paginator">
         <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?= $this->Paginator->first('<< ' . __('primeiro'), ['tag' => 'li', 'class' => 'page-item'], null, ['tag' => 'a', 'class' => 'page-link']) ?>
+            <?= $this->Paginator->prev('< ' . __('anterior', ['tag' => 'class => page-item'], ['tag' => 'a', 'class' => 'link-item'])) ?>
             <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
+            <?= $this->Paginator->next(__('próximo') . ' >', ['tag' => 'li', 'class' => 'page-item'], ['tag' => 'a', 'class' => 'link-item']) ?>
+            <?= $this->Paginator->last(__('último') . ' >>', ['tag' => 'li', 'class' => 'page-item'], ['tag' => 'a', 'class' => 'link-page']) ?>
         </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>        
+        <p><?= $this->Paginator->counter(__('Página {{page}} do {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?></p>
     </div>
 </div>

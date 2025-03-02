@@ -13,6 +13,8 @@ namespace App\Controller;
  */
 class AreamonografiasController extends AppController {
 
+    public $Monografias = null;
+
     /**
      * Index method
      *
@@ -22,14 +24,8 @@ class AreamonografiasController extends AppController {
 
         $this->Authorization->skipAuthorization();
 
-        $this->loadModel('Monografias');
-        $this->paginate['contain'] = ['Areamonografias'];
-        $this->paginate['fields'] = ['qarea' => 'count(*)', 'Monografias.areamonografia_id', 'Areamonografias.area'];
-        $this->paginate['group'] =  ['Monografias.areamonografia_id'];
-        $areas = $this->paginate($this->Monografias);
-
-        // debug($areas);
-        // die();
+        $query = $this->Areamonografias->find()->contain(['Monografias']);
+        $areas = $this->paginate($query);
         $this->set(compact('areas'));
     }
 

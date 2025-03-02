@@ -36,7 +36,7 @@ class MonografiasController extends AppController {
 
         $this->Authorization->skipAuthorization();
         $this->paginate['contain'] = ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']];
-        $this->paginate['sortWhitelist'] = [
+        $this->paginate['sortableFields'] = [
             'Monografias.titulo',
             'Monografias.periodo',
             'Monografias.url',

@@ -20,9 +20,10 @@ $user = $this->getRequest()->getAttribute('identity');
         <?= $this->element('menu_esquerdo') ?>
     </ul>
 </nav>
-
 <div class="monografias index large-9 medium-8 columns content">
+
     <h3><?= __('Monografias') ?></h3>
+
     <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
     <?= $this->Form->control('titulo', ['label' => 'Busca por título']) ?>
     <?= $this->Form->button(__('Submit')) ?>

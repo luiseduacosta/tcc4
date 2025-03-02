@@ -29,8 +29,10 @@ class AgendamentotccsController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index() {
+
+        $this->Authorization->skipAuthorization();
         $this->paginate['contain'] = ['Estudantes', 'Docentes', 'Docentes1', 'Docentes2'];
-        $this->paginate['sortWhitelist'] = ['Alunos.nome',
+        $this->paginate['sortableFields'] = ['Alunos.nome',
             'Docentes.nome',
             'Docentes1.nome',
             'Docentes2.nome',
@@ -53,6 +55,7 @@ class AgendamentotccsController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
+
         $agendamentotcc = $this->Agendamentotccs->get($id, [
             'contain' => ['Estudantes', 'Docentes', 'Docentes1', 'Docentes2'],
         ]);
@@ -76,14 +79,13 @@ class AgendamentotccsController extends AppController {
                 // echo "Horario incompleto" . "<br>";
                 $dados['horario'] = $dados['horario'] . ':00';
             endif;
-            // $agendamentotcc = $this->Agendamentotccs->patchEntity($agendamentotcc, $this->request->getData());
             $agendamentotcc = $this->Agendamentotccs->patchEntity($agendamentotcc, $dados);
             if ($this->Agendamentotccs->save($agendamentotcc)) {
-                $this->Flash->success(__('The agendamentotcc has been saved.'));
+                $this->Flash->success(__('Agendamento TCC inserido.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The agendamentotcc could not be saved. Please, try again.'));
+            $this->Flash->error(__('Agendamento TCC não foi inserido. Tente novamente'));
         }
         $qalunos = $this->Agendamentotccs->Estudantes->find('list', [
             'keyField' => 'id', 'valueField' => 'nome'
@@ -107,6 +109,7 @@ class AgendamentotccsController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null) {
+
         $agendamentotcc = $this->Agendamentotccs->get($id, [
             'contain' => ['Estudantes', 'Docentes', 'Docentes1', 'Docentes2'],
         ]);
@@ -126,11 +129,11 @@ class AgendamentotccsController extends AppController {
 
             $agendamentotcc = $this->Agendamentotccs->patchEntity($agendamentotcc, $dados);
             if ($this->Agendamentotccs->save($agendamentotcc)) {
-                $this->Flash->success(__('The agendamentotcc has been saved.'));
+                $this->Flash->success(__('Agendamento TCC atualizado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The agendamentotcc could not be saved. Please, try again.'));
+            $this->Flash->error(__('Agendamento TCC não foi atualizado. Tente novamente.'));
         }
         $qalunos = $this->Agendamentotccs->Estudantes->find('list', [
             'keyField' => 'id', 'valueField' => 'nome']);
@@ -152,12 +155,13 @@ class AgendamentotccsController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
+
         $this->request->allowMethod(['post', 'delete']);
         $agendamentotcc = $this->Agendamentotccs->get($id);
         if ($this->Agendamentotccs->delete($agendamentotcc)) {
-            $this->Flash->success(__('The agendamentotcc has been deleted.'));
+            $this->Flash->success(__('Agendamento TCC foi excluído.'));
         } else {
-            $this->Flash->error(__('The agendamentotcc could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Registro agendamento TCC não foi excluído. Tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

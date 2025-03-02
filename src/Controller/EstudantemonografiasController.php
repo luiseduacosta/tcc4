@@ -154,12 +154,12 @@ class EstudantemonografiasController extends AppController {
 
         if ($this->request->is('post')) {
             $estudante = $this->Estudantemonografias->patchEntity($estudante, $this->request->getData());
-            if ($this->Estudantemonografias->save($aluno)) {
-                $this->Flash->success(__('The aluno has been saved.'));
+            if ($this->Estudantemonografias->save($estudante)) {
+                $this->Flash->success(__('Registro adicionado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The aluno could not be saved. Please, try again.'));
+            $this->Flash->error(__('Registro não foi adicionado. Tente novamente.'));
         }
         $this->set(compact('estudante'));
     }
@@ -213,5 +213,4 @@ class EstudantemonografiasController extends AppController {
 
         return $this->redirect(['action' => 'index']);
     }
-
 }

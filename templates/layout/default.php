@@ -30,25 +30,31 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+
+        <!--
+        Cake 4.0
+        <?= $this->Html->css('milligram.min.css') ?>
+        <?= $this->Html->css('cake.css') ?>
+        -->
+
+        <!--
+        Cake 3.0
+
+        <?= $this->Html->css('base.css') ?>
+        <?= $this->Html->css('style.css') ?>
+        -->
 
         <!--
         Cake 4.0
         -->
         <?= $this->Html->css('milligram.min.css') ?>
         <?= $this->Html->css('cake.css') ?>
-        
 
-        <!--
-        Cake 3.0
-        <?= $this->Html->css('base.css') ?>
-        <?= $this->Html->css('style.css') ?>
-        -->
-        
         <?= $this->fetch('meta') ?>
         <?= $this->fetch('css') ?>
         <?=
@@ -58,26 +64,35 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <?= $this->fetch('script') ?>
     </head>
     <body>
-        <nav class="top-nav">
-            <div class="top-nav-title">
-                <center>
-                    <a href="http://ess.ufrj.br/" target="_blank">
-                        <img alt="Escola de Serviço Social - CFCH - UFRJ" src="http://ess.ufrj.br/templates/joomtic3/images/banner_logo.jpg" align='middle' width="70%" height="20%" />
-                    </a>
-                </center>
-            </div>
-            <div class="top-nav-links">
-                <ul>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMenu"
+                        aria-controls="navbarTogglerMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerMenu">
+                    <center>
+                        <a href="http://ess.ufrj.br/" target="_blank">
+                            <img alt="Escola de Serviço Social - CFCH - UFRJ" src="http://ess.ufrj.br/templates/joomtic3/images/banner_logo.jpg" align='middle' width="70%" height="20%" />
+                        </a>
+                    </center>
+                </div>
+            </nav>
+
+            <div class="btn btn-primary btn-sm float-end">
+                <ul class= 'navbar-nav mr-auto mt-lg-0'>
                     <?php $user = $this->getRequest()->getAttribute('identity'); ?>
                     <?php if (isset($user) && !empty($user)): ?>
-                        <li class = 'button float-right'><?= 'Usuário: ' . $user->role ?></li>
+                        <li class = 'nav-item'><?= 'Usuário: ' . $user->role ?></li>
                     <?php else: ?>
-                        <li class = 'button float-right'><?= 'Usuário: ' . 'Visitante' ?></li>
+                        <li class = 'nav-item'><?= 'Usuário: ' . 'Visitante' ?></li>
                     <?php endif; ?>
                 </ul>
             </div>
-        </nav>
-        <main class="main">
+
+        </div>
+
+        <main class="container">
             <div class="container">
                 <?= $this->Flash->render() ?>
                 <?= $this->fetch('content') ?>

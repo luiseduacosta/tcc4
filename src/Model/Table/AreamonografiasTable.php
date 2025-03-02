@@ -15,19 +15,19 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\MonografiasTable&\Cake\ORM\Association\HasMany $Monografias
  * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsToMany $Docentes
  *
- * @method \App\Model\Entity\Area newEmptyEntity()
- * @method \App\Model\Entity\Area newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\Area[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Area get($primaryKey, $options = [])
- * @method \App\Model\Entity\Area findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\Area patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Area[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\Area|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Area saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Area[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Area[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Area[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Area[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Areamonografia newEmptyEntity()
+ * @method \App\Model\Entity\Areamonografia newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\Areamonografia[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Areamonografia get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Areamonografia findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Areamonografia patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Areamonografia[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Areamonografia|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Areamonografia saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class AreamonografiasTable extends Table {
 
@@ -47,7 +47,7 @@ class AreamonografiasTable extends Table {
         $this->hasMany('Monografias', [
             'foreignKey' => 'areamonografia_id',
         ]);
-          
+
         $this->belongsToMany('Docentes', [
             'targetForeignKey' => 'docente_id',            
             'foreignKey' => 'areamonografia_id',
