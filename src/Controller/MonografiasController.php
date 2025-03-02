@@ -209,7 +209,7 @@ class MonografiasController extends AppController {
         // $estudantes = $this->estudantes();
 
         $docentes = $this->Monografias->Docentes->find('list', [
-            'keyField' => 'id', 'valueField' => 'nome'], ['limit' => 200]);
+            'keyField' => 'id', 'valueField' => 'nome']);
         $docentes->order(['nome' => 'asc']);
 
         $areas = $this->Monografias->Areamonografias->find('list', [

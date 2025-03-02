@@ -16,4 +16,3 @@ ver aqui: https://api.cakephp.org/3.2/class-Cake.ORM.Query.html
 
 8) Excluir na lista de estudantes aqueles que já fizeram a monografia (dos estudantes excluir tccestudantes).
 9) Calcular a quantidade de TCCs por área.
-
