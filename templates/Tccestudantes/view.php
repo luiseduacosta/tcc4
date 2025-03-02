@@ -9,7 +9,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $tccestudante->id]) ?> </li>
             <li><?= $this->Form->postLink(__('Delete Estudante'), ['action' => 'delete', $tccestudante->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tccestudante->id)]) ?> </li>
         <?php endif; ?>

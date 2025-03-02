@@ -9,7 +9,7 @@
 <div class="avaliacaoes index container">
     <?php echo $this->element('menu_mural') ?>
     <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 4 || $this->getRequest()->getAttribute('identity')['categoria'] == 3): ?>
-        <?= $this->Html->link(__('Nova Avaliação'), ['action' => 'add/' . $id], ['class' => 'button float-right']) ?>
+        <?= $this->Html->link(__('Nova Avaliação'), ['action' => 'add/' . $id], ['class' => 'btn btn-primary float-end']) ?>
     <?php endif; ?>
     <h3><?= __('Avaliações') ?></h3>
     <div class="table-responsive">

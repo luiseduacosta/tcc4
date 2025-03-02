@@ -6,7 +6,7 @@
 ?>
 <div class="configuracao index content">
     <?php echo $this->element('menu_mural') ?>
-    <?= $this->Html->link(__('Nova Configuração'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('Nova Configuração'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
     <h3><?= __('Configurações') ?></h3>
     <div class="table-responsive">
         <table>

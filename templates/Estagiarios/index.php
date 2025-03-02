@@ -15,7 +15,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerEstagiarios"></div>
     <ul class="navbar-nav ms-auto mt-lg-0">
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="nav-item"><?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
         <?php endif; ?>
     </ul>

@@ -9,8 +9,8 @@ $user = $this->getRequest()->getAttribute('identity');
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
-            <li><?= $this->Html->link(__('Novo Aluno'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <li><?= $this->Html->link(__('Novo Aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
         <?php endif; ?>
         <?php echo $this->element('menu_esquerdo'); ?>
     </ul>
@@ -19,10 +19,10 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="alunos index large-9 medium-8 columns content">
     <h3>
         <?= __('Estudantes') ?>
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
-            <?= $this->Html->link(__(' Identificação'), ['action' => 'index1'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link(__(' Comunicação'), ['action' => 'index'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'button float-right']) ?>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <?= $this->Html->link(__(' Identificação'), ['action' => 'index1'], ['class' => 'btn btn-primary float-end']) ?>
+            <?= $this->Html->link(__(' Comunicação'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+            <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'btn btn-primary float-end']) ?>
         <?php endif; ?>
     </h3>
 
@@ -31,7 +31,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <tr>
                 <th><?= $this->Paginator->sort('registro') ?></th>
                 <th><?= $this->Paginator->sort('nome') ?></th>
-                <?php if (isset($user->role) && $user->role == 'admin'): ?>
+                <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                     <th><?= $this->Paginator->sort('telefone') ?></th>
                     <th><?= $this->Paginator->sort('celular') ?></th>
                     <th><?= $this->Paginator->sort('email') ?></th>
@@ -43,7 +43,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <td><?= h($aluno->registro) ?></td>
                     <td><?= $this->Html->link($aluno->nome, ['controller' => 'estudantes', 'action' => 'view', $aluno->id]) ?></td>
-                    <?php if (isset($user->role) && $user->role == 'admin'): ?>
+                    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                         <?php if ($aluno->telefone): ?>
                             <td><?= '(' . h($aluno->codigo_telefone) . ')' . h($aluno->telefone) ?></td>
                         <?php else: ?>

@@ -8,7 +8,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?=
                 $this->Form->postLink(
                         __('Delete'),
@@ -25,9 +25,9 @@ $usuario = $this->getRequest()->getAttribute('identity');
     <fieldset>
         <legend><?= __('Edit User') ?></legend>
         <?php
-        echo $this->Form->control('username');
+        echo $this->Form->control('email');
         echo $this->Form->control('password');
-        echo $this->Form->control('role');
+        echo $this->Form->control('categoria', ['options' => ['2' => 'estudante', '3' => 'professor', '4' => 'supervisor']]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

@@ -13,23 +13,23 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDocentes">
         <ul class="navbar-nav ms-auto mt-lg-0">
-            <?php if (isset($user->role) && $user->role == 'admin'): ?>
-                <li><?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                <li><?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
                 </li>
             <?php endif; ?>
         </ul>
-    </div>
+    </div>    
     <?= $this->element('menu_esquerdo') ?>
 </nav>
 
 <div class="container">
     <h3><?= __('Docentes') ?></h3>
     <p>
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
-            <?= $this->Html->link('Dados funcionais', ['controller' => 'docentes', 'action' => 'index0'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link('Dados pessoais', ['controller' => 'docentes', 'action' => 'index1'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link('Dados graduação', ['controller' => 'docentes', 'action' => 'index2'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link('Dados pósgraduação', ['controller' => 'docentes', 'action' => 'index3'], ['class' => 'button float-right']) ?>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <?= $this->Html->link('Dados funcionais', ['controller' => 'docentes', 'action' => 'index0'], ['class' => 'btn float-end']) ?>
+            <?= $this->Html->link('Dados pessoais', ['controller' => 'docentes', 'action' => 'index1'], ['class' => 'btn float-end']) ?>
+            <?= $this->Html->link('Dados graduação', ['controller' => 'docentes', 'action' => 'index2'], ['class' => 'btn float-end']) ?>
+            <?= $this->Html->link('Dados pósgraduação', ['controller' => 'docentes', 'action' => 'index3'], ['class' => 'btn float-end']) ?>
         <?php endif; ?>
     </p>
     <table class="table table-striped table-hover table-responsive">

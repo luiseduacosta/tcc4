@@ -9,11 +9,11 @@ $usuario = $this->getRequest()->getAttribute('identity');
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <?php if (isset($usuario->role) && $usuario->role == 'admin'): ?>
-            <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?> </li>        
-            <li><?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
+            <li><?= $this->Html->link(__('Novo usuário'), ['action' => 'add']) ?> </li>        
+            <li><?= $this->Html->link(__('Editar usuário'), ['action' => 'edit', $user->id]) ?> </li>
+            <li><?= $this->Form->postLink(__('Excluir usuaŕio'), ['action' => 'delete', $user->id], ['confirm' => __('Tem certeza que quer excluir # {0}?', $user->id)]) ?> </li>
         <?php endif; ?>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('Listar usuarios'), ['action' => 'index']) ?> </li>
 
     </ul>
 </nav>
@@ -21,7 +21,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
     <h3><?= h($user->id) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th scope="row"><?= __('Username') ?></th>
+            <th scope="row"><?= __('Email') ?></th>
             <td><?= h($user->username) ?></td>
         </tr>
         <tr>
@@ -29,7 +29,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
             <td><?= h($user->password) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Role') ?></th>
+            <th scope="row"><?= __('Categoria') ?></th>
             <td><?= h($user->role) ?></td>
         </tr>
         <tr>

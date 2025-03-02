@@ -16,9 +16,9 @@ $user = $this->getRequest()->getAttribute('identity');
     <h3>
         <?= __('Estudantes') ?>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <?= $this->Html->link(__(' Identificação'), ['action' => 'index1'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link(__(' Comunicação'), ['action' => 'index'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'button float-right']) ?>
+            <?= $this->Html->link(__(' Identificação'), ['action' => 'index1'], ['class' => 'btn btn-primary float-end']) ?>
+            <?= $this->Html->link(__(' Comunicação'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+            <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'btn btn-primary float-end']) ?>
         <?php endif; ?>
     </h3>
     <table cellpadding="0" cellspacing="0">

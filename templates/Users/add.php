@@ -8,19 +8,14 @@ $usuario = $this->getRequest()->getAttribute('identity');
 
 <?= $this->element('templates') ?>
 
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('Listar usuários'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="users form large-9 medium-8 columns content">
+<div class="container">
     <?= $this->Form->create($user) ?>
     <fieldset>
-        <legend><?= __('Add User') ?></legend>
+        <legend><?= __('Adiciona usuário') ?></legend>
         <?php
             echo $this->Form->control('email');
             echo $this->Form->control('password');
-            echo $this->Form->control('categoria', ['options' => ['2' => 'estudante']]);
+            echo $this->Form->control('categoria', ['options' => ['2' => 'estudante', '3' => 'professor', '4' => 'supervisor']]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

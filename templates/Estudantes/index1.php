@@ -8,17 +8,17 @@ $user = $this->getRequest()->getAttribute('identity');
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">    
         <li class="heading"><?= __('Actions') ?></li>    
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
-            <li><?= $this->Html->link(__('Novo Aluno'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <li><?= $this->Html->link(__('Novo Aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
         <?php endif; ?>
         <?php echo $this->element('menu_esquerdo'); ?>        
     </ul>
 </nav>
 <div class="users index large-9 medium-8 columns content">
     <h3><?= __('Estudantes') ?>
-        <?= $this->Html->link(__(' Identificação'), ['action' => 'index1'], ['class' => 'button float-right']) ?>        
-        <?= $this->Html->link(__(' Comunicação'), ['action' => 'index'], ['class' => 'button float-right']) ?>                
-        <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'button float-right']) ?>    
+        <?= $this->Html->link(__(' Identificação'), ['action' => 'index1'], ['class' => 'btn btn-primary float-end']) ?>        
+        <?= $this->Html->link(__(' Comunicação'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>                
+        <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'btn btn-primary float-end']) ?>    
     </h3>
     <table cellpadding="0" cellspacing="0">
         <thead>

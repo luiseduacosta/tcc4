@@ -136,6 +136,10 @@ AuthorizationServiceProviderInterface
 
         // Load identifiers, ensure we check email and password fields
         $authenticationService->loadIdentifier('Authentication.Password', [
+            'resolver' => [
+                'className' => 'Authentication.Orm',
+                'userModel' => 'Users',
+            ],
             'fields' => [
                 'username' => 'email',
                 'password' => 'password',
@@ -150,7 +154,7 @@ AuthorizationServiceProviderInterface
                 'username' => 'email',
                 'password' => 'password',
             ],
-            'loginUrl' =>  \Cake\Routing\Router::url('/users/login'),
+            'loginUrl' =>  \Cake\Routing\Router::url('/users/login')
         ]);
 
         return $authenticationService;

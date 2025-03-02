@@ -10,7 +10,7 @@ $user = $this->getRequest()->getAttribute('identity');
 </div>
 
 <?php if ($user->categoria == '1'): ?>
-    <?= $this->Html->link(__('Novo aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
+    <?= $this->Html->link(__('Novo aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
 <?php endif; ?>
 
 <h3><?= __('Alunos') ?></h3>

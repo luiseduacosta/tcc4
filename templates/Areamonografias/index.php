@@ -15,7 +15,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerAreamongrafia">
         <ul class="navbar-nav ms-auto mt-lg-0">
-            <?php if (isset($user->role) && $user->role == 'admin'): ?>
+            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                 <li class="item-link"><?= $this->Html->link(__('Nova Área'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
             <?php endif; ?>
         </ul>

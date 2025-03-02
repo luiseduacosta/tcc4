@@ -26,12 +26,12 @@ class UsersTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config): Void
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
         $this->setTable('users');
-        $this->setDisplayField('id');
+        $this->setDisplayField('email');
         $this->setPrimaryKey('id');
     }
 
@@ -48,8 +48,7 @@ class UsersTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->scalar('email')
-            ->maxLength('email', 50)
+            ->email('email')
             ->notEmptyString('email');
 
         $validator

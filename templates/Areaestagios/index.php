@@ -7,7 +7,7 @@
 <div class="areaestagios index content">
     <?php echo $this->element('menu_mural') ?>
 
-    <?= $this->Html->link(__('Nova área de estágio'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('Nova área de estágio'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
     <h3><?= __('Áreas de estágios') ?></h3>
     <div class="table-responsive">
         <table>

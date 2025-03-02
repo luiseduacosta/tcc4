@@ -7,8 +7,8 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($agendamentotccs);
 ?>
 <div class="agendamentotccs index content">
-    <?php if (isset($user->role) && $user->role == 'admin'): ?>
-        <?= $this->Html->link(__('Novo Agendamento de Tcc'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+        <?= $this->Html->link(__('Novo Agendamento de Tcc'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
     <?php endif; ?>
     <?= $this->element('menu_esquerdo') ?>
     <h3><?= __('Agendamento de Oficina de TCC') ?></h3>
@@ -24,7 +24,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <th><?= $this->Paginator->sort('horario') ?></th>
                     <th><?= $this->Paginator->sort('sala') ?></th>
                     <th><?= $this->Paginator->sort('titulo') ?></th>
-                    <?php if (isset($user->role) && $user->role == 'admin'): ?>
+                    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                         <th><?= $this->Paginator->sort('avaliacao') ?></th>
                         <th class="actions"><?= __('Actions') ?></th>
                     <?php endif; ?>
@@ -41,7 +41,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <td><?= h($agendamentotcc->horario->i18nFormat('HH:mm:ss')) ?></td>
                         <td><?= $this->Number->format($agendamentotcc->sala) ?></td>
                         <td><?= h($agendamentotcc->titulo) ?></td>
-                        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+                        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                             <td><?= h($agendamentotcc->avaliacao) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('View'), ['action' => 'view', $agendamentotcc->id]) ?>

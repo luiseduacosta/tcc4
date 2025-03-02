@@ -23,7 +23,7 @@ class UsersController extends AppController {
         // Você não deve adicionar a ação de "login" a lista de permissões.
         // Isto pode causar problemas com o funcionamento normal do AuthComponent.
         // $this->Auth->allow(['logout']);
-        $this->Authentication->addUnauthenticatedActions(['login', 'add']);
+        $this->Authentication->addUnauthenticatedActions(['login', 'add', 'logout']);
     }
 
     public function login() {
@@ -33,8 +33,7 @@ class UsersController extends AppController {
 
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
-        // pr($result);
-        // die();
+        // debug($result);
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
             // redirect to /monografias after login success
@@ -45,7 +44,6 @@ class UsersController extends AppController {
 
             return $this->redirect($redirect);
         }
-
         // display error if user submitted and authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
             $this->Flash->error(__('Inválido username ou password'));
@@ -119,9 +117,9 @@ class UsersController extends AppController {
             // pr($user);
             // die(json_encode($user));
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('Usuários cadastrado.'));
+                $this->Flash->success(__('Usuário cadastrado.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'monografias', 'action' => 'index']);
             }
             $this->Flash->error(__('Usúario não foi cadastrado. Tente novamente.'));
         }

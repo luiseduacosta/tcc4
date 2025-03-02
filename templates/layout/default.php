@@ -83,9 +83,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <ul class= 'navbar-nav mr-auto mt-lg-0'>
                     <?php $user = $this->getRequest()->getAttribute('identity'); ?>
                     <?php if (isset($user) && !empty($user)): ?>
-                        <li class = 'nav-item'><?= 'Usuário: ' . $user->role ?></li>
+                        <li class = 'nav-item'><?= $user->email ?></li>
                     <?php else: ?>
-                        <li class = 'nav-item'><?= 'Usuário: ' . 'Visitante' ?></li>
+                        <li class = 'nav-item'><?= 'Visitante' ?></li>
                     <?php endif; ?>
                 </ul>
             </div>

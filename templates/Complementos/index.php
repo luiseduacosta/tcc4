@@ -6,7 +6,7 @@
 ?>
 <div class="complementos index content container">
     <?php echo $this->element('menu_mural') ?>
-    <?= $this->Html->link(__('Novo registro'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('Novo registro'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
     <h3><?= __('Complemento de estagiário') ?></h3>
     <div class="table-responsive">
         <table>

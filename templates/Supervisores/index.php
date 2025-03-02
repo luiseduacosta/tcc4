@@ -10,7 +10,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="supervisores index container">
     <?php echo $this->element('menu_mural') ?>
     <?php if ($user['categoria'] == 1): ?>
-        <?= $this->Html->link(__('Cadastra supervisora'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+        <?= $this->Html->link(__('Cadastra supervisora'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
     <?php endif; ?>
     <h3><?= __('Supervisores(as)') ?></h3>
     <div class="table-responsive">

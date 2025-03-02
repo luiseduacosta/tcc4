@@ -6,7 +6,7 @@
 ?>
 <div class="areainstituicoes index content">
     <?php echo $this->element('menu_mural') ?>
-    <?= $this->Html->link(__('Nova área instituição'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('Nova área instituição'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
     <h3><?= __('Área instituicoes') ?></h3>
     <div class="table-responsive">
         <table>

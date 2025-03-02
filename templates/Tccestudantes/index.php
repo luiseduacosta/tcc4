@@ -1,5 +1,6 @@
 <?php
 $user = $this->getRequest()->getAttribute('identity');
+// pr($user->categoria);
 // pr($tccestudantes);
 /**
  * @var \App\View\AppView $this
@@ -13,8 +14,8 @@ $user = $this->getRequest()->getAttribute('identity');
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse" id="navbarTogglerTccEstudantes">
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
-            <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <li class="nav-link"><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'btn float-end']) ?></li>
         <?php endif; ?>
     </ul>
 

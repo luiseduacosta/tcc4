@@ -37,7 +37,7 @@
 </div>
 
 <div class="muralinscricoes index content">
-    <?= $this->Html->link(__('Nova inscrição'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('Nova inscrição'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
     <h3><?= __('Inscrições para seleção de estágio') ?></h3>
     <div class="table-responsive">
         <table>

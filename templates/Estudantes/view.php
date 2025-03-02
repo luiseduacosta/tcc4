@@ -10,7 +10,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
 
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'side-nav-item']) ?></li>
             <li><?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $aluno->id], ['class' => 'side-nav-item']) ?></li>
             <li><?= $this->Form->postLink(__('Delete Estudante'), ['action' => 'delete', $aluno->id], ['confirm' => __('Are you sure you want to delete # {0}?', $aluno->id), 'class' => 'side-nav-item']) ?></li>
@@ -33,7 +33,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= __('Registro') ?></th>
                 <td><?= h($aluno->registro) ?></td>
             </tr>
-            <?php if (isset($user->role) && $user->role == 'admin'): ?>
+            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                 <tr>
                     <th><?= __('Nascimento') ?></th>
                     <td><?= h($aluno->nascimento) ?></td>

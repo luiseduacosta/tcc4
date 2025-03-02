@@ -6,7 +6,7 @@
 ?>
 <div class="instituicaoestagios index container">
     <?php echo $this->element('menu_mural') ?>
-    <?= $this->Html->link(__('Cadastra nova instituição de estágio'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('Cadastra nova instituição de estágio'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
     <h3><?= __('Instituições') ?></h3>
     <div class="table-responsive">
         <table>

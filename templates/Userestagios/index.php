@@ -6,7 +6,7 @@
 ?>
 <div class="userestagios index container">
     <?php echo $this->element('menu_mural') ?>
-    <?= $this->Html->link(__('Novo usuário de estágio'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('Novo usuário de estágio'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
     <h3><?= __('Usuários de estágio') ?></h3>
     <div class="table-responsive">
         <table>
