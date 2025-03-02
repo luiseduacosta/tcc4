@@ -8,19 +8,22 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
+<div class="justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerTccEstudantes"
         aria-controls="navbarTogglerTccEstudantes" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse" id="navbarTogglerTccEstudantes">
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerTccEstudantes">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li class="nav-link"><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'btn float-end']) ?></li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Novo estudante'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
         <?php endif; ?>
     </ul>
-
-    <?php echo $this->element('menu_esquerdo'); ?>
-
 </nav>
 
 <?= $this->element('templates') ?>

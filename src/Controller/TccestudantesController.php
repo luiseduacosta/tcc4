@@ -7,13 +7,17 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 
+
 /**
  * Tccestudantes Controller
  *
  * @property \App\Model\Table\TccestudantesTable $Tccestudantes
  *
  * @method \App\Model\Entity\Tccestudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * 
+ * #[AllowDynamicProperties];
  */
+
 class TccestudantesController extends AppController {
 
     public $Tccestudantes = null;
@@ -45,12 +49,12 @@ class TccestudantesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
-        // echo $id;
+
         $this->Authorization->skipAuthorization();
+        $this->loadModel('Tccestudantes'); // Estranho, mas necessário
         $tccestudante = $this->Tccestudantes->get($id, [
             'contain' => ['Monografias'],
         ]);
-
         $this->set('tccestudante', $tccestudante);
     }
 

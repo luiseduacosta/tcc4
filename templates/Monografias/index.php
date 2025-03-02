@@ -11,19 +11,24 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
+<div class="justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMonografias"
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMonografias"
         aria-controls="navbarTogglerMonografias" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-<ul class="collapse navbar-collapse" id="navbarTogglerMonografias">
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMonografias">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li class="nav-item"><?= $this->Html->link(__('Nova Monografia'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Nova Monografia'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
+            </li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
     </ul>
 </nav>
-<div class="monografias index large-9 medium-8 columns content">
+
+<div class="container">
 
     <h3><?= __('Monografias') ?></h3>
 
@@ -51,9 +56,11 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?php // die(pr($titulo)); ?>
                 <tr>
 
-                    <td><?=
-                        $this->Html->link(substr($monografia->titulo, 0, 55) . ' ...', ['action' => 'view', $monografia->id])
-                        ?></td>
+                    <td>
+                        <?=
+                            $this->Html->link(substr($monografia->titulo, 0, 55) . ' ...', ['action' => 'view', $monografia->id])
+                            ?>
+                    </td>
 
                     <td><?= h($monografia->periodo) ?></td>
                     <td>
@@ -70,10 +77,12 @@ $user = $this->getRequest()->getAttribute('identity');
                         endif;
                         ?>
                     </td>
-                    <td><?= $this->Html->link(h($monografia->docente->nome), ['controller' => 'docentes', 'action' => 'view', $monografia->docente->id]) ?></td>
-                    <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografia->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia->id]) : '' ?></td>
+                    <td><?= $this->Html->link(h($monografia->docente->nome), ['controller' => 'docentes', 'action' => 'view', $monografia->docente->id]) ?>
+                    </td>
+                    <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografia->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia->id]) : '' ?>
+                    </td>
                     <?php if (!empty($monografia->url)): ?>
-                        <td><a href="<?= $baseUrl . 'monografias/'. $monografia->url ?>">Download</a></td>
+                        <td><a href="<?= $baseUrl . 'monografias/' . $monografia->url ?>">Download</a></td>
                     <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
@@ -88,6 +97,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Paginator->next(__('next') . ' >') ?>
             <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
+        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+        </p>
     </div>
 </div>

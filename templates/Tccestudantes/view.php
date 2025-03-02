@@ -6,19 +6,26 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Tccestudante $tccestudante
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+
+<div class="justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerTccestudantesView"
+        aria-controls="navbarTogglerTccestudantesview" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerTccestudantesView">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $tccestudante->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Delete Estudante'), ['action' => 'delete', $tccestudante->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tccestudante->id)]) ?> </li>
+            <li class="nav-item"><?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $tccestudante->id], ['class' => 'btn btn-primary float-end']) ?> </li>
+            <li class="nav-item"><?= $this->Form->postLink(__('Delete Estudante'), ['action' => 'delete', $tccestudante->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $tccestudante->id), 'class' => 'btn btn-danger float-ende']) ?> </li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
     </ul>
 </nav>
-<div class="tccestudantes view large-9 medium-8 columns content">
+<div class="container">
     <h3><?= h($tccestudante->Nome) ?></h3>
-    <table class="vertical-table">
+    <table class="table table-striped table-hover">
         <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= h($tccestudante->id) ?></td>

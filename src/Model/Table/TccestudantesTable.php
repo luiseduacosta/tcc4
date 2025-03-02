@@ -10,7 +10,7 @@ use Cake\Validation\Validator;
 /**
  * Tccestudantes Model
  *
- * @property &\Cake\ORM\Association\BelongsTo $Monografias
+ * @property \Cake\ORM\Association\BelongsTo $Monografias
  *
  * @method \App\Model\Entity\Tccestudante get($primaryKey, $options = [])
  * @method \App\Model\Entity\Tccestudante newEntity($data = null, array $options = [])

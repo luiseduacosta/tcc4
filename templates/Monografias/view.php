@@ -6,26 +6,37 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Monografia $monografia
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Edit Monografia'), ['action' => 'edit', $monografia->id], ['class' => 'btn btn-primary float-end']) ?> </li>
-            <li><?= $this->Form->postLink(__('Delete Monografia'), ['action' => 'delete', $monografia->id], ['confirm' => __('Are you sure you want to delete # {0}?', $monografia->id)], ['class' => 'btn btn-primary float-end']) ?> </li>
-        <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
-    </ul>
+
+<div class="justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMonografiasView"
+        aria-controls="navbarTogglerMonografiasView" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMonografiasView">
+            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                <li class="nav-item">
+                    <?= $this->Html->link(__('Editar Monografia'), ['action' => 'edit', $monografia->id], ['class' => 'btn btn-primary float-end']) ?>
+                </li>
+                <li class="nav-item">
+                    <?= $this->Form->postLink(__('Excluir Monografia'), ['action' => 'delete', $monografia->id], ['confirm' => __('Tem certeza que quer excluir # {0}?', $monografia->id), 'class' => 'btn btn-danger float-end']) ?>
+                </li>
+            <?php endif; ?>
+        </ul>
 </nav>
-<div class="monografias view large-9 medium-8 columns content">
+
+
+<div class="container">
     <h3><?= h($monografia->titulo) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Titulo') ?></th>
-            <td><?= $this->Text->autoParagraph(h($monografia->titulo)) ?></td>
+    <table class="table table-striped table-hover">
+        <th scope="row"><?= __('Titulo') ?></th>
+        <td><?= $this->Text->autoParagraph(h($monografia->titulo)) ?></td>
         </tr>
         <?php if (isset($monografia->resumo) && $monografia->resumo): ?>
             <tr>
-                <th scope="row"colspan="2"><?= __('Resumo') ?>
+                <th scope="row" colspan="2"><?= __('Resumo') ?>
             </tr>
             <tr>
                 <td colspan="2"><?= $this->Text->autoParagraph(h($monografia->resumo)) ?></td>
@@ -46,7 +57,8 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Docente') ?></th>
-            <td><?= $this->Html->link($monografia->docente->nome, ['controller' => 'docentes', 'action' => 'view', $monografia->docente_id]) ?></td>
+            <td><?= $this->Html->link($monografia->docente->nome, ['controller' => 'docentes', 'action' => 'view', $monografia->docente_id]) ?>
+            </td>
         </tr>
         <tr>
             <th scope="row"><?= __('Data') ?></th>
@@ -58,7 +70,8 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Area') ?></th>
-            <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografia->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia->id]) : "" ?></td>
+            <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografia->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia->id]) : "" ?>
+            </td>
         </tr>
         <tr>
             <th scope="row"><?= __('Data Defesa') ?></th>
@@ -73,7 +86,8 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php if ($monografia->co_orienta_id > 0): ?>
             <tr>
                 <th scope="row"><?= __('Co Orienta Id', ['label' => 'Co-orientador']) ?></th>
-                <td><?= $monografia->has('co_orienta_id > 0') ? $this->Html->link($monografia->co_orienta_id, ['controller' => 'docentes', 'action' => 'view', $monografia->co_orienta_id]) : '' ?></td>
+                <td><?= $monografia->has('co_orienta_id > 0') ? $this->Html->link($monografia->co_orienta_id, ['controller' => 'docentes', 'action' => 'view', $monografia->co_orienta_id]) : '' ?>
+                </td>
             </tr>
         <?php endif ?>
         <tr>
@@ -89,9 +103,8 @@ $user = $this->getRequest()->getAttribute('identity');
             <td><?= h($monografia->has('banca3 != 0') ? $monografia->docentes2->nome : '') ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Convidado') ?></th>
+            <th scope="row"><?= __('Convidado(a)') ?></th>
             <td><?= h($monografia->convidado) ?></td>
         </tr>
-
     </table>
 </div>

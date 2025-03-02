@@ -6,25 +6,35 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Monografia[]|\Cake\Collection\CollectionInterface $monografias
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMonografias"
+        aria-controls="navbarTogglerMonografias" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMonografias">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Nova Monografia'), ['action' => 'add']) ?></li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Nova Monografia'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
+            </li>
         <?php endif; ?>
         <?= $this->element('menu_esquerdo') ?>
     </ul>
 </nav>
-<div class="monografias index large-9 medium-8 columns content">
-    <h3><?= __('Monografias') ?></h3>
+
+<div class="container">
+
+<?= $this->element('templates') ?>
+
+<h3><?= __('Monografias') ?></h3>
 
     <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
     <?= $this->Form->control('titulo', ['label' => 'Busca por título', 'value' => $this->getRequest()->getSession()->read('busca')]) ?>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+    <table class="table table-striped table-hover table-responsive">
+        <thead class="thead-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('titulo') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('periodo') ?></th>
@@ -61,6 +71,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
+
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>

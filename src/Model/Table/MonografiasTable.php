@@ -13,7 +13,7 @@ use Cake\Validation\Validator;
  * Monografias Model
  *
  * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
- * @property \App\Model\Table\AreasTable&\Cake\ORM\Association\BelongsTo $Areas
+ * @property \App\Model\Table\AreamonografiasTable&\Cake\ORM\Association\BelongsTo $Areas
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasMany $Tccestudantes
  *
  * @method \App\Model\Entity\Monografia newEmptyEntity()

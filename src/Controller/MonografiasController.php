@@ -20,6 +20,7 @@ use Cake\Filesystem\Folder;
  */
 class MonografiasController extends AppController {
 
+    public $Monografias = null;
     public function beforeFilter(\Cake\Event\EventInterface $event) {
 
         parent::beforeFilter($event);
@@ -58,6 +59,7 @@ class MonografiasController extends AppController {
     public function view($id = null) {
 
         $this->Authorization->skipAuthorization();
+        $this->loadModel('Monografias');
         $monografia = $this->Monografias->get($id, [
             'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes'],
         ]);
@@ -199,11 +201,11 @@ class MonografiasController extends AppController {
             $monografia = $this->Monografias->patchEntity($monografia, $dados);
             // pr($monografia);
             if ($this->Monografias->save($monografia)) {
-                $this->Flash->success(__('The monografia has been saved.'));
+                $this->Flash->success(__('Monografia atualizada.'));
 
                 return $this->redirect(['action' => 'view/' . $id]);
             }
-            $this->Flash->error(__('The monografia could not be saved. Please, try again.'));
+            $this->Flash->error(__('Monografia não foi atualizada.'));
         }
 
         // $estudantes = $this->estudantes();
@@ -233,9 +235,9 @@ class MonografiasController extends AppController {
         $this->Authorization->authorize($monografia);
 
         if ($this->Monografias->delete($monografia)) {
-            $this->Flash->success(__('The monografia has been deleted.'));
+            $this->Flash->success(__('Monografia excluída.'));
         } else {
-            $this->Flash->error(__('The monografia could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Monografia não foi excluída.'));
         }
 
         return $this->redirect(['action' => 'index']);

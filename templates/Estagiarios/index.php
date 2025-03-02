@@ -8,18 +8,24 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
+<div class="justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerEstagiarios"
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerEstagiarios"
         aria-controls="navbarTogglerEstagiarios" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerEstagiarios"></div>
-    <ul class="navbar-nav ms-auto mt-lg-0">
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li class="nav-item"><?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
-        <?php endif; ?>
-    </ul>
-    <?= $this->element('menu_esquerdo') ?>
+    <div class="collapse navbar-collapse" id="navbarTogglerEstagiarios">
+        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerEstagiarios">
+            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                <li class="nav-item">
+                    <?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
 </nav>
 
 <?= $this->element('templates') ?>
@@ -40,8 +46,8 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th scope="col"><?= $this->Paginator->sort('turno') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('nivel') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('periodo') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('titulo') ?></th>                
-                <th scope="col"><?= $this->Paginator->sort('periodo_monog') ?></th>                                
+                <th scope="col"><?= $this->Paginator->sort('titulo') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('periodo_monog') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -50,14 +56,16 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <td><?= h($c_estudante['registro']) ?></td>
                     <?php if (!empty($c_estudante['id'])): ?>
-                        <td><?= $this->Html->link($c_estudante['nome'], ['controller' => 'Tccestudantes', 'action' => 'view', $c_estudante['id']]) ?></td>
+                        <td><?= $this->Html->link($c_estudante['nome'], ['controller' => 'Tccestudantes', 'action' => 'view', $c_estudante['id']]) ?>
+                        </td>
                     <?php else: ?>
-                        <td><?= h($c_estudante['nome']) ?></td>                
+                        <td><?= h($c_estudante['nome']) ?></td>
                     <?php endif; ?>
                     <td><?= h($c_estudante['turno']) ?></td>
                     <td><?= h($c_estudante['nivel']) ?></td>
                     <td><?= h($c_estudante['periodo']) ?></td>
-                    <td><?= $this->Html->link($c_estudante['titulo'], ['controller' => 'Monografias', 'action' => 'view', $c_estudante['monografia_id']]) ?></td>                
+                    <td><?= $this->Html->link($c_estudante['titulo'], ['controller' => 'Monografias', 'action' => 'view', $c_estudante['monografia_id']]) ?>
+                    </td>
                     <td><?= h($c_estudante['periodo_monog']) ?></td>
                 </tr>
             <?php endforeach; ?>
