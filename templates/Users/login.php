@@ -2,6 +2,8 @@
 $usuario = $this->getRequest()->getAttribute('identity');
 ?>
 
+<?= $this->element('templates') ?>
+
 <div class="users form">
     <?= $this->Flash->render() ?>
     <!--

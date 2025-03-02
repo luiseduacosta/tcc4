@@ -5,10 +5,12 @@ $usuario = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\User $user
  */
 ?>
+
+<?= $this->element('templates') ?>
+
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('Listar usuários'), ['action' => 'index']) ?></li>
     </ul>
 </nav>
 <div class="users form large-9 medium-8 columns content">
@@ -16,9 +18,9 @@ $usuario = $this->getRequest()->getAttribute('identity');
     <fieldset>
         <legend><?= __('Add User') ?></legend>
         <?php
-            echo $this->Form->control('username');
+            echo $this->Form->control('email');
             echo $this->Form->control('password');
-            echo $this->Form->control('role', ['options' => ['editor' => 'editor']]);
+            echo $this->Form->control('categoria', ['options' => ['2' => 'estudante']]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

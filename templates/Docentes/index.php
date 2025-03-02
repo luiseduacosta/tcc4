@@ -5,16 +5,24 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Docente[]|\Cake\Collection\CollectionInterface $docentes
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
-            <li><?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
-        <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
-    </ul>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDocentes"
+        aria-controls="navbarTogglerDocentes" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDocentes">
+        <ul class="navbar-nav ms-auto mt-lg-0">
+            <?php if (isset($user->role) && $user->role == 'admin'): ?>
+                <li><?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+    <?= $this->element('menu_esquerdo') ?>
 </nav>
-<div class="docentes index large-9 medium-8 columns content">
+
+<div class="container">
     <h3><?= __('Docentes') ?></h3>
     <p>
         <?php if (isset($user->role) && $user->role == 'admin'): ?>
@@ -24,8 +32,8 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Html->link('Dados pósgraduação', ['controller' => 'docentes', 'action' => 'index3'], ['class' => 'button float-right']) ?>
         <?php endif; ?>
     </p>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+    <table class="table table-striped table-hover table-responsive">
+        <thead class="thead-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('departamento') ?></th>
@@ -37,7 +45,8 @@ $user = $this->getRequest()->getAttribute('identity');
         <tbody>
             <?php foreach ($docentes as $docente): ?>
                 <tr>
-                    <td><?= $this->Html->link(h($docente->nome), ['controller' => 'docentes', 'action' => 'view', $docente->id]) ?></td>
+                    <td><?= $this->Html->link(h($docente->nome), ['controller' => 'docentes', 'action' => 'view', $docente->id]) ?>
+                    </td>
                     <td><?= h($docente->departamento) ?></td>
                     <td><?= h($docente->homepage) ?></td>
                     <td>
@@ -50,6 +59,9 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <?= $this->element('templates') ?>
+
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>

@@ -7,16 +7,24 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Estagiario[]|\Cake\Collection\CollectionInterface $estagiarios
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerEstagiarios"
+        aria-controls="navbarTogglerEstagiarios" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerEstagiarios"></div>
+    <ul class="navbar-nav ms-auto mt-lg-0">
         <?php if (isset($user->role) && $user->role == 'admin'): ?>
-            <li><?= $this->Html->link(__('New Estagiario'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
+            <li class="nav-item"><?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
     </ul>
+    <?= $this->element('menu_esquerdo') ?>
 </nav>
-<div class="estagiarios index large-9 medium-8 columns content">
+
+<?= $this->element('templates') ?>
+
+<div class="container">
     <h3><?= __('Estagiarios por período e por TCC concluída') ?></h3>
 
     <?= $this->Form->create(null, ['url' => ['action' => 'index']]) ?>
@@ -24,8 +32,8 @@ $user = $this->getRequest()->getAttribute('identity');
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+    <table class="table table-striped table-hover table-responsive">
+        <thead class="thead-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('registro') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('nome') ?></th>

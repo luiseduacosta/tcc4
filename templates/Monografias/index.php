@@ -11,11 +11,14 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMonografias"
+        aria-controls="navbarTogglerMonografias" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+<ul class="collapse navbar-collapse" id="navbarTogglerMonografias">
         <?php if (isset($user->role) && $user->role == 'admin'): ?>
-            <li><?= $this->Html->link(__('Nova Monografia'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
+            <li class="nav-item"><?= $this->Html->link(__('Nova Monografia'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
         <?php endif; ?>
         <?= $this->element('menu_esquerdo') ?>
     </ul>
@@ -24,12 +27,15 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <h3><?= __('Monografias') ?></h3>
 
+    <?= $this->element('templates') ?>
+
     <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
     <?= $this->Form->control('titulo', ['label' => 'Busca por título']) ?>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-    <table class='table'>
-        <thead>
+
+    <table class='table table-striped table-hover table-responsive'>
+        <thead class="thead-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('Monografias.titulo', 'Título') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Monografias.periodo', 'Período') ?></th>
@@ -73,6 +79,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
+
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>

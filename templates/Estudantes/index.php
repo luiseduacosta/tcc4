@@ -5,6 +5,7 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Aluno[]|\Cake\Collection\CollectionInterface $alunos
  */
 ?>
+
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
@@ -14,6 +15,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php echo $this->element('menu_esquerdo'); ?>
     </ul>
 </nav>
+
 <div class="alunos index large-9 medium-8 columns content">
     <h3>
         <?= __('Estudantes') ?>
@@ -23,8 +25,9 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'button float-right']) ?>
         <?php endif; ?>
     </h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+
+    <table class="table  table-striped table-hover table-responsive">
+        <thead class="thead-dark">
             <tr>
                 <th><?= $this->Paginator->sort('registro') ?></th>
                 <th><?= $this->Paginator->sort('nome') ?></th>
@@ -57,6 +60,9 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <?= $this->element('templates') ?>
+
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>

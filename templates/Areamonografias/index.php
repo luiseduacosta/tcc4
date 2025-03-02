@@ -5,7 +5,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($areas);
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Area[]|\Cake\Collection\CollectionInterface $areas
+ * @var \App\Model\Entity\Areamonografia[]|\Cake\Collection\CollectionInterface $areas
  */
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
@@ -16,7 +16,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="collapse navbar-collapse" id="navbarTogglerAreamongrafia">
         <ul class="navbar-nav ms-auto mt-lg-0">
             <?php if (isset($user->role) && $user->role == 'admin'): ?>
-                <li><?= $this->Html->link(__('Nova Área'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
+                <li class="item-link"><?= $this->Html->link(__('Nova Área'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
             <?php endif; ?>
         </ul>
     </div>
@@ -27,7 +27,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="table-responsive">
     <h3><?= __('Áreas') ?></h3>
     <table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-responsive">
-        <thead>
+        <thead class="thead-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('area') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('monografias') ?></th>
@@ -48,11 +48,11 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <div class="paginator">
         <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('primeiro'), ['tag' => 'li', 'class' => 'page-item'], null, ['tag' => 'a', 'class' => 'page-link']) ?>
-            <?= $this->Paginator->prev('< ' . __('anterior', ['tag' => 'class => page-item'], ['tag' => 'a', 'class' => 'link-item'])) ?>
+            <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
             <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('próximo') . ' >', ['tag' => 'li', 'class' => 'page-item'], ['tag' => 'a', 'class' => 'link-item']) ?>
-            <?= $this->Paginator->last(__('último') . ' >>', ['tag' => 'li', 'class' => 'page-item'], ['tag' => 'a', 'class' => 'link-page']) ?>
+            <?= $this->Paginator->next(__('próximo')) ?>
+            <?= $this->Paginator->last(__('último')) ?>
         </ul>
         <p><?= $this->Paginator->counter(__('Página {{page}} do {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?></p>
     </div>

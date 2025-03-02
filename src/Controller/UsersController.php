@@ -33,8 +33,9 @@ class UsersController extends AppController {
 
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
+        // pr($result);
+        // die();
         // regardless of POST or GET, redirect if user is logged in
-
         if ($result->isValid()) {
             // redirect to /monografias after login success
             $redirect = $this->request->getQuery('redirect', [
@@ -47,7 +48,7 @@ class UsersController extends AppController {
 
         // display error if user submitted and authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
-            $this->Flash->error(__('Invalid username or password'));
+            $this->Flash->error(__('Inválido username ou password'));
         }
     }
 
@@ -108,18 +109,21 @@ class UsersController extends AppController {
     public function add() {
 
         // In the add, login, and logout methods
-        // $this->Authorization->skipAuthorization();
+        $this->Authorization->skipAuthorization();
 
         $user = $this->Users->newEmptyEntity();
-        $this->Authorization->authorize($user);
+        // $this->Authorization->authorize($user);
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
+            // pr($this->request->getData());
+            // pr($user);
+            // die(json_encode($user));
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('Usuários cadastrado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->error(__('Usúario não foi cadastrado. Tente novamente.'));
         }
         $this->set(compact('user'));
     }

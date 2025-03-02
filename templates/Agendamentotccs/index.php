@@ -13,8 +13,8 @@ $user = $this->getRequest()->getAttribute('identity');
     <?= $this->element('menu_esquerdo') ?>
     <h3><?= __('Agendamento de Oficina de TCC') ?></h3>
     <div class="table-responsive">
-        <table>
-            <thead>
+        <table class="table table-striped table-hover table-responsive">
+            <thead class="thead-dark">
                 <tr>
                     <th><?= $this->Paginator->sort('Estudantes.nome', 'Estudante') ?></th>
                     <th><?= $this->Paginator->sort('Docentes.nome', 'Orientador') ?></th>
@@ -54,6 +54,9 @@ $user = $this->getRequest()->getAttribute('identity');
             </tbody>
         </table>
     </div>
+
+    <?= $this->element('templates') ?>
+    
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>

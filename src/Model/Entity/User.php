@@ -8,9 +8,9 @@ use Cake\ORM\Entity;
  * User Entity
  *
  * @property int $id
- * @property string $username
+ * @property string $email
  * @property string $password
- * @property string $role
+ * @property string $categoria
  */
 class User extends Entity
 {
@@ -24,9 +24,9 @@ class User extends Entity
      * @var array
      */
     protected $_accessible = [
-        'username' => true,
+        'email' => true,
         'password' => true,
-        'role' => true,
+        'categoria' => true,
     ];
 
     protected function _setPassword($password): ?string

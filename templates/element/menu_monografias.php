@@ -9,7 +9,6 @@ $usuario = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-
 <div class="row">
     <nav class="navbar navbar-expand-lg navbar-light py-0 navbar-fixed-top" style="background-color: #2b6c9c;">
         <ul  class="navbar-nav mr-auto">
@@ -29,4 +28,3 @@ $usuario = $this->getRequest()->getAttribute('identity');
         </ul>
     </nav>
 </div>
-
