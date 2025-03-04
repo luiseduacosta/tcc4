@@ -20,7 +20,7 @@ class EstagiarioPolicy
      */
     public function canAdd(IdentityInterface $user, Estagiario $estagiario)
     {
-        return isset($user->role) && $user->role == 'admin';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
@@ -32,7 +32,7 @@ class EstagiarioPolicy
      */
     public function canEdit(IdentityInterface $user, Estagiario $estagiario)
     {
-        return isset($user->role) && $user->role == 'admin';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
@@ -44,7 +44,7 @@ class EstagiarioPolicy
      */
     public function canDelete(IdentityInterface $user, Estagiario $estagiario)
     {
-        return isset($user->role) && $user->role == 'admin';
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**

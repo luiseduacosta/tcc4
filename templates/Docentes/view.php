@@ -6,21 +6,44 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Docente $docente
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+
+<div class="justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDocentesView"
+        aria-controls="navbarTogglerDocentesView" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerDocentesView">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Edit Docente'), ['action' => 'edit', $docente->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Delete Docente'), ['action' => 'delete', $docente->id], ['confirm' => __('Are you sure you want to delete # {0}?', $docente->id)]) ?> </li>
+            <li class="item-link">
+                <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docente->id], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
+            <li class="item-link">
+                <?= $this->Form->postLink(__('Excluir Docente'), ['action' => 'delete', $docente->id], ['confirm' => __('Tem certeza que quer exclir este registro # {0}?', $docente->id), 'class' => 'btn btn-danger float-start']) ?>
+            </li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo'); ?>
     </ul>
 </nav>
-<div class="docentes view large-9 medium-8 columns content">
+
+<div class="container">
     <h3><?= h($docente->nome) ?></h3>
     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-        <table class="vertical-table">
-            <tr><td colspan="2">Dados pessoais</td></tr>
+        <table class="table table-striped table-hover table-responsive">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col"><?= __('Nome') ?></th>
+                    <th scope="col"><?= __('Departamento') ?></th>
+                    <th scope="col"><?= __('Homepage') ?></th>
+                    <th scope="col"><?= __('Curriculo Lattes') ?></th>
+                    <th scope="col"><?= __('Motivo Egresso') ?></th>
+                </tr>
+            </thead>
+            <tr>
+                <td colspan="2">Dados pessoais</td>
+            </tr>
             <tr>
                 <th scope="row"><?= __('Nome') ?></th>
                 <td><?= h($docente->nome) ?></td>
@@ -32,14 +55,14 @@ $user = $this->getRequest()->getAttribute('identity');
             <tr>
                 <th scope="row"><?= __('Sexo') ?></th>
                 <td>
-                <?php if ($docente->sexo == '1'): ?>
-                <?= 'Masculino'; ?>
-                <?php elseif ($docente->sexo == '2'): ?>
-                <?= 'Feminino'; ?>
-                <?php else: ?>
-                <?= "s/d" ?>
-                <?php endif; ?>
-              </td>
+                    <?php if ($docente->sexo == '1'): ?>
+                        <?= 'Masculino'; ?>
+                    <?php elseif ($docente->sexo == '2'): ?>
+                        <?= 'Feminino'; ?>
+                    <?php else: ?>
+                        <?= "s/d" ?>
+                    <?php endif; ?>
+                </td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Data de nascimento') ?></th>
@@ -63,14 +86,17 @@ $user = $this->getRequest()->getAttribute('identity');
             </tr>
             <tr>
                 <th scope="row"><?= __('Site') ?></th>
-                <td><?= $docente->has('homepage') ? $this->Html->link($docente->homepage, $docente->homepage): '' ?></td>
+                <td><?= $docente->has('homepage') ? $this->Html->link($docente->homepage, $docente->homepage) : '' ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Rede social') ?></th>
-                <td><?= $docente->has('redesocial') ? $this->Html->link($docente->redesocial, $docente->redesocial) : '' ?></td>
+                <td><?= $docente->has('redesocial') ? $this->Html->link($docente->redesocial, $docente->redesocial) : '' ?>
+                </td>
             </tr>
 
-            <tr><td colspan="2">Dados acadêmicos</td></tr>
+            <tr>
+                <td colspan="2">Dados acadêmicos</td>
+            </tr>
             <tr>
                 <th scope="row"><?= __('Curriculo lattes') ?></th>
                 <td><a href="<?= 'http://lattes.cnpq.br/' . $docente->curriculolattes ?>">Currículo</a></td>
@@ -85,7 +111,7 @@ $user = $this->getRequest()->getAttribute('identity');
             </tr>
             <tr>
                 <th scope="row"><?= __('Diretório de Grupos de Pesquisa') ?></th>
-                 <td><a href='http://dgp.cnpq.br/dgp/espelhogrupo/<?= $docente->pesquisadordgp ?>'>Grupo de pesquisa</a></td>
+                <td><a href='http://dgp.cnpq.br/dgp/espelhogrupo/<?= $docente->pesquisadordgp ?>'>Grupo de pesquisa</a></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Formação profissional') ?></th>
@@ -125,7 +151,9 @@ $user = $this->getRequest()->getAttribute('identity');
                 <td><?= h($docente->doutoradoanoconclusao) ?></td>
             </tr>
 
-            <tr><td colspan="2">Dados funcionais</td></tr>
+            <tr>
+                <td colspan="2">Dados funcionais</td>
+            </tr>
             <tr>
                 <th scope="row"><?= __('Siape') ?></th>
                 <td><?= $this->Number->format($docente->siape) ?></td>
@@ -169,37 +197,45 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Text->autoParagraph(h($docente->observacoes)); ?>
         </div>
     <?php endif; ?>
-    <div class="related">
-        <h4><?= __('Related Monografias') ?></h4>
+
+    <div class="container">
+        <h4><?= __('Monografias') ?></h4>
         <?php if (!empty($docente->monografias)): ?>
-            <table cellpadding="0" cellspacing="0">
-                <tr>
-                    <th scope="col"><?= __('Titulo') ?></th>
-                    <th scope="col"><?= __('Periodo') ?></th>
-                    <th scope="col"><?= __('Pdf') ?></th>
-                </tr>
+            <table class="table table-striped table-hover table-responsive">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col"><?= __('Titulo') ?></th>
+                        <th scope="col"><?= __('Periodo') ?></th>
+                        <th scope="col"><?= __('Pdf') ?></th>
+                    </tr>
+                </thead>
                 <?php foreach ($docente->monografias as $monografias): ?>
                     <tr>
-                        <td><?= $this->Html->link($monografias->titulo, ['controller' => 'monografias', 'action' => 'view', $monografias->id]) ?></td>
+                        <td><?= $this->Html->link($monografias->titulo, ['controller' => 'monografias', 'action' => 'view', $monografias->id]) ?>
+                        </td>
                         <td><?= h($monografias->periodo) ?></td>
-                        <td><?= $this->Html->link($monografias->url, ['controller' => 'monografias', 'action' => 'download', $monografias->url, $monografias->id]) ?></td>
+                        <td><?= $this->Html->link($monografias->url, ['controller' => 'monografias', 'action' => 'download', $monografias->url, $monografias->id]) ?>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </table>
         <?php endif; ?>
     </div>
-    <div class="related">
-        <h4><?= __('Related Docentes Areas') ?></h4>
+    <div class="row">
+        <h4><?= __('Áreas') ?></h4>
         <?php if (!empty($docente->areamonografias)): ?>
-            <?php // pr($docente->areas);?>
-            <table cellpadding="0" cellspacing="0">
-                <tr>
-                    <th scope="col"><?= __('Área') ?></th>
-                </tr>
-                <?php foreach ($docente->areamonografias as $docentesAreas): ?>
-                    <?php // pr($docentesAreas);?>
+            <?php // pr($docente->areas); ?>
+            <table class="table table-striped table-hover table-responsive">
+                <thead class="thead-dark">
                     <tr>
-                        <td><?= $this->Html->link($docentesAreas->area, ['controller' => 'areamonografias', 'action' => 'view', $docentesAreas->id]) ?></td>
+                        <th scope="col"><?= __('Área') ?></th>
+                    </tr>
+                </thead>
+                <?php foreach ($docente->areamonografias as $docentesAreas): ?>
+                    <?php // pr($docentesAreas); ?>
+                    <tr>
+                        <td><?= $this->Html->link($docentesAreas->area, ['controller' => 'areamonografias', 'action' => 'view', $docentesAreas->id]) ?>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </table>

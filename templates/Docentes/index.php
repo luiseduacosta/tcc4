@@ -18,7 +18,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="collapse navbar-collapse" id="navbarTogglerDocentes">
         <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerDocentes">
             <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                <li><?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                <li class="item-link"><?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
                 </li>
             <?php endif; ?>
         </ul>

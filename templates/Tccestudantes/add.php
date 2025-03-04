@@ -5,13 +5,13 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Tccestudante $tccestudante
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <?= $this->element('menu_esquerdo') ?>
-    </ul>
-</nav>
-<div class="tccestudantes form large-9 medium-8 columns content">
+
+<div class="justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <h3 class="text-center"><?= __('Inserir TCC estudante') ?></h3>
     <?= $this->Form->create($tccestudante) ?>
     <fieldset>
         <legend><?= __('Inserir TCC estudante') ?></legend>

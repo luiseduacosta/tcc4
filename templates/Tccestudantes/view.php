@@ -19,12 +19,13 @@ $user = $this->getRequest()->getAttribute('identity');
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerTccestudantesView">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="nav-item"><?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $tccestudante->id], ['class' => 'btn btn-primary float-end']) ?> </li>
-            <li class="nav-item"><?= $this->Form->postLink(__('Delete Estudante'), ['action' => 'delete', $tccestudante->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $tccestudante->id), 'class' => 'btn btn-danger float-ende']) ?> </li>
+            <li class="nav-item"><?= $this->Form->postLink(__('Excluir Estudante'), ['action' => 'delete', $tccestudante->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $tccestudante->id), 'class' => 'btn btn-danger float-end']) ?> </li>
         <?php endif; ?>
     </ul>
 </nav>
-<div class="container">
-    <h3><?= h($tccestudante->Nome) ?></h3>
+
+<div class="row">
+    <h3><?= h($tccestudante->nome) ?></h3>
     <table class="table table-striped table-hover">
         <tr>
             <th scope="row"><?= __('Id') ?></th>

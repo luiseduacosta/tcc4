@@ -149,6 +149,8 @@ class EstudantemonografiasController extends AppController {
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add() {
+
+        $this->loadModel('Estudantemonografias');
         $estudante = $this->Estudante->newEmptyEntity();
         $this->Authorization->authorize($estudante);
 
@@ -176,10 +178,7 @@ class EstudantemonografiasController extends AppController {
         $estudante = $this->Estudantemonografias->get($id, [
             'contain' => [],
         ]);
-        // pr($estudante);
-        // pr($this->request->getData());
-        // die();
-        // $this->Authorization->authorize($estudante);
+        $this->Authorization->authorize($estudante);
         // die();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $estudanteatualiza = $this->Estudantemonografias->patchEntity($estudante, $this->request->getData());

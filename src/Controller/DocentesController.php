@@ -94,6 +94,7 @@ class DocentesController extends AppController {
      */
     public function view($id = null) {
 
+        $this->loadModel("Docentes");
         $this->Authorization->skipAuthorization();
         $docente = $this->Docentes->get($id, [
             'contain' => ['Monografias', 'Areamonografias'],
@@ -108,8 +109,10 @@ class DocentesController extends AppController {
      */
     public function add() {
 
+        $this->loadModel("Docentes");
         $docente = $this->Docentes->newEmptyEntity();
         $this->Authorization->authorize($docente);
+
         if ($this->request->is('post')) {
             $docente = $this->Docentes->patchEntity($docente, $this->request->getData());
             if ($this->Docentes->save($docente)) {
@@ -131,12 +134,12 @@ class DocentesController extends AppController {
      */
     public function edit($id = null) {
 
+        $this->loadModel("Docentes");
         $docente = $this->Docentes->get($id, [
             'contain' => [],
         ]);
         $this->Authorization->authorize($docente);
-        pr($this->request->getData());
-        // die();
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $docente = $this->Docentes->patchEntity($docente, $this->request->getData());
             if ($this->Docentes->save($docente)) {

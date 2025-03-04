@@ -76,6 +76,7 @@ class MonografiasController extends AppController {
      */
     public function add() {
 
+        $this->loadModel('Monografias');
         $monografia = $this->Monografias->newEmptyEntity();
         $this->Authorization->authorize($monografia);
         // pr($monografia);
@@ -166,6 +167,7 @@ class MonografiasController extends AppController {
      */
     public function edit($id = null) {
 
+        $this->loadModel('Monografias');
         $monografia = $this->Monografias->get($id, [
             'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes'],
         ]);

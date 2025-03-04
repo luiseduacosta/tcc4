@@ -28,6 +28,7 @@ class TccestudantesController extends AppController {
      * @return \Cake\Http\Response|null
      */
     public function index() {
+
         $this->Authorization->skipAuthorization();
         $this->paginate = [
             'order' => ['nome'],
@@ -88,11 +89,10 @@ class TccestudantesController extends AppController {
                 ['keyField' => 'id', 'valueField' => 'titulo']
         );
         $monografias->order(['titulo' => 'asc']);
-        // pr($monografias);
-        // die();
 
         $tccestudante = $this->Tccestudantes->newEmptyEntity();
         $this->Authorization->authorize($tccestudante);
+
         if ($this->request->is('post')) {
             $tccaluno = $this->Tccestudantes->patchEntity($tccestudante, $this->request->getData());
             // pr($tccestudante);
@@ -117,12 +117,13 @@ class TccestudantesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null) {
+
+        $this->loadModel('Tccestudantes');
         $tccestudante = $this->Tccestudantes->get($id, [
             'contain' => ['Monografias'],
         ]);
-        // pr($tccestudante);
-        // die();
         $this->Authorization->authorize($tccestudante);
+
         $monografias = $this->Tccestudantes->Monografias->find(
                 'list',
                 ['keyField' => 'id', 'valueField' => 'titulo']
@@ -134,11 +135,11 @@ class TccestudantesController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $tccestudante = $this->Tccestudantes->patchEntity($tccestudante, $this->request->getData());
             if ($this->Tccestudantes->save($tccestudante)) {
-                $this->Flash->success(__('The tccestudante has been saved.'));
+                $this->Flash->success(__('Estudante de TCC registrado.'));
 
                 return $this->redirect(['action' => 'view', $tccestudante->id]);
             }
-            $this->Flash->error(__('The tccestudante could not be saved. Please, try again.'));
+            $this->Flash->error(__('Estudante de TCC não foi registrado.'));
         }
         $this->set(compact('monografias', 'tccestudante'));
     }
@@ -172,6 +173,7 @@ class TccestudantesController extends AppController {
      * @return string $estudantes
      */
     public function busca() {
+
         $this->Authorization->skipAuthorization();
 
         if ($this->request->is('post')) {

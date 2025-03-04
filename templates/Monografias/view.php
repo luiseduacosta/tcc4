@@ -10,6 +10,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMonografiasView"
         aria-controls="navbarTogglerMonografiasView" aria-expanded="false" aria-label="Toggle navigation">

@@ -1,11 +1,38 @@
 <?php
 $user = $this->getRequest()->getAttribute('identity');
-// pr($monografia['url']);
+pr($monografia->titulo);
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Monografia $monografia
  */
 ?>
+
+<script>
+    function contatitulo() {
+        var max = 180;
+        var len = document.getElementById('titulo').value.length;
+        if (len >= max) {
+            alert('Você atingiu o limite de ' + max + ' caracteres');
+            // document.getElementById('caraterestitulo').value = 'Você atingiu o limite de ' + max + ' caracteres';
+        } else {
+            var char = max - len;
+            document.getElementById('caraterestitulo').value = char + ' caracteres restantes';
+        }
+    }
+
+    function contaresumo() {
+        var max = 7000;
+        var len = document.getElementById('resumo').value.length;
+        if (len >= max) {
+            alert('Você atingiu o limite de ' + max + ' caracteres');
+            // document.getElementById('carateresresumo').value = 'Você atingiu o limite de ' + max + ' caracteres';
+        } else {
+            var char = max - len;
+            document.getElementById('carateresresumo').value = char + ' caracteres restantes';
+        }
+    }
+
+</script>
 
 <div class="container">
     <div class="justify-content-start">
@@ -34,15 +61,36 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <?php $this->element('templates'); ?>
 
-    <div class="container">
+    <div class="row">
         <?= $this->Form->create($monografia, ['type' => 'file']) ?>
         <fieldset>
             <legend><?= __('Editar monografia') ?></legend>
             <?php
             echo $this->Form->control('catalogo', ['type' => 'hidden']);
-            echo $this->Form->textarea('titulo', ['rows' => '2', 'cols' => '50']);
-            echo $this->Form->textarea('resumo', ['rows' => '5']);
-            echo $this->Form->control('data ', ['type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}'], 'empty' => TRUE]);
+            ?>
+
+            <div class="form-group row">
+                <label class="col-2 control-label">Título</label>
+                <div class="col-8">
+                    <textarea class="form-control" name="titulo" id="titulo" rows="5" maxlength="180"
+                        onkeyup="contatitulo()"
+                        placeholder="Título de até 180 carateres"><?= $monografia->titulo ?></textarea>
+                    <input id="caraterestitulo" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-2 control-label">Resumo</label>
+                <div class="col-8">
+                    <textarea class="form-control" name="resumo" id="resumo" rows="5" maxlength="7000"
+                        onkeyup="contaresumo()"
+                        placeholder="Texto corrido, sem parágrafos"><?= $monografia->resumo ?></textarea>
+                    <input id="carateresresumo" />
+                </div>
+            </div>
+
+            <?php
+            echo $this->Form->control('data ', ['label' => 'Data', 'type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}'], 'empty' => TRUE]);
             echo $this->Form->control('periodo');
             echo $this->Form->control('docente_id', ['options' => $docentes, 'empty' => 'Seleciona docente']);
             echo $this->Form->control('co_orienta_id', ['label' => 'Co-orientador']);
@@ -53,15 +101,44 @@ $user = $this->getRequest()->getAttribute('identity');
             echo $this->Form->control('banca3', ['options' => $docentes, 'empty' => true]);
             echo $this->Form->control('convidado');
             if (!empty($monografia['url'])):
-                echo $this->Form->control('url_atual', ['label' => 'PDF atual', 'value' => $monografia['url']]);
-                echo $this->Form->control('url', ['type' => 'file', 'label' => 'PDF novo', 'value' => $monografia['url']]);
+                ?>
+                <div class="form-group row">
+                    <label class="col-2 control-label">PDF atual</label>
+                    <div class="col-8">
+                        <input class="form-control" type="url" name="url_atual" value="<?= $monografia['url'] ?>" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-2 control-label">PDF novo</label>
+                    <div class="col-8">
+                        <input class="form-control" type="url" name="url" value="<?= $monografia['url'] ?>" />
+                    </div>
+                </div>
+
+                <?php
             else:
-                echo $this->Form->control('url', ['type' => 'file', 'label' => 'PDF novo', 'value' => $monografia['url']]);
+                ?>
+
+                <div class="form-group row">
+                    <label class="col-2 control-label">PDF novo</label>
+                    <div class="col-8">
+                        <input class="form-control" type="file" name="url" id="url" />
+                    </div>
+                </div>
+
+                <?php
             endif;
+            ?>
+
+            <?php
             echo $this->Form->control('timestamp', ['type' => 'hidden']);
             ?>
+
         </fieldset>
+
         <?= $this->Form->button(__('Confirma')) ?>
+
         <?= $this->Form->end() ?>
     </div>
 </div>

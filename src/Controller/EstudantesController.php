@@ -140,12 +140,12 @@ class EstudantesController extends AppController {
 
         if ($this->request->is('post')) {
             $estudante = $this->Estudantes->patchEntity($estudante, $this->request->getData());
-            if ($this->Estudantes->save($aluno)) {
-                $this->Flash->success(__('The aluno has been saved.'));
+            if ($this->Estudantes->save($estudante)) {
+                $this->Flash->success(__('Estudante registrado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The aluno could not be saved. Please, try again.'));
+            $this->Flash->error(__('Não foi possível registrar o estudante. Tente novamente.'));
         }
         $this->set(compact('estudante'));
     }
@@ -171,11 +171,11 @@ class EstudantesController extends AppController {
             $estudanteatualiza = $this->Estudantes->patchEntity($estudante, $this->request->getData());
             // debug($estudanteatualiza);
             if ($this->Estudantes->save($estudanteatualiza)) {
-                $this->Flash->success(__('The aluno has been saved.'));
+                $this->Flash->success(__('Estudante atualizado.'));
 
                 return $this->redirect(['action' => 'view', $id]);
             }
-            $this->Flash->error(__('The aluno could not be saved. Please, try again.'));
+            $this->Flash->error(__('Estudante não foi atualizado.'));
         }
         $this->set(compact('estudante'));
     }
@@ -188,13 +188,15 @@ class EstudantesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
+
         $this->request->allowMethod(['post', 'delete']);
+        $this->loadModel('Estudantes');
         $estudante = $this->Estudantes->get($id);
         $this->Authorization->authorize($estudante);
         if ($this->Estudantes->delete($estudante)) {
-            $this->Flash->success(__('The aluno has been deleted.'));
+            $this->Flash->success(__('Registro de estudante excluído.'));
         } else {
-            $this->Flash->error(__('The aluno could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Registro de estudante não foi excluído.'));
         }
 
         return $this->redirect(['action' => 'index']);

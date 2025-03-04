@@ -6,21 +6,27 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Tccestudante $tccestudante
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+
+<div class="justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
+<nav class="navbar navbar-collapse navbar-expand-lg" id="actions-sidebar">
+    <ul class="nav navbar-nav">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?=
+            <li class=""><?=
                 $this->Form->postLink(
-                        __('Delete'),
+                        __('Excluir'),
                         ['action' => 'delete', $tccestudante->numero],
-                        ['confirm' => __('Are you sure you want to delete # {0}?', $tccestudante->numero)]
+                        ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $tccestudante->numero), 'class' => 'btn btn-danger float-start']
                 )
                 ?></li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>    
     </ul>
 </nav>
+
+<?php $this->element('templates') ?>
+
 <div class="tccestudantes form large-9 medium-8 columns content">
     <?= $this->Form->create($tccestudante) ?>
     <fieldset>
@@ -31,6 +37,6 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('registro');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Confirma')) ?>
     <?= $this->Form->end() ?>
 </div>

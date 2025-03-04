@@ -5,16 +5,27 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Docente[]|\Cake\Collection\CollectionInterface $docentes
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
-        <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
-    </ul>
+
+<div class="justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDocentes"
+        aria-controls="navbarTogglerDocentes" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDocentes">
+        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerDocentes">
+            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                <li class="item-link"><?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
 </nav>
-<div class="docentes index large-9 medium-8 columns content">
+
+<div class="row">
     <h3><?= __('Docentes') ?></h3>
     <p>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>

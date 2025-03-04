@@ -8,9 +8,9 @@
 
 <?php $this->Form->setTemplates(["formStart" => "<div class='form-horizontal'><form{{attrs}}></div>"]); ?>
 <?php $this->Form->setTemplates(["inputContainer" => "<div class='form-group row' form-type='{{type}}'>{{content}}</div>"]); ?>
-<?php $this->Form->setTemplates(["label" => "<label class='col-3 control-label'>{{text}}</label>"]); ?>
-<?php $this->Form->setTemplates(["input" => "<div class='col-5'><input class='form-control' type='{{type}}' name='{{name}}' {{attrs}}/></div>"]); ?>
-<?php $this->Form->setTemplates(["textarea" => "<div class='col-8'><textarea class='form-control' name = '{{name}}' {{attrs}}>{{value}}</textarea></div>"]); ?>
+<?php $this->Form->setTemplates(["label" => "<label class='col-2 control-label'>{{text}}</label>"]); ?>
+<?php $this->Form->setTemplates(["input" => "<div class='col-6'><input class='form-control' type='{{type}}' name='{{name}}' {{attrs}}/></div>"]); ?>
+<?php $this->Form->setTemplates(["textarea" => "<div class='col-6'><textarea class='form-control' name = '{{name}}' {{attrs}}>{{value}}</textarea></div>"]); ?>
 <?php $this->Form->setTemplates(["select" => "<div class='col-8'><select class='form-control' name='{{name}}' {{attrs}}>{{content}}</select></div>"]); ?>
 <?php $this->Form->setTemplates(["submitContainer" => "<div class='form-group row'><div class='col-12'>{{content}}</div></div>"]); ?>
 <?php $this->Form->setTemplates(["inputSubmit" => "<input class = 'mt-lg-0 btn btn-success position-static' type = '{{type}}' {{attrs}}>"]); ?>
