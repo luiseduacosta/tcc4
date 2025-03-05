@@ -222,7 +222,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php endif; ?>
     </div>
 
-    <div class="row">
+    <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
         <h4><?= __('Áreas') ?></h4>
         <?php if (!empty($docente->areamonografias)): ?>
             <?php // pr($docente->areas); ?>

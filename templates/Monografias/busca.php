@@ -22,7 +22,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<div class="container">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
 
 <?= $this->element('templates') ?>
 

@@ -33,8 +33,8 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php $this->element('templates') ?>
 
-<div class="row">
-    <?= $this->Form->create($area) ?>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <?= $this->Form->create($areamonografia) ?>
     <fieldset>
         <legend><?= __('Editar área da monografia') ?></legend>
         <?php

@@ -17,9 +17,9 @@ $usuario = $this->getRequest()->getAttribute('identity');
 
     </ul>
 </nav>
-<div class="users view large-9 medium-8 columns content">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= h($user->id) ?></h3>
-    <table class="vertical-table">
+    <table class="table table-striped table-hover">
         <tr>
             <th scope="row"><?= __('Email') ?></th>
             <td><?= h($user->username) ?></td>

@@ -16,7 +16,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <?= $this->Form->postLink(__('Excluir Aluno'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id), 'class' => 'btn btn-danger float-end']) ?>
 </div>
 
-<div class="column-responsive column-80">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <div class="alunos view content">
         <h3><?= h($aluno->id) ?></h3>
         <table>

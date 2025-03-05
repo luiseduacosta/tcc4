@@ -15,7 +15,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <?= $this->Html->link(__('Listar alunos'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
 </div>
 
-<div class="column-responsive column-80">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <div class="alunos form content">
         <?= $this->Form->create($aluno) ?>
         <fieldset>

@@ -25,7 +25,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </div>
 </nav>
 
-<div class="container">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Docentes') ?></h3>
     <p>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>

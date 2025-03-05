@@ -6,7 +6,6 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<<<<<<< HEAD
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
@@ -22,45 +21,12 @@ $user = $this->getRequest()->getAttribute('identity');
         <?= $this->Html->link(__(' Identificação'), ['action' => 'index1'], ['class' => 'btn btn-primary float-end']) ?>
         <?= $this->Html->link(__(' Comunicação'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
         <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'btn btn-primary float-end']) ?>
-=======
-<div class="justify-content-start">
-    <?= $this->element('menu_esquerdo') ?>
-</div>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerEstudantesIndex1"
-        aria-controls="navbarTogglerEstudantesIndex1" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerEstudantesIndex1">
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li class="nav-item">
-                <?= $this->Html->link(__('Novo(a) estuante'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
-            </li>
-        <?php endif; ?>
-    </ul>
-</nav>
-
-<div class="row">
-    <h3>
-        <?= __('Estudantes') ?>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <?= $this->Html->link(__(' Comunicação'), ['action' => 'index'], ['class' => 'btn btn-secondary float-end']) ?>
-            <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'btn btn-secondary float-end']) ?>
-            <?= $this->Html->link(__(' Identificação'), ['action' => 'index1'], ['class' => 'btn btn-secondary float-end']) ?>
-        <?php endif; ?>
->>>>>>> f4568cb (Fix issues)
     </h3>
 </div>
 
-<div class="row">
-<<<<<<< HEAD
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <table cellpadding="0" cellspacing="0">
         <thead>
-=======
-    <table class="table  table-striped table-hover table-responsive">
-        <thead class="table-dark">
->>>>>>> f4568cb (Fix issues)
             <tr>
                 <th><?= $this->Paginator->sort('registro') ?></th>
                 <th><?= $this->Paginator->sort('nome') ?></th>
@@ -84,7 +50,6 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
-<<<<<<< HEAD
 </div>
 
 <div class="paginator">
@@ -98,20 +63,3 @@ $user = $this->getRequest()->getAttribute('identity');
     <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
     </p>
 </div>
-=======
-
-    <?php $this->element('templates') ?>
-
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
-        </p>
-    </div>
-</div>
->>>>>>> f4568cb (Fix issues)

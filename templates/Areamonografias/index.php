@@ -27,7 +27,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<div class="tabel table-responsive table-hover table-striped">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Áreas') ?></h3>
     <table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-responsive">
         <thead class="table-dark">

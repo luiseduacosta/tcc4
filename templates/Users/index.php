@@ -13,10 +13,11 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php endif; ?>
     </ul>
 </nav>
-<div class="users index large-9 medium-8 columns content">
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Users') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('username') ?></th>

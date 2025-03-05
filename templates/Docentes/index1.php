@@ -38,8 +38,8 @@ $user = $this->getRequest()->getAttribute('identity');
     </p>
 </div>
 
-<div class="row">
-    <table class="table">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <table class="table table-hover table-responsive table-striped">
         <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('nome') ?></th>

@@ -12,8 +12,6 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php $this->element('templates') ?>
 
-
-
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3 class="text-center"><?= __('Inserir estudante(s) autor(es) de TCC') ?></h3>
     <?= $this->Form->create($tccestudante) ?>

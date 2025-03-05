@@ -5,11 +5,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // die("Areas");
 /**
  * @var \App\View\AppView $this
-<<<<<<< HEAD
  * @var \App\Model\Entity\Areamonografia $areamonografia
-=======
- * @var \App\Model\Entity\Areamonografia $area
->>>>>>> f4568cb (Fix issues)
  */
 ?>
 
@@ -34,9 +30,9 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<div class="row">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= h($area->area) ?></h3>
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover table-responsive">
         <thead class="table-dark">
             <tr>
                 <th scope="row"><?= __('Area') ?></th>
@@ -47,7 +43,8 @@ $user = $this->getRequest()->getAttribute('identity');
                 <td><?= $this->Number->format($area->id) ?></td>
             </tr>
     </table>
-    <div class="row">
+    
+    <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
         <h4><?= __('Monografias') ?></h4>
         <?php if (!empty($area['monografias'])): ?>
             <table class="table table-striped table-hover">
@@ -83,7 +80,8 @@ $user = $this->getRequest()->getAttribute('identity');
             </table>
         <?php endif; ?>
     </div>
-    <div class="row">
+
+    <div class="row col-lg-8 shadow p-3 mb-5 bg-white rounded">
         <h4><?= __('Docentes da área') ?></h4>
         <?php if (!empty($area['docentes'])): ?>
             <table class="table table-striped table-hover">

@@ -25,7 +25,8 @@ $user = $this->getRequest()->getAttribute('identity');
         <?= $this->element('menu_esquerdo'); ?>       
     </ul>
 </nav>    
-<div class="column-responsive column-80">
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <div class="alunos form content">
         <?= $this->Form->create($estudante) ?>
         <fieldset>

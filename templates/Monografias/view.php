@@ -28,7 +28,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<div class="container">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= h($monografia->titulo) ?></h3>
     <table class="table table-striped table-hover">
         <th scope="row"><?= __('Titulo') ?></th>

@@ -9,19 +9,23 @@ $usuario = $this->getRequest()->getAttribute('identity');
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <?php if (isset($user->role) && $user->role == 'admin'): ?>
-            <li><?=
-                $this->Form->postLink(
+            <li>
+                <?=
+                    $this->Form->postLink(
                         __('Delete'),
                         ['action' => 'delete', $user->id],
                         ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
-                )
-                ?></li>
-<?php endif; ?>
+                    )
+                    ?>
+            </li>
+        <?php endif; ?>
         <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
     </ul>
 </nav>
-<div class="users form large-9 medium-8 columns content">
-<?= $this->Form->create($user) ?>
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+
+    <?= $this->Form->create($user) ?>
     <fieldset>
         <legend><?= __('Edit User') ?></legend>
         <?php
@@ -31,5 +35,5 @@ $usuario = $this->getRequest()->getAttribute('identity');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
-<?= $this->Form->end() ?>
+    <?= $this->Form->end() ?>
 </div>

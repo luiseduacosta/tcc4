@@ -38,9 +38,9 @@ $user = $this->getRequest()->getAttribute('identity');
     </p>
 </div>
 
-<div class="row">
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <table class="table table-responsive table-striped table-hover">
+        <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('mestradoarea', "Área") ?></th>

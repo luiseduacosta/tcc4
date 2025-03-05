@@ -35,7 +35,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </h3>
 </div>
 
-<div class="row">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <table class="table  table-striped table-hover table-responsive">
         <thead class="table-dark">
             <tr>

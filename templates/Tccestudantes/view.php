@@ -24,7 +24,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<div class="row">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= h($tccestudante->nome) ?></h3>
     <table class="table table-striped table-hover">
         <tr>

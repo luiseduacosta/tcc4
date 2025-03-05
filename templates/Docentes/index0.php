@@ -34,21 +34,13 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Html->link('Dados pessoais', ['controller' => 'docentes', 'action' => 'index1'], ['class' => 'btn btn-primary float-end']) ?>
             <?= $this->Html->link('Dados graduação', ['controller' => 'docentes', 'action' => 'index2'], ['class' => 'btn btn-primary float-end']) ?>
             <?= $this->Html->link('Dados pósgraduação', ['controller' => 'docentes', 'action' => 'index3'], ['class' => 'btn btn-primary float-end']) ?>
+        <?php endif; ?>
     </p>
 </div>
 
-<div class="docentes index large-9 medium-8 columns content">
-    <h3><?= __('Docentes') ?></h3>
-    <p>
-        <?php if (isset($user->role) && $user->role == 'admin'): ?>
-            <?= $this->Html->link('Dados funcionais', ['controller' => 'docentes', 'action' => 'index0'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link('Dados pessoais', ['controller' => 'docentes', 'action' => 'index1'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link('Dados graduação', ['controller' => 'docentes', 'action' => 'index2'], ['class' => 'button float-right']) ?>
-            <?= $this->Html->link('Dados pósgraduação', ['controller' => 'docentes', 'action' => 'index3'], ['class' => 'button float-right']) ?>
-        <?php endif; ?>
-    </p>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <table class="table table-responsive table-striped table-hover">
+        <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('siape') ?></th>
@@ -80,13 +72,14 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-    </div>
+</div>
+
+<div class="paginator">
+    <ul class="pagination">
+        <?= $this->Paginator->first('<< ' . __('first')) ?>
+        <?= $this->Paginator->prev('< ' . __('previous')) ?>
+        <?= $this->Paginator->numbers() ?>
+        <?= $this->Paginator->next(__('next') . ' >') ?>
+        <?= $this->Paginator->last(__('last') . ' >>') ?>
+    </ul>
 </div>

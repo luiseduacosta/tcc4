@@ -8,7 +8,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
 
 <?= $this->element('templates') ?>
 
-<div class="container">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($user) ?>
     <fieldset>
         <legend><?= __('Adiciona usuário') ?></legend>

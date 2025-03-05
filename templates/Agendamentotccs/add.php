@@ -40,7 +40,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php $this->element('templates') ?>
 
-<div class="row">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($agendamentotcc) ?>
     <fieldset class="border p-2">
         <legend><?= __('Agendamento de oficina de defesa de TCC') ?></legend>

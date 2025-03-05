@@ -16,16 +16,9 @@ $user = $this->getRequest()->getAttribute('identity');
     
     <ul class="nav navbar-nav">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-<<<<<<< HEAD
             <li class=""><?=
                 $this->Form->postLink(
                         __('Delete'),
-=======
-            <li class="">
-                <?=
-                    $this->Form->postLink(
-                        __('Excluir'),
->>>>>>> f4568cb (Fix issues)
                         ['action' => 'delete', $tccestudante->numero],
                         ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $tccestudante->numero), 'class' => 'btn btn-danger float-start']
                     )
@@ -37,7 +30,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php $this->element('templates') ?>
 
-<div class="tccestudantes form large-9 medium-8 columns content">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($tccestudante) ?>
     <fieldset>
         <legend><?= __('Editar estudante autor de TCC') ?></legend>

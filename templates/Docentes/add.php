@@ -13,7 +13,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?= $this->element('templates') ?>
 
-<div class="row">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($docente) ?>
     <fieldset>
         <legend><?= __('Novo(a) docente') ?></legend>

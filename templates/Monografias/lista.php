@@ -14,7 +14,8 @@ $user = $this->getRequest()->getAttribute('identity');
         <?= $this->element('menu_esquerdo') ?>
     </ul>
 </nav>
-<div class="monografias view large-9 medium-8 columns content">
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Monografias em PDF') ?></h3>
     <table class="table table-striped table-hover">
 

@@ -6,6 +6,7 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Aluno $aluno
  */
 ?>
+
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
@@ -21,7 +22,8 @@ $user = $this->getRequest()->getAttribute('identity');
         </li>
     </ul>
 </nav>
-<div class="alunos view large-9 medium-8 columns content">
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <div class="alunos view content">
         <h3><?= h($aluno->nome) ?></h3>
         <table>

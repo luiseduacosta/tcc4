@@ -14,9 +14,9 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php endif; ?>
 
 <h3><?= __('Alunos') ?></h3>
-<div class="table-responsive">
-    <table>
-        <thead>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <table class="table table-striped table-hover table-responsive">
+        <thead class="thead-dark">
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
                 <th><?= $this->Paginator->sort('registro') ?></th>
