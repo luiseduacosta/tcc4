@@ -221,6 +221,7 @@ $user = $this->getRequest()->getAttribute('identity');
             </table>
         <?php endif; ?>
     </div>
+
     <div class="row">
         <h4><?= __('Áreas') ?></h4>
         <?php if (!empty($docente->areamonografias)): ?>

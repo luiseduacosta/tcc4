@@ -31,7 +31,7 @@ class UsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('users');
-        $this->setDisplayField('email');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
     }
 

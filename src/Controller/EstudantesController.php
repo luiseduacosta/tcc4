@@ -194,7 +194,7 @@ class EstudantesController extends AppController {
         $estudante = $this->Estudantes->get($id);
         $this->Authorization->authorize($estudante);
         if ($this->Estudantes->delete($estudante)) {
-            $this->Flash->success(__('Registro de estudante excluído.'));
+            $this->Flash->success(__('The aluno has been deleted.'));
         } else {
             $this->Flash->error(__('Registro de estudante não foi excluído.'));
         }

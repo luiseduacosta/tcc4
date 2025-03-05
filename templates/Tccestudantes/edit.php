@@ -16,7 +16,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class=""><?=
                 $this->Form->postLink(
-                        __('Excluir'),
+                        __('Delete'),
                         ['action' => 'delete', $tccestudante->numero],
                         ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $tccestudante->numero), 'class' => 'btn btn-danger float-start']
                 )

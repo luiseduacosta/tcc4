@@ -18,7 +18,8 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="collapse navbar-collapse" id="navbarTogglerDocentes">
         <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerDocentes">
             <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                <li class="item-link"><?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                <li class="item-link">
+                    <?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
                 </li>
             <?php endif; ?>
         </ul>
@@ -35,8 +36,11 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Html->link('Dados pósgraduação', ['controller' => 'docentes', 'action' => 'index3'], ['class' => 'btn btn-primary float-end']) ?>
         <?php endif; ?>
     </p>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+</div>
+
+<div class="row">
+    <table class="table">
+        <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('curriculolattes', 'Lattes') ?></th>
@@ -50,7 +54,8 @@ $user = $this->getRequest()->getAttribute('identity');
         <tbody>
             <?php foreach ($docentes as $docente): ?>
                 <tr>
-                    <td><?= $this->Html->link(h($docente->nome), ['controller' => 'docentes', 'action' => 'view', $docente->id]) ?></td>
+                    <td><?= $this->Html->link(h($docente->nome), ['controller' => 'docentes', 'action' => 'view', $docente->id]) ?>
+                    </td>
                     <td>
                         <?php if ($docente->curriculolattes): ?>
                             <a href="<?= 'http://lattes.cnpq.br/' . $docente->curriculolattes ?>">Lattes</a>
@@ -63,7 +68,8 @@ $user = $this->getRequest()->getAttribute('identity');
                     </td>
                     <td>
                         <?php if ($docente->pesquisadordgp): ?>
-                            <a href='<?= 'http://dgp.cnpq.br/dgp/espelhogrupo/' . $docente->pesquisadordgp ?>'>Grupo de pesquisa Lattes</a>
+                            <a href='<?= 'http://dgp.cnpq.br/dgp/espelhogrupo/' . $docente->pesquisadordgp ?>'>Grupo de pesquisa
+                                Lattes</a>
                         <?php endif; ?>
                     </td>
                     <td><?= h($docente->formacaoprofissional) ?></td>
@@ -73,13 +79,14 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-    </div>
+</div>
+
+<div class="paginator">
+    <ul class="pagination">
+        <?= $this->Paginator->first('<< ' . __('first')) ?>
+        <?= $this->Paginator->prev('< ' . __('previous')) ?>
+        <?= $this->Paginator->numbers() ?>
+        <?= $this->Paginator->next(__('next') . ' >') ?>
+        <?= $this->Paginator->last(__('last') . ' >>') ?>
+    </ul>
 </div>

@@ -16,18 +16,17 @@ $user = $this->getRequest()->getAttribute('identity');
         aria-controls="navbarTogglerMonografiasView" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMonografiasView">
-            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                <li class="nav-item">
-                    <?= $this->Html->link(__('Editar Monografia'), ['action' => 'edit', $monografia->id], ['class' => 'btn btn-primary float-end']) ?>
-                </li>
-                <li class="nav-item">
-                    <?= $this->Form->postLink(__('Excluir Monografia'), ['action' => 'delete', $monografia->id], ['confirm' => __('Tem certeza que quer excluir # {0}?', $monografia->id), 'class' => 'btn btn-danger float-end']) ?>
-                </li>
-            <?php endif; ?>
-        </ul>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMonografiasView">
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Editar Monografia'), ['action' => 'edit', $monografia->id], ['class' => 'btn btn-primary float-end']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Form->postLink(__('Excluir Monografia'), ['action' => 'delete', $monografia->id], ['confirm' => __('Tem certeza que quer excluir # {0}?', $monografia->id), 'class' => 'btn btn-danger float-end']) ?>
+            </li>
+        <?php endif; ?>
+    </ul>
 </nav>
-
 
 <div class="container">
     <h3><?= h($monografia->titulo) ?></h3>
@@ -107,5 +106,6 @@ $user = $this->getRequest()->getAttribute('identity');
             <th scope="row"><?= __('Convidado(a)') ?></th>
             <td><?= h($monografia->convidado) ?></td>
         </tr>
+
     </table>
 </div>

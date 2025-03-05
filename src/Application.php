@@ -141,7 +141,7 @@ AuthorizationServiceProviderInterface
                 'userModel' => 'Users',
             ],
             'fields' => [
-                'username' => 'email',
+                'username' => 'username',
                 'password' => 'password',
             ]
         ]);
@@ -151,7 +151,7 @@ AuthorizationServiceProviderInterface
         // Configure form data check to pick email and password
         $authenticationService->loadAuthenticator('Authentication.Form', [
             'fields' => [
-                'username' => 'email',
+                'username' => 'username',
                 'password' => 'password',
             ],
             'loginUrl' =>  \Cake\Routing\Router::url('/users/login')

@@ -34,6 +34,17 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Html->link('Dados pessoais', ['controller' => 'docentes', 'action' => 'index1'], ['class' => 'btn btn-primary float-end']) ?>
             <?= $this->Html->link('Dados graduação', ['controller' => 'docentes', 'action' => 'index2'], ['class' => 'btn btn-primary float-end']) ?>
             <?= $this->Html->link('Dados pósgraduação', ['controller' => 'docentes', 'action' => 'index3'], ['class' => 'btn btn-primary float-end']) ?>
+    </p>
+</div>
+
+<div class="docentes index large-9 medium-8 columns content">
+    <h3><?= __('Docentes') ?></h3>
+    <p>
+        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+            <?= $this->Html->link('Dados funcionais', ['controller' => 'docentes', 'action' => 'index0'], ['class' => 'button float-right']) ?>
+            <?= $this->Html->link('Dados pessoais', ['controller' => 'docentes', 'action' => 'index1'], ['class' => 'button float-right']) ?>
+            <?= $this->Html->link('Dados graduação', ['controller' => 'docentes', 'action' => 'index2'], ['class' => 'button float-right']) ?>
+            <?= $this->Html->link('Dados pósgraduação', ['controller' => 'docentes', 'action' => 'index3'], ['class' => 'button float-right']) ?>
         <?php endif; ?>
     </p>
     <table cellpadding="0" cellspacing="0">

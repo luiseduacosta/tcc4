@@ -139,7 +139,6 @@ class DocentesController extends AppController {
             'contain' => [],
         ]);
         $this->Authorization->authorize($docente);
-
         if ($this->request->is(['patch', 'post', 'put'])) {
             $docente = $this->Docentes->patchEntity($docente, $this->request->getData());
             if ($this->Docentes->save($docente)) {

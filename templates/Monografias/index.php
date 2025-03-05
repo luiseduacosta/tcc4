@@ -83,7 +83,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografia->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia->id]) : '' ?>
                     </td>
                     <?php if (!empty($monografia->url)): ?>
-                        <td><a href="<?= $baseUrl . 'monografias/' . $monografia->url ?>">Download</a></td>
+                        <td><a href="<?= $baseUrl . 'monografias/'. $monografia->url ?>">Download</a></td>
                     <?php endif; ?>
                 </tr>
             <?php endforeach; ?>

@@ -41,7 +41,7 @@ class User extends Entity
      *
      * @var array
      */
-    protected $_hidden = [
-         'password',
-    ];
+    // protected $_hidden = [
+    //     'password',
+    // ];
 }

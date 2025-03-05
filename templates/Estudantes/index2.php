@@ -6,20 +6,23 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">    
-        <li class="heading"><?= __('Actions') ?></li>    
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Novo Aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
+    <ul class="side-nav">
+        <?php if (isset($user->role) && $user->role == 'admin'): ?>
+            <li><?= $this->Html->link(__('Novo Aluno'), ['action' => 'add'], ['class' => 'button float-right']) ?></li>
         <?php endif; ?>
-        <?php echo $this->element('menu_esquerdo'); ?>        
+        <?php echo $this->element('menu_esquerdo'); ?>
     </ul>
 </nav>
+
 <div class="users index large-9 medium-8 columns content">
     <h3><?= __('Estudantes') ?>
-        <?= $this->Html->link(__(' Identificação'), ['controlle'=> 'estudanates', 'action' => 'index1'], ['class' => 'btn btn-primary float-end']) ?>
-        <?= $this->Html->link(__(' Comunicação'), ['controlle'=> 'estudanates', 'action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>        
-        <?= $this->Html->link(__(' Endereço'), ['controlle'=> 'estudanates', 'action' => 'index2'], ['class' => 'btn btn-primary float-end']) ?>    
+        <?= $this->Html->link(__(' Identificação'), ['controlle' => 'estudanates', 'action' => 'index1'], ['class' => 'btn btn-primary float-end']) ?>
+        <?= $this->Html->link(__(' Comunicação'), ['controlle' => 'estudanates', 'action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+        <?= $this->Html->link(__(' Endereço'), ['controlle' => 'estudanates', 'action' => 'index2'], ['class' => 'btn btn-primary float-end']) ?>
     </h3>
+</div>
+
+<div class="row">
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
@@ -36,7 +39,8 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php foreach ($alunos as $aluno): ?>
                 <tr>
                     <td><?= h($aluno->registro) ?></td>
-                    <td><?= $this->Html->link($aluno->nome, ['controller' => 'estudantes', 'action' => 'view', $aluno->id]) ?></td>
+                    <td><?= $this->Html->link($aluno->nome, ['controller' => 'estudantes', 'action' => 'view', $aluno->id]) ?>
+                    </td>
                     <td><?= h($aluno->endereco) ?></td>
                     <td><?= h($aluno->cep) ?></td>
                     <td><?= h($aluno->municipio) ?></td>
@@ -46,14 +50,16 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-    </div>
+</div>
+
+<div class="paginator">
+    <ul class="pagination">
+        <?= $this->Paginator->first('<< ' . __('first')) ?>
+        <?= $this->Paginator->prev('< ' . __('previous')) ?>
+        <?= $this->Paginator->numbers() ?>
+        <?= $this->Paginator->next(__('next') . ' >') ?>
+        <?= $this->Paginator->last(__('last') . ' >>') ?>
+    </ul>
+    <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+    </p>
 </div>

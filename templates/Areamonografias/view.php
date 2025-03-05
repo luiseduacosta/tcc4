@@ -5,7 +5,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // die("Areas");
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Area $area
+ * @var \App\Model\Entity\Areamonografia $areamonografia
  */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
