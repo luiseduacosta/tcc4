@@ -6,16 +6,26 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Monografia[]|\Cake\Collection\CollectionInterface $monografias
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+
+<div class="justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerTccestudantesBusca"
+        aria-controls="navbarTogglerTccestudantesBusca" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerTccestudantesBusca">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Novo estudante'), ['action' => 'add']) ?></li>
+            <li class="nav-item"><?= $this->Html->link(__('Novo(a) estudante autor(a) de TCC'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?></li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
     </ul>
 </nav>
-<div class="tccestudantes index large-9 medium-8 columns content">
+
+<?php $this->element('templates') ?>
+
+<div class="row col-lg-10 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Estudantes') ?></h3>
 
     <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
@@ -23,8 +33,8 @@ $user = $this->getRequest()->getAttribute('identity');
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+    <table class="table table-striped table-hover table-responsive">
+        <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('registro') ?></th>
@@ -34,14 +44,13 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($estudantes as $estudante): ?>
-                <?php // pr($estudante->monografia->); ?>
-                <?php // die(); ?>
                 <?php if (isset($estudante->monografia->id) && !empty($estudante->monografia->id)): ?>
                     <tr>
                         <td><?= h($estudante->id) ?></td>
                         <td><?= h($estudante->registro) ?></td>
                         <td><?= $this->Html->link(__(h($estudante->nome)), ['action' => 'view', $estudante->id]) ?></td>
-                        <td><?= $this->Html->link(__(h($estudante->monografia->titulo)), ['controller' => 'monografias', 'action' => 'view', $estudante->monografia->id]) ?></td>
+                        <td><?= $this->Html->link(__(h($estudante->monografia->titulo)), ['controller' => 'monografias', 'action' => 'view', $estudante->monografia->id]) ?>
+                        </td>
                         <td>
                     </tr>
                 <?php else: ?>

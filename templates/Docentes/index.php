@@ -36,7 +36,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php endif; ?>
     </p>
     <table class="table table-striped table-hover table-responsive">
-        <thead class="thead-dark">
+        <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('departamento') ?></th>

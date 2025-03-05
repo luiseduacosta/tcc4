@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 /**
- * Alunos Controller
+ * Estudantes Controller
  *
- * @property \App\Model\Table\AlunosTable $Alunos
+ * @property \App\Model\Table\EstudantesTable $Estudantes
  *
- * @method \App\Model\Entity\Aluno[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Estudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EstudantesController extends AppController {
 
@@ -121,6 +121,7 @@ class EstudantesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
+
         $this->Authorization->skipAuthorization();
         $aluno = $this->Estudantes->get($id, [
             'contain' => [],
@@ -135,6 +136,7 @@ class EstudantesController extends AppController {
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add() {
+
         $estudante = $this->Estudante->newEmptyEntity();
         $this->Authorization->authorize($estudante);
 
@@ -201,5 +203,4 @@ class EstudantesController extends AppController {
 
         return $this->redirect(['action' => 'index']);
     }
-
 }

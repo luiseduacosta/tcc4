@@ -34,7 +34,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <?= $this->Form->end() ?>
 
     <table class="table table-striped table-hover table-responsive">
-        <thead class="thead-dark">
+        <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('titulo') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('periodo') ?></th>

@@ -32,24 +32,25 @@ $user = $this->getRequest()->getAttribute('identity');
             document.getElementById('carateresresumo').value = char + ' caracteres restantes';
         }
     }
-
-    $(document).ready(function () {
-        $('#resumo').keyup(function () {
-            var max = 7000;
-            var len = $(this).val().length;
-            if (len >= max) {
-                $('#resumo').text('Você atingiu o limite de ' + max + ' caracteres');
-            } else {
-                var char = max - len;
-                $('#resumo').text(char + ' caracteres restantes');
-            }
-        });
-    });
 </script>
 
 <div class="justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMonografiasAdd"
+        aria-controls="navbarTogglerMonografiasAdd" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMonografiasAdd">
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Monografias'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
+        <?php endif; ?>
+    </ul>
+</nav>
 
 <?php $this->element('templates') ?>
 

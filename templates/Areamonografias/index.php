@@ -18,21 +18,19 @@ $user = $this->getRequest()->getAttribute('identity');
         aria-controls="navbarTogglerAreamonografia" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerAreamongrafia">
-        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAreamonografia">
-            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                <li class="item-link">
-                    <?= $this->Html->link(__('Nova Área'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
-                </li>
-            <?php endif; ?>
-        </ul>
-    </div>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAreamonografia">
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <li class="item-link">
+                <?= $this->Html->link(__('Nova área de monografia'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
+        <?php endif; ?>
+    </ul>
 </nav>
 
 <div class="tabel table-responsive table-hover table-striped">
     <h3><?= __('Áreas') ?></h3>
     <table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-responsive">
-        <thead class="thead-dark">
+        <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('area') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('monografias') ?></th>

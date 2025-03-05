@@ -32,7 +32,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <h3><?= h($docente->nome) ?></h3>
     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
         <table class="table table-striped table-hover table-responsive">
-            <thead class="thead-dark">
+            <thead class="table-dark">
                 <tr>
                     <th scope="col"><?= __('Nome') ?></th>
                     <th scope="col"><?= __('Departamento') ?></th>
@@ -202,7 +202,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <h4><?= __('Monografias') ?></h4>
         <?php if (!empty($docente->monografias)): ?>
             <table class="table table-striped table-hover table-responsive">
-                <thead class="thead-dark">
+                <thead class="table-dark">
                     <tr>
                         <th scope="col"><?= __('Titulo') ?></th>
                         <th scope="col"><?= __('Periodo') ?></th>
@@ -227,7 +227,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php if (!empty($docente->areamonografias)): ?>
             <?php // pr($docente->areas); ?>
             <table class="table table-striped table-hover table-responsive">
-                <thead class="thead-dark">
+                <thead class="table-dark">
                     <tr>
                         <th scope="col"><?= __('Área') ?></th>
                     </tr>

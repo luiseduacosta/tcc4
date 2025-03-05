@@ -79,7 +79,6 @@ class MonografiasController extends AppController {
         $this->loadModel('Monografias');
         $monografia = $this->Monografias->newEmptyEntity();
         $this->Authorization->authorize($monografia);
-        // pr($monografia);
 
         if ($this->request->is('post')) {
 
@@ -101,20 +100,18 @@ class MonografiasController extends AppController {
             /* Data defesa */
             $dados['data_defesa'] = $dados['data_banca'];
 
-            /* Banca1 eh o próprio docente orientador */
+            /* Banca1 é o próprio docente orientador */
             if (empty($dados['banca1'])):
                 $dados['banca1'] = $dados['docente_id'];
             endif;
 
-            // pr($dados);
-            // die();
             // $monografia = $this->Monografias->patchEntity($monografia, $this->request->getData());
             $monografia = $this->Monografias->patchEntity($monografia, $dados);
             $this->Authorization->authorize($monografia);
             // pr($monografia);
             // die();
             if ($this->Monografias->save($monografia)) {
-                $this->Flash->success(__('The monografia has been saved.'));
+                $this->Flash->success(__('Monografia inserida.'));
 
                 /* Tem que inserir o Tccestudante */
                 $tccestudante = $this->Monografias->Tccestudantes->newEmptyEntity();
@@ -132,14 +129,14 @@ class MonografiasController extends AppController {
                 $dadosestudante['nome'] = $resultado->first()->nome;
                 // pr($dadosestudante);
                 // die('dadosestudante');
-                $tccaluno = $this->Monografias->Tccestudantes->patchEntity($tccestudante, $dadosestudante);
-                if ($this->Monografias->Tccestudantes->save($tccaluno)) {
-                    $this->Flash->success(__('The Tccestudantes has been saved.'));
+                $tccestudante = $this->Monografias->Tccestudantes->patchEntity($tccestudante, $dadosestudante);
+                if ($this->Monografias->Tccestudantes->save($tccestudante)) {
+                    $this->Flash->success(__('Estudante de TCC inserido.'));
                     return $this->redirect(['controller' => 'Monografias', 'action' => 'view', $monografia->id]);
                 }
-                $this->Flash->error(__('The Tccestudantes could not be saved. Please, try again.'));
+                $this->Flash->error(__('Estudante de TCC não foi inserido.'));
             }
-            $this->Flash->error(__('The Monografias could not be saved. Please, try again.'));
+            $this->Flash->error(__('Monografia não foi inserida. Tente novamente.'));
         }
 
         /* Chamo a function estudantes() para fazer o list de seleção */
@@ -153,8 +150,8 @@ class MonografiasController extends AppController {
         // debug($professores->toArray());
         // pr($professores);
         $areas = $this->Monografias->Areamonografias->find('list', [
-            'keyField' => 'id', 'valueField' => 'area'],
-                ['limit' => 200]);
+            'keyField' => 'id', 'valueField' => 'area']);
+        $areas->order(['area' => 'asc']);
         $this->set(compact('estudantes', 'monografia', 'professores', 'areas'));
     }
 
@@ -337,7 +334,7 @@ class MonografiasController extends AppController {
         // pr($estudantes);
         // die();
 
-        /* Tenho que separar os estudantes que já tem TCC */
+        /* Tenho que separar os estudantes que já fizeram TCC */
         foreach ($estudantes as $c_estudante):
             // pr($c_estudante);
             // die('estudante');

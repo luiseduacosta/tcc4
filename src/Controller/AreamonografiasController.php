@@ -14,7 +14,8 @@ namespace App\Controller;
 class AreamonografiasController extends AppController {
 
     public $Monografias = null;
-
+    public $Docentes = null;
+    public $Tccestudantes = null;
     /**
      * Index method
      *

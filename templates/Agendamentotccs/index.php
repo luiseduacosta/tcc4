@@ -16,22 +16,20 @@ $user = $this->getRequest()->getAttribute('identity');
         aria-controls="navbarTogglerAgendamentos" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerAgendamentos">
-        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerDocentes">
-            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                <li>
-                    <?= $this->Html->link(__('Novo Agendamento de Tcc'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
-                </li>
-            <?php endif; ?>
-        </ul>
-    </div>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAgendamentos">
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Novo Agendamento de Tcc'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
+        <?php endif; ?>
+    </ul>
 </nav>
 
 <h3><?= __('Agendamento de Oficina de TCC') ?></h3>
 
-<div class="table-responsive">
+<div class="row">
     <table class="table table-striped table-hover table-responsive">
-        <thead class="thead-dark">
+        <thead class="thead table-dark">
             <tr>
                 <th><?= $this->Paginator->sort('Estudantes.nome', 'Estudante') ?></th>
                 <th><?= $this->Paginator->sort('Docentes.nome', 'Orientador') ?></th>
@@ -43,7 +41,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('titulo') ?></th>
                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                     <th><?= $this->Paginator->sort('avaliacao') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
+                    <th class="actions"><?= __('Ações') ?></th>
                 <?php endif; ?>
             </tr>
         </thead>
@@ -65,10 +63,12 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                         <td><?= h($agendamentotcc->avaliacao) ?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $agendamentotcc->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $agendamentotcc->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['
-                            action' => 'delete', $agendamentotcc->id], ['confirm' => __('Are you sure you want to delete # {0}?', $agendamentotcc->id)]) ?>
+                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $agendamentotcc->id]) ?>
+                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id]) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['
+                            action' => 'delete',
+                                $agendamentotcc->id
+                            ], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $agendamentotcc->id)]) ?>
                         <?php endif; ?>
                 </tr>
             <?php endforeach; ?>

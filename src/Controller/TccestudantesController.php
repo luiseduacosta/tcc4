@@ -18,7 +18,8 @@ use Cake\Event\Event;
  * #[AllowDynamicProperties];
  */
 
-class TccestudantesController extends AppController {
+class TccestudantesController extends AppController
+{
 
     public $Tccestudantes = null;
 
@@ -27,7 +28,8 @@ class TccestudantesController extends AppController {
      *
      * @return \Cake\Http\Response|null
      */
-    public function index() {
+    public function index()
+    {
 
         $this->Authorization->skipAuthorization();
         $this->paginate = [
@@ -49,7 +51,8 @@ class TccestudantesController extends AppController {
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
         $this->Authorization->skipAuthorization();
         $this->loadModel('Tccestudantes'); // Estranho, mas necessário
@@ -64,12 +67,14 @@ class TccestudantesController extends AppController {
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add($estudante_id = null, $monografia_id = null) {
+    public function add($estudante_id = null, $monografia_id = null)
+    {
 
-        // echo "Estudante id " . $estudante_id . '<br />';
-        // echo "Monografia id " . $monografia_id;
-        // die();
         if ($estudante_id):
+            if (strlen($estudante_id) < 9):
+                $this->Flash->error(__('Registro inválido.'));
+                return $this->redirect(['action' => 'index']);
+            endif;
             $registro = $estudante_id;
 
             /* Nome do aluno */
@@ -84,9 +89,10 @@ class TccestudantesController extends AppController {
         endif;
 
         /* Titulo e id das monografias */
+        $this->loadModel('Tccestudantes');
         $monografias = $this->Tccestudantes->Monografias->find(
-                'list',
-                ['keyField' => 'id', 'valueField' => 'titulo']
+            'list',
+            ['keyField' => 'id', 'valueField' => 'titulo']
         );
         $monografias->order(['titulo' => 'asc']);
 
@@ -98,15 +104,18 @@ class TccestudantesController extends AppController {
             // pr($tccestudante);
             // die();
             if ($this->Tccestudantes->save($tccaluno)) {
-                $this->Flash->success(__('The tccestudante has been saved.'));
+                $this->Flash->success(__('Estudante autor de TCC inserido!'));
 
-                return $this->redirect(['action' => 'view/' . $tccestudante->id]);
+                return $this->redirect(['action' => 'view', $tccestudante->id]);
             }
-            $this->Flash->error(__('The tccestudante could not be saved. Please, try again.'));
+            $this->Flash->error(__('Estudante autor de TCC não foi inserido. Tente novamento.'));
         }
-
-        $this->set(compact('monografia_id', $monografia_id));
-        $this->set(compact('monografias', 'tccestudante'));
+        $this->loadModel('Estudantes');
+        $estudantes = $this->Estudantes->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
+        $estudantes->order(['nome' => 'asc']);
+        // pr($estudantes);
+        // die();
+        $this->set(compact('monografia_id', 'estudante_id', 'monografias', 'tccestudante', 'estudantes'));
     }
 
     /**
@@ -116,7 +125,8 @@ class TccestudantesController extends AppController {
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
         $this->loadModel('Tccestudantes');
         $tccestudante = $this->Tccestudantes->get($id, [
@@ -124,24 +134,21 @@ class TccestudantesController extends AppController {
         ]);
         $this->Authorization->authorize($tccestudante);
 
-        $monografias = $this->Tccestudantes->Monografias->find(
-                'list',
-                ['keyField' => 'id', 'valueField' => 'titulo']
-        );
+        $this->loadModel('Monografias');
+        $monografias = $this->Monografias->find('list', ['keyField' => 'id', 'valueField' => 'titulo']);
         $monografias->order(['titulo' => 'asc']);
-        // pr($monografias);
-        // die();
-        // pr($tccestudante->monografia);
+        $monografias = $monografias->toArray();
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $tccestudante = $this->Tccestudantes->patchEntity($tccestudante, $this->request->getData());
             if ($this->Tccestudantes->save($tccestudante)) {
-                $this->Flash->success(__('Estudante de TCC registrado.'));
+                $this->Flash->success(__('Estudante de TCC atualizado.'));
 
                 return $this->redirect(['action' => 'view', $tccestudante->id]);
             }
-            $this->Flash->error(__('Estudante de TCC não foi registrado.'));
+            $this->Flash->error(__('Estudante de TCC não foi atualizado.'));
         }
-        $this->set(compact('monografias', 'tccestudante'));
+        $this->set(compact('monografias', 'estudantes', 'tccestudante'));
     }
 
     /**
@@ -151,16 +158,18 @@ class TccestudantesController extends AppController {
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
         // pr($id);
         // die();
+        $this->loadModel('Tccestudantes');
         $this->request->allowMethod(['post', 'delete']);
         $tccestudante = $this->Tccestudantes->get($id);
         $this->Authorization->authorize($tccestudante);
         if ($this->Tccestudantes->delete($tccestudante)) {
-            $this->Flash->success(__('The tccestudante has been deleted.'));
+            $this->Flash->success(__('Estudante autor de TCC excluído.'));
         } else {
-            $this->Flash->error(__('The tccestudante could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Estudante autor de TCC não foi excluído.'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -169,10 +178,11 @@ class TccestudantesController extends AppController {
     /**
      * Busca Method
      *
-     * @param null
+     * @param string|null $busca
      * @return string $estudantes
      */
-    public function busca() {
+    public function busca()
+    {
 
         $this->Authorization->skipAuthorization();
 
@@ -191,7 +201,8 @@ class TccestudantesController extends AppController {
                     'contain' => ['Monografias']
                 ];
             endif;
-        };
+        }
+        ;
 
         if (!isset($busca)):
 

@@ -18,7 +18,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <h3><?= __('Monografias em PDF') ?></h3>
     <table class="table table-striped table-hover">
 
-        <head class="thead-dark">
+        <head class="table-dark">
             <tr>
                 <th>Pdf</th>
                 <th>Estudante</th>
