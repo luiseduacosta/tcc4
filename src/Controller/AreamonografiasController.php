@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 /**
- * Areas Controller
+ * Areamonografias Controller
  *
  * @property \App\Model\Table\AreamonografiasTable $Areamonografias
  *
- * @method \App\Model\Entity\Area[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AreamonografiasController extends AppController {
 

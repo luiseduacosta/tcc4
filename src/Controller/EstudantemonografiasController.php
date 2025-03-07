@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 /**
- * Alunos Controller
+ * Estudantemonografias Controller
  *
- * @property \App\Model\Table\EstudantesTable $Estudantes
+ * @property \App\Model\Table\EstudantemonografiasTable $Estudantemonografias
  *
- * @method \App\Model\Entity\Estudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Estudantemonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EstudantemonografiasController extends AppController {
 

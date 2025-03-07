@@ -8,11 +8,11 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 
 /**
- * Estagiarios Controller
+ * Estagiariomonografias Controller
  *
- * @property \App\Model\Table\EstagiariosTable $Estagiarios
+ * @property \App\Model\Table\EstagiariomonografiasTable $Estagiariomonografias
  *
- * @method \App\Model\Entity\Estagiario[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Estagiariomonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EstagiariomonografiasController extends AppController {
     /*
