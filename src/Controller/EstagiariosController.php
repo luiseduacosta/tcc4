@@ -155,7 +155,6 @@ class EstagiariosController extends AppController {
             $this->Flash->error(__('Não há estudantes que tenham concluído o 4 nivel no período: ' . $periodo));
             $this->redirect(['controller' => 'estagiarios', 'action' => 'index']);
         endif;
-
     }
 
     /**
@@ -187,23 +186,43 @@ class EstagiariosController extends AppController {
         if ($this->request->is('post')) {
             $estagiario = $this->Estagiarios->patchEntity($estagiario, $this->request->getData());
             if ($this->Estagiarios->save($estagiario)) {
-                $this->Flash->success(__('The estagiario has been saved.'));
+                $this->Flash->success(__('Estagiário inserido.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The estagiario could not be saved. Please, try again.'));
+            $this->Flash->error(__('Estagiário não foi inserido. Tente novamente.'));
         }
         $alunos = $this->Estagiarios->Estudantes->find('list', [
             'keyField' => 'id', 'valueField' => 'nome',
+            'order' => 'nome',
+            'limit' => 200
+        ]);
+
+        $supervisores = $this->Estagiarios->Supervisores->find('list', [
+            'keyField' => 'id', 'valueField' => 'nome',
+            'order' => 'nome',
+            'limit' => 200
+        ]);
+
+        $instituicoes = $this->Estagiarios->Instituicaoestagios->find('list', [
+            'keyField' => 'id', 'valueField' => 'instituicao',
+            'order' => 'instituicao',
             'limit' => 200
         ]);
 
         $docentes = $this->Estagiarios->Docentes->find('list', [
             'keyField' => 'id', 'valueField' => 'nome',
+            'order' => 'nome',
             'limit' => 200
         ]);
 
-        $this->set(compact('estagiario', 'alunos', 'docentes'));
+        $areaestagios = $this->Estagiarios->Areaestagios->find('list', [
+            'keyField' => 'id', 'valueField' => 'area',
+            'order' => 'area',
+            'limit' => 200
+        ]);
+        
+        $this->set(compact('estagiario', 'alunos', 'docentes', 'supervisores', 'instituicoes', 'areaestagios'));
     }
 
     /**
@@ -297,9 +316,8 @@ class EstagiariosController extends AppController {
                                 ->withType('application/json')
                                 ->withStringBody(json_encode([
                                     'registro' => $registro])
-                );
+                                );
             endif;
         endif;
     }
-
 }

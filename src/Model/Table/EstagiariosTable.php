@@ -39,8 +39,7 @@ class EstagiariosTable extends Table {
 
         $this->belongsTo('Estudantes', [
             'className' => 'Estudantes',
-            'foreignKey' => FALSE,
-            'conditions' => 'Estagiarios.registro = Estudantes.registro',
+            'foreignKey' => 'alunonovo_id',
             'joinType' => 'LEFT',
         ]);
 
@@ -63,7 +62,7 @@ class EstagiariosTable extends Table {
             'foreignKey' => 'supervisor_id',
         ]);
 
-        $this->belongsTo('Instituicaoestagos', [
+        $this->belongsTo('Instituicaoestagios', [
             'foreignKey' => 'instituicao_id',
         ]);
     }
