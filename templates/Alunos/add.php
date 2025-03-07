@@ -19,7 +19,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAlunosAdd">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Listar alunos'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Listar alunos'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
             </li>
         <?php endif; ?>
     </ul>

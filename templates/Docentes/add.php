@@ -15,13 +15,13 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($docente) ?>
-    <fieldset>
+    <fieldset class="border p-2">
         <legend><?= __('Novo(a) docente') ?></legend>
         <?php
         echo $this->Form->control('nome', ['label' => 'Nome completo', 'required' => true]);
         echo $this->Form->control('cpf', ['label' => 'CPF', 'required' => true]);
         echo $this->Form->control('siape', ['label' => 'SIAPE', 'required' => true]);
-        echo $this->Form->control('rg', ['label' => 'RG',  'required' => true]);
+        echo $this->Form->control('rg', ['label' => 'RG', 'required' => true]);
         echo $this->Form->control('orgaoexpedidor', ['label' => 'Órgão expedidor', 'required' => true]);
         echo $this->Form->control('datanascimento', ['label' => 'Data de nascimento']);
         echo $this->Form->control('localnascimento', ['label' => 'Local de nascimento']);
@@ -65,7 +65,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('tipocargo', ['label' => 'Tipo de cargo']);
         echo $this->Form->control('categoria', ['label' => 'Categoria']);
         echo $this->Form->control('regimetrabalho', ['label' => 'Regime de trabalho', 'options' => ['20' => '20', '40' => '40', 'DE' => 'DE']]);
-        echo $this->Form->control('departamento', ['options' => ['label' => 'Departamento' ,'Fundamentos' => 'Fundamentos', 'Métodos e técnicas' => 'Métodos e técnicas', 'Política social' => 'Política social', 'Outro' => 'Outro']]);
+        echo $this->Form->control('departamento', ['options' => ['label' => 'Departamento', 'Fundamentos' => 'Fundamentos', 'Métodos e técnicas' => 'Métodos e técnicas', 'Política social' => 'Política social', 'Outro' => 'Outro']]);
         echo $this->Form->control('dataegresso', ['label' => 'Data de egresso', 'empty' => true]);
         echo $this->Form->control('motivoegresso', ['label' => 'Motivo de egresso', 'options' => ['Aposentadoria' => 'Aposentadoria', 'Demissão' => 'Demissão', 'Falecimento' => 'Falecimento', 'Outro' => 'Outro']]);
         echo $this->Form->control('observacoes', ['label' => 'Observações']);

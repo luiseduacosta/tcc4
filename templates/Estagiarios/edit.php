@@ -34,8 +34,6 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<?= $this->element('menu_esquerdo') ?>
-
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($estagiario) ?>
     <fieldset class="border p-2">

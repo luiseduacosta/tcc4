@@ -19,7 +19,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="container col-lg-10 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Alunos') ?></h3>
     <table class="table table-striped table-hover table-responsive">
-        <thead class="thead-dark">
+        <thead class="table-dark">
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
                 <th><?= $this->Paginator->sort('registro') ?></th>

@@ -197,49 +197,49 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Text->autoParagraph(h($docente->observacoes)); ?>
         </div>
     <?php endif; ?>
+</div>
 
-    <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-        <h4><?= __('Monografias') ?></h4>
-        <?php if (!empty($docente->monografias)): ?>
-            <table class="table table-striped table-hover table-responsive">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col"><?= __('Titulo') ?></th>
-                        <th scope="col"><?= __('Periodo') ?></th>
-                        <th scope="col"><?= __('Pdf') ?></th>
-                    </tr>
-                </thead>
-                <?php foreach ($docente->monografias as $monografias): ?>
-                    <tr>
-                        <td><?= $this->Html->link($monografias->titulo, ['controller' => 'monografias', 'action' => 'view', $monografias->id]) ?>
-                        </td>
-                        <td><?= h($monografias->periodo) ?></td>
-                        <td><?= $this->Html->link($monografias->url, ['controller' => 'monografias', 'action' => 'download', $monografias->url, $monografias->id]) ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-        <?php endif; ?>
-    </div>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <h4><?= __('Monografias') ?></h4>
+    <?php if (!empty($docente->monografias)): ?>
+        <table class="table table-striped table-hover table-responsive">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col"><?= __('Titulo') ?></th>
+                    <th scope="col"><?= __('Periodo') ?></th>
+                    <th scope="col"><?= __('Pdf') ?></th>
+                </tr>
+            </thead>
+            <?php foreach ($docente->monografias as $monografias): ?>
+                <tr>
+                    <td><?= $this->Html->link($monografias->titulo, ['controller' => 'monografias', 'action' => 'view', $monografias->id]) ?>
+                    </td>
+                    <td><?= h($monografias->periodo) ?></td>
+                    <td><?= $this->Html->link($monografias->url, ['controller' => 'monografias', 'action' => 'download', $monografias->url, $monografias->id]) ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php endif; ?>
+</div>
 
-    <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-        <h4><?= __('Áreas') ?></h4>
-        <?php if (!empty($docente->areamonografias)): ?>
-            <?php // pr($docente->areas); ?>
-            <table class="table table-striped table-hover table-responsive">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col"><?= __('Área') ?></th>
-                    </tr>
-                </thead>
-                <?php foreach ($docente->areamonografias as $docentesAreas): ?>
-                    <?php // pr($docentesAreas); ?>
-                    <tr>
-                        <td><?= $this->Html->link($docentesAreas->area, ['controller' => 'areamonografias', 'action' => 'view', $docentesAreas->id]) ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-        <?php endif; ?>
-    </div>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <h4><?= __('Áreas') ?></h4>
+    <?php if (!empty($docente->areamonografias)): ?>
+        <?php // pr($docente->areas); ?>
+        <table class="table table-striped table-hover table-responsive">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col"><?= __('Área') ?></th>
+                </tr>
+            </thead>
+            <?php foreach ($docente->areamonografias as $docentesAreas): ?>
+                <?php // pr($docentesAreas); ?>
+                <tr>
+                    <td><?= $this->Html->link($docentesAreas->area, ['controller' => 'areamonografias', 'action' => 'view', $docentesAreas->id]) ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php endif; ?>
 </div>

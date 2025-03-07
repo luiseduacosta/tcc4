@@ -34,7 +34,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($docente) ?>
-    <fieldset>
+    <fieldset class="border p-2">
         <legend><?= __('Editar Docente') ?></legend>
         <?php
         echo $this->Form->control('nome', ['label' => 'Nome completo']);

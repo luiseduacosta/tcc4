@@ -64,13 +64,15 @@ $user = $this->getRequest()->getAttribute('identity');
         </tbody>
     </table>
     <?= $this->element("templates") ?>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
-            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('próximo') . ' >') ?>
-            <?= $this->Paginator->last(__('último') . ' >>') ?>
-        </ul>
+    <div class="d-flex justify-content-center">
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
+            </ul>
+        </div>
     </div>
 </div>

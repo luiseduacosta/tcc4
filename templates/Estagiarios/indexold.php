@@ -20,7 +20,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<div class="collapse navbar-collapse list-unstyled" id="navbarTogglerAreamonografia">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Estagiarios') ?></h3>
     <table class="table table-hover table-responsive table-striped">
         <thead class="table-dark">
@@ -66,7 +66,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?= $this->Paginator->next(__('próximo') . ' >') ?>
                 <?= $this->Paginator->last(__('último') . ' >>') ?>
             </ul>
-            <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?>
+            <p><?= $this->Paginator->counter( __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
             </p>
         </div>
     </div>

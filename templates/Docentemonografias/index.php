@@ -33,7 +33,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th scope="col"><?= $this->Paginator->sort('curriculolattes', 'Lattes') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('motivoegresso', 'Motivo egresso') ?></th>
                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                    <th class="actions"><?= __('Ações') ?></th>
+                    <th class="row"><?= __('Ações') ?></th>
                 <?php endif; ?>
             </tr>
         </thead>
@@ -51,7 +51,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     </td>
                     <td><?= h($docentemonografia->motivoegresso) ?></td>
                     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                        <td class="actions">
+                        <td class="row">
                             <?= $this->Html->link(__('Ver'), ['action' => 'view', $docentemonografia->id, 'class' => 'nav-link']) ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $docentemonografia->id, 'class' => 'nav-link']) ?>
                             <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $docentemonografia->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $docentemonografia->id), 'class' => 'nav-link']) ?>
@@ -61,6 +61,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
+    
     <div class="d-flex justify-content-center">
         <div class="paginator">
             <ul class="pagination">

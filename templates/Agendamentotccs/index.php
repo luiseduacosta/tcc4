@@ -63,7 +63,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($agendamentotcc->titulo) ?></td>
                     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                         <td><?= h($agendamentotcc->avaliacao) ?></td>
-                        <td class="actions">
+                        <td class="row">
                             <?= $this->Html->link(__('Ver'), ['action' => 'view', $agendamentotcc->id]) ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id]) ?>
                             <?= $this->Form->postLink(__('Excluir'), ['

@@ -72,4 +72,18 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?= $this->element("templates") ?>
+    <div class="d-flex justify-content-center">
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
+            </ul>
+            <p><?= $this->Paginator->counter( __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+            </p>
+        </div>
+    </div>
 </div>
