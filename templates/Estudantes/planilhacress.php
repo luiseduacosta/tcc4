@@ -20,7 +20,11 @@
 
 </script>
 
-<div class="row justify-content-left">
+<div class='d-flex justify-content-center'>
+    <?php echo $this->element('menu_mural') ?>
+</div>
+
+<div class="d-flex justify-content-left">
     <div class="col-auto">
         <?php echo $this->Form->create(null, ['class' => 'form-inline']); ?>
         <?php echo $this->Form->input('periodo', ['type' => 'select', 'id' => 'EstudantesPeriodo', 'label' => ['text' => 'Período'], 'options' => $periodos, 'selected' => $periodoselecionado, 'empty' => [$periodoselecionado => $periodoselecionado], 'class' => 'form-control']); ?>
@@ -28,8 +32,6 @@
     </div>
 </div>
 
-<div class='container'>
-    <?php echo $this->element('menu_mural') ?>
 
     <div class='table-responsive'>
         <table class='table table-hover table-striped table-responsive'>

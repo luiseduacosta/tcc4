@@ -19,7 +19,11 @@
 
 </script>
 
-<div class="row justify-content-left">
+<div class='d-flex justify-content-center'>
+    <?php echo $this->element('menu_mural') ?>
+</div>
+
+<div class="d-flex justify-content-start">
     <div class="col-auto">
         <?php echo $this->Form->create(null, ['url' => 'index'], ['class' => 'form-inline']); ?>
         <?php echo $this->Form->input('periodo', ['id' => 'periodo', 'type' => 'select', 'label' => ['text' => 'Período'], 'options' => $periodos, 'selected' => $periodoselecionado, 'empty' => [$periodoselecionado => $periodoselecionado], 'class' => 'form-control']); ?>
@@ -27,13 +31,9 @@
     </div>
 </div>
 
-<div class="container">
-
-    <?php echo $this->element('menu_mural') ?>
-
-    <div class='table-responsive'>
-        <table class='table table-hover table-striped table-responsive'>
-            <thead class='thead-light'>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <table class='table table-hover table-striped table-responsive'>
+        <thead class='thead-light'>
             <caption style='caption-side: top'>Planilha para seguro de vida dos estudantes estagiários</caption>
             <tr>
                 <th>Nome</th>
@@ -48,50 +48,49 @@
                 <th>Final</th>
                 <th>Instituição</th>
             </tr>
-            </thead>
-            <?php foreach ($t_seguro as $cada_aluno): ?>
-                <?php // pr($cada_aluno);  ?>
-                <?php // die(); ?>
-                <tr>
-                    <td>
-                        <?php echo $this->Html->link($cada_aluno['nome'], '/estudantes/view/' . $cada_aluno['id']); ?>
-                    </td>
-                    <td>
-                        <?php echo $cada_aluno['cpf']; ?>
-                    </td>
-                    <td>
-                        <?php if (empty($cada_aluno['nascimento'])): ?>
-                            <?php echo "s/d"; ?>
-                        <?php else: ?>
-                            <?php echo date('d-m-Y', strtotime($cada_aluno['nascimento'])); ?>
-                        <?php endif; ?>
-                    </td>
-                    <td>
-                        <?php echo $cada_aluno['sexo']; ?>
-                    </td>
-                    <td>
-                        <?php echo $cada_aluno['registro']; ?>
-                    </td>
-                    <td>
-                        <?php echo $cada_aluno['curso']; ?>
-                    </td>
-                    <td>
-                        <?php echo $cada_aluno['nivel']; ?>
-                    </td>
-                    <td>
-                        <?php echo $cada_aluno['periodo']; ?>
-                    </td>
-                    <td>
-                        <?php echo $cada_aluno['inicio']; ?>
-                    </td>
-                    <td>
-                        <?php echo $cada_aluno['final']; ?>
-                    </td>
-                    <td>
-                        <?php echo $cada_aluno['instituicao']; ?>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-    </div>
+        </thead>
+        <?php foreach ($t_seguro as $cada_aluno): ?>
+            <?php // pr($cada_aluno);  ?>
+            <?php // die(); ?>
+            <tr>
+                <td>
+                    <?php echo $this->Html->link($cada_aluno['nome'], '/estudantes/view/' . $cada_aluno['id']); ?>
+                </td>
+                <td>
+                    <?php echo $cada_aluno['cpf']; ?>
+                </td>
+                <td>
+                    <?php if (empty($cada_aluno['nascimento'])): ?>
+                        <?php echo "s/d"; ?>
+                    <?php else: ?>
+                        <?php echo date('d-m-Y', strtotime($cada_aluno['nascimento'])); ?>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php echo $cada_aluno['sexo']; ?>
+                </td>
+                <td>
+                    <?php echo $cada_aluno['registro']; ?>
+                </td>
+                <td>
+                    <?php echo $cada_aluno['curso']; ?>
+                </td>
+                <td>
+                    <?php echo $cada_aluno['nivel']; ?>
+                </td>
+                <td>
+                    <?php echo $cada_aluno['periodo']; ?>
+                </td>
+                <td>
+                    <?php echo $cada_aluno['inicio']; ?>
+                </td>
+                <td>
+                    <?php echo $cada_aluno['final']; ?>
+                </td>
+                <td>
+                    <?php echo $cada_aluno['instituicao']; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
 </div>
