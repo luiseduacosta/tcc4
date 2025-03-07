@@ -22,140 +22,144 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Estagiario[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Estagiario findOrCreate($search, callable $callback = null, $options = [])
  */
-class EstagiariomonografiasTable extends Table {
+class EstagiariomonografiasTable extends Table
+{
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config): Void {
-        parent::initialize($config);
+        /**
+         * Initialize method
+         *
+         * @param array $config The configuration for the Table.
+         * @return void
+         */
+        public function initialize(array $config): void
+        {
+                parent::initialize($config);
 
-        $this->setTable('estagiarios');
-        $this->setAlias('Estagiariomonografias');
-        $this->setDisplayField('registro');
-        $this->setPrimaryKey('id');
-/*
-        $this->belongsTo('Estudantes', [
-            'className' => 'Estudantes',
-            'foreignKey' => FALSE,
-            'conditions' => 'Estagiarios.registro = Estudantes.registro',
-            'joinType' => 'LEFT',
-        ]);
-*/
-        $this->belongsTo('Alunos', [
-                'foreignKey' => 'id_aluno',
-                'joinType' => 'INNER',
-        ]);
-        $this->belongsTo('Estudantes', [
-                'foreignKey' => 'alunonovo_id',
-        ]);
-        $this->belongsTo('Supervisores', [
-                'foreignKey' => 'id_supervisor',
-            ]);  
-        $this->belongsTo('Docentemonografias', [
-            'foreignKey' => 'id_professor',
-        ]);
-        $this->belongsTo('Instituicaoestagios', [
-                'foreignKey' => 'id_instituicao',
-            ]);    
-        $this->belongsTo('Areaestagios', [
-            'foreignKey' => 'id_area',
-        ]);
-        $this->belongsTo('Tccestudantes', [
-            'className' => 'Tccestudantes',
-            'foreignKey' => FALSE,
-            'conditions' => 'Estagiariomonografias.registro = Tccestudantes.registro',
-            'joinType' => 'LEFT'
-        ]);        
-        $this->hasOne('Avaliacoes', [
-                'foreignKey' => 'estagiario_id',
-        ]);
-        $this->hasOne('Folhadeatividades', [
-                'foreignKey' => 'estagiario_id',
-        ]);
-    }
+                $this->setTable('estagiarios');
+                $this->setAlias('Estagiariomonografias');
+                $this->setDisplayField('registro');
+                $this->setPrimaryKey('id');
+                /*
+                        $this->belongsTo('Estudantes', [
+                            'className' => 'Estudantes',
+                            'foreignKey' => FALSE,
+                            'conditions' => 'Estagiarios.registro = Estudantes.registro',
+                            'joinType' => 'LEFT',
+                        ]);
+                */
+                $this->belongsTo('Alunos', [
+                        'foreignKey' => 'id_aluno',
+                        'joinType' => 'INNER',
+                ]);
+                $this->belongsTo('Estudantes', [
+                        'foreignKey' => 'alunonovo_id',
+                ]);
+                $this->belongsTo('Supervisores', [
+                        'foreignKey' => 'id_supervisor',
+                ]);
+                $this->belongsTo('Docentemonografias', [
+                        'foreignKey' => 'id_professor',
+                ]);
+                $this->belongsTo('Instituicaoestagios', [
+                        'foreignKey' => 'id_instituicao',
+                ]);
+                $this->belongsTo('Areaestagios', [
+                        'foreignKey' => 'id_area',
+                ]);
+                $this->belongsTo('Tccestudantes', [
+                        'className' => 'Tccestudantes',
+                        'foreignKey' => FALSE,
+                        'conditions' => 'Estagiariomonografias.registro = Tccestudantes.registro',
+                        'joinType' => 'LEFT'
+                ]);
+                $this->hasOne('Avaliacoes', [
+                        'foreignKey' => 'estagiario_id',
+                ]);
+                $this->hasOne('Folhadeatividades', [
+                        'foreignKey' => 'estagiario_id',
+                ]);
+        }
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator): Validator {
-        $validator
-                ->integer('id')
-                ->allowEmptyString('id', null, 'create');
+        /**
+         * Default validation rules.
+         *
+         * @param \Cake\Validation\Validator $validator Validator instance.
+         * @return \Cake\Validation\Validator
+         */
+        public function validationDefault(Validator $validator): Validator
+        {
+                $validator
+                        ->integer('id')
+                        ->allowEmptyString('id', null, 'create');
 
-        $validator
-                ->integer('registro')
-                ->notEmptyString('registro');
+                $validator
+                        ->integer('registro')
+                        ->notEmptyString('registro');
 
-        $validator
-                ->multipleOptions('turno', ['D' => 'Diurno', 'N' => 'Noturno', 'I' => 'Indefinido'], 'Selecione um turno')
-                ->scalar('turno')
-                ->maxLength('turno', 1)
-                ->notEmptyString('turno');
+                $validator
+                        ->multipleOptions('turno', ['D' => 'Diurno', 'N' => 'Noturno', 'I' => 'Indefinido'], 'Selecione um turno')
+                        ->scalar('turno')
+                        ->maxLength('turno', 1)
+                        ->notEmptyString('turno');
 
-        $validator
-                ->inList('nivel', ['1', '2', '3', '4'], 'Selecione um dos níveis')
-                ->scalar('nivel')
-                ->maxLength('nivel', 1)
-                ->notEmptyString('nivel');
+                $validator
+                        ->inList('nivel', ['1', '2', '3', '4'], 'Selecione um dos níveis')
+                        ->scalar('nivel')
+                        ->maxLength('nivel', 1)
+                        ->notEmptyString('nivel');
 
-        $validator
-                ->multipleOptions('tc', ['0' => '0', '1' => '1'])
-                ->notEmptyString('tc');
+                $validator
+                        ->multipleOptions('tc', ['0' => '0', '1' => '1'])
+                        ->notEmptyString('tc');
 
-        $validator
-                ->date('tc_solicitacao')
-                ->allowEmptyDate('tc_solicitacao');
+                $validator
+                        ->date('tc_solicitacao')
+                        ->allowEmptyDate('tc_solicitacao');
 
-        $validator
-                ->notEmptyString('instituicao_id');
+                $validator
+                        ->notEmptyString('instituicao_id');
 
-        $validator
-                ->notEmptyString('supervisor_id');
+                $validator
+                        ->notEmptyString('supervisor_id');
 
-        $validator
-                ->scalar('periodo')
-                ->maxLength('periodo', 6)
-                ->notEmptyString('periodo');
+                $validator
+                        ->scalar('periodo')
+                        ->maxLength('periodo', 6)
+                        ->notEmptyString('periodo');
 
-        $validator
-                ->naturalNumber('id_area')
-                ->allowEmptyString('id_area');
+                $validator
+                        ->naturalNumber('id_area')
+                        ->allowEmptyString('id_area');
 
-        $validator
-                ->decimal('nota')
-                ->range('nota', ['0', '10'], 'Digite a nota')
-                ->allowEmptyString('nota');
+                $validator
+                        ->decimal('nota')
+                        ->range('nota', ['0', '10'], 'Digite a nota')
+                        ->allowEmptyString('nota');
 
-        $validator
-                ->allowEmptyString('ch');
+                $validator
+                        ->allowEmptyString('ch');
 
-        $validator
-                ->scalar('observacoes')
-                ->maxLength('observacoes', 255)
-                ->allowEmptyString('observacoes');
+                $validator
+                        ->scalar('observacoes')
+                        ->maxLength('observacoes', 255)
+                        ->allowEmptyString('observacoes');
 
-        return $validator;
-    }
+                return $validator;
+        }
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules): RulesChecker {
-        $rules->add($rules->existsIn(['aluno_id'], 'Alunos'));
-        $rules->add($rules->existsIn(['docente_id'], 'Docentes'));
+        /**
+         * Returns a rules checker object that will be used for validating
+         * application integrity.
+         *
+         * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+         * @return \Cake\ORM\RulesChecker
+         */
+        public function buildRules(RulesChecker $rules): RulesChecker
+        {
+                $rules->add($rules->existsIn(['aluno_id'], 'Alunos'));
+                $rules->add($rules->existsIn(['docente_id'], 'Docentes'));
 
-        return $rules;
-    }
+                return $rules;
+        }
 
 }

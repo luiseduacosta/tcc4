@@ -6,7 +6,7 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -17,7 +17,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerDocentesEdit">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li class="item-link">
+            <li class="nav-item">
                 <?=
                     $this->Form->postLink(
                         __('Excluir'),

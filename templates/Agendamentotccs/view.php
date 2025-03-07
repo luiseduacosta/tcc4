@@ -7,7 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($agendamentotcc);
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -40,7 +40,6 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
     </div>
 </nav>
-
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= h($agendamentotcc->estudante->nome) ?></h3>

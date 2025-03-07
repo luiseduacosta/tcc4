@@ -8,19 +8,23 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
 <nav class="navbar navbar-collapse navbar-expand-lg" id="actions-sidebar">
-    
-    <ul class="nav navbar-nav">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerTccestudantesEdit"
+        aria-controls="navbarTogglerTccestudantesEdit" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerTceEstudantesEdit">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li class=""><?=
-                $this->Form->postLink(
-                        __('Delete'),
-                        ['action' => 'delete', $tccestudante->numero],
-                        ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $tccestudante->numero), 'class' => 'btn btn-danger float-start']
+            <li class="">
+                <?=
+                    $this->Form->postLink(
+                        __('Excluir'),
+                        ['action' => 'delete', $tccestudante->id],
+                        ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $tccestudante->id), 'class' => 'btn btn-danger float-start']
                     )
                     ?>
             </li>
@@ -28,11 +32,11 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<?php $this->element('templates') ?>
+<?= $this->element('templates') ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($tccestudante) ?>
-    <fieldset>
+    <fieldset class="border p-2">
         <legend><?= __('Editar estudante autor de TCC') ?></legend>
         <div class="form-group row">
             <label class="col-form-label col-2" for="nome">Estudante</label>

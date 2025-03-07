@@ -2,31 +2,41 @@
 $user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Aluno[]|\Cake\Collection\CollectionInterface $alunos
+ * @var \App\Model\Entity\Estudante[]|\Cake\Collection\CollectionInterface $estudantes
  */
 ?>
+<div class="d-flex justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
 
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerEstudantes"
+        aria-controls="navbarTogglerEstudantes" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerEstudantes">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Novo Aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Novo(a) estuante'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
             </li>
         <?php endif; ?>
-        <?php echo $this->element('menu_esquerdo'); ?>
     </ul>
 </nav>
 
-<div class="users index large-9 medium-8 columns content">
-    <h3><?= __('Estudantes') ?>
-        <?= $this->Html->link(__(' Identificação'), ['action' => 'index1'], ['class' => 'btn btn-primary float-end']) ?>
-        <?= $this->Html->link(__(' Comunicação'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
-        <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'btn btn-primary float-end']) ?>
+<div class="d-flex justify-content-end">
+    <h3>
+        <?= __('Estudantes') ?>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <?= $this->Html->link(__(' Comunicação'), ['action' => 'index'], ['class' => 'btn btn-secondary float-end']) ?>
+            <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'btn btn-secondary float-end']) ?>
+            <?= $this->Html->link(__(' Identificação'), ['action' => 'index1'], ['class' => 'btn btn-secondary float-end']) ?>
+        <?php endif; ?>
     </h3>
 </div>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+    <table class="table table-hover table-responsive table-striped">
+        <thead class="table-dark">
             <tr>
                 <th><?= $this->Paginator->sort('registro') ?></th>
                 <th><?= $this->Paginator->sort('nome') ?></th>
@@ -50,16 +60,18 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
-</div>
 
-<div class="paginator">
-    <ul class="pagination">
-        <?= $this->Paginator->first('<< ' . __('first')) ?>
-        <?= $this->Paginator->prev('< ' . __('previous')) ?>
-        <?= $this->Paginator->numbers() ?>
-        <?= $this->Paginator->next(__('next') . ' >') ?>
-        <?= $this->Paginator->last(__('last') . ' >>') ?>
-    </ul>
-    <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
-    </p>
+    <div class="d-flex justify-content-center">
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
+            </ul>
+            <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+            </p>
+        </div>
+    </div>
 </div>

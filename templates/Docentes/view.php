@@ -7,7 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -28,7 +28,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<div class="container">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= h($docente->nome) ?></h3>
     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
         <table class="table table-striped table-hover table-responsive">
@@ -198,7 +198,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </div>
     <?php endif; ?>
 
-    <div class="container">
+    <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
         <h4><?= __('Monografias') ?></h4>
         <?php if (!empty($docente->monografias)): ?>
             <table class="table table-striped table-hover table-responsive">

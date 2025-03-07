@@ -8,17 +8,30 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <?= $this->element('menu_esquerdo'); ?>
+<div class="d-flex justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerAreamonografiaAdd"
+        aria-controls="navbarTogglerAreamonografiaAdd" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAreamonografiaAdd">
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Nova área de monografia'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
+        <?php endif; ?>
     </ul>
 </nav>
 
-<div class="areas form large-9 medium-8 columns content">
+<?= $this->element('templates') ?>
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($area) ?>
-    <fieldset>
-        <legend><?= __('Add Area') ?></legend>
+    <fieldset class="border p-2">
+        <legend><?= __('Nova área de monografia') ?></legend>
         <?php
             echo $this->Form->control('id');
             echo $this->Form->control('area');

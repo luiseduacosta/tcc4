@@ -6,7 +6,7 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -18,7 +18,8 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="collapse navbar-collapse" id="navbarTogglerDocentes">
         <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerDocentes">
             <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                <li class="item-link"><?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                <li class="item-link">
+                    <?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
                 </li>
             <?php endif; ?>
         </ul>
@@ -65,13 +66,15 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <?= $this->element('templates') ?>
 
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
+    <div class="d-flex justify-content-center">
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
+            </ul>
+        </div>
     </div>
 </div>

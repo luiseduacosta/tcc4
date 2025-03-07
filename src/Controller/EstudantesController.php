@@ -1,8 +1,11 @@
 <?php
 
+
 declare(strict_types=1);
 
 namespace App\Controller;
+
+use Cake\ORM\Query;
 
 /**
  * Estudantes Controller
@@ -11,9 +14,11 @@ namespace App\Controller;
  *
  * @method \App\Model\Entity\Estudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class EstudantesController extends AppController {
+class EstudantesController extends AppController
+{
 
-    public function beforeFilter(\Cake\Event\EventInterface $event) {
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
 
         parent::beforeFilter($event);
         // Permitir aos usuários se registrarem e efetuar logout.
@@ -28,10 +33,21 @@ class EstudantesController extends AppController {
      *
      * @return \Cake\Http\Response|null
      */
-    public function index() {
+    public function index()
+    {
 
         $this->Authorization->skipAuthorization();
 
+        $estudantesdetcc = $this->Estudantes->find()
+            ->contain([
+                'Tccestudantes',
+                'Estagiarios' => function (Query $q) {
+                    return $q->where(['nivel' => '4']);
+                }
+            ])
+            ->limit(100)
+            ->all();
+    
         $parameters = $this->request->getQueryParams();
         if (isset($parameters) && !empty($parameters)):
             // pr($parameters);
@@ -50,7 +66,7 @@ class EstudantesController extends AppController {
         endif;
 
         $alunos = $this->paginate($this->Estudantes, ['order' => ['nome' => 'asc']]);
-        $this->set(compact('alunos'));
+        $this->set('alunos', $alunos);
     }
 
     /**
@@ -58,7 +74,8 @@ class EstudantesController extends AppController {
      *
      * @return \Cake\Http\Response|null
      */
-    public function index1() {
+    public function index1()
+    {
 
         $this->Authorization->skipAuthorization();
 
@@ -88,7 +105,8 @@ class EstudantesController extends AppController {
      *
      * @return \Cake\Http\Response|null
      */
-    public function index2() {
+    public function index2()
+    {
 
         $this->Authorization->skipAuthorization();
 
@@ -120,7 +138,8 @@ class EstudantesController extends AppController {
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
         $this->Authorization->skipAuthorization();
         $aluno = $this->Estudantes->get($id, [
@@ -135,9 +154,10 @@ class EstudantesController extends AppController {
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
 
-        $estudante = $this->Estudante->newEmptyEntity();
+        $estudante = $this->Estudantes->newEmptyEntity();
         $this->Authorization->authorize($estudante);
 
         if ($this->request->is('post')) {
@@ -159,7 +179,8 @@ class EstudantesController extends AppController {
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
         $estudante = $this->Estudantes->get($id, [
             'contain' => [],
@@ -167,7 +188,7 @@ class EstudantesController extends AppController {
         // pr($estudante);
         // pr($this->request->getData());
         // die();
-        // $this->Authorization->authorize($estudante);
+        $this->Authorization->authorize($estudante);
         // die();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $estudanteatualiza = $this->Estudantes->patchEntity($estudante, $this->request->getData());
@@ -189,7 +210,8 @@ class EstudantesController extends AppController {
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
 
         $this->request->allowMethod(['post', 'delete']);
         $this->loadModel('Estudantes');

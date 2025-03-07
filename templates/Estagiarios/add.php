@@ -24,7 +24,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 }, // Add this line
                 success: function (resposta) {
                     // console.log(resposta);
-                    $.each(resposta, function(key, item) {
+                    $.each(resposta, function (key, item) {
                         // console.log(item);
                         // alert(item);
                         $('#registro').val(item);
@@ -37,16 +37,14 @@ $user = $this->getRequest()->getAttribute('identity');
     });
 </script>
 
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <?= $this->element('menu_esquerdo') ?>
-    </ul>
-</nav>
-<div class="estagiarios form large-9 medium-8 columns content">
+<div class="d-flex justify-content-center">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($estagiario) ?>
-    <fieldset>
-        <legend><?= __('Add Estagiario') ?></legend>
+    <fieldset class="border p-2">
+        <legend><?= __('Inserir Estagiário') ?></legend>
         <?php
         echo $this->Form->control('aluno_id', ['options' => $alunos, 'empty' => 'Seleciona estudante']);
         echo $this->Form->control('registro');
@@ -65,6 +63,6 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('observacoes');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Confirmar')) ?>
     <?= $this->Form->end() ?>
 </div>

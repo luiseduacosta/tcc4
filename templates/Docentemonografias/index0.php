@@ -6,15 +6,15 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="row justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>        
+<div class="d-flex justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>
 </div>
 
 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-    <?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
 <?php endif; ?>
 
-<div class="docentes index large-9 medium-8 columns content">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Docentes') ?></h3>
     <p>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
@@ -24,8 +24,8 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Html->link('Dados pósgraduação', ['controller' => 'docentemonografias', 'action' => 'index3'], ['class' => 'button float-right']) ?>
         <?php endif; ?>
     </p>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+    <table class="table table-hover table-responsive table-striped">
+        <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('siape') ?></th>
@@ -42,7 +42,8 @@ $user = $this->getRequest()->getAttribute('identity');
         <tbody>
             <?php foreach ($docentemonografias as $docente): ?>
                 <tr>
-                    <td><?= $this->Html->link(h($docente->nome), ['controller' => 'docentemonografias', 'action' => 'view', $docente->id]) ?></td>
+                    <td><?= $this->Html->link(h($docente->nome), ['controller' => 'docentemonografias', 'action' => 'view', $docente->id]) ?>
+                    </td>
                     <td><?= h($docente->siape) ?></td>
                     <td><?= h($docente->departamento) ?></td>
                     <td><?= h($docente->dataingresso) ?></td>
@@ -56,13 +57,14 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?= $this->element('templates') ?>
     <div class="paginator">
         <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
             <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
+            <?= $this->Paginator->next(__('próximo') . ' >') ?>
+            <?= $this->Paginator->last(__('último') . ' >>') ?>
         </ul>
     </div>
 </div>

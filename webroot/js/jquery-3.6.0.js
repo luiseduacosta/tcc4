@@ -221,7 +221,7 @@ jQuery.fn = jQuery.prototype = {
 		return this.eq( 0 );
 	},
 
-	last: function() {
+	último: function() {
 		return this.eq( -1 );
 	},
 
@@ -646,7 +646,7 @@ var i,
 		"TAG": new RegExp( "^(" + identifier + "|[*])" ),
 		"ATTR": new RegExp( "^" + attributes ),
 		"PSEUDO": new RegExp( "^" + pseudos ),
-		"CHILD": new RegExp( "^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\(" +
+		"CHILD": new RegExp( "^:(only|first|último|nth|nth-último)-(child|of-type)(?:\\(" +
 			whitespace + "*(even|odd|(([+-]|)(\\d*)n|)" + whitespace + "*(?:([+-]|)" +
 			whitespace + "*(\\d+)|))" + whitespace + "*\\)|)", "i" ),
 		"bool": new RegExp( "^(?:" + booleans + ")$", "i" ),
@@ -654,7 +654,7 @@ var i,
 		// For use in libraries implementing .is()
 		// We use this for POS matching in `select`
 		"needsContext": new RegExp( "^" + whitespace +
-			"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\(" + whitespace +
+			"*[>+~]|:(even|odd|eq|gt|lt|nth|first|último)(?:\\(" + whitespace +
 			"*((?:-\\d)?\\d*)" + whitespace + "*\\)|)(?=[^-]|$)", "i" )
 	},
 
@@ -721,7 +721,7 @@ var i,
 		function( elem ) {
 			return elem.disabled === true && elem.nodeName.toLowerCase() === "fieldset";
 		},
-		{ dir: "parentNode", next: "legend" }
+		{ dir: "parentNode", próximo: "legend" }
 	);
 
 // Optimize for push.apply( _, NodeList )
@@ -733,7 +733,7 @@ try {
 
 	// Support: Android<4.0
 	// Detect silently failing push.apply
-	// eslint-disable-next-line no-unused-expressions
+	// eslint-disable-próximo-line no-unused-expressions
 	arr[ preferredDoc.childNodes.length ].nodeType;
 } catch ( e ) {
 	push = { apply: arr.length ?
@@ -984,7 +984,7 @@ function siblingCheck( a, b ) {
 
 	// Check if b follows a
 	if ( cur ) {
-		while ( ( cur = cur.nextSibling ) ) {
+		while ( ( cur = cur.próximoSibling ) ) {
 			if ( cur === b ) {
 				return -1;
 			}
@@ -1134,7 +1134,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 	// Support: IE 11+, Edge 17 - 18+
 	// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
 	// two documents; shallow comparisons work.
-	// eslint-disable-next-line eqeqeq
+	// eslint-disable-próximo-line eqeqeq
 	if ( doc == document || doc.nodeType !== 9 || !doc.documentElement ) {
 		return document;
 	}
@@ -1149,7 +1149,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 	// Support: IE 11+, Edge 17 - 18+
 	// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
 	// two documents; shallow comparisons work.
-	// eslint-disable-next-line eqeqeq
+	// eslint-disable-próximo-line eqeqeq
 	if ( preferredDoc != document &&
 		( subWindow = document.defaultView ) && subWindow.top !== subWindow ) {
 
@@ -1494,7 +1494,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 		// Support: IE 11+, Edge 17 - 18+
 		// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
 		// two documents; shallow comparisons work.
-		// eslint-disable-next-line eqeqeq
+		// eslint-disable-próximo-line eqeqeq
 		compare = ( a.ownerDocument || a ) == ( b.ownerDocument || b ) ?
 			a.compareDocumentPosition( b ) :
 
@@ -1509,7 +1509,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 			// Support: IE 11+, Edge 17 - 18+
 			// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
 			// two documents; shallow comparisons work.
-			// eslint-disable-next-line eqeqeq
+			// eslint-disable-próximo-line eqeqeq
 			if ( a == document || a.ownerDocument == preferredDoc &&
 				contains( preferredDoc, a ) ) {
 				return -1;
@@ -1518,7 +1518,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 			// Support: IE 11+, Edge 17 - 18+
 			// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
 			// two documents; shallow comparisons work.
-			// eslint-disable-next-line eqeqeq
+			// eslint-disable-próximo-line eqeqeq
 			if ( b == document || b.ownerDocument == preferredDoc &&
 				contains( preferredDoc, b ) ) {
 				return 1;
@@ -1639,7 +1639,7 @@ Sizzle.contains = function( context, elem ) {
 	// Support: IE 11+, Edge 17 - 18+
 	// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
 	// two documents; shallow comparisons work.
-	// eslint-disable-next-line eqeqeq
+	// eslint-disable-próximo-line eqeqeq
 	if ( ( context.ownerDocument || context ) != document ) {
 		setDocument( context );
 	}
@@ -1652,7 +1652,7 @@ Sizzle.attr = function( elem, name ) {
 	// Support: IE 11+, Edge 17 - 18+
 	// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
 	// two documents; shallow comparisons work.
-	// eslint-disable-next-line eqeqeq
+	// eslint-disable-próximo-line eqeqeq
 	if ( ( elem.ownerDocument || elem ) != document ) {
 		setDocument( elem );
 	}
@@ -1741,7 +1741,7 @@ getText = Sizzle.getText = function( elem ) {
 		} else {
 
 			// Traverse its children
-			for ( elem = elem.firstChild; elem; elem = elem.nextSibling ) {
+			for ( elem = elem.firstChild; elem; elem = elem.próximoSibling ) {
 				ret += getText( elem );
 			}
 		}
@@ -1770,8 +1770,8 @@ Expr = Sizzle.selectors = {
 	relative: {
 		">": { dir: "parentNode", first: true },
 		" ": { dir: "parentNode" },
-		"+": { dir: "previousSibling", first: true },
-		"~": { dir: "previousSibling" }
+		"+": { dir: "anteriorSibling", first: true },
+		"~": { dir: "anteriorSibling" }
 	},
 
 	preFilter: {
@@ -1843,7 +1843,7 @@ Expr = Sizzle.selectors = {
 				// Get excess from tokenize (recursively)
 				( excess = tokenize( unquoted, true ) ) &&
 
-				// advance to the next closing parenthesis
+				// advance to the próximo closing parenthesis
 				( excess = unquoted.indexOf( ")", unquoted.length - excess ) - unquoted.length ) ) {
 
 				// excess is a negative index
@@ -1913,12 +1913,12 @@ Expr = Sizzle.selectors = {
 			};
 		},
 
-		"CHILD": function( type, what, _argument, first, last ) {
+		"CHILD": function( type, what, _argument, first, último ) {
 			var simple = type.slice( 0, 3 ) !== "nth",
-				forward = type.slice( -4 ) !== "last",
+				forward = type.slice( -4 ) !== "último",
 				ofType = what === "of-type";
 
-			return first === 1 && last === 0 ?
+			return first === 1 && último === 0 ?
 
 				// Shortcut for :nth-*(n)
 				function( elem ) {
@@ -1927,7 +1927,7 @@ Expr = Sizzle.selectors = {
 
 				function( elem, _context, xml ) {
 					var cache, uniqueCache, outerCache, node, nodeIndex, start,
-						dir = simple !== forward ? "nextSibling" : "previousSibling",
+						dir = simple !== forward ? "próximoSibling" : "anteriorSibling",
 						parent = elem.parentNode,
 						name = ofType && elem.nodeName.toLowerCase(),
 						useCache = !xml && !ofType,
@@ -1935,7 +1935,7 @@ Expr = Sizzle.selectors = {
 
 					if ( parent ) {
 
-						// :(first|last|only)-(child|of-type)
+						// :(first|último|only)-(child|of-type)
 						if ( simple ) {
 							while ( dir ) {
 								node = elem;
@@ -1949,17 +1949,17 @@ Expr = Sizzle.selectors = {
 								}
 
 								// Reverse direction for :only-* (if we haven't yet done so)
-								start = dir = type === "only" && !start && "nextSibling";
+								start = dir = type === "only" && !start && "próximoSibling";
 							}
 							return true;
 						}
 
-						start = [ forward ? parent.firstChild : parent.lastChild ];
+						start = [ forward ? parent.firstChild : parent.últimoChild ];
 
 						// non-xml :nth-child(...) stores cache data on `parent`
 						if ( forward && useCache ) {
 
-							// Seek `elem` from a previously-cached index
+							// Seek `elem` from a anteriorly-cached index
 
 							// ...in a gzip-friendly way
 							node = parent;
@@ -1989,7 +1989,7 @@ Expr = Sizzle.selectors = {
 
 						} else {
 
-							// Use previously-cached element index if available
+							// Use anteriorly-cached element index if available
 							if ( useCache ) {
 
 								// ...in a gzip-friendly way
@@ -2007,7 +2007,7 @@ Expr = Sizzle.selectors = {
 							}
 
 							// xml :nth-child(...)
-							// or :nth-last-child(...) or :nth(-last)?-of-type(...)
+							// or :nth-último-child(...) or :nth(-último)?-of-type(...)
 							if ( diff === false ) {
 
 								// Use the same loop as above to seek `elem` from the start
@@ -2041,7 +2041,7 @@ Expr = Sizzle.selectors = {
 						}
 
 						// Incorporate the offset, then check against cycle size
-						diff -= last;
+						diff -= último;
 						return diff === first || ( diff % first === 0 && diff / first >= 0 );
 					}
 				};
@@ -2197,7 +2197,7 @@ Expr = Sizzle.selectors = {
 			// Accessing this property makes selected-by-default
 			// options in Safari work properly
 			if ( elem.parentNode ) {
-				// eslint-disable-next-line no-unused-expressions
+				// eslint-disable-próximo-line no-unused-expressions
 				elem.parentNode.selectedIndex;
 			}
 
@@ -2211,7 +2211,7 @@ Expr = Sizzle.selectors = {
 			// :empty is negated by element (1) or content nodes (text: 3; cdata: 4; entity ref: 5),
 			//   but not by others (comment: 8; processing instruction: 7; etc.)
 			// nodeType < 6 works because attributes (2) do not appear as children
-			for ( elem = elem.firstChild; elem; elem = elem.nextSibling ) {
+			for ( elem = elem.firstChild; elem; elem = elem.próximoSibling ) {
 				if ( elem.nodeType < 6 ) {
 					return false;
 				}
@@ -2253,7 +2253,7 @@ Expr = Sizzle.selectors = {
 			return [ 0 ];
 		} ),
 
-		"last": createPositionalPseudo( function( _matchIndexes, length ) {
+		"último": createPositionalPseudo( function( _matchIndexes, length ) {
 			return [ length - 1 ];
 		} ),
 
@@ -2396,7 +2396,7 @@ function toSelector( tokens ) {
 
 function addCombinator( matcher, combinator, base ) {
 	var dir = combinator.dir,
-		skip = combinator.next,
+		skip = combinator.próximo,
 		key = skip || dir,
 		checkNonElements = base && key === "parentNode",
 		doneName = done++;
@@ -2442,11 +2442,11 @@ function addCombinator( matcher, combinator, base ) {
 						} else if ( ( oldCache = uniqueCache[ key ] ) &&
 							oldCache[ 0 ] === dirruns && oldCache[ 1 ] === doneName ) {
 
-							// Assign to newCache so results back-propagate to previous elements
+							// Assign to newCache so results back-propagate to anterior elements
 							return ( newCache[ 2 ] = oldCache[ 2 ] );
 						} else {
 
-							// Reuse newcache so results back-propagate to previous elements
+							// Reuse newcache so results back-propagate to anterior elements
 							uniqueCache[ key ] = newCache;
 
 							// A match means we're done; a fail means we have to keep checking
@@ -2639,7 +2639,7 @@ function matcherFromTokens( tokens ) {
 			// Return special upon seeing a positional matcher
 			if ( matcher[ expando ] ) {
 
-				// Find the next relative operator (if any) for proper handling
+				// Find the próximo relative operator (if any) for proper handling
 				j = ++i;
 				for ( ; j < len; j++ ) {
 					if ( Expr.relative[ tokens[ j ].type ] ) {
@@ -2691,7 +2691,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				// Support: IE 11+, Edge 17 - 18+
 				// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
 				// two documents; shallow comparisons work.
-				// eslint-disable-next-line eqeqeq
+				// eslint-disable-próximo-line eqeqeq
 				outermostContext = context == document || context || outermost;
 			}
 
@@ -2705,7 +2705,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 					// Support: IE 11+, Edge 17 - 18+
 					// IE/Edge sometimes throw a "Permission denied" error when strict-comparing
 					// two documents; shallow comparisons work.
-					// eslint-disable-next-line eqeqeq
+					// eslint-disable-próximo-line eqeqeq
 					if ( !context && elem.ownerDocument != document ) {
 						setDocument( elem );
 						xml = !documentIsHTML;
@@ -3012,7 +3012,7 @@ var dir = function( elem, dir, until ) {
 var siblings = function( n, elem ) {
 	var matched = [];
 
-	for ( ; n; n = n.nextSibling ) {
+	for ( ; n; n = n.próximoSibling ) {
 		if ( n.nodeType === 1 && n !== elem ) {
 			matched.push( n );
 		}
@@ -3112,7 +3112,7 @@ jQuery.fn.extend( {
 			this,
 
 			// If this is a positional/relative selector, check membership in the returned set
-			// so $("p:first").is("p:last") won't return true for a doc with two "p".
+			// so $("p:first").is("p:último") won't return true for a doc with two "p".
 			typeof selector === "string" && rneedsContext.test( selector ) ?
 				jQuery( selector ) :
 				selector || [],
@@ -3246,7 +3246,7 @@ var rparentsprev = /^(?:parents|prev(?:Until|All))/,
 	guaranteedUnique = {
 		children: true,
 		contents: true,
-		next: true,
+		próximo: true,
 		prev: true
 	};
 
@@ -3347,23 +3347,23 @@ jQuery.each( {
 	parentsUntil: function( elem, _i, until ) {
 		return dir( elem, "parentNode", until );
 	},
-	next: function( elem ) {
-		return sibling( elem, "nextSibling" );
+	próximo: function( elem ) {
+		return sibling( elem, "próximoSibling" );
 	},
 	prev: function( elem ) {
-		return sibling( elem, "previousSibling" );
+		return sibling( elem, "anteriorSibling" );
 	},
-	nextAll: function( elem ) {
-		return dir( elem, "nextSibling" );
+	próximoAll: function( elem ) {
+		return dir( elem, "próximoSibling" );
 	},
 	prevAll: function( elem ) {
-		return dir( elem, "previousSibling" );
+		return dir( elem, "anteriorSibling" );
 	},
-	nextUntil: function( elem, _i, until ) {
-		return dir( elem, "nextSibling", until );
+	próximoUntil: function( elem, _i, until ) {
+		return dir( elem, "próximoSibling", until );
 	},
 	prevUntil: function( elem, _i, until ) {
-		return dir( elem, "previousSibling", until );
+		return dir( elem, "anteriorSibling", until );
 	},
 	siblings: function( elem ) {
 		return siblings( ( elem.parentNode || {} ).firstChild, elem );
@@ -3445,7 +3445,7 @@ function createOptions( options ) {
  *
  *	once:			will ensure the callback list can only be fired once (like a Deferred)
  *
- *	memory:			will keep track of previous values and will call any callback added
+ *	memory:			will keep track of anterior values and will call any callback added
  *					after the list has been fired right away with the latest "memorized"
  *					values (like a Deferred)
  *
@@ -3465,7 +3465,7 @@ jQuery.Callbacks = function( options ) {
 	var // Flag to know if list is currently firing
 		firing,
 
-		// Last fire value for non-forgettable lists
+		// último fire value for non-forgettable lists
 		memory,
 
 		// Flag to know if list was already fired
@@ -4585,7 +4585,7 @@ jQuery.extend( {
 			startLength = queue.length,
 			fn = queue.shift(),
 			hooks = jQuery._queueHooks( elem, type ),
-			next = function() {
+			próximo = function() {
 				jQuery.dequeue( elem, type );
 			};
 
@@ -4603,9 +4603,9 @@ jQuery.extend( {
 				queue.unshift( "inprogress" );
 			}
 
-			// Clear up the last queue stop function
+			// Clear up the último queue stop function
 			delete hooks.stop;
-			fn.call( elem, next, hooks );
+			fn.call( elem, próximo, hooks );
 		}
 
 		if ( !startLength && hooks ) {
@@ -4924,18 +4924,18 @@ var rscriptType = ( /^$|^module$|\/(?:java|ecma)script/i );
 
 	// Support: Android <=4.1 only
 	// Older WebKit doesn't clone checked state correctly in fragments
-	support.checkClone = div.cloneNode( true ).cloneNode( true ).lastChild.checked;
+	support.checkClone = div.cloneNode( true ).cloneNode( true ).últimoChild.checked;
 
 	// Support: IE <=11 only
 	// Make sure textarea (and checkbox) defaultValue is properly cloned
 	div.innerHTML = "<textarea>x</textarea>";
-	support.noCloneChecked = !!div.cloneNode( true ).lastChild.defaultValue;
+	support.noCloneChecked = !!div.cloneNode( true ).últimoChild.defaultValue;
 
 	// Support: IE <=9 only
 	// IE <=9 replaces <option> tags with their contents when inserted outside of
 	// the select element.
 	div.innerHTML = "<option></option>";
-	support.option = !!div.lastChild;
+	support.option = !!div.últimoChild;
 } )();
 
 
@@ -5038,7 +5038,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 				// Descend through wrappers to the right content
 				j = wrap[ 0 ];
 				while ( j-- ) {
-					tmp = tmp.lastChild;
+					tmp = tmp.últimoChild;
 				}
 
 				// Support: Android <=4.0 only, PhantomJS 1 only
@@ -6068,7 +6068,7 @@ function domManip( collection, args, callback, ignored ) {
 			scripts = jQuery.map( getAll( fragment, "script" ), disableScript );
 			hasScripts = scripts.length;
 
-			// Use the original fragment for the last item
+			// Use the original fragment for the último item
 			// instead of the first because it can end up
 			// being emptied incorrectly in certain situations (#8070).
 			for ( ; i < l; i++ ) {
@@ -6275,7 +6275,7 @@ jQuery.fn.extend( {
 	after: function() {
 		return domManip( this, arguments, function( elem ) {
 			if ( this.parentNode ) {
-				this.parentNode.insertBefore( elem, this.nextSibling );
+				this.parentNode.insertBefore( elem, this.próximoSibling );
 			}
 		} );
 	},
@@ -6376,11 +6376,11 @@ jQuery.each( {
 		var elems,
 			ret = [],
 			insert = jQuery( selector ),
-			last = insert.length - 1,
+			último = insert.length - 1,
 			i = 0;
 
-		for ( ; i <= last; i++ ) {
-			elems = i === last ? this : this.clone( true );
+		for ( ; i <= último; i++ ) {
+			elems = i === último ? this : this.clone( true );
 			jQuery( insert[ i ] )[ original ]( elems );
 
 			// Support: Android <=4.0 only, PhantomJS 1 only
@@ -7611,7 +7611,7 @@ function Animation( elem, properties, options ) {
 					animation.tweens[ index ].run( 1 );
 				}
 
-				// Resolve when we played the last frame; otherwise, reject
+				// Resolve when we played the último frame; otherwise, reject
 				if ( gotoEnd ) {
 					deferred.notifyWith( elem, [ animation, 1, 0 ] );
 					deferred.resolveWith( elem, [ animation, gotoEnd ] );
@@ -7817,7 +7817,7 @@ jQuery.fn.extend( {
 				}
 			}
 
-			// Start the next in the queue if the last step wasn't forced.
+			// Start the próximo in the queue if the último step wasn't forced.
 			// Timers currently will call their complete callbacks, which
 			// will dequeue but only if they were gotoEnd.
 			if ( dequeue || !gotoEnd ) {
@@ -7948,8 +7948,8 @@ jQuery.fn.delay = function( time, type ) {
 	time = jQuery.fx ? jQuery.fx.speeds[ time ] || time : time;
 	type = type || "fx";
 
-	return this.queue( type, function( next, hooks ) {
-		var timeout = window.setTimeout( next, time );
+	return this.queue( type, function( próximo, hooks ) {
+		var timeout = window.setTimeout( próximo, time );
 		hooks.stop = function() {
 			window.clearTimeout( timeout );
 		};
@@ -8402,7 +8402,7 @@ jQuery.fn.extend( {
 
 				// If the element has a class name or if we're passed `false`,
 				// then remove the whole classname (if there was one, the above saved it).
-				// Otherwise bring back whatever was previously saved (if anything),
+				// Otherwise bring back whatever was anteriorly saved (if anything),
 				// falling back to the empty string if nothing was stored.
 				if ( this.setAttribute ) {
 					this.setAttribute( "class",
@@ -8630,12 +8630,12 @@ jQuery.extend( jQuery.event, {
 
 	trigger: function( event, data, elem, onlyHandlers ) {
 
-		var i, cur, tmp, bubbleType, ontype, handle, special, lastElement,
+		var i, cur, tmp, bubbleType, ontype, handle, special, últimoElement,
 			eventPath = [ elem || document ],
 			type = hasOwn.call( event, "type" ) ? event.type : event,
 			namespaces = hasOwn.call( event, "namespace" ) ? event.namespace.split( "." ) : [];
 
-		cur = lastElement = tmp = elem = elem || document;
+		cur = últimoElement = tmp = elem = elem || document;
 
 		// Don't do events on text and comment nodes
 		if ( elem.nodeType === 3 || elem.nodeType === 8 ) {
@@ -8707,7 +8707,7 @@ jQuery.extend( jQuery.event, {
 		// Fire handlers on the event path
 		i = 0;
 		while ( ( cur = eventPath[ i++ ] ) && !event.isPropagationStopped() ) {
-			lastElement = cur;
+			últimoElement = cur;
 			event.type = i > 1 ?
 				bubbleType :
 				special.bindType || type;
@@ -8752,13 +8752,13 @@ jQuery.extend( jQuery.event, {
 					jQuery.event.triggered = type;
 
 					if ( event.isPropagationStopped() ) {
-						lastElement.addEventListener( type, stopPropagationCallback );
+						últimoElement.addEventListener( type, stopPropagationCallback );
 					}
 
 					elem[ type ]();
 
 					if ( event.isPropagationStopped() ) {
-						lastElement.removeEventListener( type, stopPropagationCallback );
+						últimoElement.removeEventListener( type, stopPropagationCallback );
 					}
 
 					jQuery.event.triggered = undefined;
@@ -9286,8 +9286,8 @@ jQuery.extend( {
 	// Counter for holding the number of active queries
 	active: 0,
 
-	// Last-Modified header cache for next request
-	lastModified: {},
+	// último-Modified header cache for próximo request
+	últimoModified: {},
 	etag: {},
 
 	ajaxSettings: {
@@ -9616,8 +9616,8 @@ jQuery.extend( {
 
 		// Set the If-Modified-Since and/or If-None-Match header, if in ifModified mode.
 		if ( s.ifModified ) {
-			if ( jQuery.lastModified[ cacheURL ] ) {
-				jqXHR.setRequestHeader( "If-Modified-Since", jQuery.lastModified[ cacheURL ] );
+			if ( jQuery.últimoModified[ cacheURL ] ) {
+				jqXHR.setRequestHeader( "If-Modified-Since", jQuery.últimoModified[ cacheURL ] );
 			}
 			if ( jQuery.etag[ cacheURL ] ) {
 				jqXHR.setRequestHeader( "If-None-Match", jQuery.etag[ cacheURL ] );
@@ -9750,9 +9750,9 @@ jQuery.extend( {
 
 				// Set the If-Modified-Since and/or If-None-Match header, if in ifModified mode.
 				if ( s.ifModified ) {
-					modified = jqXHR.getResponseHeader( "Last-Modified" );
+					modified = jqXHR.getResponseHeader( "último-Modified" );
 					if ( modified ) {
-						jQuery.lastModified[ cacheURL ] = modified;
+						jQuery.últimoModified[ cacheURL ] = modified;
 					}
 					modified = jqXHR.getResponseHeader( "etag" );
 					if ( modified ) {
@@ -10256,7 +10256,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 		// Clean-up function (fires after converters)
 		jqXHR.always( function() {
 
-			// If previous value didn't exist - remove it
+			// If anterior value didn't exist - remove it
 			if ( overwritten === undefined ) {
 				jQuery( window ).removeProp( callbackName );
 

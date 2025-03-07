@@ -5,22 +5,32 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?> 
-            <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
+
+<div class="d-flex justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerUseresIndex"
+        aria-controls="navbarTogglerUsersIndex" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerUsersIndex">
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Novo usuário'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
         <?php endif; ?>
     </ul>
 </nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <h3><?= __('Users') ?></h3>
-    <table class="table table-striped table-hover">
-        <thead class="thead-dark">
+    <h3><?= __('Usuários') ?></h3>
+    <table class="table table-striped table-hover table-responsitive">
+        <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('username') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('email') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('categoria') ?></th>
                 <th scope="col" class="actions"><?= __('Ações') ?></th>
             </tr>
@@ -29,8 +39,8 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php foreach ($users as $user): ?>
                 <tr>
                     <td><?= $this->Number->format($user->id) ?></td>
-                    <td><?= h($user->username) ?></td>
-                    <td><?= h($user->role) ?></td>
+                    <td><?= h($user->email) ?></td>
+                    <td><?= h($user->categoria) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $user->id]) ?>
                         <?= $this->Html->link(__('Editar'), ['action' => 'edit', $user->id]) ?>
@@ -40,14 +50,20 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>        
+
+    <?= $this->element('templates') ?>
+
+    <div class="d-flex justify-content-center">
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
+            </ul>
+            <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+            </p>
+        </div>
     </div>
 </div>

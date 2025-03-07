@@ -7,16 +7,16 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Alunos Model
+ * Estudantes Model
  *
- * @method \App\Model\Entity\Aluno get($primaryKey, $options = [])
- * @method \App\Model\Entity\Aluno newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Aluno[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Aluno|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Aluno saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Aluno patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Aluno[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Aluno findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Estudante get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Estudante newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Estudante[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Estudante|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Estudante saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Estudante patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Estudante[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Estudante findOrCreate($search, callable $callback = null, $options = [])
  */
 class EstudantesTable extends Table
 {
@@ -26,21 +26,28 @@ class EstudantesTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config): Void
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
         $this->setTable('estudantes');
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
-        
+
+        /** A tabela Estagiarios tem um campo alunonovo_id que se conexta com o id */
         $this->hasMany('Estagiarios', [
-            'className' => 'estagiarios',
-            'foreignKey' => FALSE,
-            'conditions' => 'Estudantes.registro = Estagiarios.registro',
+            'targetForeignKey' => 'alunonovo_id',
+            'foreignKey' => 'alunonovo_id',
+            'joinType' => 'INNER'
+        ]);
+
+        /** A tabela Tccestudantes tem um campo registro que se conexta com o registro */
+        $this->hasOne('Tccestudantes', [
+            'targetForeignKey' => 'registro',
+            'foreignKey' => false,
+            'conditions' => 'Estudantes.registro = Tccestudantes.registro',
             'joinType' => 'LEFT'
         ]);
-        
     }
 
     /**
@@ -84,17 +91,17 @@ class EstudantesTable extends Table
         $validator
             ->email('email')
             ->allowEmptyString('email');
-/*
-        $validator
-            ->scalar('cpf')
-            ->maxLength('cpf', 12)
-            ->allowEmptyString('cpf', 'update', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
-*/
+        /*
+                $validator
+                    ->scalar('cpf')
+                    ->maxLength('cpf', 12)
+                    ->allowEmptyString('cpf', 'update', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+        */
         $validator
             ->scalar('cpf')
             ->maxLength('cpf', 12)
             ->allowEmptyString('cpf');
-        
+
         $validator
             ->scalar('identidade')
             ->maxLength('identidade', 15)
@@ -149,7 +156,7 @@ class EstudantesTable extends Table
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->isUnique(['registro']));
         /* $rules->add($rules->isUnique(['cpf'])); */
-        
+
         return $rules;
     }
 }

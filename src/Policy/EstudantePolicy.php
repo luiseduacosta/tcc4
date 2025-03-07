@@ -42,7 +42,7 @@ class EstudantePolicy {
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Estudante $estudante) {
-        return isset($user->role) && $user->role == 'admin';
+        return isset($user->categoria) && $user->categoria == 'admin';
     }
 
     /**

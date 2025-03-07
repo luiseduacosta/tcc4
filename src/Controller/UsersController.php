@@ -14,9 +14,11 @@ use Cake\Event\Event;
  *
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class UsersController extends AppController {
+class UsersController extends AppController
+{
 
-    public function beforeFilter(\Cake\Event\EventInterface $event) {
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
 
         parent::beforeFilter($event);
         // Permitir aos usuários se registrarem e efetuar logout.
@@ -26,7 +28,8 @@ class UsersController extends AppController {
         $this->Authentication->addUnauthenticatedActions(['login', 'add', 'logout']);
     }
 
-    public function login() {
+    public function login()
+    {
 
         // In the add, login, and logout methods
         $this->Authorization->skipAuthorization();
@@ -50,7 +53,8 @@ class UsersController extends AppController {
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
 
         // In the add, login, and logout methods
         $this->Authorization->skipAuthorization();
@@ -70,11 +74,13 @@ class UsersController extends AppController {
      *
      * @return \Cake\Http\Response|null
      */
-    public function index() {
-
+    public function index()
+    {
         $this->Authorization->skipAuthorization();
+
         $usuario = $this->getRequest()->getAttribute('identity');
-        if ($usuario == 'admin'):
+
+        if ($usuario->categoria == '1'):
             $users = $this->paginate($this->Users);
             $this->set(compact('users'));
         else:
@@ -90,7 +96,8 @@ class UsersController extends AppController {
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
         $user = $this->Users->get($id, [
             'contain' => [],
@@ -104,7 +111,8 @@ class UsersController extends AppController {
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
 
         // In the add, login, and logout methods
         $this->Authorization->skipAuthorization();
@@ -133,7 +141,8 @@ class UsersController extends AppController {
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
         $user = $this->Users->get($id, [
             'contain' => [],
@@ -159,7 +168,8 @@ class UsersController extends AppController {
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
 
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);

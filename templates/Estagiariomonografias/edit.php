@@ -6,24 +6,24 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 <div class="row justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>        
+    <?php echo $this->element('menu_monografias'); ?>
 </div>
 
 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
     <?=
         $this->Form->postLink(
-                __('Excluir'),
-                ['action' => 'delete', $estagiario->id],
-                ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiario->id), 'class' => 'btn btn-danger float-rigth']
+            __('Excluir'),
+            ['action' => 'delete', $estagiario->id],
+            ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiario->id), 'class' => 'btn btn-danger float-start']
         )
         ?>
 <?php endif; ?>
-<?= $this->Html->link(__('Novo estudante'), ['controller' => 'estudantes', 'action' => 'add']) ?>
-<?= $this->Html->link(__('Novo docente'), ['controller' => 'docentemonografias', 'action' => 'add']) ?>
+<?= $this->Html->link(__('Novo estudante'), ['controller' => 'estudantes', 'action' => 'add'], ['class' => 'btn btn-primary']) ?>
+<?= $this->Html->link(__('Novo docente'), ['controller' => 'docentemonografias', 'action' => 'add'], ['class' => 'btn btn-primary']) ?>
 
-<div class="estagiarios form large-9 medium-8 columns content">
-<?= $this->Form->create($estagiariomonografia) ?>
-    <fieldset>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <?= $this->Form->create($estagiariomonografia) ?>
+    <fieldset class="border p-2">
         <legend><?= __('Editar estagiário') ?></legend>
         <?php
         echo $this->Form->control('aluno_id', ['options' => $alunos]);
@@ -42,6 +42,6 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('observacoes');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-<?= $this->Form->end() ?>
+    <?= $this->Form->button(__('Confirmar')) ?>
+    <?= $this->Form->end() ?>
 </div>

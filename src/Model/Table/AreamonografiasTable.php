@@ -29,7 +29,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
-class AreamonografiasTable extends Table {
+class AreamonografiasTable extends Table
+{
 
     /**
      * Initialize method
@@ -37,7 +38,8 @@ class AreamonografiasTable extends Table {
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config): void {
+    public function initialize(array $config): void
+    {
         parent::initialize($config);
 
         $this->setTable('areamonografias');
@@ -48,7 +50,7 @@ class AreamonografiasTable extends Table {
             'foreignKey' => 'areamonografia_id',
         ]);
         $this->belongsToMany('Docentes', [
-            'targetForeignKey' => 'docente_id',            
+            'targetForeignKey' => 'docente_id',
             'foreignKey' => 'areamonografia_id',
             'joinTable' => 'areamonografias_docentes',
         ]);
@@ -60,14 +62,15 @@ class AreamonografiasTable extends Table {
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator): Validator {
+    public function validationDefault(Validator $validator): Validator
+    {
         $validator
-                ->allowEmptyString('id', null, 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
-                ->scalar('area')
-                ->maxLength('area', 50)
-                ->notEmptyString('area');
+            ->scalar('area')
+            ->maxLength('area', 50)
+            ->notEmptyString('area');
 
         return $validator;
     }

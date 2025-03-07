@@ -46,7 +46,7 @@ class UserestagiosController extends AppController {
         $userestagio = $this->Userestagios->get($id, [
             'contain' => ['Estudantes', 'Supervisores', 'Docentes'],
         ]);
-        $this->Authorization->authorize($uerestagio);
+        $this->Authorization->authorize($userestagio);
         $this->set(compact('userestagio'));
     }
 
@@ -113,7 +113,6 @@ class UserestagiosController extends AppController {
                     }
                 }
                 $this->Flash->error(__('O usuário de estagio não foi cadastrado. Tente novamente.'));
-                return $this->redirect(['action' => 'login']);
             endif;
 
             if ($this->request->getData('categoria') == 3):
@@ -241,7 +240,7 @@ class UserestagiosController extends AppController {
         $userestagio = $this->Userestagios->get($id, [
             'contain' => [],
         ]);
-        $this->Authorization->authorize($uerestagio);
+        $this->Authorization->authorize($userestagio);
         
         if ($this->request->is(['patch', 'post', 'put'])) {
             $userestagio = $this->Userestagios->patchEntity($userestagio, $this->request->getData());
@@ -269,7 +268,7 @@ class UserestagiosController extends AppController {
 
         $this->request->allowMethod(['post', 'delete']);
         $userestagio = $this->Userestagios->get($id);
-        $this->Authorization->authorize($uerestagio);
+        $this->Authorization->authorize($userestagio);
         
         if ($this->Userestagios->delete($userestagio)) {
             $this->Flash->success(__('Usuário excluído.'));

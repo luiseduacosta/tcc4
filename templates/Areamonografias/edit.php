@@ -7,7 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -18,12 +18,12 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAreamonografiaEdit">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li>
+            <li class="nav-item">
                 <?=
                     $this->Form->postLink(
                         __('Excluir área da monografia'),
-                        ['action' => 'delete', $area->id],
-                        ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $area->id), 'class' => 'btn btn-danger float-start']
+                        ['action' => 'delete', $areamonografia->id],
+                        ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $areamonografia->id), 'class' => 'btn btn-danger float-start']
                     )
                     ?>
             </li>
@@ -35,11 +35,11 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($areamonografia) ?>
-    <fieldset>
+    <fieldset class="border p-2">
         <legend><?= __('Editar área da monografia') ?></legend>
         <?php
         echo $this->Form->control('id');
-        echo $this->Form->control('area', ['label' => 'Área da mongrafia']);
+        echo $this->Form->control('area', ['label' => 'Área da monografia']);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Confirma')) ?>

@@ -21,14 +21,14 @@
 <?php $this->Form->setTemplates(['radio' => '<input class="form-check-input" type="radio" name="{{name}}" value="{{value}}"{{attrs}}>']); ?>
 <?php $this->Form->setTemplates(['legend' => '<legend style = "font-weight: normal">{{text}}</legend>']); ?>
 
-<?php $this->Paginator->setTemplates(['nextActive' => '<li class="page-item"><a class="page-link" rel="next" href="{{url}}">{{text}}</a></li>']); ?>
-<?php $this->Paginator->setTemplates(['nextDisabled' => '<li class="page-item disabled"><a class="page-link" href="" onclick="return false;">{{text}}</a></li>']); ?>
+<?php $this->Paginator->setTemplates(['próximoActive' => '<li class="page-item"><a class="page-link" rel="próximo" href="{{url}}">{{text}}</a></li>']); ?>
+<?php $this->Paginator->setTemplates(['próximoDisabled' => '<li class="page-item disabled"><a class="page-link" href="" onclick="return false;">{{text}}</a></li>']); ?>
 <?php $this->Paginator->setTemplates(['prevActive' => '<li class="page-item"><a class="page-link" rel="prev" href="{{url}}">{{text}}</a></li>']); ?>
 <?php $this->Paginator->setTemplates(['prevDisabled' => '<li class="page-item disabledá"><a class="page-link" href="" onclick="return false;">{{text}}</a></li>']); ?>
 <?php $this->Paginator->setTemplates(['counterRange' => '{{start}} - {{end}} of {{count}}']); ?>
 <?php $this->Paginator->setTemplates(['counterPages' => '{{page}} of {{pages}}']); ?>
-<?php $this->Paginator->setTemplates(['first' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>']); ?>
-<?php $this->Paginator->setTemplates(['last' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>']); ?>
+<?php $this->Paginator->setTemplates(['primeiro' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>']); ?>
+<?php $this->Paginator->setTemplates(['último' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>']); ?>
 <?php $this->Paginator->setTemplates(['number' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>']); ?>
 <?php $this->Paginator->setTemplates(['current' => '<li class="page-item active"><a class="page-link" href="">{{text}}</a></li>']); ?>
 <?php $this->Paginator->setTemplates(['ellipsis' => '<li class="ellipsis">&hellip;</li>']); ?>

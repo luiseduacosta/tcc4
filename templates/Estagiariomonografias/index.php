@@ -7,11 +7,13 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Estagiario[]|\Cake\Collection\CollectionInterface $estagiarios
  */
 ?>
-<div class="row justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>        
+<div class="d-flex justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>
 </div>
 
-<div class="content justify-content-around">
+<?= $this->element('templates') ?>
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Estagiarios por período e por TCC concluída') ?></h3>
 
     <?= $this->Form->create(null, ['url' => ['action' => 'index']]) ?>
@@ -19,8 +21,8 @@ $user = $this->getRequest()->getAttribute('identity');
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+    <table class="table table-responsive table-striped table-hover">
+        <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('registro') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
@@ -37,14 +39,16 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <td><?= h($c_estudante['registro']) ?></td>
                     <?php if (!empty($c_estudante['id'])): ?>
-                        <td><?= $this->Html->link($c_estudante['nome'], ['controller' => 'Tccestudantes', 'action' => 'view', $c_estudante['id']]) ?></td>
+                        <td><?= $this->Html->link($c_estudante['nome'], ['controller' => 'Tccestudantes', 'action' => 'view', $c_estudante['id']]) ?>
+                        </td>
                     <?php else: ?>
                         <td><?= h($c_estudante['nome']) ?></td>
                     <?php endif; ?>
                     <td><?= h($c_estudante['turno']) ?></td>
                     <td><?= h($c_estudante['nivel']) ?></td>
                     <td><?= h($c_estudante['periodo']) ?></td>
-                    <td><?= $this->Html->link($c_estudante['titulo'], ['controller' => 'Monografias', 'action' => 'view', $c_estudante['monografia_id']]) ?></td>
+                    <td><?= $this->Html->link($c_estudante['titulo'], ['controller' => 'Monografias', 'action' => 'view', $c_estudante['monografia_id']]) ?>
+                    </td>
                     <td><?= h($c_estudante['periodo_monog']) ?></td>
                 </tr>
             <?php endforeach; ?>

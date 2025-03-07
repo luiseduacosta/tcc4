@@ -3,28 +3,29 @@ $user = $this->getRequest()->getAttribute('identity');
 
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Aluno $aluno
+ * @var \App\Model\Entity\Estudante $estudante
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+
+<div class="d-flex justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerEstudantesEdit"
+        aria-controls="navbarTogglerEstudantesEdit" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerEstudantesEdit">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?=
-                $this->Form->postLink(
-                        __('Delete'),
-                        ['action' => 'delete', $estudante->id],
-                        ['confirm' => __('Are you sure you want to delete # {0}?', $estudante->id), 'class' => 'side-nav-item']
-                )
-                ?>
-            </li>    
+            <li class="item-link">
+                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $estudante->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estudante->id), 'class' => 'btn btn-danger float-start']) ?>
+            </li>
         <?php endif; ?>
-        <li>
-            <?= $this->Html->link(__('Estudantes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-        </li>
-        <?= $this->element('menu_esquerdo'); ?>       
     </ul>
-</nav>    
+</nav>
+
+<?= $this->element("templates") ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <div class="alunos form content">
@@ -50,8 +51,7 @@ $user = $this->getRequest()->getAttribute('identity');
             echo $this->Form->control('observacoes');
             ?>
         </fieldset>
-        <?= $this->Form->button(__('Submit')) ?>
+        <?= $this->Form->button(__('Confirmar')) ?>
         <?= $this->Form->end() ?>
     </div>
-</div>
 </div>

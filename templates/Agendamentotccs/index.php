@@ -7,7 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($agendamentotccs);
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -25,11 +25,12 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<h3><?= __('Agendamento de Oficina de TCC') ?></h3>
+<div class="container col-lg-10 shadow p-3 mb-5 bg-white rounded">
 
-<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <h3><?= __('Agendamento de Oficina de TCC') ?></h3>
+
     <table class="table table-striped table-hover table-responsive">
-        <thead class="thead table-dark">
+        <thead class="table-dark">
             <tr>
                 <th><?= $this->Paginator->sort('Estudantes.nome', 'Estudante') ?></th>
                 <th><?= $this->Paginator->sort('Docentes.nome', 'Orientador') ?></th>
@@ -41,14 +42,14 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('titulo') ?></th>
                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                     <th><?= $this->Paginator->sort('avaliacao') ?></th>
-                    <th class="actions"><?= __('Ações') ?></th>
+                    <th><?= __('Ações') ?></th>
                 <?php endif; ?>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($agendamentotccs as $agendamentotcc): ?>
                 <tr>
-                    <td><?= $agendamentotcc->has('estudante') ? $this->Html->link($agendamentotcc->estudante->nome, ['controller' => 'Agendamentotccs', 'action' => 'view', $agendamentotcc->id]) : '' ?>
+                    <td><?= $agendamentotcc->has('estudante') ? $this->Html->link($agendamentotcc->estudante->nome, ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->estudante_id]) : '' ?>
                     </td>
                     <td><?= $agendamentotcc->has('docente') ? $this->Html->link($agendamentotcc->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docente->id]) : '' ?>
                     </td>
@@ -80,11 +81,11 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="paginator">
     <ul class="pagination">
-        <?= $this->Paginator->first('<< ' . __('first')) ?>
-        <?= $this->Paginator->prev('< ' . __('previous')) ?>
+        <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+        <?= $this->Paginator->prev('< ' . __('anterior')) ?>
         <?= $this->Paginator->numbers() ?>
-        <?= $this->Paginator->next(__('next') . ' >') ?>
-        <?= $this->Paginator->last(__('last') . ' >>') ?>
+        <?= $this->Paginator->next(__('próximo') . ' >') ?>
+        <?= $this->Paginator->last(__('último') . ' >>') ?>
     </ul>
     <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
     </p>

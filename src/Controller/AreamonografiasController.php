@@ -7,7 +7,7 @@ namespace App\Controller;
 /**
  * Areas Controller
  *
- * @property \App\Model\Table\AreasTable $Areas
+ * @property \App\Model\Table\AreamonografiasTable $Areamonografias
  *
  * @method \App\Model\Entity\Area[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -40,59 +40,11 @@ class AreamonografiasController extends AppController {
     public function view($id = null) {
 
         $this->Authorization->skipAuthorization();
-        $area = $this->Areamonografias->get($id, [
-            'contain' => ['Docentes', 'Monografias'],
+        $areamonografia = $this->Areamonografias->get($id, [
+            'contain' => ['Docentes', 'Monografias' => ['Tccestudantes', 'Docentes']],
         ]);
-        // pr($area->monografias);
-        $this->loadModel('Docentes');
-        $this->loadModel('Tccestudantes');
-        $i = 0;
-        foreach ($area->monografias as $monografias):
-            // pr($monografias['id']);
-            // die();
-            $docente = $this->Docentes->find('all', [
-                'conditions' => ['Docentes.id' => $monografias['docente_id']]]);
-            $docentenome = $docente->first();
 
-            $tccestudante = $this->Tccestudantes->find('all', [
-                'conditions' => ['Tccestudantes.monografia_id' => $monografias['id']]]);
-            // pr($tccestudante);
-            $estudanteareamonografias = $tccestudante->all();
-
-            $estudantenome = null;
-            $estudantenome_id = null;
-            if (sizeof($estudanteareamonografias) > 1):
-                // echo sizeof($estudanteareamonografias);
-                foreach ($estudanteareamonografias as $c_tccestudante):
-                    // pr($c_tccestudante);
-                    $estudantenome[] = $c_tccestudante['nome'] . ", ";
-                    $estudantenome_id[] = $c_tccestudante['id'];
-                endforeach;
-            else:
-                foreach ($estudanteareamonografias as $c_tccestudante):
-                    // pr($c_tccestudante);
-                    $estudantenome = $c_tccestudante['nome'];
-                    $estudantenome_id = $c_tccestudante['id'];
-                endforeach;
-            endif;
-            // pr($estudantenome);
-            $monografiasrelacionadas[$i]['id'] = $monografias['id'];
-            $monografiasrelacionadas[$i]['titulo'] = $monografias['titulo'];
-            $monografiasrelacionadas[$i]['periodo'] = $monografias['periodo'];
-            $monografiasrelacionadas[$i]['docente'] = $docentenome['nome'];
-            $monografiasrelacionadas[$i]['docente_id'] = $docentenome['id'];
-            $monografiasrelacionadas[$i]['estudante'] = $estudantenome;
-            $monografiasrelacionadas[$i]['estudante_id'] = $estudantenome_id;
-            $i++;
-            // die();
-
-        endforeach;
-        // pr($monografiasrelacionadas);
-        // die();
-        if (isset($monografiasrelacionadas) && !(empty($monografiasrelacionadas))):
-            $this->set('monografiasrelacionadas', $monografiasrelacionadas);
-        endif;
-        $this->set('area', $area);
+        $this->set('areamonografia', $areamonografia);
     }
 
     /**
@@ -127,22 +79,22 @@ class AreamonografiasController extends AppController {
      */
     public function edit($id = null) {
 
-        $area = $this->Areamonografias->get($id, [
+        $areamonografia = $this->Areamonografias->get($id, [
             'contain' => ['Docentes'],
         ]);
-        $this->Authorization->authorize($area);
+        $this->Authorization->authorize($areamonografia);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $area = $this->Areamonografias->patchEntity($area, $this->request->getData());
+            $area = $this->Areamonografias->patchEntity($areamonografia, $this->request->getData());
             if ($this->Areamonografias->save($area)) {
-                $this->Flash->success(__('The area has been saved.'));
+                $this->Flash->success(__('Área de monografia atualizada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The area could not be saved. Please, try again.'));
+            $this->Flash->error(__('Área de monografia não foi atualizada.'));
         }
-        $docentes = $this->Areamonografias->Docentes->find('list', ['limit' => 200]);
-        $this->set(compact('area', 'docentes'));
+        $docentes = $this->Areamonografias->Docentes->find('list');
+        $this->set(compact('areamonografia', 'docentes'));
     }
 
     /**

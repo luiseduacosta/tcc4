@@ -8,19 +8,23 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($aluno);
 // die();
 ?>
+
 <div class="row justify-content-center">
     <?= $this->element('menu_monografias') ?>
 </div>
 
-<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-    <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'side-nav-item']) ?></li>
-    <li><?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $aluno->id], ['class' => 'side-nav-item']) ?></li>
-    <li><?= $this->Form->postLink(__('Excluir Estudante'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $aluno->id), 'class' => 'side-nav-item']) ?></li>
-<?php endif; ?>
+<div class="d-flex justify-content-end">
+    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+        <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?></li>
+        <li><?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $aluno->id], ['class' => 'btn btn-primary float-end']) ?>
+        </li>
+        <li><?= $this->Form->postLink(__('Excluir Estudante'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $aluno->id), 'class' => 'btn btn-danger float-end']) ?>
+        </li>
+    <?php endif; ?>
+    <?= $this->Html->link(__('Listar Estudantes'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+</div>
 
-<?= $this->Html->link(__('Listar Estudantes'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-
-<div class="alunos view large-9 medium-8 columns content">
+<div class="">
     <div class="alunos view content">
         <h3><?= h($aluno->nome) ?></h3>
         <table>

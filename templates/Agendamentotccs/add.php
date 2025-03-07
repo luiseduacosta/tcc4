@@ -20,7 +20,7 @@ $user = $this->getRequest()->getAttribute('identity');
     }
 </script>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 

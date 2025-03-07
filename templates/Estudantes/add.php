@@ -2,23 +2,34 @@
 $user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Aluno $aluno
+ * @var \App\Model\Entity\Estudante $estudante
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li>
-        <?= $this->Html->link(__('Alunos estagiários'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-        </li>
-        <?= $this->element('menu_esquerdo'); ?>
+
+<div class="d-flex justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerEstudantesAdd"
+        aria-controls="navbarTogglerEstudantesAdd" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerEstudantesAdd">
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Listar estudantes'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
+        <?php endif; ?>
     </ul>
-</nav>   
+</nav>
+
+<?= $this->element("templates") ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($estudante) ?>
     <fieldset>
-        <legend><?= __('Add Aluno') ?></legend>
+        <legend><?= __('Inserir estudante') ?></legend>
         <?php
         echo $this->Form->control('nome');
         echo $this->Form->control('registro');
@@ -38,6 +49,6 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('observacoes');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Confirmar')) ?>
     <?= $this->Form->end() ?>
 </div>

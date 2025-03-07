@@ -6,7 +6,7 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -26,7 +26,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </div>
 </nav>
 
-<div class="row">
+<div class="d-flex justify-content-end">
     <h3><?= __('Docentes') ?></h3>
     <p>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
@@ -68,12 +68,14 @@ $user = $this->getRequest()->getAttribute('identity');
     </table>
 </div>
 
-<div class="paginator">
-    <ul class="pagination">
-        <?= $this->Paginator->first('<< ' . __('first')) ?>
-        <?= $this->Paginator->prev('< ' . __('previous')) ?>
-        <?= $this->Paginator->numbers() ?>
-        <?= $this->Paginator->next(__('next') . ' >') ?>
-        <?= $this->Paginator->last(__('last') . ' >>') ?>
-    </ul>
+<div class="d-flex justify-content-center">
+    <div class="paginator">
+        <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next(__('próximo') . ' >') ?>
+            <?= $this->Paginator->last(__('último') . ' >>') ?>
+        </ul>
+    </div>
 </div>

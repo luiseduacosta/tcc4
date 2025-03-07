@@ -146,6 +146,7 @@ class EstagiariosController extends AppController {
             $i++;
         endforeach;
         // pr($ordem);
+        // pr($estudantes);
         // die('estudantes');
         if (isset($ordem) && !empty($ordem)):
             array_multisort($ordem, $direcao, $estudantes);
@@ -155,7 +156,6 @@ class EstagiariosController extends AppController {
             $this->redirect(['controller' => 'estagiarios', 'action' => 'index']);
         endif;
 
-        // die('sort');
     }
 
     /**

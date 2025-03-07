@@ -5,16 +5,19 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Aluno[]|\Cake\Collection\CollectionInterface $alunos
  */
 ?>
-<div class="row justify-content-center">
+
+<div class="f-flex justify-content-center">
     <?php echo $this->element('menu_mural') ?>
 </div>
 
-<?php if ($user->categoria == '1'): ?>
-    <?= $this->Html->link(__('Novo aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
-<?php endif; ?>
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <?php if ($user->categoria == '1'): ?>
+        <?= $this->Html->link(__('Novo aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+    <?php endif; ?>
+</nav>
 
-<h3><?= __('Alunos') ?></h3>
-<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+<div class="container col-lg-10 shadow p-3 mb-5 bg-white rounded">
+    <h3><?= __('Alunos') ?></h3>
     <table class="table table-striped table-hover table-responsive">
         <thead class="thead-dark">
             <tr>
@@ -45,7 +48,8 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <td><?= $aluno->id ?></td>
                     <td><?= $aluno->registro ?></td>
-                    <td><?= $this->Html->link($aluno->nome, ['controller' => 'Alunos', 'action' => 'view', $aluno->id]) ?></td>
+                    <td><?= $this->Html->link($aluno->nome, ['controller' => 'Alunos', 'action' => 'view', $aluno->id]) ?>
+                    </td>
                     <td><?= date('d-m-Y', strtotime(h($aluno->nascimento))) ?></td>
                     <td><?= h($aluno->cpf) ?></td>
                     <td><?= h($aluno->identidade) ?></td>
@@ -71,15 +75,18 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
-</div>
-<div class="paginator">
-    <ul class="pagination">
-        <?= $this->Paginator->first('<< ' . __('first')) ?>
-        <?= $this->Paginator->prev('< ' . __('previous')) ?>
-        <?= $this->Paginator->numbers() ?>
-        <?= $this->Paginator->next(__('next') . ' >') ?>
-        <?= $this->Paginator->last(__('last') . ' >>') ?>
-    </ul>
-    <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-</div>
+
+    <div class="d-flex justify-content-center">
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
+            </ul>
+            <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+            </p>
+        </div>
+    </div>
 </div>

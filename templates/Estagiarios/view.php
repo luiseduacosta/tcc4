@@ -6,22 +6,33 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Estagiario $estagiario
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
+
+<div class="d-flex justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerEstagiariosView"
+        aria-controls="navbarTogglerEstagiariosView" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerEstagiariosView">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li><?= $this->Html->link(__('Edit Estagiario'), ['action' => 'edit', $estagiario->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Delete Estagiario'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $estagiario->id)]) ?> </li>
-            <li><?= $this->Html->link(__('New Estagiario'), ['action' => 'add']) ?> </li>
-            <li><?= $this->Html->link(__('New Aluno'), ['controller' => 'Alunos', 'action' => 'add']) ?> </li>
-            <li><?= $this->Html->link(__('New Docente'), ['controller' => 'Docentes', 'action' => 'add']) ?> </li>
+            <li class="nav-item"><?= $this->Html->link(__('Editar Estagiario'), ['action' => 'edit', $estagiario->id]) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Form->postLink(__('Excluir Estagiario'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiario->id), 'class' => 'btn btn-danger float-start']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Novo Estagiario'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
         <?php endif; ?>
-        <?= $this->element('menu_esquerdo') ?>
     </ul>
 </nav>
-<div class="estagiarios view large-9 medium-8 columns content">
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= h($estagiario->aluno->nome) ?></h3>
-    <table class="vertical-table">
+    <table class="table table-striped table-hover table-responsive">
         <tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
@@ -33,7 +44,8 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
 
         <th scope="row"><?= __('Estudante') ?></th>
-        <td><?= $estagiario->has('aluno') ? $this->Html->link($estagiario->aluno->nome, ['controller' => 'Alunos', 'action' => 'view', $estagiario->aluno->id]) : '' ?></td>
+        <td><?= $estagiario->has('aluno') ? $this->Html->link($estagiario->aluno->nome, ['controller' => 'Alunos', 'action' => 'view', $estagiario->aluno->id]) : '' ?>
+        </td>
         </tr>
         <tr>
             <th scope="row"><?= __('Turno') ?></th>
@@ -45,7 +57,8 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Docente') ?></th>
-            <td><?= $estagiario->has('docente') ? $this->Html->link($estagiario->docente->id, ['controller' => 'Docentes', 'action' => 'view', $estagiario->docente->id]) : '' ?></td>
+            <td><?= $estagiario->has('docente') ? $this->Html->link($estagiario->docente->id, ['controller' => 'Docentes', 'action' => 'view', $estagiario->docente->id]) : '' ?>
+            </td>
         </tr>
         <tr>
             <th scope="row"><?= __('Periodo') ?></th>

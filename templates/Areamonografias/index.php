@@ -9,7 +9,7 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -20,7 +20,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAreamonografia">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li class="item-link">
+            <li class="nav-item">
                 <?= $this->Html->link(__('Nova área de monografia'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
             </li>
         <?php endif; ?>
@@ -29,7 +29,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Áreas') ?></h3>
-    <table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-responsive">
+    <table class="table table-striped table-hover table-responsive">
         <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('area') ?></th>
@@ -48,17 +48,19 @@ $user = $this->getRequest()->getAttribute('identity');
         </tbody>
     </table>
 
-    <?= $this->element('templates') ?>
+    <div class="d-flex justify-content-center">
+        <?= $this->element('templates') ?>
 
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
-            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('próximo')) ?>
-            <?= $this->Paginator->last(__('último')) ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Página {{page}} do {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?>
-        </p>
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo')) ?>
+                <?= $this->Paginator->last(__('último')) ?>
+            </ul>
+            <p><?= $this->Paginator->counter(__('Página {{page}} do {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?>
+            </p>
+        </div>
     </div>
 </div>

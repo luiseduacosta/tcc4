@@ -5,11 +5,12 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Aluno $aluno
  */
 ?>
-<div class="row justify-content-center">
+
+<div class="d-flex justify-content-center">
     <?php echo $this->element('menu_mural') ?>
 </div>
 
-<div class="row">
+<div class="d-flex justify-content-end">
     <?= $this->Html->link(__('Novo Aluno'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
     <?= $this->Html->link(__('Editar Aluno'), ['action' => 'edit', $aluno->id], ['class' => 'btn btn-primary']) ?>
     <?= $this->Html->link(__('Listar Alunos'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
@@ -17,84 +18,84 @@ $user = $this->getRequest()->getAttribute('identity');
 </div>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <div class="alunos view content">
-        <h3><?= h($aluno->id) ?></h3>
-        <table>
-            <tr>
-                <th><?= __('Id') ?></th>
-                <td><?= $aluno->id ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Registro') ?></th>
-                <td><?= $aluno->registro ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Nome') ?></th>
-                <td><?= h($aluno->nome) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Nascimento') ?></th>
-                <td><?= date('d-m-Y', strtotime(h($aluno->nascimento))) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Cpf') ?></th>
-                <td><?= h($aluno->cpf) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Identidade') ?></th>
-                <td><?= h($aluno->identidade) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Orgao') ?></th>
-                <td><?= h($aluno->orgao) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Email') ?></th>
-                <td><?= h($aluno->email) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Codigo Telefone') ?></th>
-                <td><?= $this->Number->format($aluno->codigo_telefone) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Telefone') ?></th>
-                <td><?= h($aluno->telefone) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Codigo Celular') ?></th>
-                <td><?= $this->Number->format($aluno->codigo_celular) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Celular') ?></th>
-                <td><?= h($aluno->celular) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Cep') ?></th>
-                <td><?= h($aluno->cep) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Endereco') ?></th>
-                <td><?= h($aluno->endereco) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Municipio') ?></th>
-                <td><?= h($aluno->municipio) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Bairro') ?></th>
-                <td><?= h($aluno->bairro) ?></td>
-            </tr>
-            <tr>
-                <th><?= __('Observações') ?></th>
-                <td><?= h($aluno->observacoes) ?></td>
-            </tr>
-        </table>
+    <h3><?= h($aluno->id) ?></h3>
+    <table class="table table-hover table-responsive table-striped">
+        <tr>
+            <th><?= __('Id') ?></th>
+            <td><?= $aluno->id ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Registro') ?></th>
+            <td><?= $aluno->registro ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Nome') ?></th>
+            <td><?= h($aluno->nome) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Nascimento') ?></th>
+            <td><?= date('d-m-Y', strtotime(h($aluno->nascimento))) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Cpf') ?></th>
+            <td><?= h($aluno->cpf) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Identidade') ?></th>
+            <td><?= h($aluno->identidade) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Orgao') ?></th>
+            <td><?= h($aluno->orgao) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Email') ?></th>
+            <td><?= h($aluno->email) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Codigo Telefone') ?></th>
+            <td><?= $this->Number->format($aluno->codigo_telefone) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Telefone') ?></th>
+            <td><?= h($aluno->telefone) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Codigo Celular') ?></th>
+            <td><?= $this->Number->format($aluno->codigo_celular) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Celular') ?></th>
+            <td><?= h($aluno->celular) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Cep') ?></th>
+            <td><?= h($aluno->cep) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Endereco') ?></th>
+            <td><?= h($aluno->endereco) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Municipio') ?></th>
+            <td><?= h($aluno->municipio) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Bairro') ?></th>
+            <td><?= h($aluno->bairro) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Observações') ?></th>
+            <td><?= h($aluno->observacoes) ?></td>
+        </tr>
+    </table>
 
-        <div class="related">
-            <h4><?= __('Inscrições para seleção de estágio') ?></h4>
-            <?php if (!empty($aluno->muralinscricoes)): ?>
-                <div class="table-responsive">
-                    <table>
+    <div class="container">
+        <h4><?= __('Inscrições para seleção de estágio') ?></h4>
+        <?php if (!empty($aluno->muralinscricoes)): ?>
+            <div class="table-responsive">
+                <table class="table table-hover table-responsive table-striped">
+                    <thead class="table-dark">
                         <tr>
                             <th><?= __('Id') ?></th>
                             <th><?= __('Registro') ?></th>
@@ -105,34 +106,37 @@ $user = $this->getRequest()->getAttribute('identity');
                             <th><?= __('Timestamp') ?></th>
                             <th class="actions"><?= __('Ações') ?></th>
                         </tr>
-                        <?php foreach ($aluno->muralinscricoes as $muralinscricoes): ?>
-                            <tr>
-                                <td><?= h($muralinscricoes->id) ?></td>
-                                <td><?= h($muralinscricoes->id_aluno) ?></td>
-                                <td><?= h($muralinscricoes->alunonovo_id) ?></td>
-                                <td><?= $muralinscricoes->has('muralestagio') ? $this->Html->link($muralinscricoes->muralestagio->instituicao, ['controller' => 'Muralestagios', 'action' => 'view', $muralinscricoes->id_instituicao]) : '' ?>
-                                </td>
-                                <td><?= date('d-m-Y', strtotime(h($muralinscricoes->data))) ?></td>
-                                <td><?= h($muralinscricoes->periodo) ?></td>
-                                <td><?= date('d-m-Y', strtotime(h($muralinscricoes->timestamp))) ?></td>
-
-                                <td class="actions">
+                    </thead>
+                    <?php foreach ($aluno->muralinscricoes as $muralinscricoes): ?>
+                        <tr>
+                            <td><?= h($muralinscricoes->id) ?></td>
+                            <td><?= h($muralinscricoes->id_aluno) ?></td>
+                            <td><?= h($muralinscricoes->alunonovo_id) ?></td>
+                            <td><?= $muralinscricoes->has('muralestagio') ? $this->Html->link($muralinscricoes->muralestagio->instituicao, ['controller' => 'Muralestagios', 'action' => 'view', $muralinscricoes->id_instituicao]) : '' ?>
+                            </td>
+                            <td><?= date('d-m-Y', strtotime(h($muralinscricoes->data))) ?></td>
+                            <td><?= h($muralinscricoes->periodo) ?></td>
+                            <td><?= date('d-m-Y', strtotime(h($muralinscricoes->timestamp))) ?></td>
+                            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                                <td class="row">
                                     <?= $this->Html->link(__('View'), ['controller' => 'Muralinscricoes', 'action' => 'view', $muralinscricoes->id]) ?>
                                     <?= $this->Html->link(__('Edit'), ['controller' => 'Muralinscricoes', 'action' => 'edit', $muralinscricoes->id]) ?>
                                     <?= $this->Form->postLink(__('Delete'), ['controller' => 'Muralinscricoes', 'action' => 'delete', $muralinscricoes->id], ['confirm' => __('Are you sure you want to delete # {0}?', $muralinscricoes->id)]) ?>
                                 </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-            <?php endif; ?>
-        </div>
+                            <?php endif ?>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        <?php endif; ?>
+    </div>
 
-        <div class="related">
-            <h4><?= __('Estágios cursados') ?></h4>
-            <?php if (!empty($aluno->estagiarios)): ?>
-                <div class="table-responsive">
-                    <table>
+    <div class="container">
+        <h4><?= __('Estágios cursados') ?></h4>
+        <?php if (!empty($aluno->estagiarios)): ?>
+            <div class="table-responsive">
+                <table class="table table-hover table-responsive table-striped">
+                    <thead class="table-dark">
                         <tr>
                             <th><?= __('Id') ?></th>
                             <th><?= __('Aluno') ?></th>
@@ -153,43 +157,47 @@ $user = $this->getRequest()->getAttribute('identity');
                             <th><?= __('Nota') ?></th>
                             <th><?= __('CH') ?></th>
                             <th><?= __('Observações') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
+                            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                                <th class="row"><?= __('Ações') ?></th>
+                            <?php endif ?>
                         </tr>
-                        <?php foreach ($aluno->estagiarios as $estagiarios): ?>
-                            <tr>
-                                <?php // pr($estagiarios); ?>
-                                <td><?= h($estagiarios->id) ?></td>
-                                <td><?= h($estagiarios->aluno->nome) ?></td>
-                                <td><?= h($estagiarios->aluno->registro) ?></td>
-                                <td><?= h($estagiarios->estudante->nome) ?></td>
-                                <td><?= h($estagiarios->estudante->registro) ?></td>
-                                <td><?= h($estagiarios->registro) ?></td>
-                                <td><?= h($estagiarios->ajuste2020) ?></td>
-                                <td><?= h($estagiarios->turno) ?></td>
-                                <td><?= h($estagiarios->nivel) ?></td>
-                                <td><?= h($estagiarios->periodo) ?></td>
-                                <td><?= h($estagiarios->tc) ?></td>
-                                <td><?= date('d-m-Y', strtotime(h($estagiarios->tc_solicitacao))) ?></td>
-                                <td><?= $estagiarios->has('instituicaoestagio') ? $this->Html->link($estagiarios->instituicaoestagio->instituicao, ['controller' => 'Instituicaoestagios', 'action' => 'view', $estagiarios->id_instituicao]) : '' ?>
-                                </td>
-                                <td><?= $estagiarios->has('supervisor') ? $this->Html->link($estagiarios->supervisor->nome, ['controller' => 'Supervisores', 'action' => 'view', $estagiarios->id_supervisor]) : '' ?>
-                                </td>
-                                <td><?= $estagiarios->has('docente') ? $this->Html->link($estagiarios->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $estagiarios->id_professor]) : '' ?>
-                                </td>
-                                <td><?= $estagiarios->has('areaestagio') ? h($estagiarios->areaestagio->area) : '' ?></td>
-                                <td><?= h($estagiarios->nota) ?></td>
-                                <td><?= h($estagiarios->ch) ?></td>
-                                <td><?= h($estagiarios->observacoes) ?></td>
-                                <td class="actions">
+                    </thead>
+                    <?php foreach ($aluno->estagiarios as $estagiarios): ?>
+                        <tr>
+                            <?php // pr($estagiarios); ?>
+                            <td><?= h($estagiarios->id) ?></td>
+                            <td><?= h($estagiarios->aluno->nome) ?></td>
+                            <td><?= h($estagiarios->aluno->registro) ?></td>
+                            <td><?= h($estagiarios->estudante->nome) ?></td>
+                            <td><?= h($estagiarios->estudante->registro) ?></td>
+                            <td><?= h($estagiarios->registro) ?></td>
+                            <td><?= h($estagiarios->ajuste2020) ?></td>
+                            <td><?= h($estagiarios->turno) ?></td>
+                            <td><?= h($estagiarios->nivel) ?></td>
+                            <td><?= h($estagiarios->periodo) ?></td>
+                            <td><?= h($estagiarios->tc) ?></td>
+                            <td><?= date('d-m-Y', strtotime(h($estagiarios->tc_solicitacao))) ?></td>
+                            <td><?= $estagiarios->has('instituicaoestagio') ? $this->Html->link($estagiarios->instituicaoestagio->instituicao, ['controller' => 'Instituicaoestagios', 'action' => 'view', $estagiarios->id_instituicao]) : '' ?>
+                            </td>
+                            <td><?= $estagiarios->has('supervisor') ? $this->Html->link($estagiarios->supervisor->nome, ['controller' => 'Supervisores', 'action' => 'view', $estagiarios->id_supervisor]) : '' ?>
+                            </td>
+                            <td><?= $estagiarios->has('docente') ? $this->Html->link($estagiarios->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $estagiarios->id_professor]) : '' ?>
+                            </td>
+                            <td><?= $estagiarios->has('areaestagio') ? h($estagiarios->areaestagio->area) : '' ?></td>
+                            <td><?= h($estagiarios->nota) ?></td>
+                            <td><?= h($estagiarios->ch) ?></td>
+                            <td><?= h($estagiarios->observacoes) ?></td>
+                            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                                <td class="row">
                                     <?= $this->Html->link(__('View'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
                                     <?= $this->Html->link(__('Edit'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
-                                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Are you sure you want to delete # {0}?', $estagiarios->id)]) ?>
+                                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Are you sure you want to delete # {0}?', $estagiarios->id)]) ?>
                                 </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-            <?php endif; ?>
-        </div>
+                            <?php endif ?>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        <?php endif; ?>
     </div>
 </div>

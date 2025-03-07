@@ -6,7 +6,7 @@
 // pr($estagiario);
 // die();
 ?>
-<div class="avaliacaoes index container">
+<div class="row justify-content-center">
     <?php echo $this->element('menu_mural') ?>
     <h3><?= __('Estágios cursados pela(o) estudande ') ?></h3>
     <div class="table-responsive">

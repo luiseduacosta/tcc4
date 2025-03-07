@@ -7,6 +7,10 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
+<div class="d-flex justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMonografias"
         aria-controls="navbarTogglerMonografias" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,23 +26,26 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-
 <?= $this->element('templates') ?>
 
-<h3><?= __('Monografias') ?></h3>
+<div class="d-flex justify-content-center">
 
     <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
     <?= $this->Form->control('titulo', ['label' => 'Busca por título', 'value' => $this->getRequest()->getSession()->read('busca')]) ?>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
+</div>
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+
+    <h3><?= __('Monografias') ?></h3>
 
     <table class="table table-striped table-hover table-responsive">
         <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('titulo') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('periodo') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('tccestudantes->nome', 'Estudante') ?></th>                
+                <th scope="col"><?= $this->Paginator->sort('tccestudantes->nome', 'Estudante') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('nome', 'Orientador(a)') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('area_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('url', 'PDF') ?></th>
@@ -63,24 +70,29 @@ $user = $this->getRequest()->getAttribute('identity');
                             endforeach;
                         endif;
                         ?>
-                    </td> 
-                    <td><?= $this->Html->link(h($monografia->docente->nome), ['controller' => 'docentes', 'action' => 'view', $monografia->docente->id]) ?></td>
-                    <td><?= $monografia->has('area') ? $this->Html->link($monografia->area->area, ['controller' => 'Areas', 'action' => 'view', $monografia->area->id]) : '' ?></td>
-                    <td><?= $this->Html->link($monografia->url, '/monografias/' . $monografia->url, ['download' => $monografia->url]) ?></td>
+                    </td>
+                    <td><?= $this->Html->link(h($monografia->docente->nome), ['controller' => 'docentes', 'action' => 'view', $monografia->docente->id]) ?>
+                    </td>
+                    <td><?= $monografia->has('area') ? $this->Html->link($monografia->area->area, ['controller' => 'Areas', 'action' => 'view', $monografia->area->id]) : '' ?>
+                    </td>
+                    <td><?= $this->Html->link($monografia->url, '/monografias/' . $monografia->url, ['download' => $monografia->url]) ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>                
+    <div class="d-flex justify-content-center">
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
+            </ul>
+            <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+            </p>
+        </div>
     </div>
-
 </div>

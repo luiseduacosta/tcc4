@@ -7,7 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -18,8 +18,12 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerTccestudantesView">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li class="nav-item"><?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $tccestudante->id], ['class' => 'btn btn-primary float-end']) ?> </li>
-            <li class="nav-item"><?= $this->Form->postLink(__('Excluir Estudante'), ['action' => 'delete', $tccestudante->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $tccestudante->id), 'class' => 'btn btn-danger float-end']) ?> </li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $tccestudante->id], ['class' => 'btn btn-primary float-end']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Form->postLink(__('Excluir Estudante'), ['action' => 'delete', $tccestudante->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $tccestudante->id), 'class' => 'btn btn-danger float-end']) ?>
+            </li>
         <?php endif; ?>
     </ul>
 </nav>
@@ -28,20 +32,26 @@ $user = $this->getRequest()->getAttribute('identity');
     <h3><?= h($tccestudante->nome) ?></h3>
     <table class="table table-striped table-hover">
         <tr>
-            <th scope="row"><?= __('Id') ?></th>
+            <td scope="row"><?= __('Id') ?></td>
             <td><?= h($tccestudante->id) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Registro') ?></th>
+            <td scope="row"><?= __('Registro') ?></td>
             <td><?= h($tccestudante->registro) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Nome') ?></th>
-            <td><?= h($tccestudante->nome) ?></td>
+            <td scope="row"><?= __('Nome') ?></td>
+            <?php if (!empty($tccestudante->estudante)): ?>
+                <td><?= $this->Html->link($tccestudante->estudante->nome, ['controller' => 'estudantes', 'action' => 'view', $tccestudante->estudante->id]) ?>
+                </td>
+            <?php else: ?>
+                <td><?= h($tccestudante->nome) ?></td>
+            <?php endif ?>
         </tr>
         <tr>
-            <th scope="row"><?= __('Monografia') ?></th>
-            <td><?= $this->Html->link($tccestudante->monografia->titulo, ['controller' => 'monografias', 'action' => 'view', $tccestudante->monografia->id]) ?></td>
+            <td scope="row"><?= __('Monografia') ?></td>
+            <td><?= $this->Html->link($tccestudante->monografia->titulo, ['controller' => 'monografias', 'action' => 'view', $tccestudante->monografia->id]) ?>
+            </td>
         </tr>
     </table>
 </div>

@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -28,15 +28,15 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?= $this->element('templates') ?>
 
-<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-
-    <h3><?= __('Estudantes') ?></h3>
-
+<div class="d-flex justify-content-center">
     <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
     <?= $this->Form->control('nome', ['label' => 'Busca por nome']) ?>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
+</div>
 
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <h3><?= __('Estudantes') ?></h3>
     <table class="table table-striped table-hover table-responsive">
         <thead class="table-dark">
             <tr>
@@ -60,14 +60,15 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
-
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
+    <div class="d-flex justify-content-center">
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
+            </ul>
+        </div>
     </div>
 </div>

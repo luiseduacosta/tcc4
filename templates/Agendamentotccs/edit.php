@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -37,7 +37,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($agendamentotcc) ?>
-    <fieldset>
+    <fieldset class="border p-2">
         <legend><?= __('Editar agendamento de defesa de TCC') ?></legend>
         <?php
         echo $this->Form->control('estudante_id', ['options' => $alunos]);

@@ -92,7 +92,7 @@ if (file_exists(CONFIG . 'app_local.php')) {
 }
 
 /*
- * When debug = true the metadata cache should only last
+ * When debug = true the metadata cache should only último
  * for a short time.
  */
 if (Configure::read('debug')) {

@@ -8,16 +8,14 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Monografia[]|\Cake\Collection\CollectionInterface $monografias
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <?= $this->element('menu_esquerdo') ?>
-    </ul>
-</nav>
+
+<div class="d-flex justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Monografias em PDF') ?></h3>
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover table-responsive">
 
         <head class="table-dark">
             <tr>
@@ -35,3 +33,4 @@ $user = $this->getRequest()->getAttribute('identity');
             </tr>
         <?php endforeach; ?>
     </table>
+</div>

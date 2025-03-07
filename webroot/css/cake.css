@@ -134,7 +134,7 @@ th {
     margin: 0 0.5rem;
 }
 .prev.disabled a,
-.next.disabled a {
+.próximo.disabled a {
     cursor: not-allowed;
     color: #606c76;
 }

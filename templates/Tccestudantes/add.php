@@ -6,11 +6,21 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
-<?php $this->element('templates') ?>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerTccestudantesAdd"
+        aria-controls="navbarTogglerTccestudantesAdd" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerTccestudantesAdd">
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <li class="item-link"><?= $this->Html->link(__('Estudantes autores'), ['action' => 'index']) ?> </li>
+        <?php endif; ?>
+    </ul>
+</nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3 class="text-center"><?= __('Inserir estudante(s) autor(es) de TCC') ?></h3>

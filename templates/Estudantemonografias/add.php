@@ -5,18 +5,20 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Aluno $aluno
  */
 ?>
+
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Ações') ?></li>
         <li>
-        <?= $this->Html->link(__('Estudantes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Estudantes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </li>
         <?= $this->element('menu_monografias'); ?>
     </ul>
-</nav>    
-<div class="alunos form large-9 medium-8 columns content">
+</nav>
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($estudante) ?>
-    <fieldset>
+    <fieldset class="border p-2">
         <legend><?= __('Novo Estudante') ?></legend>
         <?php
         echo $this->Form->control('nome');
@@ -37,6 +39,6 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('observacoes');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Confirmar')) ?>
     <?= $this->Form->end() ?>
 </div>

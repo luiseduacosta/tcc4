@@ -7,7 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -18,14 +18,16 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerTccestudantesBusca">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li class="nav-item"><?= $this->Html->link(__('Novo(a) estudante autor(a) de TCC'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?></li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Novo(a) estudante autor(a) de TCC'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
         <?php endif; ?>
     </ul>
 </nav>
 
-<?php $this->element('templates') ?>
+<?= $this->element("templates") ?>
 
-<div class="row col-lg-10 shadow p-3 mb-5 bg-white rounded">
+<div class="container col-lg-10 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Estudantes') ?></h3>
 
     <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
@@ -65,16 +67,16 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
-    
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
 
+    <div class="d-flex justify-content-center">
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
+            </ul>
+        </div>
     </div>
-
 </div>

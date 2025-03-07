@@ -4,7 +4,7 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Aluno Entity
+ * Estudante Entity
  *
  * @property int $id
  * @property string $nome
@@ -23,8 +23,10 @@ use Cake\ORM\Entity;
  * @property string|null $municipio
  * @property string|null $bairro
  * @property string|null $observacoes
+ * 
+ * @property \App\Model\Entity\Estagiario[] $estagiarios
  */
-class Aluno extends Entity
+class Estudante extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -52,5 +54,6 @@ class Aluno extends Entity
         'municipio' => true,
         'bairro' => true,
         'observacoes' => true,
+        'estagiarios' => true,
     ];
 }

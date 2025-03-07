@@ -21,7 +21,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Tccestudante[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Tccestudante findOrCreate($search, callable $callback = null, $options = [])
  */
-class TccestudantesTable extends Table {
+class TccestudantesTable extends Table
+{
 
     /**
      * Initialize method
@@ -29,7 +30,8 @@ class TccestudantesTable extends Table {
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config): Void {
+    public function initialize(array $config): void
+    {
         parent::initialize($config);
 
         $this->setTable('tccestudantes');
@@ -42,10 +44,16 @@ class TccestudantesTable extends Table {
             'joinType' => 'INNER'
         ]);
 
-        $this->hasMany('Estudantes', [
-            'foreignKey' => 'registro',
-            'bindingKey' => 'registro',
+        // Tccestudantes com estudantes
+        /** A tabela Tccestudantes tem um campo registro que se conexta com o registro */
+        $this->hasOne('Estudantes', [
+            'targetForeignKey' => 'registro',
+            'foreignKey' => false,
+            'conditions' => 'Tccestudantes.registro = Estudantes.registro',
+            'joinType' => 'LEFT'
         ]);
+
+
     }
 
     /**
@@ -54,20 +62,21 @@ class TccestudantesTable extends Table {
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator): Validator {
+    public function validationDefault(Validator $validator): Validator
+    {
         $validator
-                ->integer('id')
-                ->allowEmptyString('id', null, 'create');
+            ->integer('id')
+            ->allowEmptyString('id', null, 'create');
 
         $validator
-                ->scalar('nome')
-                ->maxLength('nome', 50)
-                ->notEmptyString('nome');
+            ->scalar('nome')
+            ->maxLength('nome', 50)
+            ->notEmptyString('nome');
 
         $validator
-                ->scalar('registro')
-                ->maxLength('registro', 10)
-                ->allowEmptyString('registro');
+            ->scalar('registro')
+            ->maxLength('registro', 10)
+            ->allowEmptyString('registro');
 
         return $validator;
     }
@@ -79,7 +88,8 @@ class TccestudantesTable extends Table {
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules): RulesChecker {
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
         $rules->add($rules->existsIn(['monografia_id'], 'Monografias'));
 
         return $rules;

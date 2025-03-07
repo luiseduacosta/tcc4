@@ -2,11 +2,11 @@
 $user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Aluno[]|\Cake\Collection\CollectionInterface $alunos
+ * @var \App\Model\Entity\Estudante[]|\Cake\Collection\CollectionInterface $estudantes
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -24,7 +24,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<div class="row">
+<div class="d-flex justify-content-end">
     <h3>
         <?= __('Estudantes') ?>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
@@ -74,15 +74,17 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <?= $this->element('templates') ?>
 
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
-        </p>
+    <div class="d-flex justify-content-center">
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
+            </ul>
+            <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+            </p>
+        </div>
     </div>
 </div>

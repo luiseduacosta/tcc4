@@ -1,18 +1,22 @@
-<?php
-$user = $this->getRequest()->getAttribute('identity');
+<?php $user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Aluno[]|\Cake\Collection\CollectionInterface $alunos
  */
 ?>
-<div class="row justify-content-center">
+
+<div class="d-flex justify-content-center">
     <?php echo $this->element('menu_monografias'); ?>
 </div>
-<?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-    <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?></li>
-<?php endif; ?>
 
-<div class="alunos index large-9 medium-8 columns content">
+<div class="d-flex justify-content-start">
+    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+        <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
+        </li>
+    <?php endif; ?>
+</div>
+
+<div class="d-flex justify-content-end">
     <h3>
         <?= __('Estudantes') ?>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
@@ -21,8 +25,11 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'btn btn-primary float-end']) ?>
         <?php endif; ?>
     </h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+</div>
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <table class="table table-striped table-hover table-responsive-">
+        <thead class="table-dark">
             <tr>
                 <th><?= $this->Paginator->sort('registro') ?></th>
                 <th><?= $this->Paginator->sort('nome') ?></th>
@@ -37,7 +44,8 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php foreach ($alunos as $aluno): ?>
                 <tr>
                     <td><?= h($aluno->registro) ?></td>
-                    <td><?= $this->Html->link($aluno->nome, ['controller' => 'estudantemonografias', 'action' => 'view', $aluno->id]) ?></td>
+                    <td><?= $this->Html->link($aluno->nome, ['controller' => 'estudantemonografias', 'action' => 'view', $aluno->id]) ?>
+                    </td>
                     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                         <?php if ($aluno->telefone): ?>
                             <td><?= '(' . h($aluno->codigo_telefone) . ')' . h($aluno->telefone) ?></td>
@@ -55,14 +63,18 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
+    <?= $this->element('templates') ?>
+    <div class="d-flex justify-content-center">
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
+            </ul>
+            <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+            </p>
+        </div>
     </div>
 </div>

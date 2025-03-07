@@ -5,15 +5,16 @@ $user = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\Docente[]|\Cake\Collection\CollectionInterface $docentes
  */
 ?>
-<div class="row justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>        
+
+<div class="d-flex justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>
 </div>
 
 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
     <?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'button float-right']) ?>
 <?php endif; ?>
 
-<div class="docentes index large-9 medium-8 columns content">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Docentes') ?></h3>
     <p>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
@@ -23,8 +24,8 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Html->link('Dados pósgraduação', ['controller' => 'docentemonografias', 'action' => 'index3'], ['class' => 'button float-right']) ?>
         <?php endif; ?>
     </p>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
+    <table class="table table-hover table-responsive table-striped">
+        <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('cpf') ?></th>
@@ -41,7 +42,8 @@ $user = $this->getRequest()->getAttribute('identity');
         <tbody>
             <?php foreach ($docentemonografias as $docente): ?>
                 <tr>
-                    <td><?= $this->Html->link(h($docente->nome), ['controller' => 'docentemonografias', 'action' => 'view', $docente->id]) ?></td>
+                    <td><?= $this->Html->link(h($docente->nome), ['controller' => 'docentemonografias', 'action' => 'view', $docente->id]) ?>
+                    </td>
                     <td><?= h($docente->cpf) ?></td>
                     <td>
                         <?php
@@ -54,24 +56,30 @@ $user = $this->getRequest()->getAttribute('identity');
                         endif;
                         ?>
                     </td>
-                    <td><?= isset($docente->datanascimento) ? date('d-m-Y', strtotime($docente->datanascimento)) : '' ?></td>
+                    <td><?= isset($docente->datanascimento) ? date('d-m-Y', strtotime($docente->datanascimento)) : '' ?>
+                    </td>
                     <td><?= $docente->localnascimento ?></td>
                     <td><?= '(' . h($docente->ddd_telefone) . ')' . h($docente->telefone) ?></td>
                     <td><?= '(' . h($docente->ddd_celular) . ')' . h($docente->celular) ?></td>
                     <td><?= h($docente->email) ?></td>
-                    <td><?= $docente->has('homepage') ? $this->html->link($docente->homepage, $docente->homepage) : '' ?></td>
-                    <td><?= $docente->has('redesocial') ? $this->html->link($docente->redesocial, $docente->redesocial) : '' ?></td>
+                    <td><?= $docente->has('homepage') ? $this->html->link($docente->homepage, $docente->homepage) : '' ?>
+                    </td>
+                    <td><?= $docente->has('redesocial') ? $this->html->link($docente->redesocial, $docente->redesocial) : '' ?>
+                    </td>
                 </tr>
-<?php endforeach; ?>
+            <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-<?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
+    <?= $this->element('templates') ?>
+    <div class="d-flex justify-content-center">
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
+            </ul>
+        </div>
     </div>
 </div>

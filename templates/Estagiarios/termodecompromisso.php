@@ -11,8 +11,9 @@
 ?>
 
 <?php echo $this->element('menu_mural') ?>
+
 <?php if (isset($estudanteestagiario) && $estudanteestagiario): ?>
-    <div class="container">
+    <div class="row justify-content-center">
         <h3><?= __('Estágios cursados') ?></h3>
         <div class="table-responsive">
             <table>

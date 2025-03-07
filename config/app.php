@@ -80,7 +80,7 @@ return [
     ],
 
     /*
-     * Apply timestamps with the last modified time to static assets (js, css, images).
+     * Apply timestamps with the último modified time to static assets (js, css, images).
      * Will append a querystring parameter containing the time the file was modified.
      * This is useful for busting browser caches.
      *

@@ -24,7 +24,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 }, // Add this line
                 success: function (resposta) {
                     // console.log(resposta);
-                    $.each(resposta, function(key, item) {
+                    $.each(resposta, function (key, item) {
                         // console.log(item);
                         // alert(item);
                         $('#registro').val(item);
@@ -37,13 +37,13 @@ $user = $this->getRequest()->getAttribute('identity');
     });
 </script>
 
-<div class="row justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>        
+<div class="d-flex justify-content-center">
+    <?php echo $this->element('menu_monografias'); ?>
 </div>
 
-<div class="estagiarios form large-9 medium-8 columns content">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($estagiariomonografia) ?>
-    <fieldset>
+    <fieldset class="border p-2">
         <legend><?= __('Estagiário') ?></legend>
         <?php
         echo $this->Form->control('aluno_id', ['options' => $alunos, 'empty' => 'Seleciona estudante']);
@@ -63,6 +63,6 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('observacoes');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Confirmar')) ?>
     <?= $this->Form->end() ?>
 </div>

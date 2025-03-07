@@ -6,13 +6,13 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="row justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>
+<div class="d-flex justify-content-center">
+    <?php echo $this->element('menu_esquerdo'); ?>
 </div>
 
-<div class="docentes form large-9 medium-8 columns content">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($docentemonografia) ?>
-    <fieldset>
+    <fieldset class="border p-2">
         <legend><?= __('Novo docente') ?></legend>
         <?php
         echo $this->Form->control('nome');
@@ -52,6 +52,6 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('observacoes');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Confirma')) ?>
     <?= $this->Form->end() ?>
 </div>

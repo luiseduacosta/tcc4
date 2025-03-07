@@ -5,32 +5,44 @@ $usuario = $this->getRequest()->getAttribute('identity');
  * @var \App\Model\Entity\User $user
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <?php if (isset($usuario->role) && $usuario->role == 'admin'): ?>
-            <li><?= $this->Html->link(__('Novo usuário'), ['action' => 'add']) ?> </li>        
-            <li><?= $this->Html->link(__('Editar usuário'), ['action' => 'edit', $user->id]) ?> </li>
-            <li><?= $this->Form->postLink(__('Excluir usuaŕio'), ['action' => 'delete', $user->id], ['confirm' => __('Tem certeza que quer excluir # {0}?', $user->id)]) ?> </li>
-        <?php endif; ?>
-        <li><?= $this->Html->link(__('Listar usuarios'), ['action' => 'index']) ?> </li>
 
+<div class="d-flex justify-content-start">
+    <?= $this->element('menu_esquerdo') ?>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerUseresView"
+        aria-controls="navbarTogglerUsersView" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerUserView">
+        <?php if (isset($usuario->categoria) && $usuario->categoria == '1'): ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Novo usuário'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Editar usuário'), ['action' => 'edit', $user->id], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
+            <li class="nva-item">
+                <?= $this->Form->postLink(__('Excluir usuaŕio'), ['action' => 'delete', $user->id], ['confirm' => __('Tem certeza que quer excluir # {0}?', $user->id), 'class' => 'btn btn-danger float-start']) ?>
+            </li>
+        <?php endif; ?>
+        <li class="nav-item">
+            <?= $this->Html->link(__('Listar usuarios'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
+        </li>
     </ul>
 </nav>
+
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= h($user->id) ?></h3>
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover table-responsive">
         <tr>
             <th scope="row"><?= __('Email') ?></th>
-            <td><?= h($user->username) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Password') ?></th>
-            <td><?= h($user->password) ?></td>
+            <td><?= h($user->email) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Categoria') ?></th>
-            <td><?= h($user->role) ?></td>
+            <td><?= h($user->categoria) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>

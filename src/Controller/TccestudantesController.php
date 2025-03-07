@@ -32,6 +32,7 @@ class TccestudantesController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
+
         $this->paginate = [
             'order' => ['nome'],
             'contain' => ['Monografias'],
@@ -57,7 +58,7 @@ class TccestudantesController extends AppController
         $this->Authorization->skipAuthorization();
         $this->loadModel('Tccestudantes'); // Estranho, mas necessário
         $tccestudante = $this->Tccestudantes->get($id, [
-            'contain' => ['Monografias'],
+            'contain' => ['Monografias', 'Estudantes'],
         ]);
         $this->set('tccestudante', $tccestudante);
     }
@@ -202,7 +203,6 @@ class TccestudantesController extends AppController
                 ];
             endif;
         }
-        ;
 
         if (!isset($busca)):
 

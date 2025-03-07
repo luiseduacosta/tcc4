@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
  */
 ?>
 
-<div class="justify-content-start">
+<div class="d-flex justify-content-start">
     <?= $this->element('menu_esquerdo') ?>
 </div>
 
@@ -30,7 +30,8 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?= $this->element('templates') ?>
 
-<div class="container">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+
     <h3><?= __('Estagiarios por período e por TCC concluída') ?></h3>
 
     <?= $this->Form->create(null, ['url' => ['action' => 'index']]) ?>
@@ -52,7 +53,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($estudantes as $c_estudante): ?>
-                <?php // pr($estagiario->tccestudante->id) ?>
+                <?php // pr($c_estudante) ?>
                 <tr>
                     <td><?= h($c_estudante['registro']) ?></td>
                     <?php if (!empty($c_estudante['id'])): ?>
