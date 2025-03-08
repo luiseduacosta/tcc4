@@ -10,9 +10,15 @@ use Cake\Validation\Validator;
 /**
  * Estagiarios Model
  *
- * @property \App\Model\Table\AlunosTable&\Cake\ORM\Association\BelongsTo $Alunos
- * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
- *
+ * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes 
+ * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes *
+ * @property \App\Model\Table\AreaestagiosTable&\Cake\ORM\Association\BelongsTo $Areaestagios
+ * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\BelongsTo $Tccestudantes
+ * @property \App\Model\Table\SupervisoresTable&\Cake\ORM\Association\BelongsTo $Supervisores
+ * @property \App\Model\Table\InstituicaoestagiosTable&\Cake\ORM\Association\BelongsTo $Instituicaoesestagio
+ * @property \App\Model\Table\AvaliacoesTable&\Cake\ORM\Association\HasOne $Avaliacao
+ * @property \App\Model\Table\FolhadeatividadesTable&\Cake\ORM\Association\HasOne $Folhadeatividade 
+ * 
  * @method \App\Model\Entity\Estagiario get($primaryKey, $options = [])
  * @method \App\Model\Entity\Estagiario newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Estagiario[] newEntities(array $data, array $options = [])
@@ -64,6 +70,12 @@ class EstagiariosTable extends Table {
 
         $this->belongsTo('Instituicaoestagios', [
             'foreignKey' => 'instituicao_id',
+        ]);
+        $this->hasOne('Avaliacoes', [
+                'foreignKey' => 'estagiario_id',
+        ]);
+        $this->hasOne('Folhadeatividades', [
+                'foreignKey' => 'estagiario_id',
         ]);
     }
 

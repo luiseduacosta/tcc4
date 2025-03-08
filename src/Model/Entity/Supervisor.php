@@ -71,6 +71,7 @@ class Supervisor extends Entity
         'curso_turma' => true,
         'observacoes' => true,
         'estagiarios' => true,
+        'userestagios' => true,
         'instituicaoestagios' => true,
     ];
 }

@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
 /**
  * Muralinscricoes Model
  *
+ * @property \App\Model\Table\AlunosTable&\Cake\ORM\Association\BelongsTo $Alunos
  * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
  * @property \App\Model\Table\MuralestagiosTable&\Cake\ORM\Association\BelongsTo $Muralestagios
  *
@@ -45,9 +46,6 @@ class MuralinscricoesTable extends Table
         $this->setDisplayField('id_aluno');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Alunos', [
-            'foreignKey' => 'id_aluno', // registro
-        ]);
         $this->belongsTo('Alunos', [
             'foreignKey' => 'aluno_id', // aluno id
         ]);

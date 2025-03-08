@@ -11,7 +11,8 @@ use Cake\Validation\Validator;
  * Tccestudantes Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Monografias
- *
+ * @property \Cake\ORM\Association\HasOne $Estudantes
+ * 
  * @method \App\Model\Entity\Tccestudante get($primaryKey, $options = [])
  * @method \App\Model\Entity\Tccestudante newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Tccestudante[] newEntities(array $data, array $options = [])

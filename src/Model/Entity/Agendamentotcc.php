@@ -20,7 +20,7 @@ use Cake\ORM\Entity;
  * @property string $titulo
  * @property string $avaliacao
  *
- * @property \App\Model\Entity\Aluno $aluno
+ * @property \App\Model\Entity\Estudante $estudante
  * @property \App\Model\Entity\Docente $docente
  */
 class Agendamentotcc extends Entity

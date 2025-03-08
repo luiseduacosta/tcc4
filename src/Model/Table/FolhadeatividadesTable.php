@@ -11,6 +11,8 @@ use Cake\Validation\Validator;
 
 /**
  * Folhadeatividades Model
+ * 
+ * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\BelongsTo $Estagiarios
  *
  * @method \App\Model\Entity\Folhadeatividade newEmptyEntity()
  * @method \App\Model\Entity\Folhadeatividade newEntity(array $data, array $options = [])

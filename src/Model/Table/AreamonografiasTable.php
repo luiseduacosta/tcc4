@@ -10,7 +10,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Areas Model
+ * Areamonografias Model
  *
  * @property \App\Model\Table\MonografiasTable&\Cake\ORM\Association\HasMany $Monografias
  * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsToMany $Docentes

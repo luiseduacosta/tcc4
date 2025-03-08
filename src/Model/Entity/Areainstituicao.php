@@ -10,6 +10,8 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $area
+ * 
+ * @property \App\Model\Entity\Instituicaoestagio[] $instituicaoestagio
  */
 class Areainstituicao extends Entity
 {

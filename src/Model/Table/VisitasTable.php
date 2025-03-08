@@ -26,6 +26,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Visita[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method \App\Model\Entity\Visita[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\Visita[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * 
  */
 class VisitasTable extends Table
 {

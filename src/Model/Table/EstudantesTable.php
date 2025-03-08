@@ -8,6 +8,9 @@ use Cake\Validation\Validator;
 
 /**
  * Estudantes Model
+ * 
+ * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
+ * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasOne $Tccestudantes
  *
  * @method \App\Model\Entity\Estudante get($primaryKey, $options = [])
  * @method \App\Model\Entity\Estudante newEntity($data = null, array $options = [])

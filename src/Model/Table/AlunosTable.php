@@ -13,7 +13,8 @@ use Cake\Validation\Validator;
  * Alunos Model
  *
  * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
- *
+ * @property \App\Model\Table\MuralinscricoesTable&\Cake\ORM\Association\HasMany $Muralinscricoes
+ * 
  * @method \App\Model\Entity\Aluno newEmptyEntity()
  * @method \App\Model\Entity\Aluno newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Aluno[] newEntities(array $data, array $options = [])

@@ -12,6 +12,8 @@ use Cake\Validation\Validator;
 /**
  * Areainstituicoes Model
  *
+ * @property \App\Model\Table\InstituicaoestagiosTable&\Cake\ORM\Association\HasMany $Instituicaoestagios
+ * 
  * @method \App\Model\Entity\Areainstituicao newEmptyEntity()
  * @method \App\Model\Entity\Areainstituicao newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Areainstituicao[] newEntities(array $data, array $options = [])

@@ -22,8 +22,15 @@ use Cake\ORM\Entity;
  * @property int|null $ch
  * @property string|null $observacoes
  *
- * @property \App\Model\Entity\Aluno $aluno
+ * @property \App\Model\Entity\Estudante $estudante
  * @property \App\Model\Entity\Docente $docente
+ * @property \App\Model\Entity\Areaestagio $areaestagio
+ * @property \App\Model\Entity\Tccestudante $tccestudante
+ * @property \App\Model\Entity\Supervisor $supervisor
+ * @property \App\Model\Entity\Instituicaoestagio $instituicaoestagio
+ * @property \App\Model\Entity\Avaliacao $avaliacao
+ * @property \App\Model\Entity\Folhadeatividade $folhadeatividade
+
  */
 class Estagiario extends Entity
 {
@@ -51,7 +58,13 @@ class Estagiario extends Entity
         'nota' => true,
         'ch' => true,
         'observacoes' => true,
-        'aluno' => true,
+        'estudante' => true,
         'docente' => true,
+        'areaestagio' => true,
+        'tccestudante' => true,
+        'supervisor' => true, 
+        'instituicaoestagio' => true,       
+        'avaliacao' => true,
+        'folhadeatividade' => true
     ];
 }

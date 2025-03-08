@@ -13,8 +13,10 @@ use Cake\Validation\Validator;
  * Monografias Model
  *
  * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
- * @property \App\Model\Table\AreamonografiasTable&\Cake\ORM\Association\BelongsTo $Areas
+ * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes1
+ * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes2
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasMany $Tccestudantes
+ * @property \App\Model\Table\AreamonografiasTable&\Cake\ORM\Association\BelongsTo $Areasmonografias
  *
  * @method \App\Model\Entity\Monografia newEmptyEntity()
  * @method \App\Model\Entity\Monografia newEntity(array $data, array $options = [])
@@ -85,9 +87,6 @@ class MonografiasTable extends Table {
           'foreignKey' => 'classificamonografia_id',
           ]);
          */
-        $this->hasMany('Tccestudantes', [
-            'foreignKey' => 'monografia_id',
-        ]);
     }
 
     /**

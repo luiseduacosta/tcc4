@@ -13,6 +13,8 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Estagiario[] $estagiarios
  * @property \App\Model\Entity\Muralestagio[] $muralestagios
+ * @property \App\Model\Entity\Muralestagio[] $muralestagios
+
  */
 class Areaestagio extends Entity
 {

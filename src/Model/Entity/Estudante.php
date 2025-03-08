@@ -25,6 +25,8 @@ use Cake\ORM\Entity;
  * @property string|null $observacoes
  * 
  * @property \App\Model\Entity\Estagiario[] $estagiarios
+ * @property \App\Model\Entity\Tccestudante[] $tccestudantes
+ * 
  */
 class Estudante extends Entity
 {
@@ -55,5 +57,6 @@ class Estudante extends Entity
         'bairro' => true,
         'observacoes' => true,
         'estagiarios' => true,
+        'tccestudantes' => true,
     ];
 }

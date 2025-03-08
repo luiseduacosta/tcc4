@@ -60,7 +60,6 @@ class Monografia extends Entity
         'timestamp' => true,
         'docente' => true,
         'areamonografia' => true,
-        'classificamonografia' => true,
         'tccestudante' => true,
     ];
 }

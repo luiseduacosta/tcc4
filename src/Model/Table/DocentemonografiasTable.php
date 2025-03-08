@@ -8,10 +8,10 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Docentes Model
+ * Docentemonografias Model
  *
  * @property \App\Model\Table\MonografiasTable&\Cake\ORM\Association\HasMany $Monografias
- * @property \App\Model\Table\ProfessoresAreasTable&\Cake\ORM\Association\HasMany $ProfessoresAreas
+ * @property \App\Model\Table\AreamonografiasTable&\Cake\ORM\Association\BelongsToMany $Areamonografias
  *
  * @method \App\Model\Entity\Docente get($primaryKey, $options = [])
  * @method \App\Model\Entity\Docente newEntity($data = null, array $options = [])

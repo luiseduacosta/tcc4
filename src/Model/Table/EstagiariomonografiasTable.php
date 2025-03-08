@@ -8,19 +8,27 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Estagiarios Model
+ * Estagiariomonografias Model
  *
  * @property \App\Model\Table\AlunosTable&\Cake\ORM\Association\BelongsTo $Alunos
+ * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
  * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
+ * @property \App\Model\Table\SupervisoresTable&\Cake\ORM\Association\BelongsTo $Supervisores
+ * @property \App\Model\Table\DocentemonografiasTable&\Cake\ORM\Association\BelongsTo $Docentemonografias
+ * @property \App\Model\Table\InstituicaoestagiosTable&\Cake\ORM\Association\BelongsTo $Institucoesestagios
+ * @property \App\Model\Table\AreaestagiosTable&\Cake\ORM\Association\BelongsTo $Areaestagios
+ * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\BelongsTo $Tccestudantes
+ * @property \App\Model\Table\AvaliacoesTable&\Cake\ORM\Association\HasOne $Avaliacoes
+ * @property \App\Model\Table\FolhadeatividadesTable&\Cake\ORM\Association\HasOne $Folhadeatividades
  *
- * @method \App\Model\Entity\Estagiario get($primaryKey, $options = [])
- * @method \App\Model\Entity\Estagiario newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Estagiario[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Estagiario|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Estagiario saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Estagiario patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Estagiario[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Estagiario findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Estagiariomonografia get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Estagiariomonografia newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Estagiariomonografia[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Estagiariomonografia|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Estagiariomonografia saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Estagiariomonografia patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Estagiariomonografia[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Estagiariomonografia findOrCreate($search, callable $callback = null, $options = [])
  */
 class EstagiariomonografiasTable extends Table
 {

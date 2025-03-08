@@ -8,16 +8,18 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Alunos Model
+ * Estudantemonogriafias Model
+ * 
+ * @property \App\Model\Table\EstagiariomonografiasTable&\Cake\ORM\Association\HasMany $Estagiariomonografias
  *
- * @method \App\Model\Entity\Aluno get($primaryKey, $options = [])
- * @method \App\Model\Entity\Aluno newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Aluno[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Aluno|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Aluno saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Aluno patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Aluno[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Aluno findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Estudantemonografia get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Estudantemonografia newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Estudantemonografia[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Estudantemonografia|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Estudantemonografia saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EstudantemonografiapatchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Estudantemonografia[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Estudantemonografia findOrCreate($search, callable $callback = null, $options = [])
  */
 class EstudantemonografiasTable extends Table {
 

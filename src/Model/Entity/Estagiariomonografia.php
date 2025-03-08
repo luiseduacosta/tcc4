@@ -4,7 +4,7 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Estagiario Entity
+ * Estagiariomonografia Entity
  *
  * @property int $id
  * @property int $aluno_id
@@ -24,6 +24,14 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Aluno $aluno
  * @property \App\Model\Entity\Docente $docente
+ * @property \App\Model\Entity\Estudante $estudante
+ * @property \App\Model\Entity\Supervisor $supervisor
+ * @property \App\Model\Entity\Docentemonografia $docentemonografia
+ * @property \App\Model\Entity\Instituicaoestagio $instituicaoestagio
+ * @property \App\Model\Entity\Areaestagio $areaestagio
+ * @property \App\Model\Entity\Tccestudante $tccestudante
+ * @property \App\Model\Entity\Avaliacao $avaliacao
+ * @property \App\Model\Entity\Folhadeatividade $folhadeatividade
  */
 class Estagiariomonografia extends Entity
 {
@@ -55,11 +63,13 @@ class Estagiariomonografia extends Entity
         'complemento_id' => true,
         'ajuste2020' => true,
         'aluno' => true,
-        'estudante' => true,
-        'instituicaoestagio' => true,
-        'supervisor' => true,
         'docente' => true,
+        'estudante' => true,
+        'supervisor' => true,
+        'docentemonografia' => true,
+        'instituicaoestagio' => true,
         'areaestagio' => true,
+        'tccestudante' => true,
         'avaliacao' => true,
         'folhadeatividade' => true,            
     ];

@@ -12,9 +12,11 @@ use Cake\Validation\Validator;
 /**
  * Agendamentotccs Model
  *
- * @property \App\Model\Table\AlunosTable&\Cake\ORM\Association\BelongsTo $Alunos
+ * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
  * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
- *
+ * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes1
+ * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes2
+ *  
  * @method \App\Model\Entity\Agendamentotcc newEmptyEntity()
  * @method \App\Model\Entity\Agendamentotcc newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Agendamentotcc[] newEntities(array $data, array $options = [])
