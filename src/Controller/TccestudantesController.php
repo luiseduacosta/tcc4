@@ -21,8 +21,6 @@ use Cake\Event\Event;
 class TccestudantesController extends AppController
 {
 
-    public $Tccestudantes = null;
-
     /**
      * Index method
      *
@@ -33,15 +31,19 @@ class TccestudantesController extends AppController
 
         $this->Authorization->skipAuthorization();
 
-        $this->paginate = [
-            'order' => ['nome'],
-            'contain' => ['Monografias'],
-            'sortableFields' => ['Tccestudantes.id', 'Tccestudantes.registro', 'Tccestudantes.nome', 'Monografias.titulo']
-        ];
+        $query = $this->Tccestudantes->find()
+            ->contain(['Monografias'])
+            ->order(['nome']);
 
-        $tccestudantes = $this->paginate($this->Tccestudantes);
-        // pr($tccestudantes);
-        // die();
+        $tccestudantes = $this->paginate($query, [
+            'sortableFields' => [
+                'Tccestudantes.id',
+                'Tccestudantes.registro',
+                'Tccestudantes.nome',
+                'Monografias.titulo'
+            ]
+        ]);
+
         $this->set(compact('tccestudantes'));
     }
 
@@ -56,8 +58,8 @@ class TccestudantesController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
-        $this->loadModel('Tccestudantes'); // Estranho, mas necessário
-        $tccestudante = $this->Tccestudantes->get($id, [
+        $tccestudantetable = $this->fetchTable('Tccestudantes'); // Estranho, mas necessário
+        $tccestudante = $tccestudantetable->get($id, [
             'contain' => ['Monografias', 'Estudantes'],
         ]);
         $this->set('tccestudante', $tccestudante);
@@ -79,8 +81,8 @@ class TccestudantesController extends AppController
             $registro = $estudante_id;
 
             /* Nome do aluno */
-            $this->loadModel('Estudantes');
-            $resultado = $this->Estudantes->find('all');
+            $estudantetable = $this->fetchTable('Estudantes');
+            $resultado = $estudantetable->find('all');
             $resultado->where(['registro' => $estudante_id]);
             $resultado->select(['nome']);
             $resultado->first();
@@ -90,8 +92,8 @@ class TccestudantesController extends AppController
         endif;
 
         /* Titulo e id das monografias */
-        $this->loadModel('Tccestudantes');
-        $monografias = $this->Tccestudantes->Monografias->find(
+        $tccestudantetable = $this->fetchTable('Tccestudantes');
+        $monografias = $tccestudantetable->Monografias->find(
             'list',
             ['keyField' => 'id', 'valueField' => 'titulo']
         );
@@ -111,8 +113,8 @@ class TccestudantesController extends AppController
             }
             $this->Flash->error(__('Estudante autor de TCC não foi inserido. Tente novamento.'));
         }
-        $this->loadModel('Estudantes');
-        $estudantes = $this->Estudantes->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
+        $estudantetable = $this->fetchTable('Estudantes');
+        $estudantes = $estudantetable->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $estudantes->order(['nome' => 'asc']);
         // pr($estudantes);
         // die();
@@ -129,14 +131,14 @@ class TccestudantesController extends AppController
     public function edit($id = null)
     {
 
-        $this->loadModel('Tccestudantes');
-        $tccestudante = $this->Tccestudantes->get($id, [
+        $tccestudantetable = $this->fetchTable('Tccestudantes');
+        $tccestudante = $tccestudantetable->get($id, [
             'contain' => ['Monografias'],
         ]);
         $this->Authorization->authorize($tccestudante);
 
-        $this->loadModel('Monografias');
-        $monografias = $this->Monografias->find('list', ['keyField' => 'id', 'valueField' => 'titulo']);
+        $monografiatable = $this->fetchTable('Monografias');
+        $monografias = $monografiatable->find('list', ['keyField' => 'id', 'valueField' => 'titulo']);
         $monografias->order(['titulo' => 'asc']);
         $monografias = $monografias->toArray();
 
@@ -163,11 +165,11 @@ class TccestudantesController extends AppController
     {
         // pr($id);
         // die();
-        $this->loadModel('Tccestudantes');
+        $tccestudantetable = $this->fetchTable('Tccestudantes');
         $this->request->allowMethod(['post', 'delete']);
-        $tccestudante = $this->Tccestudantes->get($id);
+        $tccestudante = $tccestudantetable->get($id);
         $this->Authorization->authorize($tccestudante);
-        if ($this->Tccestudantes->delete($tccestudante)) {
+        if ($tccestudantetable->delete($tccestudante)) {
             $this->Flash->success(__('Estudante autor de TCC excluído.'));
         } else {
             $this->Flash->error(__('Estudante autor de TCC não foi excluído.'));

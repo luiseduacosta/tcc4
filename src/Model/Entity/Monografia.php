@@ -28,7 +28,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Docente $docente
  * @property \App\Model\Entity\Areamonografia $areamonografia
- * @property \App\Model\Entity\Tccestudante[] $tccestudantes
+ * @property \App\Model\Entity\Tccestudante[] $tccestudante
  */
 class Monografia extends Entity
 {

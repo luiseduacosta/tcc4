@@ -14,12 +14,11 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
  * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
  * @property \App\Model\Table\SupervisoresTable&\Cake\ORM\Association\BelongsTo $Supervisores
- * @property \App\Model\Table\DocentemonografiasTable&\Cake\ORM\Association\BelongsTo $Docentemonografias
  * @property \App\Model\Table\InstituicaoestagiosTable&\Cake\ORM\Association\BelongsTo $Institucoesestagios
  * @property \App\Model\Table\AreaestagiosTable&\Cake\ORM\Association\BelongsTo $Areaestagios
- * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\BelongsTo $Tccestudantes
  * @property \App\Model\Table\AvaliacoesTable&\Cake\ORM\Association\HasOne $Avaliacoes
  * @property \App\Model\Table\FolhadeatividadesTable&\Cake\ORM\Association\HasOne $Folhadeatividades
+ * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\BelongsTo $Tccestudantes
  *
  * @method \App\Model\Entity\Estagiariomonografia get($primaryKey, $options = [])
  * @method \App\Model\Entity\Estagiariomonografia newEntity($data = null, array $options = [])
@@ -47,14 +46,7 @@ class EstagiariomonografiasTable extends Table
                 $this->setAlias('Estagiariomonografias');
                 $this->setDisplayField('registro');
                 $this->setPrimaryKey('id');
-                /*
-                        $this->belongsTo('Estudantes', [
-                            'className' => 'Estudantes',
-                            'foreignKey' => FALSE,
-                            'conditions' => 'Estagiarios.registro = Estudantes.registro',
-                            'joinType' => 'LEFT',
-                        ]);
-                */
+
                 $this->belongsTo('Alunos', [
                         'foreignKey' => 'id_aluno',
                         'joinType' => 'INNER',
@@ -65,7 +57,7 @@ class EstagiariomonografiasTable extends Table
                 $this->belongsTo('Supervisores', [
                         'foreignKey' => 'id_supervisor',
                 ]);
-                $this->belongsTo('Docentemonografias', [
+                $this->belongsTo('Docentes', [
                         'foreignKey' => 'id_professor',
                 ]);
                 $this->belongsTo('Instituicaoestagios', [
@@ -74,18 +66,19 @@ class EstagiariomonografiasTable extends Table
                 $this->belongsTo('Areaestagios', [
                         'foreignKey' => 'id_area',
                 ]);
-                $this->belongsTo('Tccestudantes', [
-                        'className' => 'Tccestudantes',
-                        'foreignKey' => FALSE,
-                        'conditions' => 'Estagiariomonografias.registro = Tccestudantes.registro',
-                        'joinType' => 'LEFT'
-                ]);
                 $this->hasOne('Avaliacoes', [
                         'foreignKey' => 'estagiario_id',
                 ]);
                 $this->hasOne('Folhadeatividades', [
                         'foreignKey' => 'estagiario_id',
                 ]);
+                $this->belongsTo('Tccestudantes', [
+                        'className' => 'Tccestudantes',
+                        'foreignKey' => FALSE,
+                        'conditions' => 'Estagiariomonografias.registro = Tccestudantes.registro',
+                        'joinType' => 'LEFT'
+                ]);
+
         }
 
         /**

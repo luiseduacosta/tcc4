@@ -43,8 +43,8 @@ use Cake\ORM\Entity;
  * @property string|null $motivoegresso
  * @property string|null $observacoes
  *
- * @property \App\Model\Entity\Monografia[] $monografias
- * @property \App\Model\Entity\Areamonografia[] $areamonografias
+ * @property \App\Model\Entity\Monografia[] $monografia
+ * @property \App\Model\Entity\Areamonografia[] $areamonografia
  */
 class Docentemonografia extends Entity {
     /**
@@ -92,7 +92,7 @@ class Docentemonografia extends Entity {
         'dataegresso' => true,
         'motivoegresso' => true,
         'observacoes' => true,
-        'monografias' => true,
-        'areamonografias' => true,
+        'monografia' => true,
+        'areamonografia' => true,
     ];
 }

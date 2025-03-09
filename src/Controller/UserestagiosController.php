@@ -81,8 +81,8 @@ class UserestagiosController extends AppController {
                 endif;
 
                 /* Verifico se está cadatrado como estudante */
-                $this->loadModel('Estudantes');
-                $estudantequery = $this->Estudantes->find()->where(['registro' => $this->request->getData('numero')]);
+                $estudantetable = $this->fetchTable('Estudantes');
+                $estudantequery = $estudantetable->find()->where(['registro' => $this->request->getData('numero')]);
                 $estudantecadastrado = $estudantequery->first();
                 // pr($estudantecadastrado);
                 // die();
@@ -131,8 +131,8 @@ class UserestagiosController extends AppController {
                 endif;
 
                 /* Verifico se está cadatrado como docente */
-                $this->loadModel('Docentes');
-                $docentequery = $this->Docentes->find()->where(['siape' => $this->request->getData('numero')]);
+                $docentetable = $this->fetchTable('Docentes');
+                $docentequery = $docentetable->find()->where(['siape' => $this->request->getData('numero')]);
                 $docentecadastrado = $docentequery->first();
                 // pr($docentecadastrado);
                 // die();
@@ -184,8 +184,8 @@ class UserestagiosController extends AppController {
                 endif;
 
                 /* Verifico se está cadatrado como supervisor */
-                $this->loadModel('Supervisores');
-                $supervisorquery = $this->Supervisores->find()->where(['cress' => $this->request->getData('numero')]);
+                $supervisortable = $this->fetchTable('Supervisores');
+                $supervisorquery = $supervisortable->find()->where(['cress' => $this->request->getData('numero')]);
                 $supervisorcadastrado = $supervisorquery->first();
                 // pr($supervisorcadastrado);
                 // die();
@@ -316,8 +316,8 @@ class UserestagiosController extends AppController {
                     if (empty($dados['estudante_id'])):
                         // echo "Estudante sem o id cadastrado";
                         $userestagios = $this->Userestagios->get($dados['id']);
-                        $this->loadModel('Estudantes');
-                        $estudantecadastrado = $this->Estudantes->find()->where(['registro' => $dados['numero']])->select(['id']);
+                        $estudantetable = $this->fetchTable('Estudantes');
+                        $estudantecadastrado = $estudantetable->find()->where(['registro' => $dados['numero']])->select(['id']);
                         if ($estudantecadastrado->first()) {
                             $dados['estudante_id'] = $estudantecadastrado->first()->id;
                             $userestagios = $this->Userestagios->patchEntity($userestagios, $dados);
@@ -330,8 +330,8 @@ class UserestagiosController extends AppController {
                         }
                     // die();
                     else:
-                        $this->loadModel('Estudantes');
-                        $estudantequery = $this->Estudantes->find()->where(['registro' => $dados['numero']]);
+                        $estudantetable = $this->fetchTable('Estudantes');
+                        $estudantequery = $estudantetable->find()->where(['registro' => $dados['numero']]);
                         $estudante = $estudantequery->first();
                         /* Se um usuário da categoria estudante e não está cadastrado como estudante então realiza cadastramento */
                         if (empty($estudante)) {
@@ -339,8 +339,8 @@ class UserestagiosController extends AppController {
                         } else {
                             $this->Flash->success(__('Bem-vindo estudante!'));
                             /* Verifico se é estagiário capturo o id  e guardo numa varíavel de sessão */
-                            $this->loadModel('Estagiarios');
-                            $estagiarioultimo_id = $this->Estagiarios->find()
+                            $estudantetable = $this->fetchTable('Estagiarios');
+                            $estagiarioultimo_id = $estudantetable->find()
                                     ->where(['Estagiarios.registro' => $this->Authentication->getIdentityData('numero')])
                                     ->select(['id'])
                                     ->orderDesc('nivel')
@@ -365,8 +365,8 @@ class UserestagiosController extends AppController {
                     echo "Professor";
 
                     /* Verifico se está cadastrado como docente */
-                    $this->loadModel('Docentes');
-                    $docentequery = $this->Docentes->find()
+                    $docentetable = $this->fetchTable('Docentes');
+                    $docentequery = $docentetable->find()
                             ->contain(['Estagiarios'])
                             ->where(['siape' => $dados['numero']]);
                     $docente = $docentequery->first();
@@ -454,8 +454,8 @@ class UserestagiosController extends AppController {
             // pr($c_user->categoria);
             if ($c_user->categoria == 2) {
                 // pr($c_user->numero);
-                $this->loadModel('Estudantes');
-                $estudante = $this->Estudantes->find()
+                $estudantetable = $this->fetchTable('Estudantes');
+                $estudante = $estudantetable->find()
                         ->contain([])
                         ->where(['estudantes.registro' => $c_user->numero]);
                 // pr($estudante);
@@ -477,7 +477,7 @@ class UserestagiosController extends AppController {
             if ($c_user->categoria == 3) {
                 // pr($c_user->numero);
                 // die();
-                $this->loadModel('Docentes');
+                $docentetable = $this->loadMode('Docentes');
                 $docente = $this->Docentes->find()
                         ->contain([])
                         ->where(['docentes.siape' => $c_user->numero]);
@@ -501,8 +501,8 @@ class UserestagiosController extends AppController {
             if ($c_user->categoria == 4) {
                 // pr($c_user->numero);
                 // die();
-                $this->loadModel('Supervisores');
-                $supervisor = $this->Supervisores->find()
+                $supervisorestable = $this->fetchTable('Supervisores');
+                $supervisor = $supervisorestable->find()
                         ->contain([])
                         ->where(['supervisores.cress' => $c_user->numero]);
                 // pr($docente);

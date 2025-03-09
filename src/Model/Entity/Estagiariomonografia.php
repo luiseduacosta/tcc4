@@ -26,12 +26,11 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Docente $docente
  * @property \App\Model\Entity\Estudante $estudante
  * @property \App\Model\Entity\Supervisor $supervisor
- * @property \App\Model\Entity\Docentemonografia $docentemonografia
  * @property \App\Model\Entity\Instituicaoestagio $instituicaoestagio
  * @property \App\Model\Entity\Areaestagio $areaestagio
- * @property \App\Model\Entity\Tccestudante $tccestudante
  * @property \App\Model\Entity\Avaliacao $avaliacao
  * @property \App\Model\Entity\Folhadeatividade $folhadeatividade
+ * @property \App\Model\Entity\Tccestudante $tccestudante
  */
 class Estagiariomonografia extends Entity
 {
@@ -66,11 +65,10 @@ class Estagiariomonografia extends Entity
         'docente' => true,
         'estudante' => true,
         'supervisor' => true,
-        'docentemonografia' => true,
         'instituicaoestagio' => true,
         'areaestagio' => true,
-        'tccestudante' => true,
         'avaliacao' => true,
-        'folhadeatividade' => true,            
+        'folhadeatividade' => true,
+        'tccestudante' => true
     ];
 }

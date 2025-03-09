@@ -214,8 +214,8 @@ class EstudantesController extends AppController
     {
 
         $this->request->allowMethod(['post', 'delete']);
-        $this->loadModel('Estudantes');
-        $estudante = $this->Estudantes->get($id);
+        $estudantetable = $this->fetchTable('Estudantes');
+        $estudante = $estudantetable->get($id);
         $this->Authorization->authorize($estudante);
         if ($this->Estudantes->delete($estudante)) {
             $this->Flash->success(__('The aluno has been deleted.'));

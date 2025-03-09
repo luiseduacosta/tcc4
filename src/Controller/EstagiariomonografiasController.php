@@ -120,8 +120,8 @@ class EstagiariomonografiasController extends AppController {
                 $estudantes[$i]['id'] = $c_estagiario->tccestudante->id;
                 $estudantes[$i]['nome'] = $c_estagiario->tccestudante->nome;
 
-                $this->loadModel('Monografias');
-                $monografia = $this->Monografias->find('all', [
+                $monografiastable = $this->fetchTable('Monografias');
+                $monografia = $monografiastable->find('all', [
                     'conditions' => ['Monografias.id' => $c_estagiario->tccestudante->monografia_id]
                 ]);
                 // pr($monografia);

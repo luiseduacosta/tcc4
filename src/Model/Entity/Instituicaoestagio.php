@@ -31,12 +31,12 @@ use Cake\ORM\Entity;
  * @property string $avaliacao
  * @property string|null $observacoes
  *
- * @property \App\Model\Entity\Areainstituicao $areainstituicaos
- * @property \App\Model\Entity\Areaestagio $areaestagios
- * @property \App\Model\Entity\Estagiario[] $estagiarios
- * @property \App\Model\Entity\Muralestagio[] $muralestagios
- * @property \App\Model\Entity\Visita[] $visitas
- * @property \App\Model\Entity\Supervisor[] $supervisores
+ * @property \App\Model\Entity\Areainstituicao $areainstituicao
+ * @property \App\Model\Entity\Areaestagio $areaestagio
+ * @property \App\Model\Entity\Estagiario[] $estagiario
+ * @property \App\Model\Entity\Muralestagio[] $muralestagio
+ * @property \App\Model\Entity\Visita[] $visita
+ * @property \App\Model\Entity\Supervisor[] $supervisor
  * 
  */
 class Instituicaoestagio extends Entity
@@ -72,11 +72,11 @@ class Instituicaoestagio extends Entity
         'seguro' => true,
         'avaliacao' => true,
         'observacoes' => true,
-        'areainstituicaos' => true,
-        'areaestagios' => true,
-        'estagiarios' => true,
-        'muralestagios' => true,
-        'visitas' => true,
-        'supervisores' => true,
+        'areainstituicao' => true,
+        'areaestagio' => true,
+        'estagiario' => true,
+        'muralestagio' => true,
+        'visita' => true,
+        'supervisor' => true,
     ];
 }

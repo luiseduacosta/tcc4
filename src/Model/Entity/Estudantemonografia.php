@@ -24,7 +24,7 @@ use Cake\ORM\Entity;
  * @property string|null $bairro
  * @property string|null $observacoes
  * 
- * @property \App\Model\Entity\Estagiariomonografia[] $estagiariomonografias
+ * @property \App\Model\Entity\Estagiariomonografia[] $estagiariomonografia
  * 
  */
 class Estudantemonografia extends Entity

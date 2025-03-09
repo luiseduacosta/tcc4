@@ -35,7 +35,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <h3><?= __('Estagiarios por período e por TCC concluída') ?></h3>
 
     <?= $this->Form->create(null, ['url' => ['action' => 'index']]) ?>
-    <?= $this->Form->control('periodo', ['label' => 'Busca por 4º periodo de estágio', 'options' => $periodos, 'value' => $this->getRequest()->getSession()->read('periodo'), 'empty' => true]) ?>
+    <?= $this->Form->control('periodo', ['label' => 'Busca por 4º periodo de estágio', 'options' => $periodos, 'value' => $this->getRequest()->getSession()->read('periodo'), 'empty' => $periodo]) ?>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 

@@ -34,8 +34,8 @@ class AvaliacoesController extends AppController {
             $registro = $registroquery->first();
             // pr($registro);
             // die();
-            $this->loadModel('Estagiarios');
-            $estagiariosquery = $this->Estagiarios->find()
+            $estagiariotable = $this->fetchTable('Estagiarios');
+            $estagiariosquery = $estagiariotable->find()
                     ->contain(['Estudantes', 'Instituicaoestagios', 'Supervisores', 'Avaliacoes'])
                     ->where(['Estagiarios.alunonovo_id' => $registro->alunonovo_id]);
             $estagiarios = $estagiariosquery->all();
@@ -201,8 +201,8 @@ class AvaliacoesController extends AppController {
             $this->Flash->error(__('Selecionar o estudante estagiário'));
             return $this->redirect('/estudantes/index');
         } else {
-            $this->loadModel('Estagiarios');
-            $estagiarioquery = $this->Estagiarios->find()
+            $estagiariotable = $this->fetchTable('Estagiarios');
+            $estagiarioquery = $estagiariotable->find()
                     ->contain(['Estudantes', 'Supervisores', 'Instituicaoestagios'])
                     ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('numero')]);
             $estagiario = $estagiarioquery->all();

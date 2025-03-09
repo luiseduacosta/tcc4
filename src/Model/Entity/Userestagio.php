@@ -45,6 +45,9 @@ class Userestagio extends Entity {
         'docente_id' => true,
         'timestamp' => true,
         'role' => true,
+        'estudante' => true,
+        'supervisor' => true,
+        'docente' => true
     ];
 
     // Add this method

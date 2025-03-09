@@ -18,10 +18,11 @@ use Cake\Filesystem\Folder;
  *
  * @method \App\Model\Entity\Monografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class MonografiasController extends AppController {
+ class MonografiasController extends AppController
+{
 
-    public $Monografias = null;
-    public function beforeFilter(\Cake\Event\EventInterface $event) {
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
 
         parent::beforeFilter($event);
         // $this->Authorization->skipAuthorization();
@@ -33,20 +34,28 @@ class MonografiasController extends AppController {
      *
      * @return \Cake\Http\Response|null
      */
-    public function index() {
+    public function index()
+    {
 
         $this->Authorization->skipAuthorization();
-        $this->paginate['contain'] = ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']];
-        $this->paginate['sortableFields'] = [
-            'Monografias.titulo',
-            'Monografias.periodo',
-            'Monografias.url',
-            'Tccestudantes.nome',
-            'Docentes.nome',
-            'Areamonografias.area'];
-        $monografias = $this->paginate($this->Monografias);
+
+        $query = $this->Monografias->find()
+            ->contain(['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']]);
+
+        $monografias = $this->paginate($query, [
+            'sortableFields' => [
+                'Monografias.titulo',
+                'Monografias.periodo',
+                'Monografias.url',
+                'Tccestudantes.nome',
+                'Docentes.nome',
+                'Areamonografias.area'
+            ]
+        ]);
+
         $baseUrl = Router::url('/', true);
         $this->set(compact('monografias', 'baseUrl'));
+
     }
 
     /**
@@ -56,11 +65,12 @@ class MonografiasController extends AppController {
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
         $this->Authorization->skipAuthorization();
-        $this->loadModel('Monografias');
-        $monografia = $this->Monografias->get($id, [
+        $monografiatable = $this->fetchTable('Monografias');
+        $monografia = $monografiatable->get($id, [
             'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes'],
         ]);
         // pr($monografia);
@@ -74,10 +84,11 @@ class MonografiasController extends AppController {
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
 
-        $this->loadModel('Monografias');
-        $monografia = $this->Monografias->newEmptyEntity();
+        $monografiatable = $this->fetchModel('Monografias');
+        $monografia = $monografiatable->newEmptyEntity();
         $this->Authorization->authorize($monografia);
 
         if ($this->request->is('post')) {
@@ -87,7 +98,7 @@ class MonografiasController extends AppController {
 
             if ($this->request->getUploadedFile('url')->getSize() > 0):
                 $dados['url'] = $this->arquivo($dados);
-            // die();
+                // die();
             endif;
             /* Ajusto o periodo agregando ano e semestre */
             // pr($dados['ano']);
@@ -117,8 +128,8 @@ class MonografiasController extends AppController {
                 $tccestudante = $this->Monografias->Tccestudantes->newEmptyEntity();
 
                 /* Capturo o nome do estudante */
-                $this->loadModel('Estudantes');
-                $resultado = $this->Estudantes->find('all');
+                $estudantetable = $this->fetchTable('Estudantes');
+                $resultado = $estudantetable->find('all');
                 $resultado->where(['registro' => $dados['registro']]);
                 $resultado->select(['nome']);
                 $resultado->first();
@@ -143,14 +154,18 @@ class MonografiasController extends AppController {
         $estudantes = $this->estudantes();
         // pr($estudantes);
         /* Deveria ser somente para professores ativos */
-        $professores = $this->Monografias->Docentes->find('list',
-                ['keyField' => 'id', 'valueField' => 'nome']);
+        $professores = $this->Monografias->Docentes->find(
+            'list',
+            ['keyField' => 'id', 'valueField' => 'nome']
+        );
         // $professores->where(['dataegresso IS NULL']);
         $professores->order(['nome']);
         // debug($professores->toArray());
         // pr($professores);
         $areas = $this->Monografias->Areamonografias->find('list', [
-            'keyField' => 'id', 'valueField' => 'area']);
+            'keyField' => 'id',
+            'valueField' => 'area'
+        ]);
         $areas->order(['area' => 'asc']);
         $this->set(compact('estudantes', 'monografia', 'professores', 'areas'));
     }
@@ -162,10 +177,11 @@ class MonografiasController extends AppController {
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
-        $this->loadModel('Monografias');
-        $monografia = $this->Monografias->get($id, [
+        $monografiatable = $this->fetchTable('Monografias');
+        $monografia = $monografiatable->get($id, [
             'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes'],
         ]);
 
@@ -180,15 +196,15 @@ class MonografiasController extends AppController {
                 // echo 'Arquivo PDF';
                 /* Preciso do DRE para inserir uma monografia */
                 $resultado = $this->Monografias->Tccestudantes->find('all')
-                        ->where(['Tccestudantes.monografia_id' => $id])
-                        ->order(['Tccestudantes.nome']);
+                    ->where(['Tccestudantes.monografia_id' => $id])
+                    ->order(['Tccestudantes.nome']);
                 $registro = $resultado->first();
                 $dre = $registro->registro;
                 // $url->moveTo(WWW_ROOT . 'monografias/');
 
                 /* Chamo a função arquivo() com os parámetros do formulário e do $dre */
                 $dados['url'] = $this->arquivo($dados, $dre);
-            // die();
+                // die();
             elseif (!empty($dados['url_atual'])):
                 $dados['url'] = $dados['url_atual'];
             else:
@@ -210,11 +226,15 @@ class MonografiasController extends AppController {
         // $estudantes = $this->estudantes();
 
         $docentes = $this->Monografias->Docentes->find('list', [
-            'keyField' => 'id', 'valueField' => 'nome']);
+            'keyField' => 'id',
+            'valueField' => 'nome'
+        ]);
         $docentes->order(['nome' => 'asc']);
 
         $areas = $this->Monografias->Areamonografias->find('list', [
-            'keyField' => 'id', 'valueField' => 'area'], ['limit' => 200]);
+            'keyField' => 'id',
+            'valueField' => 'area'
+        ], ['limit' => 200]);
         $areas->order(['area' => 'asc']);
 
         $this->set(compact('monografia', 'docentes', 'areas'));
@@ -227,7 +247,8 @@ class MonografiasController extends AppController {
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
 
         $this->request->allowMethod(['post', 'delete']);
         $monografia = $this->Monografias->get($id);
@@ -242,7 +263,8 @@ class MonografiasController extends AppController {
         return $this->redirect(['action' => 'index']);
     }
 
-    public function busca() {
+    public function busca()
+    {
 
         $this->Authorization->skipAuthorization();
         if ($this->request->is('post')) {
@@ -255,9 +277,10 @@ class MonografiasController extends AppController {
                     'conditions' => ['titulo LIKE' => "%" . $busca . "%"],
                     'contain' => ['Docentes', 'Areamonografias', 'Tccestudantes']
                 ];
-            // die();
+                // die();
             endif;
-        };
+        }
+        ;
 
         if (!isset($busca)):
 
@@ -287,7 +310,8 @@ class MonografiasController extends AppController {
      * @param array $dados.
      * @return $dados['url'].
      */
-    private function arquivo($dados, $dre = null) {
+    private function arquivo($dados, $dre = null)
+    {
 
         $this->Authorization->skipAuthorization();
         // pr($dados);
@@ -308,8 +332,8 @@ class MonografiasController extends AppController {
             move_uploaded_file($_FILES['url']['tmp_name'], WWW_ROOT . 'monografias/' . $nome_arquivo);
             // die();
             $dados['url'] = $nome_arquivo;
-        // echo $dados['url'];
-        // die();
+            // echo $dados['url'];
+            // die();
         else:
             $this->Flash->error(__('Somente são permitidos arquivos PDF.'));
             return $this->redirect(['action' => 'add']);
@@ -324,11 +348,12 @@ class MonografiasController extends AppController {
      * @param array NULL.
      * @return array $estudantes
      */
-    private function estudantes() {
+    private function estudantes()
+    {
 
         /* Preciso capturar o registro do estudante */
-        $this->loadModel('Estudantes');
-        $estudantes = $this->Estudantes->find('all');
+        $estudantetable = $this->fetchTable('Estudantes');
+        $estudantes = $estudantetable->find('all');
         $estudantes->select(['registro', 'nome']);
         $estudantes->order(['nome' => 'asc']);
         // pr($estudantes);
@@ -344,14 +369,14 @@ class MonografiasController extends AppController {
             // pr($tcc->first());
             /* Estudantes sem TCC */
             if ($tcc->first()):
-            // echo "Com monografia" . "<br>";
-            // echo $tcc->first()->monografia_id . " ";
-            // echo $tcc->first()->registro . " ";
-            // echo $tcc->first()->nome . "<br>";
+                // echo "Com monografia" . "<br>";
+                // echo $tcc->first()->monografia_id . " ";
+                // echo $tcc->first()->registro . " ";
+                // echo $tcc->first()->nome . "<br>";
             else:
                 // echo "Sem monografia ";
                 $alunos[$c_estudante->registro] = $c_estudante->nome;
-            // echo "<br>";
+                // echo "<br>";
             endif;
             // echo "<br>";
         endforeach;
@@ -361,7 +386,8 @@ class MonografiasController extends AppController {
         /* Fim da captura dos registro dos estudantes */
     }
 
-    public function lista() {
+    public function lista()
+    {
 
         $this->Authorization->skipAuthorization();
         $path = WWW_ROOT . "/monografias/";
@@ -388,8 +414,8 @@ class MonografiasController extends AppController {
                     $arquivospdf[$i]['id'] = $monografias->id;
                     $arquivospdf[$i]['nome'] = $monografias->nome;
                     $arquivospdf[$i]['registro'] = $monografias->registro;
-                // pr($monografias);
-                // die();
+                    // pr($monografias);
+                    // die();
                 else:
                     $arquivospdf[$i]['pdf'] = $c_arquivo[0];
                     $arquivospdf[$i]['id'] = '';
@@ -411,7 +437,8 @@ class MonografiasController extends AppController {
      * Repara o valor do campo url da tabela Monografias em função dos PDF que há no folder 'monografias'
      */
 
-    public function verificapdf() {
+    public function verificapdf()
+    {
 
         $this->Authorization->skipAuthorization();
         $file_path = WWW_ROOT . 'monografias';
@@ -460,7 +487,8 @@ class MonografiasController extends AppController {
      * Altera o valor do campo url na tabela Monografias em função dos arquivos que estão no folder monografias
      */
 
-    public function verificafilespdf() {
+    public function verificafilespdf()
+    {
 
         $this->Authorization->skipAuthorization();
         $file_path = WWW_ROOT . 'monografias';
@@ -468,11 +496,11 @@ class MonografiasController extends AppController {
         $files = $dir->find('.*\.pdf');
         echo $total = count($files) . "<br>";
         $i = 0;
-        $this->loadModel("Tccestudantes");
+        $tccestudantetable = $this->fetchTable("Tccestudantes");
         foreach ($files as $file):
             $parte = explode(".", $file);
             // echo $file . "<br />";
-            $estudantes = $this->Tccestudantes->find();
+            $estudantes = $tccestudantetable->find();
             $estudantes->where(['registro' => $parte[0]]);
             $estudantes->select(['id', 'registro', 'monografia_id']);
             $estudantes->first();
@@ -483,7 +511,7 @@ class MonografiasController extends AppController {
             // pr($resultado_estudantes);
             if (sizeof($resultado_estudantes) == 0):
                 echo "Monografia não localizada na tabela Tccestudantes" . $file . '<br >';
-            // die();
+                // die();
             else:
                 $monografias = $this->Monografias->find();
                 $monografias->where(['id' => $resultado_estudantes[0]['monografia_id']]);
@@ -512,7 +540,8 @@ class MonografiasController extends AppController {
         die();
     }
 
-    public function download($dre, $id) {
+    public function download($dre, $id)
+    {
 
         $this->Authorization->skipAuthorization();
         $this->autoRender = false;

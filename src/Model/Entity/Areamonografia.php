@@ -11,8 +11,8 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $area
  *
- * @property \App\Model\Entity\Monografia[] $monografias
- * @property \App\Model\Entity\Docente[] $docentes
+ * @property \App\Model\Entity\Monografia[] $monografia
+ * @property \App\Model\Entity\Docente[] $docente
  */
 class Areamonografia extends Entity
 {
@@ -27,7 +27,7 @@ class Areamonografia extends Entity
      */
     protected $_accessible = [
         'area' => true,
-        'monografias' => true,
-        'docentes' => true,
+        'monografia' => true,
+        'docente' => true,
     ];
 }

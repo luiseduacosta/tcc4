@@ -11,9 +11,11 @@ namespace App\Controller;
  *
  * @method \App\Model\Entity\Agendamentotcc[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class AgendamentotccsController extends AppController {
+class AgendamentotccsController extends AppController
+{
 
-    public function beforeFilter(\Cake\Event\EventInterface $event) {
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
 
         parent::beforeFilter($event);
         // Permitir aos usuários se registrarem e efetuar logout.
@@ -28,21 +30,27 @@ class AgendamentotccsController extends AppController {
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index() {
+    public function index()
+    {
 
         $this->Authorization->skipAuthorization();
-        $this->paginate['contain'] = ['Estudantes', 'Docentes', 'Docentes1', 'Docentes2'];
-        $this->paginate['sortableFields'] = ['Alunos.nome',
-            'Docentes.nome',
-            'Docentes1.nome',
-            'Docentes2.nome',
-            'Agendamentotccs.data',
-            'Agendamentotccs.horario',
-            'Agendamentotccs.sala',
-            'Agendamentotccs.convidado',
-            'Agendamentotccs.avaliacao']
-        ;
-        $agendamentotccs = $this->paginate($this->Agendamentotccs);
+
+        $query = $this->Agendamentotccs->find()
+            ->contain(['Estudantes', 'Docentes', 'Docentes1', 'Docentes2']);
+
+        $agendamentotccs = $this->paginate($query, [
+            'sortableFields' => [
+                'Alunos.nome',
+                'Docentes.nome',
+                'Docentes1.nome',
+                'Docentes2.nome',
+                'Agendamentotccs.data',
+                'Agendamentotccs.horario',
+                'Agendamentotccs.sala',
+                'Agendamentotccs.convidado',
+                'Agendamentotccs.avaliacao'
+            ]
+        ]);
 
         $this->set(compact('agendamentotccs'));
     }
@@ -54,7 +62,8 @@ class AgendamentotccsController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
         $agendamentotcc = $this->Agendamentotccs->get($id, [
             'contain' => ['Estudantes', 'Docentes', 'Docentes1', 'Docentes2'],
         ]);
@@ -67,7 +76,8 @@ class AgendamentotccsController extends AppController {
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
 
         $agendamentotcc = $this->Agendamentotccs->newEmptyEntity();
         $this->Authorization->authorize($agendamentotcc);
@@ -88,13 +98,16 @@ class AgendamentotccsController extends AppController {
             $this->Flash->error(__('Agendamento TCC não foi inserido. Tente novamente'));
         }
         $qalunos = $this->Agendamentotccs->Estudantes->find('list', [
-            'keyField' => 'id', 'valueField' => 'nome'
+            'keyField' => 'id',
+            'valueField' => 'nome'
         ]);
         $qalunos->order('nome');
         $alunos = $qalunos->toArray();
         // pr($alunos);
         $qdocentes = $this->Agendamentotccs->Docentes->find('list', [
-            'keyField' => 'id', 'valueField' => 'nome']);
+            'keyField' => 'id',
+            'valueField' => 'nome'
+        ]);
         $qdocentes->order('nome');
         $docentes = $qdocentes->toArray();
 
@@ -108,7 +121,8 @@ class AgendamentotccsController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
         $agendamentotcc = $this->Agendamentotccs->get($id, [
             'contain' => ['Estudantes', 'Docentes', 'Docentes1', 'Docentes2'],
         ]);
@@ -136,11 +150,15 @@ class AgendamentotccsController extends AppController {
             $this->Flash->error(__('Agendamento TCC não foi atualizado. Tente novamente.'));
         }
         $qalunos = $this->Agendamentotccs->Estudantes->find('list', [
-            'keyField' => 'id', 'valueField' => 'nome']);
+            'keyField' => 'id',
+            'valueField' => 'nome'
+        ]);
         $qalunos->order(['nome' => 'asc']);
         $alunos = $qalunos->toArray();
         $qdocentes = $this->Agendamentotccs->Docentes->find('list', [
-            'keyField' => 'id', 'valueField' => 'nome']);
+            'keyField' => 'id',
+            'valueField' => 'nome'
+        ]);
         $qdocentes->order('nome');
         $docentes = $qdocentes->toArray();
 
@@ -154,7 +172,8 @@ class AgendamentotccsController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
         $this->request->allowMethod(['post', 'delete']);
         $agendamentotcc = $this->Agendamentotccs->get($id);
         $this->Authorization->authorize($agendamentotcc);

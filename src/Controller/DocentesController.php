@@ -15,8 +15,6 @@ use Cake\Event\Event;
  * @method \App\Model\Entity\Docente[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocentesController extends AppController {
-
-    public $Docentes = null;
     
     public function beforeFilter(\Cake\Event\EventInterface $event) {
         
@@ -94,9 +92,9 @@ class DocentesController extends AppController {
      */
     public function view($id = null) {
 
-        $this->loadModel("Docentes");
+        $docentetable = $this->fetchTable("Docentes");
         $this->Authorization->skipAuthorization();
-        $docente = $this->Docentes->get($id, [
+        $docente = $docentetable->get($id, [
             'contain' => ['Monografias', 'Areamonografias'],
         ]);
         $this->set('docente', $docente);
@@ -109,8 +107,8 @@ class DocentesController extends AppController {
      */
     public function add() {
 
-        $this->loadModel("Docentes");
-        $docente = $this->Docentes->newEmptyEntity();
+        $docentetable = $this->fetchTable("Docentes");
+        $docente = $docentetable->newEmptyEntity();
         $this->Authorization->authorize($docente);
 
         if ($this->request->is('post')) {
@@ -134,8 +132,8 @@ class DocentesController extends AppController {
      */
     public function edit($id = null) {
 
-        $this->loadModel("Docentes");
-        $docente = $this->Docentes->get($id, [
+        $docentetable = $this->fetchTable("Docentes");
+        $docente = $docentetable->get($id, [
             'contain' => [],
         ]);
         $this->Authorization->authorize($docente);

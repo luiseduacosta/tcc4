@@ -20,8 +20,8 @@ class MuralinscricoesController extends AppController {
     public function index($periodo = NULL) {
 
         if (empty($periodo)) {
-            $this->loadModel('Configuracao');
-            $periodoconfiguracao = $this->Configuracao->get(1);
+            $configuracaotable = $this->fetchTable('Configuracao');
+            $periodoconfiguracao = $configuracaotable->get(1);
             $periodo = $periodoconfiguracao->mural_periodo_atual;
         }
 
@@ -97,16 +97,16 @@ class MuralinscricoesController extends AppController {
                 // die();
                 $data = $this->request->getData();
 
-                $this->loadModel('Alunos');
-                $aluno = $this->Alunos->find()->where(['registro' => $dre])->select(['id']);
+                $alunotable = $this->fetchTable('Alunos');
+                $aluno = $alunotable->find()->where(['registro' => $dre])->select(['id']);
                 $aluno_id = $aluno->first();
                 // pr($aluno_id);
-                $this->loadModel('Estudantes');
-                $estudante = $this->Estudantes->find()->where(['registro' => $dre])->select(['id']);
+                $estudantetable = $this->fetchTable('Estudantes');
+                $estudante = $estudantetable->find()->where(['registro' => $dre])->select(['id']);
                 $estudante_id = $estudante->first();
                 // pr($estudante_id);
-                $this->loadModel('Configuracao');
-                $periodo = $this->Configuracao->get(1);
+                $configuracaotable = $this->fetchTable('Configuracao');
+                $periodo = $configuracaotable->get(1);
                 $periodo = $periodo->mural_periodo_atual;
 
                 $data['id_aluno'] = $dre;
@@ -153,14 +153,14 @@ class MuralinscricoesController extends AppController {
         endif;
 
         /* Estudantes */
-        $this->loadModel('Estudantes');
-        $alunonovos = $this->Estudantes->find()
+        $estudantetable = $this->fetchTable('Estudantes');
+        $alunonovos = $estudantetable->find()
                 ->where(['estudantes.registro' => $this->getRequest()->getSession()->read('numero')])
                 ->select(['estudantes.id', 'estudantes.registro', 'estudantes.nome']);
         $alunonovos = $alunonovos->first();
 
-        $this->loadModel('Alunos');
-        $alunoestagios = $this->Alunos->find()
+        $alunotable = $this->fetchTable('Alunos');
+        $alunoestagios = $alunotable->find()
                 ->where(['alunos.registro' => $this->getRequest()->getSession()->read('numero')])
                 ->select(['alunos.id', 'alunos.nome']);
         $alunoestagios = $alunoestagios->first();

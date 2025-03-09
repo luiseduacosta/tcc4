@@ -35,7 +35,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Instituicaoestagio $instituicaoestagio
  * @property \App\Model\Entity\Areaestagio $areaestagio
  * @property \App\Model\Entity\Docente $docente
- * @property \App\Model\Entity\Muralinscricao[] $muralinscricoes
+ * @property \App\Model\Entity\Muralinscricao[] $muralinscricao
  */
 class Muralestagio extends Entity
 {

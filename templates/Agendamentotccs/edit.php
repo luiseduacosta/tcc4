@@ -44,10 +44,10 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('docente_id', ['options' => $docentes]);
         echo $this->Form->control('banca1', ['options' => $docentes]);
         echo $this->Form->control('banca2', ['options' => $docentes]);
+        echo $this->Form->control('convidado', ['label' => 'Convidado(a)']);
         echo $this->Form->control('data', ['type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
         echo $this->Form->control('horario', ['type' => 'time', 'templates' => ['dateWidget' => '{{HH}}{{mm}}{{ss}}']]);
         echo $this->Form->control('sala');
-        echo $this->Form->control('convidado');
         echo $this->Form->control('titulo');
         echo $this->Form->control('avaliacao');
         ?>

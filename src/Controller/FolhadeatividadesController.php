@@ -70,8 +70,8 @@ class FolhadeatividadesController extends AppController {
             $this->Flash->error(__('Selecione o estágio'));
             return $this->redirect('/estudantes/view?registro=' . $this->getRequest()->getSession()->read('numero'));
         } else {
-            $this->loadModel('Estagiarios');
-            $estagiarioquery = $this->Estagiarios->find()
+            $estagiariotable = $this->fetchTable('Estagiarios');
+            $estagiarioquery = $estagiariotable->find()
                     ->contain(['Estudantes'])
                     ->where(['Estagiarios.id' => $id]);
 
@@ -99,8 +99,8 @@ class FolhadeatividadesController extends AppController {
           $estagiariocategoria = $this->getRequest()->getSession()->read('id_categoria');
           $estagiarionumero = $this->getRequest()->getSession()->read('numero');
           if ($estagiariocategoria == 2) {
-          $this->loadModel('Estagiarios');
-          $estudantequery = $this->Estagiarios->find()
+          $estagiariotable = $this->fetchtable('Estagiarios');
+          $estudantequery = $estagiariotable->find()
           ->contain(['Estudantes'])
           ->where(['estagiarios.registro' => $estagiarionumero]);
 
@@ -177,8 +177,8 @@ class FolhadeatividadesController extends AppController {
             $this->Flash->error(__('Selecione o estagiário e o período da folha de atividades'));
             return $this->redirect('/estagiarios/index');
         } else {
-            $this->loadModel('Estagiarios');
-            $estagiarioquery = $this->Estagiarios->find()
+            $estagiariotable = $this->fetchTable('Estagiarios');
+            $estagiarioquery = $estagiariotable->find()
                     ->contain(['Estudantes', 'Supervisores', 'Instituicaoestagios'])
                     ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('numero')]);
             $estagiario = $estagiarioquery->all();

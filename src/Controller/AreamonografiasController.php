@@ -11,17 +11,16 @@ namespace App\Controller;
  *
  * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class AreamonografiasController extends AppController {
+class AreamonografiasController extends AppController
+{
 
-    public $Monografias = null;
-    public $Docentes = null;
-    public $Tccestudantes = null;
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null
      */
-    public function index() {
+    public function index()
+    {
 
         $this->Authorization->skipAuthorization();
 
@@ -37,7 +36,8 @@ class AreamonografiasController extends AppController {
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
         $this->Authorization->skipAuthorization();
         $areamonografia = $this->Areamonografias->get($id, [
@@ -52,7 +52,8 @@ class AreamonografiasController extends AppController {
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
 
         $area = $this->Areamonografias->newEmptyEntity();
         $this->Authorization->authorize($area);
@@ -77,7 +78,8 @@ class AreamonografiasController extends AppController {
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
         $areamonografia = $this->Areamonografias->get($id, [
             'contain' => ['Docentes'],
@@ -104,7 +106,8 @@ class AreamonografiasController extends AppController {
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
 
         $this->request->allowMethod(['post', 'delete']);
         $areamonografia = $this->Areamonografias->get($id);

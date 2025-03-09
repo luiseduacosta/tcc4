@@ -49,10 +49,10 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('docente_id', ['label' => 'Professor(a)', 'options' => $docentes, 'empty' => 'Seleciona']);
         echo $this->Form->control('banca1', ['label' => 'Banca', 'options' => $docentes, 'empty' => 'Seleciona']);
         echo $this->Form->control('banca2', ['label' => 'Banca', 'options' => $docentes, 'empty' => 'Seleciona']);
+        echo $this->Form->control('convidado', ['label' => 'Convidado(a)']);
         echo $this->Form->control('data', ['type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
         echo $this->Form->control('horario', ['type' => 'time', 'templates' => ['dateWidget' => '{{HH}}{{mm}}{{ss}}']]);
         echo $this->Form->control('sala', ['label' => 'Sala. Colocar 0 se for não-presencial', 'default' => '0']);
-        echo $this->Form->control('convidado');
         ?>
         <div class=" form-group row">
             <label class="col-2 control-label">Título</label>

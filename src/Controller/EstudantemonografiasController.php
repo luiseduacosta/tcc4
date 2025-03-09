@@ -124,8 +124,8 @@ class EstudantemonografiasController extends AppController {
 
         $this->Authorization->skipAuthorization();
 
-        $this->loadModel('Tccestudantes');
-        $tccestudantequery = $this->Tccestudantes->find()->select(['registro'])->where(['id' => $id]);
+        $tccestudantetable = $this->fetchTable('Tccestudantes');
+        $tccestudantequery = $tccestudantetable->find()->select(['registro'])->where(['id' => $id]);
         $tccestudante = $tccestudantequery->first();
 
         if ($tccestudante):
@@ -150,8 +150,8 @@ class EstudantemonografiasController extends AppController {
      */
     public function add() {
 
-        $this->loadModel('Estudantemonografias');
-        $estudante = $this->Estudante->newEmptyEntity();
+        $estudantetable = $this->fetchTable('Estudantemonografias');
+        $estudante = $estudantetable->newEmptyEntity();
         $this->Authorization->authorize($estudante);
 
         if ($this->request->is('post')) {
