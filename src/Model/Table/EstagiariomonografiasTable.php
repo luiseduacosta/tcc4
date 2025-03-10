@@ -10,7 +10,6 @@ use Cake\Validation\Validator;
 /**
  * Estagiariomonografias Model
  *
- * @property \App\Model\Table\AlunosTable&\Cake\ORM\Association\BelongsTo $Alunos
  * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
  * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
  * @property \App\Model\Table\SupervisoresTable&\Cake\ORM\Association\BelongsTo $Supervisores
@@ -47,10 +46,6 @@ class EstagiariomonografiasTable extends Table
                 $this->setDisplayField('registro');
                 $this->setPrimaryKey('id');
 
-                $this->belongsTo('Alunos', [
-                        'foreignKey' => 'id_aluno',
-                        'joinType' => 'INNER',
-                ]);
                 $this->belongsTo('Estudantes', [
                         'foreignKey' => 'alunonovo_id',
                 ]);

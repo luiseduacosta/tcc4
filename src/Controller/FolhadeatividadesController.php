@@ -77,7 +77,7 @@ class FolhadeatividadesController extends AppController {
 
             if (!$estagiarioquery) {
                 $this->Flash->error(__('Estudante sem estágio cadastrado'));
-                return redirect('/Estudantes/view/' . $id);
+                return $this->redirect('/Estudantes/view/' . $id);
             }
         }
 

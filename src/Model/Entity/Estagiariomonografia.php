@@ -22,7 +22,6 @@ use Cake\ORM\Entity;
  * @property int|null $ch
  * @property string|null $observacoes
  *
- * @property \App\Model\Entity\Aluno $aluno
  * @property \App\Model\Entity\Docente $docente
  * @property \App\Model\Entity\Estudante $estudante
  * @property \App\Model\Entity\Supervisor $supervisor
@@ -61,7 +60,6 @@ class Estagiariomonografia extends Entity
         'observacoes' => true,
         'complemento_id' => true,
         'ajuste2020' => true,
-        'aluno' => true,
         'docente' => true,
         'estudante' => true,
         'supervisor' => true,

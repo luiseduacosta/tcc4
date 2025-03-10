@@ -1,19 +1,31 @@
 <?php
+
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
-use Authentication\PasswordHasher\DefaultPasswordHasher;
+use Authentication\PasswordHasher\DefaultPasswordHasher; // Add this line
 use Cake\ORM\Entity;
 
 /**
- * User Entity
+ * Userestagio Entity
  *
  * @property int $id
- * @property string $email
- * @property string $password
+ * @property string|null $email
+ * @property string|null $password
  * @property string $categoria
+ * @property int $numero
+ * @property int|null $estudante_id
+ * @property int|null $supervisor_id
+ * @property int|null $docente_id
+ * @property \Cake\I18n\FrozenTime $timestamp
+ *
+ * @property \App\Model\Entity\Estudante $estudante
+ * @property \App\Model\Entity\Supervisor $supervisor
+ * @property \App\Model\Entity\Docente $docente
  */
-class User extends Entity
-{
+class User extends Entity {
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -27,21 +39,31 @@ class User extends Entity
         'email' => true,
         'password' => true,
         'categoria' => true,
+        'numero' => true,
+        'estudante_id' => true,
+        'supervisor_id' => true,
+        'docente_id' => true,
+        'timestamp' => true,
+        'role' => true,
+        'estudante' => true,
+        'supervisor' => true,
+        'docente' => true
     ];
 
-    protected function _setPassword($password): ?string
-    {
+    // Add this method
+    protected function _setPassword(string $password): ?string {
         if (strlen($password) > 0) {
-            return (new DefaultPasswordHasher)->hash($password);
+            return (new DefaultPasswordHasher())->hash($password);
         }
     }
-    
+
     /**
      * Fields that are excluded from JSON versions of the entity.
      *
      * @var array
      */
-    // protected $_hidden = [
-    //     'password',
-    // ];
+    protected $_hidden = [
+        'password',
+    ];
+
 }

@@ -22,6 +22,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Estudante $estudante
  * @property \App\Model\Entity\Docente $docente
+ * 
  */
 class Agendamentotcc extends Entity
 {

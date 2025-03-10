@@ -36,6 +36,9 @@ $usuario = $this->getRequest()->getAttribute('identity');
                     <?= $this->Html->link(__('Trajetórias'), ['controller' => 'Estagiarios', 'action' => 'index'], ['class' => 'nav-link']) ?>
                 </li>
             <?php endif; ?>
+            <li class='nav-item'>
+                <?= $this->Html->link(__('Mural'), ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'nav-link']) ?>
+            </li>
             <?php if (isset($usuario) && !empty($usuario)): ?>
                 <li class='nav-item'>
                     <?= $this->Html->link(__('Sair'), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'nav-link']) ?>

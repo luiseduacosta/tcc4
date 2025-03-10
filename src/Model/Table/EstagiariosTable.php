@@ -58,6 +58,7 @@ class EstagiariosTable extends Table
                 $this->belongsTo('Areaestagios', [
                         'foreignKey' => 'area_id',
                 ]);
+
                 $this->belongsTo('Supervisores', [
                         'foreignKey' => 'supervisor_id',
                 ]);
@@ -65,12 +66,15 @@ class EstagiariosTable extends Table
                 $this->belongsTo('Instituicaoestagios', [
                         'foreignKey' => 'instituicao_id',
                 ]);
+
                 $this->hasOne('Avaliacoes', [
                         'foreignKey' => 'estagiario_id',
                 ]);
+
                 $this->hasOne('Folhadeatividades', [
                         'foreignKey' => 'estagiario_id',
                 ]);
+
                 $this->belongsTo('Tccestudantes', [
                         'className' => 'Tccestudantes',
                         'foreignKey' => FALSE,

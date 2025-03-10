@@ -1,4 +1,3 @@
-<?php $id_categoria = $this->getRequest()->getSession()->read('id_categoria') ?>
 <?php $usuario = $this->getRequest()->getAttribute('identity'); ?>
 
 <?php // pr($usuario->categoria);   ?>
@@ -56,9 +55,12 @@
             <li class = "nav-item">
                 <?php echo $this->Html->link('Fale conosco', 'mailto: estagio@ess.ufrj.br', ['class' => 'nav-link']); ?>
             </li>
+            <li class = "nav-item">
+                <?php echo $this->Html->link('TCC', ['controller' => 'Monografias', 'action' => 'index'], ['class' => 'nav-link']); ?>
+            </li>            
             <?php if (!(isset($usuario->categoria))): ?>
                 <li class = "nav-item">
-                    <?php echo $this->Html->link('Login', ['controller' => 'userestagios', 'action' => 'login'], ['class' => 'nav-link']); ?>
+                    <?php echo $this->Html->link('Login', ['controller' => 'users', 'action' => 'login'], ['class' => 'nav-link']); ?>
                 </li>
             <?php endif; ?>
         </ul>
@@ -70,7 +72,7 @@
                     case 1: // Administrador
                         ?>
                         <li class = "nav-item">
-                            <?php echo $this->Html->link('Sair', '/userestagios/logout/', ['class' => 'nav-link']); ?>
+                            <?php echo $this->Html->link('Sair', '/users/logout/', ['class' => 'nav-link']); ?>
                         </li>
                         <?php
                         break;
@@ -105,7 +107,7 @@
                             <?php echo $this->Html->link("Meus dados", "/estudantes/view?registro=" . $this->getRequest()->getSession()->read('numero'), ['class' => 'nav-link']); ?>
                         </li>
                         <li class = "nav-item">
-                            <?php echo $this->Html->link('Sair', '/userestagios/logout/', ['class' => 'nav-link']); ?>
+                            <?php echo $this->Html->link('Sair', '/users/logout/', ['class' => 'nav-link']); ?>
                         </li>
                         <?php
                         break;
@@ -120,7 +122,7 @@
                             <?php echo $this->Html->link("Meus dados", "/Docentes/view?siape=" . $this->getRequest()->getSession()->read('numero'), ['class' => 'nav-link']); ?>
                         </li>
                         <li class = "nav-item">
-                            <?php echo $this->Html->link('Sair', '/Userestagios/logout/', ['class' => 'nav-link']); ?>
+                            <?php echo $this->Html->link('Sair', '/Users/logout/', ['class' => 'nav-link']); ?>
                         </li>
                         <?php
                         break;
@@ -133,14 +135,14 @@
                             <?php echo $this->Html->link("Meus dados", "/Supervisores/view?cress=" . $this->getRequest()->getAttribute('identity')['numero'], ['class' => 'nav-link']); ?>
                         </li>
                         <li class = "nav-item">
-                            <?php echo $this->Html->link('Sair', '/Userestagios/logout/', ['class' => 'nav-link']); ?>
+                            <?php echo $this->Html->link('Sair', '/Users/logout/', ['class' => 'nav-link']); ?>
                         </li>
                         <?php
                         break;
                     default:
                         ?>
                         <li class="nav-item">
-                            <?php echo $this->Html->link("Login", ['controller' => 'Userestagios', 'action' => 'login'], ['class' => 'nav-link']); ?>
+                            <?php echo $this->Html->link("Login", ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link']); ?>
                         </li>
                     <?php
                 }
