@@ -14,7 +14,7 @@ use Cake\ORM\Entity;
  * @property string|null $resumo
  * @property string|null $data
  * @property string|null $periodo
- * @property int|null $docente_id
+ * @property int|null $professor_id
  * @property int|null $co_orienta_id
  * @property int|null $areamonografia_id
  * @property int|null $classificamonografia_id
@@ -26,9 +26,9 @@ use Cake\ORM\Entity;
  * @property string|null $url
  * @property \Cake\I18n\FrozenTime|null $timestamp
  *
- * @property \App\Model\Entity\Docente $docente
- * @property \App\Model\Entity\Areamonografia $areamonografia
- * @property \App\Model\Entity\Tccestudante[] $tccestudante
+ * @property \App\Model\Entity\Professor[] $professores
+ * @property \App\Model\Entity\Areamonografia[] $areamonografias
+ * @property \App\Model\Entity\Tccestudante[] $tccestudantes
  */
 class Monografia extends Entity
 {
@@ -47,7 +47,7 @@ class Monografia extends Entity
         'resumo' => true,
         'data' => true,
         'periodo' => true,
-        'docente_id' => true,
+        'professor_id' => true,
         'co_orienta_id' => true,
         'areamonografia_id' => true,
         'classificamonografia_id' => true,        
@@ -58,7 +58,7 @@ class Monografia extends Entity
         'convidado' => true,
         'url' => true,
         'timestamp' => true,
-        'docente' => true,
+        'professor' => true,
         'areamonografia' => true,
         'tccestudante' => true,
     ];

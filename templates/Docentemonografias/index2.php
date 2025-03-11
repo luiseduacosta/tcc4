@@ -2,7 +2,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Docente[]|\Cake\Collection\CollectionInterface $docentes
+ * @var \App\Model\Entity\Docente[]|\Cake\Collection\CollectionInterface $Professores
  */
 ?>
 <div class="d-flex justify-content-center">
@@ -14,7 +14,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php endif; ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <h3><?= __('Docentes') ?></h3>
+    <h3><?= __('Professores') ?></h3>
     <p>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <?= $this->Html->link('Dados funcionais', ['controller' => 'docentemonografias', 'action' => 'index0'], ['class' => 'button float-right']) ?>

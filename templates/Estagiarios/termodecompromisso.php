@@ -30,7 +30,7 @@
                         <th><?= $this->Paginator->sort('tc_solicitacao') ?></th>
                         <th><?= $this->Paginator->sort('Instituicaoestagios.instituicao', 'Instituicao') ?></th>
                         <th><?= $this->Paginator->sort('Supervisores.nome', 'Supervisor') ?></th>
-                        <th><?= $this->Paginator->sort('Docentes.nome', 'Professor/a') ?></th>
+                        <th><?= $this->Paginator->sort('Professores.nome', 'Professor/a') ?></th>
                         <th><?= $this->Paginator->sort('periodo') ?></th>
                         <th><?= $this->Paginator->sort('tipo_de_estagio') ?></th>
                         <th><?= $this->Paginator->sort('Areaestagio.area', 'Área') ?></th>
@@ -56,7 +56,7 @@
                             <td><?= $estagiario->tc_solicitacao ? date('d-m-Y', strtotime(h($estagiario->tc_solicitacao))) : '' ?></td>
                             <td><?= $estagiario->has('instituicaoestagio') ? $this->Html->link($estagiario->instituicaoestagio->instituicao, ['controller' => 'Instituicaoestagios', 'action' => 'view', $estagiario->instituicaoestagio->id]) : '' ?></td>
                             <td><?= $estagiario->has('supervisor') ? $this->Html->link($estagiario->supervisor->nome, ['controller' => 'Supervisores', 'action' => 'view', $estagiario->supervisor->id, 'empty' => 'Seleciona']) : '' ?></td>
-                            <td><?= $estagiario->has('docente') ? $this->Html->link($estagiario->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $estagiario->docente->id]) : '' ?></td>
+                            <td><?= $estagiario->has('docente') ? $this->Html->link($estagiario->docente->nome, ['controller' => 'Professores', 'action' => 'view', $estagiario->docente->id]) : '' ?></td>
                             <td><?= h($estagiario->periodo) ?></td>
                             <td><?= h($estagiario->tipo_de_estagio) ?></td>
                             <td><?= $estagiario->has('areaestagio') ? $this->Html->link($estagiario->areaestagio->area, ['controller' => 'Areaestagios', 'action' => 'view', $estagiario->id_area]) : '' ?></td>

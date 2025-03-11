@@ -27,7 +27,7 @@ class UserestagiosController extends AppController {
     public function index() {
 
         $this->paginate = [
-            'contain' => ['Estudantes', 'Supervisores', 'Docentes'],
+            'contain' => ['Estudantes', 'Supervisores', 'Professores'],
         ];
         $userestagios = $this->paginate($this->Userestagios);
         $this->Authorization->authorize($this->Userestagios);
@@ -44,7 +44,7 @@ class UserestagiosController extends AppController {
     public function view($id = null) {
 
         $userestagio = $this->Userestagios->get($id, [
-            'contain' => ['Estudantes', 'Supervisores', 'Docentes'],
+            'contain' => ['Estudantes', 'Supervisores', 'Professores'],
         ]);
         $this->Authorization->authorize($userestagio);
         $this->set(compact('userestagio'));
@@ -131,13 +131,13 @@ class UserestagiosController extends AppController {
                 endif;
 
                 /* Verifico se está cadatrado como docente */
-                $docentetable = $this->fetchTable('Docentes');
+                $docentetable = $this->fetchTable('Professores');
                 $docentequery = $docentetable->find()->where(['siape' => $this->request->getData('numero')]);
                 $docentecadastrado = $docentequery->first();
                 // pr($docentecadastrado);
                 // die();
                 if ($docentecadastrado) {
-                    $dados['docente_id'] = $docentecadastrado->id;
+                    $dados['professor_id'] = $docentecadastrado->id;
                     // pr($dados);
                     // die();
                     $userestagio = $this->Userestagios->patchEntity($userestagio, $dados);
@@ -148,8 +148,8 @@ class UserestagiosController extends AppController {
                         $this->getRequest()->getSession()->write('numero', $this->request->getData('numero'));
                         $this->getRequest()->getSession()->write('usuario', $this->request->getData('email'));
 
-                        /* Precisa de autorização na ação add do controller Docentes */
-                        return $this->redirect(['controller' => 'docentes', 'action' => 'add', '?' => ['siape' => $this->request->getData('numero'), 'email' => $this->request->getData('email')]]);
+                        /* Precisa de autorização na ação add do controller Professores */
+                        return $this->redirect(['controller' => 'Professores', 'action' => 'add', '?' => ['siape' => $this->request->getData('numero'), 'email' => $this->request->getData('email')]]);
                     }
                 } else {
                     $userestagio = $this->Userestagios->patchEntity($userestagio, $dados);
@@ -161,10 +161,10 @@ class UserestagiosController extends AppController {
                         $this->getRequest()->getSession()->write('usuario', $this->request->getData('email'));
 
                         /* Precisa de autorização na ação add do controller Estudantes */
-                        return $this->redirect(['controller' => 'docentes', 'action' => 'add', '?' => ['registro' => $this->request->getData('numero'), 'email' => $this->request->getData('email')]]);
+                        return $this->redirect(['controller' => 'Professores', 'action' => 'add', '?' => ['registro' => $this->request->getData('numero'), 'email' => $this->request->getData('email')]]);
                     }
                 }
-                $this->Flash->error(__('Docentes são cadastrados diretamente junto com a Coordenação de Estágio'));
+                $this->Flash->error(__('Professores são cadastrados diretamente junto com a Coordenação de Estágio'));
                 return $this->redirect('/muralestagios/index');
             endif;
 
@@ -201,7 +201,7 @@ class UserestagiosController extends AppController {
                         $this->getRequest()->getSession()->write('numero', $this->request->getData('numero'));
                         $this->getRequest()->getSession()->write('usuario', $this->request->getData('email'));
 
-                        /* Precisa de autorização na ação add do controller Docentes */
+                        /* Precisa de autorização na ação add do controller Professores */
                         return $this->redirect(['controller' => 'supervisores', 'action' => 'add', '?' => ['siape' => $this->request->getData('numero'), 'email' => $this->request->getData('email')]]);
                     }
                 } else {
@@ -224,8 +224,8 @@ class UserestagiosController extends AppController {
         }
         $estudantes = $this->Userestagios->Estudantes->find('list', ['limit' => 200]);
         $supervisores = $this->Userestagios->Supervisores->find('list', ['limit' => 200]);
-        $docentes = $this->Userestagios->Docentes->find('list', ['limit' => 200]);
-        $this->set(compact('userestagio', 'estudantes', 'supervisores', 'docentes'));
+        $Professores = $this->Userestagios->Professores->find('list', ['limit' => 200]);
+        $this->set(compact('userestagio', 'estudantes', 'supervisores', 'Professores'));
     }
 
     /**
@@ -253,8 +253,8 @@ class UserestagiosController extends AppController {
         }
         $estudantes = $this->Userestagios->Estudantes->find('list', ['limit' => 200]);
         $supervisores = $this->Userestagios->Supervisores->find('list', ['limit' => 200]);
-        $docentes = $this->Userestagios->Docentes->find('list', ['limit' => 200]);
-        $this->set(compact('userestagio', 'estudantes', 'supervisores', 'docentes'));
+        $Professores = $this->Userestagios->Professores->find('list', ['limit' => 200]);
+        $this->set(compact('userestagio', 'estudantes', 'supervisores', 'Professores'));
     }
 
     /**
@@ -297,7 +297,7 @@ class UserestagiosController extends AppController {
             $dados['numero'] = $this->Authentication->getIdentityData('numero');
             $dados['email'] = $this->Authentication->getIdentityData('email');
             $dados['estudante_id'] = $this->Authentication->getIdentityData('estudante_id');
-            $dados['docente_id'] = $this->Authentication->getIdentityData('docente_id');
+            $dados['professor_id'] = $this->Authentication->getIdentityData('professor_id');
             $dados['supervisor_id'] = $this->Authentication->getIdentityData('supervisor_id');
             // pr($dados);
             // die();
@@ -365,14 +365,14 @@ class UserestagiosController extends AppController {
                     echo "Professor";
 
                     /* Verifico se está cadastrado como docente */
-                    $docentetable = $this->fetchTable('Docentes');
+                    $docentetable = $this->fetchTable('Professores');
                     $docentequery = $docentetable->find()
                             ->contain(['Estagiarios'])
                             ->where(['siape' => $dados['numero']]);
                     $docente = $docentequery->first();
                     if (!$docente) {
                         // echo "Docente sem cadastrado";
-                        return $this->redirect(__('/docentes/add?siape=' . $dados['numero']));
+                        return $this->redirect(__('/Professores/add?siape=' . $dados['numero']));
                     }
                     if ($docente->has('estagiarios')) {
                         $this->getRequest()->getSession()->write('estagiario', 1);
@@ -381,10 +381,10 @@ class UserestagiosController extends AppController {
                     }
                     // die('Professor');
 
-                    /* Verifico ainda se o campo docente_id está preenchido */
-                    if (empty($dados['docente_id'])):
+                    /* Verifico ainda se o campo professor_id está preenchido */
+                    if (empty($dados['professor_id'])):
                         // echo "Docente não cadastrado";
-                        return $this->redirect('/docentes/add?siape=' . $dados['numero']);
+                        return $this->redirect('/Professores/add?siape=' . $dados['numero']);
                     else:
 
                         $this->getRequest()->getSession()->write('id_categoria', $dados['id_categoria']);
@@ -477,14 +477,14 @@ class UserestagiosController extends AppController {
             if ($c_user->categoria == 3) {
                 // pr($c_user->numero);
                 // die();
-                $docentetable = $this->loadMode('Docentes');
-                $docente = $this->Docentes->find()
+                $docentetable = $this->loadMode('Professores');
+                $docente = $this->Professores->find()
                         ->contain([])
-                        ->where(['docentes.siape' => $c_user->numero]);
+                        ->where(['Professores.siape' => $c_user->numero]);
                 // pr($docente);
                 // pr($docente->first()->siape);
-                $c_user->docente_id = $docente->first()->id;
-                // pr($c_user->docente_id);
+                $c_user->professor_id = $docente->first()->id;
+                // pr($c_user->professor_id);
                 // pr($c_user->id);
                 // die();
                 if ($this->Userestagios->save($c_user)) {
@@ -494,9 +494,9 @@ class UserestagiosController extends AppController {
                     echo "Erro!" . "<br>";
                     $this->Flash->error(__('The userestagio could not be saved. Please, try again.'));
                 };
-                // die('if docentes');
+                // die('if Professores');
             }
-            // die('Docentes');
+            // die('Professores');
             // Supervisores
             if ($c_user->categoria == 4) {
                 // pr($c_user->numero);
@@ -508,7 +508,7 @@ class UserestagiosController extends AppController {
                 // pr($docente);
                 // pr($docente->first()->siape);
                 $c_user->supervisor_id = $supervisor->first()->id;
-                // pr($c_user->docente_id);
+                // pr($c_user->professor_id);
                 // pr($c_user->id);
                 // die();
                 if ($this->Userestagios->save($c_user)) {
@@ -518,9 +518,9 @@ class UserestagiosController extends AppController {
                     echo "Erro!" . "<br>";
                     $this->Flash->error(__('The userestagio could not be saved. Please, try again.'));
                 };
-                // die('if docentes');
+                // die('if Professores');
             }
-            // die('Docentes');
+            // die('Professores');
         }
         // pr($user);
         die();

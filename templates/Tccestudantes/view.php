@@ -41,8 +41,8 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <td scope="row"><?= __('Nome') ?></td>
-            <?php if (!empty($tccestudante->estudante)): ?>
-                <td><?= $this->Html->link($tccestudante->estudante->nome, ['controller' => 'estudantes', 'action' => 'view', $tccestudante->estudante->id]) ?>
+            <?php if (!empty($tccestudante->aluno)): ?>
+                <td><?= $this->Html->link($tccestudante->aluno->nome, ['controller' => 'alunos', 'action' => 'view', $tccestudante->aluno->id]) ?>
                 </td>
             <?php else: ?>
                 <td><?= h($tccestudante->nome) ?></td>

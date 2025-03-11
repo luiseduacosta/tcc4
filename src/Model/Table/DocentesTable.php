@@ -8,7 +8,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Docentes Model
+ * Professores Model
  *
  * @property \App\Model\Table\MonografiasTable&\Cake\ORM\Association\HasMany $Monografias
  * @property \App\Model\Table\AreamonografiasTable&\Cake\ORM\Association\HasMany $Areamonografias
@@ -33,18 +33,18 @@ class DocentesTable extends Table {
     public function initialize(array $config): Void {
         parent::initialize($config);
 
-        $this->setTable('docentes');
+        $this->setTable('Professores');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Monografias', [
-            'foreignKey' => 'docente_id',
+            'foreignKey' => 'professor_id',
         ]);
 
         $this->belongsToMany('Areamonografias', [
             'targetForeignKey' => 'areamonografia_id',
-            'foreignKey' => 'docente_id',
-            'joinTable' => 'areamonografias_docentes'
+            'foreignKey' => 'professor_id',
+            'joinTable' => 'areamonografias_professores'
         ]);
     }
 

@@ -32,7 +32,7 @@ use Cake\ORM\Entity;
  * @property string $observacoes
  * @property \Cake\I18n\FrozenTime $TIMESTAMP
  *
- * @property \App\Model\Entity\Estagiario $estagiario
+ * @property \App\Model\Entity\Estagiario[] $estagiario
  */
 class Avaliacao extends Entity
 {

@@ -56,7 +56,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('tc_solicitacao', ['empty' => true]);
         echo $this->Form->control('instituicao_id', ['options' => $instituicoes, 'empty' => 'Seleciona instituição']);
         echo $this->Form->control('supervisor_id', ['options' => $supervisores, 'empty' => 'Seleciona supervisor']);
-        echo $this->Form->control('docente_id', ['options' => $docentes, 'empty' => 'Seleciona docente']);
+        echo $this->Form->control('professor_id', ['options' => $Professores, 'empty' => 'Seleciona docente']);
         $digito = ((date('m')) > 6) ? '-2' : '-1';
         echo $this->Form->control('periodo', ['value' => date('Y') . $digito]);
         echo $this->Form->control('id_area', ['label' => 'Área de estágio', 'options' => $areaestagios, 'empty' => 'Seleciona área']);

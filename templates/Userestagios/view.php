@@ -42,7 +42,7 @@
                     </tr>
                     <tr>
                         <th><?= __('Docente') ?></th>
-                        <td><?= $userestagio->has('docente') ? $this->Html->link($userestagio->docente->id, ['controller' => 'Docentes', 'action' => 'view', $userestagio->docente->id]) : '' ?></td>
+                        <td><?= $userestagio->has('docente') ? $this->Html->link($userestagio->docente->id, ['controller' => 'Professores', 'action' => 'view', $userestagio->docente->id]) : '' ?></td>
                     </tr>
                     <tr>
                         <th><?= __('Id') ?></th>

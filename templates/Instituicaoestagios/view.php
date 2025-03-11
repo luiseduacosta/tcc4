@@ -218,7 +218,7 @@
                                     <?php endif; ?>
 
                                     <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
-                                        <td><?= $estagiarios->has('docente') ? $this->Html->link($estagiarios->docente->nome, ['controller' => 'docentes', 'action' => 'view', $estagiarios->id_professor]) : '' ?></td>
+                                        <td><?= $estagiarios->has('docente') ? $this->Html->link($estagiarios->docente->nome, ['controller' => 'Professores', 'action' => 'view', $estagiarios->id_professor]) : '' ?></td>
                                     <?php else: ?>
                                         <td><?= $estagiarios->has('docente') ? $estagiarios->docente->nome : '' ?></td>
                                     <?php endif; ?>

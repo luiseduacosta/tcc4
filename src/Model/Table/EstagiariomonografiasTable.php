@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
  * Estagiariomonografias Model
  *
  * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
- * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
+ * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
  * @property \App\Model\Table\SupervisoresTable&\Cake\ORM\Association\BelongsTo $Supervisores
  * @property \App\Model\Table\InstituicaoestagiosTable&\Cake\ORM\Association\BelongsTo $Institucoesestagios
  * @property \App\Model\Table\AreaestagiosTable&\Cake\ORM\Association\BelongsTo $Areaestagios
@@ -52,7 +52,7 @@ class EstagiariomonografiasTable extends Table
                 $this->belongsTo('Supervisores', [
                         'foreignKey' => 'id_supervisor',
                 ]);
-                $this->belongsTo('Docentes', [
+                $this->belongsTo('Professores', [
                         'foreignKey' => 'id_professor',
                 ]);
                 $this->belongsTo('Instituicaoestagios', [
@@ -153,7 +153,7 @@ class EstagiariomonografiasTable extends Table
         public function buildRules(RulesChecker $rules): RulesChecker
         {
                 $rules->add($rules->existsIn(['aluno_id'], 'Alunos'));
-                $rules->add($rules->existsIn(['docente_id'], 'Docentes'));
+                $rules->add($rules->existsIn(['professor_id'], 'Professores'));
 
                 return $rules;
         }

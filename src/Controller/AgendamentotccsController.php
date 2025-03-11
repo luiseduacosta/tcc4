@@ -36,14 +36,14 @@ class AgendamentotccsController extends AppController
         $this->Authorization->skipAuthorization();
 
         $query = $this->Agendamentotccs->find()
-            ->contain(['Estudantes', 'Docentes', 'Docentes1', 'Docentes2']);
+            ->contain(['Alunos', 'Professores', 'Professores1', 'Professores2']);
 
         $agendamentotccs = $this->paginate($query, [
             'sortableFields' => [
                 'Alunos.nome',
-                'Docentes.nome',
-                'Docentes1.nome',
-                'Docentes2.nome',
+                'Professores.nome',
+                'Professores1.nome',
+                'Professores2.nome',
                 'Agendamentotccs.data',
                 'Agendamentotccs.horario',
                 'Agendamentotccs.sala',
@@ -65,7 +65,7 @@ class AgendamentotccsController extends AppController
     public function view($id = null)
     {
         $agendamentotcc = $this->Agendamentotccs->get($id, [
-            'contain' => ['Estudantes', 'Docentes', 'Docentes1', 'Docentes2'],
+            'contain' => ['Alunos', 'Professores', 'Professores1', 'Professores2'],
         ]);
         $this->Authorization->authorize($agendamentotcc);
         $this->set('agendamentotcc', $agendamentotcc);
@@ -97,21 +97,21 @@ class AgendamentotccsController extends AppController
             }
             $this->Flash->error(__('Agendamento TCC não foi inserido. Tente novamente'));
         }
-        $qalunos = $this->Agendamentotccs->Estudantes->find('list', [
+        $qalunos = $this->Agendamentotccs->Alunos->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome'
         ]);
         $qalunos->order('nome');
         $alunos = $qalunos->toArray();
         // pr($alunos);
-        $qdocentes = $this->Agendamentotccs->Docentes->find('list', [
+        $qProfessores = $this->Agendamentotccs->Professores->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome'
         ]);
-        $qdocentes->order('nome');
-        $docentes = $qdocentes->toArray();
+        $qProfessores->order('nome');
+        $professores = $qProfessores->toArray();
 
-        $this->set(compact('agendamentotcc', 'alunos', 'docentes'));
+        $this->set(compact('agendamentotcc', 'alunos', 'professores'));
     }
 
     /**
@@ -124,7 +124,7 @@ class AgendamentotccsController extends AppController
     public function edit($id = null)
     {
         $agendamentotcc = $this->Agendamentotccs->get($id, [
-            'contain' => ['Estudantes', 'Docentes', 'Docentes1', 'Docentes2'],
+            'contain' => ['Alunos', 'Professores', 'Professores1', 'Professores2'],
         ]);
         $this->Authorization->authorize($agendamentotcc);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -149,20 +149,20 @@ class AgendamentotccsController extends AppController
             }
             $this->Flash->error(__('Agendamento TCC não foi atualizado. Tente novamente.'));
         }
-        $qalunos = $this->Agendamentotccs->Estudantes->find('list', [
+        $qalunos = $this->Agendamentotccs->Alunos->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome'
         ]);
         $qalunos->order(['nome' => 'asc']);
         $alunos = $qalunos->toArray();
-        $qdocentes = $this->Agendamentotccs->Docentes->find('list', [
+        $qProfessores = $this->Agendamentotccs->Professores->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome'
         ]);
-        $qdocentes->order('nome');
-        $docentes = $qdocentes->toArray();
+        $qProfessores->order('nome');
+        $professores = $qProfessores->toArray();
 
-        $this->set(compact('agendamentotcc', 'alunos', 'docentes'));
+        $this->set(compact('agendamentotcc', 'alunos', 'professores'));
     }
 
     /**

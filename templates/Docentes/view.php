@@ -12,11 +12,11 @@ $user = $this->getRequest()->getAttribute('identity');
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDocentesView"
-        aria-controls="navbarTogglerDocentesView" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerProfessoresView"
+        aria-controls="navbarTogglerProfessoresView" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerDocentesView">
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerProfessoresView">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="item-link">
                 <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docente->id], ['class' => 'btn btn-primary float-start']) ?>
@@ -233,10 +233,10 @@ $user = $this->getRequest()->getAttribute('identity');
                     <th scope="col"><?= __('Área') ?></th>
                 </tr>
             </thead>
-            <?php foreach ($docente->areamonografias as $docentesAreas): ?>
-                <?php // pr($docentesAreas); ?>
+            <?php foreach ($docente->areamonografias as $ProfessoresAreas): ?>
+                <?php // pr($ProfessoresAreas); ?>
                 <tr>
-                    <td><?= $this->Html->link($docentesAreas->area, ['controller' => 'areamonografias', 'action' => 'view', $docentesAreas->id]) ?>
+                    <td><?= $this->Html->link($ProfessoresAreas->area, ['controller' => 'areamonografias', 'action' => 'view', $ProfessoresAreas->id]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

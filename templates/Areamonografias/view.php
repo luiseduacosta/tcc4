@@ -1,6 +1,6 @@
 <?php
 $user = $this->getRequest()->getAttribute('identity');
-// pr($areamonografia->docentes);
+// pr($areamonografia->Professores);
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Areamonografia $areamonografia
@@ -70,7 +70,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= $this->Html->link(h($monografias->titulo), ['controller' => 'monografias', 'action' => 'view', $monografias->id]) ?>
                     </td>
                     <td><?= h($monografias['periodo']) ?></td>
-                     <td><?= $this->Html->link(h($monografias->docente->nome), ['controller' => 'docentes', 'action' => 'view', $monografias->docente->id]) ?>
+                     <td><?= $this->Html->link(h($monografias->docente->nome), ['controller' => 'Professores', 'action' => 'view', $monografias->docente->id]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -79,18 +79,18 @@ $user = $this->getRequest()->getAttribute('identity');
 </div>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <h4><?= __('Docentes da área') ?></h4>
-    <?php if (!empty($areamonografia->docentes)): ?>
+    <h4><?= __('Professores da área') ?></h4>
+    <?php if (!empty($areamonografia->Professores)): ?>
         <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
                     <th scope="col"><?= __('Docente') ?></th>
                 </tr>
             </thead>
-            <?php foreach ($areamonografia->docentes as $docentes): ?>
+            <?php foreach ($areamonografia->Professores as $Professores): ?>
                 <?php // pr($monografias);  ?>
                 <tr>
-                    <td><?= $this->Html->link(h($docentes['nome']), ['controller' => 'docentes', 'action' => 'view', $docentes['id']]) ?>
+                    <td><?= $this->Html->link(h($Professores['nome']), ['controller' => 'Professores', 'action' => 'view', $Professores['id']]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

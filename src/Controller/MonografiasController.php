@@ -18,7 +18,7 @@ use Cake\Filesystem\Folder;
  *
  * @method \App\Model\Entity\Monografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
- class MonografiasController extends AppController
+class MonografiasController extends AppController
 {
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
@@ -40,19 +40,20 @@ use Cake\Filesystem\Folder;
         $this->Authorization->skipAuthorization();
 
         $query = $this->Monografias->find()
-            ->contain(['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']]);
-
+            ->contain(['Professores', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']]);
+        // debug($query);
         $monografias = $this->paginate($query, [
             'sortableFields' => [
                 'Monografias.titulo',
                 'Monografias.periodo',
                 'Monografias.url',
                 'Tccestudantes.nome',
-                'Docentes.nome',
+                'Professores.nome',
                 'Areamonografias.area'
             ]
         ]);
-
+        // pr($monografias);
+        // die();
         $baseUrl = Router::url('/', true);
         $this->set(compact('monografias', 'baseUrl'));
 
@@ -71,7 +72,7 @@ use Cake\Filesystem\Folder;
         $this->Authorization->skipAuthorization();
         $monografiatable = $this->fetchTable('Monografias');
         $monografia = $monografiatable->get($id, [
-            'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes'],
+            'contain' => ['Professores', 'Areamonografias', 'Tccestudantes'],
         ]);
         // pr($monografia);
         // die();
@@ -113,7 +114,7 @@ use Cake\Filesystem\Folder;
 
             /* Banca1 é o próprio docente orientador */
             if (empty($dados['banca1'])):
-                $dados['banca1'] = $dados['docente_id'];
+                $dados['banca1'] = $dados['professor_id'];
             endif;
 
             // $monografia = $this->Monografias->patchEntity($monografia, $this->request->getData());
@@ -153,21 +154,21 @@ use Cake\Filesystem\Folder;
         /* Chamo a function estudantes() para fazer o list de seleção */
         $estudantes = $this->estudantes();
         // pr($estudantes);
-        /* Deveria ser somente para professores ativos */
-        $professores = $this->Monografias->Docentes->find(
+        /* Deveria ser somente para Professores ativos */
+        $Professores = $this->Monografias->Professores->find(
             'list',
             ['keyField' => 'id', 'valueField' => 'nome']
         );
-        // $professores->where(['dataegresso IS NULL']);
-        $professores->order(['nome']);
-        // debug($professores->toArray());
-        // pr($professores);
+        // $Professores->where(['dataegresso IS NULL']);
+        $Professores->order(['nome']);
+        // debug($Professores->toArray());
+        // pr($Professores);
         $areas = $this->Monografias->Areamonografias->find('list', [
             'keyField' => 'id',
             'valueField' => 'area'
         ]);
         $areas->order(['area' => 'asc']);
-        $this->set(compact('estudantes', 'monografia', 'professores', 'areas'));
+        $this->set(compact('estudantes', 'monografia', 'Professores', 'areas'));
     }
 
     /**
@@ -182,7 +183,7 @@ use Cake\Filesystem\Folder;
 
         $monografiatable = $this->fetchTable('Monografias');
         $monografia = $monografiatable->get($id, [
-            'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Areamonografias', 'Tccestudantes'],
+            'contain' => ['Professores', 'Professores1', 'Professores2', 'Areamonografias', 'Tccestudantes'],
         ]);
 
         $this->Authorization->authorize($monografia);
@@ -225,11 +226,11 @@ use Cake\Filesystem\Folder;
 
         // $estudantes = $this->estudantes();
 
-        $docentes = $this->Monografias->Docentes->find('list', [
+        $professores = $this->Monografias->Professores->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome'
         ]);
-        $docentes->order(['nome' => 'asc']);
+        $professores->order(['nome' => 'asc']);
 
         $areas = $this->Monografias->Areamonografias->find('list', [
             'keyField' => 'id',
@@ -237,7 +238,7 @@ use Cake\Filesystem\Folder;
         ], ['limit' => 200]);
         $areas->order(['area' => 'asc']);
 
-        $this->set(compact('monografia', 'docentes', 'areas'));
+        $this->set(compact('monografia', 'professores', 'areas'));
     }
 
     /**
@@ -275,7 +276,7 @@ use Cake\Filesystem\Folder;
                 $this->getRequest()->getSession()->write('busca', $busca);
                 $this->paginate = [
                     'conditions' => ['titulo LIKE' => "%" . $busca . "%"],
-                    'contain' => ['Docentes', 'Areamonografias', 'Tccestudantes']
+                    'contain' => ['Professores', 'Areamonografias', 'Tccestudantes']
                 ];
                 // die();
             endif;
@@ -290,11 +291,11 @@ use Cake\Filesystem\Folder;
             if (!empty($busca)):
                 $this->paginate = [
                     'conditions' => ['titulo LIKE' => "%" . $busca . "%"],
-                    'contain' => ['Docentes', 'Areamonografias', 'Tccestudantes']
+                    'contain' => ['Professores', 'Areamonografias', 'Tccestudantes']
                 ];
             else:
                 $this->paginate = [
-                    'contain' => ['Docentes', 'Areamonografias', 'Tccestudantes']
+                    'contain' => ['Professores', 'Areamonografias', 'Tccestudantes']
                 ];
             endif;
         endif;
@@ -352,7 +353,7 @@ use Cake\Filesystem\Folder;
     {
 
         /* Preciso capturar o registro do estudante */
-        $estudantetable = $this->fetchTable('Estudantes');
+        $estudantetable = $this->fetchTable('Alunos');
         $estudantes = $estudantetable->find('all');
         $estudantes->select(['registro', 'nome']);
         $estudantes->order(['nome' => 'asc']);

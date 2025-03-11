@@ -16,7 +16,7 @@ use Cake\ORM\Entity;
  * @property string|null $descricao
  * @property string $avaliacao
  *
- * @property \App\Model\Entity\Instituicaoestagio $instituicaoestagio
+ * @property \App\Model\Entity\Instituicaoestagio[] $instituicaoestagio
  */
 class Visita extends Entity
 {

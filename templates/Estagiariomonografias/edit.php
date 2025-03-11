@@ -36,7 +36,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('tc_solicitacao', ['empty' => true]);
         echo $this->Form->control('instituicao_id');
         echo $this->Form->control('supervisor_id');
-        echo $this->Form->control('docente_id', ['options' => $docentes, 'empty' => true]);
+        echo $this->Form->control('professor_id', ['options' => $Professores, 'empty' => true]);
         echo $this->Form->control('periodo');
         echo $this->Form->control('id_area', ['label' => 'Área', 'options' => $areas, 'empty' => true]);
         echo $this->Form->control('nota');

@@ -10,11 +10,11 @@ use Cake\Validation\Validator;
 /**
  * Estagiarios Model
  *
- * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes 
- * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
- * @property \App\Model\Table\AreaestagiosTable&\Cake\ORM\Association\BelongsTo $Areaestagios
+ * @property \App\Model\Table\AlunosTable&\Cake\ORM\Association\BelongsTo $Alunos 
+ * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
+ * @property \App\Model\Table\TurmaestagiosTable&\Cake\ORM\Association\BelongsTo $Turmestagios
  * @property \App\Model\Table\SupervisoresTable&\Cake\ORM\Association\BelongsTo $Supervisores
- * @property \App\Model\Table\InstituicaoestagiosTable&\Cake\ORM\Association\BelongsTo $Instituicaoesestagio
+ * @property \App\Model\Table\InstituicoesTable&\Cake\ORM\Association\BelongsTo $Instituicoes
  * @property \App\Model\Table\AvaliacoesTable&\Cake\ORM\Association\HasOne $Avaliacao
  * @property \App\Model\Table\FolhadeatividadesTable&\Cake\ORM\Association\HasOne $Folhadeatividade 
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\BelongsTo $Tccestudantes
@@ -45,25 +45,25 @@ class EstagiariosTable extends Table
                 $this->setDisplayField('id');
                 $this->setPrimaryKey('id');
 
-                $this->belongsTo('Estudantes', [
-                        'className' => 'Estudantes',
-                        'foreignKey' => 'alunonovo_id',
+                $this->belongsTo('Alunos', [
+                        'className' => 'Alunos',
+                        'foreignKey' => 'aluno_id',
                         'joinType' => 'LEFT',
                 ]);
 
-                $this->belongsTo('Docentes', [
-                        'foreignKey' => 'docente_id',
+                $this->belongsTo('Professores', [
+                        'foreignKey' => 'professor_id',
                 ]);
 
-                $this->belongsTo('Areaestagios', [
-                        'foreignKey' => 'area_id',
+                $this->belongsTo('Turmaestagios', [
+                        'foreignKey' => 'turmaestagio_id',
                 ]);
 
                 $this->belongsTo('Supervisores', [
                         'foreignKey' => 'supervisor_id',
                 ]);
 
-                $this->belongsTo('Instituicaoestagios', [
+                $this->belongsTo('Instituicoes', [
                         'foreignKey' => 'instituicao_id',
                 ]);
 
@@ -161,7 +161,7 @@ class EstagiariosTable extends Table
         public function buildRules(RulesChecker $rules): RulesChecker
         {
                 $rules->add($rules->existsIn(['aluno_id'], 'Alunos'));
-                $rules->add($rules->existsIn(['docente_id'], 'Docentes'));
+                $rules->add($rules->existsIn(['professor_id'], 'Professores'));
 
                 return $rules;
         }

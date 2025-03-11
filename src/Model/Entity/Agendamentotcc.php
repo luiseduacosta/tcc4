@@ -10,7 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $aluno_id
- * @property int $docente_id
+ * @property int $professor_id
  * @property int $banca1
  * @property int $banca2
  * @property \Cake\I18n\FrozenDate $data
@@ -20,9 +20,8 @@ use Cake\ORM\Entity;
  * @property string $titulo
  * @property string $avaliacao
  *
- * @property \App\Model\Entity\Estudante $estudante
- * @property \App\Model\Entity\Docente $docente
- * 
+ * @property \App\Model\Entity\Aluno[] $alunos
+ * @property \App\Model\Entity\Professor[] $professores
  */
 class Agendamentotcc extends Entity
 {
@@ -37,7 +36,7 @@ class Agendamentotcc extends Entity
      */
     protected $_accessible = [
         'aluno_id' => true,
-        'docente_id' => true,
+        'professor_id' => true,
         'banca1' => true,
         'banca2' => true,
         'data' => true,
@@ -46,7 +45,7 @@ class Agendamentotcc extends Entity
         'convidado' => true,
         'titulo' => true,
         'avaliacao' => true,
-        'estudante' => true,
-        'docente' => true,
+        'alunos' => true,
+        'professores' => true
     ];
 }

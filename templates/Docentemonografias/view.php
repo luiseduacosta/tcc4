@@ -210,10 +210,10 @@ $user = $this->getRequest()->getAttribute('identity');
             <tr>
                 <th scope="col"><?= __('Área') ?></th>
             </tr>
-            <?php foreach ($docentemonografia->areamonografias as $docentesareas): ?>
-                <?php // pr($docentesAreas); ?>
+            <?php foreach ($docentemonografia->areamonografias as $Professoresareas): ?>
+                <?php // pr($ProfessoresAreas); ?>
                 <tr>
-                    <td><?= $this->Html->link($docentesareas->area, ['controller' => 'areamonografias', 'action' => 'view', $docentesareas->id]) ?>
+                    <td><?= $this->Html->link($Professoresareas->area, ['controller' => 'areamonografias', 'action' => 'view', $Professoresareas->id]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

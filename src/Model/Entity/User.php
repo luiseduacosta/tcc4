@@ -17,12 +17,12 @@ use Cake\ORM\Entity;
  * @property int $numero
  * @property int|null $estudante_id
  * @property int|null $supervisor_id
- * @property int|null $docente_id
+ * @property int|null $professor_id
  * @property \Cake\I18n\FrozenTime $timestamp
  *
- * @property \App\Model\Entity\Estudante $estudante
- * @property \App\Model\Entity\Supervisor $supervisor
- * @property \App\Model\Entity\Docente $docente
+ * @property \App\Model\Entity\Estudante[] $estudante
+ * @property \App\Model\Entity\Supervisor[] $supervisor
+ * @property \App\Model\Entity\Professor[] $professor
  */
 class User extends Entity {
 
@@ -42,12 +42,12 @@ class User extends Entity {
         'numero' => true,
         'estudante_id' => true,
         'supervisor_id' => true,
-        'docente_id' => true,
+        'professor_id' => true,
         'timestamp' => true,
         'role' => true,
         'estudante' => true,
         'supervisor' => true,
-        'docente' => true
+        'professor' => true
     ];
 
     // Add this method

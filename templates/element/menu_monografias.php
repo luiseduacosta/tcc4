@@ -16,7 +16,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
             <li class="nav-item"><?= $this->Html->link(__('Monografias'), ['controller' => 'Monografias', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
             <?php if (isset($usuario) && $usuario->categoria == 1): ?>
                 <li class="nav-item"><?= $this->Html->link(__('Estudantes'), ['controller' => 'Tccestudantes', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
-                <li class="nav-item"><?= $this->Html->link(__('Docentes'), ['controller' => 'Docentemonografias', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+                <li class="nav-item"><?= $this->Html->link(__('Professores'), ['controller' => 'Docentemonografias', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
                 <li class="nav-item"><?= $this->Html->link(__('Áreas'), ['controller' => 'Areamonografias', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
                 <li class="nav-item"><?= $this->Html->link(__('Trajetórias'), ['controller' => 'Estagiariomonografias', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
             <?php endif; ?>

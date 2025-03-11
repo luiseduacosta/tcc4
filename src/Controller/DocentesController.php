@@ -10,7 +10,7 @@ use Cake\Event\Event;
 /**
  * Docentes Controller
  *
- * @property \App\Model\Table\DocentesTable $Docentes
+ * @property \App\Model\Table\ProfessoresTable $Docentes
  *
  * @method \App\Model\Entity\Docente[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -43,7 +43,7 @@ class DocentesController extends AppController {
     public function index0() {
 
         $docentes = $this->paginate($this->Docentes);
-        // $this->Authorization->authorize($docentes);
+        // $this->Authorization->authorize($Docentes);
         $this->set(compact('docentes'));
     }
 
@@ -107,7 +107,7 @@ class DocentesController extends AppController {
      */
     public function add() {
 
-        $docentetable = $this->fetchTable("Docentes");
+        $docentetable = $this->fetchTable("Professores");
         $docente = $docentetable->newEmptyEntity();
         $this->Authorization->authorize($docente);
 
@@ -132,14 +132,14 @@ class DocentesController extends AppController {
      */
     public function edit($id = null) {
 
-        $docentetable = $this->fetchTable("Docentes");
+        $docentetable = $this->fetchTable("Professores");
         $docente = $docentetable->get($id, [
             'contain' => [],
         ]);
         $this->Authorization->authorize($docente);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $docente = $this->Docentes->patchEntity($docente, $this->request->getData());
-            if ($this->Docentes->save($docente)) {
+            if ($this->Professores->save($docente)) {
                 $this->Flash->success(__('The docente has been saved.'));
 
                 return $this->redirect(['action' => 'index']);

@@ -83,13 +83,13 @@ $user = $this->getRequest()->getAttribute('identity');
     echo $this->Form->control('data_de_entrega', ['label' => 'Data de entrega', 'type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
     echo $this->Form->control('ano', ['type' => 'year', 'minYear' => date('Y') - 20, 'maxYear' => date('Y'), 'required' => true]);
     echo $this->Form->control('semestre', ['options' => ['0' => 'Sem dados', '1' => '1º', '2' => '2º']]);
-    echo $this->Form->control('docente_id', ['label' => 'Orientador(a)', 'options' => $professores, 'empty' => 'Selecione', 'required' => true]);
-    echo $this->Form->control('co_orienta_id', ['label' => 'Co-orientador(a)', 'options' => $professores, 'empty' => true, 'required' => false]);
+    echo $this->Form->control('professor_id', ['label' => 'Orientador(a)', 'options' => $Professores, 'empty' => 'Selecione', 'required' => true]);
+    echo $this->Form->control('co_orienta_id', ['label' => 'Co-orientador(a)', 'options' => $Professores, 'empty' => true, 'required' => false]);
     echo $this->Form->control('areamonografia_id', ['label' => 'Área', 'options' => $areas, 'empty' => 'Seleciona área', 'required' => false]);
     echo $this->Form->control('data_banca', ['label' => 'Data da banca', 'type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
-    echo $this->Form->control('banca1', ['label' => 'Banca Professor(a) orientador', 'options' => $professores, 'empty' => 'Selecione', 'required' => true]);
-    echo $this->Form->control('banca2', ['label' => 'Banca Professor(a)', 'options' => $professores, 'empty' => true]);
-    echo $this->Form->control('banca3', ['label' => 'Banca Professor(a)', 'options' => $professores, 'empty' => true]);
+    echo $this->Form->control('banca1', ['label' => 'Banca Professor(a) orientador', 'options' => $Professores, 'empty' => 'Selecione', 'required' => true]);
+    echo $this->Form->control('banca2', ['label' => 'Banca Professor(a)', 'options' => $Professores, 'empty' => true]);
+    echo $this->Form->control('banca3', ['label' => 'Banca Professor(a)', 'options' => $Professores, 'empty' => true]);
     ?>
     <div class="form-group row">
         <label class="col-2 control-label">Convidado(a)</label>

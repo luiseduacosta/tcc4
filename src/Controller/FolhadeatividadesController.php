@@ -26,9 +26,9 @@ class FolhadeatividadesController extends AppController {
         }
 
         $estagiarioquery = $this->Folhadeatividades->Estagiarios->find()
-                ->contain(['Estudantes', 'Supervisores', 'Instituicaoestagios', 'Docentes'])
+                ->contain(['Estudantes', 'Supervisores', 'Instituicaoestagios', 'Professores'])
                 ->where(['Estagiarios.Id' => $id])
-                ->select(['Estagiarios.nivel', 'Estagiarios.periodo', 'Estudantes.nome', 'Supervisores.nome', 'Instituicaoestagios.instituicao', 'Docentes.nome']);
+                ->select(['Estagiarios.nivel', 'Estagiarios.periodo', 'Estudantes.nome', 'Supervisores.nome', 'Instituicaoestagios.instituicao', 'Professores.nome']);
         $estagiario = $estagiarioquery->first();
         // pr($estagiario);
         // die();
@@ -200,7 +200,7 @@ class FolhadeatividadesController extends AppController {
                     ->where(['Folhadeatividades.estagiario_id' => $id]);
 
             $estagiarioquery = $this->Folhadeatividades->find()
-                    ->contain(['Estagiarios' => ['Estudantes', 'Docentes', 'Instituicaoestagios', 'Supervisores']])
+                    ->contain(['Estagiarios' => ['Estudantes', 'Professores', 'Instituicaoestagios', 'Supervisores']])
                     ->where(['Estagiarios.id' => $id]);
         }
 

@@ -71,7 +71,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         endif;
                         ?>
                     </td>
-                    <td><?= $this->Html->link(h($monografia->docente->nome), ['controller' => 'docentes', 'action' => 'view', $monografia->docente->id]) ?>
+                    <td><?= $this->Html->link(h($monografia->docente->nome), ['controller' => 'Professores', 'action' => 'view', $monografia->docente->id]) ?>
                     </td>
                     <td><?= $monografia->has('area') ? $this->Html->link($monografia->area->area, ['controller' => 'Areas', 'action' => 'view', $monografia->area->id]) : '' ?>
                     </td>

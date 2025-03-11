@@ -76,7 +76,7 @@
                     </td>
                     <td><?= $estagiarios->has('supervisor') ? $this->Html->link(h($estagiarios->supervisor->nome), ['controller' => 'supervisores', 'action' => 'view', $estagiarios->id_supervisor]) : '' ?>
                     </td>
-                    <td><?= $estagiarios->has('docente') ? $this->Html->link(h($estagiarios->docente->nome), ['controller' => 'docentes', 'action' => 'view', $estagiarios->id_professor]) : '' ?>
+                    <td><?= $estagiarios->has('docente') ? $this->Html->link(h($estagiarios->docente->nome), ['controller' => 'Professores', 'action' => 'view', $estagiarios->id_professor]) : '' ?>
                     </td>
                     <td><?= h($estagiarios->periodo) ?></td>
                     <td><?= $estagiarios->has('areaestagio') ? $this->Html->link(h($estagiarios->areaestagio->area), ['controller' => 'areaestagios', 'action' => 'view', $estagiarios->id_area]) : '' ?>
@@ -139,7 +139,7 @@
                     <td><?= h($muralestagios->requisitos) ?></td>
                     <td><?= h($muralestagios->areaestagio_id) ?></td>
                     <td><?= h($muralestagios->horario) ?></td>
-                    <td><?= h($muralestagios->docente_id) ?></td>
+                    <td><?= h($muralestagios->professor_id) ?></td>
                     <td><?= h($muralestagios->dataSelecao) ?></td>
                     <td><?= h($muralestagios->dataInscricao) ?></td>
                     <td><?= h($muralestagios->horarioSelecao) ?></td>

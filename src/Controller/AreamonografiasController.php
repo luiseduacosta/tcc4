@@ -41,7 +41,7 @@ class AreamonografiasController extends AppController
 
         $this->Authorization->skipAuthorization();
         $areamonografia = $this->Areamonografias->get($id, [
-            'contain' => ['Docentes', 'Monografias' => ['Tccestudantes', 'Docentes']],
+            'contain' => ['Professores', 'Monografias' => ['Tccestudantes', 'Professores']],
         ]);
 
         $this->set('areamonografia', $areamonografia);
@@ -67,8 +67,8 @@ class AreamonografiasController extends AppController
             }
             $this->Flash->error(__('The area could not be saved. Please, try again.'));
         }
-        $docentes = $this->Areamonografias->Docentes->find('list', ['limit' => 200]);
-        $this->set(compact('area', 'docentes'));
+        $Professores = $this->Areamonografias->Professores->find('list', ['limit' => 200]);
+        $this->set(compact('area', 'Professores'));
     }
 
     /**
@@ -82,7 +82,7 @@ class AreamonografiasController extends AppController
     {
 
         $areamonografia = $this->Areamonografias->get($id, [
-            'contain' => ['Docentes'],
+            'contain' => ['Professores'],
         ]);
         $this->Authorization->authorize($areamonografia);
 
@@ -95,8 +95,8 @@ class AreamonografiasController extends AppController
             }
             $this->Flash->error(__('Área de monografia não foi atualizada.'));
         }
-        $docentes = $this->Areamonografias->Docentes->find('list');
-        $this->set(compact('areamonografia', 'docentes'));
+        $Professores = $this->Areamonografias->Professores->find('list');
+        $this->set(compact('areamonografia', 'Professores'));
     }
 
     /**

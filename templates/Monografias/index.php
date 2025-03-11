@@ -46,7 +46,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th scope="col"><?= $this->Paginator->sort('Monografias.titulo', 'Título') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Monografias.periodo', 'Período') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Tccestudantes.nome', 'Estudante') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('Docentes.nome', 'Orientador(a)') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('Professores.nome', 'Orientador(a)') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Areamonografias.area', 'Área') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Monografias.url', 'PDF') ?></th>
             </tr>
@@ -78,7 +78,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         endif;
                         ?>
                     </td>
-                    <td><?= $this->Html->link(h($monografia->docente->nome), ['controller' => 'docentes', 'action' => 'view', $monografia->docente->id]) ?>
+                    <td><?= $this->Html->link(h($monografia->professor->nome), ['controller' => 'Professores', 'action' => 'view', $monografia->professor->id]) ?>
                     </td>
                     <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografia->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia->id]) : '' ?>
                     </td>

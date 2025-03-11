@@ -27,7 +27,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
                     <?= $this->Html->link(__('Estudantes'), ['controller' => 'Tccestudantes', 'action' => 'index'], ['class' => 'nav-link']) ?>
                 </li>
                 <li class='nav-item'>
-                    <?= $this->Html->link(__('Docentes'), ['controller' => 'Docentes', 'action' => 'index'], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Professores'), ['controller' => 'Professores', 'action' => 'index'], ['class' => 'nav-link']) ?>
                 </li>
                 <li class='nav-item'>
                     <?= $this->Html->link(__('Áreas'), ['controller' => 'Areamonografias', 'action' => 'index'], ['class' => 'nav-link']) ?>

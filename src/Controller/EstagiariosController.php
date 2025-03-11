@@ -54,24 +54,27 @@ class EstagiariosController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
-        $periodo = $this->getRequest()->getQuery('periodo');
-
+        // $periodo = $this->getRequest()->getQuery('periodo');
+        $data = $this->getRequest()->getData();
+        if ($data) {
+            $periodo = $data['periodo'];
+        }
         if (empty($periodo)) {
             $configuracao = $this->fetchTable('Configuracao');
             $periodo_atual = $configuracao->find()->select(['mural_periodo_atual'])->first();
             $periodo = $periodo_atual->mural_periodo_atual;
         }
 
-        // echo "Período " . $periodo;
         if ($periodo) {
             $query = $this->Estagiarios->find('all')
-                ->where(['Estagiarios.periodo' => $periodo])
-                ->contain(['Estudantes', 'Professores', 'Supervisores', 'Instituicoes', 'Turmaestagios']);
+                ->where(['Estagiarios.periodo' => $periodo, 'Estagiarios.nivel' => '4'])
+                ->contain(['Alunos', 'Professores', 'Supervisores', 'Instituicoes', 'Turmaestagios', 'Tccestudantes']);
         } else {
             $query = $this->Estagiarios->find('all')
-                ->contain(['Estudantes', 'Professores', 'Supervisores', 'Instituicoes', 'Turmaestagios']);
+                ->where(['nivel' => '4'])
+                ->contain(['Alunos', 'Professores', 'Supervisores', 'Instituicoes', 'Turmaestagios', 'Tccestudantes']);
         }
-        $config = $this->paginate = ['sortableFields' => ['id', 'Estudantes.nome', 'registro', 'turno', 'nivel', 'Instituicoes.instituicao', 'Supervisores.nome', 'Professores.nome']];
+        $config = $this->paginate = ['sortableFields' => ['id', 'Alunos.nome', 'registro', 'turno', 'nivel', 'Instituicoes.instituicao', 'Supervisores.nome', 'Professores.nome']];
         $estagiarios = $this->paginate($query, $config);
 
         /* Todos os periódos */
@@ -97,7 +100,7 @@ class EstagiariosController extends AppController
 
         $this->Authorization->skipAuthorization();
         $estagiario = $this->Estagiarios->get($id, [
-            'contain' => ['Estudantes', 'Docentes'],
+            'contain' => ['Alunos', 'Professores'],
         ]);
 
         $this->set('estagiario', $estagiario);
@@ -122,7 +125,7 @@ class EstagiariosController extends AppController
             }
             $this->Flash->error(__('Estagiário não foi inserido. Tente novamente.'));
         }
-        $estudantes = $this->Estagiarios->Estudantes->find('list', [
+        $estudantes = $this->Estagiarios->Alunos->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome',
             'order' => 'nome',
@@ -136,28 +139,21 @@ class EstagiariosController extends AppController
             'limit' => 200
         ]);
 
-        $instituicoes = $this->Estagiarios->Instituicaoestagios->find('list', [
+        $instituicoes = $this->Estagiarios->Instituicoes->find('list', [
             'keyField' => 'id',
             'valueField' => 'instituicao',
             'order' => 'instituicao',
             'limit' => 200
         ]);
 
-        $docentes = $this->Estagiarios->Docentes->find('list', [
+        $professores = $this->Estagiarios->Professores->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome',
             'order' => 'nome',
             'limit' => 200
         ]);
 
-        $areaestagios = $this->Estagiarios->Areaestagios->find('list', [
-            'keyField' => 'id',
-            'valueField' => 'area',
-            'order' => 'area',
-            'limit' => 200
-        ]);
-
-        $this->set(compact('estagiario', 'estudantes', 'docentes', 'supervisores', 'instituicoes', 'areaestagios'));
+        $this->set(compact('estagiario', 'estudantes', 'professores', 'supervisores', 'instituicoes'));
     }
 
     /**
@@ -185,7 +181,7 @@ class EstagiariosController extends AppController
             }
             $this->Flash->error(__('Estagiário não atualizado. Tente novamente.'));
         }
-        $estudantes = $this->Estagiarios->Estudantes->find(
+        $estudantes = $this->Estagiarios->Alunos->find(
             'list',
             [
                 'keyField' => 'id',
@@ -194,7 +190,7 @@ class EstagiariosController extends AppController
             ]
         );
 
-        $docentes = $this->Estagiarios->Docentes->find('list', [
+        $Professores = $this->Estagiarios->Professores->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome',
             'limit' => 200
@@ -205,7 +201,7 @@ class EstagiariosController extends AppController
             'limit' => 200
         ]);
 
-        $this->set(compact('estagiario', 'estudantes', 'docentes', 'areas'));
+        $this->set(compact('estagiario', 'estudantes', 'Professores', 'areas'));
     }
 
     /**

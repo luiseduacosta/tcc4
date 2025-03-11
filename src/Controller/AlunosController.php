@@ -47,7 +47,7 @@ class AlunosController extends AppController {
             }
         }
         $aluno = $this->Alunos->get($id, [
-            'contain' => ['Estagiarios' => ['Instituicaoestagios', 'Alunos', 'Estudantes', 'Supervisores', 'Docentes', 'Areaestagios'], 'Muralinscricoes' => 'Muralestagios'],
+            'contain' => ['Estagiarios' => ['Instituicoes', 'Alunos', 'Supervisores', 'Professores'], 'Muralinscricoes' => 'Muralestagios'],
         ]);
         $this->Authorization->authorize($aluno);
         $this->set(compact('aluno'));
@@ -65,11 +65,11 @@ class AlunosController extends AppController {
         if ($this->request->is('post')) {
             $aluno = $this->Alunos->patchEntity($aluno, $this->request->getData());
             if ($this->Alunos->save($aluno)) {
-                $this->Flash->success(__('The aluno has been saved.'));
+                $this->Flash->success(__('Dados do aluno inseridos.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The aluno could not be saved. Please, try again.'));
+            $this->Flash->error(__('Dados do aluno não inseridos.'));
         }
         $this->set(compact('aluno'));
     }
@@ -90,11 +90,11 @@ class AlunosController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $aluno = $this->Alunos->patchEntity($aluno, $this->request->getData());
             if ($this->Alunos->save($aluno)) {
-                $this->Flash->success(__('The aluno has been saved.'));
+                $this->Flash->success(__('Dados do aluno atualizados.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The aluno could not be saved. Please, try again.'));
+            $this->Flash->error(__('Dados do aluno não atualizados.'));
         }
         $this->set(compact('aluno'));
     }
@@ -112,9 +112,9 @@ class AlunosController extends AppController {
         $aluno = $this->Alunos->get($id);
         $this->Authorization->authorize($aluno);
         if ($this->Alunos->delete($aluno)) {
-            $this->Flash->success(__('The aluno has been deleted.'));
+            $this->Flash->success(__('Dados do aluno excluídos.'));
         } else {
-            $this->Flash->error(__('The aluno could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Dados do aluno não excluídos.'));
         }
 
         return $this->redirect(['action' => 'index']);

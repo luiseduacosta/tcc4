@@ -11,9 +11,7 @@ use Cake\Validation\Validator;
 /**
  * Monografias Model
  *
- * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
- * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes1
- * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes2
+ * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasMany $Tccestudantes
  * @property \App\Model\Table\AreamonografiasTable&\Cake\ORM\Association\BelongsTo $Areasmonografias
  *
@@ -48,22 +46,19 @@ class MonografiasTable extends Table
                 $this->setDisplayField('titulo');
                 $this->setPrimaryKey('id');
 
-                // Monografia tem um campo docente_id
-                $this->belongsTo('Docentes', [
-                        'className' => 'Docentes',
-                        'foreignKey' => 'docente_id',
+                // Monografia tem um campo professor_id
+                $this->belongsTo('Professores', [
+                        'className' => 'Professores',
+                        'foreignKey' => 'professor_id',
                 ]);
 
-                // Banca 1 é o docente_id //
-                // Banca 2 é um docente
-                $this->belongsTo('Docentes1', [
-                        'className' => 'Docentes',
+                $this->belongsTo('Professores1', [
+                        'className' => 'Professores',
                         'foreignKey' => 'banca2',
                 ]);
 
-                // Banca 3 é um docente
-                $this->belongsTo('Docentes2', [
-                        'className' => 'Docentes',
+                $this->belongsTo('Professores2', [
+                        'className' => 'Professores',
                         'foreignKey' => 'banca3',
                 ]);
 
@@ -162,7 +157,7 @@ class MonografiasTable extends Table
          */
         public function buildRules(RulesChecker $rules): RulesChecker
         {
-                $rules->add($rules->existsIn(['docente_id'], 'Docentes'));
+                $rules->add($rules->existsIn(['professor_id'], 'Professores'));
                 $rules->add($rules->existsIn(['areamonografia_id'], 'Areamonografias'));
 
                 return $rules;

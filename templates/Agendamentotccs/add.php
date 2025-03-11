@@ -46,9 +46,9 @@ $user = $this->getRequest()->getAttribute('identity');
         <legend><?= __('Agendamento de oficina de defesa de TCC') ?></legend>
         <?php
         echo $this->Form->control('aluno_id', ['label' => 'Estudante', 'options' => $alunos, 'empty' => 'Seleciona']);
-        echo $this->Form->control('docente_id', ['label' => 'Professor(a)', 'options' => $docentes, 'empty' => 'Seleciona']);
-        echo $this->Form->control('banca1', ['label' => 'Banca', 'options' => $docentes, 'empty' => 'Seleciona']);
-        echo $this->Form->control('banca2', ['label' => 'Banca', 'options' => $docentes, 'empty' => 'Seleciona']);
+        echo $this->Form->control('professor_id', ['label' => 'Professor(a)', 'options' => $professores, 'empty' => 'Seleciona']);
+        echo $this->Form->control('banca1', ['label' => 'Banca', 'options' => $professores, 'empty' => 'Seleciona']);
+        echo $this->Form->control('banca2', ['label' => 'Banca', 'options' => $professores, 'empty' => 'Seleciona']);
         echo $this->Form->control('convidado', ['label' => 'Convidado(a)']);
         echo $this->Form->control('data', ['type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
         echo $this->Form->control('horario', ['type' => 'time', 'templates' => ['dateWidget' => '{{HH}}{{mm}}{{ss}}']]);

@@ -45,6 +45,7 @@ use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use Cake\Routing\Router;
 use Cake\Utility\Security;
+use Cake\Utility\Inflector;
 
 /*
  * See https://github.com/josegonzalez/php-dotenv for API details.
@@ -214,7 +215,15 @@ ServerRequest::addDetector('tablet', function ($request) {
 //Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
-//Inflector::rules('transliteration', ['/å/' => 'aa']);
+// Inflector::rules('transliteration', ['/å/' => 'aa']);
+
+Inflector::rules('irregular', ['administrador' => 'administradores']);
+Inflector::rules('irregular', ['configuracao' => 'configuracoes']);
+Inflector::rules('irregular', ['inscricao' => 'inscricoes']);
+Inflector::rules('irregular', ['instituicao' => 'instituicoes']);
+Inflector::rules('irregular', ['professor' => 'professores']);
+Inflector::rules('irregular', ['supervisor' => 'supervisores']);
+Inflector::rules('irregular', ['avaliacao' => 'avaliacoes']);
 
 /*
  * Enable immutable time objects in the ORM.

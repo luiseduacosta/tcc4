@@ -12,7 +12,7 @@ use Cake\ORM\Entity;
  * @property string $area
  *
  * @property \App\Model\Entity\Monografia[] $monografia
- * @property \App\Model\Entity\Docente[] $docente
+ * @property \App\Model\Entity\Professor[] $professor
  */
 class Areamonografia extends Entity
 {
@@ -28,6 +28,6 @@ class Areamonografia extends Entity
     protected $_accessible = [
         'area' => true,
         'monografia' => true,
-        'docente' => true,
+        'professor' => true,
     ];
 }

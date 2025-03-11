@@ -38,7 +38,7 @@
                     <?php echo $this->Html->link("Supervisores", "/Supervisores/index/ordem:nome", ['class' => 'nav-link', 'style' => 'background-color: #2b6c9c; color: white']); ?>
                 </li>
                 <li class="nav-item">
-                    <?php echo $this->Html->link("Professores", "/Docentes/index/", ['class' => 'nav-link', 'style' => 'background-color: #2b6c9c; color: white']); ?>
+                    <?php echo $this->Html->link("Professores", "/Professores/index/", ['class' => 'nav-link', 'style' => 'background-color: #2b6c9c; color: white']); ?>
                 </li>
                 <li class="nav-item dropdown">
                     <a style='color: white' class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administração</a>
@@ -114,7 +114,7 @@
                         </li>
                     <?php endif; ?>
                     <li class="nav-item">
-                        <?php echo $this->Html->link("Meus dados", "/Docentes/view?siape=" . $this->getRequest()->getSession()->read('numero'), ['class' => 'nav-link', 'style' => 'color: white']); ?>
+                        <?php echo $this->Html->link("Meus dados", "/Professores/view?siape=" . $this->getRequest()->getSession()->read('numero'), ['class' => 'nav-link', 'style' => 'color: white']); ?>
                     </li>
                     <li class = "nav-item">
                         <?php echo $this->Html->link('Sair', '/Userestagios/logout/', ['class' => 'nav-link', 'style' => 'background-color: #2b6c9c; color: white']); ?>

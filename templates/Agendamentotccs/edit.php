@@ -1,7 +1,7 @@
 <?php
 $user = $this->getRequest()->getAttribute('identity');
 // pr($agendamentotcc);
-// pr($docentes);
+// pr($Professores);
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Agendamentotcc $agendamentotcc
@@ -40,10 +40,10 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset class="border p-2">
         <legend><?= __('Editar agendamento de defesa de TCC') ?></legend>
         <?php
-        echo $this->Form->control('estudante_id', ['options' => $alunos]);
-        echo $this->Form->control('docente_id', ['options' => $docentes]);
-        echo $this->Form->control('banca1', ['options' => $docentes]);
-        echo $this->Form->control('banca2', ['options' => $docentes]);
+        echo $this->Form->control('aluno_id', ['options' => $alunos]);
+        echo $this->Form->control('professor_id', ['options' => $professores]);
+        echo $this->Form->control('banca1', ['options' => $professores]);
+        echo $this->Form->control('banca2', ['options' => $professores]);
         echo $this->Form->control('convidado', ['label' => 'Convidado(a)']);
         echo $this->Form->control('data', ['type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
         echo $this->Form->control('horario', ['type' => 'time', 'templates' => ['dateWidget' => '{{HH}}{{mm}}{{ss}}']]);

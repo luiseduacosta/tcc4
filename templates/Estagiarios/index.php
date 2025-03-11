@@ -1,14 +1,15 @@
 <?php
-// pr($estudantes);
 $user = $this->getRequest()->getAttribute('identity');
+// pr($estagiarios);
 // die();
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estagiario[]|\Cake\Collection\CollectionInterface $estagiarios
  */
 ?>
+
 <div class="d-flex justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>
+    <?php echo $this->element('menu_esquerdo'); ?>
 </div>
 
 <?= $this->element('templates') ?>
@@ -17,8 +18,8 @@ $user = $this->getRequest()->getAttribute('identity');
     <h3><?= __('Estagiarios por período e por TCC concluída') ?></h3>
 
     <?= $this->Form->create(null, ['url' => ['action' => 'index']]) ?>
-    <?= $this->Form->control('periodo', ['label' => 'Busca por 4º periodo de estágio', 'options' => $periodos, 'value' => $this->getRequest()->getSession()->read('periodo'), 'empty' => true]) ?>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->control('periodo', ['label' => 'Busca por 4º periodo de estágio', 'options' => $periodos]) ?>
+    <?= $this->Form->button(__('Confirma')) ?>
     <?= $this->Form->end() ?>
 
     <table class="table table-responsive table-striped table-hover">
@@ -34,22 +35,22 @@ $user = $this->getRequest()->getAttribute('identity');
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($estudantes as $c_estudante): ?>
-                <?php // pr($estagiario->tccestudante->id) ?>
+            <?php foreach ($estagiarios as $c_estudante): ?>
+                <?php // pr($c_estudante) ?>
                 <tr>
-                    <td><?= h($c_estudante['registro']) ?></td>
-                    <?php if (!empty($c_estudante['id'])): ?>
-                        <td><?= $this->Html->link($c_estudante['nome'], ['controller' => 'Tccestudantes', 'action' => 'view', $c_estudante['id']]) ?>
+                    <td><?= h($c_estudante->registro) ?></td>
+                    <?php if (!empty($c_estudante->aluno->id)): ?>
+                        <td><?= $this->Html->link($c_estudante->aluno->nome, ['controller' => 'Alunos', 'action' => 'view', $c_estudante->aluno->id]) ?>
                         </td>
                     <?php else: ?>
-                        <td><?= h($c_estudante['nome']) ?></td>
+                        <td><?= h($c_estudante->tccestudante->nome) ?></td>
                     <?php endif; ?>
-                    <td><?= h($c_estudante['turno']) ?></td>
-                    <td><?= h($c_estudante['nivel']) ?></td>
-                    <td><?= h($c_estudante['periodo']) ?></td>
-                    <td><?= $this->Html->link($c_estudante['titulo'], ['controller' => 'Monografias', 'action' => 'view', $c_estudante['monografia_id']]) ?>
+                    <td><?= h($c_estudante->turno) ?></td>
+                    <td><?= h($c_estudante->nivel) ?></td>
+                    <td><?= h($c_estudante->periodo) ?></td>
+                    <td><?= $this->Html->link($c_estudante->titulo, ['controller' => 'Monografias', 'action' => 'view', $c_estudante->monografia_id]) ?>
                     </td>
-                    <td><?= h($c_estudante['periodo_monog']) ?></td>
+                    <td><?= h($c_estudante->periodo_monog) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

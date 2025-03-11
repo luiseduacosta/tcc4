@@ -34,7 +34,7 @@
                     <?php echo $this->Html->link("Supervisores", "/Supervisores/index/ordem:nome", ['class' => 'nav-link']); ?>
                 </li>
                 <li class="nav-item">
-                    <?php echo $this->Html->link("Professores", "/Docentes/index/", ['class' => 'nav-link']); ?>
+                    <?php echo $this->Html->link("Professores", "/Professores/index/", ['class' => 'nav-link']); ?>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administração</a>
@@ -119,7 +119,7 @@
                             </li>
                         <?php endif; ?>
                         <li class="nav-item">
-                            <?php echo $this->Html->link("Meus dados", "/Docentes/view?siape=" . $this->getRequest()->getSession()->read('numero'), ['class' => 'nav-link']); ?>
+                            <?php echo $this->Html->link("Meus dados", "/Professores/view?siape=" . $this->getRequest()->getSession()->read('numero'), ['class' => 'nav-link']); ?>
                         </li>
                         <li class = "nav-item">
                             <?php echo $this->Html->link('Sair', '/Users/logout/', ['class' => 'nav-link']); ?>

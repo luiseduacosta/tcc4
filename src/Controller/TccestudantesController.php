@@ -7,7 +7,6 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 
-
 /**
  * Tccestudantes Controller
  *
@@ -60,7 +59,7 @@ class TccestudantesController extends AppController
         $this->Authorization->skipAuthorization();
         $tccestudantetable = $this->fetchTable('Tccestudantes'); // Estranho, mas necessário
         $tccestudante = $tccestudantetable->get($id, [
-            'contain' => ['Monografias', 'Estudantes'],
+            'contain' => ['Monografias', 'Alunos'],
         ]);
         $this->set('tccestudante', $tccestudante);
     }
@@ -81,7 +80,7 @@ class TccestudantesController extends AppController
             $registro = $estudante_id;
 
             /* Nome do aluno */
-            $estudantetable = $this->fetchTable('Estudantes');
+            $estudantetable = $this->fetchTable('Alunos');
             $resultado = $estudantetable->find('all');
             $resultado->where(['registro' => $estudante_id]);
             $resultado->select(['nome']);
@@ -113,7 +112,7 @@ class TccestudantesController extends AppController
             }
             $this->Flash->error(__('Estudante autor de TCC não foi inserido. Tente novamento.'));
         }
-        $estudantetable = $this->fetchTable('Estudantes');
+        $estudantetable = $this->fetchTable('Alunos');
         $estudantes = $estudantetable->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $estudantes->order(['nome' => 'asc']);
         // pr($estudantes);

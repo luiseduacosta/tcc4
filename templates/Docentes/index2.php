@@ -2,7 +2,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Docente[]|\Cake\Collection\CollectionInterface $docentes
+ * @var \App\Model\Entity\Docente[]|\Cake\Collection\CollectionInterface $Docentes
  */
 ?>
 
@@ -11,12 +11,12 @@ $user = $this->getRequest()->getAttribute('identity');
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDocentes"
-        aria-controls="navbarTogglerDocentes" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerProfessores"
+        aria-controls="navbarTogglerProfessores" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDocentes">
-        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerDocentes">
+    <div class="collapse navbar-collapse" id="navbarTogglerProfessores">
+        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerProfessores">
             <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                 <li class="item-link">
                     <?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
@@ -27,13 +27,13 @@ $user = $this->getRequest()->getAttribute('identity');
 </nav>
 
 <div class="d-flex justify-content-end">
-    <h3><?= __('Docentes') ?></h3>
+    <h3><?= __('Professores') ?></h3>
     <p>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <?= $this->Html->link('Dados funcionais', ['controller' => 'docentes', 'action' => 'index0'], ['class' => 'btn btn-primary float-end']) ?>
-            <?= $this->Html->link('Dados pessoais', ['controller' => 'docentes', 'action' => 'index1'], ['class' => 'btn btn-primary float-end']) ?>
-            <?= $this->Html->link('Dados graduação', ['controller' => 'docentes', 'action' => 'index2'], ['class' => 'btn btn-primary float-end']) ?>
-            <?= $this->Html->link('Dados pósgraduação', ['controller' => 'docentes', 'action' => 'index3'], ['class' => 'btn btn-primary float-end']) ?>
+            <?= $this->Html->link('Dados funcionais', ['controller' => 'Professores', 'action' => 'index0'], ['class' => 'btn btn-primary float-end']) ?>
+            <?= $this->Html->link('Dados pessoais', ['controller' => 'Professores', 'action' => 'index1'], ['class' => 'btn btn-primary float-end']) ?>
+            <?= $this->Html->link('Dados graduação', ['controller' => 'Professores', 'action' => 'index2'], ['class' => 'btn btn-primary float-end']) ?>
+            <?= $this->Html->link('Dados pósgraduação', ['controller' => 'Professores', 'action' => 'index3'], ['class' => 'btn btn-primary float-end']) ?>
         <?php endif; ?>
     </p>
 </div>
@@ -52,9 +52,9 @@ $user = $this->getRequest()->getAttribute('identity');
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($docentes as $docente): ?>
+            <?php foreach ($Professores as $docente): ?>
                 <tr>
-                    <td><?= $this->Html->link(h($docente->nome), ['controller' => 'docentes', 'action' => 'view', $docente->id]) ?>
+                    <td><?= $this->Html->link(h($docente->nome), ['controller' => 'Professores', 'action' => 'view', $docente->id]) ?>
                     </td>
                     <td>
                         <?php if ($docente->curriculolattes): ?>

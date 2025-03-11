@@ -24,8 +24,8 @@ class AreasControllerTest extends TestCase
     protected $fixtures = [
         'app.Areas',
         'app.Monografias',
-        'app.Docentes',
-        'app.DocentesAreas',
+        'app.Professores',
+        'app.ProfessoresAreas',
     ];
 
     /**

@@ -68,7 +68,7 @@ class MuralestagiosController extends AppController {
         // die();
         $this->Authorization->skipAuthorization();
         $muralestagio = $this->Muralestagios->get($id, [
-            'contain' => ['Instituicaoestagios', 'Areaestagios', 'Docentes', 'Muralinscricoes' => ['Estudantes', 'Muralestagios']]
+            'contain' => ['Instituicaoestagios', 'Areaestagios', 'Professores', 'Muralinscricoes' => ['Estudantes', 'Muralestagios']]
         ]);
         // pr($muralestagio);
         // die();
@@ -114,8 +114,8 @@ class MuralestagiosController extends AppController {
         }
         $instituicaoestagios = $this->Muralestagios->Instituicaoestagios->find('list');
         $areaestagios = $this->Muralestagios->Areaestagios->find('list', ['limit' => 200]);
-        $docentes = $this->Muralestagios->Docentes->find('list');
-        $this->set(compact('muralestagio', 'instituicaoestagios', 'areaestagios', 'docentes', 'periodo'));
+        $Professores = $this->Muralestagios->Professores->find('list');
+        $this->set(compact('muralestagio', 'instituicaoestagios', 'areaestagios', 'Professores', 'periodo'));
     }
 
     /**
@@ -156,8 +156,8 @@ class MuralestagiosController extends AppController {
         }
         $instituicaoestagios = $this->Muralestagios->Instituicaoestagios->find('list');
         $areaestagios = $this->Muralestagios->Areaestagios->find('list', ['limit' => 200]);
-        $docentes = $this->Muralestagios->Docentes->find('list', ['limit' => 500]);
-        $this->set(compact('muralestagio', 'instituicaoestagios', 'areaestagios', 'docentes', 'periodostotal'));
+        $Professores = $this->Muralestagios->Professores->find('list', ['limit' => 500]);
+        $this->set(compact('muralestagio', 'instituicaoestagios', 'areaestagios', 'Professores', 'periodostotal'));
     }
 
     /**

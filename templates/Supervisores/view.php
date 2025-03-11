@@ -211,7 +211,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                     <td><?= h($estagiarios->turno) ?></td>
                                     <td><?= h($estagiarios->nivel) ?></td>
                                     <?php if ($user->categoria == '1'): ?>
-                                        <td><?= $estagiarios->has('docente') ? $this->Html->link(h($estagiarios->docente->nome), ['controller' => 'docentes', 'action' => 'view', $estagiarios->id_professor]) : '' ?></td>
+                                        <td><?= $estagiarios->has('docente') ? $this->Html->link(h($estagiarios->docente->nome), ['controller' => 'Professores', 'action' => 'view', $estagiarios->id_professor]) : '' ?></td>
                                     <?php else: ?>
                                         <td><?= $estagiarios->has('docente') ? $estagiarios->docente->nome : '' ?>
                                         <?php endif; ?>

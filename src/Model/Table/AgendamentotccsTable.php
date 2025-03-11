@@ -12,11 +12,11 @@ use Cake\Validation\Validator;
 /**
  * Agendamentotccs Model
  *
- * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
- * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
- * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes1
- * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes2
- *  
+ * @property \App\Model\Table\AlunosTable&\Cake\ORM\Association\BelongsTo $Alunos
+ * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
+ * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores1
+ * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores2
+ *    
  * @method \App\Model\Entity\Agendamentotcc newEmptyEntity()
  * @method \App\Model\Entity\Agendamentotcc newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Agendamentotcc[] newEntities(array $data, array $options = [])
@@ -31,110 +31,116 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Agendamentotcc[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\Agendamentotcc[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
-class AgendamentotccsTable extends Table {
+class AgendamentotccsTable extends Table
+{
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config): void {
-        parent::initialize($config);
+        /**
+         * Initialize method
+         *
+         * @param array $config The configuration for the Table.
+         * @return void
+         */
+        public function initialize(array $config): void
+        {
+                parent::initialize($config);
 
-        $this->setTable('agendamentotccs');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+                $this->setTable('agendamentotccs');
+                $this->setDisplayField('id');
+                $this->setPrimaryKey('id');
 
-        $this->belongsTo('Estudantes', [
-            'foreignKey' => 'estudante_id',
-            'joinType' => 'LEFT',
-        ]);
-        $this->belongsTo('Docentes', [
-            'className' => 'Docentes',
-            'foreignKey' => 'docente_id',
-            'joinType' => 'LEFT',
-        ]);
-        $this->belongsTo('Docentes1', [
-            'className' => 'Docentes',
-            'foreignKey' => 'banca1',
-            'joinType' => 'LEFT',
-        ]);
-        $this->belongsTo('Docentes2', [
-            'className' => 'Docentes',
-            'foreignKey' => 'banca2',
-            'joinType' => 'LEFT',
-        ]);
-    }
+                $this->belongsTo('Alunos', [
+                        'foreignKey' => 'aluno_id',
+                        'joinType' => 'LEFT',
+                ]);
+                $this->belongsTo('Professores', [
+                        'className' => 'Professores',
+                        'foreignKey' => 'professor_id',
+                        'joinType' => 'LEFT',
+                ]);
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator): Validator {
-        $validator
-                ->integer('id')
-                ->allowEmptyString('id', null, 'create');
+                $this->belongsTo('Professores1', [
+                        'className' => 'Professores',
+                        'foreignKey' => 'banca1',
+                        'joinType' => 'LEFT',
+                ]);
 
-        $validator
-                ->integer('banca1')
-                ->requirePresence('banca1', 'create')
-                ->notEmptyString('banca1');
+                $this->belongsTo('Professores2', [
+                        'className' => 'Professores',
+                        'foreignKey' => 'banca2',
+                        'joinType' => 'LEFT',
+                ]);
+        }
 
-        $validator
-                ->integer('banca2')
-                ->requirePresence('banca2', 'create')
-                ->notEmptyString('banca2');
+        /**
+         * Default validation rules.
+         *
+         * @param \Cake\Validation\Validator $validator Validator instance.
+         * @return \Cake\Validation\Validator
+         */
+        public function validationDefault(Validator $validator): Validator
+        {
+                $validator
+                        ->integer('id')
+                        ->allowEmptyString('id', null, 'create');
 
-        $validator
-                ->date('data')
-                ->requirePresence('data', 'create')
-                ->notEmptyDate('data');
+                $validator
+                        ->integer('banca1')
+                        ->requirePresence('banca1', 'create')
+                        ->notEmptyString('banca1');
 
-        $validator
-                ->time('horario')
-                ->requirePresence('horario', 'create')
-                ->notEmptyTime('horario');
+                $validator
+                        ->integer('banca2')
+                        ->requirePresence('banca2', 'create')
+                        ->notEmptyString('banca2');
 
-        $validator
-                ->scalar('sala')
-                ->maxLength('sala', 15)
-                ->requirePresence('sala', 'create')
-                ->notEmptyString('sala');
+                $validator
+                        ->date('data')
+                        ->requirePresence('data', 'create')
+                        ->notEmptyDate('data');
 
-        $validator
-                ->scalar('convidado')
-                ->maxLength('convidado', 30)
-                ->allowEmptyString('convidado');
+                $validator
+                        ->time('horario')
+                        ->requirePresence('horario', 'create')
+                        ->notEmptyTime('horario');
 
-        $validator
-                ->scalar('titulo')
-                ->maxLength('titulo', 180)
-                ->requirePresence('titulo', 'create')
-                ->notEmptyString('titulo');
+                $validator
+                        ->scalar('sala')
+                        ->maxLength('sala', 15)
+                        ->requirePresence('sala', 'create')
+                        ->notEmptyString('sala');
 
-        $validator
-                ->scalar('avaliacao')
-                ->maxLength('avaliacao', 10)
-                ->allowEmptyString('avaliacao');
+                $validator
+                        ->scalar('convidado')
+                        ->maxLength('convidado', 30)
+                        ->allowEmptyString('convidado');
 
-        return $validator;
-    }
+                $validator
+                        ->scalar('titulo')
+                        ->maxLength('titulo', 180)
+                        ->requirePresence('titulo', 'create')
+                        ->notEmptyString('titulo');
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules): RulesChecker {
-        $rules->add($rules->existsIn(['estudante_id'], 'Estudantes'));
-        $rules->add($rules->existsIn(['docente_id'], 'Docentes'));
+                $validator
+                        ->scalar('avaliacao')
+                        ->maxLength('avaliacao', 10)
+                        ->allowEmptyString('avaliacao');
 
-        return $rules;
-    }
+                return $validator;
+        }
+
+        /**
+         * Returns a rules checker object that will be used for validating
+         * application integrity.
+         *
+         * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+         * @return \Cake\ORM\RulesChecker
+         */
+        public function buildRules(RulesChecker $rules): RulesChecker
+        {
+                $rules->add($rules->existsIn(['aluno_id'], 'Alunos'));
+                $rules->add($rules->existsIn(['professor_id'], 'Professores'));
+
+                return $rules;
+        }
 
 }

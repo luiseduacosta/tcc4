@@ -43,7 +43,7 @@ class SupervisoresController extends AppController {
         endif;
 
         $supervisor = $this->Supervisores->get($id, [
-            'contain' => ['Instituicaoestagios' => ['Areainstituicoes'], 'Estagiarios' => ['Estudantes', 'Supervisores', 'Docentes', 'Instituicaoestagios']],
+            'contain' => ['Instituicaoestagios' => ['Areainstituicoes'], 'Estagiarios' => ['Estudantes', 'Supervisores', 'Professores', 'Instituicaoestagios']],
         ]);
         $this->Authorization->authorize($supervisor);
         $this->set(compact('supervisor'));

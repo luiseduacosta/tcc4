@@ -42,26 +42,26 @@ $user = $this->getRequest()->getAttribute('identity');
 </nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <h3><?= h($agendamentotcc->estudante->nome) ?></h3>
+    <h3><?= h($agendamentotcc->aluno->nome) ?></h3>
     <table class="table table-striped table-hover">
         <tr>
             <th><?= __('Aluno') ?></th>
-            <td><?= $agendamentotcc->has('estudante') ? $this->Html->link($agendamentotcc->estudante->nome, ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->estudante->id]) : '' ?>
+            <td><?= $agendamentotcc->has('aluno') ? $this->Html->link($agendamentotcc->aluno->nome, ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->aluno->id]) : '' ?>
             </td>
         </tr>
         <tr>
             <th><?= __('Docente') ?></th>
-            <td><?= $agendamentotcc->has('docente') ? $this->Html->link($agendamentotcc->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docente->id]) : '' ?>
+            <td><?= $agendamentotcc->has('professor') ? $this->Html->link($agendamentotcc->professor->nome, ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professor->id]) : '' ?>
             </td>
         </tr>
         <tr>
             <th><?= __('Banca1') ?></th>
-            <td><?= $agendamentotcc->has('docentes1') ? $this->Html->link($agendamentotcc->docentes1->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes1->id]) : '' ?>
+            <td><?= $agendamentotcc->has('professor1') ? $this->Html->link($agendamentotcc->professores1->nome, ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professor1->id]) : '' ?>
             </td>
         </tr>
         <tr>
             <th><?= __('Banca2') ?></th>
-            <td><?= $agendamentotcc->has('docentes2') ? $this->Html->link($agendamentotcc->docentes2->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentes2->id]) : '' ?>
+            <td><?= $agendamentotcc->has('professor2') ? $this->Html->link($agendamentotcc->professores2->nome, ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professor2->id]) : '' ?>
             </td>
         </tr>
         <tr>

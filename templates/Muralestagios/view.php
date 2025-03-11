@@ -110,7 +110,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
                     </tr>
                     <tr>
                         <th><?= __('Docente') ?></th>
-                        <td><?= $muralestagio->has('docente') ? $this->Html->link($muralestagio->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $muralestagio->docente->id]) : '' ?></td>
+                        <td><?= $muralestagio->has('docente') ? $this->Html->link($muralestagio->docente->nome, ['controller' => 'Professores', 'action' => 'view', $muralestagio->docente->id]) : '' ?></td>
                     </tr>
                     <tr>
                         <th><?= __('Horario da seleção') ?></th>

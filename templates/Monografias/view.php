@@ -56,8 +56,8 @@ $user = $this->getRequest()->getAttribute('identity');
             ?>
         </tr>
         <tr>
-            <th scope="row"><?= __('Docente') ?></th>
-            <td><?= $this->Html->link($monografia->docente->nome, ['controller' => 'docentes', 'action' => 'view', $monografia->docente_id]) ?>
+            <th scope="row"><?= __('Professor(a)') ?></th>
+            <td><?= $this->Html->link($monografia->professor->nome, ['controller' => 'Professores', 'action' => 'view', $monografia->professor_id]) ?>
             </td>
         </tr>
         <tr>
@@ -86,21 +86,21 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php if ($monografia->co_orienta_id > 0): ?>
             <tr>
                 <th scope="row"><?= __('Co Orienta Id', ['label' => 'Co-orientador']) ?></th>
-                <td><?= $monografia->has('co_orienta_id > 0') ? $this->Html->link($monografia->co_orienta_id, ['controller' => 'docentes', 'action' => 'view', $monografia->co_orienta_id]) : '' ?>
+                <td><?= $monografia->hasValue('co_orienta_id > 0') ? $this->Html->link($monografia->co_orienta_id, ['controller' => 'Professores', 'action' => 'view', $monografia->co_orienta_id]) : '' ?>
                 </td>
             </tr>
         <?php endif ?>
         <tr>
             <th scope="row"><?= __('Banca1') ?></th>
-            <td><?= h($monografia->has('banca1 != 0') ? $monografia->banca1 : $monografia->docente->nome) ?></td>
+            <td><?= h($monografia->hasValue('banca1 != 0') ? $monografia->banca1 : $monografia->professor->nome) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Banca2') ?></th>
-            <td><?= h($monografia->has('banca2 != 0') ? $monografia->docentes1->nome : '') ?></td>
+            <td><?= h($monografia->has('banca2 != 0') ? $monografia->professores1->nome : '') ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Banca3') ?></th>
-            <td><?= h($monografia->has('banca3 != 0') ? $monografia->docentes2->nome : '') ?></td>
+            <td><?= h($monografia->has('banca3 != 0') ? $monografia->professores2->nome : '') ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Convidado(a)') ?></th>

@@ -19,7 +19,7 @@ use Cake\ORM\Entity;
  * @property string|null $requisitos
  * @property int $areaestagio_id
  * @property string|null $horario
- * @property int $docente_id
+ * @property int $professor_id
  * @property \Cake\I18n\FrozenDate|null $dataSelecao
  * @property \Cake\I18n\FrozenDate|null $dataInscricao
  * @property string|null $horarioSelecao
@@ -32,9 +32,9 @@ use Cake\ORM\Entity;
  * @property string $localInscricao
  * @property string|null $email
  *
- * @property \App\Model\Entity\Docente $docente
- * @property \App\Model\Entity\Instituicaoestagio $instituicaoestagio
- * @property \App\Model\Entity\Areaestagio $areaestagio
+ * @property \App\Model\Entity\Professor[] $professor
+ * @property \App\Model\Entity\Instituicaoestagio[] $instituicaoestagio
+ * @property \App\Model\Entity\Turmaestagio $turmaestagio
  * @property \App\Model\Entity\Muralinscricao[] $muralinscricao
  */
 class Muralestagio extends Entity
@@ -71,9 +71,9 @@ class Muralestagio extends Entity
         'datafax' => true,
         'localInscricao' => true,
         'email' => true,
-        'docente' => true,
+        'professor' => true,
         'instituicaoestagio' => true,
-        'areaestagio' => true,
+        'turmaestagio' => true,
         'muralinscricao' => true,
     ];
 }

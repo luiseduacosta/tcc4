@@ -8,7 +8,7 @@ use App\Model\Table\DocentesTable;
 use Authorization\IdentityInterface;
 use Authorization\Policy\Result;
 /**
- * Docentes policy
+ * Professores policy
  */
 class DocentesTablePolicy
 {
@@ -20,7 +20,7 @@ class DocentesTablePolicy
      * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canIndex(IdentityInterface $user, DocentesTable $docentes)
+    public function canIndex(IdentityInterface $user, DocentesTable $Docentes)
     {
 
         if (isset($user->categoria) && $user->categoria == '1') {
@@ -36,7 +36,7 @@ class DocentesTablePolicy
      * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canIndex0(IdentityInterface $user, DocentesTable $docentes)
+    public function canIndex0(IdentityInterface $user, DocentesTable $Docentes)
     {
 
         if (isset($user->categoria) && $user->categoria == '1') {
@@ -51,7 +51,7 @@ class DocentesTablePolicy
      * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canIndex1(IdentityInterface $user, DocentesTable $docentes)
+    public function canIndex1(IdentityInterface $user, DocentesTable $Docentes)
     {
 
         if (isset($user->categoria) && $user->categoria == '1') {
@@ -67,7 +67,7 @@ class DocentesTablePolicy
      * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canIndex2(IdentityInterface $user, DocentesTable $docentes)
+    public function canIndex2(IdentityInterface $user, DocentesTable $Docentes)
     {
 
         if (isset($user->categoria) && $user->categoria == '1') {
@@ -83,7 +83,7 @@ class DocentesTablePolicy
      * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canIndex3(IdentityInterface $user, DocentesTable $docentes)
+    public function canIndex3(IdentityInterface $user, DocentesTable $Docentes)
     {
 
         if (isset($user->categoria) && $user->categoria == '1') {

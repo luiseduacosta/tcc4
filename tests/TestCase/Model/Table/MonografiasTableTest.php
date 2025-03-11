@@ -26,7 +26,7 @@ class MonografiasTableTest extends TestCase
      */
     protected $fixtures = [
         'app.Monografias',
-        'app.Docentes',
+        'app.Professores',
         'app.CoOrientas',
         'app.Areas',
         'app.Tccestudantes',

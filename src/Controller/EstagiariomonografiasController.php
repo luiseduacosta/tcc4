@@ -197,12 +197,12 @@ class EstagiariomonografiasController extends AppController {
             'limit' => 200
         ]);
 
-        $docentes = $this->Estagiariomonografias->Docentemonografias->find('list', [
+        $Professores = $this->Estagiariomonografias->Docentemonografias->find('list', [
             'keyField' => 'id', 'valueField' => 'nome',
             'limit' => 200
         ]);
 
-        $this->set(compact('estagiariomonografia', 'alunos', 'docentes'));
+        $this->set(compact('estagiariomonografia', 'alunos', 'Professores'));
     }
 
     /**

@@ -2,16 +2,16 @@
 2) Para que o "debug kit" funcione, num ambiente de desenvolvimento, foi preciso comentar as lineas 131 e 132 do AuthorizationMiddleware que está em /vendor/cakephp/authorization/src/Middleware/AuthorizationMiddleware.php.
 3) Modifique o arquivo routes.php na pasta config para solucionar um problema com o index das monografias
 
-4) Dividir o index dos docentes em três abas (feito!): 
+4) Dividir o index dos Professores em três abas (feito!): 
 * dados pessoais (nome, nascimento, siape, etc), 
 * dados funcionais (ingresso, egresso) e 
 * acadêmicos (lates, grupo de pesquisa, etc.)
 5) Criar a tabela agendamentostcc (feito!)
-6) Criar a tabela gruposdepesquisas (feito!) e a tabela de conexão docentes_gruposdepesquisas
+6) Criar a tabela gruposdepesquisas (feito!) e a tabela de conexão Professores_gruposdepesquisas
 7) Criar um link para imprimir declarações e documentos.
 
 8) Verificar se no controller monogroafias/index é possível incorporar os Tccestudantes
-$query->contain(['Monografias' => ['Docentes', 'Tccestudantes']]);
+$query->contain(['Monografias' => ['Professores', 'Tccestudantes']]);
 ver aqui: https://api.cakephp.org/3.2/class-Cake.ORM.Query.html
 
 8) Excluir na lista de estudantes aqueles que já fizeram a monografia (dos estudantes excluir tccestudantes).

@@ -15,7 +15,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenDate|null $tc_solicitacao
  * @property int $instituicao_id
  * @property int|null $supervisor_id
- * @property int|null $docente_id
+ * @property int|null $professor_id
  * @property string $periodo
  * @property int|null $id_area
  * @property float|null $nota

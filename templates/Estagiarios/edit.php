@@ -29,7 +29,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Html->link(__('New Aluno'), ['controller' => 'Alunos', 'action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
         </li>
         <li class="nav-link">
-            <?= $this->Html->link(__('New Docente'), ['controller' => 'Docentes', 'action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+            <?= $this->Html->link(__('New Docente'), ['controller' => 'Professores', 'action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
         </li>
     </ul>
 </nav>
@@ -47,7 +47,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('tc_solicitacao', ['empty' => true]);
         echo $this->Form->control('instituicao_id');
         echo $this->Form->control('supervisor_id');
-        echo $this->Form->control('docente_id', ['options' => $docentes, 'empty' => true]);
+        echo $this->Form->control('professor_id', ['options' => $Professores, 'empty' => true]);
         echo $this->Form->control('periodo');
         echo $this->Form->control('id_area', ['label' => 'Área', 'options' => $areas, 'empty' => true]);
         echo $this->Form->control('nota');
