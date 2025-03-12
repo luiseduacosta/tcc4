@@ -1,10 +1,6 @@
 <?php
 $user = $this->getRequest()->getAttribute('identity');
-// echo $baseUrl;
-// pr($user['role']);
-// pr($monografias);
-// pr($files);
-// die();
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Monografia[]|\Cake\Collection\CollectionInterface $monografias
@@ -33,12 +29,19 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <h3><?= __('Monografias') ?></h3>
 
-    <?= $this->element('templates') ?>
-
-    <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
-    <?= $this->Form->control('titulo', ['label' => 'Busca por título']) ?>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+    <form method="post" action="index">
+        <div class="row p-3">
+            <div class="col-8">
+                <label class="control-label" for="text">Busca por título</label>
+                <input type="text" class="form-control" id="titulo" placeholder="Título" name="titulo">
+            </div>
+            <input class="form-control" type="hidden" name="_csrfToken" autocomplete="off"
+                value="127scuEDYV6mFZKHdCMtq8ysSpftj5HtaLy9O5qBTAs0g6jtb+Nes+lPFE7/wQq2lLx9CQ4jnfpwLFQoWctlx/drBeYxN1hU+Jh88t2+pNgN2ogLo7QvPgKxmNkK2maL2SonLJv2OIOg3Ug+bBKoyQ==">
+            <div class="col-1 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">Confirma</button>
+            </div>
+        </div>
+    </form>
 
     <table class='table table-striped table-hover table-responsive'>
         <thead class="table-dark">

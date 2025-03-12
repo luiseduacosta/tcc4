@@ -38,9 +38,15 @@ class MonografiasController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
-
-        $query = $this->Monografias->find()
-            ->contain(['Professores', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']]);
+        $titulo = $this->request->getData()['titulo'];
+        if (isset($titulo)) {
+            $query = $this->Monografias->find()
+                ->where(['titulo LIKE' => "%" . $titulo . "%"])
+                ->contain(['Professores', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']]);
+        } else {
+            $query = $this->Monografias->find()
+                ->contain(['Professores', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']]);
+        }
         // debug($query);
         $monografias = $this->paginate($query, [
             'sortableFields' => [
@@ -52,8 +58,7 @@ class MonografiasController extends AppController
                 'Areamonografias.area'
             ]
         ]);
-        // pr($monografias);
-        // die();
+
         $baseUrl = Router::url('/', true);
         $this->set(compact('monografias', 'baseUrl'));
 
@@ -262,47 +267,6 @@ class MonografiasController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
-    }
-
-    public function busca()
-    {
-
-        $this->Authorization->skipAuthorization();
-        if ($this->request->is('post')) {
-            // echo "Post" . "<br>";
-            if ($this->request->getData()):
-                $dados = $this->request->getData();
-                $busca = $dados['titulo'];
-                $this->getRequest()->getSession()->write('busca', $busca);
-                $this->paginate = [
-                    'conditions' => ['titulo LIKE' => "%" . $busca . "%"],
-                    'contain' => ['Professores', 'Areamonografias', 'Tccestudantes']
-                ];
-                // die();
-            endif;
-        }
-        ;
-
-        if (!isset($busca)):
-
-            $busca = $this->getRequest()->getSession()->read('busca');
-
-            // die();
-            if (!empty($busca)):
-                $this->paginate = [
-                    'conditions' => ['titulo LIKE' => "%" . $busca . "%"],
-                    'contain' => ['Professores', 'Areamonografias', 'Tccestudantes']
-                ];
-            else:
-                $this->paginate = [
-                    'contain' => ['Professores', 'Areamonografias', 'Tccestudantes']
-                ];
-            endif;
-        endif;
-
-        $monografias = $this->paginate($this->Monografias);
-        // debug($monografias);
-        $this->set(compact('monografias'));
     }
 
     /**
