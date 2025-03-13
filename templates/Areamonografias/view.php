@@ -1,10 +1,9 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
-// pr($areamonografia->Professores);
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Areamonografia $areamonografia
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">

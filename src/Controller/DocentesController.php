@@ -107,7 +107,7 @@ class DocentesController extends AppController {
      */
     public function add() {
 
-        $docentetable = $this->fetchTable("Professores");
+        $docentetable = $this->fetchTable("Docentes");
         $docente = $docentetable->newEmptyEntity();
         $this->Authorization->authorize($docente);
 
@@ -132,7 +132,7 @@ class DocentesController extends AppController {
      */
     public function edit($id = null) {
 
-        $docentetable = $this->fetchTable("Professores");
+        $docentetable = $this->fetchTable("Docentes");
         $docente = $docentetable->get($id, [
             'contain' => [],
         ]);

@@ -11,9 +11,10 @@ use Cake\Validation\Validator;
 /**
  * Monografias Model
  *
+ * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
  * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasMany $Tccestudantes
- * @property \App\Model\Table\AreamonografiasTable&\Cake\ORM\Association\BelongsTo $Areasmonografias
+ * @property \App\Model\Table\AreamonografiasTable&\Cake\ORM\Association\BelongsTo $Areamonografias
  *
  * @method \App\Model\Entity\Monografia newEmptyEntity()
  * @method \App\Model\Entity\Monografia newEntity(array $data, array $options = [])
@@ -47,6 +48,12 @@ class MonografiasTable extends Table
                 $this->setPrimaryKey('id');
 
                 // Monografia tem um campo professor_id
+                $this->belongsTo('Docentes', [
+                        'className' => 'Docentes',
+                        'foreignKey' => 'professor_id',
+                ]);
+
+                // Monografia tem um campo professor_id
                 $this->belongsTo('Professores', [
                         'className' => 'Professores',
                         'foreignKey' => 'professor_id',
@@ -69,6 +76,7 @@ class MonografiasTable extends Table
                 ]);
 
                 $this->belongsTo('Areamonografias', [
+                        'className' => 'Areamonografias',
                         'foreignKey' => 'areamonografia_id',
                         'joinType' => 'LEFT'
                 ]);

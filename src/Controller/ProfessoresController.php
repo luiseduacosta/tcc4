@@ -44,9 +44,10 @@ class ProfessoresController extends AppController {
         if (is_null($id)) {
             $siape = $this->getRequest()->getQuery('siape');
             if (isset($siape)):
-                $idquery = $this->Professores->find()->where(['siape' => $siape]);
-                $id = $idquery->first();
-                $id = $id->id;
+                $idquery = $this->Professores->find()
+                ->where(['siape' => $siape])
+                ->first();
+                $id = $idquery->id;
             endif;
         }
         /** Têm Professores com muitos estagiários: aumentar a memória */

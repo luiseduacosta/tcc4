@@ -8,6 +8,7 @@ namespace App\Controller;
  * Areamonografias Controller
  *
  * @property \App\Model\Table\AreamonografiasTable $Areamonografias
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  *
  * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -41,7 +42,7 @@ class AreamonografiasController extends AppController
 
         $this->Authorization->skipAuthorization();
         $areamonografia = $this->Areamonografias->get($id, [
-            'contain' => ['Professores', 'Monografias' => ['Tccestudantes', 'Professores']],
+            'contain' => ['Docentes', 'Monografias' => ['Tccestudantes', 'Docentes']],
         ]);
 
         $this->set('areamonografia', $areamonografia);
@@ -61,14 +62,14 @@ class AreamonografiasController extends AppController
         if ($this->request->is('post')) {
             $area = $this->Areamonografias->patchEntity($area, $this->request->getData());
             if ($this->Areamonografias->save($area)) {
-                $this->Flash->success(__('The area has been saved.'));
+                $this->Flash->success(__('Área de monografia registrada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The area could not be saved. Please, try again.'));
+            $this->Flash->error(__('Área de monografia não registrada.'));
         }
-        $Professores = $this->Areamonografias->Professores->find('list', ['limit' => 200]);
-        $this->set(compact('area', 'Professores'));
+        $docentes = $this->Areamonografias->Docentes->find('list', ['limit' => 200]);
+        $this->set(compact('area', 'docentes'));
     }
 
     /**
@@ -95,8 +96,8 @@ class AreamonografiasController extends AppController
             }
             $this->Flash->error(__('Área de monografia não foi atualizada.'));
         }
-        $Professores = $this->Areamonografias->Professores->find('list');
-        $this->set(compact('areamonografia', 'Professores'));
+        $docentes = $this->Areamonografias->Docentes->find('list');
+        $this->set(compact('areamonografia', 'docentes'));
     }
 
     /**
@@ -114,9 +115,9 @@ class AreamonografiasController extends AppController
         $this->Authorization->authorize($areamonografia);
 
         if ($this->Areamonografias->delete($areamonografia)) {
-            $this->Flash->success(__('The area has been deleted.'));
+            $this->Flash->success(__('Área excluída.'));
         } else {
-            $this->Flash->error(__('The area could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Área não excluída.'));
         }
 
         return $this->redirect(['action' => 'index']);

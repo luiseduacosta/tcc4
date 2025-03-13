@@ -122,7 +122,6 @@ class MonografiasController extends AppController
                 $dados['banca1'] = $dados['professor_id'];
             endif;
 
-            // $monografia = $this->Monografias->patchEntity($monografia, $this->request->getData());
             $monografia = $this->Monografias->patchEntity($monografia, $dados);
             $this->Authorization->authorize($monografia);
             // pr($monografia);
@@ -135,7 +134,7 @@ class MonografiasController extends AppController
 
                 /* Capturo o nome do estudante */
                 $estudantetable = $this->fetchTable('Estudantes');
-                $resultado = $estudantetable->find('all');
+                $resultado = $estudantetable->find();
                 $resultado->where(['registro' => $dados['registro']]);
                 $resultado->select(['nome']);
                 $resultado->first();
@@ -201,11 +200,11 @@ class MonografiasController extends AppController
             if ($this->request->getUploadedFile('url')->getSize() > 0):
                 // echo 'Arquivo PDF';
                 /* Preciso do DRE para inserir uma monografia */
-                $resultado = $this->Monografias->Tccestudantes->find('all')
+                $resultado = $this->Monografias->Tccestudantes->find()
                     ->where(['Tccestudantes.monografia_id' => $id])
-                    ->order(['Tccestudantes.nome']);
-                $registro = $resultado->first();
-                $dre = $registro->registro;
+                    ->order(['Tccestudantes.nome'])
+                    ->first();
+                $dre = $resultado->registro;
                 // $url->moveTo(WWW_ROOT . 'monografias/');
 
                 /* Chamo a função arquivo() com os parámetros do formulário e do $dre */

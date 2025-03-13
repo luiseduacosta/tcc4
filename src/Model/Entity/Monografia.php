@@ -58,8 +58,8 @@ class Monografia extends Entity
         'convidado' => true,
         'url' => true,
         'timestamp' => true,
-        'professor' => true,
-        'areamonografia' => true,
-        'tccestudante' => true,
+        'professores' => true,
+        'areamonografias' => true,
+        'tccestudantes' => true,
     ];
 }

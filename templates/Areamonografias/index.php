@@ -1,12 +1,9 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
-// pr($user);
-// die();
-// pr($areas);
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Areamonografia[]|\Cake\Collection\CollectionInterface $areas
+ * @var \App\Model\Entity\Areamonografia[]|\Cake\Collection\CollectionInterface $areamonografias
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">
