@@ -8,6 +8,9 @@ namespace App\Controller;
  * Configuracao Controller
  *
  * @property \App\Model\Table\ConfiguracaoTable $Configuracao
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * 
  * @method \App\Model\Entity\Configuracao[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ConfiguracaoController extends AppController {

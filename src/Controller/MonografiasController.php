@@ -15,11 +15,17 @@ use Cake\Filesystem\Folder;
  * Monografias Controller
  *
  * @property \App\Model\Table\MonografiasTable $Monografias
- *
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization 
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * 
  * @method \App\Model\Entity\Monografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class MonografiasController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+    }
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {

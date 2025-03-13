@@ -8,6 +8,9 @@ namespace App\Controller;
  * Turmaestagios Controller
  *
  * @property \App\Model\Table\TurmaestagiosTable $Turmaestagios
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * 
  * @method \App\Model\Entity\Turmaestagio[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class TurmaestagiosController extends AppController {

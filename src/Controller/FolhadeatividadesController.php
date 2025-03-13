@@ -8,6 +8,9 @@ namespace App\Controller;
  * Folhadeatividades Controller
  *
  * @property \App\Model\Table\FolhadeatividadesTable $Folhadeatividades
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * 
  * @method \App\Model\Entity\Folhadeatividade[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class FolhadeatividadesController extends AppController {

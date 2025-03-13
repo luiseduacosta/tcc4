@@ -7,6 +7,9 @@ namespace App\Controller;
  * Complementos Controller
  *
  * @property \App\Model\Table\ComplementosTable $Complementos
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * 
  * @method \App\Model\Entity\Complemento[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ComplementosController extends AppController

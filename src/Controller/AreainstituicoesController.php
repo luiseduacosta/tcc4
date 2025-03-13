@@ -7,6 +7,9 @@ namespace App\Controller;
  * Areainstituicoes Controller
  *
  * @property \App\Model\Table\AreainstituicoesTable $Areainstituicoes
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * 
  * @method \App\Model\Entity\Areainstituicao[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AreainstituicoesController extends AppController

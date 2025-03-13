@@ -11,6 +11,8 @@ use Cake\ORM\Query;
  * Estudantes Controller
  *
  * @property \App\Model\Table\EstudantesTable $Estudantes
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  *
  * @method \App\Model\Entity\Estudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */

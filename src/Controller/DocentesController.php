@@ -11,7 +11,9 @@ use Cake\Event\Event;
  * Docentes Controller
  *
  * @property \App\Model\Table\ProfessoresTable $Docentes
- *
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * 
  * @method \App\Model\Entity\Docente[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocentesController extends AppController {

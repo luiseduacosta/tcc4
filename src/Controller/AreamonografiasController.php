@@ -9,7 +9,8 @@ namespace App\Controller;
  *
  * @property \App\Model\Table\AreamonografiasTable $Areamonografias
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
- *
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * 
  * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AreamonografiasController extends AppController

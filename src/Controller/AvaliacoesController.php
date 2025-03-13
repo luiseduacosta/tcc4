@@ -8,6 +8,9 @@ namespace App\Controller;
  * Avaliacoes Controller
  *
  * @property \App\Model\Table\AvaliacoesTable $Avaliacoes
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * 
  * @method \App\Model\Entity\Avaliaco[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AvaliacoesController extends AppController {

@@ -11,7 +11,9 @@ use Cake\Event\Event;
  * Tccestudantes Controller
  *
  * @property \App\Model\Table\TccestudantesTable $Tccestudantes
- *
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * 
  * @method \App\Model\Entity\Tccestudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  * 
  * #[AllowDynamicProperties];

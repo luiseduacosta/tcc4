@@ -8,6 +8,9 @@ namespace App\Controller;
  * Areaestagios Controller
  *
  * @property \App\Model\Table\AreaestagiosTable $Areaestagios
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * 
  * @method \App\Model\Entity\Areaestagio[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AreaestagiosController extends AppController {

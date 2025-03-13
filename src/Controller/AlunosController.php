@@ -8,6 +8,9 @@ namespace App\Controller;
  * Alunos Controller
  *
  * @property \App\Model\Table\AlunosTable $Alunos
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ *  
  * @method \App\Model\Entity\Aluno[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AlunosController extends AppController {

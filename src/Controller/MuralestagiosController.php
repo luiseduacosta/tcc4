@@ -8,6 +8,9 @@ namespace App\Controller;
  * Muralestagios Controller
  *
  * @property \App\Model\Table\MuralestagiosTable $Muralestagios
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * 
  * @method \App\Model\Entity\Muralestagio[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class MuralestagiosController extends AppController {

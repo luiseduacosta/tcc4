@@ -11,7 +11,9 @@ use Cake\Event\Event;
  * Users Controller
  *
  * @property \App\Model\Table\UsersTable $Users
- *
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * 
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UsersController extends AppController

@@ -8,7 +8,9 @@ namespace App\Controller;
  * Agendamentotccs Controller
  *
  * @property \App\Model\Table\AgendamentotccsTable $Agendamentotccs
- *
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ *  
  * @method \App\Model\Entity\Agendamentotcc[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AgendamentotccsController extends AppController
