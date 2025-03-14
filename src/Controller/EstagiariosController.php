@@ -187,20 +187,13 @@ class EstagiariosController extends AppController
             'list',
             [
                 'keyField' => 'id',
-                'valueField' => 'nome',
-                'limit' => 200
+                'valueField' => 'nome'
             ]
         );
 
         $Professores = $this->Estagiarios->Professores->find('list', [
             'keyField' => 'id',
-            'valueField' => 'nome',
-            'limit' => 200
-        ]);
-        $areas = $this->Estagiarios->Areas->find('list', [
-            'keyField' => 'id',
-            'valueField' => 'area',
-            'limit' => 200
+            'valueField' => 'nome'
         ]);
 
         $this->set(compact('estagiario', 'estudantes', 'Professores', 'areas'));

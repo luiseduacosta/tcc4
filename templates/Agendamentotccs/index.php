@@ -1,9 +1,9 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Agendamentotcc[]|\Cake\Collection\CollectionInterface $agendamentotccs
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($agendamentotccs);
 ?>
 
@@ -50,9 +50,9 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php foreach ($agendamentotccs as $agendamentotcc): ?>
                 <?php // pr($agendamentotcc->professor) ?>
                 <tr>
-                    <td><?= $agendamentotcc->hasValue('aluno') ? $this->Html->link($agendamentotcc->aluno->nome, ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->aluno_id]) : '' ?>
+                    <td><?= $agendamentotcc->hasValue('aluno') ? $this->Html->link($agendamentotcc->alunos['nome'], ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->aluno_id]) : '' ?>
                     </td>
-                    <td><?= $agendamentotcc->has('professor') ? $this->Html->link($agendamentotcc->professor->nome, ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professor->id]) : '' ?>
+                    <td><?= $agendamentotcc->has('professor') ? $this->Html->link($agendamentotcc->professores['nome'], ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professores['id']]) : '' ?>
                     </td>
                     <td><?= $agendamentotcc->has('professores1') ? $this->Html->link($agendamentotcc->professores1->nome, ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professores1->id]) : '' ?>
                     </td>

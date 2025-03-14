@@ -1,12 +1,10 @@
 <?php
-
-$user = $this->getRequest()->getAttribute('identity');
-
-// pr($arquivospdf);
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Monografia[]|\Cake\Collection\CollectionInterface $monografias
  */
+ $user = $this->getRequest()->getAttribute('identity');
+ // pr($arquivospdf); 
 ?>
 
 <div class="d-flex justify-content-start">

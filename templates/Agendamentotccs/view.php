@@ -1,9 +1,9 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Agendamentotcc $agendamentotcc
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($agendamentotcc);
 ?>
 
@@ -42,21 +42,21 @@ $user = $this->getRequest()->getAttribute('identity');
 </nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <h3><?= h($agendamentotcc->aluno->nome) ?></h3>
+    <h3><?= h($agendamentotcc->alunos['nome']) ?></h3>
     <table class="table table-striped table-hover">
         <tr>
             <th><?= __('Aluno') ?></th>
-            <td><?= $agendamentotcc->has('aluno') ? $this->Html->link($agendamentotcc->aluno->nome, ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->aluno->id]) : '' ?>
+            <td><?= $agendamentotcc->has('aluno') ? $this->Html->link($agendamentotcc->alunos['nome'], ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->alunos['id']]) : '' ?>
             </td>
         </tr>
         <tr>
             <th><?= __('Docente') ?></th>
-            <td><?= $agendamentotcc->has('professor') ? $this->Html->link($agendamentotcc->professor->nome, ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professor->id]) : '' ?>
+            <td><?= $agendamentotcc->has('professor') ? $this->Html->link($agendamentotcc->professores['nome'], ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professores['id']]) : '' ?>
             </td>
         </tr>
         <tr>
             <th><?= __('Banca1') ?></th>
-            <td><?= $agendamentotcc->has('professor1') ? $this->Html->link($agendamentotcc->professores1->nome, ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professor1->id]) : '' ?>
+            <td><?= $agendamentotcc->has('professor1') ? $this->Html->link($agendamentotcc->professores1->nome, ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professores1->id]) : '' ?>
             </td>
         </tr>
         <tr>

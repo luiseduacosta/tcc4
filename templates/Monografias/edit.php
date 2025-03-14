@@ -1,10 +1,10 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
-// pr($monografia->titulo);
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Monografia $monografia
  */
+$user = $this->getRequest()->getAttribute('identity');
+// pr($monografia->titulo);
 ?>
 
 <script>

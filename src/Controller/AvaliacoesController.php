@@ -164,8 +164,8 @@ class AvaliacoesController extends AppController
             'contain' => ['Estagiarios' => 'Estudantes'],
         ]);
         $this->Authorization->authorize($avaliacao);
-        // pr($avaliacao->estagiario);
-        $estagiario = $avaliacao->estagiario;
+        pr($avaliacao->estagiarios);
+        $estagiario = $avaliacao->estagiarios;
         // die();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $avaliacao = $this->Avaliacoes->patchEntity($avaliacao, $this->request->getData());
@@ -229,7 +229,7 @@ class AvaliacoesController extends AppController
 
         /* No login foi capturado o id do estagiário */
         $this->Authorization->skipAuthorization();
-        $this->layout = false;
+        $this->viewBuilder()->setLayout('');
         if (is_null($id)) {
             $this->Flash->error(__('Por favor selecionar a folha de avaliação do estágio do estudante'));
             return $this->redirect('/estudantes/view?registro=' . $this->getRequest()->getSession()->read('numero'));

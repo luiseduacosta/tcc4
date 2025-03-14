@@ -1,11 +1,12 @@
 <?php
 
-$user = $this->getRequest()->getAttribute('identity');
 // pr($estudantes);
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Monografia $monografia
  */
+$user = $this->getRequest()->getAttribute('identity');
+
 ?>
 
 <script>
@@ -81,7 +82,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <?php
     echo $this->Form->control('data_de_entrega', ['label' => 'Data de entrega', 'type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
-    echo $this->Form->control('ano', ['type' => 'year', 'minYear' => date('Y') - 20, 'maxYear' => date('Y'), 'required' => true]);
+    echo $this->Form->control('ano', ['type' => 'year', 'min' => date('Y') - 20, 'max' => date('Y') + 10, 'required' => true]);
     echo $this->Form->control('semestre', ['options' => ['0' => 'Sem dados', '1' => '1º', '2' => '2º']]);
     echo $this->Form->control('professor_id', ['label' => 'Orientador(a)', 'options' => $Professores, 'empty' => 'Selecione', 'required' => true]);
     echo $this->Form->control('co_orienta_id', ['label' => 'Co-orientador(a)', 'options' => $Professores, 'empty' => true, 'required' => false]);

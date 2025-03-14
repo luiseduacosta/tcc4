@@ -1,10 +1,10 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
-// pr($alunos);
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Agendamentotcc $agendamentotcc
  */
+$user = $this->getRequest()->getAttribute('identity');
+// pr($alunos);
 ?>
 
 <script>

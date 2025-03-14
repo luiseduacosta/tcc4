@@ -1,10 +1,9 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
-
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Monografia[]|\Cake\Collection\CollectionInterface $monografias
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">
@@ -29,19 +28,17 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <h3><?= __('Monografias') ?></h3>
 
-    <form method="post" action="index">
-        <div class="row p-3">
-            <div class="col-8">
-                <label class="control-label" for="text">Busca por título</label>
-                <input type="text" class="form-control" id="titulo" placeholder="Título" name="titulo">
-            </div>
-            <input class="form-control" type="hidden" name="_csrfToken" autocomplete="off"
-                value="127scuEDYV6mFZKHdCMtq8ysSpftj5HtaLy9O5qBTAs0g6jtb+Nes+lPFE7/wQq2lLx9CQ4jnfpwLFQoWctlx/drBeYxN1hU+Jh88t2+pNgN2ogLo7QvPgKxmNkK2maL2SonLJv2OIOg3Ug+bBKoyQ==">
-            <div class="col-1 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary">Confirma</button>
-            </div>
+    <?= $this->Form->create($monografias); ?>
+    <div class="form-group row p-1">
+        <div class="col-8">
+            <label class='form-label'>Busca por título</label>
+            <?= $this->Form->control('titulo', ['label' => false, 'class' => 'form-control']); ?>
         </div>
-    </form>
+        <div class="col-1 d-flex align-items-end">
+            <?= $this->Form->button(__("Confirma"), ['class' => 'btn btn-primary']); ?>
+        </div>
+    </div>
+    <?= $this->Form->end(); ?>
 
     <table class='table table-striped table-hover table-responsive'>
         <thead class="table-dark">
@@ -81,9 +78,9 @@ $user = $this->getRequest()->getAttribute('identity');
                         endif;
                         ?>
                     </td>
-                    <td><?= $this->Html->link(h($monografia->professor->nome), ['controller' => 'Professores', 'action' => 'view', $monografia->professor->id]) ?>
+                    <td><?= $this->Html->link(h($monografia->professores['nome']), ['controller' => 'Professores', 'action' => 'view', $monografia->professores['id']]) ?>
                     </td>
-                    <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografia->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia->id]) : '' ?>
+                    <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografias['area'], ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografias['id']]) : '' ?>
                     </td>
                     <?php if (!empty($monografia->url)): ?>
                         <td><a href="<?= $baseUrl . 'monografias/' . $monografia->url ?>">Download</a></td>
