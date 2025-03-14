@@ -13,14 +13,16 @@ namespace App\Controller;
  * 
  * @method \App\Model\Entity\Muralinscricao[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class MuralinscricoesController extends AppController {
+class MuralinscricoesController extends AppController
+{
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index($periodo = NULL) {
+    public function index($periodo = NULL)
+    {
 
         if (empty($periodo)) {
             $configuracaotable = $this->fetchTable('Configuracao');
@@ -30,22 +32,22 @@ class MuralinscricoesController extends AppController {
 
         if ($periodo) {
             $this->paginate = [
-                'contain' => ['Estudantes', 'Alunos', 'Muralestagios'],
-                'sortableFields' => ['id', 'id_aluno', 'Alunos.nome', 'Estudantes.nome', 'Muralestagios.instituicao', 'data', 'periodo', 'timestamp'],
+                'contain' => ['Alunos', 'Muralestagios'],
+                'sortableFields' => ['id', 'id_aluno', 'Alunos.nome', 'Muralestagios.instituicao', 'data', 'periodo', 'timestamp'],
                 'conditions' => ['muralinscricoes.periodo' => $periodo],
                 'order' => ['Estudantes.nome']
             ];
         } else {
             $this->paginate = [
-                'contain' => ['Estudantes', 'Alunos', 'Muralestagios'],
-                'sortableFields' => ['id', 'id_aluno', 'Alunos.nome', 'Estudantes.nome', 'Muralestagios.instituicao', 'data', 'periodo', 'timestamp'],
+                'contain' => ['Alunos', 'Muralestagios'],
+                'sortableFields' => ['id', 'id_aluno', 'Alunos.nome', 'Muralestagios.instituicao', 'data', 'periodo', 'timestamp'],
                 'order' => ['Estudantes.nome']
             ];
         }
 
         $muralinscricoes = $this->paginate($this->Muralinscricoes);
         $this->Authorization->authorize($this->Muralinscricoes);
-        
+
         $periodototal = $this->Muralinscricoes->find('list', [
             'keyField' => 'periodo',
             'valueField' => 'periodo'
@@ -62,12 +64,13 @@ class MuralinscricoesController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
         $muralinscricao = $this->Muralinscricoes->get($id, [
-            'contain' => ['Estudantes', 'Alunos', 'Muralestagios']
+            'contain' => ['Alunos', 'Muralestagios']
         ]);
-        $this->Authorization->authorize($muralinscricao);        
+        $this->Authorization->authorize($muralinscricao);
         $this->set(compact('muralinscricao'));
     }
 
@@ -76,7 +79,8 @@ class MuralinscricoesController extends AppController {
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add($id = NULL) {
+    public function add($id = NULL)
+    {
 
         $muralinscricao = $this->Muralinscricoes->newEmptyEntity();
         $this->Authorization->authorize($muralinscricao);
@@ -88,9 +92,9 @@ class MuralinscricoesController extends AppController {
                 // pr($dre);
                 /* Verifica se já fez inscricações para essa mesma vaga de estágio */
                 $verifica = $this->Muralinscricoes->find()
-                ->contain([])
-                ->where(['id_instituicao' => $id, 'id_aluno' => $dre])
-                ->select(['id']);
+                    ->contain([])
+                    ->where(['id_instituicao' => $id, 'id_aluno' => $dre])
+                    ->select(['id']);
                 $verifica_id = $verifica->first();
                 // pr($verifica_id);
                 if ($verifica_id) {
@@ -104,21 +108,17 @@ class MuralinscricoesController extends AppController {
                 $aluno = $alunotable->find()->where(['registro' => $dre])->select(['id']);
                 $aluno_id = $aluno->first();
                 // pr($aluno_id);
-                $estudantetable = $this->fetchTable('Estudantes');
-                $estudante = $estudantetable->find()->where(['registro' => $dre])->select(['id']);
-                $estudante_id = $estudante->first();
-                // pr($estudante_id);
+
                 $configuracaotable = $this->fetchTable('Configuracao');
                 $periodo = $configuracaotable->get(1);
                 $periodo = $periodo->mural_periodo_atual;
 
                 $data['id_aluno'] = $dre;
                 $data['aluno_id'] = $aluno_id['id'];
-                $data['alunonovo_id'] = $estudante_id['id'];
                 $data['data'] = date('Y-m-d');
                 $data['periodo'] = $periodo;
-            // pr($data);
-            // die();
+                // pr($data);
+                // die();
             else:
                 $this->Flash->error(__('Precisa do DRE do estudante para fazer inscrição'));
                 return $this->redirect('/muralinscricoes/index');
@@ -146,8 +146,8 @@ class MuralinscricoesController extends AppController {
         $muralestagios_id = $this->getRequest()->getQuery('id_instituicao');
         if ($muralestagios_id):
             $instituicao = $this->Muralinscricoes->Muralestagios->find()
-                    ->where(['muralestagios.id' => $muralestagios_id])
-                    ->select(['muralestagios.id', 'muralestagios.instituicao', 'muralestagios.periodo']);
+                ->where(['muralestagios.id' => $muralestagios_id])
+                ->select(['muralestagios.id', 'muralestagios.instituicao', 'muralestagios.periodo']);
 
             $this->set('muralestagios_id', $instituicao->first());
         else:
@@ -155,17 +155,10 @@ class MuralinscricoesController extends AppController {
             $this->redirect('/muralestagios/index');
         endif;
 
-        /* Estudantes */
-        $estudantetable = $this->fetchTable('Estudantes');
-        $alunonovos = $estudantetable->find()
-                ->where(['estudantes.registro' => $this->getRequest()->getSession()->read('numero')])
-                ->select(['estudantes.id', 'estudantes.registro', 'estudantes.nome']);
-        $alunonovos = $alunonovos->first();
-
         $alunotable = $this->fetchTable('Alunos');
         $alunoestagios = $alunotable->find()
-                ->where(['alunos.registro' => $this->getRequest()->getSession()->read('numero')])
-                ->select(['alunos.id', 'alunos.nome']);
+            ->where(['alunos.registro' => $this->getRequest()->getSession()->read('numero')])
+            ->select(['alunos.id', 'alunos.nome']);
         $alunoestagios = $alunoestagios->first();
 
         // pr($alunonovos);
@@ -184,7 +177,8 @@ class MuralinscricoesController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
         $muralinscricao = $this->Muralinscricoes->get($id, [
             'contain' => ['Estudantes'],
@@ -219,7 +213,8 @@ class MuralinscricoesController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
 
         $registro = $this->Muralinscricoes->find()->where(['id' => $id])->select(['alunonovo_id']);
         // pr($registro);
@@ -229,7 +224,7 @@ class MuralinscricoesController extends AppController {
         $this->request->allowMethod(['post', 'delete']);
         $muralinscricao = $this->Muralinscricoes->get($id);
         $this->Authorization->authorize($muralinscricao);
-        
+
         if ($this->Muralinscricoes->delete($muralinscricao)) {
             $this->Flash->success(__('Inscrição excluída.'));
         } else {

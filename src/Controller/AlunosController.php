@@ -13,14 +13,16 @@ namespace App\Controller;
  *  
  * @method \App\Model\Entity\Aluno[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class AlunosController extends AppController {
+class AlunosController extends AppController
+{
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index() {
+    public function index()
+    {
 
         $alunos = $this->paginate($this->Alunos);
         $this->Authorization->authorize($this->Alunos);
@@ -34,7 +36,8 @@ class AlunosController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
         if (is_null($id)) {
             $registro = $this->getRequest()->getQuery('registro');
@@ -61,7 +64,8 @@ class AlunosController extends AppController {
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
 
         $aluno = $this->Alunos->newEmptyEntity();
         $this->Authorization->authorize($aluno);
@@ -84,7 +88,8 @@ class AlunosController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
         $aluno = $this->Alunos->get($id, [
             'contain' => [],
@@ -109,7 +114,8 @@ class AlunosController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
 
         $this->request->allowMethod(['post', 'delete']);
         $aluno = $this->Alunos->get($id);

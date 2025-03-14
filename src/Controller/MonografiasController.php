@@ -139,7 +139,7 @@ class MonografiasController extends AppController
                 $tccestudante = $this->Monografias->Tccestudantes->newEmptyEntity();
 
                 /* Capturo o nome do estudante */
-                $estudantetable = $this->fetchTable('Estudantes');
+                $estudantetable = $this->fetchTable('Alunos');
                 $resultado = $estudantetable->find();
                 $resultado->where(['registro' => $dados['registro']]);
                 $resultado->select(['nome']);
@@ -245,7 +245,7 @@ class MonografiasController extends AppController
         $areas = $this->Monografias->Areamonografias->find('list', [
             'keyField' => 'id',
             'valueField' => 'area'
-        ], ['limit' => 200]);
+        ]);
         $areas->order(['area' => 'asc']);
 
         $this->set(compact('monografia', 'professores', 'areas'));

@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
 /**
  * Visitas Model
  *
- * @property \App\Model\Table\InstituicaoestagiosTable&\Cake\ORM\Association\BelongsTo $Instituicaoestagios
+ * @property \App\Model\Table\InstituicoesTable&\Cake\ORM\Association\BelongsTo $Instituicoes
  *
  * @method \App\Model\Entity\Visita newEmptyEntity()
  * @method \App\Model\Entity\Visita newEntity(array $data, array $options = [])
@@ -45,7 +45,7 @@ class VisitasTable extends Table
         $this->setDisplayField('estagio_id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Instituicaoestagios', [
+        $this->belongsTo('Instituicoes', [
             'foreignKey' => 'estagio_id',
             'joinType' => 'INNER',
         ]);

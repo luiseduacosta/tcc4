@@ -14,7 +14,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
  * @property \App\Model\Table\MuralestagiosTable&\Cake\ORM\Association\HasMany $Muralestagios
- * @property \App\Model\Table\InstituicaoestagiosTable&\Cake\ORM\Association\HasMany $Instituicaoestagios
+ * @property \App\Model\Table\InstituicoesTable&\Cake\ORM\Association\HasMany $Instituicoes
  *
  * @method \App\Model\Entity\Areaestagio newEmptyEntity()
  * @method \App\Model\Entity\Areaestagio newEntity(array $data, array $options = [])
@@ -52,7 +52,7 @@ class AreaestagiosTable extends Table {
         $this->hasMany('Muralestagios', [
             'foreignKey' => 'id_area',
         ]);
-        $this->hasMany('Instituicaoestagios', [
+        $this->hasMany('Instituicoes', [
             'foreignKey' => 'area',
         ]);
     }

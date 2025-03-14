@@ -96,9 +96,9 @@ class Professor extends Entity
         'dataegresso' => true,
         'motivoegresso' => true,
         'observacoes' => true,
-        'estagiario' => true,
-        'muralestagio' => true,
-        'user' => true,
+        'estagiarios' => true,
+        'muralestagios' => true,
+        'users' => true,
         'monografias' => true,
         'areamonografias' => true,
     ];

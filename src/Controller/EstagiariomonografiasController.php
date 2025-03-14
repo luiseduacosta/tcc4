@@ -16,28 +16,29 @@ use Cake\Event\Event;
  * 
  * @method \App\Model\Entity\Estagiariomonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class EstagiariomonografiasController extends AppController {
-    /*
-      public function beforeFilter(\Cake\Event\EventInterface $event): Event
-      {
+class EstagiariomonografiasController extends AppController
+{
 
-      parent::beforeFilter($event);
+    public function beforeFilter(\Cake\Event\EventInterface $event): void
+    {
 
-      // $this->Auth->allow(['view', 'index', 'indexold', 'busca', 'registro']);
-      }
-     */
+        parent::beforeFilter($event);
+
+        $this->Authentication->addUnauthenticatedActions(['view', 'index', 'indexold', 'busca', 'registro']);
+    }
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null
      */
-    public function indexold() {
+    public function indexold()
+    {
 
         $this->Authorization->skipAuthorization();
         $this->paginate = [
             'conditions' => ['nivel' => 4],
-            'contain' => ['Tccestudantes', 'Estudantes'],
+            'contain' => ['Tccestudantes', 'Alunos'],
         ];
         $estagiariomonografias = $this->paginate($this->Estagiariomonografias);
         // pr($estagiarios);
@@ -49,7 +50,8 @@ class EstagiariomonografiasController extends AppController {
      *
      * @return \Cake\Http\Response|null
      */
-    public function index() {
+    public function index()
+    {
 
         $this->Authorization->skipAuthorization();
         $parametros = $this->request->getQueryParams();
@@ -74,7 +76,8 @@ class EstagiariomonografiasController extends AppController {
                 $periodo = $dados['periodo'];
                 $this->request->getSession()->write('periodo', $periodo);
             endif;
-        };
+        }
+        ;
 
         $periodo = $this->request->getSession()->read('periodo');
         // echo $periodo . "<br>";
@@ -82,12 +85,12 @@ class EstagiariomonografiasController extends AppController {
         if (!empty($periodo)):
             $estagiariomonografias = $this->Estagiariomonografias->find('all', [
                 'conditions' => ['nivel' => 4, 'periodo' => $periodo],
-                'contain' => ['Tccestudantes', 'Estudantes'],
+                'contain' => ['Tccestudantes', 'Alunos'],
             ]);
         else:
             $estagiariomonografias = $this->Estagiariomonografias->find('all', [
                 'conditions' => ['nivel' => 4],
-                'contain' => ['Tccestudantes', 'Estudantes'],
+                'contain' => ['Tccestudantes', 'Aluns'],
             ]);
         endif;
         $this->Authorization->authorize($this->Estagiariomonografias);
@@ -134,7 +137,7 @@ class EstagiariomonografiasController extends AppController {
                 $estudantes[$i]['titulo'] = $totalmonografia['titulo'];
                 $estudantes[$i]['periodo_monog'] = $totalmonografia['periodo'];
                 $ordem[$i][$criterio] = $estudantes[$i][$criterio];
-            // die();
+                // die();
             else:
                 $estudantes[$i]['nome'] = $c_estagiario->estudante['nome'];
                 $estudantes[$i]['registro'] = $c_estagiario->estudante['registro'];
@@ -167,7 +170,8 @@ class EstagiariomonografiasController extends AppController {
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
         $estagiariomonografia = $this->Estagiariomonografias->get($id, [
             'contain' => ['Estudantes', 'Docentemonografias'],
@@ -181,7 +185,8 @@ class EstagiariomonografiasController extends AppController {
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
 
         $estagiariomonografia = $this->Estagiariomonografias->newEmptyEntity();
         $this->Authorization->authorize($estagiariomonografia);
@@ -195,12 +200,14 @@ class EstagiariomonografiasController extends AppController {
             $this->Flash->error(__('Registro estagiário não foi inserido. Tente novamente.'));
         }
         $alunos = $this->Estagiariomonografias->Estudantes->find('list', [
-            'keyField' => 'id', 'valueField' => 'nome',
+            'keyField' => 'id',
+            'valueField' => 'nome',
             'limit' => 200
         ]);
 
-        $Professores = $this->Estagiariomonografias->Docentemonografias->find('list', [
-            'keyField' => 'id', 'valueField' => 'nome',
+        $Professores = $this->Estagiariomonografias->Professores->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'nome',
             'limit' => 200
         ]);
 
@@ -214,7 +221,8 @@ class EstagiariomonografiasController extends AppController {
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
         // $this->autoRender = false;
         $estagiariomonografia = $this->Estagiariomonografias->get($id, [
@@ -232,18 +240,24 @@ class EstagiariomonografiasController extends AppController {
             }
             $this->Flash->error(__('Estagiário não foi atualizado. Tente novamente.'));
         }
-        $alunos = $this->Estagiariomonografias->Estudantes->find('list',
-                ['keyField' => 'id', 'valueField' => 'nome',
-                    'limit' => 200]
+        $alunos = $this->Estagiariomonografias->Estudantes->find(
+            'list',
+            [
+                'keyField' => 'id',
+                'valueField' => 'nome',
+                'limit' => 200
+            ]
         );
         // debug($alunos);
         // die("alunos");
-        $docentemonografias = $this->Estagiariomonografias->Docentemonografias->find('list', [
-            'keyField' => 'id', 'valueField' => 'nome',
+        $docentemonografias = $this->Estagiariomonografias->Professores->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'nome',
             'limit' => 200
         ]);
-        $areas = $this->Estagiariomonografias->Areas->find('list', [
-            'keyField' => 'id', 'valueField' => 'area',
+        $areas = $this->Estagiariomonografias->Areaestagios->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'area',
             'limit' => 200
         ]);
 
@@ -257,7 +271,8 @@ class EstagiariomonografiasController extends AppController {
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
 
         $this->request->allowMethod(['post', 'delete']);
         $estagiariomonografia = $this->Estagiariomonografias->get($id);
@@ -272,7 +287,8 @@ class EstagiariomonografiasController extends AppController {
         return $this->redirect(['action' => 'index']);
     }
 
-    public function busca($busca = null) {
+    public function busca($busca = null)
+    {
 
         $this->Authorization->skipAuthorization();
         $this->autoRender = false;
@@ -284,7 +300,8 @@ class EstagiariomonografiasController extends AppController {
         // die();
     }
 
-    public function registro($id = null) {
+    public function registro($id = null)
+    {
 
         $this->Authorization->skipAuthorization();
         $this->autoRender = false;
@@ -295,10 +312,12 @@ class EstagiariomonografiasController extends AppController {
             $registro = $estagiariomonografia->registro;
             if ($registro):
                 return $this->response
-                                ->withType('application/json')
-                                ->withStringBody(json_encode([
-                                    'registro' => $registro])
-                );
+                    ->withType('application/json')
+                    ->withStringBody(
+                        json_encode([
+                            'registro' => $registro
+                        ])
+                    );
             endif;
         endif;
     }

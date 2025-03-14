@@ -13,14 +13,16 @@ namespace App\Controller;
  * 
  * @method \App\Model\Entity\Instituicoes[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class InstituicoesController extends AppController {
+class InstituicoesController extends AppController
+{
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index() {
+    public function index()
+    {
 
         $this->paginate = [
             'contain' => ['Supervisores', 'Areainstituicoes', 'Areaestagios'],
@@ -38,7 +40,8 @@ class InstituicoesController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
         $instituicaoestagio = $this->Instituicoes->get($id, [
             'contain' => ['Areainstituicoes', 'Supervisores', 'Estagiarios' => ['Alunos', 'Estudantes', 'Instituicaoestagios', 'Professores', 'Supervisores', 'Areaestagios'], 'Muralestagios', 'Visitas'],
@@ -52,7 +55,8 @@ class InstituicoesController extends AppController {
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
 
         $instituicaoestagio = $this->Instituicoes->newEmptyEntity();
         $this->Authorization->authorize($instituicaoestagio);
@@ -78,12 +82,13 @@ class InstituicoesController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
         $instituicaoestagio = $this->Instituicoes->get($id, [
             'contain' => ['Supervisores'],
         ]);
-        $this->Authorization->authorize($instituicaoestagio);        
+        $this->Authorization->authorize($instituicaoestagio);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $instituicaoestagio = $this->Instituicoes->patchEntity($instituicaoestagio, $this->request->getData());
             if ($this->Instituicoes->save($instituicaoestagio)) {
@@ -105,11 +110,12 @@ class InstituicoesController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
 
         $this->request->allowMethod(['post', 'delete']);
         $instituicaoestagio = $this->Instituicoes->get($id);
-        $this->Authorization->authorize($instituicaoestagio);        
+        $this->Authorization->authorize($instituicaoestagio);
         if ($this->Instituicao->delete($instituicaoestagio)) {
             $this->Flash->success(__('Instituição de estágio excluída.'));
         } else {

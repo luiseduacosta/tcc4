@@ -22,14 +22,14 @@ use Cake\ORM\Entity;
  * @property int|null $ch
  * @property string|null $observacoes
  *
- * @property \App\Model\Entity\Docente $docente
- * @property \App\Model\Entity\Estudante $estudante
- * @property \App\Model\Entity\Supervisor $supervisor
- * @property \App\Model\Entity\Instituicaoestagio $instituicaoestagio
- * @property \App\Model\Entity\Areaestagio $areaestagio
- * @property \App\Model\Entity\Avaliacao $avaliacao
- * @property \App\Model\Entity\Folhadeatividade $folhadeatividade
- * @property \App\Model\Entity\Tccestudante $tccestudante
+ * @property \App\Model\Entity\Docente[] $docentes
+ * @property \App\Model\Entity\Estudante[] $estudantes
+ * @property \App\Model\Entity\Supervisor[] $supervisores
+ * @property \App\Model\Entity\Instituicao[] $instituicoes
+ * @property \App\Model\Entity\Areaestagio[] $areaestagios
+ * @property \App\Model\Entity\Avaliacao[] $avaliacoes
+ * @property \App\Model\Entity\Folhadeatividade[] $folhadeatividades
+ * @property \App\Model\Entity\Tccestudante[] $tccestudantes
  */
 class Estagiariomonografia extends Entity
 {
@@ -60,13 +60,13 @@ class Estagiariomonografia extends Entity
         'observacoes' => true,
         'complemento_id' => true,
         'ajuste2020' => true,
-        'docente' => true,
-        'estudante' => true,
-        'supervisor' => true,
-        'instituicaoestagio' => true,
-        'areaestagio' => true,
-        'avaliacao' => true,
-        'folhadeatividade' => true,
-        'tccestudante' => true
+        'docentes' => true,
+        'estudantes' => true,
+        'supervisores' => true,
+        'instituicoes' => true,
+        'areaestagios' => true,
+        'avaliacoes' => true,
+        'folhadeatividades' => true,
+        'tccestudantes' => true
     ];
 }

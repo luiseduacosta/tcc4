@@ -49,7 +49,7 @@ class EstudantesController extends AppController
             ])
             ->limit(100)
             ->all();
-    
+
         $parameters = $this->request->getQueryParams();
         if (isset($parameters) && !empty($parameters)):
             // pr($parameters);
@@ -220,9 +220,9 @@ class EstudantesController extends AppController
         $estudante = $estudantetable->get($id);
         $this->Authorization->authorize($estudante);
         if ($this->Estudantes->delete($estudante)) {
-            $this->Flash->success(__('The aluno has been deleted.'));
+            $this->Flash->success(__('Registro de estudante excluído.'));
         } else {
-            $this->Flash->error(__('Registro de estudante não foi excluído.'));
+            $this->Flash->error(__('Registro de estudante não excluído.'));
         }
 
         return $this->redirect(['action' => 'index']);

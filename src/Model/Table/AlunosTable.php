@@ -14,6 +14,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
  * @property \App\Model\Table\MuralinscricoesTable&\Cake\ORM\Association\HasMany $Muralinscricoes
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
  * 
  * @method \App\Model\Entity\Aluno newEmptyEntity()
  * @method \App\Model\Entity\Aluno newEntity(array $data, array $options = [])
@@ -29,136 +30,146 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Aluno[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\Aluno[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
-class AlunosTable extends Table {
+class AlunosTable extends Table
+{
 
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config): void {
-        parent::initialize($config);
+        /**
+         * Initialize method
+         *
+         * @param array $config The configuration for the Table.
+         * @return void
+         */
+        public function initialize(array $config): void
+        {
+                parent::initialize($config);
 
-        $this->setTable('alunos');
-        $this->setAlias('alunos');
-        $this->setDisplayField('nome');
-        $this->setPrimaryKey('id');
+                $this->setTable('alunos');
+                $this->setAlias('alunos');
+                $this->setDisplayField('nome');
+                $this->setPrimaryKey('id');
 
-        $this->hasMany('Estagiarios', [
-            'foreignKey' => 'aluno_id',
-        ]);
+                $this->hasMany('Estagiarios', [
+                        'foreignKey' => 'aluno_id',
+                ]);
 
-        $this->hasMany('Muralinscricoes', [
-            'foreignKey' => 'aluno_id',
-        ]);
-    }
+                $this->hasMany('Muralinscricoes', [
+                        'foreignKey' => 'aluno_id',
+                ]);
 
-    public function beforeFind($event, $query, $options, $primary) {
+                $this->hasMany('Users', [
+                        'foreignKey' => 'aluno_id',
+                ]);
 
-        $query->order(['nome' => 'ASC']);
-        return $query;
-    }
+        }
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator): Validator {
-        $validator
-                ->integer('id')
-                ->allowEmptyString('id', null, 'create');
+        public function beforeFind($event, $query, $options, $primary)
+        {
 
-        $validator
-                ->scalar('nome')
-                ->maxLength('nome', 50)
-                ->notEmptyString('nome');
+                $query->order(['nome' => 'ASC']);
+                return $query;
+        }
 
-        $validator
-                ->integer('registro')
-                ->notEmptyString('registro')
-                ->add('registro', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+        /**
+         * Default validation rules.
+         *
+         * @param \Cake\Validation\Validator $validator Validator instance.
+         * @return \Cake\Validation\Validator
+         */
+        public function validationDefault(Validator $validator): Validator
+        {
+                $validator
+                        ->integer('id')
+                        ->allowEmptyString('id', null, 'create');
 
-        $validator
-                ->notEmptyString('codigo_telefone');
+                $validator
+                        ->scalar('nome')
+                        ->maxLength('nome', 50)
+                        ->notEmptyString('nome');
 
-        $validator
-                ->scalar('telefone')
-                ->maxLength('telefone', 9)
-                ->allowEmptyString('telefone');
+                $validator
+                        ->integer('registro')
+                        ->notEmptyString('registro')
+                        ->add('registro', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
-        $validator
-                ->notEmptyString('codigo_celular');
+                $validator
+                        ->notEmptyString('codigo_telefone');
 
-        $validator
-                ->scalar('celular')
-                ->maxLength('celular', 10)
-                ->allowEmptyString('celular');
+                $validator
+                        ->scalar('telefone')
+                        ->maxLength('telefone', 9)
+                        ->allowEmptyString('telefone');
 
-        $validator
-                ->email('email')
-                ->allowEmptyString('email');
+                $validator
+                        ->notEmptyString('codigo_celular');
 
-        $validator
-                ->scalar('cpf')
-                ->maxLength('cpf', 12)
-                ->allowEmptyString('cpf');
+                $validator
+                        ->scalar('celular')
+                        ->maxLength('celular', 10)
+                        ->allowEmptyString('celular');
 
-        $validator
-                ->scalar('identidade')
-                ->maxLength('identidade', 15)
-                ->allowEmptyString('identidade');
+                $validator
+                        ->email('email')
+                        ->allowEmptyString('email');
 
-        $validator
-                ->scalar('orgao')
-                ->maxLength('orgao', 10)
-                ->allowEmptyString('orgao');
+                $validator
+                        ->scalar('cpf')
+                        ->maxLength('cpf', 12)
+                        ->allowEmptyString('cpf');
 
-        $validator
-                ->date('nascimento')
-                ->allowEmptyDate('nascimento');
+                $validator
+                        ->scalar('identidade')
+                        ->maxLength('identidade', 15)
+                        ->allowEmptyString('identidade');
 
-        $validator
-                ->scalar('endereco')
-                ->maxLength('endereco', 50)
-                ->allowEmptyString('endereco');
+                $validator
+                        ->scalar('orgao')
+                        ->maxLength('orgao', 10)
+                        ->allowEmptyString('orgao');
 
-        $validator
-                ->scalar('cep')
-                ->maxLength('cep', 9)
-                ->allowEmptyString('cep');
+                $validator
+                        ->date('nascimento')
+                        ->allowEmptyDate('nascimento');
 
-        $validator
-                ->scalar('municipio')
-                ->maxLength('municipio', 30)
-                ->allowEmptyString('municipio');
+                $validator
+                        ->scalar('endereco')
+                        ->maxLength('endereco', 50)
+                        ->allowEmptyString('endereco');
 
-        $validator
-                ->scalar('bairro')
-                ->maxLength('bairro', 30)
-                ->allowEmptyString('bairro');
+                $validator
+                        ->scalar('cep')
+                        ->maxLength('cep', 9)
+                        ->allowEmptyString('cep');
 
-        $validator
-                ->scalar('observacoes')
-                ->maxLength('observacoes', 250)
-                ->allowEmptyString('observacoes');
+                $validator
+                        ->scalar('municipio')
+                        ->maxLength('municipio', 30)
+                        ->allowEmptyString('municipio');
 
-        return $validator;
-    }
+                $validator
+                        ->scalar('bairro')
+                        ->maxLength('bairro', 30)
+                        ->allowEmptyString('bairro');
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules): RulesChecker {
-        $rules->add($rules->isUnique(['registro']), ['errorField' => 'registro']);
+                $validator
+                        ->scalar('observacoes')
+                        ->maxLength('observacoes', 250)
+                        ->allowEmptyString('observacoes');
 
-        return $rules;
-    }
+                return $validator;
+        }
+
+        /**
+         * Returns a rules checker object that will be used for validating
+         * application integrity.
+         *
+         * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+         * @return \Cake\ORM\RulesChecker
+         */
+        public function buildRules(RulesChecker $rules): RulesChecker
+        {
+                $rules->add($rules->isUnique(['registro']), ['errorField' => 'registro']);
+
+                return $rules;
+        }
 
 }

@@ -12,13 +12,15 @@ namespace App\Controller;
  * 
  * @method \App\Model\Entity\Visita[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class VisitasController extends AppController {
+class VisitasController extends AppController
+{
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index() {
+    public function index()
+    {
 
         $this->paginate = [
             'contain' => ['Instituicaoestagios'],
@@ -35,7 +37,8 @@ class VisitasController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
         $visita = $this->Visitas->get($id, [
             'contain' => ['Instituicaoestagios'],
@@ -49,19 +52,20 @@ class VisitasController extends AppController {
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
 
         $visita = $this->Visitas->newEmptyEntity();
         $this->Authorization->authorize($visita);
-        
+
         if ($this->request->is('post')) {
             $visita = $this->Visitas->patchEntity($visita, $this->request->getData());
             if ($this->Visitas->save($visita)) {
-                $this->Flash->success(__('The visita has been saved.'));
+                $this->Flash->success(__('Visita inserida.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The visita could not be saved. Please, try again.'));
+            $this->Flash->error(__('Visita não inserida.'));
         }
         $instituicaoestagios = $this->Visitas->Instituicaoestagios->find('list', ['limit' => 200]);
         $this->set(compact('visita', 'instituicaoestagios'));
@@ -74,21 +78,22 @@ class VisitasController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
         $visita = $this->Visitas->get($id, [
             'contain' => [],
         ]);
         $this->Authorization->authorize($visita);
-        
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $visita = $this->Visitas->patchEntity($visita, $this->request->getData());
             if ($this->Visitas->save($visita)) {
-                $this->Flash->success(__('The visita has been saved.'));
+                $this->Flash->success(__('Visita atualizada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The visita could not be saved. Please, try again.'));
+            $this->Flash->error(__('Visita não atualizada.'));
         }
         $instituicaoestagios = $this->Visitas->Instituicaoestagios->find('list', ['limit' => 200]);
         $this->set(compact('visita', 'instituicaoestagios'));
@@ -101,16 +106,17 @@ class VisitasController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
-        
+    public function delete($id = null)
+    {
+
         $this->request->allowMethod(['post', 'delete']);
         $visita = $this->Visitas->get($id);
         $this->Authorization->authorize($visita);
-        
+
         if ($this->Visitas->delete($visita)) {
-            $this->Flash->success(__('The visita has been deleted.'));
+            $this->Flash->success(__('Visita excluída.'));
         } else {
-            $this->Flash->error(__('The visita could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Visita não excluída.'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -13,9 +13,11 @@ namespace App\Controller;
  *
  * @method \App\Model\Entity\Estudantemonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class EstudantemonografiasController extends AppController {
+class EstudantemonografiasController extends AppController
+{
 
-    public function beforeFilter(\Cake\Event\EventInterface $event) {
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
 
         parent::beforeFilter($event);
         // Permitir aos usuários se registrarem e efetuar logout.
@@ -30,7 +32,8 @@ class EstudantemonografiasController extends AppController {
      *
      * @return \Cake\Http\Response|null
      */
-    public function index() {
+    public function index()
+    {
 
         $this->Authorization->skipAuthorization();
 
@@ -60,7 +63,8 @@ class EstudantemonografiasController extends AppController {
      *
      * @return \Cake\Http\Response|null
      */
-    public function index1() {
+    public function index1()
+    {
 
         $this->Authorization->skipAuthorization();
 
@@ -90,7 +94,8 @@ class EstudantemonografiasController extends AppController {
      *
      * @return \Cake\Http\Response|null
      */
-    public function index2() {
+    public function index2()
+    {
 
         $this->Authorization->skipAuthorization();
 
@@ -122,7 +127,8 @@ class EstudantemonografiasController extends AppController {
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
         $this->Authorization->skipAuthorization();
 
@@ -132,7 +138,7 @@ class EstudantemonografiasController extends AppController {
 
         if ($tccestudante):
             $query = $this->Estudantemonografias->find()
-                    ->where(['registro' => $tccestudante->registro]);
+                ->where(['registro' => $tccestudante->registro]);
             $aluno = $query->first();
             if (empty($aluno)):
                 $this->Flash->error(__('Não há estudante cadastrado'));
@@ -150,7 +156,8 @@ class EstudantemonografiasController extends AppController {
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
 
         $estudantetable = $this->fetchTable('Estudantemonografias');
         $estudante = $estudantetable->newEmptyEntity();
@@ -175,7 +182,8 @@ class EstudantemonografiasController extends AppController {
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
         $estudante = $this->Estudantemonografias->get($id, [
             'contain' => [],
@@ -186,11 +194,11 @@ class EstudantemonografiasController extends AppController {
             $estudanteatualiza = $this->Estudantemonografias->patchEntity($estudante, $this->request->getData());
             // debug($estudanteatualiza);
             if ($this->Estudantemonografias->save($estudanteatualiza)) {
-                $this->Flash->success(__('The aluno has been saved.'));
+                $this->Flash->success(__('Registro estudante inserido.'));
 
                 return $this->redirect(['action' => 'view', $id]);
             }
-            $this->Flash->error(__('The aluno could not be saved. Please, try again.'));
+            $this->Flash->error(__('Registro estudante não inserido.'));
         }
         $this->set(compact('estudante'));
     }
@@ -202,14 +210,15 @@ class EstudantemonografiasController extends AppController {
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
         $this->request->allowMethod(['post', 'delete']);
         $estudante = $this->Estudantemonografias->get($id);
         $this->Authorization->authorize($estudante);
         if ($this->Estudantemonografias->delete($estudante)) {
-            $this->Flash->success(__('The aluno has been deleted.'));
+            $this->Flash->success(__('Registro de estudante foi excluído.'));
         } else {
-            $this->Flash->error(__('The aluno could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Registro de estudante não foi excluído.'));
         }
 
         return $this->redirect(['action' => 'index']);

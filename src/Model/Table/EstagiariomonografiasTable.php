@@ -13,7 +13,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
  * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
  * @property \App\Model\Table\SupervisoresTable&\Cake\ORM\Association\BelongsTo $Supervisores
- * @property \App\Model\Table\InstituicaoestagiosTable&\Cake\ORM\Association\BelongsTo $Institucoesestagios
+ * @property \App\Model\Table\InstituicoesTable&\Cake\ORM\Association\BelongsTo $Institucoes
  * @property \App\Model\Table\AreaestagiosTable&\Cake\ORM\Association\BelongsTo $Areaestagios
  * @property \App\Model\Table\AvaliacoesTable&\Cake\ORM\Association\HasOne $Avaliacoes
  * @property \App\Model\Table\FolhadeatividadesTable&\Cake\ORM\Association\HasOne $Folhadeatividades
@@ -55,7 +55,7 @@ class EstagiariomonografiasTable extends Table
                 $this->belongsTo('Professores', [
                         'foreignKey' => 'id_professor',
                 ]);
-                $this->belongsTo('Instituicaoestagios', [
+                $this->belongsTo('Instituicoes', [
                         'foreignKey' => 'id_instituicao',
                 ]);
                 $this->belongsTo('Areaestagios', [

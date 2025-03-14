@@ -116,9 +116,9 @@ class AreamonografiasController extends AppController
         $this->Authorization->authorize($areamonografia);
 
         if ($this->Areamonografias->delete($areamonografia)) {
-            $this->Flash->success(__('Área excluída.'));
+            $this->Flash->success(__('Área da mongrafia excluída.'));
         } else {
-            $this->Flash->error(__('Área não excluída.'));
+            $this->Flash->error(__('Área da monografia não excluída.'));
         }
 
         return $this->redirect(['action' => 'index']);

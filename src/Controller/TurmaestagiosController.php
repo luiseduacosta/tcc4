@@ -13,14 +13,16 @@ namespace App\Controller;
  * 
  * @method \App\Model\Entity\Turmaestagio[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class TurmaestagiosController extends AppController {
+class TurmaestagiosController extends AppController
+{
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index() {
+    public function index()
+    {
         $turmaestagios = $this->paginate($this->Turmaestagios);
 
         $this->set(compact('turmaestagios'));
@@ -33,7 +35,8 @@ class TurmaestagiosController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
         ini_set('memory_limit', '2048M');
         $turmaestagio = $this->Turmaestagios->get($id, [
@@ -53,7 +56,8 @@ class TurmaestagiosController extends AppController {
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
 
         $turmaestagio = $this->Turmaestagios->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -75,7 +79,8 @@ class TurmaestagiosController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
         $turmaestagio = $this->Turmaestagios->get($id, [
             'contain' => [],
@@ -98,8 +103,9 @@ class TurmaestagiosController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
-        
+    public function delete($id = null)
+    {
+
         $this->request->allowMethod(['post', 'delete']);
         $turmaestagio = $this->Turmaestagios->get($id, [
             'contain' => ['Estagiarios']

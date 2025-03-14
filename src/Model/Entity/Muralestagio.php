@@ -32,10 +32,10 @@ use Cake\ORM\Entity;
  * @property string $localInscricao
  * @property string|null $email
  *
- * @property \App\Model\Entity\Professor[] $professor
- * @property \App\Model\Entity\Instituicaoestagio[] $instituicaoestagio
- * @property \App\Model\Entity\Turmaestagio $turmaestagio
- * @property \App\Model\Entity\Muralinscricao[] $muralinscricao
+ * @property \App\Model\Entity\Professor[] $professores
+ * @property \App\Model\Entity\Instituicao[] $instituicoes
+ * @property \App\Model\Entity\Turmaestagio[] $turmaestagios
+ * @property \App\Model\Entity\Muralinscricao[] $muralinscricoes
  */
 class Muralestagio extends Entity
 {
@@ -71,9 +71,9 @@ class Muralestagio extends Entity
         'datafax' => true,
         'localInscricao' => true,
         'email' => true,
-        'professor' => true,
-        'instituicaoestagio' => true,
-        'turmaestagio' => true,
-        'muralinscricao' => true,
+        'professores' => true,
+        'instituicoes' => true,
+        'turmaestagios' => true,
+        'muralinscricoes' => true,
     ];
 }

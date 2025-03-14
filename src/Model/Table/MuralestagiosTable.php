@@ -12,7 +12,7 @@ use Cake\Validation\Validator;
 /**
  * Muralestagios Model
  *
- * @property \App\Model\Table\InstituicaoestagiosTable&\Cake\ORM\Association\BelongsTo $Instituicaoestagios
+ * @property \App\Model\Table\InstituicoesTable&\Cake\ORM\Association\BelongsTo $Instituicoes
  * @property \App\Model\Table\AreaestagiosTable&\Cake\ORM\Association\BelongsTo $Areaestagios
  * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
  * @property \App\Model\Table\MuralinscricoesTable&\Cake\ORM\Association\HasMany $Muralinscricoes
@@ -47,7 +47,7 @@ class MuralestagiosTable extends Table {
         $this->setDisplayField('instituicao');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Instituicaoestagios', [
+        $this->belongsTo('Instituicoes', [
             'foreignKey' => ['id_estagio'],
         ]);
         $this->belongsTo('Areaestagios', [

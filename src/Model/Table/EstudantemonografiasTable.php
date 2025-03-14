@@ -36,14 +36,7 @@ class EstudantemonografiasTable extends Table {
         $this->setAlias('estudantemonografias');
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
-        /*
-          $this->hasMany('Estagiarios', [
-          'className' => 'estagiarios',
-          'foreignKey' => FALSE,
-          'conditions' => 'Estudantes.registro = Estagiarios.registro',
-          'joinType' => 'LEFT'
-          ]);
-         */
+
         $this->hasMany('Estagiariomonografias', [
             'foreignKey' => 'alunonovo_id',
         ]);

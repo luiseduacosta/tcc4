@@ -50,15 +50,15 @@ class ComplementosController extends AppController
     public function add()
     {
         $complemento = $this->Complementos->newEmptyEntity();
-        $this->Authorization->authorize($complemento);        
+        $this->Authorization->authorize($complemento);
         if ($this->request->is('post')) {
             $complemento = $this->Complementos->patchEntity($complemento, $this->request->getData());
             if ($this->Complementos->save($complemento)) {
-                $this->Flash->success(__('The complemento has been saved.'));
+                $this->Flash->success(__('Complemento inserido.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The complemento could not be saved. Please, try again.'));
+            $this->Flash->error(__('Complemento não inserido.'));
         }
         $this->set(compact('complemento'));
     }
@@ -75,15 +75,15 @@ class ComplementosController extends AppController
         $complemento = $this->Complementos->get($id, [
             'contain' => [],
         ]);
-        $this->Authorization->authorize($complemento);        
+        $this->Authorization->authorize($complemento);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $complemento = $this->Complementos->patchEntity($complemento, $this->request->getData());
             if ($this->Complementos->save($complemento)) {
-                $this->Flash->success(__('The complemento has been saved.'));
+                $this->Flash->success(__('Complemento atualizado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The complemento could not be saved. Please, try again.'));
+            $this->Flash->error(__('Complemento não atualizado.'));
         }
         $this->set(compact('complemento'));
     }
@@ -101,9 +101,9 @@ class ComplementosController extends AppController
         $complemento = $this->Complementos->get($id);
         $this->Authorization->authorize($complemento);
         if ($this->Complementos->delete($complemento)) {
-            $this->Flash->success(__('The complemento has been deleted.'));
+            $this->Flash->success(__('Complemento excluído.'));
         } else {
-            $this->Flash->error(__('The complemento could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Complemento não excluído.'));
         }
 
         return $this->redirect(['action' => 'index']);

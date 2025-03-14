@@ -13,14 +13,16 @@ namespace App\Controller;
  * 
  * @method \App\Model\Entity\Areaestagio[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class AreaestagiosController extends AppController {
+class AreaestagiosController extends AppController
+{
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index() {
+    public function index()
+    {
 
         $areaestagios = $this->paginate($this->Areaestagios);
         $this->Authorization->authorize($this->Areaestagios);
@@ -35,7 +37,8 @@ class AreaestagiosController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
 
         $areaestagio = $this->Areaestagios->get($id, [
             'contain' => ['Estagiarios' => ['Alunos', 'Estudantes', 'Instituicaoestagios', 'Supervisores', 'Professores', 'Areaestagios'], 'Muralestagios'],
@@ -49,18 +52,19 @@ class AreaestagiosController extends AppController {
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
 
         $areaestagio = $this->Areaestagios->newEmptyEntity();
         $this->Authorization->authorize($areaestagio);
         if ($this->request->is('post')) {
             $areaestagio = $this->Areaestagios->patchEntity($areaestagio, $this->request->getData());
             if ($this->Areaestagios->save($areaestagio)) {
-                $this->Flash->success(__('The areaestagio has been saved.'));
+                $this->Flash->success(__('Área de estágio inserida.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The areaestagio could not be saved. Please, try again.'));
+            $this->Flash->error(__('Área de estágio não inserida.'));
         }
         $this->set(compact('areaestagio'));
     }
@@ -72,7 +76,8 @@ class AreaestagiosController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
         $areaestagio = $this->Areaestagios->get($id, [
             'contain' => [],
@@ -81,11 +86,11 @@ class AreaestagiosController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $areaestagio = $this->Areaestagios->patchEntity($areaestagio, $this->request->getData());
             if ($this->Areaestagios->save($areaestagio)) {
-                $this->Flash->success(__('The areaestagio has been saved.'));
+                $this->Flash->success(__('Área de estagio atualizada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The areaestagio could not be saved. Please, try again.'));
+            $this->Flash->error(__('Área de estagio não atualizada.'));
         }
         $this->set(compact('areaestagio'));
     }
@@ -97,15 +102,16 @@ class AreaestagiosController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
 
         $this->request->allowMethod(['post', 'delete']);
         $areaestagio = $this->Areaestagios->get($id);
         $this->Authorization->authorize($areaestagio);
         if ($this->Areaestagios->delete($areaestagio)) {
-            $this->Flash->success(__('The areaestagio has been deleted.'));
+            $this->Flash->success(__('Área de estagio excluída.'));
         } else {
-            $this->Flash->error(__('The areaestagio could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Área de estagio não excluída.'));
         }
 
         return $this->redirect(['action' => 'index']);
