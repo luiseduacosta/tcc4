@@ -16,3 +16,34 @@ ver aqui: https://api.cakephp.org/3.2/class-Cake.ORM.Query.html
 
 8) Excluir na lista de estudantes aqueles que já fizeram a monografia (dos estudantes excluir tccestudantes).
 9) Calcular a quantidade de TCCs por área.
+
+
+# Mudar o nome dos campos da tabela no entity
+In entity class add
+
+protected function _getFirstName()
+{
+    return $this->user_firstname;
+}
+
+in views:
+
+echo $user->first_name;
+
+Mais informação:
+https://book.cakephp.org/4/en/orm/entities.html#accessors-mutators
+
+
+# Verifica se o usuario está autorizado para utilizar um recurso como p. ex. editar um artigo dele
+// Colocar no Entity
+
+public function canEdit(IdentityInterface $user, Article $article)
+    {
+        // logged in users can edit their own articles.
+        return $this->isAuthor($user, $article);
+    }
+
+protected function isAuthor(IdentityInterface $user, Article $article)
+    {
+        return $article->user_id === $user->getIdentifier();
+    }

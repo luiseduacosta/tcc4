@@ -9,8 +9,11 @@ use Cake\ORM\Entity;
  * Muralinscricao Entity
  *
  * @property int $id
+ * @property int $id_aluno // registro
+ * @property int $alunonovo_id // aluno_id
+ * @property int $id_instituicao // instituicao_id
  * @property int $registro
- * @property int|null $estudante_id
+ * @property int|null $estudante_id // alunoestagiario_id
  * @property int $muralestagio_id
  * @property \Cake\I18n\FrozenDate $data
  * @property string $periodo
@@ -32,8 +35,7 @@ class Muralinscricao extends Entity
      */
     protected $_accessible = [
         'id_aluno' => true, // registro 
-        'aluno_id' => true,
-        'alunonovo_id' => true,
+        'alunonovo_id' => true, // aluno_id
         'id_instituicao' => true, // id atual do mural de estagios
         'data' => true,
         'periodo' => true,

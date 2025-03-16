@@ -11,7 +11,7 @@ $user = $this->getRequest()->getAttribute('identity');
 </div>
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
-    <?php if ($user->categoria == '1'): ?>
+    <?php if (isset($user) && $user->categoria == '1'): ?>
         <?= $this->Html->link(__('Novo aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
     <?php endif; ?>
 </nav>
@@ -38,8 +38,8 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('municipio') ?></th>
                 <th><?= $this->Paginator->sort('bairro') ?></th>
                 <th><?= $this->Paginator->sort('observacoes') ?></th>
-                <?php if ($user->categoria == '1'): ?>
-                    <th class="actions"><?= __('Ações') ?></th>
+                <?php if (isset($user) && $user->categoria == '1'): ?>
+                    <th class="row"><?= __('Ações') ?></th>
                 <?php endif; ?>
             </tr>
         </thead>
@@ -64,8 +64,8 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($aluno->municipio) ?></td>
                     <td><?= h($aluno->bairro) ?></td>
                     <td><?= h($aluno->observacoes) ?></td>
-                    <?php if ($user->categoria == '1'): ?>
-                        <td class="actions">
+                    <?php if (isset($user) && $user->categoria == '1'): ?>
+                        <td class="row">
                             <?= $this->Html->link(__('Ver'), ['action' => 'view', $aluno->id]) ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $aluno->id]) ?>
                             <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id)]) ?>

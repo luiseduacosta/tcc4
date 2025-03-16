@@ -20,6 +20,7 @@ use Cake\ORM\Entity;
  * @property int|null $id_area
  * @property float|null $nota
  * @property int|null $ch
+ * @property string $ajuste2020
  * @property string|null $observacoes
  *
  * @property \App\Model\Entity\Aluno[] $aluno
@@ -56,6 +57,7 @@ class Estagiario extends Entity
         'area_id' => true,
         'nota' => true,
         'ch' => true,
+        'ajuste2020' => true,
         'observacoes' => true,
         'aluno' => true,
         'professor' => true,

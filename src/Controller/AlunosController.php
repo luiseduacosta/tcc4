@@ -25,7 +25,7 @@ class AlunosController extends AppController
     {
 
         $alunos = $this->paginate($this->Alunos);
-        $this->Authorization->authorize($this->Alunos);
+        $this->Authorization->skipAuthorization();
         $this->set(compact('alunos'));
     }
 
@@ -41,8 +41,10 @@ class AlunosController extends AppController
 
         if (is_null($id)) {
             $registro = $this->getRequest()->getQuery('registro');
-            $alunoquery = $this->Alunos->find()->where(['alunos.registro' => $registro])->select('alunos.id');
-            $aluno = $alunoquery->first();
+            $aluno = $this->Alunos->find()
+                ->where(['alunos.registro' => $registro])
+                ->select('alunos.id')
+                ->first();
 
             if (empty($aluno)) {
                 echo "Sem parámentros para localizar o aluno";
@@ -53,9 +55,9 @@ class AlunosController extends AppController
             }
         }
         $aluno = $this->Alunos->get($id, [
-            'contain' => ['Estagiarios' => ['Instituicoes', 'Alunos', 'Supervisores', 'Professores'], 'Muralinscricoes' => 'Muralestagios'],
+            'contain' => ['Estagiarios' => ['Instituicoes', 'Alunos', 'Supervisores', 'Professores'], 'Muralinscricoes' => 'Muralestagios', 'Tccestudantes'],
         ]);
-        $this->Authorization->authorize($aluno);
+        $this->Authorization->skipAuthorization();
         $this->set(compact('aluno'));
     }
 

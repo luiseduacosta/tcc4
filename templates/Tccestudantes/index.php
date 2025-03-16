@@ -1,11 +1,11 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
-// pr($user->categoria);
-// pr($tccestudantes);
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Tccestudante[]|\Cake\Collection\CollectionInterface $tccestudantes
  */
+$user = $this->getRequest()->getAttribute('identity');
+// pr($user->categoria);
+// pr($tccestudantes);
 ?>
 
 <div class="d-flex justify-content-start">

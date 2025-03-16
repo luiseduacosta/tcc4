@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace App\Policy;
 
 use App\Model\Entity\Aluno;
+use App\Model\Entity\Monografia;
 use Authorization\IdentityInterface;
 
 /**
  * Aluno policy
  */
+use Cake\ORM\TableRegistry;
+
 class AlunoPolicy {
 
     /**
@@ -31,7 +34,7 @@ class AlunoPolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Aluno $aluno) {
-        return isset($user->categoria) && $user->categoria == '1';
+        return isset($user->categoria) && $user->categoria == '1' || $this->isAuthor($user, $aluno);
     }
 
     /**
@@ -54,6 +57,11 @@ class AlunoPolicy {
      */
     public function canView(IdentityInterface $user, Aluno $aluno) {
         return isset($user->categoria) && $user->categoria == '1';
+    }
+    protected function isAuthor(IdentityInterface $user, Aluno $aluno)
+    {
+        $userEntity = $user->getOriginalData();
+        return $aluno->id === $userEntity->getIdentifier()['estudante_id'];
     }
 
 }

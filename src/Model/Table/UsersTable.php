@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
 /**
  * Userestagios Model
  *
+ * @property \App\Model\Table\AlunosTable&\Cake\ORM\Association\BelongsTo $Alunos
  * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
  * @property \App\Model\Table\SupervisoresTable&\Cake\ORM\Association\BelongsTo $Supervisores
  * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
@@ -45,6 +46,10 @@ class UsersTable extends Table {
         $this->setAlias('userestagios');
         $this->setDisplayField('email');
         $this->setPrimaryKey('id');
+
+        $this->belongsTo('Alunos', [
+            'foreignKey' => 'estudante_id',
+        ]);
 
         $this->belongsTo('Estudantes', [
             'foreignKey' => 'estudante_id',
