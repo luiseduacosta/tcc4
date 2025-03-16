@@ -13,10 +13,10 @@ use Authorization\IdentityInterface;
 class EstagiariomonografiaPolicy {
 
     /**
-     * Check if $user can create Estagiario
+     * Check if $user can create Estagiariomonografia
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Estagiario $estagiario
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Estagiariomonografia $estagiariomongrafia
      * @return bool
      */
     public function canAdd(IdentityInterface $user, Estagiariomonografia $estagiariomonografia) {
@@ -24,10 +24,10 @@ class EstagiariomonografiaPolicy {
     }
 
     /**
-     * Check if $user can update Estagiario
+     * Check if $user can update Estagiariomonografia
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Estagiario $estagiario
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Estagiariomonografia $estagiariomonografia
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Estagiariomonografia $estagiariomonografia) {
@@ -35,10 +35,10 @@ class EstagiariomonografiaPolicy {
     }
 
     /**
-     * Check if $user can delete Estagiario
+     * Check if $user can delete Estagiariomonografia
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Estagiario $estagiario
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Estagiariomonografia $estagiariomonografia
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Estagiariomonografia $estagiariomonografia) {
@@ -46,10 +46,10 @@ class EstagiariomonografiaPolicy {
     }
 
     /**
-     * Check if $user can view Estagiario
+     * Check if $user can view Estagiariomonografia
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Estagiario $estagiario
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Estagiariomonografia $estagiariomonografia
      * @return bool
      */
     public function canView(IdentityInterface $user, Estagiariomonografia $estagiariomonografia) {

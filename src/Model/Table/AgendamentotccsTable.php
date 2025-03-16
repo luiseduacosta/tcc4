@@ -14,8 +14,8 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\AlunosTable&\Cake\ORM\Association\BelongsTo $Alunos
  * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
- * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores1
- * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores2
+ * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professorbanca1
+ * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professorbanca2
  *    
  * @method \App\Model\Entity\Agendamentotcc newEmptyEntity()
  * @method \App\Model\Entity\Agendamentotcc newEntity(array $data, array $options = [])
@@ -58,14 +58,16 @@ class AgendamentotccsTable extends Table
                         'joinType' => 'LEFT',
                 ]);
 
-                $this->belongsTo('Professores1', [
+                $this->belongsTo('Professorbanca1', [
                         'className' => 'Professores',
+                        'propertyName' => 'professorbanca1',
                         'foreignKey' => 'banca1',
                         'joinType' => 'LEFT',
                 ]);
 
-                $this->belongsTo('Professores2', [
+                $this->belongsTo('Professorbanca2', [
                         'className' => 'Professores',
+                        'propertyName' => 'professorbanca2',
                         'foreignKey' => 'banca2',
                         'joinType' => 'LEFT',
                 ]);

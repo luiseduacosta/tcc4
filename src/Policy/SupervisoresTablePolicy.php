@@ -15,8 +15,8 @@ class SupervisoresTablePolicy {
     /**
      * Check if $user can index Supervisores
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Table\Supervisores $supervisores
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Table\SupervisoresTable $supervisores
      * @return bool
      */
     public function canIndex(IdentityInterface $user, SupervisoresTable $supervisores) {

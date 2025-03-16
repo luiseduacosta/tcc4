@@ -15,8 +15,8 @@ class EstudantesTablePolicy {
     /**
      * Check if $user can index Estudantes
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Table\Estudantes $estudantes
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Table\EstudantesTable $estudantes
      * @return bool
      */
     public function canIndex(IdentityInterface $user, EstudantesTable $estudantes) {

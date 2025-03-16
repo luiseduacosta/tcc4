@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Monografia[]|\Cake\Collection\CollectionInterface $monografias
  */
 $user = $this->getRequest()->getAttribute('identity');
+// pr($monografias);
 ?>
 
 <div class="d-flex justify-content-start">
@@ -53,7 +54,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($monografias as $monografia): ?>
-                <?php // $titulo = $monografia->titulo; ?>
+                <?php // pr($monografia); ?>
                 <?php // die(pr($titulo)); ?>
                 <tr>
 
@@ -64,13 +65,14 @@ $user = $this->getRequest()->getAttribute('identity');
                     </td>
 
                     <td><?= h($monografia->periodo) ?></td>
+
                     <td>
                         <?php
-                        if (!(empty($monografia->tccestudantes))):
-                            $q_estudantes = count($monografia->tccestudantes);
-                            foreach ($monografia->tccestudantes as $tccestudantes):
-                                // pr($tccestudantes);
-                                echo $this->Html->link($tccestudantes->nome, ['controller' => 'tccestudantes', 'action' => 'view', $tccestudantes->id]);
+                        if (!(empty($monografia->tccestudante))):
+                            $q_estudantes = count($monografia->tccestudante);
+                            foreach ($monografia->tccestudante as $tccestudante):
+                                // pr($tccestudante);
+                                echo $this->Html->link($tccestudante->nome, ['controller' => 'tccestudantes', 'action' => 'view', $tccestudante->id]);
                                 if ($q_estudantes > 1):
                                     echo ", ";
                                 endif;
@@ -78,13 +80,17 @@ $user = $this->getRequest()->getAttribute('identity');
                         endif;
                         ?>
                     </td>
-                    <td><?= $this->Html->link(h($monografia->professores['nome']), ['controller' => 'Professores', 'action' => 'view', $monografia->professores['id']]) ?>
+
+                    <td><?= isset($monografia->professor) ? $this->Html->link($monografia->professor['nome'], ['controller' => 'Professores', 'action' => 'view', $monografia->professor['id']]) : '' ?>
                     </td>
-                    <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografias['area'], ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografias['id']]) : '' ?>
+
+                    <td><?= $monografia->hasValue('areamonografia') ? $this->Html->link($monografia->areamonografia['area'], ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia['id']]) : '' ?>
                     </td>
+
                     <?php if (!empty($monografia->url)): ?>
                         <td><a href="<?= $baseUrl . 'monografias/' . $monografia->url ?>">Download</a></td>
                     <?php endif; ?>
+
                 </tr>
             <?php endforeach; ?>
         </tbody>

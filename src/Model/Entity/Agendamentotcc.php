@@ -20,8 +20,10 @@ use Cake\ORM\Entity;
  * @property string $titulo
  * @property string $avaliacao
  *
- * @property \App\Model\Entity\Aluno[] $alunos
- * @property \App\Model\Entity\Professor[] $professores
+ * @property \App\Model\Entity\Aluno[] $aluno
+ * @property \App\Model\Entity\Professor[] $professor
+ * @property \App\Model\Entity\Professor[] $professorbanca1
+ * @property \App\Model\Entity\Professor[] $professorbanca2
  */
 class Agendamentotcc extends Entity
 {
@@ -45,7 +47,9 @@ class Agendamentotcc extends Entity
         'convidado' => true,
         'titulo' => true,
         'avaliacao' => true,
-        'alunos' => true,
-        'professores' => true
+        'aluno' => true,
+        'professor' => true,
+        'professorbanca1' => true,
+        'professorbanca2' => true,
     ];
 }

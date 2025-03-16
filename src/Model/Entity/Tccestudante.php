@@ -10,8 +10,8 @@ use Cake\ORM\Entity;
  * @property int $monografia_id
  * @property string|null $registro
  * 
- * @property \App\Model\Entity\Monografia[] $monografias
- * @property \App\Model\Entity\Aluno[] $alunos
+ * @property \App\Model\Entity\Monografia[] $monografia
+ * @property \App\Model\Entity\Aluno[] $aluno
  * 
  */
 class Tccestudante extends Entity
@@ -29,7 +29,7 @@ class Tccestudante extends Entity
         'nome' => true,
         'monografia_id' => true,
         'registro' => true,
-        'monografias' => true,
-        'alunos' => true,
+        'monografia' => true,
+        'aluno' => true,
     ];
 }

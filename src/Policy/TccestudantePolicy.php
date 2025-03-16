@@ -15,8 +15,8 @@ class TccestudantePolicy {
     /**
      * Check if $user can create Tccestudante
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Tccestudante $tccestudante
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Tccestudante $tccestudante
      * @return bool
      */
     public function canAdd(IdentityInterface $user, Tccestudante $tccestudante) {
@@ -26,8 +26,8 @@ class TccestudantePolicy {
     /**
      * Check if $user can update Tccestudante
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Tccestudante $tccestudante
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Tccestudante $tccestudante
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Tccestudante $tccestudante) {
@@ -37,8 +37,8 @@ class TccestudantePolicy {
     /**
      * Check if $user can delete Tccestudante
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Tccestudante $tccestudante
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Tccestudante $tccestudante
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Tccestudante $tccestudante) {
@@ -48,8 +48,8 @@ class TccestudantePolicy {
     /**
      * Check if $user can view Tccestudante
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Tccestudante $tccestudante
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Tccestudante $tccestudante
      * @return bool
      */
     public function canView(IdentityInterface $user, Tccestudante $tccestudante) {

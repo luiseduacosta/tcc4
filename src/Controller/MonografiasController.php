@@ -76,10 +76,9 @@ class MonografiasController extends AppController {
         $this->Authorization->skipAuthorization();
         $monografiatable = $this->fetchTable('Monografias');
         $monografia = $monografiatable->get($id, [
-            'contain' => ['Professores', 'Areamonografias', 'Tccestudantes'],
+            'contain' => ['Professores', 'Professorbanca1', 'Professorbanca2', 'Professorbanca3', 'Areamonografias', 'Tccestudantes'],
         ]);
-        // pr($monografia);
-        // die();
+
         $baseUrl = Router::url('/', true);
         $this->set(compact('monografia', 'baseUrl'));
     }

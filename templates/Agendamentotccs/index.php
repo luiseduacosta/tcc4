@@ -48,30 +48,31 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($agendamentotccs as $agendamentotcc): ?>
-                <?php // pr($agendamentotcc->professor) ?>
+                <?php // pr($agendamentotcc->aluno) ?>
                 <tr>
-                    <td><?= $agendamentotcc->hasValue('aluno') ? $this->Html->link($agendamentotcc->alunos['nome'], ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->aluno_id]) : '' ?>
+                    <td><?= $agendamentotcc->hasValue('aluno') ? $this->Html->link($agendamentotcc->aluno['nome'], ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->aluno['id']]) : '' ?>
                     </td>
-                    <td><?= $agendamentotcc->has('professor') ? $this->Html->link($agendamentotcc->professores['nome'], ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professores['id']]) : '' ?>
+                    <td><?= $agendamentotcc->hasValue('professor') ? $this->Html->link($agendamentotcc->professor['nome'], ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professor['id']]) : '' ?>
                     </td>
-                    <td><?= $agendamentotcc->has('professores1') ? $this->Html->link($agendamentotcc->professores1->nome, ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professores1->id]) : '' ?>
+                    <td><?= $agendamentotcc->hasValue('professorbanca1') ? $this->Html->link($agendamentotcc->professorbanca1['nome'], ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professorbanca1['id']]) : '' ?>
                     </td>
-                    <td><?= $agendamentotcc->has('professores2') ? $this->Html->link($agendamentotcc->professores2->nome, ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professores2->id]) : '' ?>
+                    <td><?= $agendamentotcc->hasValue('professorbanca2') ? $this->Html->link($agendamentotcc->professorbanca2['nome'], ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professorbanca2['id']]) : '' ?>
                     </td>
                     <td><?= h($agendamentotcc->data) ?></td>
                     <td><?= h($agendamentotcc->horario) ?></td>
                     <td><?= h($agendamentotcc->sala) ?></td>
                     <td><?= h($agendamentotcc->titulo) ?></td>
-                    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                        <td><?= h($agendamentotcc->avaliacao) ?></td>
-                        <td class="row">
-                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $agendamentotcc->id]) ?>
+                    <td><?= h($agendamentotcc->avaliacao) ?></td>
+                    <td class="row">
+                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $agendamentotcc->id]) ?>
+                        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id]) ?>
                             <?= $this->Form->postLink(__('Excluir'), ['
                             action' => 'delete',
                                 $agendamentotcc->id
                             ], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $agendamentotcc->id)]) ?>
                         <?php endif; ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

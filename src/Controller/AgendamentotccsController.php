@@ -20,10 +20,6 @@ class AgendamentotccsController extends AppController
     {
 
         parent::beforeFilter($event);
-        // Permitir aos usuários se registrarem e efetuar logout.
-        // Você não deve adicionar a ação de "login" a lista de permissões.
-        // Isto pode causar problemas com o funcionamento normal do AuthComponent.
-        // $this->Auth->allow(['logout']);
         $this->Authentication->addUnauthenticatedActions(['index', 'view']);
     }
 
@@ -38,14 +34,14 @@ class AgendamentotccsController extends AppController
         $this->Authorization->skipAuthorization();
 
         $query = $this->Agendamentotccs->find()
-            ->contain(['Alunos', 'Professores', 'Professores1', 'Professores2']);
+            ->contain(['Alunos', 'Professores', 'Professorbanca1', 'Professorbanca2']);
 
         $agendamentotccs = $this->paginate($query, [
             'sortableFields' => [
                 'Alunos.nome',
                 'Professores.nome',
-                'Professores1.nome',
-                'Professores2.nome',
+                'Professorbanca1.nome',
+                'Professorbanca2.nome',
                 'Agendamentotccs.data',
                 'Agendamentotccs.horario',
                 'Agendamentotccs.sala',
@@ -67,9 +63,9 @@ class AgendamentotccsController extends AppController
     public function view($id = null)
     {
         $agendamentotcc = $this->Agendamentotccs->get($id, [
-            'contain' => ['Alunos', 'Professores', 'Professores1', 'Professores2'],
+            'contain' => ['Alunos', 'Professores', 'Professorbanca1', 'Professorbanca2'],
         ]);
-        $this->Authorization->authorize($agendamentotcc);
+        $this->Authorization->skipAuthorization();
         $this->set('agendamentotcc', $agendamentotcc);
     }
 
@@ -126,7 +122,7 @@ class AgendamentotccsController extends AppController
     public function edit($id = null)
     {
         $agendamentotcc = $this->Agendamentotccs->get($id, [
-            'contain' => ['Alunos', 'Professores', 'Professores1', 'Professores2'],
+            'contain' => ['Alunos', 'Professores', 'Professorbanca1', 'Professorbanca2'],
         ]);
         $this->Authorization->authorize($agendamentotcc);
         if ($this->request->is(['patch', 'post', 'put'])) {

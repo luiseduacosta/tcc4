@@ -15,8 +15,8 @@ class UsersTablePolicy {
     /**
      * Check if $user can index Users
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Monografia $monografia
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Table\UsersTable $users
      * @return bool
      */
     public function canIndex(IdentityInterface $user, UsersTable $users) {

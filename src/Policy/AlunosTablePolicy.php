@@ -15,8 +15,8 @@ class AlunosTablePolicy {
     /**
      * Check if $user can index Alunos
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\AlunosTable\Alunos $alunos
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Table\AlunosTable $alunos
      * @return bool
      */
     public function canIndex(IdentityInterface $user, AlunosTable $alunos) {

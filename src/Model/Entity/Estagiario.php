@@ -22,14 +22,14 @@ use Cake\ORM\Entity;
  * @property int|null $ch
  * @property string|null $observacoes
  *
- * @property \App\Model\Entity\Aluno[] $alunos
- * @property \App\Model\Entity\Professor[] $professores
- * @property \App\Model\Entity\Turmaestagio[] $turmaestagios
- * @property \App\Model\Entity\Supervisor[] $supervisores
- * @property \App\Model\Entity\Instituicao[] $instituicoes
- * @property \App\Model\Entity\Avaliacao[] $avaliacoes
- * @property \App\Model\Entity\Folhadeatividade[] $folhadeatividades
- * @property \App\Model\Entity\Tccestudante[] $tccestudantes
+ * @property \App\Model\Entity\Aluno[] $aluno
+ * @property \App\Model\Entity\Professor[] $professor
+ * @property \App\Model\Entity\Turmaestagio[] $turmaestagio
+ * @property \App\Model\Entity\Supervisor[] $supervisor
+ * @property \App\Model\Entity\Instituicao[] $instituicao
+ * @property \App\Model\Entity\Avaliacao[] $avaliacao
+ * @property \App\Model\Entity\Folhadeatividade[] $folhadeatividade
+ * @property \App\Model\Entity\Tccestudante[] $tccestudante
  */
 class Estagiario extends Entity
 {
@@ -57,13 +57,13 @@ class Estagiario extends Entity
         'nota' => true,
         'ch' => true,
         'observacoes' => true,
-        'alunos' => true,
-        'professores' => true,
-        'turmaestagios' => true,
-        'supervisores' => true, 
-        'instituicoes' => true,       
-        'avaliacoes' => true,
-        'folhadeatividades' => true,
-        'tccestudantes' => true
+        'aluno' => true,
+        'professor' => true,
+        'turmaestagio' => true,
+        'supervisor' => true, 
+        'instituicao' => true,       
+        'avaliacao' => true,
+        'folhadeatividade' => true,
+        'tccestudante' => true
     ];
 }

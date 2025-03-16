@@ -14,8 +14,8 @@ class AvaliacoesTablePolicy {
     /**
      * Check if $user can index Avaliacoes
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\AvaliacoesTable\Avaliacoes $avaliacoes
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Table\AvaliacoesTable $avaliacoes
      * @return bool
      */
     public function canIndex(IdentityInterface $user, AvaliacoesTable $avaliacoes) {

@@ -26,9 +26,12 @@ use Cake\ORM\Entity;
  * @property string|null $url
  * @property \Cake\I18n\FrozenTime|null $timestamp
  *
- * @property \App\Model\Entity\Professor[] $professores
- * @property \App\Model\Entity\Areamonografia[] $areamonografias
- * @property \App\Model\Entity\Tccestudante[] $tccestudantes
+ * @property \App\Model\Entity\Professor[] $professor
+ * @property \App\Model\Entity\Professor[] $professorbanca1
+ * @property \App\Model\Entity\Professor[] $professorbanca2
+ * @property \App\Model\Entity\Professor[] $professorbanca3
+ * @property \App\Model\Entity\Areamonografia[] $areamonografia
+ * @property \App\Model\Entity\Tccestudante[] $tccestudante
  */
 class Monografia extends Entity
 {
@@ -41,6 +44,7 @@ class Monografia extends Entity
      *
      * @var array
      */
+
     protected $_accessible = [
         'catalogo' => true,
         'titulo' => true,
@@ -58,8 +62,12 @@ class Monografia extends Entity
         'convidado' => true,
         'url' => true,
         'timestamp' => true,
-        'professores' => true,
-        'areamonografias' => true,
-        'tccestudantes' => true,
+        'professor' => true,
+        'areamonografia' => true,
+        'professorbanca1' => true,
+        'professorbanca2' => true,
+        'professorbanca3' => true,
+        'tccestudante' => true,
     ];
+
 }

@@ -59,13 +59,22 @@ class MonografiasTable extends Table
                         'foreignKey' => 'professor_id',
                 ]);
 
-                $this->belongsTo('Professores1', [
+                // Monografia tem um campo banca1
+                $this->belongsTo('Professorbanca1', [
                         'className' => 'Professores',
+                        'propertyName' => 'professorbanca1',
+                        'foreignKey' => 'banca1',
+                ]);
+
+                $this->belongsTo('Professorbanca2', [
+                        'className' => 'Professores',
+                        'propertyName' => 'professorbanca2',
                         'foreignKey' => 'banca2',
                 ]);
 
-                $this->belongsTo('Professores2', [
+                $this->belongsTo('Professorbanca3', [
                         'className' => 'Professores',
+                        'propertyName' => 'professorbanca3',
                         'foreignKey' => 'banca3',
                 ]);
 

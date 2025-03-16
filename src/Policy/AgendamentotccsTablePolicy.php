@@ -14,8 +14,8 @@ class AgendamentotccsTablePolicy {
     /**
      * Check if $user can index Agendamentotccs
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\AgendamentotccsTable\Agendamentotccs $agendamentotccs
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Table\AgendamentotccsTable $agendamentotccss
      * @return bool
      */
     public function canIndex(IdentityInterface $user, AgendamentotccsTable $agendamentotccs) {

@@ -45,9 +45,9 @@ $user = $this->getRequest()->getAttribute('identity');
         <tr>
             <th scope="row"><?= __('Estudante') ?></th>
             <?php
-            if (isset($monografia->tccestudantes) && $monografia->tccestudantes):
+            if (isset($monografia->tccestudante)):
                 echo '<td>';
-                foreach ($monografia->tccestudantes as $tccestudantes):
+                foreach ($monografia->tccestudante as $tccestudantes):
                     echo $this->Html->link($tccestudantes->nome, ['controller' => 'tccestudantes', 'action' => 'view', $tccestudantes->id]);
                     echo ", ";
                 endforeach;
@@ -57,7 +57,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Professor(a)') ?></th>
-            <td><?= $this->Html->link($monografia->professores['nome'], ['controller' => 'Professores', 'action' => 'view', $monografia->professor_id]) ?>
+            <td><?= $this->Html->link($monografia->professor['nome'], ['controller' => 'Professores', 'action' => 'view', $monografia->professor_id]) ?>
             </td>
         </tr>
         <tr>
@@ -70,7 +70,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Area') ?></th>
-            <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografias['area'], ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografias['id']]) : "" ?>
+            <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografia['area'], ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia['id']]) : "" ?>
             </td>
         </tr>
         <tr>
@@ -92,15 +92,15 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php endif ?>
         <tr>
             <th scope="row"><?= __('Banca1') ?></th>
-            <td><?= h($monografia->hasValue('banca1 != 0') ? $monografia->banca1 : $monografia->professores['nome']) ?></td>
+            <td><?= h($monografia->hasValue('professorbanca1') ? $monografia->professorbanca1['nome'] : '') ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Banca2') ?></th>
-            <td><?= h($monografia->has('banca2 != 0') ? $monografia->professores1['nome'] : '') ?></td>
+            <td><?= h($monografia->hasValue('professorbanca2') ? $monografia->professorbanca2['nome'] : '') ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Banca3') ?></th>
-            <td><?= h($monografia->has('banca3 != 0') ? $monografia->professores2->nome : '') ?></td>
+            <td><?= h($monografia->hasValue('professorbanca3') ? $monografia->professorbanca3['nome'] : '') ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Convidado(a)') ?></th>

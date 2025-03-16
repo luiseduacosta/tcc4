@@ -10,7 +10,8 @@ use Authorization\IdentityInterface;
 /**
  * Agendamentotcc policy
  */
-class AgendamentotccPolicy {
+class AgendamentotccPolicy
+{
 
     /**
      * Check if $user can add Agendamentotcc
@@ -19,7 +20,8 @@ class AgendamentotccPolicy {
      * @param \App\Model\Entity\Agendamentotcc $agendamentotcc
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, Agendamentotcc $agendamentotcc) {
+    public function canAdd(IdentityInterface $user, Agendamentotcc $agendamentotcc)
+    {
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -30,7 +32,8 @@ class AgendamentotccPolicy {
      * @param \App\Model\Entity\Agendamentotcc $agendamentotcc
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, Agendamentotcc $agendamentotcc) {
+    public function canEdit(IdentityInterface $user, Agendamentotcc $agendamentotcc)
+    {
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -41,7 +44,8 @@ class AgendamentotccPolicy {
      * @param \App\Model\Entity\Agendamentotcc $agendamentotcc
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, Agendamentotcc $agendamentotcc) {
+    public function canDelete(IdentityInterface $user, Agendamentotcc $agendamentotcc)
+    {
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -52,8 +56,12 @@ class AgendamentotccPolicy {
      * @param \App\Model\Entity\Agendamentotcc $agendamentotcc
      * @return bool
      */
-    public function canView(IdentityInterface $user, Agendamentotcc $agendamentotcc) {
-        return isset($user->categoria) && $user->categoria == '1';
+    public function canView(IdentityInterface $user, Agendamentotcc $agendamentotcc)
+    {
+        if (isset($user->categoria) && $user->categoria == '1') {
+            return true;
+        }
+        return true;
     }
-    
+
 }

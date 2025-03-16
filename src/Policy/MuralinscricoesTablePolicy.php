@@ -15,8 +15,8 @@ class MuralinscricoesTablePolicy {
     /**
      * Check if $user can index Areamonografias
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Table\Muralinscricoes $muralinscricoes
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Table\MuralinscricoesTable $muralinscricoes
      * @return bool
      */
     public function canIndex(IdentityInterface $user, MuralinscricoesTable $muralinscricoes) {

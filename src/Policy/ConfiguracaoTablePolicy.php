@@ -14,16 +14,16 @@ class ConfiguracaoTablePolicy {
     /**
      * Check if $user can index configuracao
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\ConfiguracaoTable\Configuracao $configuracao
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Table\ConfiguracaoTable $configuracoes
      * @return bool
      */
-    public function canIndex(IdentityInterface $user, ConfiguracaoTable $configuracao) {
+    public function canIndex(IdentityInterface $user, ConfiguracaoTable $configuracoes) {
         
         if (isset($user->categoria) && $user->categoria == '1') {
             return true;
         }
-        return ;
+        return true;
     }
     
 }

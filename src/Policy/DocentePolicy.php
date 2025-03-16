@@ -4,55 +4,55 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
-use App\Model\Entity\Userestagio;
+use App\Model\Entity\Docente;
 use Authorization\IdentityInterface;
 
 /**
- * Userestagio policy
+ * Docente policy
  */
-class UserestagioPolicy {
+class DocentePolicy {
 
     /**
-     * Check if $user can add Userestagio
+     * Check if $user can add Docente
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\Userestagio $userestagio
+     * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, Userestagio $userestagio) {
+    public function canAdd(IdentityInterface $user, Docente $docente) {
         return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
-     * Check if $user can edit Userestagio
+     * Check if $user can edit Docente
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\Userestagio $userestagio
+     * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, Userestagio $userestagio) {
+    public function canEdit(IdentityInterface $user, Docente $docente) {
         return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
-     * Check if $user can delete Userestagio
+     * Check if $user can delete Docente
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\Userestagio $userestagio
+     * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, Userestagio $userestagio) {
+    public function canDelete(IdentityInterface $user, Docente $docente) {
         return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
-     * Check if $user can view Userestagio
+     * Check if $user can view Docente
      *
      * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\Userestagio $userestagio
+     * @param \App\Model\Entity\Docente $docente
      * @return bool
      */
-    public function canView(IdentityInterface $user, Userestagio $userestagio) {
+    public function canView(IdentityInterface $user, Docente $docente) {
         return isset($user->categoria) && $user->categoria == '1';
     }
 

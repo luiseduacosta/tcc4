@@ -16,8 +16,8 @@ use Cake\ORM\Entity;
  * @property string $periodo
  * @property \Cake\I18n\FrozenTime $timestamp
  *
- * @property \App\Model\Entity\Estudante[] $estudantes
- * @property \App\Model\Entity\Muralestagio[] $muralestagios
+ * @property \App\Model\Entity\Estudante[] $estudante
+ * @property \App\Model\Entity\Muralestagio[] $muralestagio
  */
 class Muralinscricao extends Entity
 {
@@ -38,7 +38,7 @@ class Muralinscricao extends Entity
         'data' => true,
         'periodo' => true,
         'timestamp' => true,
-        'estudantes' => true,
-        'muralestagios' => true,
+        'estudante' => true,
+        'muralestagio' => true,
     ];
 }

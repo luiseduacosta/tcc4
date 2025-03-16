@@ -14,8 +14,8 @@ class AreamonografiasTablePolicy {
     /**
      * Check if $user can index Areamonografias
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Monografia $monografia
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Areamonografia $areamonografias
      * @return bool
      */
     public function canIndex(IdentityInterface $user, AreamonografiasTable $areamonografias) {

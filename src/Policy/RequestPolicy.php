@@ -8,10 +8,12 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
+use Authorization\IdentityInterface;
 use Authorization\Policy\RequestPolicyInterface;
 use Cake\Http\ServerRequest;
 
-class RequestPolicy implements RequestPolicyInterface {
+class RequestPolicy implements RequestPolicyInterface
+{
 
     /**
      * Method to check if the request can be accessed
@@ -22,7 +24,8 @@ class RequestPolicy implements RequestPolicyInterface {
      * Server Request
      * @return bool
      */
-    public function canAccess(IdentityInterface $user, ServerRequest $request) {
+    public function canAccess(?IdentityInterface $user, ServerRequest $request)
+    {
 
         /*
          * Debugkit bypass authorize
@@ -37,6 +40,10 @@ class RequestPolicy implements RequestPolicyInterface {
         if ($request->getParam('controller') === 'Pages') {
             return true;
         }
+        
+        // Default deny access
+        return false;
+
     }
 
 }

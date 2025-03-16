@@ -15,8 +15,8 @@ class VisitasTablePolicy {
     /**
      * Check if $user can index Visitas
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Table\Visitas $visitas
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Table\VisitasTable $visitas
      * @return bool
      */
     public function canIndex(IdentityInterface $user, VisitasTable $visitas) {

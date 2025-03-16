@@ -14,8 +14,8 @@ class AreainstituicoesTablePolicy {
     /**
      * Check if $user can index Areainstituicoes
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\AreainstituicoesTable\Areainstituicoes $areainstituicoes
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Table\AreainstituicoesTable $areainstituicoes
      * @return bool
      */
     public function canIndex(IdentityInterface $user, AreainstituicoesTable $areainstituicoes) {

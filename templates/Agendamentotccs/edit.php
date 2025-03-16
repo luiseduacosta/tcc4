@@ -4,8 +4,6 @@
  * @var \App\Model\Entity\Agendamentotcc $agendamentotcc
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($agendamentotcc);
-// pr($Professores);
 ?>
 
 <div class="d-flex justify-content-start">

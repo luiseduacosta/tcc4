@@ -15,11 +15,11 @@ class MonografiasTablePolicy {
     /**
      * Check if $user can index Monografia
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Monografia $monografia
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Table\MonografiasTable $monografias
      * @return bool
      */
-    public function canIndex(IdentityInterface $user, Monografia $monografia) {
+    public function canIndex(IdentityInterface $user, MonografiasTable $monografias) {
         return isset($user->categoria) && $user->categoria == '1';
     }
 

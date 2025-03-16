@@ -15,8 +15,8 @@ class FolhadeatividadesTablePolicy {
     /**
      * Check if $user can index Folhadeatividades
      *
-     * @param Authorization\IdentityInterface $user The user.
-     * @param App\Model\Entity\Folhadeatividade $folhadeatividade
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Folhadeatividade $folhadeatividade
      * @return bool
      */
     public function canIndex(IdentityInterface $user, FolhadeatividadesTable $folhadeatividades) {
