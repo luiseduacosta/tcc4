@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Muralinscricao[]|\Cake\Collection\CollectionInterface $muralinscricoes
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($muralinscricoes);
 ?>
 

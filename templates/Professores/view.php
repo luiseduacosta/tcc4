@@ -3,8 +3,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Professor $professor
  */
-// pr($professor);
 $user = $this->getRequest()->getAttribute('identity');
+// pr($professor);
 ?>
 <div class="container">
 

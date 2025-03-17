@@ -1,9 +1,9 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Docente[]|\Cake\Collection\CollectionInterface $Professores
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="d-flex justify-content-center">
     <?php echo $this->element('menu_monografias'); ?>

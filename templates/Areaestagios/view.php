@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Areaestagio $areaestagio
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($areaestagio);
 // die();
 ?>

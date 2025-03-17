@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Configuracao[]|\Cake\Collection\CollectionInterface $configuracao
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="configuracao index content">
     <?php echo $this->element('menu_mural') ?>

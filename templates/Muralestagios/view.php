@@ -1,9 +1,9 @@
 <?php
-$usuario = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Muralestagio $muralestagio
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($muralestagio);
 // die();
 ?>
@@ -13,7 +13,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
     </div>
 
     <div class="row">
-        <?php if (isset($usuario) && $usuario->categoria == '1'): ?>
+        <?php if (isset($user) && $user->categoria == '1'): ?>
             <?= $this->Html->link(__('Novo'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $muralestagio->id], ['class' => 'btn btn-primary']) ?>
             <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>

@@ -1,9 +1,9 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estagiario $estagiario
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="row justify-content-center">
     <?php echo $this->element('menu_monografias'); ?>

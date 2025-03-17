@@ -1,5 +1,5 @@
 <?php
-$usuario = $this->getRequest()->getAttribute('identity');
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">

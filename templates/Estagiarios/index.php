@@ -1,11 +1,11 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
-// pr($estagiarios);
-// die();
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estagiario[]|\Cake\Collection\CollectionInterface $estagiarios
  */
+$user = $this->getRequest()->getAttribute('identity');
+// pr($estagiarios);
+// die();
 ?>
 
 <div class="d-flex justify-content-center">

@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Instituicaoestagio[]|\Cake\Collection\CollectionInterface $instituicaoestagios
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="instituicaoestagios index container">
     <?php echo $this->element('menu_mural') ?>

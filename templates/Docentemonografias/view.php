@@ -1,10 +1,10 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
-// pr($docente);
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Docente $docente
  */
+$user = $this->getRequest()->getAttribute('identity');
+// pr($docente);
 ?>
 
 <div class="row justify-content-center">

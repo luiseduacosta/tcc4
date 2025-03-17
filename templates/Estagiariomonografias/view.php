@@ -1,11 +1,11 @@
 <?php
-// pr($estagiariomonografia);
-// die();
-$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estagiario $estagiario
  */
+$user = $this->getRequest()->getAttribute('identity');
+// pr($estagiariomonografia);
+// die();
 ?>
 
 <div class="d-flex justify-content-center">

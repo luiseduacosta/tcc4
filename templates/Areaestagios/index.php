@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Areaestagio[]|\Cake\Collection\CollectionInterface $areaestagios
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">

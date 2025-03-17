@@ -1,9 +1,9 @@
 <?php
-$usuario = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">
@@ -16,7 +16,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerUserView">
-        <?php if (isset($usuario->categoria) && $usuario->categoria == '1'): ?>
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="nav-item">
                 <?= $this->Html->link(__('Novo usuário'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
             </li>

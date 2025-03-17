@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Professor $professor
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 <?= $this->element('templates') ?>
 <div class="container">

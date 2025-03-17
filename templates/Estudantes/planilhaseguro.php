@@ -1,7 +1,6 @@
-<?php // pr($t_seguro);         ?>
-<?php // pr($periodos);         ?>
-<?php // pr($periodoselecionado); ?>
-<?php // die();         ?>
+<?php 
+$user = $this->getRequest()->getAttribute('identity');
+?>
 
 <script>
 

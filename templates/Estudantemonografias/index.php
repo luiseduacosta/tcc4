@@ -1,8 +1,9 @@
-<?php $user = $this->getRequest()->getAttribute('identity');
+<?php 
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Aluno[]|\Cake\Collection\CollectionInterface $alunos
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-center">

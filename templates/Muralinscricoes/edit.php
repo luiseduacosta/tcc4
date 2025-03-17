@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Muralinscricao $muralinscricao
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($muralinscricao);
 ?>
 <div class="row">

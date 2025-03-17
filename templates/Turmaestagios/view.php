@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Turmaestagio $turmaestagio
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <?php $usuario = $this->getRequest()->getAttribute('identity'); ?>

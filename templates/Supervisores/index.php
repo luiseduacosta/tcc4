@@ -3,9 +3,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Supervisor[]|\Cake\Collection\CollectionInterface $supervisores
  */
-// pr($supervisores);
 $user = $this->getRequest()->getAttribute('identity');
-// pr($user['categoria']);
+// pr($supervisores);
 ?>
 <div class="supervisores index container">
     <?php echo $this->element('menu_mural') ?>

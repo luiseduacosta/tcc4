@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Visita $visita
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="row">
     <?php echo $this->element('menu_mural') ?>
@@ -22,7 +23,7 @@
                 <tr>
                     <th><?= __('Id') ?></th>
                     <td><?= $this->Number->format($visita->id) ?></td>
-                </tr>                
+                </tr>
                 <tr>
                     <th><?= __('Instituição') ?></th>
                     <td><?= $visita->has('instituicaoestagio') ? $this->Html->link($visita->instituicaoestagio->id, ['controller' => 'Instituicaoestagios', 'action' => 'view', $visita->instituicaoestagio->id]) : '' ?></td>

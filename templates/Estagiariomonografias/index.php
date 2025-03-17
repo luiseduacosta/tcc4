@@ -1,11 +1,9 @@
 <?php
-// pr($estudantes);
-$user = $this->getRequest()->getAttribute('identity');
-// die();
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estagiario[]|\Cake\Collection\CollectionInterface $estagiarios
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">

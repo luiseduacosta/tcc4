@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Visita $visita
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="row">
     <?php echo $this->element('menu_mural') ?>

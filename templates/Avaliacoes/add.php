@@ -1,10 +1,10 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Avaliacao $avaliacao
  * @var \Cake\Collection\CollectionInterface|string[] $estagiarios
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($estagiario);
 // die();
 ?>

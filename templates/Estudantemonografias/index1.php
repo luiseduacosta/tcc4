@@ -1,9 +1,9 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Aluno[]|\Cake\Collection\CollectionInterface $alunos
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-center">
@@ -22,9 +22,9 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="d-flex justify-content-center">
     <h3><?= __('Estudantes') ?>
-        <?= $this->Html->link(__(' Identificação'), ['action' => 'index1'], ['class' => 'button float-right']) ?>
-        <?= $this->Html->link(__(' Comunicação'), ['action' => 'index'], ['class' => 'button float-right']) ?>
-        <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'button float-right']) ?>
+        <?= $this->Html->link(__(' Identificação'), ['action' => 'index1'], ['class' => 'btn btn-secondary float-end']) ?>
+        <?= $this->Html->link(__(' Comunicação'), ['action' => 'index'], ['class' => 'btn btn-secondary float-end']) ?>
+        <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'btn btn-secondary float-end']) ?>
     </h3>
 </div>
 

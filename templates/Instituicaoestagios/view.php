@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Instituicaoestagio $instituicaoestagio
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($instituicaoestagio);
 ?>
 <div class="container">

@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Avaliacao $avaliacao
  * @var \Cake\Collection\CollectionInterface|string[] $estagiarios
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($estagiario);
 // die();
 ?>

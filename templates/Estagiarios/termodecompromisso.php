@@ -2,7 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estagiario $estagiario
- */
+ */$user = $this->getRequest()->getAttribute('identity');
 // pr($ultimoestagio);
 // pr($atualizar);
 // pr($estudanteestagiario);

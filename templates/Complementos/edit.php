@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Complemento $complemento
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="container">
     <div class="row">

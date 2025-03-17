@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Visita[]|\Cake\Collection\CollectionInterface $visitas
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="visitas index content">
     <?php echo $this->element('menu_mural') ?>

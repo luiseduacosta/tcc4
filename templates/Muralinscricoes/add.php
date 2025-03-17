@@ -3,10 +3,9 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Muralinscricao $muralinscricao
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($alunonovos);
 // pr($alunoestagios);
-// die();
-$categoria = $this->getRequest()->getAttribute('identity')['categoria'];
 // die();
 ?>
 <div class="row">
@@ -23,7 +22,7 @@ $categoria = $this->getRequest()->getAttribute('identity')['categoria'];
             <fieldset>
                 <legend><?= __('Inscrição para seleção de estágio') ?></legend>
                 <?php
-                if (isset($categoria) && $categoria == 1):
+                if (isset($user->categoria) && $user->categoria == 1):
                     echo $this->Form->control('id_aluno', ['label' => 'Registro', 'placeholder' => 'Digite o DRE', 'options' => $estudantes, 'empty' => true]);
                     echo $this->Form->control('id_instituicao', ['label' => 'Mural de estágio', 'options' => $muralestagios, 'empty' => [$muralestagios_id->id => $muralestagios_id->instituicao]], 'readonly');
                     echo $this->Form->control('data', ['value' => date('d-m-Y', strtotime(now())), 'readonly']);
@@ -32,7 +31,7 @@ $categoria = $this->getRequest()->getAttribute('identity')['categoria'];
                     echo $this->Form->control('alunonovo_id', ['label' => 'Estudante', 'options' => [$alunonovos->id => $alunonovos->nome], 'value' => $alunonovos->id, 'readonly']);
                     echo $this->Form->control('aluno_id', ['label' => 'Aluno', 'options' => [$alunoestagio->id => $alunoestagio->nome]]);
                 // die(pr($id_categoria));
-                elseif (isset($categoria) && $categoria == 2):
+                elseif (isset($user->categoria) && $user->categoria == 2):
                     echo $this->Form->control('id_aluno', ['label' => 'Registro', 'value' => $alunonovos->registro, 'readonly']);
                     echo $this->Form->control('id_instituicao', ['label' => 'Mural de estágio', 'options' => [$muralestagios_id->id => $muralestagios_id->instituicao]], 'readonly');
                     echo $this->Form->control('data', ['type' => 'hidden', 'value' => date('Y-m-d')]);

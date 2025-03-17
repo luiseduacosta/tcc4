@@ -3,6 +3,7 @@
 // pr($periodos);
 // pr($periodoselecionado);
 // die();
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <script>

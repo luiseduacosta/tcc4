@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Folhadeatividade $folhadeatividade
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($estagiario);
 ?>
 <div class="container">

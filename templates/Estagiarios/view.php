@@ -1,10 +1,10 @@
 <?php
-pr($estagiario);
-$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estagiario $estagiario
  */
+$user = $this->getRequest()->getAttribute('identity');
+// pr($estagiario);
 ?>
 
 <div class="d-flex justify-content-start">
@@ -13,7 +13,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerEstagiariosView"
-        aria-controls="navbarTogglerEstagiariosView" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerEstagiariosView" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerEstagiariosView">

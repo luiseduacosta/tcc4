@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estagiario[]|\Cake\Collection\CollectionInterface $estagiarios
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($estagiarios);
 // pr($periodo);
 // die();

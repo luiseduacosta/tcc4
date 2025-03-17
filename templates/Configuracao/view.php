@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Configuracao $configuracao
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="row justify-content-center">

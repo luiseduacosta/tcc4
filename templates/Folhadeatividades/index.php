@@ -1,9 +1,9 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Folhadeatividade[]|\Cake\Collection\CollectionInterface $folhadeatividades
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($id);
 
 $supervisora = isset($estagiario->supervisor->nome);

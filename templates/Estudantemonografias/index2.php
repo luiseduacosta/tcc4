@@ -1,9 +1,9 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Aluno[]|\Cake\Collection\CollectionInterface $alunos
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-center">
@@ -21,9 +21,9 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="d-flex justify-content-end">
     <h3><?= __('Estudantes') ?>
-        <?= $this->Html->link(__(' Identificação'), ['controlle' => 'estudanates', 'action' => 'index1'], ['class' => 'btn btn-primary float-end']) ?>
-        <?= $this->Html->link(__(' Comunicação'), ['controlle' => 'estudanates', 'action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
-        <?= $this->Html->link(__(' Endereço'), ['controlle' => 'estudanates', 'action' => 'index2'], ['class' => 'btn btn-primary float-end']) ?>
+        <?= $this->Html->link(__(' Identificação'), ['controlle' => 'estudanates', 'action' => 'index1'], ['class' => 'btn btn-secondary float-end']) ?>
+        <?= $this->Html->link(__(' Comunicação'), ['controlle' => 'estudanates', 'action' => 'index'], ['class' => 'btn btn-secondary float-end']) ?>
+        <?= $this->Html->link(__(' Endereço'), ['controlle' => 'estudanates', 'action' => 'index2'], ['class' => 'btn btn-secondary float-end']) ?>
     </h3>
 </div>
 

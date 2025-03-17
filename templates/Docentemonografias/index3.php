@@ -1,9 +1,10 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Docente[]|\Cake\Collection\CollectionInterface $Professores
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="row justify-content-center">

@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Avaliaco $avaliacao
  */
+$user = $this->getRequest()->getAttribute('identity');
 // pr($avaliacao);
 
 $supervisora = isset($avaliacao->estagiario->supervisor->nome);

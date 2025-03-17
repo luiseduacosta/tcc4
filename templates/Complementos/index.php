@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Complemento[]|\Cake\Collection\CollectionInterface $complementos
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="complementos index content container">
     <?php echo $this->element('menu_mural') ?>

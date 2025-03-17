@@ -3,9 +3,10 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Folhadeatividade $folhadeatividade
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="d-flex justify-content-center">
         <?php echo $this->element('menu_mural') ?>
 </div>
 <div class='row'>

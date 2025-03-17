@@ -1,10 +1,10 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
-// pr($estagiarios);
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estagiario[]|\Cake\Collection\CollectionInterface $estagiarios
  */
+$user = $this->getRequest()->getAttribute('identity');
+// pr($estagiarios);
 ?>
 
 <div class="d-flex justify-content-center">

@@ -1,10 +1,9 @@
 <?php
-$user = $this->getRequest()->getAttribute('identity');
-
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Aluno $aluno
  */
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
 

@@ -1,9 +1,10 @@
 <?php
-$usuario = $this->getRequest()->getAttribute('identity');
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
+$usuario = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">
