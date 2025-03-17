@@ -54,7 +54,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($tccestudante->registro) ?></td>
                     <td><?= $this->Html->link(h($tccestudante->nome), ['controller' => 'tccestudantes', 'action' => 'view', $tccestudante->id]) ?>
                     </td>
-                    <td><?= $tccestudante->has('monografia') ? $this->Html->link(h($tccestudante->monografia->titulo), ['controller' => 'monografias', 'action' => 'view', $tccestudante->monografia->id]) : "" ?>
+                    <td><?= $tccestudante->has('monografia') ? $this->Html->link(h($tccestudante->monografia['titulo']), ['controller' => 'monografias', 'action' => 'view', $tccestudante->monografia['id']]) : "" ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

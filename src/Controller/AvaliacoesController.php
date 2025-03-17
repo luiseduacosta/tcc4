@@ -164,7 +164,7 @@ class AvaliacoesController extends AppController
             'contain' => ['Estagiarios' => 'Estudantes'],
         ]);
         $this->Authorization->authorize($avaliacao);
-        pr($avaliacao->estagiarios);
+        // pr($avaliacao->estagiarios);
         $estagiario = $avaliacao->estagiarios;
         // die();
         if ($this->request->is(['patch', 'post', 'put'])) {
