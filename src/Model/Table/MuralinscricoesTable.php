@@ -12,7 +12,6 @@ use Cake\Validation\Validator;
  * Muralinscricoes Model
  *
  * @property \App\Model\Table\AlunosTable&\Cake\ORM\Association\BelongsTo $Alunos
- * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
  * @property \App\Model\Table\MuralestagiosTable&\Cake\ORM\Association\BelongsTo $Muralestagios
  *
  * @method \App\Model\Entity\Muralinscricao newEmptyEntity()
@@ -41,19 +40,17 @@ class MuralinscricoesTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('mural_inscricao');
+        $this->setTable('inscricoes');
         $this->setAlias('muralinscricoes');
-        $this->setDisplayField('id_aluno');
+        $this->setDisplayField('registro');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Alunos', [
             'foreignKey' => 'aluno_id', // aluno id
         ]);
-        $this->belongsTo('Estudantes', [
-            'foreignKey' => 'alunonovo_id',
-        ]);
+
         $this->belongsTo('Muralestagios', [
-            'foreignKey' => 'id_instituicao',
+            'foreignKey' => 'muralestagio_id',
             'joinType' => 'INNER',
         ]);
     }
@@ -71,26 +68,21 @@ class MuralinscricoesTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->integer('id_aluno')
-            ->notEmptyString('id_aluno');
+            ->scalar('registro')
+            ->notEmptyString('registro');
+
+        $validator
+            ->integer('aluno_id')
+            ->notEmptyString('aluno_id');
+
+        $validator
+            ->integer('muralestagio_id')
+            ->notEmptyString('muralestagio_id');
 
         $validator
             ->date('data')
             ->requirePresence('data', 'create')
             ->notEmptyDate('data');
-        
-        $validator
-                ->integer('alunonovo_id')
-                ->notEmptyString('alunonovo_id');
-        
-        $validator
-                ->integer('id_instituicao')
-                ->notEmptyString('id_instituicao');
-        
-        $validator
-                ->date('data')
-                ->requirePresence('data', 'create')
-                ->notEmptyDate('data');
 
         $validator
             ->scalar('periodo')
@@ -113,7 +105,7 @@ class MuralinscricoesTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['estudante_id'], 'Estudantes'), ['errorField' => 'estudante_id']);
+        $rules->add($rules->existsIn(['aluno_id'], 'Alunos'), ['errorField' => 'aluno_id']);
         $rules->add($rules->existsIn(['muralestagio_id'], 'Muralestagios'), ['errorField' => 'muralestagio_id']);
 
         return $rules;

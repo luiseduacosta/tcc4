@@ -9,7 +9,7 @@ use Cake\ORM\Entity;
  * Muralestagio Entity
  *
  * @property int $id
- * @property int|null $instituicaoestagio_id
+ * @property int|null $instituicao_id // id_estagio -> instituicao_id
  * @property string $instituicao
  * @property string $convenio
  * @property int $vagas
@@ -17,9 +17,9 @@ use Cake\ORM\Entity;
  * @property string|null $final_de_semana
  * @property int|null $cargaHoraria
  * @property string|null $requisitos
- * @property int $areaestagio_id
+ * @property int $turmaestagio_id // id_area -> turmaestagio_id
  * @property string|null $horario
- * @property int $professor_id
+ * @property int $professor_id // id_professor -> professor_id
  * @property \Cake\I18n\FrozenDate|null $dataSelecao
  * @property \Cake\I18n\FrozenDate|null $dataInscricao
  * @property string|null $horarioSelecao
@@ -32,9 +32,9 @@ use Cake\ORM\Entity;
  * @property string $localInscricao
  * @property string|null $email
  *
- * @property \App\Model\Entity\Professor[] $professor
- * @property \App\Model\Entity\Instituicao[] $instituicaodeestagio
+ * @property \App\Model\Entity\Instituicao[] $instituicoes
  * @property \App\Model\Entity\Turmaestagio[] $turmaestagio
+ * @property \App\Model\Entity\Professor[] $professor
  * @property \App\Model\Entity\Muralinscricao[] $muralinscricao
  */
 class Muralestagio extends Entity
@@ -49,7 +49,7 @@ class Muralestagio extends Entity
      * @var array
      */
     protected $_accessible = [
-        'id_estagio' => true,
+        'instituicao_id' => true,
         'instituicao' => true,
         'convenio' => true,
         'vagas' => true,
@@ -57,9 +57,9 @@ class Muralestagio extends Entity
         'final_de_semana' => true,
         'cargaHoraria' => true,
         'requisitos' => true,
-        'id_area' => true,
+        'turmaestagio_id' => true,
         'horario' => true,
-        'id_professor' => true,
+        'professor_id' => true,
         'dataSelecao' => true,
         'dataInscricao' => true,
         'horarioSelecao' => true,
@@ -71,9 +71,9 @@ class Muralestagio extends Entity
         'datafax' => true,
         'localInscricao' => true,
         'email' => true,
-        'professor' => true,
-        'instituicaodeestagio' => true, // corrigir a tabela ou corrigir o nome do campo
+        'instituicoes' => true, // corrigir a tabela ou corrigir o nome do campo
         'turmaestagio' => true,
+        'professor' => true,
         'muralinscricao' => true,
     ];
 }

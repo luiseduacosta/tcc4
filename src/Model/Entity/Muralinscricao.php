@@ -9,17 +9,15 @@ use Cake\ORM\Entity;
  * Muralinscricao Entity
  *
  * @property int $id
- * @property int $id_aluno // registro
- * @property int $alunonovo_id // aluno_id
- * @property int $id_instituicao // instituicao_id
- * @property int $registro
- * @property int|null $estudante_id // alunoestagiario_id
+ * @property int $registro // id_aluno -> registro
+ * @property int $aluno_id // alunonovo_id -> aluno_id
  * @property int $muralestagio_id
  * @property \Cake\I18n\FrozenDate $data
  * @property string $periodo
  * @property \Cake\I18n\FrozenTime $timestamp
  *
- * @property \App\Model\Entity\Estudante[] $estudante
+ * @property int|null $alunoestagiario_id // estudante_id -> alunoestagiario_id
+ * @property \App\Model\Entity\Aluno[] $aluno
  * @property \App\Model\Entity\Muralestagio[] $muralestagio
  */
 class Muralinscricao extends Entity
@@ -34,13 +32,14 @@ class Muralinscricao extends Entity
      * @var array
      */
     protected $_accessible = [
-        'id_aluno' => true, // registro 
-        'alunonovo_id' => true, // aluno_id
-        'id_instituicao' => true, // id atual do mural de estagios
+        'registro' => true, // id_aluno -> registro 
+        'aluno_id' => true, // alunonovo_id -> aluno_id
+        'muralestagio_id' => true,
         'data' => true,
         'periodo' => true,
         'timestamp' => true,
-        'estudante' => true,
+        'alunoestagiario_id' => true, // estudante_id -> alunoestagiario_id Obsoleto
+        'aluno' => true,
         'muralestagio' => true,
     ];
 }

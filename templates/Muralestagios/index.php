@@ -22,23 +22,28 @@ $user = $this->getRequest()->getAttribute('identity');
     })
 </script>
 
-<div class="d-flex justify-content-start">
-    <?php echo $this->element('menu_mural') ?>
-</div>
-
-<?= $this->element('templates') ?>
-
-<div class="d-flex justify-content-center">
-    <div class="col-auto">
-        <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
-            <h1 style="text-align: center;">Mural de estágios da ESS/UFRJ. Período: <?= $periodo; ?></h1>
-        <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
-            <?= $this->Form->create($muralestagios, ['class' => 'form-inline']); ?>
-            <?= $this->Form->input('periodo', ['id' => 'MuralestagioPeriodo', 'type' => 'select', 'label' => ['text' => 'Período'], 'options' => $periodos, 'empty' => [$periodo => $periodo]], ['class' => 'form-control']); ?>
-            <?= $this->Form->end(); ?>
-        <?php endif; ?>
+<div class="row">
+    <div class="d-flex justify-content-start">
+        <?php echo $this->element('menu_mural') ?>
     </div>
 </div>
+
+<?php if (isset($user) && $user['categoria'] == '1'): ?>
+    <?= $this->Form->create($muralestagios); ?>
+    <div class="d-flex justify-content-center">
+        <div class="col-1 p-3">
+            <label class="form-label" for="MuralestagioPeriodo">Período</label>
+        </div>
+        <div class="col-1 p-1">
+            <?= $this->Form->input('periodo', ['id' => 'MuralestagioPeriodo', 'type' => 'select', 'label' => false, 'options' => $periodos, 'empty' => [$periodo => $periodo], 'class' => 'form-control']); ?>
+        </div>
+    </div>
+    <?= $this->Form->end(); ?>
+<?php else: ?>
+    <h1 style="text-align: center;">Mural de estágios da ESS/UFRJ. Período: <?= $periodo; ?></h1>
+<?php endif; ?>
+
+<?= $this->element('templates') ?>
 
 <div class="d-flex justify-content-end">
     <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
