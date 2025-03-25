@@ -28,7 +28,8 @@ class InstituicoesController extends AppController
             'contain' => ['Supervisores', 'Areainstituicoes', 'Areaestagios'],
         ];
         $instituicaoestagios = $this->paginate($this->Instituicoes);
-        $this->Authorization->authorize($this->Instituicoes);
+        $this->Authorization->skipAuthorization();
+        // $this->Authorization->authorize($instituicoes);
 
         $this->set(compact('instituicaoestagios'));
     }
@@ -116,7 +117,7 @@ class InstituicoesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $instituicaoestagio = $this->Instituicoes->get($id);
         $this->Authorization->authorize($instituicaoestagio);
-        if ($this->Instituicao->delete($instituicaoestagio)) {
+        if ($this->Instituicoes->delete($instituicaoestagio)) {
             $this->Flash->success(__('Instituição de estágio excluída.'));
         } else {
             $this->Flash->error(__('Instituição de estágio não foi excluída.'));

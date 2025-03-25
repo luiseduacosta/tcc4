@@ -1,10 +1,13 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Instituicaoestagio[]|\Cake\Collection\CollectionInterface $instituicaoestagios
+ * @var \App\Model\Entity\Instituicao[]|\Cake\Collection\CollectionInterface $instituicao
  */
 $user = $this->getRequest()->getAttribute('identity');
 ?>
+
+<?php $this->element('templates') ?>
+
 <div class="instituicaoestagios index container">
     <?php echo $this->element('menu_mural') ?>
     <?= $this->Html->link(__('Cadastra nova instituição de estágio'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>

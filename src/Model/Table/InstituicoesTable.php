@@ -9,7 +9,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Instituicaoestagios Model
+ * Instituicoes Model
  *
  * @property \App\Model\Table\AreainstituicoesTable&\Cake\ORM\Association\BelongsTo $Areainstituicoes
  * @property \App\Model\Table\AreaestagiosTable&\Cake\ORM\Association\BelongsTo $Areaestagios

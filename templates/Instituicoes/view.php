@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Instituicaoestagio $instituicaoestagio
+ * @var \App\Model\Entity\Instituicao $instituicao
  */
 $user = $this->getRequest()->getAttribute('identity');
 // pr($instituicaoestagio);

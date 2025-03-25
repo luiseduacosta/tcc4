@@ -24,8 +24,8 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?= $this->element('templates') ?>
 
-<div class="muralestagios form content">
-    <?= $this->Form->create($muralestagio, ['method' => 'post']) ?>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <?= $this->Form->create($muralestagio, ['method' => 'post', 'id' => 'muralestagio-form']) ?>
     <fieldset>
         <legend><?= __('Novo mural de estágio') ?></legend>
         <?php
@@ -36,7 +36,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('beneficios', ['label' => ['text' => 'Benefícios']]);
         echo $this->Form->control('final_de_semana', ['label' => ['text' => 'Final de semana'], 'options' => ['0' => 'Não', '1' => 'Sim']]);
         echo $this->Form->control('cargaHoraria', ['label' => ['text' => 'Carga horária']]);
-        echo $this->Form->control('requisitos', ['id' => 'editor-requisitos', 'label' => ['text' => 'Requisitos']]);
+        echo $this->Form->control('requisitos', ['type' => 'textarea', 'rows' => 5, 'style' => 'height: 200', 'label' => ['text' => 'Requisitos']]);
         echo $this->Form->control('turmeestagio_id', ['label' => ['text' => 'Turma de estágio'], 'options' => $turmaestagios, 'empty' => 'Selecione']);
         echo $this->Form->control('horario', ['label' => ['text' => 'Horário da OTP'], 'options' => ['D' => 'Diurno', 'N' => 'Noturno', 'I' => 'Indeterminado']]);
         echo $this->Form->control('professor_id', ['label' => ['text' => 'Docente da OTP'], 'options' => $professores, 'empty' => [0 => 'Selecione']]);
@@ -50,45 +50,63 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('datafax', ['type' => 'hidden', 'empty' => true]);
         echo $this->Form->control('localInscricao', ['label' => ['text' => 'Local da inscrição'], 'options' => ['0' => 'Somente no mural da Coordenação de Estágio/ESS', '1' => 'Diretamente na Instituição e no mural da Coordenação de Estágio/ESS']]);
         echo $this->Form->control('email');
-        echo $this->Form->control('outras', ['id' => 'editor-outras', 'label' => ['text' => 'Outras informações']]);
+        echo $this->Form->control('outras', ['type' => 'textarea', 'label' => ['text' => 'Outras informações']]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>
 
-<!-- Quill JS -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-<!-- Initialize Quill editor -->
-<script>
-    const quillRequisitos = new Quill('#editor-requisitos', {
-        modules: {
+<script type="module">
+    import {
+        ClassicEditor,
+        Essentials,
+        Bold,
+        Italic,
+        Strikethrough,
+        Font,
+        Paragraph,
+        List,
+        Alignment
+    } from 'ckeditor5';
+
+    let requisitos;
+    if (typeof requisitos !== 'undefined') {
+        requisitos.destroy();
+    }
+
+    ClassicEditor
+        .create(document.querySelector('#requisitos'), {
+            plugins: [Essentials, Bold, Italic, Strikethrough, Font, Paragraph, List, Alignment],
             toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],
-                ['link', 'blockquote', 'code-block'],
-                [{ list: 'ordered' }, { list: 'bullet' }],
-                [{ script: 'sub' }, { script: 'super' }],
-                [{ indent: '-1' }, { indent: '+1' }],
-                [{ direction: 'rtl' }],
-                [{ size: ['small', false, 'large', 'huge'] }],
-                [{ header: [1, 2, 3, 4, 5, 6, false] }],
-                [{ color: [] }, { background: [] }],
-                [{ font: [] }],
-                [{ align: [] }],
-                ['image', 'code-block']
+                'undo', 'redo', '|', 'bold', 'italic', 'strikethrough', 'bulletedList', 'numberedList', 'alignment', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
             ]
-        },
-        theme: 'snow'
-    });
+        })
+        .then(editor => {
+            requisitos = editor;
+            console.log('Olá editor requisitos was initialized', requisitos);
+            requisitos.setData("");
+        });
 
-    const quillOutras = new Quill('#editor-outras', {
-        theme: 'snow'
-    });
 
-    // Sync Quill content with textarea on form submit
-    document.querySelector('form').onsubmit = function () {
-        document.querySelector('textarea#editor-requisitos').value = quillRequisitos.root.innerHTML;
-        document.querySelector('textarea#editor-outras').value = quillOutras.root.innerHTML;
-    };
+    let outras;
+    if (typeof outras !== 'undefined') {
+        outras.destroy();
+    }
+
+    ClassicEditor
+        .create(document.querySelector('#outras'), {
+            plugins: [Essentials, Bold, Italic, Strikethrough, Font, Paragraph, List, Alignment],
+            toolbar: [
+                'undo', 'redo', '|', 'bold', 'italic', 'strikethrough',  'bulletedList', 'numberedList', 'alignment','|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+            ]
+        })
+        .then(editor => {
+            outras = editor;
+            console.log('Olá editor outras was initialized', outras);
+            outras.setData("");
+        });
+
 </script>

@@ -1,10 +1,13 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Instituicaoestagio $instituicaoestagio
+ * @var \App\Model\Entity\Instituicao $instituicao
  */
 $user = $this->getRequest()->getAttribute('identity');
 ?>
+
+<?php $this->element('templates') ?>
+
 <div class='container'>
     <div class="row justify-content-center">
         <?php echo $this->element('menu_mural') ?>

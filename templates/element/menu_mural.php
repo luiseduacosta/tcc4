@@ -1,4 +1,10 @@
-<?php $usuario = $this->getRequest()->getAttribute('identity'); ?>
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\User $usuario
+ */
+$usuario = $this->getRequest()->getAttribute('identity'); 
+?>
 
 <?php // pr($usuario->categoria);   ?>
 <?php // die();   ?>
@@ -28,7 +34,7 @@
                     <?php echo $this->Html->link("Estagiários", "/Estagiarios/index", ['class' => 'nav-link']); ?>
                 </li>
                 <li class="nav-item">
-                    <?php echo $this->Html->link("Instituições", "/Instituicaoestagios/index", ['escape' => FALSE, 'class' => 'nav-link']); ?>
+                    <?php echo $this->Html->link("Instituições", "/Instituicoes/index", ['escape' => FALSE, 'class' => 'nav-link']); ?>
                 </li>
                 <li class="nav-item">
                     <?php echo $this->Html->link("Supervisores", "/Supervisores/index/ordem:nome", ['class' => 'nav-link']); ?>

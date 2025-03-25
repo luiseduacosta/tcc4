@@ -37,12 +37,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-    <!-- Editor Quill wysiwyg -->
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.0-beta.0/dist/quill.snow.css" rel="stylesheet" />
-
-    <!-- Include the Quill library -->
-    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-beta.0/dist/quill.js"></script>
-
     <!--
         Cake 4.0
         <?= $this->Html->css('milligram.min.css') ?>
@@ -69,6 +63,19 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'
         ])
         ?>
+
+    <!-- Include stylesheet -->
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" />
+    <!-- Include the ckeditor library -->
+    <script type="importmap">
+            {
+            "imports": {
+                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.js",
+                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.2.0/"
+                }
+            }
+        </script>
+
     <?= $this->fetch('script') ?>
 </head>
 
