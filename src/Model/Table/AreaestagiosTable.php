@@ -13,8 +13,6 @@ use Cake\Validation\Validator;
  * Areaestagios Model (Mudar para Turmaestagios)
  *
  * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
- * @property \App\Model\Table\MuralestagiosTable&\Cake\ORM\Association\HasMany $Muralestagios
- * @property \App\Model\Table\InstituicoesTable&\Cake\ORM\Association\HasMany $Instituicoes
  *
  * @method \App\Model\Entity\Areaestagio newEmptyEntity()
  * @method \App\Model\Entity\Areaestagio newEntity(array $data, array $options = [])
@@ -47,13 +45,7 @@ class AreaestagiosTable extends Table {
         $this->setPrimaryKey('id');
 
         $this->hasMany('Estagiarios', [
-            'foreignKey' => 'id_area',
-        ]);
-        $this->hasMany('Muralestagios', [
-            'foreignKey' => 'id_area',
-        ]);
-        $this->hasMany('Instituicoes', [
-            'foreignKey' => 'area',
+            'foreignKey' => 'turmaestagio_id',
         ]);
     }
 

@@ -6,7 +6,7 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Areaestagio Entity
+ * Areaestagio Entity (Mudar para Turmaestagio)
  *
  * @property int $id
  * @property string $area
