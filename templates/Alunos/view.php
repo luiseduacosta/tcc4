@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Aluno $aluno
  */
 $user = $this->getRequest()->getAttribute('identity');
-pr($aluno);
+// pr($aluno);
 ?>
 
 <div class="d-flex justify-content-center">
@@ -111,9 +111,8 @@ pr($aluno);
             <?php foreach ($aluno->muralinscricoes as $muralinscricoes): ?>
                 <tr>
                     <td><?= h($muralinscricoes->id) ?></td>
-                    <td><?= h($muralinscricoes->id_aluno) ?></td>
-                    <td><?= h($muralinscricoes->alunonovo_id) ?></td>
-                    <td><?= $muralinscricoes->has('muralestagio') ? $this->Html->link($muralinscricoes->muralestagio['instituicao'], ['controller' => 'Muralestagios', 'action' => 'view', $muralinscricoes->id_instituicao]) : '' ?>
+                    <td><?= h($muralinscricoes->aluno_id) ?></td>
+                    <td><?= $muralinscricoes->has('muralestagio') ? $this->Html->link($muralinscricoes->muralestagio['instituicao'], ['controller' => 'Muralestagios', 'action' => 'view', $muralinscricoes['instituicao_id']]) : '' ?>
                     </td>
                     <td><?= date('d-m-Y', strtotime(h($muralinscricoes->data))) ?></td>
                     <td><?= h($muralinscricoes->periodo) ?></td>

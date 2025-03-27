@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\BelongsTo $Monografias
  * @property \Cake\ORM\Association\HasOne $Alunos
+ * @property \Cake\ORM\Association\HasOne $Estudantes
  * 
  * @method \App\Model\Entity\Tccestudante get($primaryKey, $options = [])
  * @method \App\Model\Entity\Tccestudante newEntity($data = null, array $options = [])
@@ -45,7 +46,7 @@ class TccestudantesTable extends Table
             'joinType' => 'INNER'
         ]);
 
-        // Tccestudantes com estudantes
+        // Tccestudantes com alunos
         $this->hasOne('Alunos', [
             'targetForeignKey' => 'registro',
             'foreignKey' => false,
@@ -53,6 +54,13 @@ class TccestudantesTable extends Table
             'joinType' => 'LEFT'
         ]);
 
+        // Tccestudantes com alunos
+        $this->hasOne('Estudantes', [
+            'targetForeignKey' => 'registro',
+            'foreignKey' => false,
+            'conditions' => 'Tccestudantes.registro = Estudantes.registro',
+            'joinType' => 'LEFT'
+        ]);
     }
 
     /**

@@ -7,7 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">
-    <?= $this->element('menu_mural') ?>
+    <?= $this->element('menu_monografias') ?>
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">

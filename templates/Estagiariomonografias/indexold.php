@@ -35,13 +35,13 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?php // pr($estagiario->tccestudante->id) ?>
                 <tr>
                     <td><?= $estagiario->id ?></td>
-                    <td><?= $this->Html->link($estagiario->tccestudante->nome, ['controller' => 'Tccestudantes', 'action' => 'view', $estagiario->tccestudante->id]) ?>
+                    <td><?= $this->Html->link($estagiario->tccestudante['nome'], ['controller' => 'Tccestudantes', 'action' => 'view', $estagiario->tccestudante['id']]) ?>
                     </td>
                     <td><?= h($estagiario->registro) ?></td>
                     <td><?= h($estagiario->turno) ?></td>
                     <td><?= h($estagiario->nivel) ?></td>
                     <td><?= h($estagiario->periodo) ?></td>
-                    <td><?= h($estagiario->tccestudante->monografia_id) ?></td>
+                    <td><?= h($estagiario->tccestudante['monografia_id']) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $estagiario->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $estagiario->id]) ?>

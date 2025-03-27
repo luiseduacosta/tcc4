@@ -50,4 +50,3 @@ $user = $this->getRequest()->getAttribute('identity');
         </div>
     </div>
 </div>
-</div>

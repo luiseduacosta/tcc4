@@ -1,4 +1,8 @@
 <?php 
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Estudante $estudante
+ */
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
@@ -24,7 +28,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="d-flex justify-content-start">
     <div class="col-auto">
-        <?php echo $this->Form->create(null, ['url' => 'index'], ['class' => 'form-inline']); ?>
+        <?php echo $this->Form->create(null, ['url' => 'index', 'class' => 'form-inline']); ?>
         <?php echo $this->Form->input('periodo', ['id' => 'periodo', 'type' => 'select', 'label' => ['text' => 'Período'], 'options' => $periodos, 'selected' => $periodoselecionado, 'empty' => [$periodoselecionado => $periodoselecionado], 'class' => 'form-control']); ?>
         <?php echo $this->Form->end(); ?>
     </div>

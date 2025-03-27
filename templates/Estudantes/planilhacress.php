@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Estudante $estudante
+ */
 // pr($cress);
 // pr($periodos);
 // pr($periodoselecionado);

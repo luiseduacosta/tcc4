@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">
-    <?= $this->element('menu_esquerdo') ?>
+    <?= $this->element('menu_monografias') ?>
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
@@ -42,7 +42,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <tr>
             <td scope="row"><?= __('Nome') ?></td>
             <?php if (!empty($tccestudante->aluno)): ?>
-                <td><?= $this->Html->link($tccestudante->aluno->nome, ['controller' => 'alunos', 'action' => 'view', $tccestudante->aluno->id]) ?>
+                <td><?= $this->Html->link($tccestudante->aluno['nome'], ['controller' => 'estudantes', 'action' => 'view', $tccestudante->aluno['id']]) ?>
                 </td>
             <?php else: ?>
                 <td><?= h($tccestudante->nome) ?></td>
@@ -50,7 +50,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <td scope="row"><?= __('Monografia') ?></td>
-            <td><?= $this->Html->link($tccestudante->monografia->titulo, ['controller' => 'monografias', 'action' => 'view', $tccestudante->monografia->id]) ?>
+            <td><?= $this->Html->link($tccestudante->monografia['titulo'], ['controller' => 'monografias', 'action' => 'view', $tccestudante->monografia['id']]) ?>
             </td>
         </tr>
     </table>

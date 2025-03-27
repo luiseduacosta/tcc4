@@ -7,16 +7,16 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">
-    <?= $this->element('menu_esquerdo') ?>
+    <?= $this->element('menu_monografias') ?>
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerProfessores"
-        aria-controls="navbarTogglerProfessores" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDocentes"
+        aria-controls="navbarTogglerDocentes" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerProfessores">
-        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerProfessores">
+    <div class="collapse navbar-collapse" id="navbarTogglerDocentes">
+        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerDocentes">
             <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                 <li class="item-link">
                     <?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
@@ -27,7 +27,7 @@ $user = $this->getRequest()->getAttribute('identity');
 </nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <h3><?= __('Professores') ?></h3>
+    <h3><?= __('Docentes') ?></h3>
     <div class="d-flex justify-content-end">
         <p>
             <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
@@ -54,7 +54,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <tbody>
             <?php foreach ($docentes as $docente): ?>
                 <tr>
-                    <td><?= $this->Html->link(h($docente->nome), ['controller' => 'Professores', 'action' => 'view', $docente->id]) ?>
+                    <td><?= $this->Html->link(h($docente->nome), ['controller' => 'Docentes', 'action' => 'view', $docente->id]) ?>
                     </td>
                     <td>
                         <?php if ($docente->curriculolattes): ?>

@@ -43,10 +43,10 @@ class MonografiasController extends AppController {
             $titulo = $this->request->getData()['titulo'];
             $query = $this->Monografias->find()
                     ->where(['titulo LIKE' => "%" . $titulo . "%"])
-                    ->contain(['Professores', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']]);
+                    ->contain(['Docentes', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']]);
         } else {
             $query = $this->Monografias->find()
-                    ->contain(['Professores', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']]);
+                    ->contain(['Docentes', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']]);
         }
         // debug($query);
         $monografias = $this->paginate($query, [
@@ -55,7 +55,7 @@ class MonografiasController extends AppController {
                 'Monografias.periodo',
                 'Monografias.url',
                 'Tccestudantes.nome',
-                'Professores.nome',
+                'Docentes.nome',
                 'Areamonografias.area'
             ]
         ]);
@@ -76,7 +76,7 @@ class MonografiasController extends AppController {
         $this->Authorization->skipAuthorization();
         $monografiatable = $this->fetchTable('Monografias');
         $monografia = $monografiatable->get($id, [
-            'contain' => ['Professores', 'Professorbanca1', 'Professorbanca2', 'Professorbanca3', 'Areamonografias', 'Tccestudantes'],
+            'contain' => ['Docentes', 'Professorbanca1', 'Professorbanca2', 'Professorbanca3', 'Areamonografias', 'Tccestudantes'],
         ]);
 
         $baseUrl = Router::url('/', true);
@@ -155,21 +155,21 @@ class MonografiasController extends AppController {
         /* Chamo a function estudantes() para fazer o list de seleção */
         $estudantes = $this->estudantes();
         // pr($estudantes);
-        /* Deveria ser somente para Professores ativos */
-        $Professores = $this->Monografias->Professores->find(
+        /* Deveria ser somente para Docentes ativos */
+        $docentes = $this->Monografias->Docentes->find(
                 'list',
                 ['keyField' => 'id', 'valueField' => 'nome']
         );
-        // $Professores->where(['dataegresso IS NULL']);
-        $Professores->order(['nome']);
-        // debug($Professores->toArray());
-        // pr($Professores);
+        // $docentes->where(['dataegresso IS NULL']);
+        $docentes->order(['nome']);
+        // debug($docentes->toArray());
+        // pr($docentes);
         $areas = $this->Monografias->Areamonografias->find('list', [
             'keyField' => 'id',
             'valueField' => 'area'
         ]);
         $areas->order(['area' => 'asc']);
-        $this->set(compact('estudantes', 'monografia', 'Professores', 'areas'));
+        $this->set(compact('estudantes', 'monografia', 'docentes', 'areas'));
     }
 
     /**
@@ -183,7 +183,7 @@ class MonografiasController extends AppController {
 
         $monografiatable = $this->fetchTable('Monografias');
         $monografia = $monografiatable->get($id, [
-            'contain' => ['Professores', 'Professores1', 'Professores2', 'Areamonografias', 'Tccestudantes'],
+            'contain' => ['Docentes', 'Professores1', 'Professores2', 'Areamonografias', 'Tccestudantes'],
         ]);
 
         $this->Authorization->authorize($monografia);
@@ -226,11 +226,11 @@ class MonografiasController extends AppController {
 
         // $estudantes = $this->estudantes();
 
-        $professores = $this->Monografias->Professores->find('list', [
+        $docentes = $this->Monografias->Docentes->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome'
         ]);
-        $professores->order(['nome' => 'asc']);
+        $docentes->order(['nome' => 'asc']);
 
         $areas = $this->Monografias->Areamonografias->find('list', [
             'keyField' => 'id',
@@ -238,7 +238,7 @@ class MonografiasController extends AppController {
         ]);
         $areas->order(['area' => 'asc']);
 
-        $this->set(compact('monografia', 'professores', 'areas'));
+        $this->set(compact('monografia', 'docentes', 'areas'));
     }
 
     /**

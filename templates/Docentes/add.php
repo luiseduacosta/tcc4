@@ -7,7 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">
-    <?= $this->element('menu_esquerdo') ?>
+    <?= $this->element('menu_monografias') ?>
 </div>
 
 <?= $this->element('templates') ?>

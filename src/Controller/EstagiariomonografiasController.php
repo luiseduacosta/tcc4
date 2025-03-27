@@ -38,7 +38,7 @@ class EstagiariomonografiasController extends AppController
         $this->Authorization->skipAuthorization();
         $this->paginate = [
             'conditions' => ['nivel' => 4],
-            'contain' => ['Tccestudantes', 'Alunos'],
+            'contain' => ['Tccestudantes', 'Estudantes'],
         ];
         $estagiariomonografias = $this->paginate($this->Estagiariomonografias);
         // pr($estagiarios);
@@ -85,12 +85,12 @@ class EstagiariomonografiasController extends AppController
         if (!empty($periodo)):
             $estagiariomonografias = $this->Estagiariomonografias->find('all', [
                 'conditions' => ['nivel' => 4, 'periodo' => $periodo],
-                'contain' => ['Tccestudantes', 'Alunos'],
+                'contain' => ['Tccestudantes', 'Estudantes'],
             ]);
         else:
             $estagiariomonografias = $this->Estagiariomonografias->find('all', [
                 'conditions' => ['nivel' => 4],
-                'contain' => ['Tccestudantes', 'Aluns'],
+                'contain' => ['Tccestudantes', 'Estudantes'],
             ]);
         endif;
         $this->Authorization->authorize($this->Estagiariomonografias);
@@ -108,6 +108,7 @@ class EstagiariomonografiasController extends AppController
         endforeach;
         // die();
         // pr($totalperiodos);
+        $this->set('periodo', $periodo);
         $this->set('periodos', $totalperiodos);
         // die();
         $i = 0;
@@ -205,7 +206,7 @@ class EstagiariomonografiasController extends AppController
             'limit' => 200
         ]);
 
-        $Professores = $this->Estagiariomonografias->Professores->find('list', [
+        $Professores = $this->Estagiariomonografias->Docentes->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome',
             'limit' => 200
@@ -250,7 +251,7 @@ class EstagiariomonografiasController extends AppController
         );
         // debug($alunos);
         // die("alunos");
-        $docentemonografias = $this->Estagiariomonografias->Professores->find('list', [
+        $docentemonografias = $this->Estagiariomonografias->Docentes->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome',
             'limit' => 200

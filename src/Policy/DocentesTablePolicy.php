@@ -8,7 +8,7 @@ use App\Model\Table\DocentesTable;
 use Authorization\IdentityInterface;
 use Authorization\Policy\Result;
 /**
- * Professores policy
+ * Docentes policy
  */
 class DocentesTablePolicy
 {

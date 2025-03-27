@@ -35,7 +35,7 @@ $user = $this->getRequest()->getAttribute('identity');
 </script>
 
 <div class="d-flex justify-content-start">
-    <?= $this->element('menu_esquerdo') ?>
+    <?= $this->element('menu_monografias') ?>
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
@@ -91,13 +91,13 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php
         echo $this->Form->control('data ', ['label' => 'Data', 'type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}'], 'empty' => TRUE]);
         echo $this->Form->control('periodo');
-        echo $this->Form->control('professor_id', ['options' => $professores, 'empty' => 'Seleciona docente']);
+        echo $this->Form->control('professor_id', ['options' => $docentes, 'empty' => 'Seleciona docente']);
         echo $this->Form->control('co_orienta_id', ['label' => 'Co-orientador']);
         echo $this->Form->control('areamonografia_id', ['options' => $areas, 'empty' => 'Seleciona área']);
-        echo $this->Form->control('data_defesa', ['type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}'], 'empty' => TRUE]);
-        echo $this->Form->control('banca1', ['value' => $monografia->professor_id, 'options' => $professores, 'empty' => true]);
-        echo $this->Form->control('banca2', ['options' => $professores, 'empty' => true]);
-        echo $this->Form->control('banca3', ['options' => $professores, 'empty' => true]);
+        echo $this->Form->control('data_defesa', ['type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}'], 'empty' => true]);
+        echo $this->Form->control('banca1', ['value' => $monografia->professor_id, 'options' => $docentes, 'empty' => true]);
+        echo $this->Form->control('banca2', ['options' => $docentes, 'empty' => true]);
+        echo $this->Form->control('banca3', ['options' => $docentes, 'empty' => true]);
         echo $this->Form->control('convidado');
         if (!empty($monografia['url'])):
             ?>

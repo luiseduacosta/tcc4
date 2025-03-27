@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">
-    <?= $this->element('menu_esquerdo') ?>
+    <?= $this->element('menu_monografias') ?>
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
@@ -47,7 +47,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th scope="col"><?= $this->Paginator->sort('Monografias.titulo', 'Título') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Monografias.periodo', 'Período') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Tccestudantes.nome', 'Estudante') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('Professores.nome', 'Orientador(a)') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('Docentes.nome', 'Orientador(a)') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Areamonografias.area', 'Área') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Monografias.url', 'PDF') ?></th>
             </tr>
@@ -81,7 +81,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         ?>
                     </td>
 
-                    <td><?= isset($monografia->professor) ? $this->Html->link($monografia->professor['nome'], ['controller' => 'Professores', 'action' => 'view', $monografia->professor['id']]) : '' ?>
+                    <td><?= $monografia->hasValue('docente') ? $this->Html->link($monografia->docente['nome'], ['controller' => 'Professores', 'action' => 'view', $monografia->docente['id']]) : '' ?>
                     </td>
 
                     <td><?= $monografia->hasValue('areamonografia') ? $this->Html->link($monografia->areamonografia['area'], ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia['id']]) : '' ?>

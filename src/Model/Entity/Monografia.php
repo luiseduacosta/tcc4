@@ -27,9 +27,10 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $timestamp
  *
  * @property \App\Model\Entity\Professor[] $professor
- * @property \App\Model\Entity\Professor[] $professorbanca1
- * @property \App\Model\Entity\Professor[] $professorbanca2
- * @property \App\Model\Entity\Professor[] $professorbanca3
+ * @property \App\Model\Entity\Docente[] $docente
+ * @property \App\Model\Entity\Docente[] $professorbanca1
+ * @property \App\Model\Entity\Docente[] $professorbanca2
+ * @property \App\Model\Entity\Docente[] $professorbanca3
  * @property \App\Model\Entity\Areamonografia[] $areamonografia
  * @property \App\Model\Entity\Tccestudante[] $tccestudante
  */
@@ -63,6 +64,7 @@ class Monografia extends Entity
         'url' => true,
         'timestamp' => true,
         'professor' => true,
+        'docente' => true,
         'areamonografia' => true,
         'professorbanca1' => true,
         'professorbanca2' => true,

@@ -7,7 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">
-    <?= $this->element('menu_esquerdo') ?>
+    <?= $this->element('menu_monografias') ?>
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
@@ -43,6 +43,8 @@ $user = $this->getRequest()->getAttribute('identity');
     </table>
 </div>
 
+<?php // pr($areamonografia->monografias); ?>
+
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h4><?= __('Monografias') ?></h4>
     <?php if (!empty($areamonografia->monografias)): ?>
@@ -58,10 +60,10 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php foreach ($areamonografia->monografias as $monografias): ?>
                 <?php // pr($monografias->docente->nome); ?>
                 <tr>
-                    <?php if (count($monografias->tccestudantes) > 0): ?>
+                    <?php if (isset($monografias->tccestudante) && count($monografias->tccestudante) > 0): ?>
                         <td>
-                            <?php for ($i = 0; $i < count($monografias->tccestudantes); $i++): ?>
-                                <?= $this->Html->link(h($monografias->tccestudantes[$i]->nome), ['controller' => 'tccestudantes', 'action' => 'view', $monografias->tccestudantes[$i]->id]) ?>
+                            <?php for ($i = 0; $i < count($monografias->tccestudante); $i++): ?>
+                                <?= $this->Html->link(h($monografias->tccestudante[$i]->nome), ['controller' => 'tccestudantes', 'action' => 'view', $monografias->tccestudante[$i]->id]) ?>
                             <?php endfor; ?>
                         </td>
                     <?php endif; ?>
@@ -69,7 +71,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= $this->Html->link(h($monografias->titulo), ['controller' => 'monografias', 'action' => 'view', $monografias->id]) ?>
                     </td>
                     <td><?= h($monografias['periodo']) ?></td>
-                     <td><?= $this->Html->link(h($monografias->docente->nome), ['controller' => 'Professores', 'action' => 'view', $monografias->docente->id]) ?>
+                     <td><?= $this->Html->link(h($monografias->docente['nome']), ['controller' => 'Professores', 'action' => 'view', $monografias->docente['id']]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -77,19 +79,21 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php endif; ?>
 </div>
 
+<?php // pr($areamonografia->docentes); ?>
+
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h4><?= __('Professores da área') ?></h4>
-    <?php if (!empty($areamonografia->Professores)): ?>
+    <?php if (!empty($areamonografia->docentes)): ?>
         <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
                     <th scope="col"><?= __('Docente') ?></th>
                 </tr>
             </thead>
-            <?php foreach ($areamonografia->Professores as $Professores): ?>
+            <?php foreach ($areamonografia->docentes as $docentes): ?>
                 <?php // pr($monografias);  ?>
                 <tr>
-                    <td><?= $this->Html->link(h($Professores['nome']), ['controller' => 'Professores', 'action' => 'view', $Professores['id']]) ?>
+                    <td><?= $this->Html->link(h($docentes['nome']), ['controller' => 'Docentes', 'action' => 'view', $docentes['id']]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

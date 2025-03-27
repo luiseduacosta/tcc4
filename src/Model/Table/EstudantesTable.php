@@ -39,8 +39,8 @@ class EstudantesTable extends Table
 
         /** A tabela Estagiarios tem um campo alunonovo_id que se conexta com o id */
         $this->hasMany('Estagiarios', [
-            'targetForeignKey' => 'alunonovo_id',
-            'foreignKey' => 'alunonovo_id',
+            'targetForeignKey' => 'aluno_id',
+            'foreignKey' => 'aluno_id',
             'joinType' => 'INNER'
         ]);
 

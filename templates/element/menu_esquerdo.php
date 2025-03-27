@@ -1,12 +1,16 @@
 <?php
-$usuario = $this->getRequest()->getAttribute('identity');
-// echo 'Usuário: ' . $usuario->username;
-// die();
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Monografia $monografia
+ */
+$usuario = $this->getRequest()->getAttribute('identity');
+// echo 'Usuário: ' . $usuario->username;
+// die();
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">

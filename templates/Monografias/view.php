@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <div class="d-flex justify-content-start">
-    <?= $this->element('menu_esquerdo') ?>
+    <?= $this->element('menu_monografias') ?>
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
@@ -57,7 +57,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Professor(a)') ?></th>
-            <td><?= $this->Html->link($monografia->professor['nome'], ['controller' => 'Professores', 'action' => 'view', $monografia->professor_id]) ?>
+            <td><?= $this->Html->link($monografia->docente['nome'], ['controller' => 'Docentes', 'action' => 'view', $monografia->professor_id]) ?>
             </td>
         </tr>
         <tr>
