@@ -26,13 +26,12 @@ use Cake\ORM\Entity;
  * @property string|null $url
  * @property \Cake\I18n\FrozenTime|null $timestamp
  *
- * @property \App\Model\Entity\Professor[] $professor
- * @property \App\Model\Entity\Docente[] $docente
+ * @property \App\Model\Entity\Docente[] $docentes
  * @property \App\Model\Entity\Docente[] $professorbanca1
  * @property \App\Model\Entity\Docente[] $professorbanca2
  * @property \App\Model\Entity\Docente[] $professorbanca3
- * @property \App\Model\Entity\Areamonografia[] $areamonografia
- * @property \App\Model\Entity\Tccestudante[] $tccestudante
+ * @property \App\Model\Entity\Areamonografia[] $areamonografias
+ * @property \App\Model\Entity\Tccestudante[] $tccestudantes
  */
 class Monografia extends Entity
 {
@@ -63,13 +62,12 @@ class Monografia extends Entity
         'convidado' => true,
         'url' => true,
         'timestamp' => true,
-        'professor' => true,
-        'docente' => true,
-        'areamonografia' => true,
+        'docentes' => true,
+        'areamonografias' => true,
         'professorbanca1' => true,
         'professorbanca2' => true,
         'professorbanca3' => true,
-        'tccestudante' => true,
+        'tccestudantes' => true,
     ];
 
 }

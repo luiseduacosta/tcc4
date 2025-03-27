@@ -62,9 +62,10 @@ class AlunosTable extends Table
                 ]);
 
                 $this->hasOne('Tccestudantes', [
+                        'propertyName' => 'tccestudantes',
                         'targetForeignKey' => 'registro',
                         'foreignKey' => false,
-                        'conditions' => 'alunos.registro = Tccestudantes.registro',
+                        'conditions' => 'Alunos.registro = Tccestudantes.registro',
                         'joinType' => 'LEFT'
                     ]);
         }

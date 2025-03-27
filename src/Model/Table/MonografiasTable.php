@@ -12,7 +12,6 @@ use Cake\Validation\Validator;
  * Monografias Model
  *
  * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
- * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasMany $Tccestudantes
  * @property \App\Model\Table\AreamonografiasTable&\Cake\ORM\Association\BelongsTo $Areamonografias
  *
@@ -48,14 +47,9 @@ class MonografiasTable extends Table
                 $this->setPrimaryKey('id');
 
                 // Monografia tem um campo professor_id
-                $this->belongsTo('Professores', [
-                        'className' => 'Docentes',
-                        'foreignKey' => 'professor_id',
-                ]);
-
-                // Monografia tem um campo professor_id
                 $this->belongsTo('Docentes', [
                         'className' => 'Docentes',
+                        'propertyName' => 'docentes',
                         'foreignKey' => 'professor_id',
                 ]);
 
@@ -80,11 +74,13 @@ class MonografiasTable extends Table
 
                 // Tccestudantes tem um campo monografia_id
                 $this->hasMany('Tccestudantes', [
+                        'propertyName' => 'tccestudantes',
                         'foreignKey' => 'monografia_id',
                         'joinType' => 'LEFT'
                 ]);
 
                 $this->belongsTo('Areamonografias', [
+                        'propertyName' => 'areamonografias',
                         'className' => 'Areamonografias',
                         'foreignKey' => 'areamonografia_id',
                         'joinType' => 'LEFT'

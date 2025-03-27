@@ -7,7 +7,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Estudantes Model
+ * Estudantes Model (clone de Alunos para usar com Monografias)
  * 
  * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasOne $Tccestudantes
@@ -33,11 +33,11 @@ class EstudantesTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('estudantes');
+        $this->setTable('alunos');
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 
-        /** A tabela Estagiarios tem um campo alunonovo_id que se conexta com o id */
+        /** A tabela Estagiarios tem um campo aluno_id que se conexta com o id de Estudantess */
         $this->hasMany('Estagiarios', [
             'targetForeignKey' => 'aluno_id',
             'foreignKey' => 'aluno_id',
@@ -48,7 +48,7 @@ class EstudantesTable extends Table
         $this->hasOne('Tccestudantes', [
             'targetForeignKey' => 'registro',
             'foreignKey' => false,
-            'conditions' => 'Estudantes.registro = Tccestudantes.registro',
+            'conditions' => 'Alunos.registro = Tccestudantes.registro',
             'joinType' => 'LEFT'
         ]);
     }

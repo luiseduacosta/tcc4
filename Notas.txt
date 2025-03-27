@@ -47,3 +47,8 @@ protected function isAuthor(IdentityInterface $user, Article $article)
     {
         return $article->user_id === $user->getIdentifier();
     }
+
+** Mudar a ordem de uma tabela *
+ALTER TABLE TBLCLIENTE
+MODIFY COLUMN SexoCliente varchar(1)
+AFTER NomeCliente 

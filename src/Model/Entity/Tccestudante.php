@@ -32,6 +32,6 @@ class Tccestudante extends Entity
         'registro' => true,
         'monografia' => true,
         'aluno' => true,
-        'estudante' => true,
+        'estudante' => true, // Para Monografias
     ];
 }

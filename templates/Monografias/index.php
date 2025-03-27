@@ -54,7 +54,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($monografias as $monografia): ?>
-                <?php // pr($monografia); ?>
+                <?php // pr($monografia->docentes); ?>
                 <?php // die(pr($titulo)); ?>
                 <tr>
 
@@ -68,9 +68,9 @@ $user = $this->getRequest()->getAttribute('identity');
 
                     <td>
                         <?php
-                        if (!(empty($monografia->tccestudante))):
-                            $q_estudantes = count($monografia->tccestudante);
-                            foreach ($monografia->tccestudante as $tccestudante):
+                        if (!(empty($monografia->tccestudantes))):
+                            $q_estudantes = count($monografia->tccestudantes);
+                            foreach ($monografia->tccestudantes as $tccestudante):
                                 // pr($tccestudante);
                                 echo $this->Html->link($tccestudante->nome, ['controller' => 'tccestudantes', 'action' => 'view', $tccestudante->id]);
                                 if ($q_estudantes > 1):
@@ -81,10 +81,10 @@ $user = $this->getRequest()->getAttribute('identity');
                         ?>
                     </td>
 
-                    <td><?= $monografia->hasValue('docente') ? $this->Html->link($monografia->docente['nome'], ['controller' => 'Professores', 'action' => 'view', $monografia->docente['id']]) : '' ?>
+                    <td><?= $monografia->hasValue('docentes') ? $this->Html->link($monografia->docentes['nome'], ['controller' => 'Docentes', 'action' => 'view', $monografia->docentes['id']]) : '' ?>
                     </td>
 
-                    <td><?= $monografia->hasValue('areamonografia') ? $this->Html->link($monografia->areamonografia['area'], ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia['id']]) : '' ?>
+                    <td><?= $monografia->hasValue('areamonografias') ? $this->Html->link($monografia->areamonografias['area'], ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografias['id']]) : '' ?>
                     </td>
 
                     <?php if (!empty($monografia->url)): ?>

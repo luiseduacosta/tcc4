@@ -45,9 +45,9 @@ $user = $this->getRequest()->getAttribute('identity');
         <tr>
             <th scope="row"><?= __('Estudante') ?></th>
             <?php
-            if (isset($monografia->tccestudante)):
+            if (isset($monografia->tccestudantes) && !empty($monografia->tccestudantes)):
                 echo '<td>';
-                foreach ($monografia->tccestudante as $tccestudantes):
+                foreach ($monografia->tccestudantes as $tccestudantes):
                     echo $this->Html->link($tccestudantes->nome, ['controller' => 'tccestudantes', 'action' => 'view', $tccestudantes->id]);
                     echo ", ";
                 endforeach;
@@ -57,7 +57,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Professor(a)') ?></th>
-            <td><?= $this->Html->link($monografia->docente['nome'], ['controller' => 'Docentes', 'action' => 'view', $monografia->professor_id]) ?>
+            <td><?= $this->Html->link($monografia->docentes['nome'], ['controller' => 'Docentes', 'action' => 'view', $monografia->professor_id]) ?>
             </td>
         </tr>
         <tr>
@@ -70,7 +70,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Area') ?></th>
-            <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografia['area'], ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografia['id']]) : "" ?>
+            <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografias['area'], ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografias['id']]) : "" ?>
             </td>
         </tr>
         <tr>

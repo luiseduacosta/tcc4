@@ -54,7 +54,7 @@ class TccestudantesTable extends Table
             'joinType' => 'LEFT'
         ]);
 
-        // Tccestudantes com alunos
+        // Tccestudantes com estudantes para usar em Monografias
         $this->hasOne('Estudantes', [
             'targetForeignKey' => 'registro',
             'foreignKey' => false,
