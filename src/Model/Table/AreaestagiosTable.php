@@ -10,7 +10,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Areaestagios Model
+ * Areaestagios Model (Mudar para Turmaestagios)
  *
  * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
  * @property \App\Model\Table\MuralestagiosTable&\Cake\ORM\Association\HasMany $Muralestagios

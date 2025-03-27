@@ -60,10 +60,10 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php foreach ($areamonografia->monografias as $monografias): ?>
                 <?php // pr($monografias->docente->nome); ?>
                 <tr>
-                    <?php if (isset($monografias->tccestudante) && count($monografias->tccestudante) > 0): ?>
+                    <?php if (isset($monografias->tccestudantes) && count($monografias->tccestudantes) > 0): ?>
                         <td>
-                            <?php for ($i = 0; $i < count($monografias->tccestudante); $i++): ?>
-                                <?= $this->Html->link(h($monografias->tccestudante[$i]->nome), ['controller' => 'tccestudantes', 'action' => 'view', $monografias->tccestudante[$i]->id]) ?>
+                            <?php for ($i = 0; $i < count($monografias->tccestudantes); $i++): ?>
+                                <?= $this->Html->link(h($monografias->tccestudantes[$i]->nome), ['controller' => 'tccestudantes', 'action' => 'view', $monografias->tccestudantes[$i]->id]) ?>
                             <?php endfor; ?>
                         </td>
                     <?php endif; ?>
@@ -71,7 +71,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= $this->Html->link(h($monografias->titulo), ['controller' => 'monografias', 'action' => 'view', $monografias->id]) ?>
                     </td>
                     <td><?= h($monografias['periodo']) ?></td>
-                     <td><?= $this->Html->link(h($monografias->docente['nome']), ['controller' => 'Professores', 'action' => 'view', $monografias->docente['id']]) ?>
+                     <td><?= $this->Html->link(h($monografias->docentes['nome']), ['controller' => 'Docentes', 'action' => 'view', $monografias->docentes['id']]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -91,7 +91,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 </tr>
             </thead>
             <?php foreach ($areamonografia->docentes as $docentes): ?>
-                <?php // pr($monografias);  ?>
+                <?php // pr($docentes);  ?>
                 <tr>
                     <td><?= $this->Html->link(h($docentes['nome']), ['controller' => 'Docentes', 'action' => 'view', $docentes['id']]) ?>
                     </td>
