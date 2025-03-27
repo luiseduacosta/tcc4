@@ -3,100 +3,140 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estagiario $estagiario
  */
-$user = $this->getRequest()->getAttribute('identity');
 // pr($estagiario);
+// die();
 ?>
 
-<div class="d-flex justify-content-start">
-    <?= $this->element('menu_esquerdo') ?>
-</div>
+<div class='container'>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerEstagiariosView"
-            aria-controls="navbarTogglerEstagiariosView" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerEstagiariosView">
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li class="nav-item"><?= $this->Html->link(__('Editar Estagiario'), ['action' => 'edit', $estagiario->id]) ?>
-            </li>
-            <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir Estagiario'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiario->id), 'class' => 'btn btn-danger float-start']) ?>
-            </li>
-            <li class="nav-item">
-                <?= $this->Html->link(__('Novo Estagiario'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
-            </li>
-        <?php endif; ?>
-    </ul>
-</nav>
+    < class="row">
+        <div class="col-auto">
+            <?php if ($this->getRequest()->getAttribute('identity')['categoria_id'] == 1): ?>
+                <?= $this->Form->postLink(__('Excluir Estagiario'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $estagiario->id), 'class' => 'btn btn-danger float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Listar Estagiarios'), ['action' => 'index'], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Inserir Estagiario'), ['action' => 'add'], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Editar Estagiario'), ['action' => 'edit', $estagiario->id], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'estagiarios', 'action' => 'termodecompromisso', $estagiario->id], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
+            <?php endif; ?>
+            <?php if ($this->getRequest()->getAttribute('identity')['categoria_id'] == 1 || $this->getRequest()->getAttribute('identity')['categoria_id'] == 4): ?>
+                <?= $this->Html->link(__('Preencher Avaliação'), ['controller' => 'avaliacoes', 'action' => 'add', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
+            <?php endif; ?>
+            <?php if ($this->getRequest()->getAttribute('identity')['categoria_id'] == 1): ?>
+                <?= $this->Html->link(__('Imprimir Avaliação'), ['action' => 'avaliacaodiscentepdf', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Preencher Atividades'), ['controller' => 'folhadeatividades', 'action' => 'view', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Imprimir Atividades'), ['controller' => 'estagiarios', 'action' => 'folhadeatividadespdf', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Declaração de estágio'), ['action' => 'declaracaodeestagiopdf', $estagiario->id], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
+            <?php endif; ?>
+        </div>
 
-<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <h3><?= h($estagiario->aluno->nome) ?></h3>
-    <table class="table table-striped table-hover table-responsive">
-        <tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($estagiario->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Registro') ?></th>
-            <td><?= h($estagiario->registro) ?></td>
-        </tr>
+        <div class="container">
+            <h3><?= h($estagiario->aluno['nome']) ?></h3>
+            <table class="table table-striped table-hover table-responsive">
+                <tr>
+                <tr>
+                    <th><?= __('Id') ?></th>
+                    <td><?= $estagiario->id ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Registro') ?></th>
+                    <td><?= $estagiario->registro ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Aluno') ?></th>
+                    <?php if ($this->getRequest()->getAttribute('identity')['categoria_id'] == 1): ?>
+                        <td><?= (isset($estagiario->aluno)) ? $this->Html->link($estagiario->aluno['nome'], ['controller' => 'Estudantes', 'action' => 'view', $estagiario->aluno['id']]) : '' ?>
+                        </td>
+                    <?php else: ?>
+                        <td><?= $estagiario->hasValue('aluno') ? $estagiario->aluno['nome'] : '' ?></td>
+                    <?php endif; ?>
+                </tr>
+                <tr>
+                    <th><?= __('Ajuste 2020') ?></th>
+                    <td><?= h($estagiario->ajuste2020) == 0 ? 'Não' : 'Sim' ?></td>
+                </tr>
 
-        <th scope="row"><?= __('Estudante') ?></th>
-        <td><?= $estagiario->has('aluno') ? $this->Html->link($estagiario->aluno->nome, ['controller' => 'Alunos', 'action' => 'view', $estagiario->aluno->id]) : '' ?>
-        </td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Turno') ?></th>
-            <td><?= h($estagiario->turno) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Nivel') ?></th>
-            <td><?= h($estagiario->nivel) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Docente') ?></th>
-            <td><?= $estagiario->has('docente') ? $this->Html->link($estagiario->docente->id, ['controller' => 'Professores', 'action' => 'view', $estagiario->docente->id]) : '' ?>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Periodo') ?></th>
-            <td><?= h($estagiario->periodo) ?></td>
-        </tr>
-        <th scope="row"><?= __('Tc') ?></th>
-        <td><?= $this->Number->format($estagiario->tc) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Tc Solicitacao') ?></th>
-            <td><?= h($estagiario->tc_solicitacao) ?></td>
-        </tr>
+                <tr>
+                    <th><?= __('Turno') ?></th>
+                    <td><?= h($estagiario->turno) ?></td>
+                </tr>
 
-        <tr>
-            <th scope="row"><?= __('Id Instituicao') ?></th>
-            <td><?= $this->Number->format($estagiario->id_instituicao) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id Supervisor') ?></th>
-            <td><?= $this->Number->format($estagiario->id_supervisor) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id Area') ?></th>
-            <td><?= $this->Number->format($estagiario->id_area) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Nota') ?></th>
-            <td><?= $this->Number->format($estagiario->nota) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Ch') ?></th>
-            <td><?= $this->Number->format($estagiario->ch) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Observacoes') ?></th>
-            <td><?= h($estagiario->observacoes) ?></td>
-        </tr>
-        <tr>
+                <tr>
+                    <th><?= __('Nível') ?></th>
+                    <td><?= h($estagiario->nivel) ?></td>
+                </tr>
 
-    </table>
-</div>
+                <tr>
+                    <th><?= __('Instituição') ?></th>
+                    <?php if ($this->getRequest()->getAttribute('identity')['categoria_id'] == 1): ?>
+                        <td><?= isset($estagiario->instituicao) ? $this->Html->link($estagiario->instituicao['instituicao'], ['controller' => 'Instituicoes', 'action' => 'view', $estagiario->instituicao['id']]) : '' ?>
+                        </td>
+                    <?php else: ?>
+                        <td><?= $estagiario->hasValue('instituicao') ? $estagiario->instituicao['instituicao'] : '' ?>
+                        </td>
+                    <?php endif; ?>
+                </tr>
+
+                <tr>
+                    <th><?= __('Supervisor(a)') ?></th>
+                    <?php if (!empty($estagiario->supervisor['nome'])): ?>
+                        <?php if ($this->getRequest()->getAttribute('identity')['categoria_id'] == 1): ?>
+                            <td><?= isset($estagiario->supervisor) ? $this->Html->link($estagiario->supervisor['nome'], ['controller' => 'Supervisores', 'action' => 'view', $estagiario->supervisor['id']]) : '' ?>
+                            </td>
+                        <?php else: ?>
+                            <td><?= $estagiario->hasValue('supervisor') ? $estagiario->supervisor['nome'] : '' ?></td>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <td>Sem informaçao</td>
+                    <?php endif; ?>
+                </tr>
+
+                <tr>
+                    <th><?= __('Professor') ?></th>
+                    <?php if (!empty($estagiario->professor['nome'])): ?>
+                        <?php if ($this->getRequest()->getAttribute('identity')['categoria_id'] == 1): ?>
+                            <td><?= isset($estagiario->professor) ? $this->Html->link($estagiario->professor['nome'], ['controller' => 'Professores', 'action' => 'view', $estagiario->professor['id']]) : '' ?>
+                            </td>
+                        <?php else: ?>
+                            <td><?= $estagiario->hasValue('professor') ? $estagiario->professor['nome'] : '' ?></td>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <td>Sem informaçao</td>
+                    <?php endif; ?>
+                </tr>
+
+                <tr>
+                    <th><?= __('Período') ?></th>
+                    <td><?= h($estagiario->periodo) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Turm de estágio') ?></th>
+                    <td><?= isset($estagiario->turmaestagio) ? $this->Html->link($estagiario->turmaestagio['area'], ['controller' => 'Turmaestagios', 'action' => 'view', $estagiario->turmaestagio['id']]) : '' ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th><?= __('TC') ?></th>
+                    <td><?= $this->Number->format($estagiario->tc) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Data TC') ?></th>
+                    <td><?= $estagiario->tc_solicitacao ? $estagiario->tc_solicitacao : '' ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Nota') ?></th>
+                    <?php if ($estagiario->nota): ?>
+                        <td><?= $this->Number->format($estagiario->nota, ['places' => 2]) ?></td>
+                    </tr>
+                <?php else: ?>
+                    <td>Sem informaçao</td>
+                <?php endif; ?>
+                <tr>
+                    <th><?= __('CH') ?></th>
+                    <td><?= $this->Number->format($estagiario->ch) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Observações') ?></th>
+                    <td name='observacoes'><?= h($estagiario->observacoes) ?></td>
+                </tr>
+            </table>
+        </div>
+    </div>

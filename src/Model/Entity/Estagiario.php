@@ -28,6 +28,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Turmaestagio[] $turmaestagio
  * @property \App\Model\Entity\Supervisor[] $supervisor
  * @property \App\Model\Entity\Instituicao[] $instituicao
+ * @property \App\Model\Entity\Turmaestagio[] $turmaestagio
  * @property \App\Model\Entity\Avaliacao[] $avaliacao
  * @property \App\Model\Entity\Folhadeatividade[] $folhadeatividade
  * @property \App\Model\Entity\Tccestudante[] $tccestudante

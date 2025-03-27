@@ -5,10 +5,10 @@
  */
 $user = $this->getRequest()->getAttribute('identity');
 ?>
+
 <div class="row justify-content-center">
     <?php echo $this->element('menu_monografias'); ?>
 </div>
-
 
 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
     <?=
@@ -19,8 +19,8 @@ $user = $this->getRequest()->getAttribute('identity');
         )
         ?>
 <?php endif; ?>
-<?= $this->Html->link(__('Novo estudante'), ['controller' => 'estudantes', 'action' => 'add'], ['class' => 'btn btn-primary']) ?>
-<?= $this->Html->link(__('Novo docente'), ['controller' => 'docentemonografias', 'action' => 'add'], ['class' => 'btn btn-primary']) ?>
+<?= $this->Html->link(__('Novo estudante'), ['controller' => 'Estudantes', 'action' => 'add'], ['class' => 'btn btn-primary']) ?>
+<?= $this->Html->link(__('Novo docente'), ['controller' => 'Docentes', 'action' => 'add'], ['class' => 'btn btn-primary']) ?>
 
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">

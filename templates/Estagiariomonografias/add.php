@@ -30,8 +30,6 @@ $user = $this->getRequest()->getAttribute('identity');
                     })
                 }
             });
-
-
         });
     });
 </script>
