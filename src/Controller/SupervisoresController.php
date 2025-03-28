@@ -49,7 +49,7 @@ class SupervisoresController extends AppController
         endif;
 
         $supervisor = $this->Supervisores->get($id, [
-            'contain' => ['Instituicaoestagios' => ['Areainstituicoes'], 'Estagiarios' => ['Estudantes', 'Supervisores', 'Professores', 'Instituicaoestagios']],
+            'contain' => ['Instituicoes' => ['Areainstituicoes'], 'Estagiarios' => ['Alunos', 'Supervisores', 'Professores', 'Instituicoes']],
         ]);
         $this->Authorization->authorize($supervisor);
         $this->set(compact('supervisor'));
@@ -70,12 +70,11 @@ class SupervisoresController extends AppController
             $supervisor = $this->Supervisores->patchEntity($supervisor, $this->request->getData());
             if ($this->Supervisores->save($supervisor)) {
                 $this->Flash->success(__('Registro de supervisora realizado.'));
-                $ultimo_id = $this->Supervisores->find()->orderDesc('id')->first();
-                return $this->redirect(['action' => 'view', $ultimo_id->id]);
+                return $this->redirect(['action' => 'view', $supervisor->id]);
             }
             $this->Flash->error(__('O registro da supervisora não foi realizado. Tente novamente.'));
         }
-        $instituicaoestagios = $this->Supervisores->Instituicaoestagios->find('list');
+        $instituicaoestagios = $this->Supervisores->Instituicoes->find('list');
         $this->set(compact('supervisor', 'instituicaoestagios'));
     }
 
@@ -90,7 +89,7 @@ class SupervisoresController extends AppController
     {
 
         $supervisor = $this->Supervisores->get($id, [
-            'contain' => ['Instituicaoestagios'],
+            'contain' => ['Instituicoes'],
         ]);
         $this->Authorization->authorize($supervisor);
 
@@ -103,7 +102,7 @@ class SupervisoresController extends AppController
             }
             $this->Flash->error(__('A supervisora não foi atualizada. Tente novamente.'));
         }
-        $instituicaoestagios = $this->Supervisores->Instituicaoestagios->find('list');
+        $instituicaoestagios = $this->Supervisores->Instituicoes->find('list');
         $this->set(compact('supervisor', 'instituicaoestagios'));
     }
 

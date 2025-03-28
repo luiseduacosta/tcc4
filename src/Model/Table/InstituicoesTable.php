@@ -12,7 +12,6 @@ use Cake\Validation\Validator;
  * Instituicoes Model
  *
  * @property \App\Model\Table\AreainstituicoesTable&\Cake\ORM\Association\BelongsTo $Areainstituicoes
- * @property \App\Model\Table\AreaestagiosTable&\Cake\ORM\Association\BelongsTo $Areaestagios
  * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
  * @property \App\Model\Table\MuralestagiosTable&\Cake\ORM\Association\HasMany $Muralestagios
  * @property \App\Model\Table\VisitasTable&\Cake\ORM\Association\HasMany $Visitas
@@ -52,21 +51,18 @@ class InstituicoesTable extends Table
         $this->belongsTo('Areainstituicoes', [
             'foreignKey' => 'area_instituicoes_id',
         ]);
-        $this->belongsTo('Areaestagios', [
-            'foreignKey' => 'area',
-        ]);        
         $this->hasMany('Estagiarios', [
-            'foreignKey' => 'id_instituicao',
+            'foreignKey' => 'instituicao_id',
         ]);
         $this->hasMany('Muralestagios', [
-            'foreignKey' => 'id_estagio',
+            'foreignKey' => 'instituicao_id',
         ]);
         $this->hasMany('Visitas', [
-            'foreignKey' => 'estagio_id',
+            'foreignKey' => 'instituicao_id',
         ]);
         $this->belongsToMany('Supervisores', [
-            'foreignKey' => 'id_instituicao',
-            'targetForeignKey' => 'id_supervisor',
+            'foreignKey' => 'instituicao_id',
+            'targetForeignKey' => 'supervisor_id',
             'joinTable' => 'inst_super',
         ]);
     }

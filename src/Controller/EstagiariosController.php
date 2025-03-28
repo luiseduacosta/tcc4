@@ -8,11 +8,16 @@ namespace App\Controller;
  * Estagiarios Controller
  *
  * @property \App\Model\Table\EstagiariosTable $Estagiarios
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ *
  * @method \App\Model\Entity\Estagiario[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class EstagiariosController extends AppController {
+class EstagiariosController extends AppController
+{
 
-    public function initialize(): void {
+    public function initialize(): void
+    {
         parent::initialize();
         // $this->loadComponent('RequestHandler');
     }
@@ -22,7 +27,8 @@ class EstagiariosController extends AppController {
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index($id = NULL) {
+    public function index($id = NULL)
+    {
 
         $periodo = $this->getRequest()->getQuery('periodo');
 
@@ -31,15 +37,15 @@ class EstagiariosController extends AppController {
             $periodo_atual = $configuracao->find()->select(['mural_periodo_atual'])->first();
             $periodo = $periodo_atual->mural_periodo_atual;
         }
-
+        $this->Authorization->skipAuthorization();
         // echo "Período " . $periodo;
         if ($periodo) {
             $query = $this->Estagiarios->find('all')
-                    ->where(['Estagiarios.periodo' => $periodo])
-                    ->contain(['Alunos', 'Professores', 'Supervisores', 'Instituicoes', 'Turmaestagios']);
+                ->where(['Estagiarios.periodo' => $periodo])
+                ->contain(['Alunos', 'Professores', 'Supervisores', 'Instituicoes', 'Turmaestagios']);
         } else {
             $query = $this->Estagiarios->find('all')
-                    ->contain(['Alunos', 'Professores', 'Supervisores', 'Instituicoes', 'Turmaestagios']);
+                ->contain(['Alunos', 'Professores', 'Supervisores', 'Instituicoes', 'Turmaestagios']);
         }
         $config = $this->paginate = ['sortableFields' => ['id', 'Alunos.nome', 'registro', 'turno', 'nivel', 'Instituicoes.instituicao', 'Supervisores.nome', 'Professores.nome']];
         $estagiarios = $this->paginate($query, $config);
@@ -65,7 +71,10 @@ class EstagiariosController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
+        /** Corrigir */
+        $this->Authorization->skipAuthorization();
         // pr($id);
         $estagiario = $this->Estagiarios->get($id, [
             'contain' => ['Alunos', 'Instituicoes', 'Supervisores', 'Professores', 'Turmaestagios']
@@ -79,7 +88,11 @@ class EstagiariosController extends AppController {
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
+
+        /** Corrigir */
+        $this->Authorization->skipAuthorization();
 
         $estagiario = $this->Estagiarios->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -105,7 +118,8 @@ class EstagiariosController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      * Pode receber como parâmetro o id do estagiário ou o id do estudante.
      */
-    public function termodecompromisso($id = NULL) {
+    public function termodecompromisso($id = NULL)
+    {
 
         // pr($this->request->getAttribute('params'));
         $estudante_id = $this->getRequest()->getQuery('estudante_id');
@@ -120,23 +134,23 @@ class EstagiariosController extends AppController {
         if ($this->getRequest()->getSession()->read('categoria') == 1) {
             if ($id) {
                 $estagiario = $this->Estagiarios->find()
-                        ->where(['Estagiarios.id' => $id])
-                        ->first();
+                    ->where(['Estagiarios.id' => $id])
+                    ->first();
 
                 // die();
                 $registro = $estagiario->registro;
                 $estudante_id = $estagiario->estudante_id;
                 // die();
                 $estudante = $this->Estagiarios->Alunos->find()
-                        ->contain(['Estagiarios'])
-                        ->where(['Estudantes.registro' => $registro])
-                        ->first();
+                    ->contain(['Estagiarios'])
+                    ->where(['Estudantes.registro' => $registro])
+                    ->first();
             } else {
                 $estudante_id = $this->getRequest()->getQuery('estudante_id');
                 $estudante = $this->Estagiarios->Alunos->find()
-                        ->contain(['Estagiarios'])
-                        ->where(['Estudantes.id' => $estudante_id])
-                        ->first();
+                    ->contain(['Estagiarios'])
+                    ->where(['Estudantes.id' => $estudante_id])
+                    ->first();
 
                 $registro = $estudante->registro;
             }
@@ -177,9 +191,9 @@ class EstagiariosController extends AppController {
 
                 /** Capturo o id do estudante para passar para o estagiario */
                 $estudante = $estudantestabela->find()
-                        ->contain([])
-                        ->where(['Estudantes.id' => $estudante_id])
-                        ->first();
+                    ->contain([])
+                    ->where(['Estudantes.id' => $estudante_id])
+                    ->first();
                 // pr($estudante);
                 // die();
                 $dadosinsere = $this->getRequest()->getData();
@@ -237,8 +251,8 @@ class EstagiariosController extends AppController {
                         // echo "Aluno já está cadastrado" . "<br>";
                     } else {
                         $queryestudantesemestagio = $estudantestabela->find()
-                                ->where(['Estudantes.id' => $estudante_id])
-                                ->first();
+                            ->where(['Estudantes.id' => $estudante_id])
+                            ->first();
                         $estudantesemestagio = $queryestudantesemestagio->toArray();
                         // pr($estudantesemestagio);
                         // die();
@@ -259,8 +273,8 @@ class EstagiariosController extends AppController {
                     /** Finaliza a insercao dos dados do estudante no aluno. */
                     /** Atualizo o estagiario novo com o id do aluno */
                     $aluno = $alunostabela->find()
-                            ->where(['Alunos.registro' => $dadosinsere['registro']])
-                            ->first();
+                        ->where(['Alunos.registro' => $dadosinsere['registro']])
+                        ->first();
 
                     $aluno_id = $aluno->toArray()['id'];
                     // pr($aluno_id);
@@ -296,11 +310,11 @@ class EstagiariosController extends AppController {
 
         if ($estudante_id) {
             $ultimoestagio = $this->Estagiarios->find()
-                    ->contain(['Alunos', 'Supervisores', 'Professores', 'Instituicoes'])
-                    ->where(['Estagiarios.estudante_id' => $estudante_id])
-                    ->order(['Estagiarios.nivel'])
-                    ->all()
-                    ->last();
+                ->contain(['Alunos', 'Supervisores', 'Professores', 'Instituicoes'])
+                ->where(['Estagiarios.estudante_id' => $estudante_id])
+                ->order(['Estagiarios.nivel'])
+                ->all()
+                ->last();
         }
         // pr($ultimoestagio);
         // die();
@@ -341,10 +355,10 @@ class EstagiariosController extends AppController {
             // die();
 
             $estudante_semestagio = $estudantestabela->find()
-                    ->contain([])
-                    ->where(['Estudantes.id' => $estudante_id])
-                    ->select(['id', 'registro', 'nome', 'turno', 'ingresso'])
-                    ->first();
+                ->contain([])
+                ->where(['Estudantes.id' => $estudante_id])
+                ->select(['id', 'registro', 'nome', 'turno', 'ingresso'])
+                ->first();
             $this->set('estudante_semestagio', $estudante_semestagio);
         }
 
@@ -356,9 +370,9 @@ class EstagiariosController extends AppController {
         if ($instituicao_id) {
 
             $supervisores_instituicao = $this->Estagiarios->Instituicoes->find()
-                    ->contain(['Supervisores'])
-                    ->where(['Instituicaoestagios.id' => $instituicao_id])
-                    ->first();
+                ->contain(['Supervisores'])
+                ->where(['Instituicaoestagios.id' => $instituicao_id])
+                ->first();
 
             // pr($supervisores_instituicao);
             // die();
@@ -377,9 +391,9 @@ class EstagiariosController extends AppController {
         } elseif (isset($ultimoestagio->instituicaoestagio->id)) {
             // pr($ultimoestagio->instituicaoestagio->id);
             $supervisores_instituicao = $this->Estagiarios->Instituicoes->find()
-                    ->contain(['Supervisores'])
-                    ->where(['Instituicaoestagios.id' => $ultimoestagio->instituicaoestagio->id])
-                    ->first();
+                ->contain(['Supervisores'])
+                ->where(['Instituicaoestagios.id' => $ultimoestagio->instituicaoestagio->id])
+                ->first();
             $this->set('instituicao_id', $ultimoestagio->instituicaoestagio->id);
             if ($supervisores_instituicao) {
                 $this->set('instituicao', $supervisores_instituicao);
@@ -410,15 +424,16 @@ class EstagiariosController extends AppController {
         endif;
     }
 
-    public function termodecompromissopdf($id = NULL) {
+    public function termodecompromissopdf($id = NULL)
+    {
 
         $this->viewBuilder()->enableAutoLayout(false);
         if (is_null($id)) {
             $this->cakeError('error404');
         } else {
             $estagiario = $this->Estagiarios->find()
-                    ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
-                    ->where(['Estagiarios.id' => $id]);
+                ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
+                ->where(['Estagiarios.id' => $id]);
         }
         // pr($estagiario->first());
         // die();
@@ -430,18 +445,19 @@ class EstagiariosController extends AppController {
         $this->viewBuilder()->enableAutoLayout(false);
         $this->viewBuilder()->setClassName('CakePdf.Pdf');
         $this->viewBuilder()->setOption(
-                'pdfConfig',
-                [
-                    'orientation' => 'portrait',
-                    'download' => true, // This can be omitted if "filename" is specified.
-                    'filename' => 'termo_de_compromisso_' . $id . '.pdf' //// This can be omitted if you want file name based on URL.
-                ]
+            'pdfConfig',
+            [
+                'orientation' => 'portrait',
+                'download' => true, // This can be omitted if "filename" is specified.
+                'filename' => 'termo_de_compromisso_' . $id . '.pdf' //// This can be omitted if you want file name based on URL.
+            ]
         );
         $this->set('configuracao', $configuracao);
         $this->set('estagiario', $estagiario->first());
     }
 
-    public function selecionadeclaracaodeestagio($id = NULL) {
+    public function selecionadeclaracaodeestagio($id = NULL)
+    {
 
         /* No login foi capturado o id do estagiário */
         $id = $this->getRequest()->getSession()->read('estagiario_id');
@@ -450,8 +466,8 @@ class EstagiariosController extends AppController {
             return $this->redirect('/Alunos/index');
         } else {
             $estagiarioquery = $this->Estagiarios->find()
-                    ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
-                    ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('registro')]);
+                ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
+                ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('registro')]);
             $estagiario = $estagiarioquery->all();
             //pr($estagiario);
             // die();
@@ -460,12 +476,13 @@ class EstagiariosController extends AppController {
         $this->set('estagiario', $estagiario);
     }
 
-    public function declaracaodeestagiopdf($id = NULL) {
+    public function declaracaodeestagiopdf($id = NULL)
+    {
 
         $estagiarioquery = $this->Estagiarios->find()
-                ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
-                ->where(['Estagiarios.id' => $id])
-                ->first();
+            ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
+            ->where(['Estagiarios.id' => $id])
+            ->first();
         // pr($estagioquery);
         // die('estagioquery');
 
@@ -496,17 +513,18 @@ class EstagiariosController extends AppController {
         $this->viewBuilder()->enableAutoLayout(false);
         $this->viewBuilder()->setClassName('CakePdf.Pdf');
         $this->viewBuilder()->setOption(
-                'pdfConfig',
-                [
-                    'orientation' => 'portrait',
-                    'download' => true, // This can be omitted if "filename" is specified.
-                    'filename' => 'declaracao_de_estagio_' . $id . '.pdf' //// This can be omitted if you want file name based on URL.
-                ]
+            'pdfConfig',
+            [
+                'orientation' => 'portrait',
+                'download' => true, // This can be omitted if "filename" is specified.
+                'filename' => 'declaracao_de_estagio_' . $id . '.pdf' //// This can be omitted if you want file name based on URL.
+            ]
         );
         $this->set('estagiario', $estagiarioquery);
     }
 
-    public function selecionafolhadeatividades($id = NULL) {
+    public function selecionafolhadeatividades($id = NULL)
+    {
 
         /* No login foi capturado o id do estagiário */
         $id = $this->getRequest()->getSession()->read('estagiario_id');
@@ -515,8 +533,8 @@ class EstagiariosController extends AppController {
             return $this->redirect('/Alunos/index');
         } else {
             $estagiarioquery = $this->Estagiarios->find()
-                    ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
-                    ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('registro')]);
+                ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
+                ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('registro')]);
             $estagiario = $estagiarioquery->all();
             //pr($estagiario);
             // die();
@@ -525,13 +543,14 @@ class EstagiariosController extends AppController {
         $this->set('estagiario', $estagiario);
     }
 
-    public function folhadeatividadespdf($id = NULL) {
+    public function folhadeatividadespdf($id = NULL)
+    {
 
         $estagiario_id = $this->getRequest()->getQuery('estagiario_id');
         $estagiario = $this->Estagiarios->find()
-                ->contain(['Alunos', 'Supervisores', 'Instituicoes', 'Professores'])
-                ->where(['Estagiarios.id' => $estagiario_id])
-                ->first();
+            ->contain(['Alunos', 'Supervisores', 'Instituicoes', 'Professores'])
+            ->where(['Estagiarios.id' => $estagiario_id])
+            ->first();
         // pr($estagiario);
         // die();
         $this->layout = false;
@@ -540,12 +559,12 @@ class EstagiariosController extends AppController {
             $this->viewBuilder()->enableAutoLayout(false);
             $this->viewBuilder()->setClassName('CakePdf.Pdf');
             $this->viewBuilder()->setOption(
-                    'pdfConfig',
-                    [
-                        'orientation' => 'portrait',
-                        'download' => true, // This can be omitted if "filename" is specified.
-                        'filename' => 'folha_de_atividades_' . $id . '.pdf' //// This can be omitted if you want file name based on URL.
-                    ]
+                'pdfConfig',
+                [
+                    'orientation' => 'portrait',
+                    'download' => true, // This can be omitted if "filename" is specified.
+                    'filename' => 'folha_de_atividades_' . $id . '.pdf' //// This can be omitted if you want file name based on URL.
+                ]
             );
             $this->set('estagiario', $estagiario);
         } else {
@@ -554,7 +573,8 @@ class EstagiariosController extends AppController {
         }
     }
 
-    public function selecionaavaliacaodiscente($id = NULL) {
+    public function selecionaavaliacaodiscente($id = NULL)
+    {
 
         /* No login foi capturado o id do estagiário */
         $id = $this->getRequest()->getSession()->read('estagiario_id');
@@ -563,8 +583,8 @@ class EstagiariosController extends AppController {
             return $this->redirect('/Alunos/index');
         } else {
             $estagiarioquery = $this->Estagiarios->find()
-                    ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
-                    ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('registro')]);
+                ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
+                ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('registro')]);
             $estagiario = $estagiarioquery->all();
             //pr($estagiario);
             // die();
@@ -574,15 +594,16 @@ class EstagiariosController extends AppController {
         $this->set('estagiario', $estagiario);
     }
 
-    public function avaliacaodiscentepdf($id = NULL) {
+    public function avaliacaodiscentepdf($id = NULL)
+    {
 
         $this->layout = false;
         $estagiario_id = $this->getRequest()->getQuery('estagiario_id');
 
         $estagiario = $this->Estagiarios->find()
-                ->contain(['Alunos', 'Supervisores', 'Instituicoes', 'Professores'])
-                ->where(['Estagiarios.id' => $estagiario_id])
-                ->first();
+            ->contain(['Alunos', 'Supervisores', 'Instituicoes', 'Professores'])
+            ->where(['Estagiarios.id' => $estagiario_id])
+            ->first();
 
         if (!$estagiario) {
             $this->Flash->error(__('Sem estagiarios cadastrados'));
@@ -592,12 +613,12 @@ class EstagiariosController extends AppController {
         $this->viewBuilder()->enableAutoLayout(false);
         $this->viewBuilder()->setClassName('CakePdf.Pdf');
         $this->viewBuilder()->setOption(
-                'pdfConfig',
-                [
-                    'orientation' => 'portrait',
-                    'download' => true, // This can be omitted if "filename" is specified.
-                    'filename' => 'avaliacao_discente_' . $estagiario_id . '.pdf' //// This can be omitted if you want file name based on URL.
-                ]
+            'pdfConfig',
+            [
+                'orientation' => 'portrait',
+                'download' => true, // This can be omitted if "filename" is specified.
+                'filename' => 'avaliacao_discente_' . $estagiario_id . '.pdf' //// This can be omitted if you want file name based on URL.
+            ]
         );
         $this->set('estagiario', $estagiario);
     }
@@ -609,7 +630,8 @@ class EstagiariosController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
 
         if (is_null($id)) {
             $this->cakeError('error404');
@@ -642,7 +664,8 @@ class EstagiariosController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
         $this->request->allowMethod(['post', 'delete']);
         $estagiario = $this->Estagiarios->get($id);
         if ($this->Estagiarios->delete($estagiario)) {
@@ -654,22 +677,23 @@ class EstagiariosController extends AppController {
         return $this->redirect(['controller' => 'alunos', 'action' => 'view', '?' => ['registro', $estagiario->registro]]);
     }
 
-    public function lancanota($id = null) {
+    public function lancanota($id = null)
+    {
 
         $siape = $this->getRequest()->getQuery('siape');
 
         $idquery = $this->Estagiarios->Professores->find()
-                ->contain([
-                    'Estagiarios' => [
-                        'sort' => ['periodo' => 'desc'],
-                        'Alunos' => ['fields' => ['id', 'nome'], 'sort' => ['nome']],
-                        'Professores' => ['fields' => ['id', 'nome', 'siape']],
-                        'Supervisores' => ['fields' => ['id', 'nome']],
-                        'Instituicoes' => ['fields' => ['id', 'instituicao']],
-                        'Avaliacoes' => ['fields' => ['id', 'estagiario_id']]
-                    ]
-                ])
-                ->where(['siape' => $siape]);
+            ->contain([
+                'Estagiarios' => [
+                    'sort' => ['periodo' => 'desc'],
+                    'Alunos' => ['fields' => ['id', 'nome'], 'sort' => ['nome']],
+                    'Professores' => ['fields' => ['id', 'nome', 'siape']],
+                    'Supervisores' => ['fields' => ['id', 'nome']],
+                    'Instituicoes' => ['fields' => ['id', 'instituicao']],
+                    'Avaliacoes' => ['fields' => ['id', 'estagiario_id']]
+                ]
+            ])
+            ->where(['siape' => $siape]);
 
         // die();
         // $estagiariosfolha = $idquery->distinct(['estagiario_id']);
@@ -694,10 +718,10 @@ class EstagiariosController extends AppController {
                 // pr($c_estagio->estudante);
                 $folhadeatividadestabela = $this->fetchTable('Folhadeatividades');
                 $folhaquery = $folhadeatividadestabela->find()
-                        ->where(['Folhadeatividades.estagiario_id' => $c_estagio->id]);
+                    ->where(['Folhadeatividades.estagiario_id' => $c_estagio->id]);
                 $folha = $folhaquery->first();
                 if ($folha):
-                // pr($folha);
+                    // pr($folha);
                 endif;
                 $estagiarioslancanota[$i]['instituicao_id'] = $c_estagio->instituicaoestagio->id;
                 $estagiarioslancanota[$i]['instituicao'] = $c_estagio->instituicaoestagio->instituicao;

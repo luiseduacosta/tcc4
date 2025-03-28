@@ -37,7 +37,7 @@ class ConfiguracaoTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('configuracao');
+        $this->setTable('configuracoes');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
     }

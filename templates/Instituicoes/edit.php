@@ -8,54 +8,61 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php $this->element('templates') ?>
 
-<div class='container'>
-    <div class="row justify-content-center">
-        <?php echo $this->element('menu_mural') ?>
-    </div>
+<div class="d-flex justify-content-center">
+    <?php echo $this->element('menu_mural') ?>
+</div>
 
-    <div class="row">
-        <?= $this->Html->link(__('Listar instituições'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-        <?=
-        $this->Form->postLink(
-                __('Excluir'),
-                ['action' => 'delete', $instituicaoestagio->id],
-                ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $instituicaoestagio->id), 'class' => 'btn btn-danger float-right']
-        )
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerInstituicoes"
+        aria-controls="navbarTogglerInstituicoes" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerInstituicoes">
+        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <li class="nav-item">
+                <?=
+                    $this->Form->postLink(
+                        __('Excluir'),
+                        ['action' => 'delete', $instituicaoestagio->id],
+                        ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $instituicaoestagio->id), 'class' => 'btn btn-danger float-right']
+                    )
+                    ?>
+            </li>
+        <?php endif; ?>
+        <li class="nav-item">
+            <?= $this->Html->link(__('Listar instituiçoes'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+        </li>
+    </ul>
+</nav>
+
+<div class="container col-lg-10 shadow p-3 mb-5 bg-white rounded">
+    <?= $this->Form->create($instituicaoestagio) ?>
+    <fieldset>
+        <legend><?= __('Editar instituição') ?></legend>
+        <?php
+        echo $this->Form->control('instituicao');
+        echo $this->Form->control('areainstituicoes_id', ['options' => $areainstituicoes, 'empty' => true]);
+        echo $this->Form->control('natureza');
+        echo $this->Form->control('cnpj');
+        echo $this->Form->control('email');
+        echo $this->Form->control('url');
+        echo $this->Form->control('endereco');
+        echo $this->Form->control('bairro');
+        echo $this->Form->control('municipio');
+        echo $this->Form->control('cep');
+        echo $this->Form->control('telefone');
+        echo $this->Form->control('fax');
+        echo $this->Form->control('beneficio');
+        echo $this->Form->control('fim_de_semana');
+        echo $this->Form->control('localInscricao');
+        echo $this->Form->control('convenio');
+        echo $this->Form->control('expira', ['empty' => true]);
+        echo $this->Form->control('seguro');
+        echo $this->Form->control('avaliacao');
+        echo $this->Form->control('observacoes');
+        echo $this->Form->control('supervisores._ids', ['options' => $supervisores]);
         ?>
-    </div>
-
-    <div class="column-responsive column-80">
-        <div class="instituicaoestagios form content">
-            <?= $this->Form->create($instituicaoestagio) ?>
-            <fieldset>
-                <legend><?= __('Editar instituição') ?></legend>
-                <?php
-                echo $this->Form->control('instituicao');
-                echo $this->Form->control('areainstituicoes_id', ['options' => $areainstituicoes, 'empty' => true]);
-                echo $this->Form->control('area');
-                echo $this->Form->control('natureza');
-                echo $this->Form->control('cnpj');
-                echo $this->Form->control('email');
-                echo $this->Form->control('url');
-                echo $this->Form->control('endereco');
-                echo $this->Form->control('bairro');
-                echo $this->Form->control('municipio');
-                echo $this->Form->control('cep');
-                echo $this->Form->control('telefone');
-                echo $this->Form->control('fax');
-                echo $this->Form->control('beneficio');
-                echo $this->Form->control('fim_de_semana');
-                echo $this->Form->control('localInscricao');
-                echo $this->Form->control('convenio');
-                echo $this->Form->control('expira', ['empty' => true]);
-                echo $this->Form->control('seguro');
-                echo $this->Form->control('avaliacao');
-                echo $this->Form->control('observacoes');
-                echo $this->Form->control('supervisores._ids', ['options' => $supervisores]);
-                ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
-        </div>
-    </div>
+    </fieldset>
+    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->end() ?>
 </div>

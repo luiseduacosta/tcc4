@@ -24,12 +24,12 @@ class InstituicoesController extends AppController
     public function index()
     {
 
-        $this->paginate = [
-            'contain' => ['Supervisores', 'Areainstituicoes', 'Areaestagios'],
-        ];
-        $instituicaoestagios = $this->paginate($this->Instituicoes);
+        $query = $this->Instituicoes->find('all', [
+            'contain' => ['Supervisores', 'Areainstituicoes'],
+            'order' => ['instituicao' => 'ASC']
+        ]);
+        $instituicaoestagios = $this->paginate( $query);
         $this->Authorization->skipAuthorization();
-        // $this->Authorization->authorize($instituicoes);
 
         $this->set(compact('instituicaoestagios'));
     }
@@ -45,7 +45,7 @@ class InstituicoesController extends AppController
     {
 
         $instituicaoestagio = $this->Instituicoes->get($id, [
-            'contain' => ['Areainstituicoes', 'Supervisores', 'Estagiarios' => ['Alunos', 'Estudantes', 'Instituicaoestagios', 'Professores', 'Supervisores', 'Areaestagios'], 'Muralestagios', 'Visitas'],
+            'contain' => ['Areainstituicoes', 'Supervisores', 'Estagiarios' => ['Alunos', 'Instituicoes', 'Professores', 'Supervisores'], 'Muralestagios', 'Visitas'],
         ]);
         $this->Authorization->authorize($instituicaoestagio);
         $this->set(compact('instituicaoestagio'));
@@ -71,7 +71,7 @@ class InstituicoesController extends AppController
             }
             $this->Flash->error(__('Não foi possível criar a  instituição de estágio. Tente novamente.'));
         }
-        $areainstituicoes = $this->Instituicoes->Areainstituicoes->find('list', ['limit' => 200]);
+        $areainstituicoes = $this->Instituicoes->Areainstituicoes->find('list');
         $supervisores = $this->Instituicoes->Supervisores->find('list');
         $this->set(compact('instituicaoestagio', 'areainstituicoes', 'supervisores'));
     }
@@ -95,12 +95,12 @@ class InstituicoesController extends AppController
             if ($this->Instituicoes->save($instituicaoestagio)) {
                 $this->Flash->success(__('Instituição de estágio atualizada.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $instituicaoestagio->id]);
             }
             $this->Flash->error(__('Instituição de estágio não foia atualizada.'));
         }
-        $areainstituicoes = $this->Instituicoes->Areainstituicoes->find('list', ['limit' => 200]);
-        $supervisores = $this->Instituicoes->Supervisores->find('list', ['limit' => 200]);
+        $areainstituicoes = $this->Instituicoes->Areainstituicoes->find('list');
+        $supervisores = $this->Instituicoes->Supervisores->find('list');
         $this->set(compact('instituicaoestagio', 'areainstituicoes', 'supervisores'));
     }
 
