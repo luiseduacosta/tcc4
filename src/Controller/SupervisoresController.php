@@ -23,9 +23,8 @@ class SupervisoresController extends AppController
      */
     public function index()
     {
-
+        $this->Authorization->skipAuthorization();
         $supervisores = $this->paginate($this->Supervisores);
-        $this->Authorization->authorize($this->Supervisores);
         $this->set(compact('supervisores'));
     }
 

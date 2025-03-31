@@ -28,7 +28,7 @@ if (!Configure::read('debug')) :
     );
 endif;
 
-$cakeDescription = 'Banco de TCC da ESS/UFRJ. Feito com o framework CakePHP';
+$cakeDescription = 'Banco de TCCs e de ofertas de vagas de estágio da ESS/UFRJ. Feito com o framework CakePHP';
 ?>
 <!DOCTYPE html>
 <html>
@@ -64,20 +64,21 @@ Cake 4.0
 </head>
 <body>
     <header>
-        <div class="container text-center">
+        <div class="d-flex justify-content-center">
             <a href="http://ess.ufrj.br/" target="_blank">
                 <img alt="Escola de Serviço Social - CFCH - UFRJ" src="http://ess.ufrj.br/templates/joomtic3/images/banner_logo.jpg" width="100%" height="20%" />
             </a>
             <h1>
-                TCC - Escola de Serviço Social - UFRJ <?php $this->Html->link('Escola de Serviço Social', ['http://www.ess.ufrj.br']) ?>
+                <?= $this->Html->link('Escola de Serviço Social', ['http://www.ess.ufrj.br']) ?>
             </h1>
         </div>
     </header>
-    <p><a href="monografias">Clique aqui se não foi direcionado para o site</a></p>
+    <p><a href="Monografias">Clique aqui se não foi direcionado para o site</a></p>
 </body>
 </html>
 <?php
 
 header("location: monografias/index/");
+// header("location: muralestagios/index/");
 
 die();

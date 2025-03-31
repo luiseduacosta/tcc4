@@ -52,3 +52,8 @@ protected function isAuthor(IdentityInterface $user, Article $article)
 ALTER TABLE TBLCLIENTE
 MODIFY COLUMN SexoCliente varchar(1)
 AFTER NomeCliente 
+
+// Cake 2
+pr($this->Model->validationErrors);
+// Cake 4
+pr($estagiario->getErrors());

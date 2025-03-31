@@ -54,7 +54,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <div id="instituicao" class="tab-pane container active show">
             <h3><?= h($muralestagio->instituicao) ?></h3>
 
-            <table class='table-responsive'>
+            <table class='table table-stripper table-hover table-responsive'>
                 <tr>
                     <th><?= __('Id') ?></th>
                     <td><?= $muralestagio->id ?></td>

@@ -4,16 +4,16 @@
  * @var \App\Model\Entity\User $usuario
  */
 $usuario = $this->getRequest()->getAttribute('identity'); 
+// pr($usuario->categoria);
+// die();   
 ?>
 
-<?php // pr($usuario->categoria);   ?>
-<?php // die();   ?>
-<nav class='navbar navbar-expand-lg navbar-light py-0 navbar-fixed-top'>
+<nav class='navbar navbar-expand-lg navbar-light py-0 navbar-fixed-top' id='actions-sidebar'>
     <?= $this->Html->link("Mural", ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'nav-link']); ?>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPrincipal">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div style='font-size: 90%', class='collapse navbar-collapse' id='navbarPrincipal'>
+    <div class='collapse navbar-collapse' id='navbarPrincipal'>
         <ul class="navbar-nav mr-auto">
             <?php
             if (isset($usuario) && $usuario->categoria == 1):

@@ -6,30 +6,27 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<?php $usuario = $this->getRequest()->getAttribute('identity'); ?>
-
 <div class="d-flex justify-content-start">
     <?= $this->element('menu_mural') ?>
 </div>
 
-
-<?php if (isset($usuario) && $usuario['categoria_id'] == '1'): ?>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerEstagiario"
-            aria-controls="navbarTogglerUsuario" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerEstagiario">
-            <ul class="navbar-nav ms-auto mt-lg-0">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerProfessor"
+        aria-controls="navbarTogglerProfessor" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerProfessor">
+        <ul class="navbar-nav ms-auto mt-lg-0">
+            <?php if (isset($user) && $user->categoria == '1'): ?>
                 <li class="nav-item">
                     <?= $this->Html->link(__('Nova professora'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
                 </li>
-            </ul>
-        </div>
-    </nav>
-<?php endif; ?>
+            <?php endif; ?>
+        </ul>
+    </div>
+</nav>
 
-<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+<div class="container col-lg-10 shadow p-3 mb-5 bg-white rounded">
     <table class="table table-striped table-hover table-responsive">
         <thead class="table-dark">
             <tr>

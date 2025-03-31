@@ -107,7 +107,7 @@ class EstagiariosTable extends Table
                         ->notEmptyString('turno');
 
                 $validator
-                        ->inList('nivel', ['1', '2', '3', '4'], 'Selecione um dos níveis')
+                        ->inList('nivel', ['1', '2', '3', '4', '9'], 'Selecione um dos níveis')
                         ->scalar('nivel')
                         ->maxLength('nivel', 1)
                         ->notEmptyString('nivel');
