@@ -165,7 +165,7 @@ class MuralinscricoesController extends AppController
         // pr($alunoestagio);
         // die();
 
-        $estudantes = $this->Muralinscricoes->Estudantes->find('list');
+        $estudantes = $this->Muralinscricoes->Alunos->find('list');
         $muralestagios = $this->Muralinscricoes->Muralestagios->find('list');
         $this->set(compact('muralinscricao', 'estudantes', 'muralestagios', 'periodos', 'alunonovos', 'alunoestagios'));
     }
@@ -201,7 +201,7 @@ class MuralinscricoesController extends AppController
         $periodos = $periodototal->toArray();
         // pr($periodos);
         // die();
-        $estudantes = $this->Muralinscricoes->Estudantes->find('list');
+        $estudantes = $this->Muralinscricoes->Alunos->find('list');
         $muralestagios = $this->Muralinscricoes->Muralestagios->find('list');
         $this->set(compact('muralinscricao', 'estudantes', 'muralestagios', 'periodos'));
     }

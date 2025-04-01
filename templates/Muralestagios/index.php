@@ -45,7 +45,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?= $this->element('templates') ?>
 
-<div class="d-flex justify-content-end">
+<div class="d-flex justify-content-start">
     <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
     <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
         <?= $this->Html->link(__('Novo mural'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>

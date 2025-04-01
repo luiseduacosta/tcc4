@@ -6,7 +6,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="f-flex justify-content-start">
+<div class="f-flex justify-content-center">
     <?php echo $this->element('menu_mural') ?>
 </div>
 
@@ -32,14 +32,13 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('id') ?></th>
                 <th><?= $this->Paginator->sort('registro') ?></th>
                 <th><?= $this->Paginator->sort('nome') ?></th>
-                <th><?= $this->Paginator->sort('nascimento') ?></th>
-                <th><?= $this->Paginator->sort('cpf', 'CPF') ?></th>
-                <th><?= $this->Paginator->sort('identidade') ?></th>
-                <th><?= $this->Paginator->sort('orgao', 'Orgão') ?></th>
+                <th><?= $this->Paginator->sort('email') ?></th>
+                <th><?= $this->Paginator->sort('codigo_telefone') ?></th>
+                <th><?= $this->Paginator->sort('telefone') ?></th>
+                <th><?= $this->Paginator->sort('codigo_celular') ?></th>
+                <th><?= $this->Paginator->sort('celular') ?></th>
                 <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
-                <?php if (isset($user) && $user->categoria == '1'): ?>
                     <th class="row"><?= __('Ações') ?></th>
-                <?php endif; ?>
             </tr>
         </thead>
         <tbody>
@@ -57,6 +56,11 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($aluno->cpf) ?></td>
                     <td><?= h($aluno->identidade) ?></td>
                     <td><?= h($aluno->orgao) ?></td>
+                    <td><?= h($aluno->email) ?></td>
+                    <td><?= $this->Number->format($aluno->codigo_telefone) ?></td>
+                    <td><?= h($aluno->telefone) ?></td>
+                    <td><?= $this->Number->format($aluno->codigo_celular) ?></td>
+                    <td><?= h($aluno->celular) ?></td>
                     <td><?= h($aluno->observacoes) ?></td>
                     <td class="row">
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $aluno->id]) ?>
@@ -64,6 +68,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $aluno->id]) ?>
                             <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id)]) ?>
                         <?php endif; ?>
+
                     </td>
                 </tr>
             <?php endforeach; ?>

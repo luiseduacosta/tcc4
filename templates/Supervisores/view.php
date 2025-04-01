@@ -6,28 +6,39 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="container">
-    <div class="row justify-content-center">
+
+    <div class="d-flex justify-content-start">
         <?php echo $this->element('menu_mural') ?>
     </div>
-    <div class="row">
-        <?= $this->Html->link(__('Editar supervisor(a)'), ['action' => 'edit', $supervisor->id], ['class' => 'btn btn-primary']) ?>
-        <?= $this->Html->link(__('Listar supervisores(as)'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-        <?php if ($user['categoria'] == 1): ?>
-            <?= $this->Html->link(__('Cadastrar supervisor(a)'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
-            <?= $this->Form->postLink(__('Exclur supervisor(a)'), ['action' => 'delete', $supervisor->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $supervisor->id), 'class' => 'btn btn-danger']) ?>
-        <?php endif; ?>
-    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerSupervisores"
+            aria-controls="navbarTogglerSupervisores" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerSupervisores">
+            <?= $this->Html->link(__('Listar supervisores(as)'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+            <?php if (isset($user) && $user['categoria'] == 1): ?>
+                <?= $this->Html->link(__('Editar supervisor(a)'), ['action' => 'edit', $supervisor->id], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Cadastrar supervisor(a)'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Form->postLink(__('Exclur supervisor(a)'), ['action' => 'delete', $supervisor->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $supervisor->id), 'class' => 'btn btn-danger']) ?>
+            <?php endif; ?>
+        </ul>
+    </nav>
 
     <div class="row">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#supervisora" role="tab" aria-controls="supervisora" aria-selected="true">Supervisora</a>
+                <a class="nav-link active" data-toggle="tab" href="#supervisora" role="tab" aria-controls="supervisora"
+                    aria-selected="true">Supervisora</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#instituicao" role="tab" aria-controls="instituicao" aria-selected="false">Instituição</a>
+                <a class="nav-link" data-toggle="tab" href="#instituicao" role="tab" aria-controls="instituicao"
+                    aria-selected="false">Instituição</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#estagiarios" role="tab" aria-controls="estagiarios" aria-selected="false">Estagiários</a>
+                <a class="nav-link" data-toggle="tab" href="#estagiarios" role="tab" aria-controls="estagiarios"
+                    aria-selected="false">Estagiários</a>
             </li>
         </ul>
     </div>
@@ -36,7 +47,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <div class="tab-content">
 
             <div id="supervisora" class="tab-pane container active show">
-                <h3><?= h($supervisor->id) ?></h3>
+                <h3><?= h($supervisor->nome) ?></h3>
                 <table>
                     <tr>
                         <th><?= __('Id') ?></th>
@@ -137,7 +148,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
             <div id="instituicao" class="tab-pane container fade">
                 <h4><?= __('Instituição de estágio') ?></h4>
-                <?php if (!empty($supervisor->instituicaoestagios)) : ?>
+                <?php if (!empty($supervisor->instituicaoestagios)): ?>
                     <div class="table-responsive">
                         <table>
                             <tr>
@@ -156,7 +167,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <th><?= __('Observacoes') ?></th>
                                 <th class="actions"><?= __('Ações') ?></th>
                             </tr>
-                            <?php foreach ($supervisor->instituicaoestagios as $instituicaoestagios) : ?>
+                            <?php foreach ($supervisor->instituicaoestagios as $instituicaoestagios): ?>
                                 <tr>
                                     <td><?= h($instituicaoestagios->id) ?></td>
                                     <td><?= h($instituicaoestagios->instituicao) ?></td>
@@ -187,7 +198,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
             <div id="estagiarios" class="tab-pane container fade">
                 <h4><?= __('Estagiarios') ?></h4>
-                <?php if (!empty($supervisor->estagiarios)) : ?>
+                <?php if (!empty($supervisor->estagiarios)): ?>
                     <div class="table-responsive">
                         <table>
                             <tr>
@@ -203,15 +214,17 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <th><?= __('Observacoes') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
-                            <?php foreach ($supervisor->estagiarios as $estagiarios) : ?>
+                            <?php foreach ($supervisor->estagiarios as $estagiarios): ?>
                                 <tr>
                                     <td><?= h($estagiarios->id) ?></td>
-                                    <td><?= $this->Html->link($estagiarios->estudante->nome, ['controller' => 'estudantes', 'action' => 'view', $estagiarios->alunonovo_id]) ?></td>
+                                    <td><?= $this->Html->link($estagiarios->estudante->nome, ['controller' => 'estudantes', 'action' => 'view', $estagiarios->alunonovo_id]) ?>
+                                    </td>
                                     <td><?= h($estagiarios->registro) ?></td>
                                     <td><?= h($estagiarios->turno) ?></td>
                                     <td><?= h($estagiarios->nivel) ?></td>
                                     <?php if ($user->categoria == '1'): ?>
-                                        <td><?= $estagiarios->has('docente') ? $this->Html->link(h($estagiarios->docente->nome), ['controller' => 'Professores', 'action' => 'view', $estagiarios->id_professor]) : '' ?></td>
+                                        <td><?= $estagiarios->has('docente') ? $this->Html->link(h($estagiarios->docente->nome), ['controller' => 'Professores', 'action' => 'view', $estagiarios->id_professor]) : '' ?>
+                                        </td>
                                     <?php else: ?>
                                         <td><?= $estagiarios->has('docente') ? $estagiarios->docente->nome : '' ?>
                                         <?php endif; ?>

@@ -7,7 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($aluno);
 ?>
 
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-start">
     <?php echo $this->element('menu_mural') ?>
 </div>
 
@@ -18,7 +18,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <?= $this->Form->postLink(__('Excluir Aluno'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id), 'class' => 'btn btn-danger float-end']) ?>
 </div>
 
-<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+<div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
     <h3><?= h($aluno->nome) ?></h3>
     <table class="table table-hover table-responsive table-striped">
         <tr>
@@ -92,7 +92,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </table>
 </div>
 
-<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+<div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
     <h4><?= __('Inscrições para seleção de estágio') ?></h4>
     <?php if (!empty($aluno->muralinscricoes)): ?>
         <table class="table table-hover table-responsive table-striped">
@@ -111,8 +111,8 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php foreach ($aluno->muralinscricoes as $muralinscricoes): ?>
                 <tr>
                     <td><?= h($muralinscricoes->id) ?></td>
-                    <td><?= h($muralinscricoes->aluno_id) ?></td>
-                    <td><?= $muralinscricoes->has('muralestagio') ? $this->Html->link($muralinscricoes->muralestagio['instituicao'], ['controller' => 'Muralestagios', 'action' => 'view', $muralinscricoes['instituicao_id']]) : '' ?>
+                    <td><?= h($muralinscricoes->registro) ?></td>
+                    <td><?= $muralinscricoes->has('muralestagio') ? $this->Html->link($muralinscricoes->muralestagio['instituicao'], ['controller' => 'Muralestagios', 'action' => 'view', $muralinscricoes->muralestagio['id']]) : '' ?>
                     </td>
                     <td><?= date('d-m-Y', strtotime(h($muralinscricoes->data))) ?></td>
                     <td><?= h($muralinscricoes->periodo) ?></td>
@@ -132,7 +132,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php endif; ?>
 </div>
 
-<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+<div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
     <h4><?= __('Estágios cursados') ?></h4>
     <?php if (!empty($aluno->estagiarios)): ?>
         <table class="table table-hover table-responsive table-striped">
@@ -171,7 +171,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($estagiarios->periodo) ?></td>
                     <td><?= h($estagiarios->tc) ?></td>
                     <td><?= date('d-m-Y', strtotime(h($estagiarios->tc_solicitacao))) ?></td>
-                    <td><?= $estagiarios->has('instituicao') ? $this->Html->link($estagiarios->instituicao['instituicao'], ['controller' => 'Instituicaoestagios', 'action' => 'view', $estagiarios->instituicao_id]) : '' ?>
+                    <td><?= $estagiarios->has('instituicao') ? $this->Html->link($estagiarios->instituicao['instituicao'], ['controller' => 'Instituicoes', 'action' => 'view', $estagiarios->instituicao_id]) : '' ?>
                     </td>
                     <td><?= $estagiarios->has('supervisor') ? $this->Html->link($estagiarios->supervisor['nome'], ['controller' => 'Supervisores', 'action' => 'view', $estagiarios->supervisor_id]) : '' ?>
                     </td>

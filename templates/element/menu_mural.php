@@ -3,7 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $usuario
  */
-$usuario = $this->getRequest()->getAttribute('identity'); 
+$user = $this->getRequest()->getAttribute('identity'); 
 // pr($usuario->categoria);
 // die();   
 ?>
@@ -16,7 +16,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
     <div class='collapse navbar-collapse' id='navbarPrincipal'>
         <ul class="navbar-nav mr-auto">
             <?php
-            if (isset($usuario) && $usuario->categoria == 1):
+            if (isset($user) && $user->categoria == 1):
                 ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Declarações</a>
@@ -73,8 +73,8 @@ $usuario = $this->getRequest()->getAttribute('identity');
 
         <ul class = "navbar-nav ml-auto">
             <?php
-            if (isset($usuario->categoria)):
-                switch ($usuario->categoria) {
+            if (isset($user->categoria)):
+                switch ($user->categoria) {
                     case 1: // Administrador
                         ?>
                         <li class = "nav-item">

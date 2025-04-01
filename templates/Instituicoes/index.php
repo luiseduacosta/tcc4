@@ -24,7 +24,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<div class="container col-lg-10 shadow p-3 mb-5 bg-white rounded">
+<div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
     <table class="table table-striped table-hover table-responsive">
         <caption>Instituições</caption>
         <thead class="table-dark">

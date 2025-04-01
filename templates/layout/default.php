@@ -81,19 +81,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
 <body>
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMenu"
-                aria-controls="navbarTogglerMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerMenu">
-                <a href="http://ess.ufrj.br/" target="_blank">
-                    <img alt="Escola de Serviço Social - CFCH - UFRJ"
-                        src="http://ess.ufrj.br/templates/joomtic3/images/banner_logo.jpg" align='middle' width="70%"
-                        height="20%" />
-                </a>
-            </div>
-        </nav>
 
         <div class="btn btn-primary btn-sm float-end">
             <ul class='navbar-nav mr-auto mt-lg-0'>

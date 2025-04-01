@@ -6,22 +6,15 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="f-flex justify-content-start">
+<div class="f-flex justify-content-center">
     <?php echo $this->element('menu_mural') ?>
 </div>
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerAlunos"
-        aria-controls="navbarTogglerAlunos" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAlunos">
-        <?php if (isset($user) && $user->categoria == '1'): ?>
-            <li class="nav-item">
-                <?= $this->Html->link(__('Novo aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
-            </li>
-        <?php endif; ?>
-    </ul>
+
+<?php if (isset($user) && $user->categoria == '1'): ?>
+        <?= $this->Html->link(__('Novo aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+    <?php endif; ?>
 </nav>
 
 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
@@ -32,14 +25,12 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('id') ?></th>
                 <th><?= $this->Paginator->sort('registro') ?></th>
                 <th><?= $this->Paginator->sort('nome') ?></th>
-                <th><?= $this->Paginator->sort('nascimento') ?></th>
-                <th><?= $this->Paginator->sort('cpf', 'CPF') ?></th>
-                <th><?= $this->Paginator->sort('identidade') ?></th>
-                <th><?= $this->Paginator->sort('orgao', 'Orgão') ?></th>
+                <th><?= $this->Paginator->sort('cep', 'CEP') ?></th>
+                <th><?= $this->Paginator->sort('endereco', 'Endereço') ?></th>
+                <th><?= $this->Paginator->sort('municipio') ?></th>
+                <th><?= $this->Paginator->sort('bairro') ?></th>
                 <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
-                <?php if (isset($user) && $user->categoria == '1'): ?>
-                    <th class="row"><?= __('Ações') ?></th>
-                <?php endif; ?>
+                <th class="row"><?= __('Ações') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -49,14 +40,10 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= $aluno->registro ?></td>
                     <td><?= $this->Html->link($aluno->nome, ['controller' => 'Alunos', 'action' => 'view', $aluno->id]) ?>
                     </td>
-                    <?php if (empty($aluno->nascimento)): ?>
-                        <td>Sem dados</td>
-                    <?php else: ?>
-                        <td><?= date('d-m-Y', strtotime(h($aluno->nascimento))) ?></td>
-                    <?php endif; ?>
-                    <td><?= h($aluno->cpf) ?></td>
-                    <td><?= h($aluno->identidade) ?></td>
-                    <td><?= h($aluno->orgao) ?></td>
+                    <td><?= h($aluno->cep) ?></td>
+                    <td><?= h($aluno->endereco) ?></td>
+                    <td><?= h($aluno->municipio) ?></td>
+                    <td><?= h($aluno->bairro) ?></td>
                     <td><?= h($aluno->observacoes) ?></td>
                     <td class="row">
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $aluno->id]) ?>

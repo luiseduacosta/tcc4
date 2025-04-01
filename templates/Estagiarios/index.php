@@ -22,18 +22,16 @@ $user = $this->getRequest()->getAttribute('identity');
     })
 </script>
 
-<div class="f-flex justify-content-center">
+<div class="f-flex justify-content-start">
     <?php echo $this->element('menu_mural') ?>
 </div>
 
-<?= $this->element('templates') ?>
-
-<div class='row'>
-    <?php if (isset($user) && $user->categoria == 1): ?>
+<div class="f-flex justify-content-center">
+    <?php if (isset($user) && $user->categoria == '1'): ?>
         <?= $this->Form->create($estagiarios); ?>
         <div class="form-group row">
-            <label class='col-sm-1 col-form-label'>Período</label>
-            <div class='col-sm-2'>
+            <label for='EstagiarioPeriodo' class="col-sm-1 col-form-label p-2">Período</label>
+            <div class="col-sm-1 p-1">
                 <?= $this->Form->control('periodo', ['id' => 'EstagiarioPeriodo', 'type' => 'select', 'label' => false, 'options' => $periodos, 'empty' => [$periodo => $periodo], 'class' => 'form-control']); ?>
             </div>
         </div>
@@ -43,10 +41,15 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php endif; ?>
 </div>
 
-<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <?php if ($user->categoria == 1): ?>
-        <?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
+<div class="d-flex justify-content-start">
+    <?php if (isset($user) && $user->categoria == 1): ?>
+        <?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
     <?php endif; ?>
+</div>
+
+<?= $this->element('templates') ?>
+
+<div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Estagiarios') ?></h3>
     <table class="table table-striped table-hover table-responsive">
         <thead class="thead-dark">
