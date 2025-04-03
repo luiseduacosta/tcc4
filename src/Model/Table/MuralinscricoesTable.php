@@ -46,10 +46,12 @@ class MuralinscricoesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Alunos', [
+            'propertyName' => 'alunos',
             'foreignKey' => 'aluno_id', // aluno id
         ]);
 
         $this->belongsTo('Muralestagios', [
+            'propertyName' => 'muralestagios',
             'foreignKey' => 'muralestagio_id',
             'joinType' => 'INNER',
         ]);

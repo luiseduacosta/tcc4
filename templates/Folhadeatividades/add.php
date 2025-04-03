@@ -9,12 +9,12 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="container">
     <div class="row">
         <?php echo $this->element('menu_mural') ?>
-        <aside class="column">
+        <nav class="column">
             <div class="side-nav">
                 <h4 class="heading"><?= __('Ações') ?></h4>
                 <?= $this->Html->link(__('Listar Folha de atividades'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             </div>
-        </aside>
+        </nav>
         <div class="column-responsive column-80">
             <div class="folhadeatividades form content">
                 <?= $this->Form->create($folhadeatividade) ?>

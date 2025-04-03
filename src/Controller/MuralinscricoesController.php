@@ -33,15 +33,15 @@ class MuralinscricoesController extends AppController
         if ($periodo) {
             $this->paginate = [
                 'contain' => ['Alunos', 'Muralestagios'],
-                'sortableFields' => ['id', 'id_aluno', 'Alunos.nome', 'Muralestagios.instituicao', 'data', 'periodo', 'timestamp'],
+                'sortableFields' => ['id', 'registro', 'Alunos.nome', 'Muralestagios.instituicao', 'data', 'periodo', 'timestamp'],
                 'conditions' => ['muralinscricoes.periodo' => $periodo],
-                'order' => ['Estudantes.nome']
+                'order' => ['Alunos.nome']
             ];
         } else {
             $this->paginate = [
                 'contain' => ['Alunos', 'Muralestagios'],
-                'sortableFields' => ['id', 'id_aluno', 'Alunos.nome', 'Muralestagios.instituicao', 'data', 'periodo', 'timestamp'],
-                'order' => ['Estudantes.nome']
+                'sortableFields' => ['id', 'registro', 'Alunos.nome', 'Muralestagios.instituicao', 'data', 'periodo', 'timestamp'],
+                'order' => ['Alunos.nome']
             ];
         }
 
@@ -189,7 +189,7 @@ class MuralinscricoesController extends AppController
             if ($this->Muralinscricoes->save($muralinscricao)) {
                 $this->Flash->success(__('Registro muralinscricao atualizado.'));
 
-                return $this->redirect(['action' => 'view', $id]);
+                return $this->redirect(['action' => 'view', $muralinscricao->id]);
             }
             $this->Flash->error(__('Registro muralinscricao não foi atualizado. Tente novamente.'));
         }

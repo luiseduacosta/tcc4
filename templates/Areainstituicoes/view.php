@@ -7,7 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="row">
     <?php echo $this->element('menu_mural') ?>
-    <aside class="column">
+    <nav class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Ações') ?></h4>
             <?= $this->Html->link(__('Editar área instituição'), ['action' => 'edit', $areainstituicao->id], ['class' => 'side-nav-item']) ?>
@@ -15,7 +15,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Html->link(__('Listar área instituições'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('Nova área instituição'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
         </div>
-    </aside>
+    </nav>
     <div class="column-responsive column-80">
         <div class="areainstituicoes view content">
             <h3><?= h($areainstituicao->id) ?></h3>

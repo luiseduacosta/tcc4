@@ -12,11 +12,11 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="container">
     <div class="row">
-        <aside class="column">
+        <nav class="column">
             <div class="side-nav">
                 <?= $this->Html->link(__('Listar configuração'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
             </div>
-        </aside>
+        </nav>
         <div class="column-responsive column-80">
             <div class="configuracao form content">
                 <?= $this->Form->create($configuracao) ?>

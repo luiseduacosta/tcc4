@@ -45,9 +45,8 @@ $user = $this->getRequest()->getAttribute('identity');
         <thead class="thead-dark">
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('id_aluno', 'Registro') ?></th>
+                <th><?= $this->Paginator->sort('Muralestagios.registro', 'Registro') ?></th>
                 <th><?= $this->Paginator->sort('Alunos.nome', 'Aluno') ?></th>
-                <th><?= $this->Paginator->sort('Estudantes.nome', 'Estudante') ?></th>
                 <th><?= $this->Paginator->sort('Muralestagios.instituicao', 'Instituição') ?></th>
                 <th><?= $this->Paginator->sort('data') ?></th>
                 <th><?= $this->Paginator->sort('periodo') ?></th>
@@ -60,11 +59,9 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <td><?= $muralinscricao->id ?></td>
                     <td><?= $muralinscricao->registro ?></td>
-                    <td><?= $muralinscricao->has('aluno') ? $this->Html->link($muralinscricao->aluno['nome'], ['controller' => 'Alunos', 'action' => 'view', $muralinscricao->aluno_id]) : '' ?>
+                    <td><?= $muralinscricao->has('alunos') ? $this->Html->link($muralinscricao->alunos['nome'], ['controller' => 'Alunos', 'action' => 'view', $muralinscricao->aluno_id]) : '' ?>
                     </td>
-                    <td><?= $muralinscricao->has('aluno') ? $this->Html->link($muralinscricao->aluno['nome'], ['controller' => 'Alunos', 'action' => 'view', $muralinscricao->aluno_id]) : '' ?>
-                    </td>
-                    <td><?= $muralinscricao->has('muralestagio') ? $this->Html->link($muralinscricao->muralestagio['instituicao'], ['controller' => 'Muralestagios', 'action' => 'view', $muralinscricao->muralestagio['id']]) : '' ?>
+                    <td><?= $muralinscricao->has('muralestagios') ? $this->Html->link($muralinscricao->muralestagios['instituicao'], ['controller' => 'Muralestagios', 'action' => 'view', $muralinscricao->muralestagios['id']]) : '' ?>
                     </td>
                     <td><?= date('d-m-Y', strtotime(h($muralinscricao->data))) ?></td>
                     <td><?= h($muralinscricao->periodo) ?></td>

@@ -7,7 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="row">
     <?php echo $this->element('menu_mural') ?>
-    <aside class="column">
+    <nav class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Ações') ?></h4>
             <?= $this->Html->link(__('Editar visita'), ['action' => 'edit', $visita->id], ['class' => 'side-nav-item']) ?>
@@ -15,7 +15,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Html->link(__('Listar visitas'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('Nova visita'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
         </div>
-    </aside>
+    </nav>
     <div class="column-responsive column-80">
         <div class="visitas view content">
             <h3><?= h($visita->id) ?></h3>
@@ -26,7 +26,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 </tr>
                 <tr>
                     <th><?= __('Instituição') ?></th>
-                    <td><?= $visita->has('instituicaoestagio') ? $this->Html->link($visita->instituicaoestagio->id, ['controller' => 'Instituicaoestagios', 'action' => 'view', $visita->instituicaoestagio->id]) : '' ?></td>
+                    <td><?= $visita->has('instituicao') ? $this->Html->link($visita->instituicao['id'], ['controller' => 'Instituicaoestagios', 'action' => 'view', $visita->instituicao['id']]) : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Motivo') ?></th>

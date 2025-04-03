@@ -12,11 +12,11 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php echo $this->element('menu_mural') ?>
 </div>
 
-<aside class="column">
+<nav class="column">
     <div class="side-nav">
         <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
     </div>
-</aside>
+</nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create() ?>

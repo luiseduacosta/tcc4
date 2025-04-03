@@ -10,7 +10,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php echo $this->element('menu_mural') ?>
 </div>
 
-<aside class="column">
+<nav class="column">
     <div class="side-nav">
         <?=
             $this->Form->postLink(
@@ -21,17 +21,17 @@ $user = $this->getRequest()->getAttribute('identity');
             ?>
         <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
     </div>
-</aside>
+</nav>
 
-<?= $this->element('tempaltes') ?>
+<?= $this->element('templates') ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($muralinscricao) ?>
     <fieldset>
-        <legend><?= __('Editar Muralinscricao') ?></legend>
+        <legend><?= __('Editar inscrição') ?></legend>
         <?php
-        echo $this->Form->control('registro', ['value' => $muralinscricao->aluno['registro'], 'readonly' => true]);
-        echo $this->Form->control('estudante_id', ['options' => [$muralinscricao->aluno['id'] => $muralinscricao->aluno['nome']], 'empty' => $muralinscricao->aluno['nome'], 'readonly' => true]);
+        echo $this->Form->control('registro', ['value' => $muralinscricao->alunos['registro'], 'readonly' => true]);
+        echo $this->Form->control('aluno_id', ['options' => [$muralinscricao->alunos['id'] => $muralinscricao->alunos['nome']], 'empty' => $muralinscricao->alunos['nome'], 'readonly' => true]);
         echo $this->Form->control('muralestagio_id', ['options' => $muralestagios]);
         echo $this->Form->control('data');
         echo $this->Form->control('periodo');

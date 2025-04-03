@@ -44,12 +44,12 @@ if ($cress) {
 <div class="container">
     <div class="row">
         <?php echo $this->element('menu_mural') ?>
-        <aside class="column">
+        <nav class="column">
             <div class="side-nav">
                 <h4 class="heading"><?= __('Actions') ?></h4>
                 <?= $this->Html->link(__('List Avaliacoes'), ['action' => 'index/' . $estagiario->id . '/' . $estagiario->registro], ['class' => 'side-nav-item']) ?>
             </div>
-        </aside>
+        </nav>
         <h1>Formulário de avalição da(a) discente <?= $estagiario->estudante->nome ?></h1>
         <div class="column-responsive column-80">
             <div class="avaliacoes form content">

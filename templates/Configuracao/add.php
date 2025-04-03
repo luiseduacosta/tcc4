@@ -7,12 +7,12 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="row">
     <?php echo $this->element('menu_mural') ?>
-    <aside class="column">
+    <nav class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
             <?= $this->Html->link(__('List Configuracao'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
-    </aside>
+    </nav>
     <div class="column-responsive column-80">
         <div class="configuracao form content">
             <?= $this->Form->create($configuracao) ?>

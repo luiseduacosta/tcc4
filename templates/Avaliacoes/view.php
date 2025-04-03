@@ -1,35 +1,35 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Avaliaco $avaliacao
+ * @var \App\Model\Entity\Avaliacao $avaliacao
  */
 $user = $this->getRequest()->getAttribute('identity');
 // pr($avaliacao);
 
-$supervisora = isset($avaliacao->estagiario->supervisor->nome);
+$supervisora = isset($avaliacao->estagiario['supervisor']['nome']);
 if ($supervisora) {
-    $supervisora = $avaliacao->estagiario->supervisor->nome;
+    $supervisora = $avaliacao->estagiario['supervisor']['nome'];
 } else {
     $supervisora = "____________________";
 }
 
-$regiao = isset($avaliacao->estagiario->supervisor->regiao);
+$regiao = isset($avaliacao->estagiario['supervisor']['regiao']);
 if ($regiao) {
-    $regiao = $avaliacao->estagiario->supervisor->regiao;
+    $regiao = $avaliacao->estagiario['supervisor']['nome'];
 } else {
     $regiao = '__';
 }
 
-$cress = isset($avaliacao->estagiario->supervisor->cress);
+$cress = isset($avaliacao->estagiario['supervisor']['cress']);
 if ($cress) {
-    $cress = $avaliacao->estagiario->supervisor->cress;
+    $cress = $avaliacao->estagiario['supervisor']['cress'];
 } else {
     $cress = '_____';
 }
 
-$professora = isset($avaliacao->estagiario->docente->nome);
+$professora = isset($avaliacao->estagiario['docente']['nome']);
 if ($professora) {
-    $professora = $avaliacao->estagiario->docente->nome;
+    $professora = $avaliacao->estagiario['docente']['nome'];
 } else {
     $professora = '____________________';
 }
@@ -50,7 +50,7 @@ if ($professora) {
 <div class="container">
     <div class="row">
         <?php echo $this->element('menu_mural') ?>
-        <aside class="column">
+        <nav class="column">
             <div class="side-nav">
                 <h4 class="heading"><?= __('Ações') ?></h4>
                 <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
@@ -61,11 +61,11 @@ if ($professora) {
                 <?php endif; ?>
                 <?= $this->Html->link(__('Imprimir avaliação'), ['action' => 'imprimeavaliacaopdf/' . $avaliacao->id], ['class' => 'side-nav-item']) ?>
             </div>
-        </aside>
+        </nav>
         <div class="column-responsive column-80">
             <div class="avaliacaoes view content">
-                <h3><?= 'Avaliação da(o) estagiario(a) ' . $avaliacao->estagiario->estudante->nome ?></h3>
-                <p><span style="font-size: 100%; text-align: justify; font-weight: normal">Campo de estágio <?= $avaliacao->estagiario->instituicaoestagio->instituicao ?>. Supervisor(a) <?= $supervisora ?>, Cress <?= $cress ?>. Período de estágio <?= $avaliacao->estagiario->periodo ?>. Nível: <?= $avaliacao->estagiario->nivel ?>. Supervisão acadêmica: <?= $professora ?></span></p>
+                <h3><?= 'Avaliação da(o) estagiario(a) ' . $avaliacao->estagiario['estudante']['nome'] ?></h3>
+                <p><span style="font-size: 100%; text-align: justify; font-weight: normal">Campo de estágio <?= $avaliacao->estagiario['instituicao']['instituicao'] ?>. Supervisor(a) <?= $supervisora ?>, Cress <?= $cress ?>. Período de estágio <?= $avaliacao->estagiario['periodo'] ?>. Nível: <?= $avaliacao->estagiario['nivel'] ?>. Supervisão acadêmica: <?= $professora ?></span></p>
                 <table>
                     <tr>
                         <th><?= __('Id') ?></th>
@@ -73,7 +73,7 @@ if ($professora) {
                     </tr>
                     <tr>
                         <th><?= __('Estagiario') ?></th>
-                        <td><?= $avaliacao->has('estagiario') ? $this->Html->link($avaliacao->estagiario->estudante->nome, ['controller' => 'Estagiarios', 'action' => 'view', $avaliacao->estagiario->id]) : '' ?></td>
+                        <td><?= $avaliacao->has('estagiario') ? $this->Html->link($avaliacao->estagiario['aluno']['nome'], ['controller' => 'Estagiarios', 'action' => 'view', $avaliacao->estagiario['id']]) : '' ?></td>
                     </tr>
                     <tr>
                         <th><?= __('1) ASSIDUIDADE: Desenvolveu as atividades propostas com frequência, ausentando-se apenas com conhecimento e acordado com o(a) supervisor(a) de campo e ou acadêmico(a), seja por motivo de saúde, seja por situações estabelecidas na Lei 11788/2008, entre outras:') ?></th>
