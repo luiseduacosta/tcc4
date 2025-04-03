@@ -113,7 +113,7 @@ class MuralinscricoesController extends AppController
                 $periodo = $configuracaotable->get(1);
                 $periodo = $periodo->mural_periodo_atual;
 
-                $data['id_aluno'] = $dre;
+                $data['registro'] = $dre;
                 $data['aluno_id'] = $aluno_id['id'];
                 $data['data'] = date('Y-m-d');
                 $data['periodo'] = $periodo;
@@ -143,7 +143,7 @@ class MuralinscricoesController extends AppController
         $periodos = $periodototal->toArray();
 
         /* Muralestagios */
-        $muralestagios_id = $this->getRequest()->getQuery('id_instituicao');
+        $muralestagios_id = $this->getRequest()->getQuery('instituicao_id');
         if ($muralestagios_id):
             $instituicao = $this->Muralinscricoes->Muralestagios->find()
                 ->where(['muralestagios.id' => $muralestagios_id])
@@ -167,7 +167,7 @@ class MuralinscricoesController extends AppController
 
         $estudantes = $this->Muralinscricoes->Alunos->find('list');
         $muralestagios = $this->Muralinscricoes->Muralestagios->find('list');
-        $this->set(compact('muralinscricao', 'estudantes', 'muralestagios', 'periodos', 'alunonovos', 'alunoestagios'));
+        $this->set(compact('muralinscricao', 'estudantes', 'muralestagios', 'periodos', 'alunoestagios'));
     }
 
     /**
@@ -181,7 +181,7 @@ class MuralinscricoesController extends AppController
     {
 
         $muralinscricao = $this->Muralinscricoes->get($id, [
-            'contain' => ['Estudantes'],
+            'contain' => ['Alunos'],
         ]);
         $this->Authorization->authorize($muralinscricao);
         if ($this->request->is(['patch', 'post', 'put'])) {
