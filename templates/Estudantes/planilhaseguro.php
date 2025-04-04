@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estudante $estudante
@@ -22,9 +22,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 </script>
 
-<div class='d-flex justify-content-center'>
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <div class="d-flex justify-content-start">
     <div class="col-auto">
@@ -37,20 +35,20 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <table class='table table-hover table-striped table-responsive'>
         <thead class='thead-light'>
-            <caption style='caption-side: top'>Planilha para seguro de vida dos estudantes estagiários</caption>
-            <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Nascimento</th>
-                <th>Sexo</th>
-                <th>DRE</th>
-                <th>Curso</th>
-                <th>Nível</th>
-                <th>Período</th>
-                <th>Início</th>
-                <th>Final</th>
-                <th>Instituição</th>
-            </tr>
+        <caption style='caption-side: top'>Planilha para seguro de vida dos estudantes estagiários</caption>
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Nascimento</th>
+            <th>Sexo</th>
+            <th>DRE</th>
+            <th>Curso</th>
+            <th>Nível</th>
+            <th>Período</th>
+            <th>Início</th>
+            <th>Final</th>
+            <th>Instituição</th>
+        </tr>
         </thead>
         <?php foreach ($t_seguro as $cada_aluno): ?>
             <?php // pr($cada_aluno);  ?>

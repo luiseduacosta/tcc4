@@ -8,9 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // die();
 ?>
 
-<div class="d-flex justify-content-start">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMural"

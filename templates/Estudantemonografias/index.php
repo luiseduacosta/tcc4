@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Aluno[]|\Cake\Collection\CollectionInterface $alunos
@@ -6,9 +6,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="d-flex justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>
-</div>
+<?php echo $this->element('menu_monografias'); ?>
 
 <div class="d-flex justify-content-start">
     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>

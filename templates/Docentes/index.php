@@ -7,13 +7,11 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($docentes);
 ?>
 
-<div class="d-flex justify-content-start">
-    <?= $this->element('menu_monografias') ?>
-</div>
+<?= $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDocentes"
-        aria-controls="navbarTogglerDocentes" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerDocentes" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDocentes">

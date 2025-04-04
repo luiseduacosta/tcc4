@@ -33,13 +33,11 @@ $user = $this->getRequest()->getAttribute('identity');
     }
 </script>
 
-<div class="d-flex justify-content-start">
-    <?= $this->element('menu_monografias') ?>
-</div>
+<?= $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMonografiasAdd"
-        aria-controls="navbarTogglerMonografiasAdd" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerMonografiasAdd" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMonografiasAdd">
@@ -64,7 +62,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <label class="col-2 control-label">Título</label>
         <div class="col-8">
             <textarea class="form-control" name="titulo" id="titulo" rows="5" maxlength="180" onkeyup="contatitulo()"
-                placeholder="Digite o título com até 180 carateres"></textarea>
+                      placeholder="Digite o título com até 180 carateres"></textarea>
             <input id="caraterestitulo" />
         </div>
     </div>
@@ -73,7 +71,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <label class="col-2 control-label">Resumo</label>
         <div class="col-8">
             <textarea class="form-control" name="resumo" id="resumo" rows="5" maxlength="7000" onkeyup="contaresumo()"
-                placeholder="Digite um texto corrido, sem parágrafos"></textarea>
+                      placeholder="Digite um texto corrido, sem parágrafos"></textarea>
             <input id="carateresresumo" />
         </div>
     </div>
@@ -104,7 +102,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </div>
     </div>
 
-    </fieldset>
-    <?= $this->Form->button(__('Confirma')) ?>
-    <?= $this->Form->end() ?>
+</fieldset>
+<?= $this->Form->button(__('Confirma')) ?>
+<?= $this->Form->end() ?>
 </div>

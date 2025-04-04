@@ -6,9 +6,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="d-flex justify-content-start">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMural"
@@ -99,7 +97,7 @@ $user = $this->getRequest()->getAttribute('identity');
         .create(document.querySelector('#outras'), {
             plugins: [Essentials, Bold, Italic, Strikethrough, Font, Paragraph, List, Alignment],
             toolbar: [
-                'undo', 'redo', '|', 'bold', 'italic', 'strikethrough',  'bulletedList', 'numberedList', 'alignment','|',
+                'undo', 'redo', '|', 'bold', 'italic', 'strikethrough', 'bulletedList', 'numberedList', 'alignment', '|',
                 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
             ]
         })

@@ -8,25 +8,23 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php $this->element('templates') ?>
 
-<div class="d-flex justify-content-center">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerInstituicoes"
-        aria-controls="navbarTogglerInstituicoes" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerInstituicoes" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerInstituicoes">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="nav-item">
                 <?=
-                    $this->Form->postLink(
+                $this->Form->postLink(
                         __('Excluir'),
                         ['action' => 'delete', $instituicaoestagio->id],
                         ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $instituicaoestagio->id), 'class' => 'btn btn-danger float-right']
-                    )
-                    ?>
+                )
+                ?>
             </li>
         <?php endif; ?>
         <li class="nav-item">

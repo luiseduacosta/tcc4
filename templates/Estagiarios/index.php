@@ -22,9 +22,7 @@ $user = $this->getRequest()->getAttribute('identity');
     })
 </script>
 
-<div class="f-flex justify-content-start">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <div class="f-flex justify-content-center">
     <?php if (isset($user) && $user->categoria == '1'): ?>

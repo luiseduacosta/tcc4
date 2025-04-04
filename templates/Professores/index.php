@@ -6,9 +6,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="d-flex justify-content-start">
-    <?= $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerProfessor"
@@ -65,7 +63,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('departamento') ?></th>
                 <th><?= $this->Paginator->sort('dataegresso') ?></th>
                 <th><?= $this->Paginator->sort('motivoegresso') ?></th>
-                <?php if (isset($usuario) && $usuario['categoria_id'] == '1'): ?>
+                <?php if (isset($user) && $user['categoria_id'] == '1'): ?>
                     <th class="actions"><?= __('Ações') ?></th>
                 <?php endif ?>
             </tr>
@@ -111,10 +109,10 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($professor->departamento) ?></td>
                     <td><?= $professor->dataegresso ? date('d-m-Y', strtotime(h($professor->dataegresso))) : '' ?></td>
                     <td><?= h($professor->motivoegresso) ?></td>
-                    <?php if (isset($usuario) && $usuario['categoria_id'] == '1'): ?>
+                    <?php if (isset($user) && $user['categoria_id'] == '1'): ?>
                         <td class="row">
                             <?= $this->Html->link(__('Ver'), ['action' => 'view', $professor->id]) ?>
-                            <?php if (isset($usuario) && $usuario['categoria_id'] == '1'): ?>
+                            <?php if (isset($user) && $user['categoria_id'] == '1'): ?>
                                 <?= $this->Html->link(__('Editar'), ['action' => 'edit', $professor->id]) ?>
                                 <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $professor->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $professor->id)]) ?>
                             <?php endif; ?>

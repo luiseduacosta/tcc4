@@ -7,9 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($muralestagio);
 ?>
 
-<div class="d-flex justify-content-center">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMural"
@@ -89,7 +87,7 @@ $user = $this->getRequest()->getAttribute('identity');
         .create(document.querySelector('#muralestagioRequisitos'), {
             plugins: [Essentials, Bold, Italic, Strikethrough, Font, Paragraph, List, Alignment],
             toolbar: [
-                'undo', 'redo', '|', 'bold', 'italic', 'strikethrough', 'list', 'alignment','|',
+                'undo', 'redo', '|', 'bold', 'italic', 'strikethrough', 'list', 'alignment', '|',
                 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
             ]
         })

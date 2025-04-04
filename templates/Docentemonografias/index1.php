@@ -6,9 +6,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="d-flex justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>
-</div>
+<?php echo $this->element('menu_monografias'); ?>
 
 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
     <?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'button float-right']) ?>

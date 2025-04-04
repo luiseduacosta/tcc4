@@ -6,6 +6,7 @@
 // pr($estagiario->item->estudante);
 // die();
 ?>
+
 <div class="container">
     <h3><?= __('Estágios cursados pela(o) estudande ') ?></h3>
     <div class="table-responsive">

@@ -6,18 +6,16 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="row justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>
-</div>
+<?php echo $this->element('menu_monografias'); ?>
 
 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
     <?=
-        $this->Form->postLink(
+    $this->Form->postLink(
             __('Excluir'),
             ['action' => 'delete', $estagiario->id],
             ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiario->id), 'class' => 'btn btn-danger float-start']
-        )
-        ?>
+    )
+    ?>
 <?php endif; ?>
 <?= $this->Html->link(__('Novo estudante'), ['controller' => 'Estudantes', 'action' => 'add'], ['class' => 'btn btn-primary']) ?>
 <?= $this->Html->link(__('Novo docente'), ['controller' => 'Docentes', 'action' => 'add'], ['class' => 'btn btn-primary']) ?>

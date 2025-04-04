@@ -21,21 +21,21 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>
         <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
     </title>
+
     <?= $this->Html->meta('icon') ?>
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <!-- Bootstrap 5.3.4 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-DQvkBjpPgn7RC31MCQoOeC9TI2kdqa4+BSgNMNj8v77fdC77Kj5zpWFTJaaAoMbC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <!--
         Cake 4.0
@@ -50,21 +50,16 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <?= $this->Html->css('style.css') ?>
         -->
 
-    <!--
-        Cake 4.0
-        -->
-    <?= $this->Html->css('milligram.min.css') ?>
-    <?= $this->Html->css('cake.css') ?>
-
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
+
     <?=
         $this->Html->script([
             'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'
         ])
         ?>
 
-    <!-- Include stylesheet -->
+    <!-- Include stylesheet ckeditor -->
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" />
     <!-- Include the ckeditor library -->
     <script type="importmap">
@@ -80,25 +75,19 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 
 <body>
-    <div class="container">
-
-        <div class="btn btn-primary btn-sm float-end">
-            <ul class='navbar-nav mr-auto mt-lg-0'>
-                <?php $user = $this->getRequest()->getAttribute('identity'); ?>
-                <?php if (isset($user) && !empty($user)): ?>
-                    <li class='nav-item'><?= $user->email ?></li>
-                <?php else: ?>
-                    <li class='nav-item'><?= 'Visitante' ?></li>
-                <?php endif; ?>
-            </ul>
-        </div>
-    </div>
 
     <main class="container">
         <?= $this->Flash->render() ?>
         <?= $this->fetch('content') ?>
     </main>
+
     <footer>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.min.js"
+            integrity="sha384-Re460s1NeyAhufAM5JwfIGWosokaQ7CH15ti6W5Y4wC/m4eJ5opJ2ivohxVM05Wd"
+            crossorigin="anonymous"></script>
     </footer>
 </body>
 

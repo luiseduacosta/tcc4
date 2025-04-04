@@ -6,9 +6,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="d-flex justify-content-start">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMural"
@@ -236,14 +234,14 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?php if (isset($user) && $user->categoria == '1'): ?>
                     <tr>
                         <td colspan='2' style="text-align: center">
-                        <?= $this->Form->create(null, ['url' => ['controller' => 'Muralinscricoes', 'action' => 'add', '?' => ['muralestagio_id', $muralestagio->id]], 'type' => 'post']); ?>
+                            <?= $this->Form->create(null, ['url' => ['controller' => 'Muralinscricoes', 'action' => 'add'], 'type' => 'post']); ?>
                             <?= $this->Form->input('muralestagio_id', ['type' => 'hidden', 'value' => $muralestagio->id]); ?>
-                            <?= $this->Form->input('registro', ['type' => 'select', 'options' => $alunos, 'empty' => 'Seleciona aluno']); ?>
+                            <?= $this->Form->input('registro', ['type' => 'select', 'options' => $alunos, 'empty' => 'Seleciona aluno', 'class' => 'form-control']); ?>
                             <div class='row justify-content-center'>
                                 <div class='col-auto'>
                                     <?=
                                         $this->Form->submit('Inscrição', ['type' => 'Submit', 'label' => ['text' => 'Inscrição', 'class' => 'col-4'], 'class' => 'btn btn-primary']);
-                                        $this->Form->end();
+                                    $this->Form->end();
                                     ?>
                                 </div>
                             </div>

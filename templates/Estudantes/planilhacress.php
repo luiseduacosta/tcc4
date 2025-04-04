@@ -25,9 +25,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 </script>
 
-<div class='d-flex justify-content-center'>
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <div class="d-flex justify-content-start">
     <div class="col-auto">

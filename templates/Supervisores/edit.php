@@ -6,13 +6,11 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="d-flex justify-content-start">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerSupervisores"
-        aria-controls="navbarTogglerSupervisores" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerSupervisores" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerSupervisores">
@@ -22,12 +20,12 @@ $user = $this->getRequest()->getAttribute('identity');
         <li class="nav-item">
             <?php if (isset($user) && $user->categoria == '1'): ?>
                 <?=
-                    $this->Form->postLink(
+                $this->Form->postLink(
                         __('Excluir'),
                         ['action' => 'delete', $supervisor->id],
                         ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $supervisor->id), 'class' => 'btn btn-danger']
-                    )
-                    ?>
+                )
+                ?>
             <?php endif; ?>
         </li>
     </ul>

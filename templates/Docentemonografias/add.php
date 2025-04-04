@@ -6,9 +6,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="d-flex justify-content-center">
-    <?php echo $this->element('menu_esquerdo'); ?>
-</div>
+<?php echo $this->element('menu_esquerdo'); ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($docentemonografia) ?>

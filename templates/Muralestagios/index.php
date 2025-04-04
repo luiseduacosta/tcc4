@@ -22,11 +22,7 @@ $user = $this->getRequest()->getAttribute('identity');
     })
 </script>
 
-<div class="row">
-    <div class="d-flex justify-content-start">
-        <?php echo $this->element('menu_mural') ?>
-    </div>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <?php if (isset($user) && $user['categoria'] == '1'): ?>
     <?= $this->Form->create($muralestagios); ?>

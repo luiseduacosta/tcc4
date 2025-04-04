@@ -28,9 +28,7 @@ if ($professora) {
 }
 ?>
 
-<div class="row justify-content-center">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <div class="row">
     <?php if ($user->categoria == '1' || $user->categoria == '2'): ?>
@@ -119,4 +117,3 @@ if ($professora) {
     </ul>
     <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?></p>
 </div>
-

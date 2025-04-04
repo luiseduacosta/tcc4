@@ -1,31 +1,28 @@
 <?php
-
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
-$usuario = $this->getRequest()->getAttribute('identity');
+$user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="d-flex justify-content-start">
-    <?= $this->element('menu_esquerdo') ?>
-</div>
+<?= $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerUsereEdit"
-        aria-controls="navbarTogglerUserEdit" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerUserEdit" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerUserEdit">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="nav-link">
                 <?=
-                    $this->Form->postLink(
+                $this->Form->postLink(
                         __('Excluir'),
                         ['action' => 'delete', $user->id],
                         ['confirm' => __('Tem certeza que quer excluir este usuário # {0}?', $user->id), 'class' => 'btn btn-danger float-start']
-                    )
-                    ?>
+                )
+                ?>
             </li>
         <?php endif; ?>
         <li class="nav-link">

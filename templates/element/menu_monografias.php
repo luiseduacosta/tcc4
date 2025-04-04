@@ -8,12 +8,12 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Monografia $monografia
  */
-$usuario = $this->getRequest()->getAttribute('identity');
-// echo 'Usuário: ' . $usuario->username;
+$user = $this->getRequest()->getAttribute('identity');
+// echo 'Usuário: ' . $user->username;
 // die();
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-light py-0 navbar-light bg-secondary navbar-fixed-top" id="actions-sidebar">
+<nav class="navbar navbar-expand-lg py-0 navbar-light bg-secondary navbar-fixed-top" id="actions-sidebar">
     <?= $this->Html->link("Monografias", ['controller' => 'Monografias', 'action' => 'index'], ['class' => 'nav-link']); ?>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPrincipal">
         <span class="navbar-toggler-icon"></span>
@@ -26,7 +26,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
             <li class="nav-item">
                 <?= $this->Html->link(__('Monografias'), ['controller' => 'Monografias', 'action' => 'index'], ['class' => 'nav-link']) ?>
             </li>
-            <?php if (isset($usuario) && $usuario->categoria == 1): ?>
+            <?php if (isset($user) && $user->categoria == 1): ?>
                 <li class="nav-item">
                     <?= $this->Html->link(__('Estudantes'), ['controller' => 'Tccestudantes', 'action' => 'index'], ['class' => 'nav-link']) ?>
                 </li>
@@ -43,7 +43,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
             <li class='nav-item'>
                 <?= $this->Html->link(__('Mural'), ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'nav-link']) ?>
             </li>
-            <?php if (isset($usuario) && !empty($usuario)): ?>
+            <?php if (isset($user) && !empty($user)): ?>
                 <li class="nav-item">
                     <?= $this->Html->link(__('Sair'), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'nav-link']) ?>
                 </li>
@@ -55,3 +55,15 @@ $usuario = $this->getRequest()->getAttribute('identity');
         </ul>
     </div>
 </nav>
+<div class="row justify-content-end">
+    <div class="col-1">
+        <ul class='navbar-nav mr-auto mt-lg-0'>
+            <?php $user = $this->getRequest()->getAttribute('identity'); ?>
+            <?php if (isset($user) && !empty($user)): ?>
+                <li class='nav-item'><span class="btn btn-primary"><?= $user->email ?></span></li>
+            <?php else: ?>
+                <li class='nav-item'><span class="btn btn-secondary"><?= 'Visitante' ?></span></li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</div>

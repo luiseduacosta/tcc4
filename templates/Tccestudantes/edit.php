@@ -7,9 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($monografias)
 ?>
 
-<div class="d-flex justify-content-start">
-    <?= $this->element('menu_monografias') ?>
-</div>
+<?php echo $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-collapse navbar-expand-lg" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerTccestudantesEdit"

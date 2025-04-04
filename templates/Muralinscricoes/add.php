@@ -8,9 +8,8 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($alunoestagios);
 // die();
 ?>
-<div class="row">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+
+<?php echo $this->element('menu_mural') ?>
 
 <nav class="column">
     <div class="side-nav">
@@ -30,7 +29,7 @@ $user = $this->getRequest()->getAttribute('identity');
             echo $this->Form->control('periodo', ['label' => 'Período', 'value' => $muralestagios_id->periodo, 'readonly' => true]);
             echo $this->Form->control('timestamp', ['type' => 'hidden']);
             echo $this->Form->control('aluno_id', ['label' => 'Aluno', 'options' => [$alunoestagio->id => $alunoestagio->nome]]);
-            // die(pr($id_categoria));
+        // die(pr($id_categoria));
         elseif (isset($user->categoria) && $user->categoria == 2):
             echo $this->Form->control('registro', ['label' => 'Registro', 'value' => $alunonovos->registro, 'readonly' => true]);
             echo $this->Form->control('instituicao_id', ['label' => 'Mural de estágio', 'options' => [$muralestagios_id->id => $muralestagios_id->instituicao], 'readonly' => true]);

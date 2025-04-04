@@ -6,8 +6,6 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-
-
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>

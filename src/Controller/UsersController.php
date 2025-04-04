@@ -80,9 +80,9 @@ class UsersController extends AppController
     {
         $this->Authorization->skipAuthorization();
 
-        $usuario = $this->getRequest()->getAttribute('identity');
+        $user = $this->getRequest()->getAttribute('identity');
 
-        if ($usuario->categoria == '1'):
+        if ($user->categoria == '1'):
             $users = $this->paginate($this->Users);
             $this->set(compact('users'));
         else:

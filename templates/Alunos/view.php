@@ -7,9 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($aluno);
 ?>
 
-<div class="d-flex justify-content-start">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <div class="d-flex justify-content-start">
     <?= $this->Html->link(__('Novo Aluno'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>

@@ -9,9 +9,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // die();
 ?>
 
-<div class="row justify-content-center">
-    <?= $this->element('menu_monografias') ?>
-</div>
+<?= $this->element('menu_monografias') ?>
 
 <div class="d-flex justify-content-end">
     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>

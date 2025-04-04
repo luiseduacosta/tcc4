@@ -34,9 +34,7 @@ $user = $this->getRequest()->getAttribute('identity');
     });
 </script>
 
-<div class="d-flex justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>
-</div>
+<?php echo $this->element('menu_monografias'); ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($estagiariomonografia) ?>

@@ -5,37 +5,38 @@
  */
 $user = $this->getRequest()->getAttribute('identity');
 ?>
-<div class="row">
-    <?php echo $this->element('menu_mural') ?>
-    <nav class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Ações') ?></h4>
-            <?=
-            $this->Form->postLink(
-                    __('Excluir'),
-                    ['action' => 'delete', $visita->id],
-                    ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $visita->id), 'class' => 'side-nav-item']
-            )
+
+<?php echo $this->element('menu_mural') ?>
+
+<nav class="column">
+    <div class="side-nav">
+        <h4 class="heading"><?= __('Ações') ?></h4>
+        <?=
+        $this->Form->postLink(
+                __('Excluir'),
+                ['action' => 'delete', $visita->id],
+                ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $visita->id), 'class' => 'side-nav-item']
+        )
+        ?>
+        <?= $this->Html->link(__('Listar visitas'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+    </div>
+</nav>
+
+<div class="column-responsive column-80">
+    <div class="visitas form content">
+        <?= $this->Form->create($visita) ?>
+        <fieldset>
+            <legend><?= __('Editar visita') ?></legend>
+            <?php
+            echo $this->Form->control('instituicaoestagio_id', ['options' => $instituicaoestagios]);
+            echo $this->Form->control('data');
+            echo $this->Form->control('motivo');
+            echo $this->Form->control('responsavel');
+            echo $this->Form->control('descricao');
+            echo $this->Form->control('avaliacao');
             ?>
-            <?= $this->Html->link(__('Listar visitas'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </nav>
-    <div class="column-responsive column-80">
-        <div class="visitas form content">
-            <?= $this->Form->create($visita) ?>
-            <fieldset>
-                <legend><?= __('Editar visita') ?></legend>
-                <?php
-                echo $this->Form->control('instituicaoestagio_id', ['options' => $instituicaoestagios]);
-                echo $this->Form->control('data');
-                echo $this->Form->control('motivo');
-                echo $this->Form->control('responsavel');
-                echo $this->Form->control('descricao');
-                echo $this->Form->control('avaliacao');
-                ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
-        </div>
+        </fieldset>
+        <?= $this->Form->button(__('Submit')) ?>
+        <?= $this->Form->end() ?>
     </div>
 </div>

@@ -6,13 +6,11 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="d-flex justify-content-start">
-    <?= $this->element('menu_esquerdo') ?>
-</div>
+<?= $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerUseresView"
-        aria-controls="navbarTogglerUsersView" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerUsersView" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerUserView">

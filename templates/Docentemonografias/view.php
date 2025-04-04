@@ -7,9 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($docente);
 ?>
 
-<div class="row justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>
-</div>
+<?php echo $this->element('menu_monografias'); ?></div>
 
 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
     <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docentemonografia->id], ['class' => 'btn btn-primary float-start']) ?>

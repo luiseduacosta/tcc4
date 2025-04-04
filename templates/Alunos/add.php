@@ -7,9 +7,8 @@ $user = $this->getRequest()->getAttribute('identity');
  // pr($registro);
 // die();
 ?>
-<div class="row justify-content-center">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+
+<?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerAlunosAdd"

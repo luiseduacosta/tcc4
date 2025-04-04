@@ -1,18 +1,16 @@
 <?php
-/** 
+/**
  * @var \App\View\AppView $this 
  * @var \App\Model\Entity\Supervisor[]|\Cake\Collection\CollectionInterface $supervisores 
  */ $user = $this->getRequest()->getAttribute('identity');
 // pr($supervisores);
 ?>
 
-<div class="d-flex justify-content-start">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerSupervisor"
-        aria-controls="navbarTogglerSupervisor" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerSupervisor" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerSupervisor">

@@ -6,13 +6,11 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="d-flex justify-content-start">
-    <?= $this->element('menu_monografias') ?>
-</div>
+<?= $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDocentes"
-        aria-controls="navbarTogglerDocentes" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerDocentes" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDocentes">
@@ -27,17 +25,17 @@ $user = $this->getRequest()->getAttribute('identity');
 </nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-<h3><?= __('Docentes') ?></h3>
-<div class="d-flex justify-content-end">
-    <p>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <?= $this->Html->link('Dados funcionais', ['controller' => 'Docentes', 'action' => 'index0'], ['class' => 'btn btn-secondary float-end']) ?>
-            <?= $this->Html->link('Dados pessoais', ['controller' => 'Docentes', 'action' => 'index1'], ['class' => 'btn btn-secondary float-end']) ?>
-            <?= $this->Html->link('Dados graduação', ['controller' => 'Docentes', 'action' => 'index2'], ['class' => 'btn btn-secondary float-end']) ?>
-            <?= $this->Html->link('Dados pósgraduação', ['controller' => 'Docentes', 'action' => 'index3'], ['class' => 'btn btn-secondary float-end']) ?>
-        <?php endif; ?>
-    </p>
-</div>
+    <h3><?= __('Docentes') ?></h3>
+    <div class="d-flex justify-content-end">
+        <p>
+            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                <?= $this->Html->link('Dados funcionais', ['controller' => 'Docentes', 'action' => 'index0'], ['class' => 'btn btn-secondary float-end']) ?>
+                <?= $this->Html->link('Dados pessoais', ['controller' => 'Docentes', 'action' => 'index1'], ['class' => 'btn btn-secondary float-end']) ?>
+                <?= $this->Html->link('Dados graduação', ['controller' => 'Docentes', 'action' => 'index2'], ['class' => 'btn btn-secondary float-end']) ?>
+                <?= $this->Html->link('Dados pósgraduação', ['controller' => 'Docentes', 'action' => 'index3'], ['class' => 'btn btn-secondary float-end']) ?>
+            <?php endif; ?>
+        </p>
+    </div>
 
     <table class="table table-responsive table-striped table-hover">
         <thead class="table-dark">

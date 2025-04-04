@@ -21,9 +21,7 @@ $user = $this->getRequest()->getAttribute('identity');
     })
 </script>
 
-<div class="row justify-content-center">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <div class="col-auto">
     <?php if (isset($user) && $user->categoria == '1'): ?>

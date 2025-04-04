@@ -8,8 +8,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Monografia $monografia
  */
-$usuario = $this->getRequest()->getAttribute('identity');
-// echo 'Usuário: ' . $usuario->username;
+$user = $this->getRequest()->getAttribute('identity');
+// echo 'Usuário: ' . $user->username;
 // die();
 ?>
 
@@ -26,7 +26,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
             <li class='nav-item'>
                 <?= $this->Html->link(__('Monografias'), ['controller' => 'Monografias', 'action' => 'index'], ['class' => 'nav-link']) ?>
             </li>
-            <?php if (isset($usuario) && $usuario->categoria == 1): ?>
+            <?php if (isset($user) && $user->categoria == 1): ?>
                 <li class='nav-item'>
                     <?= $this->Html->link(__('Estudantes'), ['controller' => 'Tccestudantes', 'action' => 'index'], ['class' => 'nav-link']) ?>
                 </li>
@@ -43,7 +43,7 @@ $usuario = $this->getRequest()->getAttribute('identity');
             <li class='nav-item'>
                 <?= $this->Html->link(__('Mural'), ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'nav-link']) ?>
             </li>
-            <?php if (isset($usuario) && !empty($usuario)): ?>
+            <?php if (isset($user) && !empty($user)): ?>
                 <li class='nav-item'>
                     <?= $this->Html->link(__('Sair'), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'nav-link']) ?>
                 </li>

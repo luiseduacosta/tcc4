@@ -6,9 +6,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="row justify-content-center">
-    <?= $this->element('menu_mural') ?>
-</div>
+<?= $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <ul class="collapse navbar-collapse list-unstyled">

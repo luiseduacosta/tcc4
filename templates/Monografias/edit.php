@@ -34,25 +34,23 @@ $user = $this->getRequest()->getAttribute('identity');
 
 </script>
 
-<div class="d-flex justify-content-start">
-    <?= $this->element('menu_monografias') ?>
-</div>
+<?= $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMonografiasEdit"
-        aria-controls="navbarTogglerMonografiasEdit" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerMonografiasEdit" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMonografiasEdit">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li>
                 <?=
-                    $this->Form->postLink(
+                $this->Form->postLink(
                         __('Excluir Monografia'),
                         ['action' => 'delete', $monografia->id],
                         ['confirm' => __('Tem certeza que quer excluir a monografia # {0}?', $monografia->id), 'class' => 'btn btn-danger float-end']
-                    )
-                    ?>
+                )
+                ?>
             </li>
         <?php endif; ?>
     </ul>
@@ -72,8 +70,8 @@ $user = $this->getRequest()->getAttribute('identity');
             <label class="col-2 control-label">Título</label>
             <div class="col-8">
                 <textarea class="form-control" name="titulo" id="titulo" rows="5" maxlength="180"
-                    onkeyup="contatitulo()"
-                    placeholder="Título de até 180 carateres"><?= $monografia->titulo ?></textarea>
+                          onkeyup="contatitulo()"
+                          placeholder="Título de até 180 carateres"><?= $monografia->titulo ?></textarea>
                 <input id="caraterestitulo" />
             </div>
         </div>
@@ -82,8 +80,8 @@ $user = $this->getRequest()->getAttribute('identity');
             <label class="col-2 control-label">Resumo</label>
             <div class="col-8">
                 <textarea class="form-control" name="resumo" id="resumo" rows="5" maxlength="7000"
-                    onkeyup="contaresumo()"
-                    placeholder="Texto corrido, sem parágrafos"><?= $monografia->resumo ?></textarea>
+                          onkeyup="contaresumo()"
+                          placeholder="Texto corrido, sem parágrafos"><?= $monografia->resumo ?></textarea>
                 <input id="carateresresumo" />
             </div>
         </div>
@@ -126,7 +124,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 </div>
             </div>
 
-            <?php
+        <?php
         endif;
         ?>
 

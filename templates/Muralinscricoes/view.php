@@ -4,21 +4,19 @@
  * @var \App\Model\Entity\Muralinscricao $muralinscricao
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($usuario->get('categoria'));
+// pr($user->get('categoria'));
 ?>
 
-<div class="d-flex justify-content-center">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMuralinscricao"
-        aria-controls="navbarTogglerMuralinscricao" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerMuralinscricao" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMuralinscricao">
         <li class="nav-item">
-            <?= $this->Html->link(__('Voltar'), ['controller' => 'Muralestagios' ,'action' => 'index'], ['class' => 'btn btn-info']) ?>
+            <?= $this->Html->link(__('Voltar'), ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'btn btn-info']) ?>
         </li>
         <li class="nav-item">
             <?= $this->Html->link(__('Listar inscrições'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>

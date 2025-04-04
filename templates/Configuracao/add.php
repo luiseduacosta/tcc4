@@ -5,9 +5,7 @@
  */
 $user = $this->getRequest()->getAttribute('identity');
 ?>
-<div class="d-flex justify-content-start">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+<?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <ul class="collapse navbar-collapse list-unstyled">

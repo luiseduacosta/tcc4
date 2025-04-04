@@ -1,5 +1,5 @@
 <?php $id_categoria = $this->getRequest()->getSession()->read('id_categoria') ?>
-<?php $usuario = $this->getRequest()->getAttribute('identity'); ?>
+<?php $user = $this->getRequest()->getAttribute('identity'); ?>
 
 <?php // pr($id_categoria);   ?>
 <?php // die();   ?>

@@ -6,13 +6,13 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
+<?= $this->element('menu_monografias'); ?>
+
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Ações') ?></li>
         <li>
             <?= $this->Html->link(__('Estudantes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </li>
-        <?= $this->element('menu_monografias'); ?>
     </ul>
 </nav>
 

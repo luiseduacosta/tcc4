@@ -6,25 +6,23 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="d-flex justify-content-start">
-    <?= $this->element('menu_monografias') ?>
-</div>
+<?= $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDocentesEdit"
-        aria-controls="navbarTogglerDocentesEdit" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerDocentesEdit" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerDocentesEdit">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="nav-item">
                 <?=
-                    $this->Form->postLink(
+                $this->Form->postLink(
                         __('Excluir'),
                         ['action' => 'delete', $docente->id],
                         ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $docente->id), 'class' => 'btn btn-danger float-start'],
-                    )
-                    ?>
+                )
+                ?>
             </li>
         <?php endif; ?>
     </ul>
@@ -42,7 +40,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('rg', ['label' => 'RG']);
         echo $this->Form->control('orgaoexpedidor', ['label' => 'Órgão expedidor']);
         echo $this->Form->control('siape', ['label' => 'SIAPE']);
-        echo $this->Form->control('datanascimento', ['label' => 'Data de nascimento' ,'empty' => true]);
+        echo $this->Form->control('datanascimento', ['label' => 'Data de nascimento', 'empty' => true]);
         echo $this->Form->control('localnascimento', ['label' => 'Local de nascimento']);
         echo $this->Form->control('sexo', ['options' => ['1' => 'Homem', '2' => 'Mulher'], 'empty' => true]);
         echo $this->Form->control('ddd_telefone', ['label' => 'DDD telefone']);

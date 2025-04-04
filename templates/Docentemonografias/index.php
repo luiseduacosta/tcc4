@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Docente[]|\Cake\Collection\CollectionInterface $Professores
@@ -7,9 +6,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<div class="d-flex justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>
-</div>
+<?php echo $this->element('menu_monografias'); ?>
 
 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
     <?= $this->Html->link(__('Novo docente'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
@@ -62,7 +59,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
-    
+
     <div class="d-flex justify-content-center">
         <div class="paginator">
             <ul class="pagination">

@@ -6,19 +6,18 @@
 $user = $this->getRequest()->getAttribute('identity');
 // pr($muralinscricao);
 ?>
-<div class="row">
-    <?php echo $this->element('menu_mural') ?>
-</div>
+
+<?php echo $this->element('menu_mural') ?>
 
 <nav class="column">
     <div class="side-nav">
         <?=
-            $this->Form->postLink(
+        $this->Form->postLink(
                 __('Excluir'),
                 ['action' => 'delete', $muralinscricao->id],
                 ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'side-nav-item']
-            )
-            ?>
+        )
+        ?>
         <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
     </div>
 </nav>

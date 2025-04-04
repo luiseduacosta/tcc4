@@ -7,9 +7,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($estagiarios);
 ?>
 
-<div class="d-flex justify-content-center">
-    <?php echo $this->element('menu_monografias'); ?>
-</div>
+<?php echo $this->element('menu_monografias'); ?>
 
 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
     <?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
