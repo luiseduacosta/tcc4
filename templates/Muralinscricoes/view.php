@@ -11,20 +11,36 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php echo $this->element('menu_mural') ?>
 </div>
 
-<div class="d-flex justify-content-start">
-    <?php if (isset($user) && $user->categoria == '1'): ?>
-        <?= $this->Html->link(__('Editar inscrição'), ['action' => 'edit', $muralinscricao->id], ['class' => 'side-nav-item']) ?>
-        <?= $this->Html->link(__('Listar inscrições'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-        <?= $this->Html->link(__('Nova inscrição'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-        <?= $this->Form->postLink(__('Excluir inscrição'), ['action' => 'delete', $muralinscricao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'btn btn-danger']) ?>
-    <?php elseif (isset($user) && $user->categoria == '2'): ?>
-        <?= $this->Form->postLink(__('Excluir inscrição'), ['action' => 'delete', $muralinscricao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'btn btn-danger']) ?>
-    <?php endif; ?>
-</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMuralinscricao"
+        aria-controls="navbarTogglerMuralinscricao" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMuralinscricao">
+        <li class="nav-item">
+            <?= $this->Html->link(__('Voltar'), ['controller' => 'Muralestagios' ,'action' => 'index'], ['class' => 'btn btn-info']) ?>
+        </li>
+        <li class="nav-item">
+            <?= $this->Html->link(__('Listar inscrições'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+        </li>
+        <?php if (isset($user) && $user->categoria == '1'): ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Editar inscrição'), ['action' => 'edit', $muralinscricao->id], ['class' => 'btn btn-primary']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Form->postLink(__('Excluir inscrição'), ['action' => 'delete', $muralinscricao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'btn btn-danger']) ?>
+            </li>
+        <?php elseif (isset($user) && $user->categoria == '2'): ?>
+            <li class="nav-item">
+                <?= $this->Form->postLink(__('Excluir inscrição'), ['action' => 'delete', $muralinscricao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'btn btn-danger']) ?>
+            </li>
+        <?php endif; ?>
+    </ul>
+</nav>
 
 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
-    <h3><?= h($muralinscricao->aluno['nome']) ?></h3>
-    <table>
+    <h3><?= h($muralinscricao->alunos['nome']) ?></h3>
+    <table class="table table-responsive table-hover table-striped table-bordered">
         <tr>
             <th><?= __('Id') ?></th>
             <td><?= $muralinscricao->id ?></td>
@@ -34,13 +50,13 @@ $user = $this->getRequest()->getAttribute('identity');
             <td><?= $muralinscricao->registro ?></td>
         </tr>
         <tr>
-            <th><?= __('Estudante') ?></th>
-            <td><?= $muralinscricao->has('aluno') ? $this->Html->link($muralinscricao->aluno['nome'], ['controller' => 'Alunos', 'action' => 'view', $muralinscricao->aluno['id']]) : '' ?>
+            <th><?= __('Aluno') ?></th>
+            <td><?= $muralinscricao->has('alunos') ? $this->Html->link($muralinscricao->alunos['nome'], ['controller' => 'Alunos', 'action' => 'view', $muralinscricao->alunos['id']]) : '' ?>
             </td>
         </tr>
         <tr>
             <th><?= __('Inscrição para estagio') ?></th>
-            <td><?= $muralinscricao->has('muralestagio') ? $this->Html->link($muralinscricao->muralestagio['instituicao'], ['controller' => 'Muralestagios', 'action' => 'view', $muralinscricao->muralestagio['id']]) : '' ?>
+            <td><?= $muralinscricao->has('muralestagios') ? $this->Html->link($muralinscricao->muralestagios['instituicao'], ['controller' => 'Muralestagios', 'action' => 'view', $muralinscricao->muralestagios['id']]) : '' ?>
             </td>
         </tr>
         <tr>

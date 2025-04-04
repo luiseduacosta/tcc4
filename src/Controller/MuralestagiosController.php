@@ -74,7 +74,14 @@ class MuralestagiosController extends AppController
         $muralestagio = $this->Muralestagios->get($id, [
             'contain' => ['Instituicoes', 'Turmaestagios', 'Professores', 'Muralinscricoes' => ['Alunos', 'Muralestagios']]
         ]);
-
+        /** Para o administrador selecionar o aluno */
+        $alunotable = $this->fetchTable('Alunos');
+        $alunos = $alunotable->find('list', [
+            'keyField' => 'registro',
+            'valueField' => 'nome'
+        ]);
+        $alunos->order(['nome' => 'ASC']);
+        $this->set('alunos', $alunos->toArray());
         $this->set(compact('muralestagio'));
     }
 

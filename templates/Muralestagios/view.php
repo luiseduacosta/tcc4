@@ -61,7 +61,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 </tr>
                 <tr>
                     <th><?= __('Instituição') ?></th>
-                    <?php if ($this->getRequest()->getSession()->read('id_categoaria') == 1): ?>
+                    <?php if (isset($user) && $user->categoria == 1): ?>
                         <td><?= $this->Html->link($muralestagio->instituicao, ['controller' => 'Instituicaoestagios', 'action' => 'view', $muralestagio->instituicao_id]) ?>
                         </td>
                     <?php else: ?>
@@ -220,7 +220,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     </div>
                 </tr>
                 <!--
-                    Se a inscricao e na instituição também tem que fazer inscrição no mural
+                    Se a inscricao é na instituição também tem que fazer inscrição no mural
                     //-->
                 <?php if ($muralestagio->localInscricao === 1): ?>
 
@@ -235,15 +235,14 @@ $user = $this->getRequest()->getAttribute('identity');
 
                 <?php if (isset($user) && $user->categoria == '1'): ?>
                     <tr>
-                        <td colspan=2 style="text-align: center">
-                            <?= $this->Form->create(null, ['url' => '/muralinscricoes/add/' . $muralestagio->id, 'type' => 'post']); ?>
-                            <?= $this->Form->input('id_instituicao', array('type' => 'hidden', 'value' => $muralestagio->id)); ?>
+                        <td colspan='2' style="text-align: center">
+                        <?= $this->Form->create(null, ['url' => ['controller' => 'Muralinscricoes', 'action' => 'add', '?' => ['muralestagio_id', $muralestagio->id]], 'type' => 'post']); ?>
+                            <?= $this->Form->input('muralestagio_id', ['type' => 'hidden', 'value' => $muralestagio->id]); ?>
+                            <?= $this->Form->input('registro', ['type' => 'select', 'options' => $alunos, 'empty' => 'Seleciona aluno']); ?>
                             <div class='row justify-content-center'>
                                 <div class='col-auto'>
                                     <?=
                                         $this->Form->submit('Inscrição', ['type' => 'Submit', 'label' => ['text' => 'Inscrição', 'class' => 'col-4'], 'class' => 'btn btn-primary']);
-                                    ?>
-                                    <?=
                                         $this->Form->end();
                                     ?>
                                 </div>
@@ -259,8 +258,8 @@ $user = $this->getRequest()->getAttribute('identity');
                         <tr>
                             <td colspan=2 style="text-align: center">
 
-                                <?= $this->Form->create(null, ['url' => '/Muralinscricoes/add/' . $muralestagio->id, 'type' => 'post']); ?>
-                                <?= $this->Form->input('id_instituicao', ['type' => 'hidden', 'value' => $muralestagio->id]); ?>
+                                <?= $this->Form->create(null, ['url' => ['controller' => 'Muralinscricoes', 'action' => 'add', '?' => ['muralestagio_id', $muralestagio->id]], 'type' => 'post']); ?>
+                                <?= $this->Form->input('muralestagio_id', ['type' => 'hidden', 'value' => $muralestagio->id]); ?>
                                 <div class='row justify-content-center'>
                                     <div class='col-auto'>
                                         <?=
@@ -290,8 +289,8 @@ $user = $this->getRequest()->getAttribute('identity');
 
         <div id="inscricoes" class="tab-pane container fade">
             <h3><?= __('Inscrições para seleção de estágio') ?></h3>
-            <?php if (!empty($muralestagio->muralinscricoes)): ?>
-                <table class="table-responsive">
+            <?php if (!empty($muralestagio->muralinscricao)): ?>
+                <table class="table table-responsive table-striped table-hover">
                     <tr>
                         <th><?= __('Id') ?></th>
                         <th><?= __('Registro') ?></th>
@@ -299,25 +298,25 @@ $user = $this->getRequest()->getAttribute('identity');
                         <th><?= __('Vaga de estágio') ?></th>
                         <th><?= __('Data') ?></th>
                         <th><?= __('Periodo') ?></th>
-                        <?php if (isset($usuario) && $usuario->categoria == 1): ?>
+                        <?php if (isset($user) && $user->categoria == 1): ?>
                             <th><?= __('Timestamp') ?></th>
                             <th class="actions"><?= __('Ações') ?></th>
                         <?php endif; ?>
                     </tr>
-                    <?php foreach ($muralestagio->muralinscricoes as $muralinscricoes): ?>
+                    <?php foreach ($muralestagio->muralinscricao as $muralinscricoes): ?>
                         <tr>
                             <?php // pr($muralinscricoes) ?>
                             <td><?= h($muralinscricoes->id) ?></td>
-                            <td><?= h($muralinscricoes->id_aluno) ?></td>
-                            <td><?= (isset($usuario) && $usuario->categoria == 1) ? $this->Html->link($muralinscricoes->estudante->nome, ['controller' => 'Estudantes', 'action' => 'view', $muralinscricoes->alunonovo_id]) : $muralinscricoes->estudante->nome; ?>
+                            <td><?= h($muralinscricoes->registro) ?></td>
+                            <td><?= (isset($user) && $user->categoria == 1) ? $this->Html->link($muralinscricoes->alunos->nome, ['controller' => 'Alunos', 'action' => 'view', $muralinscricoes->aluno_id]) : $muralinscricoes->alunos->nome; ?>
                             </td>
-                            <td><?= $this->Html->link($muralinscricoes->muralestagio->instituicao, ['controller' => 'muralestagios', 'action' => 'view', $muralinscricoes->id_instituicao]) ?>
+                            <td><?= $this->Html->link($muralinscricoes->muralestagios->instituicao, ['controller' => 'muralestagios', 'action' => 'view', $muralinscricoes->instituicao_id]) ?>
                             </td>
                             <td><?= date('d-m-Y', strtotime(h($muralinscricoes->data))) ?></td>
                             <td><?= h($muralinscricoes->periodo) ?></td>
-                            <?php if (isset($usuario) && $usuario->categoria == 1): ?>
+                            <?php if (isset($user) && $user->categoria == 1): ?>
                                 <td><?= date('d-m-Y', strtotime($muralinscricoes->timestamp)) ?></td>
-                                <td class="actions">
+                                <td class="row">
                                     <?= $this->Html->link(__('Ver'), ['controller' => 'Muralinscricoes', 'action' => 'view', $muralinscricoes->id]) ?>
                                     <?= $this->Html->link(__('Editar'), ['controller' => 'Muralinscricoes', 'action' => 'edit', $muralinscricoes->id]) ?>
                                     <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Muralinscricoes', 'action' => 'delete', $muralinscricoes->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $muralinscricoes->id)]) ?>
@@ -331,5 +330,4 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endif; ?>
         </div>
     </div>
-</div>
 </div>

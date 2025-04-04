@@ -11,7 +11,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php echo $this->element('menu_mural') ?>
 </div>
 
-<div class="d-flex justify-content-end">
+<div class="d-flex justify-content-start">
     <?= $this->Html->link(__('Novo Aluno'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
     <?= $this->Html->link(__('Editar Aluno'), ['action' => 'edit', $aluno->id], ['class' => 'btn btn-primary']) ?>
     <?= $this->Html->link(__('Listar Alunos'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
@@ -100,7 +100,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <th><?= __('Id') ?></th>
                     <th><?= __('Registro') ?></th>
-                    <th><?= __('Estudante') ?></th>
                     <th><?= __('Muralestagio') ?></th>
                     <th><?= __('Data') ?></th>
                     <th><?= __('Periodo') ?></th>
@@ -112,7 +111,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <td><?= h($muralinscricoes->id) ?></td>
                     <td><?= h($muralinscricoes->registro) ?></td>
-                    <td><?= $muralinscricoes->has('muralestagio') ? $this->Html->link($muralinscricoes->muralestagio['instituicao'], ['controller' => 'Muralestagios', 'action' => 'view', $muralinscricoes->muralestagio['id']]) : '' ?>
+                    <td><?= $muralinscricoes->has('muralestagios') ? $this->Html->link($muralinscricoes->muralestagios['instituicao'], ['controller' => 'Muralestagios', 'action' => 'view', $muralinscricoes->muralestagios['id']]) : '' ?>
                     </td>
                     <td><?= date('d-m-Y', strtotime(h($muralinscricoes->data))) ?></td>
                     <td><?= h($muralinscricoes->periodo) ?></td>

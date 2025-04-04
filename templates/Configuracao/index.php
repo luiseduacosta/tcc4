@@ -5,48 +5,64 @@
  */
 $user = $this->getRequest()->getAttribute('identity');
 ?>
-<div class="configuracao index content">
+
+<div class="d-flex justify-content-center">
     <?php echo $this->element('menu_mural') ?>
-    <?= $this->Html->link(__('Nova Configuração'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
-    <h3><?= __('Configurações') ?></h3>
-    <div class="table-responsive">
-        <table>
-            <thead>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="collapse navbar-collapse list-unstyled">
+        <li class="nav-item">
+            <?= $this->Html->link(__('Nova Configuração'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
+        </li>
+    </ul>
+</nav>
+
+<h3><?= __('Configurações') ?></h3>
+
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <table class="table table-striped table-hover table-responsive">
+        <thead class="thead-dark">
+            <tr>
+                <th><?= $this->Paginator->sort('id') ?></th>
+                <th><?= $this->Paginator->sort('mural_periodo_atual', 'Período do mural') ?></th>
+                <th><?= $this->Paginator->sort('termo_compromisso_periodo', 'Período do termo de compromisso') ?></th>
+                <th><?= $this->Paginator->sort('termo_compromisso_inicio', 'Data de início do termo de compromisso') ?>
+                </th>
+                <th><?= $this->Paginator->sort('termo_compromisso_final', 'Data de finalização do termo de compromisso') ?>
+                </th>
+                <th class="actions"><?= __('Ações') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($configuracao as $configura): ?>
                 <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('mural_periodo_atual', 'Período do mural') ?></th>
-                    <th><?= $this->Paginator->sort('termo_compromisso_periodo', 'Período do termo de compromisso') ?></th>
-                    <th><?= $this->Paginator->sort('termo_compromisso_inicio', 'Data de início do termo de compromisso') ?></th>
-                    <th><?= $this->Paginator->sort('termo_compromisso_final', 'Data de finalização do termo de compromisso') ?></th>
-                    <th class="actions"><?= __('Ações') ?></th>
+                    <td><?= $configura->id ?></td>
+                    <td><?= h($configura->mural_periodo_atual) ?></td>
+                    <td><?= h($configura->termo_compromisso_periodo) ?></td>
+                    <td><?= h($configura->termo_compromisso_inicio) ?></td>
+                    <td><?= h($configura->termo_compromisso_final) ?></td>
+                    <td class="actions">
+                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $configura->id]) ?>
+                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $configura->id]) ?>
+                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $configura->id], ['confirm' => __('Are you sure you want to delete # {0}?', $configura->id)]) ?>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($configuracao as $configuracao): ?>
-                    <tr>
-                        <td><?= $configuracao->id ?></td>
-                        <td><?= h($configuracao->mural_periodo_atual) ?></td>
-                        <td><?= h($configuracao->termo_compromisso_periodo) ?></td>
-                        <td><?= h($configuracao->termo_compromisso_inicio) ?></td>
-                        <td><?= h($configuracao->termo_compromisso_final) ?></td>
-                        <td class="actions">
-                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $configuracao->id]) ?>
-                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $configuracao->id]) ?>
-                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $configuracao->id], ['confirm' => __('Are you sure you want to delete # {0}?', $configuracao->id)]) ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
-            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('próximo') . ' >') ?>
-            <?= $this->Paginator->last(__('último') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?></p>
-    </div>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?= $this->element("templates") ?>
+
+<div class="paginator">
+    <ul class="pagination">
+        <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+        <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+        <?= $this->Paginator->numbers() ?>
+        <?= $this->Paginator->next(__('próximo') . ' >') ?>
+        <?= $this->Paginator->last(__('último') . ' >>') ?>
+    </ul>
+    <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?>
+    </p>
 </div>

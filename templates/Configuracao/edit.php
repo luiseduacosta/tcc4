@@ -10,31 +10,30 @@ $user = $this->getRequest()->getAttribute('identity');
     <?= $this->element('menu_mural') ?>
 </div>
 
-<div class="container">
-    <div class="row">
-        <nav class="column">
-            <div class="side-nav">
-                <?= $this->Html->link(__('Listar configuração'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-            </div>
-        </nav>
-        <div class="column-responsive column-80">
-            <div class="configuracao form content">
-                <?= $this->Form->create($configuracao) ?>
-                <fieldset>
-                    <legend><?= __('Editar configurações') ?></legend>
-                    <?php
-                    echo $this->Form->control('mural_periodo_atual', ['label' => ['text' => 'Período do mural de estágios']]);
-                    echo $this->Form->control('termo_compromisso_periodo', ['label' => ['text' => 'Período do termo de compromisso']]);
-                    echo $this->Form->control('termo_compromisso_inicio', ['label' => ['text' => 'Data de início do termo de compromisso']]);
-                    echo $this->Form->control('termo_compromisso_final', ['label' => ['text' => 'Data de finalização do termo de compromisso']]);
-                    echo $this->Form->control('curso_turma_atual');
-                    echo $this->Form->control('curso_abertura_inscricoes');
-                    echo $this->Form->control('curso_encerramento_inscricoes');
-                    ?>
-                </fieldset>
-                <?= $this->Form->button(__('Submit')) ?>
-                <?= $this->Form->end() ?>
-            </div>
-        </div>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="collapse navbar-collapse list-unstyled">
+        <li class="nav-item">
+            <?= $this->Html->link(__('Listar configuração'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+        </li>
+    </ul>
+</nav>
+
+<?= $this->element('templates') ?>
+
+<div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
+    <?= $this->Form->create($configuracao) ?>
+    <fieldset>
+        <legend><?= __('Editar configurações') ?></legend>
+        <?php
+        echo $this->Form->control('mural_periodo_atual', ['label' => ['text' => 'Período do mural de estágios']]);
+        echo $this->Form->control('termo_compromisso_periodo', ['label' => ['text' => 'Período do termo de compromisso']]);
+        echo $this->Form->control('termo_compromisso_inicio', ['label' => ['text' => 'Data de início do termo de compromisso']]);
+        echo $this->Form->control('termo_compromisso_final', ['label' => ['text' => 'Data de finalização do termo de compromisso']]);
+        echo $this->Form->control('curso_turma_atual');
+        echo $this->Form->control('curso_abertura_inscricoes');
+        echo $this->Form->control('curso_encerramento_inscricoes');
+        ?>
+    </fieldset>
+    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->end() ?>
 </div>
