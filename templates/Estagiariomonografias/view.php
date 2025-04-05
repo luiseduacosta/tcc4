@@ -51,7 +51,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
 
         <tr>
-            <th scope="row"><?= __('Tc') ?></th>
+            <th scope="row"><?= __('Termo compromisso') ?></th>
             <td><?= $estagiariomonografia->tc ?></td>
         </tr>
 
@@ -61,18 +61,18 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
 
         <tr>
-            <th scope="row"><?= __('Id Instituicao') ?></th>
-            <td><?= $estagiariomonografia->id_instituicao ?></td>
+            <th scope="row"><?= __('Instituicao') ?></th>
+            <td><?= $estagiariomonografia->instituicao_id ?></td>
         </tr>
 
         <tr>
-            <th scope="row"><?= __('Id Supervisor') ?></th>
-            <td><?= $estagiariomonografia->id_supervisor ?></td>
+            <th scope="row"><?= __('Supervisor') ?></th>
+            <td><?= $estagiariomonografia->supervisor_id ?></td>
         </tr>
 
         <tr>
-            <th scope="row"><?= __('Id Area') ?></th>
-            <td><?= $estagiariomonografia->id_area ?></td>
+            <th scope="row"><?= __('Turma') ?></th>
+            <td><?= $estagiariomonografia->turmaestagio_id ?></td>
         </tr>
 
         <tr>

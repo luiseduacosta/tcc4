@@ -17,7 +17,7 @@ use Cake\ORM\Entity;
  * @property int|null $supervisor_id
  * @property int|null $professor_id
  * @property string $periodo
- * @property int|null $id_area
+ * @property int|null $turmaestagio_id
  * @property float|null $nota
  * @property int|null $ch
  * @property string $ajuste2020

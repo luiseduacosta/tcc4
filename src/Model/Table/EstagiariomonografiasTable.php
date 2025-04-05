@@ -14,7 +14,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
  * @property \App\Model\Table\SupervisoresTable&\Cake\ORM\Association\BelongsTo $Supervisores
  * @property \App\Model\Table\InstituicoesTable&\Cake\ORM\Association\BelongsTo $Institucoes
- * @property \App\Model\Table\AreaestagiosTable&\Cake\ORM\Association\BelongsTo $Areaestagios
+ * @property \App\Model\Table\TurmaestagiosTable&\Cake\ORM\Association\BelongsTo $Turmaestagios
  * @property \App\Model\Table\AvaliacoesTable&\Cake\ORM\Association\HasOne $Avaliacoes
  * @property \App\Model\Table\FolhadeatividadesTable&\Cake\ORM\Association\HasOne $Folhadeatividades
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\BelongsTo $Tccestudantes
@@ -50,16 +50,16 @@ class EstagiariomonografiasTable extends Table
                         'foreignKey' => 'aluno_id',
                 ]);
                 $this->belongsTo('Supervisores', [
-                        'foreignKey' => 'id_supervisor',
+                        'foreignKey' => 'supervisor_id',
                 ]);
                 $this->belongsTo('Docentes', [
-                        'foreignKey' => 'id_professor',
+                        'foreignKey' => 'professor_id',
                 ]);
                 $this->belongsTo('Instituicoes', [
-                        'foreignKey' => 'id_instituicao',
+                        'foreignKey' => 'instituicao_id',
                 ]);
-                $this->belongsTo('Areaestagios', [
-                        'foreignKey' => 'id_area',
+                $this->belongsTo('Turmaestagios', [
+                        'foreignKey' => 'turmaestagio_id',
                 ]);
                 $this->hasOne('Avaliacoes', [
                         'foreignKey' => 'estagiario_id',
@@ -124,8 +124,8 @@ class EstagiariomonografiasTable extends Table
                         ->notEmptyString('periodo');
 
                 $validator
-                        ->naturalNumber('id_area')
-                        ->allowEmptyString('id_area');
+                        ->naturalNumber('turmaestagio_id')
+                        ->allowEmptyString('turmaestagio_id');
 
                 $validator
                         ->decimal('nota')

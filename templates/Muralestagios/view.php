@@ -124,7 +124,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 </tr>
                 <tr>
                     <th><?= __('Docente') ?></th>
-                    <td><?= $muralestagio->has('docente') ? $this->Html->link($muralestagio->docente->nome, ['controller' => 'Professores', 'action' => 'view', $muralestagio->docente->id]) : '' ?>
+                    <td><?= $muralestagio->has('professor') ? $this->Html->link($muralestagio->professor['nome'], ['controller' => 'Professores', 'action' => 'view', $muralestagio->professor['id']]) : '' ?>
                     </td>
                 </tr>
                 <tr>
@@ -306,9 +306,9 @@ $user = $this->getRequest()->getAttribute('identity');
                             <?php // pr($muralinscricoes) ?>
                             <td><?= h($muralinscricoes->id) ?></td>
                             <td><?= h($muralinscricoes->registro) ?></td>
-                            <td><?= (isset($user) && $user->categoria == 1) ? $this->Html->link($muralinscricoes->alunos->nome, ['controller' => 'Alunos', 'action' => 'view', $muralinscricoes->aluno_id]) : $muralinscricoes->alunos->nome; ?>
+                            <td><?= (isset($user) && $user->categoria == 1) ? $this->Html->link($muralinscricoes->alunos['nome'], ['controller' => 'Alunos', 'action' => 'view', $muralinscricoes->aluno_id]) : $muralinscricoes->alunos['nome']; ?>
                             </td>
-                            <td><?= $this->Html->link($muralinscricoes->muralestagios->instituicao, ['controller' => 'muralestagios', 'action' => 'view', $muralinscricoes->instituicao_id]) ?>
+                            <td><?= $this->Html->link($muralinscricoes->muralestagios['instituicao'], ['controller' => 'muralestagios', 'action' => 'view', $muralinscricoes['instituicao_id']]) ?>
                             </td>
                             <td><?= date('d-m-Y', strtotime(h($muralinscricoes->data))) ?></td>
                             <td><?= h($muralinscricoes->periodo) ?></td>

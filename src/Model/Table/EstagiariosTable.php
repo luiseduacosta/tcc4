@@ -132,8 +132,8 @@ class EstagiariosTable extends Table
                         ->notEmptyString('periodo');
 
                 $validator
-                        ->naturalNumber('id_area')
-                        ->allowEmptyString('id_area');
+                        ->naturalNumber('turmaestagio_id')
+                        ->allowEmptyString('turmaestagio_id');
 
                 $validator
                         ->decimal('nota')

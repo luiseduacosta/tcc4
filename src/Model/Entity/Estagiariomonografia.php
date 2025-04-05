@@ -17,7 +17,7 @@ use Cake\ORM\Entity;
  * @property int|null $supervisor_id
  * @property int|null $professor_id
  * @property string $periodo
- * @property int|null $id_area
+ * @property int|null $turmaestagio_id
  * @property float|null $nota
  * @property int|null $ch
  * @property string|null $observacoes
@@ -26,7 +26,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Estudante[] $estudante
  * @property \App\Model\Entity\Supervisor[] $supervisor
  * @property \App\Model\Entity\Instituicao[] $instituicao
- * @property \App\Model\Entity\Areaestagio[] $areaestagio
+ * @property \App\Model\Entity\Turmaestagio[] $turmestagio
  * @property \App\Model\Entity\Avaliacao[] $avaliacao
  * @property \App\Model\Entity\Folhadeatividade[] $folhadeatividade
  * @property \App\Model\Entity\Tccestudante[] $tccestudante
@@ -43,18 +43,18 @@ class Estagiariomonografia extends Entity
      * @var array
      */
     protected $_accessible = [
-        'id_aluno' => true,
+        'aluno_id' => true,
         'alunonovo_id' => true,
         'registro' => true,
         'turno' => true,
         'nivel' => true,
         'tc' => true,
         'tc_solicitacao' => true,
-        'id_instituicao' => true,
-        'id_supervisor' => true,
-        'id_professor' => true,
+        'instituicao_id' => true,
+        'supervisor_id' => true,
+        'professor_id' => true,
         'periodo' => true,
-        'id_area' => true,
+        'turmaestagio_id' => true,
         'nota' => true,
         'ch' => true,
         'observacoes' => true,

@@ -52,7 +52,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('professor_id', ['options' => $Professores, 'empty' => true]);
         $digito = ((date('m')) > 6) ? '-2' : '-1';
         echo $this->Form->control('periodo', ['value' => date('Y') . $digito]);
-        echo $this->Form->control('id_area', ['label' => 'Área de estágio']);
+        echo $this->Form->control('turmaestagio_id', ['label' => 'Turma', 'options' => $turmaestagios, 'empty' => true]);
         echo $this->Form->control('nota');
         echo $this->Form->control('ch', ['label' => 'Carga horária']);
         echo $this->Form->control('observacoes');

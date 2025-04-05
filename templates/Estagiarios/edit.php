@@ -40,7 +40,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('supervisor_id', ['options' => $supervisores, 'empty' => true]);
         echo $this->Form->control('professor_id', ['options' => $professores, 'empty' => true]);
         echo $this->Form->control('periodo');
-        echo $this->Form->control('id_area', ['label' => 'Área', 'options' => $turmaestagios, 'empty' => true]);
+        echo $this->Form->control('turmaestagio_id', ['label' => 'Turma', 'options' => $turmaestagios, 'empty' => true]);
         echo $this->Form->control('nota');
         echo $this->Form->control('ch', ['label' => 'Carga horária']);
         echo $this->Form->control('observacoes');
