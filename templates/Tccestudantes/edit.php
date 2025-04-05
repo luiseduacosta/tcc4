@@ -10,7 +10,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php echo $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-collapse navbar-expand-lg" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerTccestudantesEdit"
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerTccestudantesEdit"
         aria-controls="navbarTogglerTccestudantesEdit" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>

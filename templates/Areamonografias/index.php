@@ -8,18 +8,22 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_monografias') ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerAreamonografia"
-        aria-controls="navbarTogglerAreamonografia" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAreamonografia">
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li class="nav-item">
-                <?= $this->Html->link(__('Nova área de monografia'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
-            </li>
-        <?php endif; ?>
-    </ul>
+<nav class="navbar navbar-expand-lg py-0 navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarArea"
+            aria-controls="navbarArea" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarArea">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                    <li class="nav-item">
+                        <?= $this->Html->link(__('Nova área de monografia'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </div>
 </nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">

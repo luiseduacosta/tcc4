@@ -14,7 +14,7 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMenuEsquerdo"
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerMenuEsquerdo"
         aria-controls="navbarTogglerMenuEsquerdo" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>

@@ -9,19 +9,17 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerProfessor"
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerProfessor"
         aria-controls="navbarTogglerProfessor" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerProfessor">
-        <ul class="navbar-nav ms-auto mt-lg-0">
-            <?php if (isset($user) && $user->categoria == '1'): ?>
-                <li class="nav-item">
-                    <?= $this->Html->link(__('Nova professora'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
-                </li>
-            <?php endif; ?>
-        </ul>
-    </div>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerProfessor">
+        <?php if (isset($user) && $user->categoria == '1'): ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Nova professora'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
+            </li>
+        <?php endif; ?>
+    </ul>
 </nav>
 
 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">

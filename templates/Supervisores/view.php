@@ -9,7 +9,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerSupervisores"
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerSupervisores"
             aria-controls="navbarTogglerSupervisores" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,15 +26,15 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="row">
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#supervisora" role="tab" aria-controls="supervisora"
+            <a class="nav-link active" data-bs-toggle="tab" href="#supervisora" role="tab" aria-controls="supervisora"
                aria-selected="true">Supervisora</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#instituicao" role="tab" aria-controls="instituicao"
+            <a class="nav-link" data-bs-toggle="tab" href="#instituicao" role="tab" aria-controls="instituicao"
                aria-selected="false">Instituição</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#estagiarios" role="tab" aria-controls="estagiarios"
+            <a class="nav-link" data-bs-toggle="tab" href="#estagiarios" role="tab" aria-controls="estagiarios"
                aria-selected="false">Estagiários</a>
         </li>
     </ul>

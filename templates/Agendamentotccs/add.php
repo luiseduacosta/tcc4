@@ -23,17 +23,19 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php echo $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerAgendamentosAdd"
-        aria-controls="navbarTogglerAgendamentosAdd" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAgendamentosAdd">
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-            <li class="nav-item">
-                <?= $this->Html->link(__('Agendamentos de Tcc'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
-            </li>
-        <?php endif; ?>
-    </ul>
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
+            aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <?= $this->Html->link(__('Agendamentos de TCC'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>
 
 <?php $this->element('templates') ?>

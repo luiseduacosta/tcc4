@@ -22,7 +22,7 @@ use Cake\Http\Exception\NotFoundException;
 
 $this->disableAutoLayout();
 
-if (!Configure::read('debug')) :
+if (!Configure::read('debug')):
     throw new NotFoundException(
         'Please replace templates/Pages/home.php with your own version or re-enable debug mode.'
     );
@@ -32,6 +32,7 @@ $cakeDescription = 'Banco de TCCs e de ofertas de vagas de estágio da ESS/UFRJ.
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,6 +44,7 @@ $cakeDescription = 'Banco de TCCs e de ofertas de vagas de estágio da ESS/UFRJ.
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
+
 <!--
 Cake 4.0
     <?= $this->Html->css('milligram.min.css') ?>
@@ -50,23 +52,27 @@ Cake 4.0
     <?= $this->Html->css('home.css') ?>
 -->
 
-<!-- Cake 3.0 -->
+<!-- Cake 3.0 
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('style.css') ?>
     <?= $this->Html->css('home.css') ?>
+-->
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+
 <!--
     <meta http-equiv="refresh" content="0; url=tccestudantes" />
 -->
 </head>
+
 <body>
     <header>
         <div class="d-flex justify-content-center">
             <a href="http://ess.ufrj.br/" target="_blank">
-                <img alt="Escola de Serviço Social - CFCH - UFRJ" src="http://ess.ufrj.br/templates/joomtic3/images/banner_logo.jpg" width="100%" height="20%" />
+                <img alt="Escola de Serviço Social - CFCH - UFRJ"
+                    src="http://ess.ufrj.br/templates/joomtic3/images/banner_logo.jpg" width="100%" height="20%" />
             </a>
             <h1>
                 <?= $this->Html->link('Escola de Serviço Social', ['http://www.ess.ufrj.br']) ?>
@@ -75,6 +81,7 @@ Cake 4.0
     </header>
     <p><a href="Monografias">Clique aqui se não foi direcionado para o site</a></p>
 </body>
+
 </html>
 <?php
 

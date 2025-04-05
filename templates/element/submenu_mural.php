@@ -5,7 +5,7 @@
 <?php // die();   ?>
 <nav class='navbar navbar-expand-lg navbar-light py-0 navbar-fixed-top' style="background-color: #2b6c9c;">
     <?= $this->Html->link("Mural", ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'nav-link', 'style' => 'color: white;']); ?>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPrincipal">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPrincipal">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -17,7 +17,7 @@
                 ?>
 
                 <li class="nav-item dropdown">
-                    <a style='color:white' class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Declarações</a>
+                    <a style='color:white' class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Declarações</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <?php echo $this->Html->link("Termo de compromisso", "/estagiarios/termodecompromisso?registro=" . $this->getRequest()->getSession()->read('numero'), ['class' => 'dropdown-item', 'style' => 'background-color: #2b6c9c; color: white;']); ?>
                         <?php echo $this->Html->link("Folha de avaliação discente", "/estagiarios/selecionaavaliacaodiscente/" . $this->getRequest()->getSession()->read('estagiario_id'), ['class' => 'dropdown-item', 'style' => 'background-color: #2b6c9c; color: white']); ?>
@@ -41,7 +41,7 @@
                     <?php echo $this->Html->link("Professores", "/Professores/index/", ['class' => 'nav-link', 'style' => 'background-color: #2b6c9c; color: white']); ?>
                 </li>
                 <li class="nav-item dropdown">
-                    <a style='color: white' class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administração</a>
+                    <a style='color: white' class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administração</a>
                     <div class="dropdown-menu">
                         <?php echo $this->Html->link('Configuração', '/Configuracao/view/1', ['class' => 'dropdown-item', 'style' => 'background-color: #2b6c9c; color: white']); ?>
                         <?php echo $this->Html->link('Usuários', '/userestagios/index', ['class' => 'dropdown-item', 'style' => 'background-color: #2b6c9c; color: white']); ?>

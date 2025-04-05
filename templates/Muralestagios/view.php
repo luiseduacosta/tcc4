@@ -9,7 +9,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerMural"
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerMural"
         aria-controls="navbarTogglerMural" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -34,12 +34,12 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="row">
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#instituicao" role="tab" aria-controls="Instituição"
+            <a class="nav-link active" data-bs-toggle="tab" href="#instituicao" role="tab" aria-controls="Instituição"
                 aria-selected="true">Instituição</a>
         </li>
         <?php if (isset($user) && $user->categoria == 1): ?>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#inscricoes" role="tab" aria-controls="Estudantes inscritos"
+                <a class="nav-link" data-bs-toggle="tab" href="#inscricoes" role="tab" aria-controls="Estudantes inscritos"
                     aria-selected="false">Estudantes inscritos</a>
             </li>
         <?php endif; ?>

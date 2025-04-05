@@ -24,13 +24,19 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_mural') ?>
 
+<div class="d-flex justify-content-start">
+    <?php if (isset($user) && $user->categoria == '1'): ?>
+        <?= $this->Html->link(__('Novo mural'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
+    <?php endif; ?>
+</div>
+
 <?php if (isset($user) && $user['categoria'] == '1'): ?>
     <?= $this->Form->create($muralestagios); ?>
     <div class="d-flex justify-content-center">
         <div class="col-1 p-3">
             <label class="form-label" for="MuralestagioPeriodo">Período</label>
         </div>
-        <div class="col-1 p-1">
+        <div class="col-1 p-2">
             <?= $this->Form->input('periodo', ['id' => 'MuralestagioPeriodo', 'type' => 'select', 'label' => false, 'options' => $periodos, 'empty' => [$periodo => $periodo], 'class' => 'form-control']); ?>
         </div>
     </div>
@@ -40,13 +46,6 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php endif; ?>
 
 <?= $this->element('templates') ?>
-
-<div class="d-flex justify-content-start">
-    <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
-    <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
-        <?= $this->Html->link(__('Novo mural'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
-    <?php endif; ?>
-</div>
 
 <div class="container col-lg-10 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Mural de estagios') ?></h3>

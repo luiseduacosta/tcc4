@@ -30,23 +30,23 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="row">
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#instituicao" role="tab" aria-controls="instituicao"
+            <a class="nav-link active" data-bs-toggle="tab" href="#instituicao" role="tab" aria-controls="instituicao"
                aria-selected="true">Instituição</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#supervisores" role="tab" aria-controls="supervisores"
+            <a class="nav-link" data-bs-toggle="tab" href="#supervisores" role="tab" aria-controls="supervisores"
                aria-selected="false">Supervisores</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#estagiarios" role="tab" aria-controls="estagiarios"
+            <a class="nav-link" data-bs-toggle="tab" href="#estagiarios" role="tab" aria-controls="estagiarios"
                aria-selected="false">Estagiários</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#muraldeestagio" role="tab" aria-controls="muraldeestagio"
+            <a class="nav-link" data-bs-toggle="tab" href="#muraldeestagio" role="tab" aria-controls="muraldeestagio"
                aria-selected="false">Mural de estágio</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#visitas" role="tab" aria-controls="visitas"
+            <a class="nav-link" data-bs-toggle="tab" href="#visitas" role="tab" aria-controls="visitas"
                aria-selected="false">Visitas</a>
         </li>
     </ul>
