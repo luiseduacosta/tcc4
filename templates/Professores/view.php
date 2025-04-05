@@ -9,7 +9,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_mural') ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerEstagiario"
         aria-controls="navbarTogglerUsuario" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -238,20 +238,20 @@ $user = $this->getRequest()->getAttribute('identity');
                         <th class="actions"><?= __('Ações') ?></th>
                     <?php endif; ?>
                 </tr>
-                <?php foreach ($professor->estagiarios as $estagiarios): ?>
+                <?php foreach ($professor->estagiario as $estagiarios): ?>
                     <tr>
                         <?php if (isset($user) && $user->categoria == '1'): ?>
                             <td><?= h($estagiarios->id) ?></td>
                         <?php endif; ?>
-                        <td><?= $estagiarios->hasValue('aluno') ? $estagiarios->aluno->nome : "" ?>
+                        <td><?= $estagiarios->hasValue('aluno') ? $estagiarios->aluno['nome'] : "" ?>
                         </td>
                         <td><?= h($estagiarios->registro) ?></td>
                         <td><?= h($estagiarios->ajuste2020) ?></td>
                         <td><?= h($estagiarios->turno) ?></td>
                         <td><?= h($estagiarios->nivel) ?></td>
-                        <td><?= $estagiarios->hasValue('instituicao') ? $estagiarios->instituicao->instituicao : "" ?>
+                        <td><?= $estagiarios->hasValue('instituicao') ? $estagiarios->instituicao['instituicao'] : "" ?>
                         </td>
-                        <td><?= $estagiarios->hasValue('supervisor') ? $estagiarios->supervisor->nome : '' ?>
+                        <td><?= $estagiarios->hasValue('supervisor') ? $estagiarios->supervisor['nome'] : '' ?>
                         </td>
                         <td><?= h($estagiarios->periodo) ?></td>
                         <td><?= h($estagiarios->nota) ?></td>
@@ -294,13 +294,13 @@ $user = $this->getRequest()->getAttribute('identity');
                         <th><?= __('Observações') ?></th>
                         <th class="actions"><?= __('Ações') ?></th>
                     </tr>
-                    <?php foreach ($professor->estagiarios as $estagiarios): ?>
+                    <?php foreach ($professor->estagiario as $estagiarios): ?>
                         <?php // pr($estagiarios->folhadeatividade) ?>
                         <tr>
                             <?php if (isset($user) && $user->categoria == '1'): ?>
                                 <td><?= h($estagiarios->id) ?></td>
                             <?php endif; ?>
-                            <td><?= $estagiarios->hasValue('aluno') ? $estagiarios->aluno->nome : "" ?>
+                            <td><?= $estagiarios->hasValue('aluno') ? $estagiarios->aluno['nome'] : "" ?>
                             </td>
                             <td><?= h($estagiarios->registro) ?></td>
                             <?php if (isset($user) && $user->categoria == '1'): ?>
@@ -314,9 +314,9 @@ $user = $this->getRequest()->getAttribute('identity');
                             </td>
                             <td><?= h($estagiarios->turno) ?></td>
                             <td><?= h($estagiarios->nivel) ?></td>
-                            <td><?= $estagiarios->hasValue('instituicao') ? $estagiarios->instituicao->instituicao : "" ?>
+                            <td><?= $estagiarios->hasValue('instituicao') ? $estagiarios->instituicao['instituicao'] : "" ?>
                             </td>
-                            <td><?= $estagiarios->hasValue('supervisor') ? $this->Html->link($estagiarios->supervisor->nome, ['controller' => 'supervisores', 'action' => 'view', $estagiarios->supervisor->id]) : "" ?>
+                            <td><?= $estagiarios->hasValue('supervisor') ? $this->Html->link($estagiarios->supervisor['nome'], ['controller' => 'supervisores', 'action' => 'view', $estagiarios->supervisor['id']]) : "" ?>
                             </td>
                             <td><?= h($estagiarios->periodo) ?></td>
                             <td><?= h($estagiarios->nota) ?></td>

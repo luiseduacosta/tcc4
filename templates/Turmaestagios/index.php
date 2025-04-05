@@ -8,11 +8,10 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php $user = $this->getRequest()->getAttribute('identity'); ?>
 
-
 <?php if (isset($user) && $user->categoria_id == 1): ?>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerEstagiario"
-                aria-controls="navbarTogglerUsuario" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarTogglerUsuario" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerEstagiario">
@@ -55,11 +54,12 @@ $user = $this->getRequest()->getAttribute('identity');
 </div>
 
 <?= $this->element('templates'); ?>
+
 <div class="d-flex justify-content-center">
     <div class="paginator">
         <ul class="pagination">
             <?= $this->element('paginator') ?>
         </ul>
     </div>
+    <?= $this->element('paginator_count') ?>
 </div>
-<?= $this->element('paginator_count') ?>

@@ -1,9 +1,13 @@
-<?php $id_categoria = $this->getRequest()->getSession()->read('id_categoria') ?>
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Monografia $monografia
+ */
+?>
+
 <?php $user = $this->getRequest()->getAttribute('identity'); ?>
 
-<?php // pr($id_categoria);   ?>
-<?php // die();   ?>
-<nav class='navbar navbar-expand-lg navbar-light py-0 navbar-fixed-top' style="background-color: #2b6c9c;">
+<nav class='navbar navbar-expand-lg navbar-light py-2 navbar-fixed-top' style="background-color: #2b6c9c;">
     <?= $this->Html->link("Mural", ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'nav-link', 'style' => 'color: white;']); ?>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPrincipal">
         <span class="navbar-toggler-icon"></span>

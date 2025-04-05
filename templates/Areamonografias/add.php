@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_monografias') ?>
 
-<nav class="navbar navbar-expand-lg py-0 navbar-light bg-secondary">
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-secondary">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPrincipal"
             aria-controls="navbarPrincipal" aria-expanded="false" aria-label="Toggle navigation">

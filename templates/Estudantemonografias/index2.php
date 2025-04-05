@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_monografias'); ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
     <ul class="side-nav">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li><?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'bgt btn-primary float-start']) ?>

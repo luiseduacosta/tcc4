@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // die();   
 ?>
 
-<nav class='navbar navbar-expand-lg navbar-light py-0 navbar-fixed-top bg-light' id='actions-sidebar'>
+<nav class='navbar navbar-expand-lg navbar-light py-2 navbar-fixed-top bg-light' id='actions-sidebar'>
     <div class="container-fluid">
         <?= $this->Html->link("Mural", ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'navbar-brand']); ?>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPrincipal">

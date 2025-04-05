@@ -9,7 +9,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?= $this->element('menu_monografias') ?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light" id="actions-sidebar">
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerMonografias"
             aria-controls="navbarTogglerMonografias" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

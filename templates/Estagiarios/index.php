@@ -24,7 +24,21 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_mural') ?>
 
-<div class="f-flex justify-content-center">
+<?php if (isset($user) && $user->categoria == '1'): ?>
+    <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerMural"
+            aria-controls="navbarTogglerMural" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMural">
+        <li class="nav-item">
+                <?= $this->Html->link(__('Novo Estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
+            </li>
+        </ul>
+    </nav>
+<?php endif; ?>
+
+<div class="f-flex justify-content-center py-2">
     <?php if (isset($user) && $user->categoria == '1'): ?>
         <?= $this->Form->create($estagiarios); ?>
         <div class="form-group row">
@@ -39,11 +53,6 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php endif; ?>
 </div>
 
-<div class="d-flex justify-content-start">
-    <?php if (isset($user) && $user->categoria == 1): ?>
-        <?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
-    <?php endif; ?>
-</div>
 
 <?= $this->element('templates') ?>
 

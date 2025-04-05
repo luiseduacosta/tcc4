@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // die();   
 ?>
 
-<nav class="navbar navbar-expand-lg py-0 navbar-light bg-secondary">
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-secondary">
     <div class="container-fluid">
         <?= $this->Html->link("Mural", ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'navbar-brand']); ?>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPrincipal"
@@ -74,13 +74,13 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <?php echo $this->Html->link('Configuração', '/Configuracao/view/1', ['class' => 'dropdown-item']); ?>
                             </li>
                             <li class="nav-item">
-                                <?php echo $this->Html->link('Usuários', '/userestagios/index', ['class' => 'dropdown-item']); ?>
+                                <?php echo $this->Html->link('Usuários', '/users/index', ['class' => 'dropdown-item']); ?>
                             </li>
                             <li class="nav-item">
-                                <?php echo $this->Html->link('Planilha seguro', '/estudantes/planilhaseguro/', ['class' => 'dropdown-item']); ?>
+                                <?php echo $this->Html->link('Planilha seguro', '/alunos/planilhaseguro/', ['class' => 'dropdown-item']); ?>
                             </li>
                             <li class="nav-item">
-                                <?php echo $this->Html->link('Planilha CRESS', '/estudantes/planilhacress/', ['class' => 'dropdown-item']); ?>
+                                <?php echo $this->Html->link('Planilha CRESS', '/alunos/planilhacress/', ['class' => 'dropdown-item']); ?>
                             </li>
                             <li class="nav-item">
                                 <?php echo $this->Html->link('Carga horária', '/Alunos/cargahoraria/', ['class' => 'dropdown-item']); ?>
@@ -112,7 +112,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?php echo $this->Html->link("Meus dados", "/supervisores/view/" . $user['supervisor_id'], ['class' => 'nav-link']); ?>
                     </li>
                 <?php endif; ?>
-                
+
                 <li class="nav-item">
                     <?php echo $this->Html->link('Fale conosco', 'mailto: estagio@ess.ufrj.br', ['class' => 'nav-link']); ?>
                 </li>
@@ -128,20 +128,12 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?php echo $this->Html->link('Login', ['controller' => 'users', 'action' => 'login'], ['class' => 'nav-link']); ?>
                     </li>
                 <?php endif; ?>
-
+                <?php if (isset($user) && !empty($user)): ?>
+                    <li class='nav-item'><span class="btn btn-primary"><?= $user->email ?></span></li>
+                <?php else: ?>
+                    <li class='nav-item'><span class="btn btn-secondary"><?= 'Visitante' ?></span></li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
 </nav>
-<div class="row justify-content-end">
-    <div class="col-1">
-        <ul class='navbar-nav mr-auto mt-lg-0'>
-            <?php $user = $this->getRequest()->getAttribute('identity'); ?>
-            <?php if (isset($user) && !empty($user)): ?>
-                <li class='nav-item'><span class="btn btn-primary"><?= $user->email ?></span></li>
-            <?php else: ?>
-                <li class='nav-item'><span class="btn btn-secondary"><?= 'Visitante' ?></span></li>
-            <?php endif; ?>
-        </ul>
-    </div>
-</div>
