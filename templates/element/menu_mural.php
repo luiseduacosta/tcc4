@@ -25,7 +25,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <?php echo $this->Html->link("Termo de compromisso", "/estagiarios/termodecompromisso?registro=" . $this->getRequest()->getSession()->read('numero'), ['class' => 'dropdown-item']); ?>
+                                <?php echo $this->Html->link("Termo de compromisso", "/estagiarios/novotermodecompromisso?aluno_id=" . $user['aluno_id'], ['class' => 'dropdown-item']); ?>
                             </li>
                             <li>
                                 <?php echo $this->Html->link("Declaração de estágio", "/estagiarios/selecionadeclaracaodeestagio/" . $this->getRequest()->getSession()->read('estagiario_id'), ['class' => 'dropdown-item']); ?>
@@ -116,9 +116,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 <li class="nav-item">
                     <?php echo $this->Html->link('Fale conosco', 'mailto: estagio@ess.ufrj.br', ['class' => 'nav-link']); ?>
                 </li>
-                <li class="nav-item">
-                    <?php echo $this->Html->link('TCC', ['controller' => 'Monografias', 'action' => 'index'], ['class' => 'nav-link']); ?>
-                </li>
                 <?php if (isset($user)): ?>
                     <li class="nav-item">
                         <?php echo $this->Html->link('Sair', ['controller' => 'users', 'action' => 'logout'], ['class' => 'nav-link']); ?>
@@ -128,6 +125,9 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?php echo $this->Html->link('Login', ['controller' => 'users', 'action' => 'login'], ['class' => 'nav-link']); ?>
                     </li>
                 <?php endif; ?>
+                <li class="nav-item">
+                    <?php echo $this->Html->link('TCC', ['controller' => 'Monografias', 'action' => 'index'], ['class' => 'btn btn-info']); ?>
+                </li>
                 <?php if (isset($user) && !empty($user)): ?>
                     <li class='nav-item'><span class="btn btn-primary"><?= $user->email ?></span></li>
                 <?php else: ?>

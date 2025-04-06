@@ -184,7 +184,8 @@ class MuralestagiosTable extends Table
                 $rules->add($rules->existsIn(['instituicao_id'], 'Instituicoes'), ['errorField' => 'instituicao_id']);
                 $rules->add($rules->existsIn(['turmaestagio_id'], 'Turmaestagios'), ['errorField' => 'turmaestagio_id']);
                 $rules->add($rules->existsIn(['professor_id'], 'Professores'), ['errorField' => 'professor_id']);
-
+                $rules->add($rules->existsIn(['muralestagio_id'], 'Muralestagios'), ['errorField' => 'muralestagio_id']);
+                
                 return $rules;
         }
 

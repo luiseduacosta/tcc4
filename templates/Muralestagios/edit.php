@@ -37,8 +37,8 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset>
         <legend><?= __('Editar Mural de estágio') ?></legend>
         <?php
-        echo $this->Form->control('instituicao_id', ['type' => 'hidden', 'label' => ['text' => 'Instituição'], 'options' => $instituicaoestagios, 'empty' => true, 'readonly']);
-        echo $this->Form->control('instituicao', ['label' => ['text' => 'Instituição'], 'value' => $muralestagio->instituicao, 'readonly']);
+        echo $this->Form->control('instituicao_id', ['label' => ['text' => 'Instituição'], 'options' => $instituicaoestagios, 'empty' => true, 'readonly']);
+        echo $this->Form->control('instituicao', ['label' => ['text' => 'Instituição'], 'value' => $muralestagio->instituicao_id, 'readonly']);
         echo $this->Form->control('convenio', ['label' => ['text' => 'Convênio'], 'options' => ['0' => 'Não', '1' => 'Sim']]);
         echo $this->Form->control('vagas');
         echo $this->Form->control('beneficios', ['label' => ['text' => 'Benefícios']]);

@@ -454,7 +454,7 @@ class EstagiariosController extends AppController
 
             $this->set('aluno_id', $aluno_id);
 
-            /** Todos os periódos */
+            /** Todos os períodos */
             $periodototal = $this->Estagiarios->find('list', [
                 'keyField' => 'periodo',
                 'valueField' => 'periodo',
@@ -464,9 +464,8 @@ class EstagiariosController extends AppController
             $periodoatual = end($periodos);
 
             if (empty($periodoatual)) {
-                $configuracaotabela = $this->fetchTable('Configuracao');
-                $periodo = $configuracaotabela->find()->first();
-                $periodoatual = $periodo->mural_periodo_atual;
+                $configuracao = $this->fetchTable('Configuracao')->find()->first();
+                $periodoatual = $configuracao->mural_periodo_atual;
             }
             $this->set('periodo', $periodoatual);
 
@@ -480,15 +479,15 @@ class EstagiariosController extends AppController
             /** Ajusto o valor do nivel de estágio com o periodo e o ajuste2020 */
             if ($estagiario) {
                 if ($estagiario->periodo == $periodoatual) {
-                    $nivel = $estagiario->nivel;
+                    $nivel = $estagiario->nivel; // Mesmo período não muda o nível
                 } elseif ($estagiario->periodo != $periodoatual) {
-                    $nivel = $estagiario->nivel + 1;
-                    if ($estagiario->ajuste2020 == 0 && $nivel > 4) {
-                        $nivel = 9;
-                    } elseif ($estagiario->ajuste2020 == 1 && $nivel > 3) {
-                        $nivel = 9;
+                    $nivel = $estagiario->nivel + 1; // Novo período aumenta o nível
+                    if ($estagiario->ajuste2020 == 0 && $nivel > 4) { // Aumenta o nível até 4 antes do ajuste curricular
+                        $nivel = 9; // Estágio não curricular
+                    } elseif ($estagiario->ajuste2020 == 1 && $nivel > 3) { // Aumenta o nível até 3 depois do ajuste curricular
+                        $nivel = 9; // Estágio não curricular
                     } else {
-                        $nivel = $nivel + 1;
+                        $nivel; // Já aumentou o nível no início
                     }
                     $this->set('nivel', $nivel);
                 }
@@ -497,19 +496,18 @@ class EstagiariosController extends AppController
                 $this->set('nivel', $nivel);
                 $this->set('estagiario', $estagiario);
             } else {
-                $alunostable = $this->fetchTable(('Alunos'));
-                $aluno = $alunostable->find()
+                $aluno = $this->fetchTable('Alunos')
+                    ->find()
                     ->where(['id' => $aluno_id])
                     ->first();
-                $nivel = 1;
+                $nivel = 1; // Se não é estagiário então o nível é 1
                 $this->set('nomealuno', $aluno->nome);
                 $this->set('registro', $aluno->registro);
                 $this->set('nivel', $nivel);
             }
 
             /** Instituições */
-            $instituicoestable = $this->fetchTable('Instituicoes');
-            $instituicoes = $instituicoestable->find('list');
+            $instituicoes = $this->fetchTable('Instituicoes')->find('list');
             $this->set('instituicoes', $instituicoes);
             if ($estagiario->instituicao_id) {
                 $this->set('instituicao_id', $estagiario->instituicao_id);
@@ -518,13 +516,13 @@ class EstagiariosController extends AppController
             /** Supervisores */
             $supevisorestable = $this->fetchTable('Supervisores');
             if ($estagiario) { // ou $instituicao_id
-                $supervisoresdainstituicao = $instituicoestable->find()
+                $supervisoresdainstituicao = $this->fetchTable('Instituicoes')->find()
                     ->contain(['Supervisores'])
                     ->where(['instituicoes.id' => $estagiario->instituicao_id])
                     ->all()
                     ->toList();
             } else {
-                $supervisores = $supevisorestable->find('list');
+                $supervisores = $this->fetchTable('Supervisores')->find('list');
                 $this->set('supervisores', $supervisores);
             }
             if ($supervisoresdainstituicao) {
@@ -549,13 +547,11 @@ class EstagiariosController extends AppController
             }
 
             /** Professores */
-            $professorestable = $this->fetchTable('Professores');
-            $professores = $professorestable->find('list');
+            $professores = $this->fetchTable('Professores')->find('list');
             $this->set('professores', $professores);
 
             /** Turmas */
-            $turmaestagiostable = $this->fetchTable('Turmaestagios');
-            $turmaestagios = $turmaestagiostable->find('list');
+            $turmaestagios = $this->fetchTable('Turmaestagios')->find('list');
             $this->set('turmaestagios', $turmaestagios);
 
         } else {

@@ -4,8 +4,9 @@
  * @var \App\Model\Entity\Muralestagio $muralestagio
  */
 $user = $this->getRequest()->getAttribute('identity');
-?>
 
+$this->assign('title', __('Mural de Estágios'));
+?>
 <?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
@@ -60,10 +61,10 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <th><?= __('Instituição') ?></th>
                     <?php if (isset($user) && $user->categoria == 1): ?>
-                        <td><?= $this->Html->link($muralestagio->instituicao, ['controller' => 'Instituicaoestagios', 'action' => 'view', $muralestagio->instituicao_id]) ?>
+                        <td><?= $this->Html->link($muralestagio->instituicao, ['controller' => 'Instituicoes', 'action' => 'view', $muralestagio->instituicao_id]) ?>
                         </td>
                     <?php else: ?>
-                        <td><?= $muralestagio->has('instituicaoestagio') ? $muralestagio->instituicao : '' ?></td>
+                        <td><?= $muralestagio->has('instituicao') ? $muralestagio->instituicao : '' ?></td>
                     <?php endif; ?>
                 </tr>
                 <tr>
@@ -100,7 +101,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 </tr>
                 <tr>
                     <th><?= __('Turme de estágio') ?></th>
-                    <td><?= $muralestagio->has('turmaestagio') ? $this->Html->link($muralestagio->turmaestagio['area'], ['controller' => 'Areaestagios', 'action' => 'view', $muralestagio->turmaestagio['id']]) : '' ?>
+                    <td><?= $muralestagio->has('turmaestagios') ? $this->Html->link($muralestagio->turmaestagios['area'], ['controller' => 'Areaestagios', 'action' => 'view', $muralestagio->turmaestagios['id']]) : '' ?>
                     </td>
                 </tr>
                 <tr>
@@ -124,7 +125,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 </tr>
                 <tr>
                     <th><?= __('Docente') ?></th>
-                    <td><?= $muralestagio->has('professor') ? $this->Html->link($muralestagio->professor['nome'], ['controller' => 'Professores', 'action' => 'view', $muralestagio->professor['id']]) : '' ?>
+                    <td><?= $muralestagio->has('professores') ? $this->Html->link($muralestagio->professores['nome'], ['controller' => 'Professores', 'action' => 'view', $muralestagio->professores['id']]) : '' ?>
                     </td>
                 </tr>
                 <tr>
@@ -287,7 +288,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
         <div id="inscricoes" class="tab-pane container fade">
             <h3><?= __('Inscrições para seleção de estágio') ?></h3>
-            <?php if (!empty($muralestagio->muralinscricao)): ?>
+            <?php if (!empty($muralestagio->muralinscricoes)): ?>
                 <table class="table table-responsive table-striped table-hover">
                     <tr>
                         <th><?= __('Id') ?></th>
@@ -301,7 +302,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <th class="actions"><?= __('Ações') ?></th>
                         <?php endif; ?>
                     </tr>
-                    <?php foreach ($muralestagio->muralinscricao as $muralinscricoes): ?>
+                    <?php foreach ($muralestagio->muralinscricoes as $muralinscricoes): ?>
                         <tr>
                             <?php // pr($muralinscricoes) ?>
                             <td><?= h($muralinscricoes->id) ?></td>

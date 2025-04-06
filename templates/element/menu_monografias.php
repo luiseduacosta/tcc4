@@ -9,8 +9,6 @@
  * @var \App\Model\Entity\Monografia $monografia
  */
 $user = $this->getRequest()->getAttribute('identity');
-// echo 'Usuário: ' . $user->username;
-// die();
 ?>
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-secondary">
@@ -42,9 +40,6 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?= $this->Html->link(__('Trajetórias'), ['controller' => 'Estagiariomonografias', 'action' => 'index'], ['class' => 'nav-link']) ?>
                     </li>
                 <?php endif; ?>
-                <li class='nav-item'>
-                    <?= $this->Html->link(__('Mural'), ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'nav-link']) ?>
-                </li>
                 <?php if (isset($user) && !empty($user)): ?>
                     <li class="nav-item">
                         <?= $this->Html->link(__('Sair'), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'nav-link']) ?>
@@ -54,6 +49,9 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?= $this->Html->link(__('Login'), ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link']) ?>
                     </li>
                 <?php endif; ?>
+                <li class='nav-item'>
+                    <?= $this->Html->link(__('Mural'), ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'btn btn-info']) ?>
+                </li>
                 <?php if (isset($user) && !empty($user)): ?>
                     <li class='nav-item'><span class="btn btn-primary"><?= $user->email ?></span></li>
                 <?php else: ?>

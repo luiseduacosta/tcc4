@@ -125,9 +125,9 @@ class MuralestagiosController extends AppController
             }
             $this->Flash->error(__('Registro de mural de estágio não foi feito. Tente novamente.'));
         }
-        $instituicaoestagios = $this->Muralestagios->Instituicoes->find('list');
-        $turmaestagios = $this->Muralestagios->Turmaestagios->find('list');
-        $professores = $this->Muralestagios->Professores->find('list');
+        $instituicaoestagios = $this->fetchTable('Instituicoes')->find('list');
+        $turmaestagios = $this->fetchTable('Turmaestagios')->find('list');
+        $professores = $this->fetchTable('Professores')->find('list');
         // pr($professores);
         // die();
         $this->set(compact('muralestagio', 'instituicaoestagios', 'turmaestagios', 'professores', 'periodo'));
