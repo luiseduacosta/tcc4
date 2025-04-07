@@ -79,6 +79,7 @@ class AlunosController extends AppController
 
         $aluno = $this->Alunos->newEmptyEntity();
         $this->Authorization->authorize($aluno);
+
         if ($this->request->is('post')) {
             $aluno = $this->Alunos->patchEntity($aluno, $this->request->getData());
             if ($this->Alunos->save($aluno)) {
@@ -104,7 +105,22 @@ class AlunosController extends AppController
         $aluno = $this->Alunos->get($id, [
             'contain' => [],
         ]);
-        $this->Authorization->authorize($aluno);
+        $user = $this->getRequest()->getAttribute('identity');
+
+        if (isset($user) && $user->categoria == '1') {
+            $this->Authorization->authorize($aluno);
+        } elseif (isset($user) && $user->categoria == '2') {
+            if ($aluno->id == $user->estudante_id) {
+                $this->Authorization->authorize($aluno);
+            } else {
+                $this->Flash->error(__('Usuário não autorizado.'));
+                return $this->redirect(['action' => 'index']);
+            }
+        } else {
+            $this->Flash->error(__('Operação não autorizada.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $aluno = $this->Alunos->patchEntity($aluno, $this->request->getData());
             if ($this->Alunos->save($aluno)) {
@@ -261,7 +277,7 @@ class AlunosController extends AppController
             ->where([$option])
             ->first();
         /**
-         * Calculo a partir do ingresso em que periodo o aluno está neste momento.
+         * Calculo a partir da data de ingresso em que periodo o aluno está neste momento.
          */
         /* Capturo o periodo do calendario academico atual */
         $periodoacademicoatual = $this->fetchTable('Configuracoes')
@@ -285,12 +301,13 @@ class AlunosController extends AppController
         $atual = explode('-', $periodo_atual);
         // echo $atual[0] . ' ' . $inicial[0] . '<br>';
         /**
-         * Calculo o total de semestres
+         * Calculo o total de semestres multiplicando o número de anos por 2.
          */
         $semestres = (($atual[0] - $inicial[0]) + 1) * 2;
         // pr($semestres);
         // die();
 
+        /** Verifica se o período está completo: ano e semestre */
         if (sizeof($inicial) < 2) {
             $inicial[1] = 0;
             $totalperiodos = $semestres;
@@ -569,6 +586,13 @@ class AlunosController extends AppController
         // die();
     }
 
+    /**
+     * Busca aluno por id
+     *
+     * @param string|null $id Aluno id.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
     public function buscaaluno($id = null)
     {
         $this->viewBuilder()->disableAutoLayout();
@@ -582,15 +606,15 @@ class AlunosController extends AppController
             ->where(['Estagiarios.aluno_id' => $id])
             ->order(['Estagiarios.nivel' => 'desc'])
             ->first();
-        pr($aluno);
+        // pr($aluno);
 
         $configuracao = $this->fetchTable('Configuracao')->find()->first();
         $periodoatual = $configuracao->mural_periodo_atual;
 
-        pr($aluno);
+        // pr($aluno);
 
         if ($aluno) {
-            echo $periodoatual . ' ' . $aluno->periodo . "<br>";
+            // echo $periodoatual . ' ' . $aluno->periodo . "<br>";
             // die();
             if ($periodoatual > $aluno->periodo) {
                 $nivel = $aluno->nivel + 1;

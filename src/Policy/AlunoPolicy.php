@@ -34,7 +34,7 @@ class AlunoPolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Aluno $aluno) {
-        return isset($user->categoria) && $user->categoria == '1' || $this->isAuthor($user, $aluno);
+        return isset($user->categoria) && $user->categoria == '1';
     }
 
     /**
@@ -60,8 +60,7 @@ class AlunoPolicy {
     }
     protected function isAuthor(IdentityInterface $user, Aluno $aluno)
     {
-        $userEntity = $user->getOriginalData();
-        return $aluno->id === $userEntity->getIdentifier()['estudante_id'];
+        return $aluno->id === $user['estudante_id'];
     }
 
 }
