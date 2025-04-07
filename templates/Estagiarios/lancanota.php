@@ -22,6 +22,8 @@
     })
 </script>
 
+<?php echo $this->element('menu_mural'); ?>
+
 <?php
 // die();
 ?>

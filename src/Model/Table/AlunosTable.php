@@ -45,7 +45,7 @@ class AlunosTable extends Table
                 parent::initialize($config);
 
                 $this->setTable('alunos');
-                $this->setAlias('alunos');
+                $this->setAlias('Alunos');
                 $this->setDisplayField('nome');
                 $this->setPrimaryKey('id');
 
@@ -73,7 +73,7 @@ class AlunosTable extends Table
         public function beforeFind($event, $query, $options, $primary)
         {
 
-                $query->order(['alunos.nome' => 'ASC']);
+                $query->order(['Alunos.nome' => 'ASC']);
                 return $query;
         }
 

@@ -9,10 +9,17 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
-
-<?php if (isset($user) && $user->categoria == '1'): ?>
-        <?= $this->Html->link(__('Novo aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
-    <?php endif; ?>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAluno"
+        aria-controls="navbarAluno" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarAluno">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <?php if (isset($user) && $user->categoria == '1'): ?>
+                <?= $this->Html->link(__('Novo aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+            <?php endif; ?>
+        </ul>
+    </div>
 </nav>
 
 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">

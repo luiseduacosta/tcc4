@@ -42,7 +42,7 @@ class SupervisoresTable extends Table {
         parent::initialize($config);
 
         $this->setTable('supervisores');
-        $this->setAlias('supervisores');
+        $this->setAlias('Supervisores');
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 

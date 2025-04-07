@@ -44,7 +44,7 @@ class InstituicoesTable extends Table
         parent::initialize($config);
 
         $this->setTable('estagio');
-        $this->setAlias('instituicoes');
+        $this->setAlias('Instituicoes');
         $this->setDisplayField('instituicao');
         $this->setPrimaryKey('id');
 

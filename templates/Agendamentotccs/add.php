@@ -23,18 +23,16 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php echo $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-            aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <?= $this->Html->link(__('Agendamentos de TCC'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
-                </li>
-            </ul>
-        </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
+        aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <?= $this->Html->link(__('Agendamentos de TCC'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
+        </ul>
     </div>
 </nav>
 

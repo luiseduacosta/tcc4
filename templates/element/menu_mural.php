@@ -25,7 +25,10 @@ $user = $this->getRequest()->getAttribute('identity');
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <?php echo $this->Html->link("Termo de compromisso", "/estagiarios/novotermodecompromisso?aluno_id=" . $user['aluno_id'], ['class' => 'dropdown-item']); ?>
+                                <?php echo $this->Html->link("Declaração de periódo", "/Alunos/certificadoperiodo/" . $user['aluno_id'], ['class' => 'dropdown-item']); ?>
+                            </li>
+                            <li>
+                                <?php echo $this->Html->link("Termo de compromisso", "/estagiarios/novotermocompromisso?aluno_id=" . $user['aluno_id'], ['class' => 'dropdown-item']); ?>
                             </li>
                             <li>
                                 <?php echo $this->Html->link("Declaração de estágio", "/estagiarios/selecionadeclaracaodeestagio/" . $this->getRequest()->getSession()->read('estagiario_id'), ['class' => 'dropdown-item']); ?>
@@ -50,7 +53,9 @@ $user = $this->getRequest()->getAttribute('identity');
                             </li>
                         </ul>
                     </li>
-
+                    <li class="nav-item">
+                        <?php echo $this->Html->link("Alunos", "/Alunos/index", ['class' => 'nav-link']); ?>
+                    </li>
                     <li class="nav-item">
                         <?php echo $this->Html->link("Estagiários", "/Estagiarios/index", ['class' => 'nav-link']); ?>
                     </li>

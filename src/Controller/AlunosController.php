@@ -197,6 +197,14 @@ class AlunosController extends AppController
     }
     public function certificadoperiodo($id = NULL)
     {
+
+        if ($this->request->is('post')) {
+            $tamanhoingresso = strlen($this->getRequest()->getData('ingresso'));
+            if ($tamanhoingresso < 6) {
+                $this->Flash->error(__('Período de ingresso incompleto: falta indicar se for no 1° ou 2° semestre'));
+                return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', $id]);
+            }
+        }
         $this->Authorization->skipAuthorization();
         /**
          * Autorização. Verifica se o aluno cadastrado no Users está acessando seu próprio registro.
@@ -208,7 +216,7 @@ class AlunosController extends AppController
                  * @var $option
                  * Para consultar a tabela alunos com o id.
                  */
-                $option = "id = $aluno_id";
+                $option = "Alunos.id = $aluno_id";
                 // echo "Aluno Id autorizado";
             } else {
                 $estudante_registro = $this->getRequest()->getAttribute('identity')['registro'];
@@ -226,8 +234,20 @@ class AlunosController extends AppController
                     // die('Aluno não autorizado.');
                 }
             }
-        } elseif ($this->getRequest()->getAttribute('identity')['categoria_id'] == '1') {
-            echo "Administrador autorizado";
+        } elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1') {
+            // echo "Administrador autorizado. Selecionou o aluno.";
+            if ($id == NULL) {
+                $aluno_id = $this->getRequest()->getQuery('aluno_id');
+                if ($aluno_id == NULL) {
+                    $this->Flash->error(__('Selecione aluno'));
+                    return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
+                    // die();
+                } else {
+                    $option = "Alunos.id = $aluno_id";
+                }
+            } else {
+                $option = "Alunos.id = $id";
+            }
         } else {
             $this->Flash->error(__('2. Operação não autorizada.'));
             return $this->redirect(['controller' => 'Muralestagios', 'action' => 'index']);
@@ -241,11 +261,12 @@ class AlunosController extends AppController
             ->where([$option])
             ->first();
         /**
-         * Calculo a partir do ingresso em que periodo o aluno esté neste momento.
+         * Calculo a partir do ingresso em que periodo o aluno está neste momento.
          */
         /* Capturo o periodo do calendario academico atual */
-        $configuracaotabela = $this->fetchTable('Configuracoes');
-        $periodoacademicoatual = $configuracaotabela->find()->select(['periodo_calendario_academico'])->first();
+        $periodoacademicoatual = $this->fetchTable('Configuracoes')
+            ->find()->select(['periodo_calendario_academico'])
+            ->first();
         // pr($periodoacademicoatual);
         // die();
         /**
@@ -254,24 +275,27 @@ class AlunosController extends AppController
         $periodo_atual = $periodoacademicoatual->periodo_calendario_academico;
         /** Capturo o periodo inicial para o cálculo dos semetres.
          *  Inicialmente coincide com o campo de ingresso.
-         *  Mas pode ser alterada para fazer coincider os semestres no casos dos alunos que trancaram.
+         *  Mas pode ser alterada para fazer coincidir os semestres no casos dos alunos que trancaram.
          */
         $novoperiodo = $this->getRequest()->getData('novoperiodo');
-        if ($novoperiodo) {
-            $periodo_inicial = $this->getRequest()->getData('novoperiodo');
-        } else {
-            $periodo_inicial = $aluno->ingresso;
-        }
+        $periodo_inicial = $novoperiodo ?? $aluno->ingresso;
+        // pr($periodo_inicial);
 
         $inicial = explode('-', $periodo_inicial);
         $atual = explode('-', $periodo_atual);
         // echo $atual[0] . ' ' . $inicial[0] . '<br>';
-
         /**
          * Calculo o total de semestres
          */
         $semestres = (($atual[0] - $inicial[0]) + 1) * 2;
         // pr($semestres);
+        // die();
+
+        if (sizeof($inicial) < 2) {
+            $inicial[1] = 0;
+            $totalperiodos = $semestres;
+            $this->Flash->error(__('Período de ingresso incompleto: falta indicar se for no 1° ou 2° semestre'));
+        }
 
         /** Se começa no semestre 1 e finaliza no 2 então são anos inteiros */
         if (($inicial[1] == 1) && ($atual[1] == 2)) {
@@ -296,22 +320,15 @@ class AlunosController extends AppController
         /** Se o período inicial é maior que o período atual então informar que há um erro */
         if ($totalperiodos <= 0) {
             $this->Flash->error(__('Error: período inicial é maior que período atual'));
-            return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', '?' => ['registro' => $this->getRequest()->getAttribute('identity')['registro']]]);
+            return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', '?' => ['aluno_id' => $this->getRequest()->getAttribute('identity')['aluno_id']]]);
         }
 
-        // pr($totalperiodos);
-        if (isset($this->getRequest()->getData()['novoperiodo'])) {
-            $aluno->periodonovo = $this->getRequest()->getData()['novoperiodo'];
-        } else {
-            $aluno->periodonovo = $aluno->ingresso;
-        }
+        $novoperiodo = $this->getRequest()->getData('novoperiodo');
+        $aluno->periodonovo = $novoperiodo ?? $aluno->ingresso;
 
-        // pr($aluno);
-        // die();
         $this->set('aluno', $aluno);
         $this->set('totalperiodos', $totalperiodos);
     }
-
 
     public function certificadoperiodopdf($id = NULL)
     {
@@ -350,7 +367,7 @@ class AlunosController extends AppController
     public function planilhacress($id = NULL)
     {
         $this->Authorization->skipAuthorization();
-        $periodo = !is_null($this->getRequest()->getQuery('periodo')) ? $this->getRequest()->getQuery('periodo') : NULL;
+        $periodo = $this->getRequest()->getQuery('periodo') ?: NULL;
         // pr($periodo);
         // die();
         $ordem = 'Alunos.nome';
@@ -550,6 +567,110 @@ class AlunosController extends AppController
         $this->set('periodos', $periodos);
         $this->set('periodoselecionado', $periodo);
         // die();
+    }
+
+    public function buscaaluno($id = null)
+    {
+        $this->viewBuilder()->disableAutoLayout();
+        // $id = 1877;
+        $this->Authorization->skipAuthorization();
+        // $this->request->allowMethod(['ajax']);
+        // $this->autoRender = false;
+        $aluno = $this->Alunos->Estagiarios->find(
+            'all',
+        )
+            ->where(['Estagiarios.aluno_id' => $id])
+            ->order(['Estagiarios.nivel' => 'desc'])
+            ->first();
+        pr($aluno);
+
+        $configuracao = $this->fetchTable('Configuracao')->find()->first();
+        $periodoatual = $configuracao->mural_periodo_atual;
+
+        pr($aluno);
+
+        if ($aluno) {
+            echo $periodoatual . ' ' . $aluno->periodo . "<br>";
+            // die();
+            if ($periodoatual > $aluno->periodo) {
+                $nivel = $aluno->nivel + 1;
+                if ($aluno->ajuste2020 == 1) {
+                    if ($nivel > 3) {
+                        $nivel = 9;
+                    }
+                } elseif ($aluno->ajuste2020 == 0) {
+                    if ($nivel > 4) {
+                        $nivel = 9;
+                    }
+                } else {
+                    $nivel;
+                }
+            } else {
+                $nivel = $aluno->nivel;
+            }
+            $aluno->nivel = $nivel;
+
+        }
+        // pr($aluno);
+        die();
+    }
+
+    public function getaluno($id = null)
+    {
+        $this->Authorization->skipAuthorization();
+        $this->request->allowMethod(['ajax']);
+
+        $id = $this->request->getData('id');
+
+        try {
+
+            $configuracao = $this->fetchTable('Configuracao')->find()->first();
+            $periodoatual = $configuracao->mural_periodo_atual;
+
+            $aluno = $this->Alunos->Estagiarios->find()
+                ->where(['Estagiarios.aluno_id' => $id])
+                ->order(['Estagiarios.nivel' => 'desc'])
+                ->first();
+
+            // pr($aluno);
+
+            if ($aluno) {
+                if ($periodoatual > $aluno->periodo) {
+                    $nivel = $aluno->nivel + 1;
+                    if ($aluno->ajuste2020 == 1) {
+                        if ($nivel > 3) {
+                            $nivel = 9;
+                        }
+                    } elseif ($aluno->ajuste2020 == 0) {
+                        if ($nivel > 4) {
+                            $nivel = 9;
+                        }
+                    } else {
+                        $nivel;
+                    }
+                } else {
+                    $nivel = $aluno->nivel;
+                }
+                $aluno->nivel = $nivel;
+                // pr($aluno);
+
+                return $this->response
+                    ->withType('application/json')
+                    ->withStringBody(json_encode($aluno));
+
+            } else {
+                return $this->response
+                    ->withType('application/json')
+                    ->withStatus(404)
+                    ->withStringBody(json_encode(['error' => 'Aluno não encontrado']));
+            }
+
+        } catch (\Exception $e) {
+            return $this->response
+                ->withType('application/json')
+                ->withStatus(500)
+                ->withStringBody(json_encode(['error' => 'Erro ao buscar aluno']));
+        }
     }
 
 }

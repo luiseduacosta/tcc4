@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\ORM\Rule\IsUnique;
+
 /**
  * Estagiarios Controller
  *
@@ -106,11 +108,15 @@ class EstagiariosController extends AppController
             }
             $this->Flash->error(__('Registro de estagiario nao foi inserido. Tente novamente.'));
         }
-        $alunos = $this->Estagiarios->Alunos->find('list');
-        $instituicoes = $this->Estagiarios->Instituicoes->find('list');
-        $supervisores = $this->Estagiarios->Supervisores->find('list');
-        $docentes = $this->Estagiarios->Professores->find('list');
-        $turmaestagios = $this->Estagiarios->Turmestagios->find('list');
+        $alunos = $this->fetchTable('Alunos')->find('list')
+            ->matching('Estagiarios', function ($q) {
+                return $q->where(['Estagiarios.nivel IS' => 2]);
+            });
+        // $alunos = $this->Estagiarios->fetchTable('Alunos')->find('list');
+        $instituicoes = $this->fetchTable('Instituicoes')->find('list');
+        $supervisores = $this->fetchTable('Supervisores')->find('list');
+        $professores = $this->fetchTable('Professores')->find('list');
+        $turmaestagios = $this->fetchTable('Turmaestagios')->find('list');
         $this->set(compact('estagiario', 'alunos', 'instituicoes', 'supervisores', 'professores', 'turmaestagios'));
     }
 
@@ -434,7 +440,6 @@ class EstagiariosController extends AppController
     /**
      * novotermocompromisso method
      * 
-     * @param scalar $id_aluno
      * @param string $periodo
      * @param scalar $nivel
      * @param string $ajuste2020
@@ -442,17 +447,19 @@ class EstagiariosController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      * 
      */
-    public function novotermocompromisso()
+    public function novotermocompromisso($id = NULL)
     {
 
         $this->Authorization->skipAuthorization();
+        if ($id == null) {
+            $id = $this->getRequest()->getQuery('aluno_id');
+        }
 
-        $aluno_id = $this->getRequest()->getQuery('aluno_id');
         $instituicao_id = $this->getRequest()->getQuery('instituicao_id');
         /** Envio os dados para o formulário */
-        if ($aluno_id) {
+        if ($id) {
 
-            $this->set('aluno_id', $aluno_id);
+            $this->set('aluno_id', $id);
 
             /** Todos os períodos */
             $periodototal = $this->Estagiarios->find('list', [
@@ -471,7 +478,7 @@ class EstagiariosController extends AppController
 
             $estagiario = $this->Estagiarios->find()
                 ->contain(['Alunos', 'Supervisores', 'Professores', 'Instituicoes'])
-                ->where(['Estagiarios.aluno_id' => $aluno_id])
+                ->where(['Estagiarios.aluno_id' => $id])
                 ->order(['Estagiarios.nivel' => 'asc'])
                 ->all()
                 ->last();
@@ -498,7 +505,7 @@ class EstagiariosController extends AppController
             } else {
                 $aluno = $this->fetchTable('Alunos')
                     ->find()
-                    ->where(['id' => $aluno_id])
+                    ->where(['id' => $id])
                     ->first();
                 $nivel = 1; // Se não é estagiário então o nível é 1
                 $this->set('nomealuno', $aluno->nome);
@@ -637,56 +644,58 @@ class EstagiariosController extends AppController
 
     public function selecionadeclaracaodeestagio($id = NULL)
     {
-
+        $this->Authorization->skipAuthorization();
         /* No login foi capturado o id do estagiário */
         $id = $this->getRequest()->getSession()->read('estagiario_id');
-        if (is_null($id)) {
-            $this->Flash->error(__('Selecionar o estudante estagiário'));
+        if ($id === null) {
+            $this->Flash->error(__('Selecionar o estágio do(a) estudante'));
             return $this->redirect('/Alunos/index');
         } else {
-            $estagiarioquery = $this->Estagiarios->find()
-                ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
-                ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('registro')]);
-            $estagiario = $estagiarioquery->all();
+            if ($this->request->getAttribute('categoria') == '2') {
+                $estagiario = $this->Estagiarios->find()
+                    ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
+                    ->where(['Estagiarios.registro' => $this->request->getAttribute('registro')])
+                    ->all();
+            }
             //pr($estagiario);
             // die();
         }
-
         $this->set('estagiario', $estagiario);
     }
 
     public function declaracaodeestagiopdf($id = NULL)
     {
-
-        $estagiarioquery = $this->Estagiarios->find()
+        $this->Authorization->skipAuthorization();
+        $estagiario = $this->Estagiarios->find()
             ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
             ->where(['Estagiarios.id' => $id])
             ->first();
-        // pr($estagioquery);
-        // die('estagioquery');
+        // pr($estagio);
+        // die('estagio');
 
-        if (!$estagiarioquery) {
+        if (!$estagiario) {
             $this->Flash->error(__('Sem estagio cadastrado.'));
             return $this->redirect(['controller' => 'estagiarios', 'action' => 'view', $id]);
         }
 
-        if (empty($estagiarioquery->estudante->identidade)) {
+        if (empty($estagiario->aluno->identidade)) {
             $this->Flash->error(__("Estudante sem RG"));
-            return $this->redirect('/Alunos/view/' . $estagiarioquery->estudante->id);
+            return $this->redirect('/Alunos/view/' . $estagiario->aluno->id);
         }
 
-        if (empty($estagiarioquery->estudante->orgao)) {
+        if (empty($estagiario->aluno->orgao)) {
             $this->Flash->error(__("Estudante não especifica o orgão emisor do documento"));
-            return $this->redirect('/Alunos/view/' . $estagiarioquery->estudante->id);
-        }
-        if (empty($estagiarioquery->estudante->cpf)) {
-            $this->Flash->error(__("Estudante sem CPF"));
-            return $this->redirect('/Alunos/view/' . $estagiarioquery->estudante->id);
+            return $this->redirect('/Alunos/view/' . $estagiario->aluno->id);
         }
 
-        if (empty($estagiarioquery->supervisor->id)) {
+        if (empty($estagiario->aluno->cpf)) {
+            $this->Flash->error(__("Estudante sem CPF"));
+            return $this->redirect('/Alunos/view/' . $estagiario->aluno->id);
+        }
+
+        if (empty($estagiario->supervisor->id)) {
             $this->Flash->error(__("Falta o supervisor de estágio"));
-            return $this->redirect('/Estagiarios/view/' . $estagiarioquery->id);
+            return $this->redirect('/Estagiarios/view/' . $estagiario->id);
         }
 
         $this->viewBuilder()->enableAutoLayout(false);
@@ -699,7 +708,7 @@ class EstagiariosController extends AppController
                 'filename' => 'declaracao_de_estagio_' . $id . '.pdf' //// This can be omitted if you want file name based on URL.
             ]
         );
-        $this->set('estagiario', $estagiarioquery);
+        $this->set('estagiario', $estagiario);
     }
 
     public function selecionafolhadeatividades($id = NULL)

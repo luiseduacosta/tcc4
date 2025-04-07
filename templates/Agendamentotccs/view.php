@@ -10,35 +10,33 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php echo $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-            aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                    <li class="nav-item">
-                        <?= $this->Html->link(__('Agendar Oficina'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
-                    </li>
-                    <li class="nav-item">
-                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id], ['class' => 'btn btn-primary float-end']) ?>
-                    </li>
-                    <li class="nav-item">
-                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $agendamentotcc->id), 'class' => 'btn btn-danger float-start']) ?>
-                    </li>
-                <?php endif; ?>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
+        aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                 <li class="nav-item">
-                    <?= $this->Html->link(__('Agendamentos marcados'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+                    <?= $this->Html->link(__('Agendar Oficina'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
                 </li>
                 <li class="nav-item">
-                    <?= $this->Html->link(__('Ata da Oficna'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id], ['class' => 'btn btn-primary float-end']) ?>
                 </li>
                 <li class="nav-item">
-                    <?= $this->Html->link(__('Declarações de participção'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $agendamentotcc->id), 'class' => 'btn btn-danger float-start']) ?>
                 </li>
-            </ul>
-        </div>
+            <?php endif; ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Agendamentos marcados'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Ata da Oficna'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Declarações de participção'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+            </li>
+        </ul>
     </div>
 </nav>
 

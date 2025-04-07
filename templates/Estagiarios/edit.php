@@ -11,6 +11,8 @@ $user = $this->getRequest()->getAttribute('identity');
     CKEDITOR.replace('observacoes')
 </script>
 
+<?php echo $this->element('menu_mural'); ?>
+
 <?= $this->element('templates') ?>
 
 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>

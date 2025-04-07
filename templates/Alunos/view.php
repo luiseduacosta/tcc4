@@ -9,11 +9,36 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_mural') ?>
 
-<div class="d-flex justify-content-start">
-    <?= $this->Html->link(__('Novo Aluno'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
-    <?= $this->Html->link(__('Editar Aluno'), ['action' => 'edit', $aluno->id], ['class' => 'btn btn-primary']) ?>
-    <?= $this->Html->link(__('Listar Alunos'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-    <?= $this->Form->postLink(__('Excluir Aluno'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id), 'class' => 'btn btn-danger float-end']) ?>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <?= $this->Html->link(__('Declaração de período'), ['action' => 'certificadoperiodo', $aluno->id], ['class' => 'btn btn-primary']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'Estagiarios' ,'action' => 'novotermocompromisso', $aluno->id], ['class' => 'btn btn-primary']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Novo Aluno'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Editar Aluno'), ['action' => 'edit', $aluno->id], ['class' => 'btn btn-primary']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Listar Alunos'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Form->postLink(__('Excluir Aluno'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id), 'class' => 'btn btn-danger float-end']) ?>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="d-flex justify-content-start py-2">
 </div>
 
 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">

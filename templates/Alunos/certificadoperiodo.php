@@ -3,14 +3,13 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Aluno $aluno
  */
-//pr($cargahorariatotal); 
+// pr($cargahorariatotal); 
 // pr($aluno);
 // pr($totalperiodos);
 // echo $aluno->nome;
-
 ?>
 
-<?php echo $this->element('menu_mural') ?>
+<?= $this->element('menu_mural') ?>
 
 <?php
 $submit = [
@@ -20,15 +19,15 @@ $submit = [
 
 <?= $this->element('templates') ?>
 
-<div class="container">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($aluno) ?>
     <fieldset>
-        <legend><?= __('Declaração de ' . $totalperiodos . 'º' . ' período do(a) aluno') ?></legend>
+        <legend><?= __('Declaração de ' . $totalperiodos . 'º' . ' período do(a) aluno(a)') ?></legend>
         <?php
-        if ($aluno->periodonovo):
-            echo $this->Form->control('novoperiodo', ['label' => ['text' => 'Período de ingresso'], 'value' => $aluno->periodonovo]);
+        if ($aluno['periodonovo']):
+            echo $this->Form->control('novoperiodo', ['label' => ['text' => 'Período de ingresso'], 'value' => $aluno['periodonovo']]);
         else:
-            echo $this->Form->control('novoperiodo', ['label' => ['text' => 'Período de ingresso'], 'value' => $aluno->ingresso]);
+            echo $this->Form->control('novoperiodo', ['label' => ['text' => 'Período de ingresso'], 'value' => $aluno-['ingresso']]);
         endif;
         echo $this->Form->control('nome', ['readonly']);
         echo $this->Form->control('nomesocial', ['label' => ['text' => 'Nome social']]);

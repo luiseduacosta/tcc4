@@ -28,7 +28,7 @@ class InstituicoesController extends AppController
             'contain' => ['Supervisores', 'Areainstituicoes'],
             'order' => ['instituicao' => 'ASC']
         ]);
-        $instituicaoestagios = $this->paginate( $query);
+        $instituicaoestagios = $this->paginate($query);
         $this->Authorization->skipAuthorization();
 
         $this->set(compact('instituicaoestagios'));
@@ -123,6 +123,48 @@ class InstituicoesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function buscasupervisores()
+    {
+        
+        $this->Authorization->skipAuthorization();
+
+        if (!$this->request->is('post')) {
+            return $this->response->withStatus(400);
+        }
+
+        $instituicao_id = $this->request->getData('id');
+
+        // $instituicao_id = 265; // Exemplo de ID da instituição, você pode substituir isso por um valor dinâmico
+
+        try {
+            $supervisores = $this->Instituicoes->Supervisores->find(
+                'list',
+                [
+                    'keyField' => 'id',
+                    'valueField' => 'nome',
+                    'joinTable' => 'inst_super',
+                    'joinType' => 'INNER'
+                ]
+            )
+                ->matching('Instituicoes', function ($q) use ($instituicao_id) {
+                    return $q->where(['Instituicoes.id' => $instituicao_id]);
+                })
+                ->order(['nome' => 'ASC'])
+                ->toArray();
+
+            return $this->response
+                ->withType('application/json')
+                ->withStringBody(json_encode($supervisores));
+
+        } catch (\Exception $e) {
+            return $this->response
+                ->withStatus(500)
+                ->withType('application/json')
+                ->withStringBody(json_encode(['error' => 'Erro ao buscar supervisores']));
+        }
+
     }
 
 }
