@@ -445,6 +445,7 @@ class AlunosController extends AppController
                 'Alunos.cpf',
                 'Alunos.nascimento',
                 'Alunos.registro',
+                'Estagiarios.id',
                 'Estagiarios.nivel',
                 'Estagiarios.periodo',
                 'Instituicoes.instituicao'
@@ -532,7 +533,7 @@ class AlunosController extends AppController
                 // Final
                 $final = $c_seguro->periodo;
 
-                // Estagio não obrigatório. Conto como estágio 5
+                // Estagio não obrigatório. Conto como estágio 9
             } elseif ($c_seguro->nivel == 9) {
 
                 $semestre = explode('-', $c_seguro->periodo);
@@ -555,6 +556,7 @@ class AlunosController extends AppController
             }
 
             $t_seguro[$i]['id'] = $c_seguro->aluno->id;
+            $t_seguro[$i]['estagiario_id'] = $c_seguro->id;
             $t_seguro[$i]['nome'] = $c_seguro->aluno->nome;
             $t_seguro[$i]['cpf'] = $c_seguro->aluno->cpf;
             $t_seguro[$i]['nascimento'] = $c_seguro->aluno->nascimento;
@@ -571,7 +573,7 @@ class AlunosController extends AppController
             $t_seguro[$i]['periodo'] = $c_seguro->periodo;
             $t_seguro[$i]['inicio'] = $inicio;
             $t_seguro[$i]['final'] = $final;
-            $t_seguro[$i]['instituicao'] = $c_seguro->instituicao->instituicao;
+            $t_seguro[$i]['instituicao'] = isset($c_seguro->instituicao->instituicao) ? $c_seguro->instituicao->instituicao : 'Sem informação';
             $criterio[$i] = $t_seguro[$i][$ordem];
 
             $i++;

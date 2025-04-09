@@ -24,9 +24,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 )
                 ?>
             </li>
-            <li class="nav-item">
-                <?= $this->Html->link(__('Novo aluno'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
-            </li>
         <?php endif; ?>
     </ul>
 </nav>

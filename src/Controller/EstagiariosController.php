@@ -821,12 +821,18 @@ class EstagiariosController extends AppController
     public function edit($id = null)
     {
 
-        if (is_null($id)) {
+        if ($id === null) {
+            $this->Flash->error(__('Sem parâmetro para localizar o estagiário.'));
             throw new \Cake\Http\Exception\NotFoundException(__('Sem parâmetro para localizar o estagiário.'));
         } else {
             $estagiario = $this->Estagiarios->get($id, [
                 'contain' => [],
             ]);
+        }
+        $this->Authorization->authorize($estagiario);
+        if (!$estagiario) {
+            $this->Flash->error(__('Estagiário não encontrado.'));
+            return $this->redirect(['action' => 'index']);
         }
         if ($this->request->is(['patch', 'post', 'put'])) {
             $estagiario = $this->Estagiarios->patchEntity($estagiario, $this->request->getData());
@@ -837,12 +843,21 @@ class EstagiariosController extends AppController
             }
             $this->Flash->error(__('Registro de estagiario nao foi atualizado. Tente novamente.'));
         }
-        $alunos = $this->Estagiarios->Alunos->find('list');
-        $instituicoes = $this->Estagiarios->Instituicoes->find('list');
-        $supervisores = $this->Estagiarios->Supervisores->find('list');
-        $professores = $this->Estagiarios->Professores->find('list', ['limit' => 500]);
-        $turamestagios = $this->Estagiarios->Turmestagios->find('list', ['limit' => 200]);
-        $this->set(compact('estagiario', 'alunos', 'instituicoes', 'supervisores', 'professores', 'turmaestagios'));
+
+        /** Supervisores da instituição */
+        $supervisoresporinstituicao = $this->fetchTable('Instituicoes')->find()
+            ->contain(['Supervisores'])
+            ->where(['Instituicoes.id' => $estagiario->instituicao_id])
+            ->first();
+        foreach ($supervisoresporinstituicao->supervisores as $supervisor) {
+            $supervisores[$supervisor->id] = $supervisor->nome;
+        }
+        $alunos = $this->fetchTable('Alunos')->find('list');
+        $instituicoes = $this->fetchTable('Instituicoes')->find('list');
+        $professores = $this->fetchTable('Professores')->find('list');
+        $turamestagios = $this->fetchTable('Turmaestagios')->find('list');
+        $this->set(compact('estagiario', 'alunos', 'instituicoes', 'supervisores', 'professores', 'turamestagios'));
+        $this->set('turmaestagios', $turamestagios);
     }
 
     /**

@@ -163,6 +163,10 @@ class EstagiariosTable extends Table
         {
                 $rules->add($rules->existsIn(['aluno_id'], 'Alunos'));
                 $rules->add($rules->existsIn(['professor_id'], 'Professores'));
+                $rules->add($rules->existsIn(['turmaestagio_id'], 'Turmaestagios'));
+                $rules->add($rules->existsIn(['supervisor_id'], 'Supervisores'));
+                $rules->add($rules->existsIn(['instituicao_id'], 'Instituicoes'));
+                $rules->add($rules->existsIn(['tccestudante_id'], 'Tccestudantes'));
 
                 return $rules;
         }

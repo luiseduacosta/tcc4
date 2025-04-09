@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Estagiario $estagiario
  */
 ?>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function getaluno(id) {
@@ -109,7 +110,7 @@
         echo $this->Form->control('turmaestagio_id', ['label' => 'Turma de estágio', 'options' => $turmaestagios, 'empty' => true]);
         echo $this->Form->control('nota');
         echo $this->Form->control('ch', ['label' => 'Carga horária']);
-        echo $this->Form->control('observacoes');
+        echo $this->Form->control('observacoes', ['type' => 'textarea', 'rows' => '3', 'cols' => '40', 'label' => 'Observações']);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Confirmar')) ?>

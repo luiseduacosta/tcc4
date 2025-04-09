@@ -61,6 +61,7 @@ class InstituicoesTable extends Table
             'foreignKey' => 'instituicao_id',
         ]);
         $this->belongsToMany('Supervisores', [
+            'className' => 'Supervisores',
             'foreignKey' => 'instituicao_id',
             'targetForeignKey' => 'supervisor_id',
             'joinTable' => 'inst_super',

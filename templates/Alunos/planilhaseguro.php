@@ -14,7 +14,6 @@
 <?= $this->element('menu_mural') ?>
 
 <script>
-
     var base_url = "<?= $this->Html->Url->build(['controller' => 'Alunos', 'action' => 'planilhaseguro']); ?>";
     /* alert(base_url); */
 
@@ -26,7 +25,6 @@
             window.location = base_url + "?periodo=" + periodo;
         })
     });
-
 </script>
 
 <?= $this->element('templates') ?>
@@ -60,11 +58,11 @@
             </tr>
         </thead>
         <?php foreach ($t_seguro as $cada_aluno): ?>
-            <?php // pr($cada_aluno);  ?>
+            <?php pr($cada_aluno);  ?>
             <?php // die(); ?>
             <tr>
                 <td>
-                    <?php echo $this->Html->link($cada_aluno['nome'], '/alunos/view/' . $cada_aluno['id']); ?>
+                    <?php echo $this->Html->link($cada_aluno['nome'], '/Estagiarios/view/' . $cada_aluno['estagiario_id']); ?>
                 </td>
                 <td>
                     <?php echo $cada_aluno['cpf']; ?>
