@@ -6,6 +6,7 @@
 ?>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
     function getaluno(id) {
         $.ajax({
@@ -116,3 +117,37 @@
     <?= $this->Form->button(__('Confirmar')) ?>
     <?= $this->Form->end() ?>
 </div>
+
+<script type="module">
+    import {
+        ClassicEditor,
+        Essentials,
+        Bold,
+        Italic,
+        Strikethrough,
+        Font,
+        Paragraph,
+        List,
+        Alignment
+    } from 'ckeditor5';
+
+    let requisitos;
+    if (typeof requisitos !== 'undefined') {
+        requisitos.destroy();
+    }
+
+    ClassicEditor
+        .create(document.querySelector('#observacoes'), {
+            plugins: [Essentials, Bold, Italic, Strikethrough, Font, Paragraph, List, Alignment],
+            toolbar: [
+                'undo', 'redo', '|', 'bold', 'italic', 'strikethrough', 'bulletedList', 'numberedList', 'alignment', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+            ]
+        })
+        .then(editor => {
+            observacoes = editor;
+            console.log('Olá editor observações inicializado', observacoes);
+            requisitos.setData("");
+        });
+
+</script>

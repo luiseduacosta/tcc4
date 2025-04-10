@@ -86,7 +86,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php // pr($estagiario); ?>
                     <td><?= $this->Html->link($estagiario->id, ['controller' => 'estagiarios', 'action' => 'view', $estagiario->id]) ?>
                     </td>
-                    <td><?= $estagiario->hasValue('aluno') ? $this->Html->link($estagiario->aluno['nome'], ['controller' => 'Alunos', 'action' => 'view', $estagiario['aluno_id']]) : '' ?>
+                    <td><?= $estagiario->hasValue('alunos') ? $this->Html->link($estagiario->alunos['nome'], ['controller' => 'Alunos', 'action' => 'view', $estagiario['aluno_id']]) : '' ?>
                     </td>
                     <td><?= $estagiario->registro ?></td>
                     <td><?= h($estagiario->ajuste2020) == 0 ? 'Não' : 'Sim' ?></td>
@@ -98,25 +98,25 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php else: ?>
                         <td>Sem dados</td>
                     <?php endif; ?>
-                    <?php if (isset($estagiario->instituicao['instituicao'])): ?>
-                        <td><?= $estagiario->hasValue('instituicao') ? $this->Html->link($estagiario->instituicao['instituicao'], ['controller' => 'Instituicoes', 'action' => 'view', $estagiario->instituicao['id']]) : '' ?>
+                    <?php if (isset($estagiario->instituicoes['instituicao'])): ?>
+                        <td><?= $estagiario->hasValue('instituicoes') ? $this->Html->link($estagiario->instituicoes['instituicao'], ['controller' => 'Instituicoes', 'action' => 'view', $estagiario->instituicoes['id']]) : '' ?>
                         </td>
                     <?php endif; ?>
-                    <?php if (isset($estagiario->supervisor['nome'])): ?>
-                        <td><?= $estagiario->hasValue('supervisor') ? $this->Html->link($estagiario->supervisor['nome'], ['controller' => 'Supervisores', 'action' => 'view', $estagiario->supervisor['id']]) : '' ?>
+                    <?php if (isset($estagiario->supervisores['nome'])): ?>
+                        <td><?= $estagiario->hasValue('supervisores') ? $this->Html->link($estagiario->supervisores['nome'], ['controller' => 'Supervisores', 'action' => 'view', $estagiario->supervisores['id']]) : '' ?>
                         </td>
                     <?php else: ?>
                         <td>Sem dados</td>
                     <?php endif; ?>
-                    <?php if (isset($estagiario->professor['nome'])): ?>
-                        <td><?= $estagiario->hasValue('professor') ? $this->Html->link($estagiario->professor['nome'], ['controller' => 'Professores', 'action' => 'view', $estagiario->professor['id']]) : '' ?>
+                    <?php if (isset($estagiario->professores['nome'])): ?>
+                        <td><?= $estagiario->hasValue('professores') ? $this->Html->link($estagiario->professores['nome'], ['controller' => 'Professores', 'action' => 'view', $estagiario->professores['id']]) : '' ?>
                         </td>
                     <?php else: ?>
                         <td>Sem dados</td>
                     <?php endif; ?>
                     <td><?= h($estagiario->periodo) ?></td>
-                    <?php if (isset($estagiario->turmaestagio['area'])): ?>
-                        <td><?= $estagiario->hasValue('turmaestagio') ? $this->Html->link($estagiario->turmaestagio['area'], ['controller' => 'Turmaestagios', 'action' => 'view', $estagiario->turmaestagio['areaestagio_id']]) : '' ?>
+                    <?php if (isset($estagiario->turmaestagios['area'])): ?>
+                        <td><?= $estagiario->hasValue('turmaestagios') ? $this->Html->link($estagiario->turmaestagios['area'], ['controller' => 'Turmaestagios', 'action' => 'view', $estagiario->turmaestagios['areaestagio_id']]) : '' ?>
                         </td>
                     <?php else: ?>
                         <td>Sem dados</td>

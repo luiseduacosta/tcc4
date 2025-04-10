@@ -48,7 +48,7 @@ class ProfessoresController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
-        if (is_null($id)) {
+        if ($id === null) {
             $siape = $this->getRequest()->getQuery('siape');
             if (isset($siape)):
                 $idquery = $this->Professores->find()
