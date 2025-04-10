@@ -10,7 +10,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerSupervisores"
-            aria-controls="navbarTogglerSupervisores" aria-expanded="false" aria-label="Toggle navigation">
+        aria-controls="navbarTogglerSupervisores" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerSupervisores">
@@ -27,15 +27,15 @@ $user = $this->getRequest()->getAttribute('identity');
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link active" data-bs-toggle="tab" href="#supervisora" role="tab" aria-controls="supervisora"
-               aria-selected="true">Supervisora</a>
+                aria-selected="true">Supervisora</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="tab" href="#instituicao" role="tab" aria-controls="instituicao"
-               aria-selected="false">Instituição</a>
+                aria-selected="false">Instituição</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="tab" href="#estagiarios" role="tab" aria-controls="estagiarios"
-               aria-selected="false">Estagiários</a>
+                aria-selected="false">Estagiários</a>
         </li>
     </ul>
 </div>
@@ -63,7 +63,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($supervisor->nome) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Cpf') ?></th>
+                    <th><?= __('CPF') ?></th>
                     <td><?= h($supervisor->cpf) ?></td>
                 </tr>
                 <tr>
@@ -71,7 +71,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($supervisor->cargo) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Cep') ?></th>
+                    <th><?= __('CEP') ?></th>
                     <td><?= h($supervisor->cep) ?></td>
                 </tr>
                 <tr>
@@ -146,100 +146,96 @@ $user = $this->getRequest()->getAttribute('identity');
         <div id="instituicao" class="tab-pane container fade">
             <h4><?= __('Instituição de estágio') ?></h4>
             <?php if (!empty($supervisor->instituicoes)): ?>
-                <div class="table-responsive">
-                    <table>
+                <table class="table table-striped table-hover table-responsive">
+                    <tr>
+                        <th><?= __('Id') ?></th>
+                        <th><?= __('Instituicao') ?></th>
+                        <th><?= __('Cnpj') ?></th>
+                        <th><?= __('Email') ?></th>
+                        <th><?= __('Endereco') ?></th>
+                        <th><?= __('Bairro') ?></th>
+                        <th><?= __('Municipio') ?></th>
+                        <th><?= __('Cep') ?></th>
+                        <th><?= __('Telefone') ?></th>
+                        <th><?= __('Convenio') ?></th>
+                        <th><?= __('Expira') ?></th>
+                        <th><?= __('Seguro') ?></th>
+                        <th><?= __('Observacoes') ?></th>
+                        <th class="row"><?= __('Ações') ?></th>
+                    </tr>
+                    <?php foreach ($supervisor->instituicoes as $instituicaoestagios): ?>
                         <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Instituicao') ?></th>
-                            <th><?= __('Cnpj') ?></th>
-                            <th><?= __('Email') ?></th>
-                            <th><?= __('Endereco') ?></th>
-                            <th><?= __('Bairro') ?></th>
-                            <th><?= __('Municipio') ?></th>
-                            <th><?= __('Cep') ?></th>
-                            <th><?= __('Telefone') ?></th>
-                            <th><?= __('Convenio') ?></th>
-                            <th><?= __('Expira') ?></th>
-                            <th><?= __('Seguro') ?></th>
-                            <th><?= __('Observacoes') ?></th>
-                            <th class="actions"><?= __('Ações') ?></th>
+                            <td><?= h($instituicaoestagios->id) ?></td>
+                            <td><?= h($instituicaoestagios->instituicao) ?></td>
+                            <td><?= h($instituicaoestagios->cnpj) ?></td>
+                            <td><?= h($instituicaoestagios->email) ?></td>
+                            <td><?= h($instituicaoestagios->endereco) ?></td>
+                            <td><?= h($instituicaoestagios->bairro) ?></td>
+                            <td><?= h($instituicaoestagios->municipio) ?></td>
+                            <td><?= h($instituicaoestagios->cep) ?></td>
+                            <td><?= h($instituicaoestagios->telefone) ?></td>
+                            <td><?= h($instituicaoestagios->convenio) ?></td>
+                            <td><?= h($instituicaoestagios->expira) ?></td>
+                            <td><?= h($instituicaoestagios->seguro) ?></td>
+                            <td><?= h($instituicaoestagios->observacoes) ?></td>
+                            <td class="row">
+                                <?= $this->Html->link(__('Ver'), ['controller' => 'Instituicoes', 'action' => 'view', $instituicaoestagios->id]) ?>
+                                <?php if (isset($user) && $user->categoria == 1): ?>
+                                    <?= $this->Html->link(__('Editar'), ['controller' => 'Instituicoes', 'action' => 'edit', $instituicaoestagios->id]) ?>
+                                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Instituicoes', 'action' => 'delete', $instituicaoestagios->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $instituicaoestagios->id)]) ?>
+                                <?php endif; ?>
+                            </td>
                         </tr>
-                        <?php foreach ($supervisor->instituicoes as $instituicaoestagios): ?>
-                            <tr>
-                                <td><?= h($instituicaoestagios->id) ?></td>
-                                <td><?= h($instituicaoestagios->instituicao) ?></td>
-                                <td><?= h($instituicaoestagios->cnpj) ?></td>
-                                <td><?= h($instituicaoestagios->email) ?></td>
-                                <td><?= h($instituicaoestagios->endereco) ?></td>
-                                <td><?= h($instituicaoestagios->bairro) ?></td>
-                                <td><?= h($instituicaoestagios->municipio) ?></td>
-                                <td><?= h($instituicaoestagios->cep) ?></td>
-                                <td><?= h($instituicaoestagios->telefone) ?></td>
-                                <td><?= h($instituicaoestagios->convenio) ?></td>
-                                <td><?= h($instituicaoestagios->expira) ?></td>
-                                <td><?= h($instituicaoestagios->seguro) ?></td>
-                                <td><?= h($instituicaoestagios->observacoes) ?></td>
-                                <td class="actions">
-                                    <?= $this->Html->link(__('Ver'), ['controller' => 'Instituicaoestagios', 'action' => 'view', $instituicaoestagios->id]) ?>
-                                    <?php if ($user->categoria == 1): ?>
-                                        <?= $this->Html->link(__('Editar'), ['controller' => 'Instituicaoestagios', 'action' => 'edit', $instituicaoestagios->id]) ?>
-                                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Instituicaoestagios', 'action' => 'delete', $instituicaoestagios->id], ['confirm' => __('Are you sure you want to delete # {0}?', $instituicaoestagios->id)]) ?>
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
+                    <?php endforeach; ?>
+                </table>
             <?php endif; ?>
         </div>
 
         <div id="estagiarios" class="tab-pane container fade">
             <h4><?= __('Estagiarios') ?></h4>
             <?php if (!empty($supervisor->estagiarios)): ?>
-                <div class="table-responsive">
-                    <table>
+                <table class="table table-striped table-hover table-responsive">
+                    <tr>
+                        <th><?= __('Id') ?></th>
+                        <th><?= __('Estudante') ?></th>
+                        <th><?= __('Registro') ?></th>
+                        <th><?= __('Turno') ?></th>
+                        <th><?= __('Nivel') ?></th>
+                        <th><?= __('Docente') ?></th>
+                        <th><?= __('Periodo') ?></th>
+                        <th><?= __('Nota') ?></th>
+                        <th><?= __('Ch') ?></th>
+                        <th><?= __('Observacoes') ?></th>
+                        <th class="row"><?= __('Ações') ?></th>
+                    </tr>
+                    <?php foreach ($supervisor->estagiarios as $estagiarios): ?>
                         <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Estudante') ?></th>
-                            <th><?= __('Registro') ?></th>
-                            <th><?= __('Turno') ?></th>
-                            <th><?= __('Nivel') ?></th>
-                            <th><?= __('Docente') ?></th>
-                            <th><?= __('Periodo') ?></th>
-                            <th><?= __('Nota') ?></th>
-                            <th><?= __('Ch') ?></th>
-                            <th><?= __('Observacoes') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
+                            <td><?= h($estagiarios->id) ?></td>
+                            <td><?= $this->Html->link($estagiarios->aluno['nome'], ['controller' => 'aluno', 'action' => 'view', $estagiarios->aluno_id]) ?>
+                            </td>
+                            <td><?= h($estagiarios->registro) ?></td>
+                            <td><?= h($estagiarios->turno) ?></td>
+                            <td><?= h($estagiarios->nivel) ?></td>
+                            <?php if (isset($user) && $user->categoria == '1'): ?>
+                                <td><?= $estagiarios->has('professor') ? $this->Html->link(h($estagiarios->professor['nome']), ['controller' => 'Professores', 'action' => 'view', $estagiarios->professor_id]) : '' ?>
+                                </td>
+                            <?php else: ?>
+                                <td><?= $estagiarios->has('professor') ? $estagiarios->professor['nome'] : '' ?>
+                                <?php endif; ?>
+                            <td><?= h($estagiarios->periodo) ?></td>
+                            <td><?= h($estagiarios->nota) ?></td>
+                            <td><?= h($estagiarios->ch) ?></td>
+                            <td><?= h($estagiarios->observacoes) ?></td>
+                            <td class="row">
+                                <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
+                                <?php if (isset($user) && $user->categoria == '1'): ?>
+                                    <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
+                                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Are you sure you want to delete # {0}?', $estagiarios->id)]) ?>
+                                <?php endif; ?>
+                            </td>
                         </tr>
-                        <?php foreach ($supervisor->estagiarios as $estagiarios): ?>
-                            <tr>
-                                <td><?= h($estagiarios->id) ?></td>
-                                <td><?= $this->Html->link($estagiarios->aluno['nome'], ['controller' => 'aluno', 'action' => 'view', $estagiarios->aluno_id]) ?>
-                                </td>
-                                <td><?= h($estagiarios->registro) ?></td>
-                                <td><?= h($estagiarios->turno) ?></td>
-                                <td><?= h($estagiarios->nivel) ?></td>
-                                <?php if ($user->categoria == '1'): ?>
-                                    <td><?= $estagiarios->has('professor') ? $this->Html->link(h($estagiarios->professor['nome']), ['controller' => 'Professores', 'action' => 'view', $estagiarios->professor_id]) : '' ?>
-                                    </td>
-                                <?php else: ?>
-                                    <td><?= $estagiarios->has('professor') ? $estagiarios->professor['nome'] : '' ?>
-                                    <?php endif; ?>
-                                <td><?= h($estagiarios->periodo) ?></td>
-                                <td><?= h($estagiarios->nota) ?></td>
-                                <td><?= h($estagiarios->ch) ?></td>
-                                <td><?= h($estagiarios->observacoes) ?></td>
-                                <td class="actions">
-                                    <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
-                                    <?php if ($user->categoria == 1): ?>
-                                        <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
-                                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Are you sure you want to delete # {0}?', $estagiarios->id)]) ?>
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
+                    <?php endforeach; ?>
+                </table>
             <?php endif; ?>
         </div>
     </div>

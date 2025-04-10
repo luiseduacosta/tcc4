@@ -29,11 +29,13 @@ $user = $this->getRequest()->getAttribute('identity');
         aria-controls="navbarTogglerMural" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMural">
-        <li class="nav-item">
-            <?= $this->Html->link(__('Novo mural'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
-        </li>
-    </ul>
+    <?php if (isset($user) && $user->categoria == '1'): ?>
+        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMural">
+            <li class="nav-item">
+                <?= $this->Html->link(__('Novo mural'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
+            </li>
+        </ul>
+    <?php endif; ?>
 </nav>
 
 <?php if (isset($user) && $user['categoria'] == '1'): ?>

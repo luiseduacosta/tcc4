@@ -4,7 +4,7 @@
  * @var array $params
  * @var string $message
  */
-$class = 'bg-success';
+$class = 'badge bg-success';
 if (!isset($params['escape']) || $params['escape'] !== false) {
     $message = h($message);
 }

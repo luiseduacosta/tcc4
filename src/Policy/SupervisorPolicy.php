@@ -10,7 +10,8 @@ use Authorization\IdentityInterface;
 /**
  * Supervisor policy
  */
-class SupervisorPolicy {
+class SupervisorPolicy
+{
 
     /**
      * Check if $user can add Supervisor
@@ -19,19 +20,28 @@ class SupervisorPolicy {
      * @param \App\Model\Entity\Supervisor $supervisor
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, Supervisor $supervisor) {
-        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '4';
+    public function canAdd(?IdentityInterface $user, Supervisor $supervisor)
+    {
+        if (!$user) {
+            return false;
+        }
+
+        return isset($user) && ($user->categoria == '1' || $user->categoria == '4');
     }
 
     /**
      * Check if $user can edit Supervisor
-     *
      * @param \Authorization\IdentityInterface $user The user.
      * @param \App\Model\Entity\Supervisor $supervisor
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, Supervisor $supervisor) {
-        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '4';
+    public function canEdit(?IdentityInterface $user, Supervisor $supervisor)
+    {
+        if (!$user) {
+            return false;
+        }
+
+        return isset($user) && ($user->categoria == '1' || $user->categoria == '4');
     }
 
     /**
@@ -41,8 +51,13 @@ class SupervisorPolicy {
      * @param \App\Model\Entity\Supervisor $supervisor
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, Supervisor $supervisor) {
-        return isset($user->categoria) && $user->categoria == '1';
+    public function canDelete(?IdentityInterface $user, Supervisor $supervisor)
+    {
+        if (!$user) {
+            return false;
+        }
+
+        return isset($user) && $user->categoria == '1';
     }
 
     /**
@@ -52,8 +67,12 @@ class SupervisorPolicy {
      * @param \App\Model\Entity\Supervisor $supervisor
      * @return bool
      */
-    public function canView(IdentityInterface $user, Supervisor $supervisor) {
-        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '4';
+    public function canView(?IdentityInterface $user, Supervisor $supervisor)
+    {
+        if (!$user) {
+            return false;
+        }
+        return isset($user) && $user->categoria == '1' || $user->categoria == '4';
     }
 
 }

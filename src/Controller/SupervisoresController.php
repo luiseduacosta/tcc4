@@ -39,7 +39,7 @@ class SupervisoresController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
-        if (is_null($id)):
+        if ($id === null):
             $cress = $this->getRequest()->getQuery('cress');
             $supervisorquery = $this->Supervisores->find()
                 ->where(['cress' => $cress]);
@@ -50,7 +50,7 @@ class SupervisoresController extends AppController
         $supervisor = $this->Supervisores->get($id, [
             'contain' => ['Instituicoes' => ['Areainstituicoes'], 'Estagiarios' => ['Alunos', 'Supervisores', 'Professores', 'Instituicoes']],
         ]);
-        $this->Authorization->authorize($supervisor);
+        // $this->Authorization->authorize($supervisor);
         $this->set(compact('supervisor'));
     }
 
