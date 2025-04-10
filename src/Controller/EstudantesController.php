@@ -1,6 +1,5 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -47,7 +46,6 @@ class EstudantesController extends AppController
                     return $q->where(['nivel' => '4']);
                 }
             ])
-            ->limit(100)
             ->all();
 
         $parameters = $this->request->getQueryParams();
