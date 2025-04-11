@@ -49,7 +49,6 @@ $this->assign('title', __('Mural de Estágios'));
 
 <div class="row">
     <div class="tab-content">
-
         <div id="instituicao" class="tab-pane container active show">
             <h3><?= h($muralestagio->instituicao) ?></h3>
 
@@ -286,47 +285,49 @@ $this->assign('title', __('Mural de Estágios'));
             </table>
         </div>
 
-        <div id="inscricoes" class="tab-pane container fade">
-            <h3><?= __('Inscrições para seleção de estágio') ?></h3>
-            <?php if (!empty($muralestagio->muralinscricoes)): ?>
-                <table class="table table-responsive table-striped table-hover">
-                    <tr>
-                        <th><?= __('Id') ?></th>
-                        <th><?= __('Registro') ?></th>
-                        <th><?= __('Estudante') ?></th>
-                        <th><?= __('Vaga de estágio') ?></th>
-                        <th><?= __('Data') ?></th>
-                        <th><?= __('Periodo') ?></th>
-                        <?php if (isset($user) && $user->categoria == 1): ?>
-                            <th><?= __('Timestamp') ?></th>
-                            <th class="actions"><?= __('Ações') ?></th>
-                        <?php endif; ?>
-                    </tr>
-                    <?php foreach ($muralestagio->muralinscricoes as $muralinscricoes): ?>
+        <div class="tab-content">
+            <div id="inscricoes" class="tab-pane container fade">
+                <h3><?= __('Inscrições para seleção de estágio') ?></h3>
+                <?php if (!empty($muralestagio->muralinscricoes)): ?>
+                    <table class="table table-responsive table-striped table-hover">
                         <tr>
-                            <?php // pr($muralinscricoes) ?>
-                            <td><?= h($muralinscricoes->id) ?></td>
-                            <td><?= h($muralinscricoes->registro) ?></td>
-                            <td><?= (isset($user) && $user->categoria == 1) ? $this->Html->link($muralinscricoes->alunos['nome'], ['controller' => 'Alunos', 'action' => 'view', $muralinscricoes->aluno_id]) : $muralinscricoes->alunos['nome']; ?>
-                            </td>
-                            <td><?= $this->Html->link($muralinscricoes->muralestagios['instituicao'], ['controller' => 'muralestagios', 'action' => 'view', $muralinscricoes->muralestagio_id]) ?>
-                            </td>
-                            <td><?= date('d-m-Y', strtotime(h($muralinscricoes->data))) ?></td>
-                            <td><?= h($muralinscricoes->periodo) ?></td>
+                            <th><?= __('Id') ?></th>
+                            <th><?= __('Registro') ?></th>
+                            <th><?= __('Estudante') ?></th>
+                            <th><?= __('Vaga de estágio') ?></th>
+                            <th><?= __('Data') ?></th>
+                            <th><?= __('Periodo') ?></th>
                             <?php if (isset($user) && $user->categoria == 1): ?>
-                                <td><?= date('d-m-Y', strtotime($muralinscricoes->timestamp)) ?></td>
-                                <td class="row">
-                                    <?= $this->Html->link(__('Ver'), ['controller' => 'Muralinscricoes', 'action' => 'view', $muralinscricoes->id]) ?>
-                                    <?= $this->Html->link(__('Editar'), ['controller' => 'Muralinscricoes', 'action' => 'edit', $muralinscricoes->id]) ?>
-                                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Muralinscricoes', 'action' => 'delete', $muralinscricoes->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $muralinscricoes->id)]) ?>
-                                </td>
+                                <th><?= __('Timestamp') ?></th>
+                                <th class="actions"><?= __('Ações') ?></th>
                             <?php endif; ?>
                         </tr>
-                    <?php endforeach; ?>
-                </table>
-            <?php else: ?>
-                <p>Sem inscrições</p>
-            <?php endif; ?>
+                        <?php foreach ($muralestagio->muralinscricoes as $muralinscricoes): ?>
+                            <tr>
+                                <?php // pr($muralinscricoes) ?>
+                                <td><?= h($muralinscricoes->id) ?></td>
+                                <td><?= h($muralinscricoes->registro) ?></td>
+                                <td><?= (isset($user) && $user->categoria == 1) ? $this->Html->link($muralinscricoes->alunos['nome'], ['controller' => 'Alunos', 'action' => 'view', $muralinscricoes->aluno_id]) : $muralinscricoes->alunos['nome']; ?>
+                                </td>
+                                <td><?= $this->Html->link($muralinscricoes->muralestagios['instituicao'], ['controller' => 'muralestagios', 'action' => 'view', $muralinscricoes->muralestagio_id]) ?>
+                                </td>
+                                <td><?= date('d-m-Y', strtotime(h($muralinscricoes->data))) ?></td>
+                                <td><?= h($muralinscricoes->periodo) ?></td>
+                                <?php if (isset($user) && $user->categoria == 1): ?>
+                                    <td><?= date('d-m-Y', strtotime($muralinscricoes->timestamp)) ?></td>
+                                    <td class="row">
+                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Muralinscricoes', 'action' => 'view', $muralinscricoes->id]) ?>
+                                        <?= $this->Html->link(__('Editar'), ['controller' => 'Muralinscricoes', 'action' => 'edit', $muralinscricoes->id]) ?>
+                                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Muralinscricoes', 'action' => 'delete', $muralinscricoes->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $muralinscricoes->id)]) ?>
+                                    </td>
+                                <?php endif; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                <?php else: ?>
+                    <p>Sem inscrições</p>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </div>
