@@ -6,7 +6,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<?php $user = $this->getRequest()->getAttribute('identity'); ?>
+<?= $this->element('menu_mural') ?>
 
 <?php if (isset($user) && $user->categoria_id == 1): ?>
     <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">

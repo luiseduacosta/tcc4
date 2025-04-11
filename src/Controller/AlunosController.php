@@ -64,7 +64,7 @@ class AlunosController extends AppController
         }
         // $this->Authorization->authorize($aluno);
         $aluno = $this->Alunos->get($id, [
-            'contain' => ['Estagiarios' => ['Instituicoes', 'Alunos', 'Supervisores', 'Professores'], 'Muralinscricoes' => 'Muralestagios']
+            'contain' => ['Estagiarios' => ['Instituicoes', 'Alunos', 'Supervisores', 'Professores', 'Turmaestagios'], 'Muralinscricoes' => 'Muralestagios']
         ]);
         $this->set(compact('aluno'));
     }

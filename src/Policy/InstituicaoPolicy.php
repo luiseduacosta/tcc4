@@ -19,8 +19,8 @@ class InstituicaoPolicy {
      * @param \App\Model\Entity\Instituicao $instituicao
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, Instituicao $instituicao) {
-        return isset($user->categoria) && $user->categoria == '1';
+    public function canAdd(?IdentityInterface $user, Instituicao $instituicao) {
+        return isset($user) && $user->categoria == '1';
     }
 
     /**
@@ -30,8 +30,8 @@ class InstituicaoPolicy {
      * @param \App\Model\Entity\Instituicao $instituicao
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, Instituicao $instituicao) {
-        return isset($user->categoria) && $user->categoria == '1';
+    public function canEdit(?IdentityInterface $user, Instituicao $instituicao) {
+        return isset($user) && $user->categoria == '1';
     }
 
     /**
@@ -41,8 +41,8 @@ class InstituicaoPolicy {
      * @param \App\Model\Entity\Instituicao $instituicao
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, Instituicao $instituicao) {
-        return isset($user->categoria) && $user->categoria == '1';
+    public function canDelete(?IdentityInterface $user, Instituicao $instituicao) {
+        return isset($user) && $user->categoria == '1';
     }
 
     /**
@@ -52,7 +52,7 @@ class InstituicaoPolicy {
      * @param \App\Model\Entity\Instituicao $instituicao
      * @return bool
      */
-    public function canView(IdentityInterface $user, Instituicao $instituicao) {
+    public function canView(?IdentityInterface $user, Instituicao $instituicao) {
         return true;
     }
 

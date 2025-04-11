@@ -43,10 +43,16 @@ class InstituicoesController extends AppController
      */
     public function view($id = null)
     {
-        $instituicaoestagio = $this->Instituicoes->get($id, [
-            'contain' => ['Areainstituicoes', 'Supervisores', 'Estagiarios' => ['Alunos', 'Instituicoes', 'Professores', 'Supervisores'], 'Muralestagios', 'Visitas'],
-        ]);
-        $this->Authorization->authorize($instituicaoestagio);
+        $this->Authorization->skipAuthorization();
+        try {
+            $instituicaoestagio = $this->Instituicoes->get($id, [
+                'contain' => ['Areainstituicoes', 'Supervisores', 'Estagiarios' => ['Alunos', 'Instituicoes', 'Professores', 'Supervisores', 'Turmaestagios'], 'Muralestagios', 'Visitas']
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Instituição não encontrada.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $this->set(compact('instituicaoestagio'));
     }
 
@@ -64,7 +70,7 @@ class InstituicoesController extends AppController
         if ($this->request->is('post')) {
             $instituicaoestagio = $this->Instituicoes->patchEntity($instituicaoestagio, $this->request->getData());
             if ($this->Instituicoes->save($instituicaoestagio)) {
-                $this->Flash->success(__('Instituição de estagio creada.'));
+                $this->Flash->success(__('Instituição de estagio criada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
@@ -127,7 +133,7 @@ class InstituicoesController extends AppController
 
     public function buscasupervisores()
     {
-        
+
         $this->Authorization->skipAuthorization();
 
         if (!$this->request->is('post')) {

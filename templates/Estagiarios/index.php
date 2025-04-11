@@ -31,7 +31,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <span class="navbar-toggler-icon"></span>
         </button>
         <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMural">
-        <li class="nav-item">
+            <li class="nav-item">
                 <?= $this->Html->link(__('Novo Estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
             </li>
         </ul>
@@ -53,7 +53,6 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php endif; ?>
 </div>
 
-
 <?= $this->element('templates') ?>
 
 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
@@ -69,15 +68,18 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('nivel') ?></th>
                 <th><?= $this->Paginator->sort('tc') ?></th>
                 <th><?= $this->Paginator->sort('tc_solicitacao') ?></th>
-                <th><?= $this->Paginator->sort('Instituicaoestagios.instituicao', 'Instituicao') ?></th>
+                <th><?= $this->Paginator->sort('Instituicoes.instituicao', 'Instituicao') ?></th>
                 <th><?= $this->Paginator->sort('Supervisores.nome', 'Supervisor(a)') ?></th>
                 <th><?= $this->Paginator->sort('Docentes.nome', 'Professor(a)') ?></th>
                 <th><?= $this->Paginator->sort('periodo', 'Período') ?></th>
                 <th><?= $this->Paginator->sort('Turmaestagio.area', 'Turma de estágio') ?></th>
-                <th><?= $this->Paginator->sort('nota') ?></th>
-                <th><?= $this->Paginator->sort('Estagiarios.ch', 'Carga horária') ?></th>
-                <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
-                <th class="row"><?= __('Ações') ?></th>
+                <?php if (isset($user) && $user->categoria == '1'): ?>
+                    <th><?= $this->Paginator->sort('nota') ?></th>
+                    <th><?= $this->Paginator->sort('nota') ?></th>
+                    <th><?= $this->Paginator->sort('Estagiarios.ch', 'Carga horária') ?></th>
+                    <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
+                    <th class="row"><?= __('Ações') ?></th>
+                <?php endif; ?>
             </tr>
         </thead>
         <tbody>
@@ -86,7 +88,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php // pr($estagiario); ?>
                     <td><?= $this->Html->link($estagiario->id, ['controller' => 'estagiarios', 'action' => 'view', $estagiario->id]) ?>
                     </td>
-                    <td><?= $estagiario->hasValue('alunos') ? $this->Html->link($estagiario->alunos['nome'], ['controller' => 'Alunos', 'action' => 'view', $estagiario['aluno_id']]) : '' ?>
+                    <td><?= $estagiario->hasValue('aluno') ? $this->Html->link($estagiario->aluno->nome, ['controller' => 'Alunos', 'action' => 'view', $estagiario->aluno_id]) : '' ?>
                     </td>
                     <td><?= $estagiario->registro ?></td>
                     <td><?= h($estagiario->ajuste2020) == 0 ? 'Não' : 'Sim' ?></td>
@@ -98,47 +100,35 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php else: ?>
                         <td>Sem dados</td>
                     <?php endif; ?>
-                    <?php if (isset($estagiario->instituicoes['instituicao'])): ?>
-                        <td><?= $estagiario->hasValue('instituicoes') ? $this->Html->link($estagiario->instituicoes['instituicao'], ['controller' => 'Instituicoes', 'action' => 'view', $estagiario->instituicoes['id']]) : '' ?>
-                        </td>
-                    <?php endif; ?>
-                    <?php if (isset($estagiario->supervisores['nome'])): ?>
-                        <td><?= $estagiario->hasValue('supervisores') ? $this->Html->link($estagiario->supervisores['nome'], ['controller' => 'Supervisores', 'action' => 'view', $estagiario->supervisores['id']]) : '' ?>
-                        </td>
-                    <?php else: ?>
-                        <td>Sem dados</td>
-                    <?php endif; ?>
-                    <?php if (isset($estagiario->professores['nome'])): ?>
-                        <td><?= $estagiario->hasValue('professores') ? $this->Html->link($estagiario->professores['nome'], ['controller' => 'Professores', 'action' => 'view', $estagiario->professores['id']]) : '' ?>
-                        </td>
-                    <?php else: ?>
-                        <td>Sem dados</td>
-                    <?php endif; ?>
-                    <td><?= h($estagiario->periodo) ?></td>
-                    <?php if (isset($estagiario->turmaestagios['area'])): ?>
-                        <td><?= $estagiario->hasValue('turmaestagios') ? $this->Html->link($estagiario->turmaestagios['area'], ['controller' => 'Turmaestagios', 'action' => 'view', $estagiario->turmaestagios['areaestagio_id']]) : '' ?>
-                        </td>
-                    <?php else: ?>
-                        <td>Sem dados</td>
-                    <?php endif; ?>
-                    <?php if (isset($estagiario->nota)): ?>
-                        <td><?= $this->Number->format($estagiario->nota, ['precision' => 2]) ?></td>
-                    <?php else: ?>
-                        <td>Sem nota</td>
-                    <?php endif; ?>
-                    <?php if (isset($estagiario->ch)): ?>
-                        <td><?= $this->Number->format($estagiario->ch) ?></td>
-                    <?php else: ?>
-                        <td>Sem dados</td>
-                    <?php endif; ?>
-                    <td><?= h($estagiario->observacoes) ?></td>
-                    <td class="row">
-                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $estagiario->id]) ?>
-                        <?php if (isset($user) && $user->categoria == 1): ?>
-                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $estagiario->id]) ?>
-                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiario->id)]) ?>
-                        <?php endif; ?>
+                    <td><?= $estagiario->hasValue('instituicao') ? $this->Html->link($estagiario->instituicao->instituicao, ['controller' => 'Instituicoes', 'action' => 'view', $estagiario->instituicao->id]) : '' ?>
                     </td>
+                    <td><?= $estagiario->hasValue('supervisor') ? $this->Html->link($estagiario->supervisor->nome, ['controller' => 'Supervisores', 'action' => 'view', $estagiario->supervisor->id]) : 'Sem dados' ?>
+                    </td>
+                    <td><?= $estagiario->hasValue('professor') ? $this->Html->link($estagiario->professor->nome, ['controller' => 'Professores', 'action' => 'view', $estagiario->professor->id]) : 'Sem dados' ?>
+                    </td>
+                    <td><?= h($estagiario->periodo) ?></td>
+                    <td><?= $estagiario->hasValue('turmaestagio') ? $this->Html->link($estagiario->turmaestagio->area, ['controller' => 'Turmaestagios', 'action' => 'view', $estagiario->turmaestagio->turmestagio_id]) : '' ?>
+                    </td>
+                    <?php if (isset($user) && $user->categoria == '1'): ?>
+                        <?php if (isset($estagiario->nota)): ?>
+                            <td><?= $this->Number->format($estagiario->nota, ['precision' => 2]) ?></td>
+                        <?php else: ?>
+                            <td>Sem nota</td>
+                        <?php endif; ?>
+                        <?php if (isset($estagiario->ch)): ?>
+                            <td><?= $this->Number->format($estagiario->ch) ?></td>
+                        <?php else: ?>
+                            <td>Sem dados</td>
+                        <?php endif; ?>
+                        <td><?= h($estagiario->observacoes) ?></td>
+                        <td class="row">
+                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $estagiario->id]) ?>
+                            <?php if (isset($user) && $user->categoria == 1): ?>
+                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $estagiario->id]) ?>
+                                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiario->id)]) ?>
+                            <?php endif; ?>
+                        </td>
+                    <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>

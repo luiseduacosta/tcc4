@@ -60,7 +60,7 @@ $this->assign('title', __('Mural de Estágios'));
                 </tr>
                 <tr>
                     <th><?= __('Instituição') ?></th>
-                    <?php if (isset($user) && $user->categoria == 1): ?>
+                    <?php if (isset($user) && $user->categoria == '1' && !empty($muralestagio->instituicao_id)): ?>
                         <td><?= $this->Html->link($muralestagio->instituicao, ['controller' => 'Instituicoes', 'action' => 'view', $muralestagio->instituicao_id]) ?>
                         </td>
                     <?php else: ?>
@@ -309,7 +309,7 @@ $this->assign('title', __('Mural de Estágios'));
                             <td><?= h($muralinscricoes->registro) ?></td>
                             <td><?= (isset($user) && $user->categoria == 1) ? $this->Html->link($muralinscricoes->alunos['nome'], ['controller' => 'Alunos', 'action' => 'view', $muralinscricoes->aluno_id]) : $muralinscricoes->alunos['nome']; ?>
                             </td>
-                            <td><?= $this->Html->link($muralinscricoes->muralestagios['instituicao'], ['controller' => 'muralestagios', 'action' => 'view', $muralinscricoes['instituicao_id']]) ?>
+                            <td><?= $this->Html->link($muralinscricoes->muralestagios['instituicao'], ['controller' => 'muralestagios', 'action' => 'view', $muralinscricoes->muralestagio_id]) ?>
                             </td>
                             <td><?= date('d-m-Y', strtotime(h($muralinscricoes->data))) ?></td>
                             <td><?= h($muralinscricoes->periodo) ?></td>

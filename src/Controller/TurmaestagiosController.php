@@ -23,6 +23,7 @@ class TurmaestagiosController extends AppController
      */
     public function index()
     {
+        $this->Authorization->skipAuthorization();
         $turmaestagios = $this->paginate($this->Turmaestagios);
 
         $this->set(compact('turmaestagios'));
@@ -37,10 +38,10 @@ class TurmaestagiosController extends AppController
      */
     public function view($id = null)
     {
-
+        $this->Authorization->skipAuthorization();
         ini_set('memory_limit', '2048M');
         $turmaestagio = $this->Turmaestagios->get($id, [
-            'contain' => ['Estagiarios' => ['Alunos', 'Professores', 'Supervisores', 'Instituicoes']],
+            'contain' => ['Estagiarios' => ['Alunos', 'Professores', 'Supervisores', 'Instituicoes', 'Turmaestagios']],
         ]);
 
         if (!isset($turmaestagio)) {
@@ -60,6 +61,7 @@ class TurmaestagiosController extends AppController
     {
 
         $turmaestagio = $this->Turmaestagios->newEmptyEntity();
+        $this->Authorization->authorize($turmaestagio);
         if ($this->request->is('post')) {
             $turmaestagio = $this->Turmaestagios->patchEntity($turmaestagio, $this->request->getData());
             if ($this->Turmaestagios->save($turmaestagio)) {
@@ -85,6 +87,7 @@ class TurmaestagiosController extends AppController
         $turmaestagio = $this->Turmaestagios->get($id, [
             'contain' => [],
         ]);
+        $this->Authorization->authorize($turmaestagio);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $turmaestagio = $this->Turmaestagios->patchEntity($turmaestagio, $this->request->getData());
             if ($this->Turmaestagios->save($turmaestagio)) {
@@ -110,6 +113,7 @@ class TurmaestagiosController extends AppController
         $turmaestagio = $this->Turmaestagios->get($id, [
             'contain' => ['Estagiarios']
         ]);
+        $this->Authorization->authorize($turmaestagio);
         if (sizeof($turmaestagio->estagiarios) > 0) {
             $this->Flash->error(__("Não pode ser excluida porque têm estagiários associados."));
             return $this->redirect(['controller' => 'Turmaestagios', 'action' => 'view', $id]);

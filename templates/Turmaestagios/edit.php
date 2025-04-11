@@ -5,7 +5,8 @@
  */
 $user = $this->getRequest()->getAttribute('identity');
 ?>
-<?= $this->element('templates') ?>
+
+<?= $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerEstagiario"
@@ -29,6 +30,8 @@ $user = $this->getRequest()->getAttribute('identity');
         </ul>
     </div>
 </nav>
+
+<?= $this->element('templates') ?>
 
 <div class="container">
     <?= $this->Form->create($turmaestagio) ?>
