@@ -111,12 +111,12 @@ $user = $this->getRequest()->getAttribute('identity');
                             </td>
                             <td><?= h($docente->siape) ?></td>
                             <td><?= h($docente->departamento) ?></td>
-                            <td><?= h($docente->dataingresso) ?></td>
+                            <td><?= $docente->dataingresso ? $docente->dataingresso->i18nFormat('dd-MM-yyyy') : 's/d' ?></td>
                             <td><?= h($docente->formaingresso) ?></td>
                             <td><?= h($docente->tipocargo) ?></td>
                             <td><?= h($docente->categoria) ?></td>
                             <td><?= h($docente->regimetrabalho) ?></td>
-                            <td><?= h($docente->dataegresso) ?></td>
+                            <td><?= $docente->dataegresso ? $docente->dataegresso->i18nFormat('dd-MM-yyyy') : 's/d' ?></td>
                             <td><?= h($docente->motivoegresso) ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -160,7 +160,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 endif;
                                 ?>
                             </td>
-                            <td><?= h($docente->datanascimento) ?></td>
+                            <td><?= $docente->datanascimento ? $docente->datanascimento->i18nFormat('dd-MM-yyyy') : ' ' ?></td>
                             <td><?= h($docente->localnascimento) ?></td>
                             <td><?= '(' . h($docente->ddd_telefone) . ')' . h($docente->telefone) ?></td>
                             <td><?= '(' . h($docente->ddd_celular) . ')' . h($docente->celular) ?></td>
@@ -207,7 +207,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             </td>
                             <td>
                                 <?php if ($docente->atualizacaolattes): ?>
-                                    <?= h($docente->atualizacaolattes) ?>
+                                    <?= $docente->atualizacaolattes ? $docente->atualizacaolattes->i18nFormat('dd-MM-yyyy') : ' ' ?>
                                 <?php endif; ?>
                             </td>
                             <td>

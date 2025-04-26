@@ -28,27 +28,27 @@ $user = $this->getRequest()->getAttribute('identity');
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link active" data-bs-toggle="tab" href="#professor1" role="tab" aria-controls="professor1"
-                    aria-selected="true">Professor(a) - Dados Gerais</a>
+                    aria-selected="true">Dados Gerais</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#professor2" role="tab" aria-controls="professor2"
-                    aria-selected="false">Professor - Comunicação</a>
+                    aria-selected="false">Comunicação</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#professor3" role="tab" aria-controls="professor3"
-                    aria-selected="false">Professor - Curriculo</a>
+                    aria-selected="false">Curriculo</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#professor4" role="tab" aria-controls="professor4"
-                    aria-selected="false">Professor - Graduação</a>
+                    aria-selected="false">Graduação</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#professor5" role="tab" aria-controls="professor5"
-                    aria-selected="false">Professor - Pósgraduação</a>
+                    aria-selected="false">Pósgraduação</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#professor6" role="tab" aria-controls="professor6"
-                    aria-selected="false">Professor - Dados funcionais</a>
+                    aria-selected="false">Dados funcionais</a>
             </li>
 
         </ul>
@@ -82,7 +82,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             </td>
                             <td><?= h($professor->cpf) ?></td>
                             <td><?= $professor->siape ?></td>
-                            <td><?= $professor->datanascimento ? date('d-m-Y', strtotime(h($professor->datanascimento))) : '' ?>
+                            <td><?= $professor->datanascimento ? $professor->datanascimento->i18nFormat('dd-MM-yyyy') : '' ?>
                             </td>
                             <td><?= h($professor->localnascimento) ?></td>
                             <td><?= h($professor->sexo) ?></td>
@@ -183,7 +183,8 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= $this->Html->link(h($professor->nome), ['controller' => 'Professores', 'action' => 'view', $professor->id]) ?>
                             </td>
                             <td><?= h($professor->curriculolattes) ?></td>
-                            <td><?= h($professor->atualizacaolattes) ?></td>
+                            <td><?= $professor->atualizacaolattes ? $professor->atualizacaolattes->i18nFormat('dd-MM-yyyy') : '' ?>
+                            </td>
                             <td><?= h($professor->curriculosigma) ?></td>
                             <td><?= h($professor->pesquisadordgp) ?></td>
 
@@ -328,14 +329,14 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= $this->Html->link(h($professor->nome), ['controller' => 'Professores', 'action' => 'view', $professor->id]) ?>
                             </td>
 
-                            <td><?= $professor->dataingresso ? date('d-m-Y', strtotime(h($professor->dataingresso))) : '' ?>
+                            <td><?= $professor->dataingresso ? $professor->dataingresso->i18nFormat('dd-MM-yyyy') : '' ?>
                             </td>
                             <td><?= h($professor->formaingresso) ?></td>
                             <td><?= h($professor->tipocargo) ?></td>
                             <td><?= h($professor->categoria) ?></td>
                             <td><?= h($professor->regimetrabalho) ?></td>
                             <td><?= h($professor->departamento) ?></td>
-                            <td><?= $professor->dataegresso ? date('d-m-Y', strtotime(h($professor->dataegresso))) : '' ?>
+                            <td><?= $professor->dataegresso ? $professor->dataegresso->i18nFormat('dd-MM-yyyy') : '' ?>
                             </td>
                             <td><?= h($professor->motivoegresso) ?></td>
 

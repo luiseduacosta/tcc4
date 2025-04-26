@@ -52,7 +52,7 @@ $user = $this->getRequest()->getAttribute('identity');
             </dd>
 
             <dt scope="row"><?= __('Data de nascimento') ?></dt>
-            <dd><?= h($docente->datanascimento) ?></dd>
+            <dd><?= $docente->datanascimento ? $docente->datanascimento->i18nFormat('dd-MM-yyyy') : 's/d' ?></dd>
 
             <dt scope="row"><?= __('Local de nascimento') ?></dt>
             <dd><?= h($docente->localnascimento) ?></dd>
@@ -82,7 +82,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <dd><a href="<?= 'http://lattes.cnpq.br/' . $docente->curriculolattes ?>">Currículo</a></dd>
 
             <dt scope="row"><?= __('Atualização lattes') ?></dt>
-            <dd><?= h($docente->atualizacaolattes) ?></dd>
+            <dd><?= $docente->atualizacaolattes ? $docente->atualizacaolattes->i18nFormat('dd-MM-yyyy') : 's/d' ?></dd>
 
             <dt scope="row"><?= __('Curriculo Sigma') ?></dt>
             <dd><?= h($docente->curriculosigma) ?></dd>
@@ -133,7 +133,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <dd><?= h($docente->formaingresso) ?></dd>
 
             <dt scope="row"><?= __('Data de ingresso') ?></dt>
-            <dd><?= h($docente->dataingresso) ?></dd>
+            <dd><?= $docente->dataingresso ? $docente->dataingresso->i18nFormat('dd-MM-yyyy') : 's/d' ?></dd>
 
             <dd scope="row"><?= __('Tipo de cargo') ?></dd>
             <dt><?= h($docente->tipocargo) ?></dt>

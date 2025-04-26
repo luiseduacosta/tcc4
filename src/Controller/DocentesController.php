@@ -140,6 +140,11 @@ class DocentesController extends AppController
         $docente = $this->Docentes->get($id);
         $this->Authorization->authorize($docente);
 
+        if (empty($docente)):
+            $this->Flash->error(__('Registro docente não encontrado'));
+            return $this->redirect(['action' => 'index']);
+        endif;
+
         if ($this->Docentes->delete($docente)) {
             $this->Flash->success(__('Registro docente excluído.'));
         } else {

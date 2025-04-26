@@ -8,7 +8,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Professores Model
+ * Docentes Model
  *
  * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
  * @property \App\Model\Table\MuralestagiosTable&\Cake\ORM\Association\HasMany $Muralestagios
@@ -84,7 +84,7 @@ class DocentesTable extends Table
 
                 $validator
                         ->scalar('cpf')
-                        ->maxLength('cpf', 12)
+                        ->maxLength('cpf', 14)
                         ->allowEmptyString('cpf');
 
                 $validator

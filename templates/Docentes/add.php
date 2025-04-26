@@ -6,6 +6,14 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#cpf').mask('000.000.000-00');
+    });
+</script>
+
 <?= $this->element('menu_monografias') ?>
 
 <?= $this->element('templates') ?>
@@ -16,13 +24,11 @@ $user = $this->getRequest()->getAttribute('identity');
         <legend><?= __('Novo(a) docente') ?></legend>
         <?php
         echo $this->Form->control('nome', ['label' => 'Nome completo', 'required' => true]);
-        echo $this->Form->control('cpf', ['label' => 'CPF', 'required' => true]);
+        echo $this->Form->control('cpf', ['label' => 'CPF', 'pattern' => '\d{3}\.\d{3}\.\d{3}-\d{2}', 'placeholder' => '000.000.000-00', 'keypress()','required' => true]);
         echo $this->Form->control('siape', ['label' => 'SIAPE', 'required' => true]);
-        echo $this->Form->control('rg', ['label' => 'RG', 'required' => true]);
-        echo $this->Form->control('orgaoexpedidor', ['label' => 'Órgão expedidor', 'required' => true]);
+        echo $this->Form->control('rg', ['label' => 'RG', 'required' => false]);
+        echo $this->Form->control('orgaoexpedidor', ['label' => 'Órgão expedidor', 'required' => false]);
         echo $this->Form->control('datanascimento', ['label' => 'Data de nascimento']);
-        echo $this->Form->control('localnascimento', ['label' => 'Local de nascimento']);
-        echo $this->Form->control('datanascimento', ['label' => 'Data de nascimento', 'empty' => true]);
         echo $this->Form->control('localnascimento', ['label' => 'Local de nascimento']);
         echo $this->Form->control('sexo', ['options' => ['1' => 'Homem', '2' => 'Mulher'], 'label' => 'Sexo', 'empty' => true]);
         echo $this->Form->control('ddd_telefone', ['label' => 'DDD telefone']);

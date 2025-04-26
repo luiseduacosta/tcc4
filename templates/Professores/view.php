@@ -3,6 +3,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Professor $professor
  */
+use Cake\I18n\FrozenDate;
+
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
@@ -188,22 +190,22 @@ $user = $this->getRequest()->getAttribute('identity');
             </tr>
             <tr>
                 <th><?= __('Data nascimento') ?></th>
-                <td><?= $professor->datanascimento ? date('d-m-Y', strtotime(h($professor->datanascimento))) : '' ?>
+                <td><?= $professor->datanascimento ? $professor->datanascimento->i18nFormat('dd-MM-yyyy') : 's/d' ?>
                 </td>
             </tr>
             <tr>
                 <th><?= __('Atualização lattes') ?></th>
-                <td><?= $professor->atualizacaolattes ? date('d-m-Y', strtotime(h($professor->atualizacaolattes))) : '' ?>
+                <td><?= $professor->atualizacaolattes ? $professor->atualizacaolattes->i18nFormat('dd-MM-yyyy') : ' ' ?>
                 </td>
             </tr>
             <tr>
                 <th><?= __('Data de ingresso') ?></th>
-                <td><?= $professor->dataingresso ? date('d-m-Y', strtotime(h($professor->dataingresso))) : '' ?>
+                <td><?= $professor->dataingresso ? $professor->dataingresso->i18nFormat('dd-MM-yyyy') : ' ' ?>
                 </td>
             </tr>
             <tr>
                 <th><?= __('Data de egresso') ?></th>
-                <td><?= $professor->dataegresso ? date('d-m-Y', strtotime(h($professor->dataegresso))) : ' ' ?>
+                <td><?= $professor->dataegresso ? $professor->dataegresso->i18nFormat('dd-MM-yyyy') : ' ' ?>
                 </td>
             </tr>
         </table>
