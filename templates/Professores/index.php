@@ -43,11 +43,11 @@ $user = $this->getRequest()->getAttribute('identity');
                     aria-selected="false">Professor - Graduação</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#professor5" role="tab" aria-controls="professor4"
+                <a class="nav-link" data-bs-toggle="tab" href="#professor5" role="tab" aria-controls="professor5"
                     aria-selected="false">Professor - Pósgraduação</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#professor6" role="tab" aria-controls="professor5"
+                <a class="nav-link" data-bs-toggle="tab" href="#professor6" role="tab" aria-controls="professor6"
                     aria-selected="false">Professor - Dados funcionais</a>
             </li>
 
