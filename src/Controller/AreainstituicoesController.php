@@ -58,7 +58,7 @@ class AreainstituicoesController extends AppController
             if ($this->Areainstituicoes->save($areainstituicao)) {
                 $this->Flash->success(__('Área de instituição inserida.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $areainstituicao->id]);
             }
             $this->Flash->error(__('Área de instituição não inserida.'));
         }
@@ -84,7 +84,7 @@ class AreainstituicoesController extends AppController
             if ($this->Areainstituicoes->save($areainstituicao)) {
                 $this->Flash->success(__('Área de instituição atualizada.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $areainstituicao->id]);
             }
             $this->Flash->error(__('Área de instituição não atualizada.'));
         }

@@ -35,6 +35,18 @@ $user = $this->getRequest()->getAttribute('identity');
                 <li class="nav-item">
                     <?= $this->Form->postLink(__('Excluir Aluno'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id), 'class' => 'btn btn-danger float-end']) ?>
                 </li>
+            <?php elseif (isset($user) && $user->categoria == '2'): ?>
+                <?php if ($user->estudante_id == $aluno->id): ?>
+                    <li class="nav-item">
+                        <?= $this->Html->link(__('Editar Aluno'), ['action' => 'edit', $aluno->id], ['class' => 'btn btn-primary']) ?>
+                    </li>
+                    <li class="nav-item">
+                        <?= $this->Html->link(__('Declaração de período'), ['action' => 'certificadoperiodo', $aluno->id], ['class' => 'btn btn-primary']) ?>
+                    </li>
+                    <li class="nav-item">
+                        <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'Estagiarios', 'action' => 'novotermocompromisso', $aluno->id], ['class' => 'btn btn-primary']) ?>
+                    </li>
+                <?php endif; ?>
             <?php endif ?>
         </ul>
     </div>
@@ -58,7 +70,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <th><?= __('Nome') ?></th>
             <td><?= h($aluno->nome) ?></td>
         </tr>
-        <?php if (isset($user) && $user->categoria == '1'): ?>
+        <?php if (isset($user) && ($user->categoria == '1' || ($user->categoria == '2' && $aluno->id == $user->estudante_id))): ?>
             <tr>
                 <th><?= __('Nascimento') ?></th>
                 <td><?= date('d-m-Y', strtotime(h($aluno->nascimento))) ?></td>
@@ -204,7 +216,8 @@ $user = $this->getRequest()->getAttribute('identity');
                     </td>
                     <td><?= $estagiarios->has('professor') ? $this->Html->link($estagiarios->professor['nome'], ['controller' => 'Professores', 'action' => 'view', $estagiarios->professor_id]) : '' ?>
                     </td>
-                    <td><?= $estagiarios->has('turmaestagio') ? $this->Html->link($estagiarios->turmaestagio->area, ['controller' => 'Turmaestagios', 'action' => 'view', $estagiarios->turmaestagio_id]) : '' ?></td>
+                    <td><?= $estagiarios->has('turmaestagio') ? $this->Html->link($estagiarios->turmaestagio->area, ['controller' => 'Turmaestagios', 'action' => 'view', $estagiarios->turmaestagio_id]) : '' ?>
+                    </td>
                     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                         <td><?= h($estagiarios->nota) ?></td>
                         <td><?= h($estagiarios->ch) ?></td>

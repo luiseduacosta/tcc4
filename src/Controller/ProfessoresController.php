@@ -118,46 +118,12 @@ class ProfessoresController extends AppController
                 ->first();
             if (empty($usercadastrado)):
                 $this->Flash->error(__('Professor(a) não cadastrado(a) como usuário(a)'));
-                return $this->redirect('/users/add');
+                // return $this->redirect('/users/add'); // Não é obrigatório cadastrar como usuário
             endif;
 
             $professorresultado = $this->Professores->patchEntity($professor, $this->request->getData());
             if ($this->Professores->save($professorresultado)) {
                 $this->Flash->success(__('Registro do(a) professor(a) inserido.'));
-
-                /**
-                 * Verifico se está preenchido o campo professor_id na tabela Users.
-                 * Primeiro busco o usuário.
-                 */
-                $userprofessor = $this->Professores->Users->find()
-                    ->where(['professor_id' => $professorresultado->id])
-                    ->first();
-
-                /**
-                 * Se a busca retorna vazia então atualizo a tabela Users com o valor do professor_id.
-                 */
-                if (empty($userprofessor)) {
-
-                    $userestagio = $this->Professores->Users->find()
-                        ->where(['categoria_id' => 3, 'registro' => $professorresultado->siape])
-                        ->first();
-                    $userdata = $userestagio->toArray();
-                    /** Carrego o valor do campo professor_id */
-                    $userdata['professor_id'] = $professorresultado->id;
-                    $userestagiostabela = $this->fetchTable('Users');
-                    $user_entity = $userestagiostabela->get($userestagio->id);
-                    /** Atualiza */
-                    $userestagioresultado = $this->Professores->Users->patchEntity($user_entity, $userdata);
-                    // pr($userestagioresultado);
-                    if ($this->Professores->Users->save($userestagioresultado)) {
-                        $this->Flash->success(__('Usuário atualizado com o id do professor'));
-                        return $this->redirect(['action' => 'view', $professorresultado->id]);
-                    } else {
-                        $this->Flash->erro(__('Não foi possível atualizar a tabela Users com o id do professor'));
-                        // debug($users->getErrors());
-                        return $this->redirect(['controller' => 'Users', 'action' => 'logout']);
-                    }
-                }
                 return $this->redirect(['action' => 'view', $professorresultado->id]);
             }
             $this->Flash->error(__('Registro do(a) professor(a) não inserido. Tente novamente.'));

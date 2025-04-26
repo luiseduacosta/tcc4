@@ -172,7 +172,7 @@ class AvaliacoesController extends AppController
             if ($this->Avaliacoes->save($avaliacao)) {
                 $this->Flash->success(__('Avaliação atualizada.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'index', $this->getRequest()->getData('estagiario_id')]);
             }
             $this->Flash->error(__('Avaliação não atualizada.'));
         }

@@ -56,7 +56,7 @@ class ComplementosController extends AppController
             if ($this->Complementos->save($complemento)) {
                 $this->Flash->success(__('Complemento inserido.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $complemento->id]);
             }
             $this->Flash->error(__('Complemento não inserido.'));
         }
@@ -81,7 +81,7 @@ class ComplementosController extends AppController
             if ($this->Complementos->save($complemento)) {
                 $this->Flash->success(__('Complemento atualizado.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $complemento->id]);
             }
             $this->Flash->error(__('Complemento não atualizado.'));
         }

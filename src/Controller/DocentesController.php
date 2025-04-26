@@ -23,7 +23,6 @@ class DocentesController extends AppController
     {
 
         parent::beforeFilter($event);
-
         $this->Authentication->addUnauthenticatedActions(['index', 'view']);
     }
 
@@ -41,58 +40,6 @@ class DocentesController extends AppController
     }
 
     /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null
-     */
-    public function index0()
-    {
-        $this->Authorization->skipAuthorization();
-        $docentes = $this->paginate($this->Docentes);
-        // $this->Authorization->authorize($Docentes);
-        $this->set(compact('docentes'));
-    }
-
-    /**
-     * Index1 method
-     *
-     * @return \Cake\Http\Response|null
-     */
-    public function index1()
-    {
-        $this->Authorization->skipAuthorization();
-        $docentes = $this->paginate($this->Docentes);
-        // $this->Authorization->authorize($docentes);
-        $this->set(compact('docentes'));
-    }
-
-    /**
-     * Index2 method
-     *
-     * @return \Cake\Http\Response|null
-     */
-    public function index2()
-    {
-        $this->Authorization->skipAuthorization();
-        $docentes = $this->paginate($this->Docentes);
-        // $this->Authorization->authorize($docentes);
-        $this->set(compact('docentes'));
-    }
-
-    /**
-     * Index3 method
-     *
-     * @return \Cake\Http\Response|null
-     */
-    public function index3()
-    {
-        $this->Authorization->skipAuthorization();
-        $docentes = $this->paginate($this->Docentes);
-        // $this->Authorization->authorize($docentes);
-        $this->set(compact('docentes'));
-    }
-
-    /**
      * View method
      *
      * @param string|null $id Docente id.
@@ -102,11 +49,14 @@ class DocentesController extends AppController
     public function view($id = null)
     {
 
-        $docentetable = $this->fetchTable("Docentes");
-        $this->Authorization->skipAuthorization();
-        $docente = $docentetable->get($id, [
-            'contain' => ['Monografias', 'Areamonografias'],
-        ]);
+        $docente = $this->fetchTable("Docentes")
+            ->get(
+                $id,
+                [
+                    'contain' => ['Monografias', 'Areamonografias'],
+                ]
+            );
+        $this->Authorization->authorize($docente);
         $this->set('docente', $docente);
     }
 
@@ -118,8 +68,7 @@ class DocentesController extends AppController
     public function add()
     {
 
-        $docentetable = $this->fetchTable("Docentes");
-        $docente = $docentetable->newEmptyEntity();
+        $docente = $this->fetchTable("Docentes")->newEmptyEntity();
         $this->Authorization->authorize($docente);
 
         if ($this->request->is('post')) {
@@ -127,7 +76,7 @@ class DocentesController extends AppController
             if ($this->Docentes->save($docente)) {
                 $this->Flash->success(__('Registro docente inserido.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $docente->id]);
             }
             $this->Flash->error(__('Registro docente inserido'));
         }
@@ -144,17 +93,17 @@ class DocentesController extends AppController
     public function edit($id = null)
     {
 
-        $docentetable = $this->fetchTable("Docentes");
-        $docente = $docentetable->get($id, [
+        $docente = $this->fetchTable("Docentes")->get($id, [
             'contain' => [],
         ]);
+        ;
         $this->Authorization->authorize($docente);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $docente = $this->Docentes->patchEntity($docente, $this->request->getData());
             if ($this->Docentes->save($docente)) {
                 $this->Flash->success(__('Registro docente atualizado.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $docente->id]);
             }
             $this->Flash->error(__('Registro docente não atualizado.'));
         }

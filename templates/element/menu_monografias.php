@@ -8,6 +8,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Monografia $monografia
  */
+use Cake\ORM\TableRegistry;
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
@@ -53,7 +54,13 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?= $this->Html->link(__('Mural'), ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'btn btn-info']) ?>
                 </li>
                 <?php if (isset($user) && !empty($user)): ?>
-                    <li class='nav-item'><span class="btn btn-primary"><?= $user->email ?></span></li>
+                    <?php if ($user->categoria == 2):
+                        $estudante = TableRegistry::getTableLocator()->get('Estudantes')->find()->where(['Estudantes.id' => $user->estudante_id])->first();
+                        ?>
+                        <li class='nav-item'>
+                            <?= $this->Html->link($user->email, ['controller' => 'Estudantes', 'action' => 'view', $estudante->id], ['class' => 'btn btn-primary']) ?>
+                        </li>
+                    <?php endif; ?>
                 <?php else: ?>
                     <li class='nav-item'><span class="btn btn-secondary"><?= 'Visitante' ?></span></li>
                 <?php endif; ?>

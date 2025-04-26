@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
+use Cake\ORM\TableRegistry;
 $user = $this->getRequest()->getAttribute('identity');
 // pr($user->categoria);
 // die();   
@@ -102,7 +103,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
                 <?php if (isset($user) && $user->categoria == '2'): ?>
                     <li class="nav-item">
-                        <?php echo $this->Html->link("Meus dados", "/alunos/view/" . $user['aluno_id'], ['class' => 'nav-link']); ?>
+                        <?php echo $this->Html->link("Meus dados", "/alunos/view/" . $user['estudante_id'], ['class' => 'nav-link']); ?>
                     </li>
                 <?php endif; ?>
 
@@ -134,7 +135,13 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php echo $this->Html->link('TCC', ['controller' => 'Monografias', 'action' => 'index'], ['class' => 'btn btn-info']); ?>
                 </li>
                 <?php if (isset($user) && !empty($user)): ?>
-                    <li class='nav-item'><span class="btn btn-primary"><?= $user->email ?></span></li>
+                    <?php if ($user->categoria == 2) {
+                        $aluno = TableRegistry::getTableLocator()->get('Alunos')->find()->where(['Alunos.id' => $user->estudante_id])->first();
+                        ?>
+                        <li class='nav-item'>
+                            <?= $this->Html->link($user->email, ['controller' => 'Alunos', 'action' => 'view', $aluno['id']], ['class' => 'btn btn-primary']) ?>
+                        </li>
+                    <?php } ?>
                 <?php else: ?>
                     <li class='nav-item'><span class="btn btn-secondary"><?= 'Visitante' ?></span></li>
                 <?php endif; ?>

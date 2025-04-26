@@ -5,8 +5,10 @@
  */
 // pr($cargahorariatotal); 
 // pr($aluno);
+// pr($novoperiodo);
 // pr($totalperiodos);
 // echo $aluno->nome;
+// die();
 ?>
 
 <?= $this->element('menu_mural') ?>
@@ -20,7 +22,7 @@ $submit = [
 <?= $this->element('templates') ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <?= $this->Form->create($aluno) ?>
+    <?= $this->Form->create(null) ?>
     <fieldset>
         <legend><?= __('Declaração de ' . $totalperiodos . 'º' . ' período do(a) aluno(a)') ?></legend>
         <?php
@@ -50,6 +52,7 @@ $submit = [
         echo $this->Form->control('observacoes', ['label' => ['text' => 'Observações']]);
         ?>
     </fieldset>
+    
     <div class="d-flex justify-content-center">
         <div class="btn-group" role="group" aria-label="Confirma">
             <?= $this->Html->link('Imprime PDF', ['action' => 'certificadoperiodopdf', '?' => ['id' => $aluno->id, 'totalperiodos' => $totalperiodos]], ['class' => 'btn btn-lg btn-primary', 'rule' => 'button']); ?>

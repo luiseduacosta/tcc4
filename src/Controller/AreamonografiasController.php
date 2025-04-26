@@ -63,13 +63,13 @@ class AreamonografiasController extends AppController
         if ($this->request->is('post')) {
             $area = $this->Areamonografias->patchEntity($area, $this->request->getData());
             if ($this->Areamonografias->save($area)) {
-                $this->Flash->success(__('Área de monografia registrada.'));
+                $this->Flash->success(__('Área de monografia inserida.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $area->id]);
             }
-            $this->Flash->error(__('Área de monografia não registrada.'));
+            $this->Flash->error(__('Área de monografia não inserida.'));
         }
-        $docentes = $this->Areamonografias->Docentes->find('list', ['limit' => 200]);
+        $docentes = $this->Areamonografias->Docentes->find('list');
         $this->set(compact('area', 'docentes'));
     }
 
@@ -93,7 +93,7 @@ class AreamonografiasController extends AppController
             if ($this->Areamonografias->save($area)) {
                 $this->Flash->success(__('Área de monografia atualizada.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $area->id]);
             }
             $this->Flash->error(__('Área de monografia não foi atualizada.'));
         }

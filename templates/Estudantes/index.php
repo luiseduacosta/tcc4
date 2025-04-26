@@ -22,10 +22,10 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<div class="d-flex justify-content-end">
+<div class="d-flex justify-content-start">
     <h3>
         <?= __('Estudantes') ?>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+        <?php if (isset($user) && $user->categoria == '1'): ?>
             <?= $this->Html->link(__(' Comunicação'), ['action' => 'index'], ['class' => 'btn btn-secondary float-end']) ?>
             <?= $this->Html->link(__(' Endereço'), ['action' => 'index2'], ['class' => 'btn btn-secondary float-end']) ?>
             <?= $this->Html->link(__(' Identificação'), ['action' => 'index1'], ['class' => 'btn btn-secondary float-end']) ?>
@@ -39,7 +39,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <tr>
                 <th><?= $this->Paginator->sort('registro') ?></th>
                 <th><?= $this->Paginator->sort('nome') ?></th>
-                <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                <?php if (isset($user) && $user->categoria == '1'): ?>
                     <th><?= $this->Paginator->sort('telefone') ?></th>
                     <th><?= $this->Paginator->sort('celular') ?></th>
                     <th><?= $this->Paginator->sort('email') ?></th>
@@ -52,7 +52,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($aluno->registro) ?></td>
                     <td><?= $this->Html->link($aluno->nome, ['controller' => 'estudantes', 'action' => 'view', $aluno->id]) ?>
                     </td>
-                    <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                    <?php if (isset($user) && $user->categoria == '1'): ?>
                         <?php if ($aluno->telefone): ?>
                             <td><?= '(' . h($aluno->codigo_telefone) . ')' . h($aluno->telefone) ?></td>
                         <?php else: ?>

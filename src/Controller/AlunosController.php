@@ -85,7 +85,7 @@ class AlunosController extends AppController
             if ($this->Alunos->save($aluno)) {
                 $this->Flash->success(__('Dados do aluno inseridos.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $aluno->id]);
             }
             $this->Flash->error(__('Dados do aluno não inseridos.'));
         }
@@ -102,6 +102,7 @@ class AlunosController extends AppController
     public function edit($id = null)
     {
 
+        $this->Authorization->skipAuthorization();
         $aluno = $this->Alunos->get($id, [
             'contain' => [],
         ]);
@@ -111,7 +112,7 @@ class AlunosController extends AppController
             $this->Authorization->authorize($aluno);
         } elseif (isset($user) && $user->categoria == '2') {
             if ($aluno->id == $user->estudante_id) {
-                $this->Authorization->authorize($aluno);
+                // $this->Authorization->authorize($aluno);
             } else {
                 $this->Flash->error(__('Usuário não autorizado.'));
                 return $this->redirect(['action' => 'index']);
@@ -126,7 +127,7 @@ class AlunosController extends AppController
             if ($this->Alunos->save($aluno)) {
                 $this->Flash->success(__('Dados do aluno atualizados.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $aluno->id]);
             }
             $this->Flash->error(__('Dados do aluno não atualizados.'));
         }
@@ -211,32 +212,98 @@ class AlunosController extends AppController
         $this->set('cargahorariatotal', $cargahorariatotal);
         // die();
     }
+
+    public function declaracaoperiodo($id = null)
+    {
+
+        $this->Authorization->skipAuthorization();
+        $user = $this->getRequest()->getAttribute('identity');
+        $aluno = $this->Alunos->find()->where(['Alunos.id' => $user->estudante_id])->first();
+        // pr($aluno);
+        // die();
+        if ($this->request->is(['post', 'put'])) {
+            $aluno = $this->request->getData();
+
+            $periodoacademicoatual = $this->fetchTable('Configuracoes')
+                ->find()->select(['periodo_calendario_academico'])
+                ->first();
+            // pr($periodoacademicoatual);
+            /**
+             * Separo o periodo em duas partes: o ano e o indicador de primeiro ou segundo semestre.
+             */
+            $periodo_atual = $periodoacademicoatual->periodo_calendario_academico;
+            /** Capturo o periodo inicial para o cálculo dos semetres.
+             *  Inicialmente coincide com o campo de ingresso.
+             *  Mas pode ser alterada para fazer coincidir os semestres no casos dos alunos que trancaram.
+             */
+            // pr($periodo_atual);
+            $novoperiodo = $aluno['novoperiodo'];
+            pr($novoperiodo);
+
+            $periodo_inicial = $novoperiodo ?? $aluno->ingresso;
+            pr($periodo_inicial);
+
+            $inicial = explode('-', $periodo_inicial);
+            $atual = explode('-', $periodo_atual);
+            echo $atual[0] . ' ' . $inicial[0] . '<br>';
+            /**
+             * Calculo o total de semestres multiplicando o número de anos por 2.
+             */
+            $semestres = (($atual[0] - $inicial[0]) + 1) * 2;
+            pr($semestres);
+            // die();
+            /** Verifica se o período está completo: ano e semestre */
+            if (sizeof($inicial) < 2) {
+                $inicial[1] = 0;
+                $totalperiodos = $semestres;
+                $this->Flash->error(__('Período de ingresso incompleto: falta indicar se for no 1° ou 2° semestre'));
+            }
+            /** Se começa no semestre 1 e finaliza no 2 então são anos inteiros */
+            if (($inicial[1] == 1) && ($atual[1] == 2)) {
+                $totalperiodos = $semestres;
+            }
+            /** Se começa no semestre 1 e finaliza no 1 então perdeu um semestre (o segundo semestre atual) */
+            if (($inicial[1] == 1) && ($atual[1] == 1)) {
+                $totalperiodos = $semestres - 1;
+            }
+            /** Se começa no semestre 2 e finaliza no 2 então perdeu um semestre (o primeiro semestre inicial) */
+            if (($inicial[1] == 2) && ($atual[1] == 2)) {
+                $totalperiodos = $semestres - 1;
+            }
+            /** Se começa no semestre 2 e finaliza no semestre 1 então perdeu dois semestres (o primeiro do ano inicial e o segundo do ano atual) */
+            if (($inicial[1] == 2) && ($atual[1] == 1)) {
+                $totalperiodos = $semestres - 2;
+            }
+            pr('Total: ' . $totalperiodos);
+            // die();            
+            /** Se o período inicial é maior que o período atual então informar que há um erro */
+            if ($totalperiodos <= 0) {
+                $this->Flash->error(__('Error: período inicial é maior que período atual'));
+                // return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', '?' => ['aluno_id' => $this->getRequest()->getAttribute('identity')['aluno_id']]]);
+            }
+        }
+        $this->set('aluno', $aluno);
+
+    }
+
     public function certificadoperiodo($id = NULL)
     {
 
-        if ($this->request->is('post')) {
-            $tamanhoingresso = strlen($this->getRequest()->getData('ingresso'));
-            if ($tamanhoingresso < 6) {
-                $this->Flash->error(__('Período de ingresso incompleto: falta indicar se for no 1° ou 2° semestre'));
-                return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', $id]);
-            }
-        }
         $this->Authorization->skipAuthorization();
-        /**
-         * Autorização. Verifica se o aluno cadastrado no Users está acessando seu próprio registro.
-         */
-        if ($this->getRequest()->getAttribute('identity')['categoria'] == '2') {
-            $aluno_id = $this->getRequest()->getAttribute('identity')['aluno_id'];
+        $user = $this->getRequest()->getAttribute('identity');
+
+        if (isset($user) && $user->categoria == '2') {
+            $aluno_id = $user->estudante_id;
             if ($id == $aluno_id) {
                 /**
                  * @var $option
                  * Para consultar a tabela alunos com o id.
                  */
-                $option = "Alunos.id = $aluno_id";
+                $option = "id = $aluno_id";
                 // echo "Aluno Id autorizado";
             } else {
-                $estudante_registro = $this->getRequest()->getAttribute('identity')['registro'];
-                if ($estudante_registro == $this->getRequest()->getQuery('registro')) {
+                $estudante_registro = $user->numero;
+                if ($estudante_registro == $user->numero) {
                     /**
                      * @var $option
                      * Para consultar a tabela alunos com o registro
@@ -246,24 +313,12 @@ class AlunosController extends AppController
                 } else {
                     // echo "Registros não coincidem" . "<br>";
                     $this->Flash->error(__('1. Operação não autorizada.'));
-                    return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo?registro=' . $this->getRequest()->getAttribute('identity')['registro']]);
+                    return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo?registro=' . $user->numero]);
                     // die('Aluno não autorizado.');
                 }
             }
-        } elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1') {
-            // echo "Administrador autorizado. Selecionou o aluno.";
-            if ($id == NULL) {
-                $aluno_id = $this->getRequest()->getQuery('aluno_id');
-                if ($aluno_id == NULL) {
-                    $this->Flash->error(__('Selecione aluno'));
-                    return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
-                    // die();
-                } else {
-                    $option = "Alunos.id = $aluno_id";
-                }
-            } else {
-                $option = "Alunos.id = $id";
-            }
+        } elseif (isset($user) && $user->categoria == '1') {
+            echo "Administrador autorizado";
         } else {
             $this->Flash->error(__('2. Operação não autorizada.'));
             return $this->redirect(['controller' => 'Muralestagios', 'action' => 'index']);
@@ -276,13 +331,15 @@ class AlunosController extends AppController
         $aluno = $this->Alunos->find()
             ->where([$option])
             ->first();
+
+        pr($aluno);
+        die();
         /**
-         * Calculo a partir da data de ingresso em que periodo o aluno está neste momento.
+         * Calculo a partir do ingresso em que periodo o aluno esté neste momento.
          */
         /* Capturo o periodo do calendario academico atual */
-        $periodoacademicoatual = $this->fetchTable('Configuracoes')
-            ->find()->select(['periodo_calendario_academico'])
-            ->first();
+        $configuracaotabela = $this->fetchTable('Configuracoes');
+        $periodoacademicoatual = $configuracaotabela->find()->select(['periodo_calendario_academico'])->first();
         // pr($periodoacademicoatual);
         // die();
         /**
@@ -291,28 +348,24 @@ class AlunosController extends AppController
         $periodo_atual = $periodoacademicoatual->periodo_calendario_academico;
         /** Capturo o periodo inicial para o cálculo dos semetres.
          *  Inicialmente coincide com o campo de ingresso.
-         *  Mas pode ser alterada para fazer coincidir os semestres no casos dos alunos que trancaram.
+         *  Mas pode ser alterada para fazer coincider os semestres no casos dos alunos que trancaram.
          */
         $novoperiodo = $this->getRequest()->getData('novoperiodo');
-        $periodo_inicial = $novoperiodo ?? $aluno->ingresso;
-        // pr($periodo_inicial);
+        if ($novoperiodo) {
+            $periodo_inicial = $this->getRequest()->getData('novoperiodo');
+        } else {
+            $periodo_inicial = $aluno->ingresso;
+        }
 
         $inicial = explode('-', $periodo_inicial);
         $atual = explode('-', $periodo_atual);
         // echo $atual[0] . ' ' . $inicial[0] . '<br>';
+
         /**
-         * Calculo o total de semestres multiplicando o número de anos por 2.
+         * Calculo o total de semestres
          */
         $semestres = (($atual[0] - $inicial[0]) + 1) * 2;
         // pr($semestres);
-        // die();
-
-        /** Verifica se o período está completo: ano e semestre */
-        if (sizeof($inicial) < 2) {
-            $inicial[1] = 0;
-            $totalperiodos = $semestres;
-            $this->Flash->error(__('Período de ingresso incompleto: falta indicar se for no 1° ou 2° semestre'));
-        }
 
         /** Se começa no semestre 1 e finaliza no 2 então são anos inteiros */
         if (($inicial[1] == 1) && ($atual[1] == 2)) {
@@ -337,14 +390,21 @@ class AlunosController extends AppController
         /** Se o período inicial é maior que o período atual então informar que há um erro */
         if ($totalperiodos <= 0) {
             $this->Flash->error(__('Error: período inicial é maior que período atual'));
-            return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', '?' => ['aluno_id' => $this->getRequest()->getAttribute('identity')['aluno_id']]]);
+            return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', '?' => ['registro' => $this->getRequest()->getAttribute('identity')['registro']]]);
         }
 
-        $novoperiodo = $this->getRequest()->getData('novoperiodo');
-        $aluno->periodonovo = $novoperiodo ?? $aluno->ingresso;
+        // pr($totalperiodos);
+        if (isset($this->getRequest()->getData()['novoperiodo'])) {
+            $aluno->periodonovo = $this->getRequest()->getData()['novoperiodo'];
+        } else {
+            $aluno->periodonovo = $aluno->ingresso;
+        }
 
+        // pr($aluno);
+        // die();
         $this->set('aluno', $aluno);
         $this->set('totalperiodos', $totalperiodos);
+
     }
 
     public function certificadoperiodopdf($id = NULL)

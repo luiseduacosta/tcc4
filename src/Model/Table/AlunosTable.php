@@ -175,7 +175,9 @@ class AlunosTable extends Table
          */
         public function buildRules(RulesChecker $rules): RulesChecker
         {
+                
                 $rules->add($rules->isUnique(['registro']), ['errorField' => 'registro']);
+                $rules->add($rules->isUnique(['email']), ['errorField' => 'email']);
 
                 return $rules;
         }

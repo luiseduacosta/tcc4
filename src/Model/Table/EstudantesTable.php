@@ -48,7 +48,7 @@ class EstudantesTable extends Table
         $this->hasOne('Tccestudantes', [
             'targetForeignKey' => 'registro',
             'foreignKey' => false,
-            'conditions' => 'Alunos.registro = Tccestudantes.registro',
+            'conditions' => 'Estudantes.registro = Tccestudantes.registro',
             'joinType' => 'LEFT'
         ]);
     }

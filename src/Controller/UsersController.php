@@ -41,10 +41,35 @@ class UsersController extends AppController
         // debug($result);
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
+
+            /**Verifica se o aluno está cadastrado */
+            if ($result->getData()->categoria == '2') {
+                echo "Estudante";
+                $estudante_id = $result->getData()->estudante_id;
+                if (empty($estudante_id)) {
+                    echo "Estudante não cadastrado";
+                    // die();
+                    $estudante = $this->fetchTable('Alunos')->find()
+                        ->where(['Alunos.email' => $result->getData()->email])
+                        ->first();
+                    if (empty($estudante)) {
+                        echo "Não cadastrado";
+                        return $this->redirect(['controller' => 'Alunos', 'action' => 'add', '?' => ['dre' => $result->getData()->numero, 'email' => $result->getData()->email]]);
+                    } else {
+                        $user = $this->Users->get($result->getData()->id);
+                        $data['estudante_id'] = $estudante->id;
+                        $user = $this->Users->patchEntity($user, $data);
+                        if ($this->Users->save($user)) {
+                            $this->Flash->success(__('Registro do(a) usuário(a) atualizado.'));
+                        }
+                    }
+                }
+                // die('Estudante cadastrado');
+            }
             // redirect to /monografias after login success
             $redirect = $this->request->getQuery('redirect', [
-                'controller' => 'Monografias',
-                'action' => 'index',
+                'controller' => 'Alunos',
+                'action' => 'view', $result->getData()->estudante_id
             ]);
 
             return $this->redirect($redirect);

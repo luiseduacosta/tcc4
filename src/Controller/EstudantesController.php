@@ -41,13 +41,14 @@ class EstudantesController extends AppController
 
         $estudantesdetcc = $this->Estudantes->find()
             ->contain([
-                'Tccestudantes',
+                 'Tccestudantes',
                 'Estagiarios' => function (Query $q) {
                     return $q->where(['nivel' => '4']);
                 }
             ])
             ->all();
-
+        // pr($estudantesdetcc);
+        // die();
         $parameters = $this->request->getQueryParams();
         if (isset($parameters) && !empty($parameters)):
             // pr($parameters);
