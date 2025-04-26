@@ -72,6 +72,22 @@ class DocentesController extends AppController
         $this->Authorization->authorize($docente);
 
         if ($this->request->is('post')) {
+            $siape = $this->request->getData('siape');
+            $docentesiape = $this->Docentes->find()
+                ->where(['siape' => $siape])
+                ->first();
+            if ($docentesiape):
+                $this->Flash->error(__('Siape do docente já cadastrado'));
+                return $this->redirect(['action' => 'view', $docentesiape->id]);
+            endif;
+            $email = $this->request->getData('email');
+            $docenteemail = $this->Docentes->find()
+                ->where(['email' => $email])
+                ->first();
+            if ($docenteemail):
+                $this->Flash->error(__('E-mail do docente já cadastrado'));
+                return $this->redirect(['action' => 'view', $docenteemail->id]);
+            endif;
             $docente = $this->Docentes->patchEntity($docente, $this->request->getData());
             if ($this->Docentes->save($docente)) {
                 $this->Flash->success(__('Registro docente inserido.'));

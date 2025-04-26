@@ -101,7 +101,18 @@ class ProfessoresController extends AppController
                 ->first();
 
             if ($professorcadastrado):
-                $this->Flash->error(__('Professor já cadastrado'));
+                $this->Flash->error(__('Siape do(a) professor(a) já cadastrado'));
+                return $this->redirect(['view' => $professorcadastrado->id]);
+            endif;
+        }
+
+        if ($email) {
+            $professorcadastrado = $this->Professores->find()
+                ->where(['email' => $email])
+                ->first();
+
+            if ($professorcadastrado):
+                $this->Flash->error(__('E-mail do(a) professor(a) já cadastrado'));
                 return $this->redirect(['view' => $professorcadastrado->id]);
             endif;
         }
@@ -114,7 +125,7 @@ class ProfessoresController extends AppController
             /** Busca se já está cadastrado como user */
             $siape = $this->request->getData('siape');
             $usercadastrado = $this->Professores->Users->find()
-                ->where(['categoria_id' => 3, 'registro' => $siape])
+                ->where(['categoria' => 3, 'numero' => $siape])
                 ->first();
             if (empty($usercadastrado)):
                 $this->Flash->error(__('Professor(a) não cadastrado(a) como usuário(a)'));
@@ -127,7 +138,11 @@ class ProfessoresController extends AppController
                 return $this->redirect(['action' => 'view', $professorresultado->id]);
             }
             $this->Flash->error(__('Registro do(a) professor(a) não inserido. Tente novamente.'));
-            return $this->redirect(['action' => 'add', '?' => ['siape' => $siape, 'email' => $email]]);
+            if ($siape && $email):
+                return $this->redirect(['action' => 'add', '?' => ['siape' => $siape, 'email' => $email]]);
+            else:
+                return $this->redirect(['action' => 'add']);
+            endif;
         }
         $this->set(compact('professor'));
     }
