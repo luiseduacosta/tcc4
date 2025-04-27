@@ -10,6 +10,37 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($instituicao_id);
 ?>
 
+<script>
+    function getsupervisores(id) {
+        $.ajax(
+            {
+                url: '<?= $this->Url->build(['controller' => 'Instituicoes', 'action' => 'buscasupervisores']) ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: id,
+                    _csrfToken: '<?= $this->request->getAttribute('csrfToken') ?>'
+            },
+            success: function (response) {
+                let options = '<option value="">Selecione o supervisor</option>';
+                if (response && Object.keys(response).length > 0) {
+                    $.each(response, function (key, value) {
+                        options += '<option value="' + key + '">' + value + '</option>';
+                    });
+                } else {
+                    options = '<option value="">Nenhum supervisor encontrado</option>';
+                }
+                $('#supervisor-id').html(options);
+            },
+            error: function (xhr, status, error) {
+                console.error('Ajax error:', error);
+                $('#supervisor-id').html('<option value="">Erro ao carregar supervisores</option>');
+            }
+        }
+    );
+    }
+</script>
+
 <?php echo $this->element('menu_mural'); ?>
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
@@ -58,7 +89,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('periodo', ['label' => 'Período', 'value' => $periodo, 'required' => true, 'readonly' => true]);
         echo $this->Form->control('ajuste2020', ['label' => 'Ajuste 2020', 'options' => ['0' => 'Não', '1' => 'Sim'], 'default' => '1']);
 
-        echo $this->Form->control('instituicao_id', ['value' => $instituicao_id, 'options' => $instituicoes, 'required' => true, 'empty' => 'Seleciona instituição']);
+        echo $this->Form->control('instituicao_id', ['value' => $instituicao_id, 'options' => $instituicoes, 'required' => true, 'onchange' => 'getsupervisores(this.value)','empty' => 'Seleciona instituição']);
 
         if (isset($supervisor_id)) {
             echo $this->Form->control('supervisor_id', ['value' => $supervisor_id, 'options' => $supervisores, 'required' => false, 'empty' => "Seleciona supervisor"]);

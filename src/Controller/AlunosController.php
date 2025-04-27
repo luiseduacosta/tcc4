@@ -38,8 +38,7 @@ class AlunosController extends AppController
      */
     public function view($id = null)
     {
-
-        /** Corrigir */
+        /** Corrigir autorização */
         $this->Authorization->skipAuthorization();
 
         if ($id === null) {

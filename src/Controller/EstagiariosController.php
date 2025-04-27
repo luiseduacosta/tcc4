@@ -482,7 +482,6 @@ class EstagiariosController extends AppController
                 ->order(['Estagiarios.nivel' => 'asc'])
                 ->all()
                 ->last();
-
             /** Ajusto o valor do nivel de estágio com o periodo e o ajuste2020 */
             if ($estagiario) {
                 if ($estagiario->periodo == $periodoatual) {
@@ -521,18 +520,16 @@ class EstagiariosController extends AppController
             }
 
             /** Supervisores */
-            $supevisorestable = $this->fetchTable('Supervisores');
             if ($estagiario) { // ou $instituicao_id
                 $supervisoresdainstituicao = $this->fetchTable('Instituicoes')->find()
                     ->contain(['Supervisores'])
-                    ->where(['instituicoes.id' => $estagiario->instituicao_id])
-                    ->all()
-                    ->toList();
+                    ->where(['Instituicoes.id' => $estagiario->instituicao_id])
+                    ->first();
             } else {
                 $supervisores = $this->fetchTable('Supervisores')->find('list');
                 $this->set('supervisores', $supervisores);
             }
-            if ($supervisoresdainstituicao) {
+            if (!empty($supervisoresdainstituicao)) {
                 $todosossupervisores[] = null;
                 foreach ($supervisoresdainstituicao as $supervisor) {
                     foreach ($supervisor['supervisores'] as $cadasupervisor) {

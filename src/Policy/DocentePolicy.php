@@ -56,7 +56,7 @@ class DocentePolicy {
         if (!isset($user)) {
             return false;
         }
-        return isset($user) && $user->categoria == '1';
+        return isset($user) && $user->categoria == '1' || $user->categoria == '2';
     }
 
 }

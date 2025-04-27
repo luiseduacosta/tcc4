@@ -16,10 +16,10 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-                <?= $this->Html->link(__('Listar Alunos'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-            </li>
             <?php if (isset($user) && $user->categoria == '1'): ?>
+                <li class="nav-item">
+                    <?= $this->Html->link(__('Listar Alunos'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+                </li>
                 <li class="nav-item">
                     <?= $this->Html->link(__('Declaração de período'), ['action' => 'certificadoperiodo', $aluno->id], ['class' => 'btn btn-primary']) ?>
                 </li>
