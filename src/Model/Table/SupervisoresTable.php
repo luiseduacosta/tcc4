@@ -88,7 +88,7 @@ class SupervisoresTable extends Table
 
                 $validator
                         ->scalar('cpf')
-                        ->maxLength('cpf', 12)
+                        ->maxLength('cpf', 14)
                         ->allowEmptyString('cpf');
 
                 $validator
@@ -122,7 +122,7 @@ class SupervisoresTable extends Table
 
                 $validator
                         ->scalar('telefone')
-                        ->maxLength('telefone', 9)
+                        ->maxLength('telefone', 15)
                         ->allowEmptyString('telefone');
 
                 $validator
@@ -132,7 +132,7 @@ class SupervisoresTable extends Table
 
                 $validator
                         ->scalar('celular')
-                        ->maxLength('celular', 10)
+                        ->maxLength('celular', 15)
                         ->allowEmptyString('celular');
 
                 $validator

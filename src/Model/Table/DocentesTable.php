@@ -84,7 +84,7 @@ class DocentesTable extends Table
 
                 $validator
                         ->scalar('cpf')
-                        ->maxLength('cpf', 14)
+                        ->maxLength('cpf', 15)
                         ->allowEmptyString('cpf');
 
                 $validator
@@ -111,7 +111,7 @@ class DocentesTable extends Table
 
                 $validator
                         ->scalar('telefone')
-                        ->maxLength('telefone', 12)
+                        ->maxLength('telefone', 15)
                         ->allowEmptyString('telefone');
 
                 $validator
@@ -121,7 +121,7 @@ class DocentesTable extends Table
 
                 $validator
                         ->scalar('celular')
-                        ->maxLength('celular', 12)
+                        ->maxLength('celular', 15)
                         ->allowEmptyString('celular');
 
                 $validator
@@ -236,6 +236,7 @@ class DocentesTable extends Table
 
                 $validator
                         ->scalar('observacoes')
+                        ->maxLength('observacoes', 250)
                         ->allowEmptyString('observacoes');
 
                 return $validator;

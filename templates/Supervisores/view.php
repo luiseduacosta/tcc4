@@ -4,6 +4,8 @@
  * @var \App\Model\Entity\Supervisor $supervisor
  */
 $user = $this->getRequest()->getAttribute('identity');
+// pr($supervisor->nome);
+// die();
 ?>
 
 <?php echo $this->element('menu_mural') ?>
@@ -44,101 +46,97 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="tab-content">
 
         <div id="supervisora" class="tab-pane container active show">
-            <h3><?= h($supervisor->nome) ?></h3>
+            <h3><?= $supervisor->nome ?></h3>
             <table>
                 <tr>
                     <th><?= __('Id') ?></th>
-                    <td><?= $supervisor->id ?></td>
+                    <td><?= $this->Number->format($supervisor->id, ['places' => 0]) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Cress') ?></th>
-                    <td><?= $supervisor->cress ?></td>
+                    <td><?= $this->Number->format($supervisor->cress, ['pattern' => '#####']) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Região') ?></th>
                     <td><?= $this->Number->ordinal($supervisor->regiao, ['locale' => 'pt_BR']) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Nome') ?></th>
-                    <td><?= h($supervisor->nome) ?></td>
-                </tr>
-                <tr>
                     <th><?= __('CPF') ?></th>
-                    <td><?= h($supervisor->cpf) ?></td>
+                    <td><?= $this->Number->format($supervisor->cpf, ['pattern' => '###.###.###-##']) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Cargo na instituição') ?></th>
-                    <td><?= h($supervisor->cargo) ?></td>
+                    <td><?= $supervisor->cargo ?></td>
                 </tr>
                 <tr>
                     <th><?= __('CEP') ?></th>
-                    <td><?= h($supervisor->cep) ?></td>
+                    <td><?= $supervisor->cep ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Endereço') ?></th>
-                    <td><?= h($supervisor->endereco) ?></td>
+                    <td><?= $supervisor->endereco ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Bairro') ?></th>
-                    <td><?= h($supervisor->bairro) ?></td>
+                    <td><?= $supervisor->bairro ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Município') ?></th>
-                    <td><?= h($supervisor->municipio) ?></td>
+                    <td><?= $supervisor->municipio ?></td>
                 </tr>
                 <tr>
                     <th><?= __('E-mail') ?></th>
-                    <td><?= h($supervisor->email) ?></td>
+                    <td><?= $this->Html->link($supervisor->email, 'mailto:' . $supervisor->email, ['target' => '_blank']) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('DDD') ?></th>
-                    <td><?= h($supervisor->codigo_tel) ?></td>
+                    <td><?= $this->Number->format($supervisor->codigo_tel, ['places' => 0]) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Telefone') ?></th>
-                    <td><?= h($supervisor->telefone) ?></td>
+                    <td><?= $supervisor->telefone ?></td>
                 </tr>
                 <tr>
                     <th><?= __('DDD') ?></th>
-                    <td><?= h($supervisor->codigo_cel) ?></td>
+                    <td><?= $this->Number->format($supervisor->codigo_cel, ['places' => 0]) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Celular') ?></th>
-                    <td><?= h($supervisor->celular) ?></td>
+                    <td><?= $supervisor->celular ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Escola de formação em Serviço Social') ?></th>
-                    <td><?= h($supervisor->escola) ?></td>
+                    <td><?= $supervisor->escola ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Ano Formatura') ?></th>
-                    <td><?= h($supervisor->ano_formatura) ?></td>
+                    <td><?= $supervisor->ano_formatura ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Outros Estudos') ?></th>
-                    <td><?= h($supervisor->outros_estudos) ?></td>
+                    <th><?= __('Outros estudos') ?></th>
+                    <td><?= $supervisor->outros_estudos ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Área do curso de outros estudos') ?></th>
-                    <td><?= h($supervisor->area_curso) ?></td>
+                    <td><?= $supervisor->area_curso ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Ano do curso de outros estudos') ?></th>
-                    <td><?= h($supervisor->ano_curso) ?></td>
+                    <td><?= $supervisor->ano_curso ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Turma do Curso de supervisores da ESS') ?></th>
-                    <td><?= h($supervisor->curso_turma) ?></td>
+                    <th><?= __('Turma do curso de supervisores da ESS') ?></th>
+                    <td><?= $supervisor->curso_turma ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Número de inscrição no Curso de supervisores da ESS') ?></th>
+                    <th><?= __('Número de inscrição no curso de supervisores da ESS') ?></th>
                     <td><?= $supervisor->num_inscricao ?></td>
                 </tr>
             </table>
-            <div class="text">
+            <div class="text-justify">
                 <strong><?= __('Observações') ?></strong>
                 <blockquote>
-                    <?= $this->Text->autoParagraph(h($supervisor->observacoes)); ?>
+                    <?= $this->Text->autoParagraph($supervisor->observacoes); ?>
                 </blockquote>
             </div>
         </div>
@@ -149,18 +147,18 @@ $user = $this->getRequest()->getAttribute('identity');
                 <table class="table table-striped table-hover table-responsive">
                     <tr>
                         <th><?= __('Id') ?></th>
-                        <th><?= __('Instituicao') ?></th>
-                        <th><?= __('Cnpj') ?></th>
-                        <th><?= __('Email') ?></th>
-                        <th><?= __('Endereco') ?></th>
+                        <th><?= __('Instituição') ?></th>
+                        <th><?= __('CNPJ') ?></th>
+                        <th><?= __('E-mail') ?></th>
+                        <th><?= __('Endereço') ?></th>
                         <th><?= __('Bairro') ?></th>
-                        <th><?= __('Municipio') ?></th>
-                        <th><?= __('Cep') ?></th>
+                        <th><?= __('Município') ?></th>
+                        <th><?= __('CEP') ?></th>
                         <th><?= __('Telefone') ?></th>
                         <th><?= __('Convenio') ?></th>
                         <th><?= __('Expira') ?></th>
                         <th><?= __('Seguro') ?></th>
-                        <th><?= __('Observacoes') ?></th>
+                        <th><?= __('Observações') ?></th>
                         <th class="row"><?= __('Ações') ?></th>
                     </tr>
                     <?php foreach ($supervisor->instituicoes as $instituicaoestagios): ?>
@@ -180,7 +178,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= $this->Text->autoParagraph(h($instituicaoestagios->observacoes)) ?></td>
                             <td class="row">
                                 <?= $this->Html->link(__('Ver'), ['controller' => 'Instituicoes', 'action' => 'view', $instituicaoestagios->id]) ?>
-                                <?php if (isset($user) && $user->categoria == 1): ?>
+                                <?php if (isset($user) && $user['categoria'] == 1): ?>
                                     <?= $this->Html->link(__('Editar'), ['controller' => 'Instituicoes', 'action' => 'edit', $instituicaoestagios->id]) ?>
                                     <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Instituicoes', 'action' => 'delete', $instituicaoestagios->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $instituicaoestagios->id)]) ?>
                                 <?php endif; ?>
@@ -196,16 +194,16 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php if (!empty($supervisor->estagiarios)): ?>
                 <table class="table table-striped table-hover table-responsive">
                     <tr>
-                        <th><?= __('Id') ?></th>
+                        <th><?= __('ID') ?></th>
                         <th><?= __('Estudante') ?></th>
                         <th><?= __('Registro') ?></th>
                         <th><?= __('Turno') ?></th>
-                        <th><?= __('Nivel') ?></th>
+                        <th><?= __('Nível') ?></th>
                         <th><?= __('Docente') ?></th>
-                        <th><?= __('Periodo') ?></th>
+                        <th><?= __('Período') ?></th>
                         <th><?= __('Nota') ?></th>
-                        <th><?= __('Ch') ?></th>
-                        <th><?= __('Observacoes') ?></th>
+                        <th><?= __('CH') ?></th>
+                        <th><?= __('Observações') ?></th>
                         <th class="row"><?= __('Ações') ?></th>
                     </tr>
                     <?php foreach ($supervisor->estagiarios as $estagiarios): ?>
@@ -228,7 +226,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($estagiarios->observacoes) ?></td>
                             <td class="row">
                                 <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
-                                <?php if (isset($user) && $user->categoria == '1'): ?>
+                                <?php if (isset($user) && $user['categoria'] == '1'): ?>
                                     <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
                                     <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Are you sure you want to delete # {0}?', $estagiarios->id)]) ?>
                                 <?php endif; ?>

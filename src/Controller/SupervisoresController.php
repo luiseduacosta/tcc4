@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 namespace App\Controller;
 
 /**
@@ -50,6 +49,8 @@ class SupervisoresController extends AppController
         $supervisor = $this->Supervisores->get($id, [
             'contain' => ['Instituicoes' => ['Areainstituicoes'], 'Estagiarios' => ['Alunos', 'Supervisores', 'Professores', 'Instituicoes']],
         ]);
+        // pr($supervisor);
+        // die();
         // $this->Authorization->authorize($supervisor);
         $this->set(compact('supervisor'));
     }

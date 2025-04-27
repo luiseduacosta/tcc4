@@ -28,15 +28,15 @@
     <table class="table table-responsive table-hover table-striped">
         <thead class="table-dark">
             <tr>
-                <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('nome') ?></th>
-                <th><?= $this->Paginator->sort('cress') ?></th>
-                <th><?= $this->Paginator->sort('regiao') ?></th>
+                <th><?= $this->Paginator->sort('id', 'ID') ?></th>
+                <th><?= $this->Paginator->sort('nome', 'Nome') ?></th>
+                <th><?= $this->Paginator->sort('cress', 'CRESS') ?></th>
+                <th><?= $this->Paginator->sort('regiao', 'Região') ?></th>
                 <th><?= $this->Paginator->sort('codigo_tel', 'DDD') ?></th>
-                <th><?= $this->Paginator->sort('telefone') ?></th>
+                <th><?= $this->Paginator->sort('telefone', 'Telefone') ?></th>
                 <th><?= $this->Paginator->sort('codigo_cel', 'DDD') ?></th>
-                <th><?= $this->Paginator->sort('celular') ?></th>
-                <th><?= $this->Paginator->sort('email') ?></th>
+                <th><?= $this->Paginator->sort('celular', 'Celular') ?></th>
+                <th><?= $this->Paginator->sort('email', 'E-mail') ?></th>
                 <th class="row"><?= __('Ações') ?></th>
             </tr>
         </thead>
@@ -58,10 +58,10 @@
                     <td><?= h($supervisor->celular) ?></td>
                     <td><?= h($supervisor->email) ?></td>
                     <td class="row">
-                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $supervisor->id]) ?>
-                        <?php if (isset($user) && $user->categoria == '1'): ?>
-                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $supervisor->id]) ?>
-                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $supervisor->id], ['confirm' => __('Are you sure you want to delete # {0}?', $supervisor->id)]) ?>
+                        <?= $this->Html->link(__('Ver'), ['controller' => 'Supervisores', 'action' => 'view', $supervisor->id]) ?>
+                        <?php if (isset($user) && $user['categoria'] == '1'): ?>
+                            <?= $this->Html->link(__('Editar'), ['controller' => 'Supervisores', 'action' => 'edit', $supervisor->id]) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Supervisores', 'action' => 'delete', $supervisor->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $supervisor->id)]) ?>
                         <?php endif; ?>
                     </td>
                 </tr>

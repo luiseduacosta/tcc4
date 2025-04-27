@@ -104,7 +104,7 @@ class AlunosTable extends Table
 
                 $validator
                         ->scalar('telefone')
-                        ->maxLength('telefone', 9)
+                        ->maxLength('telefone', 15)
                         ->allowEmptyString('telefone');
 
                 $validator
@@ -112,7 +112,7 @@ class AlunosTable extends Table
 
                 $validator
                         ->scalar('celular')
-                        ->maxLength('celular', 10)
+                        ->maxLength('celular', 15)
                         ->allowEmptyString('celular');
 
                 $validator
@@ -121,7 +121,7 @@ class AlunosTable extends Table
 
                 $validator
                         ->scalar('cpf')
-                        ->maxLength('cpf', 12)
+                        ->maxLength('cpf', 15)
                         ->allowEmptyString('cpf');
 
                 $validator
@@ -131,7 +131,7 @@ class AlunosTable extends Table
 
                 $validator
                         ->scalar('orgao')
-                        ->maxLength('orgao', 10)
+                        ->maxLength('orgao', 15)
                         ->allowEmptyString('orgao');
 
                 $validator
@@ -140,7 +140,7 @@ class AlunosTable extends Table
 
                 $validator
                         ->scalar('endereco')
-                        ->maxLength('endereco', 50)
+                        ->maxLength('endereco', 100)
                         ->allowEmptyString('endereco');
 
                 $validator
@@ -150,7 +150,7 @@ class AlunosTable extends Table
 
                 $validator
                         ->scalar('municipio')
-                        ->maxLength('municipio', 30)
+                        ->maxLength('municipio', 50)
                         ->allowEmptyString('municipio');
 
                 $validator
