@@ -65,6 +65,7 @@ class EstagiariosTable extends Table
                 ]);
 
                 $this->belongsTo('Instituicoes', [
+                        'className' => 'Instituicoes',
                         'foreignKey' => 'instituicao_id',
                 ]);
 

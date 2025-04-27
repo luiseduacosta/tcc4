@@ -15,143 +15,163 @@ $user = $this->getRequest()->getAttribute('identity');
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerDocentesView">
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+    <li class="item-link">
+            <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
+        </li>
+    <?php if (isset($user) && $user->categoria == '1'): ?>
             <li class="item-link">
-                <?= $this->Html->link(__('Editar Docente'), ['action' => 'edit', $docente->id], ['class' => 'btn btn-primary float-start']) ?>
+                <?= $this->Html->link(__('Editar docente'), ['action' => 'edit', $docente->id], ['class' => 'btn btn-primary float-start']) ?>
             </li>
             <li class="item-link">
-                <?= $this->Form->postLink(__('Excluir Docente'), ['action' => 'delete', $docente->id], ['confirm' => __('Tem certeza que quer exclir este registro # {0}?', $docente->id), 'class' => 'btn btn-danger float-start']) ?>
+                <?= $this->Form->postLink(__('Excluir docente'), ['action' => 'delete', $docente->id], ['confirm' => __('Tem certeza que quer exclir este registro # {0}?', $docente->id), 'class' => 'btn btn-danger float-start']) ?>
             </li>
         <?php endif; ?>
     </ul>
 </nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <h3><?= h($docente->nome) ?></h3>
+    <h3 class="text-center"><?= h($docente->nome) ?></h3>
     <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
         <dl class="row">
 
-            <dt class="table-dark">Dados pessoais</dt>
+            <dt class="col-sm-5 h3">Dados pessoais</dt>
             <dd></dd>
 
-            <dt scope="row"><?= __('Nome') ?></dt>
-            <dd><?= h($docente->nome) ?></dd>
+            <dt class="col-sm-3"><?= __('Nome') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->nome) ?></dd>
 
-            <dt scope="row"><?= __('CṔF') ?></dt>
-            <dd><?= h($docente->cpf) ?></dd>
+            <dt class="col-sm-3"><?= __('CPF') ?></dt>
+            <dd class="col-sm-9"><?= $docente->cpf ? h($docente->cpf) : 's/d' ?></dd>
 
-            <dt scope="row"><?= __('Sexo') ?></dt>
-            <dd>
-                <?php if ($docente->sexo == '1'): ?>
-                    <?= 'Masculino'; ?>
-                <?php elseif ($docente->sexo == '2'): ?>
-                    <?= 'Feminino'; ?>
-                <?php else: ?>
-                    <?= "s/d" ?>
-                <?php endif; ?>
+            <dt class="col-sm-3"><?= __('Sexo') ?></dt>
+            <dd class="col-sm-9">
+                <?php 
+                if ($docente->sexo == '0') {
+                    echo 'Feminino';
+                } elseif ($docente->sexo == '1') {
+                    echo 'Masculino';
+                } elseif ($docente->sexo == '2') {
+                    echo 'Não informado';
+                }
+                ?>
             </dd>
 
-            <dt scope="row"><?= __('Data de nascimento') ?></dt>
-            <dd><?= $docente->datanascimento ? $docente->datanascimento->i18nFormat('dd-MM-yyyy') : 's/d' ?></dd>
+            <dt class="col-sm-3"><?= __('Data de nascimento') ?></dt>
+            <dd class="col-sm-9"><?= $docente->datanascimento ? $docente->datanascimento->i18nFormat('dd-MM-yyyy') : 's/d' ?></dd>
 
-            <dt scope="row"><?= __('Local de nascimento') ?></dt>
-            <dd><?= h($docente->localnascimento) ?></dd>
+            <dt class="col-sm-3"><?= __('Local de nascimento') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->localnascimento) ?></dd>
+        </dl>
 
-            <dt scope="row"><?= __('Telefone') ?></dt>
-            <dd><?= h('(' . h($docente->ddd_telefone) . ')' . h($docente->telefone)) ?></dd>
+        <dl class="row">
+            <dt class="col-sm-5 h3">Dados de contato</dt>
+            <dd></dd>
 
-            <dt scope="row"><?= __('Celular') ?></dt>
-            <dd><?= h('(' . h($docente->ddd_celular) . ')' . h($docente->celular)) ?></dd>
+            <dt class="col-sm-3"><?= __('Telefone') ?></dt>
+            <dd class="col-sm-9"><?= $docente->ddd_telefone ? h('(' . h($docente->ddd_telefone) . ')' . h($docente->telefone)) : 's/d' ?></dd>
 
-            <dt scope="row"><?= __('E-mail') ?></dt>
-            <dd><?= h($docente->email) ?></dd>
+            <dt class="col-sm-3"><?= __('Celular') ?></dt>
+            <dd class="col-sm-9"><?= $docente->ddd_celular ? h('(' . h($docente->ddd_celular) . ')' . h($docente->celular)) : 's/d' ?></dd>
 
-            <dt scope="row"><?= __('Site') ?></dt>
-            <dd><?= $docente->has('homepage') ? $this->Html->link($docente->homepage, $docente->homepage) : '' ?></dd>
+            <dt class="col-sm-3"><?= __('E-mail') ?></dt>
+            <dd class="col-sm-9"><?= $docente->email ? $this->Html->link($docente->email, 'mailto:' . $docente->email) : 's/d' ?></dd>
 
-            <dt scope="row"><?= __('Rede social') ?></dt>
-            <dd><?= $docente->has('redesocial') ? $this->Html->link($docente->redesocial, $docente->redesocial) : '' ?></dd>
+            <dt class="col-sm-3"><?= __('Site') ?></dt>
+            <dd class="col-sm-9"><?= $docente->has('homepage') ? $this->Html->link($docente->homepage, $docente->homepage) : '' ?></dd>
+
+            <dt class="col-sm-3"><?= __('Rede social') ?></dt>
+            <dd class="col-sm-9"><?= $docente->has('redesocial') ? $this->Html->link($docente->redesocial, $docente->redesocial) : '' ?></dd>
 
         </dl>
 
-        <dl>
-            <dt class="table-dark">Dados acadêmicos</dt>
+        <dl class="row">
+            <dt class="col-sm-5 h3">Currículos</dt>
             <dd></dd>
 
-            <dt scope="row"><?= __('Curriculo lattes') ?></dt>
-            <dd><a href="<?= 'http://lattes.cnpq.br/' . $docente->curriculolattes ?>">Currículo</a></dd>
+            <dt class="col-sm-3"><?= __('Curriculo lattes') ?></dt>
+            <dd class="col-sm-9"><?= $docente->curriculolattes ? $this->Html->link($docente->curriculolattes, 'http://lattes.cnpq.br/' . $docente->curriculolattes, ['target' => '_blanck', 'full' => true]) : 's/d' ?></dd>
 
-            <dt scope="row"><?= __('Atualização lattes') ?></dt>
-            <dd><?= $docente->atualizacaolattes ? $docente->atualizacaolattes->i18nFormat('dd-MM-yyyy') : 's/d' ?></dd>
+            <dt class="col-sm-3"><?= __('Atualização lattes') ?></dt>
+            <dd class="col-sm-9"><?= $docente->atualizacaolattes ? $docente->atualizacaolattes->i18nFormat('dd-MM-yyyy') : 's/d' ?></dd>
 
-            <dt scope="row"><?= __('Curriculo Sigma') ?></dt>
-            <dd><?= h($docente->curriculosigma) ?></dd>
+            <dt class="col-sm-3"><?= __('Curriculo Sigma') ?></dt>
+            <dd class="col-sm-9"><?= $docente->curriculosigma ? $this->Html->link($docente->curriculosigma, $docente->curriculosigma) : 's/d' ?></dd>
 
-            <dt scope="row"><?= __('Diretório de Grupos de Pesquisa') ?></dt>
-            <dd><a href='http://dgp.cnpq.br/dgp/espelhogrupo/<?= $docente->pesquisadordgp ?>'>Grupo de pesquisa</a></dd>
+            <dt class="col-sm-3"><?= __('Diretório de Grupos de Pesquisa') ?></dt>
+            <dd class="col-sm-9"><a href='http://dgp.cnpq.br/dgp/espelhogrupo/<?= $docente->pesquisadordgp ?>'>Grupo de pesquisa</a></dd>
+        </dl>
 
-            <dt scope="row"><?= __('Formação profissional') ?></dt>
-            <dd><?= h($docente->formacaoprofissional) ?></dd>
+        <dl class="row">
+            <dt class="col-sm-5 h3">Graduação</dt>
+            <dd></dd>
 
-            <dt scope="row"><?= __('Universidade de graduação') ?></dt>
-            <dd><?= h($docente->universidadedegraduacao) ?></dd>
+            <dt class="col-sm-3"><?= __('Formação profissional') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->formacaoprofissional) ?></dd>
 
-            <dt scope="row"><?= __('Ano formação') ?></dt>
-            <dd><?= h($docente->anoformacao) ?></dd>
+            <dt class="col-sm-3"><?= __('Universidade de graduação') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->universidadedegraduacao) ?></dd>
 
-            <dt scope="row"><?= __('Mestrado área') ?></dt>
-            <dd><?= h($docente->mestradoarea) ?></dd>
+            <dt class="col-sm-3"><?= __('Ano formação') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->anoformacao) ?></dd>
+        </dl>
 
-            <dt scope="row"><?= __('Mestrado universidade') ?></dt>
-            <dd><?= h($docente->mestradouniversidade) ?></dd>
+        <dl class="row">
+            <dt class="col-sm-5 h3">Pós-graduação</dt>
+            <dd></dd>
 
-            <dt scope="row"><?= __('Mestrado ano conclusão') ?></dt>
-            <dd><?= $this->Number->format($docente->mestradoanoconclusao) ?></dd>
+            <dt class="col-sm-3"><?= __('Mestrado área') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->mestradoarea) ?></dd>
 
-            <dt scope="row"><?= __('Doutorado área') ?></dt>
-            <dd><?= h($docente->doutoradoarea) ?></dd>
+            <dt class="col-sm-3"><?= __('Universidade de mestrado') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->mestradouniversidade) ?></dd>
 
-            <dt scope="row"><?= __('Doutorado universidade') ?></dt>
-            <dd><?= h($docente->doutoradouniversidade) ?></dd>
+            <dt class="col-sm-3"><?= __('Ano de conclusão do mestrado') ?></dt>
+            <dd class="col-sm-9"><?= $this->Number->format($docente->mestradoanoconclusao) ?></dd>
 
-            <dt scope="row"><?= __('Doutorado ano conclusão') ?></dt>
-            <dd><?= h($docente->doutoradoanoconclusao) ?></dd>
+            <dt class="col-sm-3"><?= __('Área de doutorado') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->doutoradoarea) ?></dd>
+
+            <dt class="col-sm-3"><?= __('Universidade de doutorado') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->doutoradouniversidade) ?></dd>
+
+            <dt class="col-sm-3"><?= __('Ano de conclusão do doutorado') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->doutoradoanoconclusao) ?></dd>
 
         </dl>
 
-        <dl>
-            <dt class="table-dark">Dados funcionais</dt>
+        <dl class="row">
+            <dt class="col-sm-5 h3">Dados funcionais</dt>
             <dd></dd>
 
-            <dt scope="row"><?= __('Siape') ?></dt>
-            <dd><?= $this->Number->format($docente->siape) ?></dd>
+            <dt class="col-sm-3"><?= __('SIAPE') ?></dt>
+            <dd class="col-sm-9"><?= $this->Number->format($docente->siape, ['pattern' => '#######']) ?></dd>
 
-            <dt scope="row"><?= __('Departamento') ?></dt>
-            <dd><?= h($docente->departamento) ?></dd>
+            <dt class="col-sm-3"><?= __('Departamento') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->departamento) ?></dd>
 
-            <dt scope="row"><?= __('Forma de ingresso') ?></dt>
-            <dd><?= h($docente->formaingresso) ?></dd>
+            <dt class="col-sm-3"><?= __('Forma de ingresso') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->formaingresso) ?></dd>
 
-            <dt scope="row"><?= __('Data de ingresso') ?></dt>
-            <dd><?= $docente->dataingresso ? $docente->dataingresso->i18nFormat('dd-MM-yyyy') : 's/d' ?></dd>
+            <dt class="col-sm-3"><?= __('Data de ingresso') ?></dt>
+            <dd class="col-sm-9"><?= $docente->dataingresso ? $docente->dataingresso->i18nFormat('dd-MM-yyyy') : 's/d' ?></dd>
 
-            <dd scope="row"><?= __('Tipo de cargo') ?></dd>
-            <dt><?= h($docente->tipocargo) ?></dt>
+            <dt class="col-sm-3"><?= __('Tipo de cargo') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->tipocargo) ?></dd>
 
-            <dt scope="row"><?= __('Classe e nível') ?></dt>
-            <dd><?= h($docente->categoria) ?></dd>
+            <dt class="col-sm-3"><?= __('Classe e nível') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->categoria) ?></dd>
 
-            <dt scope="row"><?= __('Regime de trabalho') ?></dt>
-            <dd><?= h($docente->regimetrabalho) ?></dd>
+            <dt class="col-sm-3"><?= __('Regime de trabalho') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->regimetrabalho) ?></dd>
 
-            <dt scope="row"><?= __('Data de egresso') ?></dt>
-            <dd><?= h($docente->dataegresso) ?></dd>
+            <dt class="col-sm-3"><?= __('Data de egresso') ?></dt>
+            <dd class="col-sm-9"><?= $docente->dataegresso ? $docente->dataegresso->i18nFormat('dd-MM-yyyy') : 's/d' ?></dd>
 
-            <dt scope="row"><?= __('Motivo de egresso') ?></dt>
-            <dd><?= h($docente->motivoegresso) ?></dd>
+            <dt class="col-sm-3"><?= __('Motivo de egresso') ?></dt>
+            <dd class="col-sm-9"><?= h($docente->motivoegresso) ?></dd>
 
-            <dt><?= __('Observacoes') ?></dt>
-            <dd><?= $this->Text->autoParagraph(h($docente->observacoes)); ?></dd>
+            <dt class="col-sm-3"><?= __('Observações') ?></dt>
+            <dd class="col-sm-9"><?= $this->Text->autoParagraph(h($docente->observacoes)); ?></dd>
         </dl>
     </div>
 <?php endif; ?>

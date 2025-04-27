@@ -2,7 +2,9 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Muralestagio $muralestagio
+ * @var \Cake\I18n\FrozenTime $now
  */
+
 $user = $this->getRequest()->getAttribute('identity');
 
 $this->assign('title', __('Mural de Estágios'));
@@ -96,7 +98,7 @@ $this->assign('title', __('Mural de Estágios'));
                 </tr>
                 <tr>
                     <th><?= __('Requisitos') ?></th>
-                    <td><?= h($muralestagio->requisitos) ?></td>
+                    <td><?= $this->Text->autoParagraph($muralestagio->requisitos) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Turme de estágio') ?></th>
@@ -191,28 +193,28 @@ $this->assign('title', __('Mural de Estágios'));
                 </tr>
                 <tr>
                     <th><?= __('Carga horária') ?></th>
-                    <td><?= $this->Number->format($muralestagio->cargaHoraria) ?></td>
+                    <td><?= $this->Number->format($muralestagio->cargaHoraria, ['pattern' => '##']) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Data da seleção') ?></th>
-                    <td><?= $muralestagio->dataSelecao ? date('d-m-Y', strtotime($muralestagio->dataSelecao)) : '' ?>
+                    <td><?= $muralestagio->dataSelecao ? $muralestagio->dataSelecao->i18nFormat('dd-MM-yyyy') : '' ?>
                     </td>
                 </tr>
                 <tr>
                     <th><?= __('Data de encerramento da inscrição') ?></th>
-                    <td><?= $muralestagio->dataInscricao ? date('d-m-Y', strtotime($muralestagio->dataInscricao)) : '' ?>
+                    <td><?= $muralestagio->dataInscricao ? $muralestagio->dataInscricao->i18nFormat('dd-MM-yyyy') : '' ?>
                     </td>
                 </tr>
                 <tr>
                     <th><?= __('Data fax') ?></th>
-                    <td><?= $muralestagio->datafax ? date('d-m-Y', strtotime(h($muralestagio->datafax))) : '' ?></td>
+                    <td><?= $muralestagio->datafax ? $muralestagio->datafax->i18nFormat('dd-MM-yyyy') : '' ?></td>
                 </tr>
                 <tr>
                     <div class="text">
                         <th><?= __('Outras informações') ?></th>
                         <td>
                             <blockquote>
-                                <?= $this->Text->autoParagraph(h($muralestagio->outras)); ?>
+                                <?= $this->Text->autoParagraph($muralestagio->outras); ?>
                             </blockquote>
                         </td>
                     </div>
@@ -248,11 +250,11 @@ $this->assign('title', __('Mural de Estágios'));
                         </td>
                     </tr>
 
-                <?php elseif (isset($user) && $user->categoria == 2): ?>
+                <?php elseif (isset($user) && $user->categoria == '2'): ?>
                     <!--
                         Para os outros usuários as inscrições dependem da data de encerramento
                         //-->
-                    <?php if (date('Y-m-d') < date('Y-m-d', strtotime($muralestagio->dataInscricao))): ?>
+                    <?php if (now()->i18nFormat('Y-m-d') < $muralestagio->dataInscricao->i18nFormat('Y-m-d')): ?>
                         <tr>
                             <td colspan=2 style="text-align: center">
 
@@ -311,10 +313,10 @@ $this->assign('title', __('Mural de Estágios'));
                                 </td>
                                 <td><?= $this->Html->link($muralinscricoes->muralestagios['instituicao'], ['controller' => 'muralestagios', 'action' => 'view', $muralinscricoes->muralestagio_id]) ?>
                                 </td>
-                                <td><?= date('d-m-Y', strtotime(h($muralinscricoes->data))) ?></td>
+                                <td><?= $muralinscricoes->data->i18nFormat('dd-MM-yyyy') ?></td>
                                 <td><?= h($muralinscricoes->periodo) ?></td>
                                 <?php if (isset($user) && $user->categoria == 1): ?>
-                                    <td><?= date('d-m-Y', strtotime($muralinscricoes->timestamp)) ?></td>
+                                    <td><?= $muralinscricoes->timestamp->i18nFormat('dd-MM-yyyy') ?></td>
                                     <td class="row">
                                         <?= $this->Html->link(__('Ver'), ['controller' => 'Muralinscricoes', 'action' => 'view', $muralinscricoes->id]) ?>
                                         <?= $this->Html->link(__('Editar'), ['controller' => 'Muralinscricoes', 'action' => 'edit', $muralinscricoes->id]) ?>

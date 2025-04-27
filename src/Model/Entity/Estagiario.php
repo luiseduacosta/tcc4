@@ -62,8 +62,8 @@ class Estagiario extends Entity
         'alunos' => true,
         'professores' => true,
         'turmaestagios' => true,
-        'supervisores' => true, 
-        'instituicoes' => true,       
+        'supervisores' => true,
+        'instituicoes' => true,
         'avaliacoes' => true,
         'folhadeatividades' => true,
         'tccestudantes' => true

@@ -40,7 +40,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('instituicao_id', ['label' => ['text' => 'Instituição'], 'options' => $instituicaoestagios, 'empty' => true, 'readonly']);
         echo $this->Form->control('instituicao', ['label' => ['text' => 'Instituição'], 'value' => $muralestagio->instituicao_id, 'readonly']);
         echo $this->Form->control('convenio', ['label' => ['text' => 'Convênio'], 'options' => ['0' => 'Não', '1' => 'Sim']]);
-        echo $this->Form->control('vagas');
+        echo $this->Form->control('vagas', ['label' => ['text' => 'Vagas']]);
         echo $this->Form->control('beneficios', ['label' => ['text' => 'Benefícios']]);
         echo $this->Form->control('final_de_semana', ['label' => ['text' => 'Final de semana'], 'options' => ['0' => 'Não', '1' => 'Sim']]);
         echo $this->Form->control('cargaHoraria', ['label' => ['text' => 'Carga horária']]);
@@ -53,15 +53,15 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('horarioSelecao', ['label' => ['text' => 'Horário da seleção']]);
         echo $this->Form->control('localSelecao', ['label' => ['text' => 'Local da seleção']]);
         echo $this->Form->control('formaSelecao', ['label' => ['text' => 'Forma da seleção'], 'options' => ['0' => 'Entrevista', '1' => 'CR', '2' => 'Prova', '3' => 'Outras']]);
-        echo $this->Form->control('contato');
-        echo $this->Form->control('email');
+        echo $this->Form->control('contato', ['label' => ['text' => 'Contato']]);
+        echo $this->Form->control('email', ['label' => ['text' => 'Email']]);
         echo $this->Form->control('periodo', ['label' => ['text' => 'Período'], 'options' => $periodos]);
-        echo $this->Form->control('datafax', ['empty' => true]);
+        echo $this->Form->control('datafax', ['empty' => true, 'label' => ['text' => 'Data do fax']]);
         echo $this->Form->control('localInscricao', ['label' => ['text' => 'Local da inscrição'], 'options' => ['0' => 'Somente no mural da Coordenação de Estágio/ESS', '1' => 'Diretamente na Instituição e na Coordenação de Estágio/ESS']]);
         echo $this->Form->control('outras', ['id' => 'muralestagioOutras', 'label' => ['text' => 'Outras informações']]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Salvar'), ['class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
 </div>
 

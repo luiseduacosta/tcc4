@@ -10,6 +10,8 @@ use Cake\ORM\Entity;
  * @property string $nome
  * @property string|null $cpf
  * @property int|null $siape
+ * @property int|null $rg
+ * @property string|null $orgaoexpedidor
  * @property \Cake\I18n\FrozenDate|null $datanascimento
  * @property string|null $localnascimento
  * @property string|null $sexo
@@ -20,6 +22,12 @@ use Cake\ORM\Entity;
  * @property string|null $email
  * @property string|null $homepage
  * @property string|null $redesocial
+ * @property string|null $endereco
+ * @property string|null $bairro
+ * @property string|null $cep
+ * @property string|null $cidade
+ * @property string|null $estado
+ * @property string|null $pais
  * @property string|null $curriculolattes
  * @property \Cake\I18n\FrozenDate|null $atualizacaolattes
  * @property string|null $curriculosigma
@@ -59,9 +67,12 @@ class Professor extends Entity
      * @var array
      */
     protected $_accessible = [
+        'id' => false,
         'nome' => true,
         'cpf' => true,
         'siape' => true,
+        'rg' => true,
+        'orgaoexpedidor' => true,
         'datanascimento' => true,
         'localnascimento' => true,
         'sexo' => true,
@@ -72,6 +83,12 @@ class Professor extends Entity
         'email' => true,
         'homepage' => true,
         'redesocial' => true,
+        'endereco' => true,
+        'bairro' => true,
+        'cep' => true,
+        'cidade' => true,
+        'estado' => true,
+        'pais' => true,
         'curriculolattes' => true,
         'atualizacaolattes' => true,
         'curriculosigma' => true,

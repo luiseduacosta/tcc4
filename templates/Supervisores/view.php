@@ -55,8 +55,8 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= $supervisor->cress ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Regiao') ?></th>
-                    <td><?= $this->Number->format($supervisor->regiao) ?></td>
+                    <th><?= __('Região') ?></th>
+                    <td><?= $this->Number->ordinal($supervisor->regiao, ['locale' => 'pt_BR']) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Nome') ?></th>
@@ -177,7 +177,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($instituicaoestagios->convenio) ?></td>
                             <td><?= h($instituicaoestagios->expira) ?></td>
                             <td><?= h($instituicaoestagios->seguro) ?></td>
-                            <td><?= h($instituicaoestagios->observacoes) ?></td>
+                            <td><?= $this->Text->autoParagraph(h($instituicaoestagios->observacoes)) ?></td>
                             <td class="row">
                                 <?= $this->Html->link(__('Ver'), ['controller' => 'Instituicoes', 'action' => 'view', $instituicaoestagios->id]) ?>
                                 <?php if (isset($user) && $user->categoria == 1): ?>
@@ -211,7 +211,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php foreach ($supervisor->estagiarios as $estagiarios): ?>
                         <tr>
                             <td><?= h($estagiarios->id) ?></td>
-                            <td><?= $this->Html->link($estagiarios->aluno['nome'], ['controller' => 'aluno', 'action' => 'view', $estagiarios->aluno_id]) ?>
+                            <td><?= $this->Html->link($estagiarios->aluno['nome'], ['controller' => 'alunos', 'action' => 'view', $estagiarios->aluno_id]) ?>
                             </td>
                             <td><?= h($estagiarios->registro) ?></td>
                             <td><?= h($estagiarios->turno) ?></td>

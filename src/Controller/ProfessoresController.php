@@ -62,7 +62,7 @@ class ProfessoresController extends AppController
         $professor = $this->Professores->get(
             $id,
             [
-                'contain' => ['Estagiarios' => ['sort' => ['Estagiarios.periodo DESC'], 'Instituicoes', 'Supervisores', 'Professores']]
+                'contain' => ['Estagiarios' => ['sort' => ['Estagiarios.periodo DESC'], 'Instituicoes', 'Supervisores', 'Professores', 'Alunos']]
             ]
         );
 

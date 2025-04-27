@@ -77,15 +77,15 @@ $user = $this->getRequest()->getAttribute('identity');
         <tbody>
             <?php foreach ($muralestagios as $muralestagio): ?>
                 <tr>
-                    <td><?= $muralestagio->id ?></td>
-                    <td><?= $muralestagio->has('instituicaoestagio') ? $this->Html->link($muralestagio->instituicao, ['controller' => 'Muralestagios', 'action' => 'view', $muralestagio->id]) : $this->Html->link($muralestagio->instituicao, ['controller' => 'Muralestagios', 'action' => 'view', $muralestagio->id]); ?>
+                    <td><?= $this->Html->link($muralestagio->id, ['controller' => 'Muralestagios', 'action' => 'view', $muralestagio->id]) ?></td>
+                    <td><?= $muralestagio->instituicao_id ? $this->Html->link($muralestagio->instituicao, ['controller' => 'Instituicoes', 'action' => 'view', $muralestagio->instituicao_id]) : $muralestagio->instituicao ?>
                     </td>
-                    <td><?= $muralestagio->vagas ?></td>
-                    <td><?= h($muralestagio->beneficios) ?></td>
+                    <td><?= $this->Number->format($muralestagio->vagas, ['pattern' => '##']) ?></td>
+                    <td><?= $this->Text->autoParagraph($muralestagio->beneficios) ?></td>
                     <td><?= (h($muralestagio->final_de_semana) == 0) ? 'Não' : 'Sim' ?></td>
-                    <td><?= $muralestagio->cargaHoraria ?></td>
-                    <td><?= isset($muralestagio->dataInscricao) ? $muralestagio->dataInscricao : '' ?></td>
-                    <td><?= isset($muralestagio->dataSelecao) ? $muralestagio->dataSelecao : '' ?></td>
+                    <td><?= $this->Number->format($muralestagio->cargaHoraria, ['pattern' => '##']) ?></td>
+                    <td><?= isset($muralestagio->dataInscricao) ? $muralestagio->dataInscricao->i18nFormat('dd-MM-yyyy') : '' ?></td>
+                    <td><?= isset($muralestagio->dataSelecao) ? $muralestagio->dataSelecao->i18nFormat('dd-MM-yyyy') : '' ?></td>
                     <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
                     <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
                         <td class="actions">

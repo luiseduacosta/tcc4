@@ -46,7 +46,7 @@ class AlunosController extends AppController
             $registro = $this->getRequest()->getQuery('registro');
             if (empty($registro)) {
                 echo "Sem parâmentros para localizar o aluno";
-                $this->Flash->error(__('Sem parâmentros para localizar o/a aluno/a'));
+                $this->Flash->error(__('1. Sem parâmentros para localizar o/a aluno/a?'));
                 return $this->redirect('/alunos/index');
             }
             $aluno = $this->Alunos->find()
@@ -56,7 +56,7 @@ class AlunosController extends AppController
 
             if (empty($aluno)) {
                 echo "Sem parámentros para localizar o aluno";
-                $this->Flash->error(__('Sem parámentros para localizar o/a aluno/a'));
+                $this->Flash->error(__('2. Sem parámentros para localizar o/a aluno/a?'));
                 return $this->redirect('/alunos/index');
             } else {
                 $id = $aluno->id;
