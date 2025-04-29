@@ -23,15 +23,21 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_mural') ?>
 
-<div class="col-auto">
-    <?php if (isset($user) && $user->categoria == '1'): ?>
-        <?= $this->Form->create($muralinscricoes, ['class' => 'form-inline']); ?>
-        <?= $this->Form->input('periodo', ['id' => 'MuralinscricoesPeriodo', 'type' => 'select', 'label' => ['text' => 'Período ', 'style' => 'display: inline;'], 'options' => $periodos, 'empty' => [$periodo => $periodo]], ['class' => 'form-control']); ?>
-        <?= $this->Form->end(); ?>
-    <?php else: ?>
-        <h1 style="text-align: center;">Inscrições para seleção de estágio da ESS/UFRJ. Período: <?= $periodo; ?></h1>
-    <?php endif; ?>
-</div>
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerMural"
+        aria-controls="navbarTogglerMural" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="row">
+        <?php if (isset($user) && $user->categoria == '1'): ?>
+            <?= $this->Form->create($muralinscricoes, ['class' => 'form-inline']); ?>
+            <?= $this->Form->input('periodo', ['id' => 'MuralinscricoesPeriodo', 'type' => 'select', 'label' => ['text' => 'Período ', 'style' => 'display: inline;'], 'options' => $periodos, 'empty' => [$periodo => $periodo]], ['class' => 'form-control']); ?>
+            <?= $this->Form->end(); ?>
+        <?php else: ?>
+            <h1 style="text-align: center;">Inscrições para seleção de estágio da ESS/UFRJ. Período: <?= $periodo; ?></h1>
+        <?php endif; ?>
+    </div>    
+</nav>
 
 <div class="d-flex justify-content-start">
     <?= $this->Html->link(__('Nova inscrição'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>

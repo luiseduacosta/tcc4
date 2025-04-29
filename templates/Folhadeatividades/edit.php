@@ -8,18 +8,28 @@ $user = $this->getRequest()->getAttribute('identity');
 ?>
 <?php echo $this->element('menu_mural') ?>
 
-<nav class="column">
-    <div class="side-nav">
-        <?=
-        $this->Form->postLink(
-                __('Excluir'),
-                ['action' => 'delete', $folhadeatividade->id],
-                ['confirm' => __('Tem certeza que quer excluir esta atividade # {0}?', $folhadeatividade->id), 'class' => 'btn btn-danger']
-        )
-        ?>
-        <?= $this->Html->link(__('Lista de atividades'), ['action' => 'index', $estagiario->estagiario->id], ['class' => 'btn btn-primary']) ?>
-    </div>
-</nav>
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAtividades"
+            aria-controls="navbarTogglerAtividades" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAtividades">
+        <?php if (isset($user) && $user->categoria == '1') ?>
+        <li class="nav-item">
+            <?=
+                $this->Form->postLink(
+                    __('Excluir'),
+                    ['action' => 'delete', $folhadeatividade->id],
+                    ['confirm' => __('Tem certeza que quer excluir esta atividade # {0}?', $folhadeatividade->id), 'class' => 'btn btn-danger']
+            )
+            ?>
+        </li>
+        <?php endif; ?>
+        <li class="nav-item">
+            <?= $this->Html->link(__('Lista de atividades'), ['action' => 'index', $estagiario->estagiario->id], ['class' => 'btn btn-primary']) ?>
+        </li>
+    </ul>
+</nav>        
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
         <?= $this->Form->create($folhadeatividade) ?>

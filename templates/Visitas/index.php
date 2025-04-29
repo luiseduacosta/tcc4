@@ -8,7 +8,19 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_mural') ?>
 
-<?= $this->Html->link(__('Nova visita'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerVisitas"
+        aria-controls="navbarTogglerVisitas" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerVisitas">
+        <?php if (isset($user) && $user->categoria == '1'); ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Nova visita'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
+            </li>
+        <?php endif; ?>
+    </ul>
+</nav>
 
 <h3><?= __('Visitas instituicionais') ?></h3>
 

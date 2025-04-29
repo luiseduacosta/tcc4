@@ -11,15 +11,28 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <nav class="column">
     <div class="side-nav">
-        <?=
-        $this->Form->postLink(
-                __('Excluir'),
-                ['action' => 'delete', $muralinscricao->id],
-                ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'side-nav-item']
-        )
-        ?>
-        <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-    </div>
+
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerMural"
+        aria-controls="navbarTogglerMural" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMural">        
+    <?php if (isset($user) && $user->categoria == '1'); ?>
+        <li class="nav-item">
+            <?=
+                $this->Form->postLink(
+                    __ ('Excluir'),
+                    ['action' => 'delete', $muralinscricao->id],
+                    ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'side-nav-item']
+                    )
+                ?>
+        </li>
+    <?php endif; ?>
+        <li class='nav-link'>
+            <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+        </li>
+    </ul>
 </nav>
 
 <?= $this->element('templates') ?>

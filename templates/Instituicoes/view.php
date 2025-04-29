@@ -9,8 +9,12 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_mural') ?>
 
-<div class="d-flex justify-content-start py-2">
-    <ul class="nav nav-tabs">
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerInstituicao"
+        aria-controls="navbarTogglerInstituicao" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerInstituicao">
         <li class="nav-item">
             <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
         </li>
@@ -25,7 +29,8 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $instituicao->id), 'class' => 'btn btn-danger float-right']) ?>
             </li>
         <?php endif; ?>
-</div>
+    </ul>
+</nav>
 
 <div class="row">
     <ul class="nav nav-tabs">

@@ -10,9 +10,19 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_mural') ?>
 
-<?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 4 || $this->getRequest()->getAttribute('identity')['categoria'] == 3): ?>
-    <?= $this->Html->link(__('Nova Avaliação'), ['action' => 'add', $id], ['class' => 'btn btn-primary float-end']) ?>
-<?php endif; ?>
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAvaliacoes"
+        aria-controls="navbarTogglerAvaliacoes" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAvaliacoes">
+        <?php if (isset($user) && ($user->categoria == '1'): ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Nova Avaliação'), ['action' => 'add', $id], ['class' => 'btn btn-primary float-end']) ?>
+            </li>                
+        <?php endif; ?>
+    </ul>
+</nav>
 
 <h3><?= __('Avaliações') ?></h3>
 

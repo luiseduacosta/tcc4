@@ -30,12 +30,22 @@ if ($professora) {
 
 <?php echo $this->element('menu_mural') ?>
 
-<div class="row">
-    <?php if ($user->categoria == '1' || $user->categoria == '2'): ?>
-        <?= $this->Html->link(__('Cadastra nova atividade'), ['action' => 'add/' . $id], ['class' => 'btn btn-primary float-right']) ?>
-    <?php endif; ?>
-    <?= $this->Html->link(__('Imprime folha de atividades'), ['action' => 'folhadeatividadespdf/' . $id], ['class' => 'btn btn-primary float-left']) ?>
-</div>
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAtividades"
+            aria-controls="navbarTogglerAtividades" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAtividades">
+        <?php if ($user->categoria == '1' || $user->categoria == '2'): ?>
+            <li class='nav-link'>
+                <?= $this->Html->link(__('Cadastra nova atividade'), ['action' => 'add/' . $id], ['class' => 'btn btn-primary float-right']) ?>
+            </li>
+        <?php endif; ?>
+            <li class='nav-link'>
+                <?= $this->Html->link(__('Imprime folha de atividades'), ['action' => 'folhadeatividadespdf/' . $id], ['class' => 'btn btn-primary float-left']) ?>
+            </li>
+    </ul>    
+</nav>
 
 <h3 class="text-center"><?= __('Folha de atividades da(o) estagiária(o) ' . $estagiario->estudante->nome) ?></h3>
 

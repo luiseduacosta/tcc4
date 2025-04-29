@@ -18,7 +18,7 @@ $user = $this->getRequest()->getAttribute('identity');
     });
 </script>
 
-<?php echo $this->element('menu_mural') ?>
+<?= $this->element('menu_mural') ?>
 <?= $this->element('templates') ?>
 
 <div class="d-flex justify-content-start">

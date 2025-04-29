@@ -44,12 +44,17 @@ if ($cress) {
 
 <?php echo $this->element('menu_mural') ?>
 
-<nav class="column">
-    <div class="side-nav">
-        <h4 class="heading"><?= __('Actions') ?></h4>
-        <?= $this->Html->link(__('Listar Avaliações'), ['action' => 'index/' . $estagiario->id . '/' . $estagiario->registro], ['class' => 'side-nav-item']) ?>
-    </div>
-</nav>
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerSupervisores"
+        aria-controls="navbarTogglerSupervisores" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerSupervisores">
+        <li class="nav-item">
+            <?= $this->Html->link(__('Listar Avaliações'), ['action' => 'index/' . $estagiario->id . '/' . $estagiario->registro], ['class' => 'side-nav-item']) ?>
+        </li>
+    </ul>
+</nav>    
 
 <h1>Formulário de avalição da(a) discente <?= $estagiario->estudante->nome ?></h1>
 

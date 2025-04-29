@@ -9,11 +9,16 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_mural') ?>
 
-<nav class="column">
-    <div class="side-nav">
-        <h4 class="heading"><?= __('Ações') ?></h4>
-        <?= $this->Html->link(__('Listar Folha de atividades'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-    </div>
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAtividades"
+            aria-controls="navbarTogglerAtividades" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAtividades">
+        <li class="nav-item">
+            <?= $this->Html->link(__('Listar atividades'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+        </li>
+    </ul>
 </nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
