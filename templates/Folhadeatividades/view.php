@@ -15,12 +15,11 @@ $user = $this->getRequest()->getAttribute('identity');
     <?= $this->Form->postLink(__('Excluir atividade'), ['action' => 'delete', $folhadeatividade->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $folhadeatividade->id), 'class' => 'btn btn-danger float-rigth']) ?>
 </div>
 
-<div class="column-responsive column-80">
-    <div class="folhadeatividades view content">
-        <h3><?= h($folhadeatividade->atividade) ?></h3>
-        <table>
-            <tr>
-                <th><?= __('Atividade') ?></th>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <h3><?= h($folhadeatividade->atividade) ?></h3>
+    <table class="table table-striped table-hover table-responsive">
+        <tr>
+            <th><?= __('Atividade') ?></th>
                 <td><?= h($folhadeatividade->atividade) ?></td>
             </tr>
             <tr>
@@ -46,7 +45,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <tr>
                 <th><?= __('Horário') ?></th>
                 <td><?= h($folhadeatividade->horario) ?></td>
-            </tr>
-        </table>
-    </div>
+        </tr>
+    </table>
 </div>
+

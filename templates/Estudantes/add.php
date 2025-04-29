@@ -6,6 +6,32 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
+<!-- jQuery Mask -->
+<script>
+    $(document).ready(function() {
+        $('#cpf').mask('000.000.000-00', {
+            translation: {
+                '0': { pattern: /[0-9]/ }
+            }
+        });
+        $('#cep').mask('00000-000', {
+            translation: {
+                '0': { pattern: /[0-9]/ }
+            }
+        });
+        $('#telefone').mask('(00) 0000-0000', {
+            translation: {
+                '0': { pattern: /[0-9]/ }
+            }
+        });
+        $('#celular').mask('(00) 00000-0000', { 
+            translation: {
+                '0': { pattern: /[0-9]/ }
+            }
+        });
+    });
+</script>
+
 <?= $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
@@ -29,24 +55,24 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset>
         <legend><?= __('Inserir estudante') ?></legend>
         <?php
-        echo $this->Form->control('nome');
-        echo $this->Form->control('registro');
-        echo $this->Form->control('codigo_telefone');
-        echo $this->Form->control('telefone');
-        echo $this->Form->control('codigo_celular');
-        echo $this->Form->control('celular');
-        echo $this->Form->control('email');
-        echo $this->Form->control('cpf');
-        echo $this->Form->control('identidade');
-        echo $this->Form->control('orgao');
-        echo $this->Form->control('nascimento', ['empty' => true]);
-        echo $this->Form->control('endereco');
-        echo $this->Form->control('cep');
-        echo $this->Form->control('municipio');
-        echo $this->Form->control('bairro');
-        echo $this->Form->control('observacoes');
+        echo $this->Form->control('nome', ['label' => 'Nome', 'class' => 'form-control']);
+        echo $this->Form->control('registro', ['label' => 'Registro', 'class' => 'form-control']);
+        echo $this->Form->control('codigo_telefone', ['label' => 'Código de telefone', 'class' => 'form-control']);
+        echo $this->Form->control('telefone', ['label' => 'Telefone', 'class' => 'form-control', 'id' => 'telefone']);
+        echo $this->Form->control('codigo_celular', ['label' => 'Código de celular', 'class' => 'form-control']);
+        echo $this->Form->control('celular', ['label' => 'Celular', 'class' => 'form-control', 'id' => 'celular']);
+        echo $this->Form->control('email', ['label' => 'Email', 'class' => 'form-control']);
+        echo $this->Form->control('cpf', ['label' => 'CPF', 'class' => 'form-control', 'keypress()', 'id' => 'cpf']);
+        echo $this->Form->control('identidade', ['label' => 'Identidade', 'class' => 'form-control']);
+        echo $this->Form->control('orgao', ['label' => 'Orgão', 'class' => 'form-control']);
+        echo $this->Form->control('nascimento', ['label' => 'Data de nascimento', 'empty' => true, 'class' => 'form-control', 'id' => 'nascimento']);
+        echo $this->Form->control('endereco', ['label' => 'Endereço', 'class' => 'form-control']);
+        echo $this->Form->control('cep', ['label' => 'CEP', 'class' => 'form-control', 'keypress()', 'id' => 'cep']);
+        echo $this->Form->control('municipio', ['label' => 'Município', 'class' => 'form-control']);
+        echo $this->Form->control('bairro', ['label' => 'Bairro', 'class' => 'form-control']);
+        echo $this->Form->control('observacoes', ['label' => 'Observações', 'class' => 'form-control']);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Confirmar')) ?>
+    <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
 </div>

@@ -237,19 +237,19 @@ class AlunosController extends AppController
              */
             // pr($periodo_atual);
             $novoperiodo = $aluno['novoperiodo'];
-            pr($novoperiodo);
+            // pr($novoperiodo);
 
             $periodo_inicial = $novoperiodo ?? $aluno->ingresso;
-            pr($periodo_inicial);
+            // pr($periodo_inicial);
 
             $inicial = explode('-', $periodo_inicial);
             $atual = explode('-', $periodo_atual);
-            echo $atual[0] . ' ' . $inicial[0] . '<br>';
+            // echo $atual[0] . ' ' . $inicial[0] . '<br>';
             /**
              * Calculo o total de semestres multiplicando o número de anos por 2.
              */
             $semestres = (($atual[0] - $inicial[0]) + 1) * 2;
-            pr($semestres);
+            // pr($semestres);
             // die();
             /** Verifica se o período está completo: ano e semestre */
             if (sizeof($inicial) < 2) {
@@ -273,7 +273,7 @@ class AlunosController extends AppController
             if (($inicial[1] == 2) && ($atual[1] == 1)) {
                 $totalperiodos = $semestres - 2;
             }
-            pr('Total: ' . $totalperiodos);
+            // pr('Total: ' . $totalperiodos);
             // die();            
             /** Se o período inicial é maior que o período atual então informar que há um erro */
             if ($totalperiodos <= 0) {
@@ -331,14 +331,14 @@ class AlunosController extends AppController
             ->where([$option])
             ->first();
 
-        pr($aluno);
-        die();
+        // pr($aluno);
+        // die();
         /**
          * Calculo a partir do ingresso em que periodo o aluno esté neste momento.
          */
         /* Capturo o periodo do calendario academico atual */
-        $configuracaotabela = $this->fetchTable('Configuracoes');
-        $periodoacademicoatual = $configuracaotabela->find()->select(['periodo_calendario_academico'])->first();
+        $periodoacademicoatual = $this->fetchTable('Configuracoes')
+            ->find()->select(['periodo_calendario_academico'])->first();
         // pr($periodoacademicoatual);
         // die();
         /**

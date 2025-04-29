@@ -28,8 +28,8 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="d-flex justify-content-center">
     <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
-    <?= $this->Form->control('nome', ['label' => 'Busca por nome']) ?>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->control('nome', ['label' => 'Busca por nome', 'class' => 'form-control']) ?>
+    <?= $this->Form->button(__('Submit', ['class' => 'btn btn-primary'])) ?>
     <?= $this->Form->end() ?>
 </div>
 

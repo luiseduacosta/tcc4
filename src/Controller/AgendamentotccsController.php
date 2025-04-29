@@ -91,7 +91,7 @@ class AgendamentotccsController extends AppController
             if ($this->Agendamentotccs->save($agendamentotcc)) {
                 $this->Flash->success(__('Agendamento TCC inserido.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $agendamentotcc->id]);
             }
             $this->Flash->error(__('Agendamento TCC não foi inserido. Tente novamente'));
         }
@@ -135,15 +135,13 @@ class AgendamentotccsController extends AppController
             if (empty($horarioarray[2])):
                 $dados['horario'] = $dados['horario'] . ':00';
             endif;
-            // pr($dados);
-            // die();
             /* Finaliza ajuste de horario */
 
             $agendamentotcc = $this->Agendamentotccs->patchEntity($agendamentotcc, $dados);
             if ($this->Agendamentotccs->save($agendamentotcc)) {
                 $this->Flash->success(__('Agendamento TCC atualizado.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $agendamentotcc->id]);
             }
             $this->Flash->error(__('Agendamento TCC não foi atualizado. Tente novamente.'));
         }

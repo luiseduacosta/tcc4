@@ -55,7 +55,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php // die(); ?>
             <tr>
                 <td>
-                    <?php echo $this->Html->link($cada_aluno['nome'], '/estudantes/view/' . $cada_aluno['id']); ?>
+                    <?php echo $this->Html->link($cada_aluno['nome'], ['controller' => 'estudantes', 'action' => 'view', $cada_aluno['id']]); ?>
                 </td>
                 <td>
                     <?php echo $cada_aluno['cpf']; ?>
@@ -64,7 +64,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php if (empty($cada_aluno['nascimento'])): ?>
                         <?php echo "s/d"; ?>
                     <?php else: ?>
-                        <?php echo date('d-m-Y', strtotime($cada_aluno['nascimento'])); ?>
+                        <?php echo $cada_aluno['nascimento']->i18nFormat('dd-MM-yyyy'); ?>
                     <?php endif; ?>
                 </td>
                 <td>

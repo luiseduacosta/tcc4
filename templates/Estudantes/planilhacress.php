@@ -1,4 +1,4 @@
-<?php
+s<?php
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estudante $estudante
@@ -16,7 +16,6 @@ $user = $this->getRequest()->getAttribute('identity');
 
         var base_url = "<?= $this->Html->Url->build(['controller' => 'estudantes', 'action' => 'planilhacress']); ?>";
         /* alert(base_url); */
-
         $("#EstudantesPeriodo").change(function () {
             var periodo = $(this).val();
             window.location = base_url + "?periodo=" + periodo;
@@ -54,13 +53,13 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php foreach ($cress as $c_cress): ?>
             <?php // pr($c_cress); ?>
             <tr>
-                <td><?php echo isset($c_cress->estudante->nome) ? $this->Html->link($c_cress->estudante->nome, '/estudantes/view/' . $c_cress->estudante->id) : 'Sem informação'; ?>
+                <td><?php echo isset($c_cress->estudante->nome) ? $this->Html->link($c_cress->estudante->nome, ['controller' => 'estudantes', 'action' => 'view', $c_cress->estudante->id]) : 'Sem informação'; ?>
                 </td>
-                <td><?php echo isset($c_cress->instituicaoestagio->instituicao) ? $this->Html->link($c_cress->instituicaoestagio->instituicao, '/instituicaoestagios/view/' . $c_cress->instituicaoestagio->id) : 'Sem informação'; ?>
+                <td><?php echo isset($c_cress->instituicao->instituicao) ? $this->Html->link($c_cress->instituicao->instituicao, ['controller' => 'instituicoes', 'action' => 'view', $c_cress->instituicao->id]) : 'Sem informação'; ?>
                 </td>
-                <td><?php echo $c_cress->instituicaoestagio->endereco; ?></td>
-                <td><?php echo isset($c_cress->instituicaoestagio->cep) ? $c_cress->instituicaoestagio->cep : ''; ?></td>
-                <td><?php echo isset($c_cress->instituicaoestagio->bairro) ? $c_cress->instituicaoestagio->bairro : ''; ?>
+                <td><?php echo $c_cress->instituicao->endereco; ?></td>
+                <td><?php echo isset($c_cress->instituicao->cep) ? $c_cress->instituicao->cep : ''; ?></td>
+                <td><?php echo isset($c_cress->instituicao->bairro) ? $c_cress->instituicao->bairro : ''; ?>
                 </td>
                 <td><?php echo isset($c_cress->supervisor->nome) ? $c_cress->supervisor->nome : ''; ?></td>
                 <td><?php echo isset($c_cress->supervisor->cress) ? $c_cress->supervisor->cress : ''; ?></td>

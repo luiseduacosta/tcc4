@@ -13,7 +13,7 @@ use Authorization\IdentityInterface;
 class InstituicaoPolicy {
 
     /**
-     * Check if $user can create Aluno
+     * Check if $user can create Instituicao
      *
      * @param \Authorization\IdentityInterface $user The user.
      * @param \App\Model\Entity\Instituicao $instituicao
@@ -24,7 +24,7 @@ class InstituicaoPolicy {
     }
 
     /**
-     * Check if $user can update Aluno
+     * Check if $user can update Instituicao
      *
      * @param \Authorization\IdentityInterface $user The user.
      * @param \App\Model\Entity\Instituicao $instituicao
@@ -35,7 +35,7 @@ class InstituicaoPolicy {
     }
 
     /**
-     * Check if $user can delete Aluno
+     * Check if $user can delete Instituicao
      *
      * @param \Authorization\IdentityInterface $user The user.
      * @param \App\Model\Entity\Instituicao $instituicao
@@ -46,7 +46,7 @@ class InstituicaoPolicy {
     }
 
     /**
-     * Check if $user can view Aluno
+     * Check if $user can view Instituicao
      *
      * @param \Authorization\IdentityInterface $user The user.
      * @param \App\Model\Entity\Instituicao $instituicao

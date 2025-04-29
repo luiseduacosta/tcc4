@@ -12,9 +12,9 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <h3><?= __('Avaliações') ?></h3>
 
-<div class="table-responsive">
-    <table>
-        <thead>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <table class="table table-striped table-responsive table-hover">
+        <thead class="table-dark">
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
                 <th><?= $this->Paginator->sort('estagiario.avaliacao.id', 'Avaliação on-line') ?></th>
@@ -66,9 +66,9 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                         <?php if (isset($c_estagiario->avaliacao->id)): ?>
                             <td class="actions">
-                                <?= $this->Html->link(__('View'), ['action' => 'view', $c_estagiario->avaliacao->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $c_estagiario->avaliacao->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $c_estagiario->avaliacao->id], ['confirm' => __('Are you sure you want to delete # {0}?', $c_estagiario->avaliacao->id)]) ?>
+                                <?= $this->Html->link(__('Ver'), ['action' => 'view', $c_estagiario->avaliacao->id]) ?>
+                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $c_estagiario->avaliacao->id]) ?>
+                                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $c_estagiario->avaliacao->id], ['confirm' => __('Tem certeza que deseja excluir a avaliação # {0}?', $c_estagiario->avaliacao->id)]) ?>
                             </td>
                         <?php endif; ?>
                     <?php endif; ?>

@@ -33,14 +33,16 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?= $this->element('templates') ?>
 
-<div class="container">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($turmaestagio) ?>
     <fieldset>
         <legend><?= __('Editar turma de estágio') ?></legend>
         <?php
-        echo $this->Form->control('area', ['label' => ['text' => 'Turma']]);
+        echo $this->Form->control('area', ['label' => ['text' => 'Turma'], 'class' => 'form-control']);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <div class="d-flex justify-content-center">
+        <?= $this->Form->button(__('Submit', ['class' => 'btn btn-primary'])) ?>
+    </div>
     <?= $this->Form->end() ?>
 </div>

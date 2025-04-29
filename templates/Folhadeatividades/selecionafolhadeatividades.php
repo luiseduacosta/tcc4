@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Avaliaco[]|\Cake\Collection\CollectionInterface $avaliacaoes
+ * @var \App\Model\Entity\Estagiario[]|\Cake\Collection\CollectionInterface $estagiarios
  */
 $user = $this->getRequest()->getAttribute('identity');
 // pr($estagiario->item->estudante);
@@ -12,16 +12,16 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <h3><?= __('Estágios cursados pela(o) estudande ') ?></h3>
 
-<div class="table-responsive">
-    <table>
-        <thead>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <table class="table table-striped table-hover table-responsive">
+        <thead class="thead-dark">
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
                 <th><?= $this->Paginator->sort('estagiario.avaliacao.id', 'Preenche atividades') ?></th>
                 <th><?= $this->Paginator->sort('estagiario->estudante->nome', 'Estudante') ?></th>
                 <th><?= $this->Paginator->sort('estagiario->periodo', 'Período') ?></th>
                 <th><?= $this->Paginator->sort('estagiario->nivel', 'Nível') ?></th>
-                <th><?= $this->Paginator->sort('estagiario->instituicaoestagio->instituicao', 'Instituição') ?></th>
+                <th><?= $this->Paginator->sort('estagiario->instituicao->instituicao', 'Instituição') ?></th>
                 <th><?= $this->Paginator->sort('estagiario->supervisor->nome', 'Supervisor(a)') ?></th>
                 <th><?= $this->Paginator->sort('estagiario->ch', 'Carga horária') ?></th>
                 <th><?= $this->Paginator->sort('estagiario->nota', 'Nota') ?></th>
@@ -51,17 +51,17 @@ $user = $this->getRequest()->getAttribute('identity');
 
                     <td><?= $c_estagiario->periodo ?></td>
                     <td><?= $c_estagiario->nivel ?></td>
-                    <td><?= $c_estagiario->has('instituicaoestagio') ? $c_estagiario->instituicaoestagio->instituicao : '' ?></td>
+                    <td><?= $c_estagiario->has('instituicao') ? $c_estagiario->instituicao->instituicao : '' ?></td>
                     <td><?= $c_estagiario->has('supervisor') ? $c_estagiario->supervisor->nome : '' ?></td>
                     <td><?= $c_estagiario->ch ?></td>
                     <td><?= $c_estagiario->nota ?></td>
 
-                    <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?> 
+                    <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                         <?php if (isset($c_estagiario->id)): ?>
                             <td class="actions">
-                                <?= $this->Html->link(__('View'), ['action' => 'view', $c_estagiario->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $c_estagiario->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $c_estagiario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $c_estagiario->id)]) ?>
+                                <?= $this->Html->link(__('View'), ['action' => 'view', $c_estagiario->id], ['class' => 'btn btn-info']) ?>
+                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $c_estagiario->id], ['class' => 'btn btn-warning']) ?>
+                                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $c_estagiario->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $c_estagiario->id), 'class' => 'btn btn-danger']) ?>
                             </td>
                         <?php endif; ?>
                     <?php endif; ?>
@@ -71,4 +71,3 @@ $user = $this->getRequest()->getAttribute('identity');
         </tbody>
     </table>
 </div>
-

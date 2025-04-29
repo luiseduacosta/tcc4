@@ -10,13 +10,12 @@ $user = $this->getRequest()->getAttribute('identity');
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">
     <ul class="collapse navbar-collapse list-unstyled">
         <li class="nav-item">
-            <?= $this->Html->link(__('List Configuracao'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Listar configurações'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
         </li>
     </ul>
 </nav>
 
-<div class="column-responsive column-80">
-    <div class="configuracao form content">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
         <?= $this->Form->create($configuracao) ?>
         <fieldset>
             <legend><?= __('Configuração') ?></legend>
@@ -30,8 +29,6 @@ $user = $this->getRequest()->getAttribute('identity');
             echo $this->Form->control('curso_encerramento_inscricoes');
             ?>
         </fieldset>
-        <?= $this->Form->button(__('Submit')) ?>
+        <?= $this->Form->button(__('Salvar'), ['class' => 'btn btn-primary']) ?>
         <?= $this->Form->end() ?>
-    </div>
-</div>
 </div>

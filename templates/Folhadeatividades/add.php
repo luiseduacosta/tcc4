@@ -16,39 +16,37 @@ $user = $this->getRequest()->getAttribute('identity');
     </div>
 </nav>
 
-<div class="column-responsive column-80">
-    <div class="folhadeatividades form content">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
         <?= $this->Form->create($folhadeatividade) ?>
         <fieldset>
-            <legend><?= __('Adiciona uma atividade') ?></legend>
+            <legend><?= __('Adicionar atividade') ?></legend>
             <?php
             echo $this->Form->control('estagiario_id', ['options' => [$estagiario->id => $estagiario->estudante->nome], 'readonly']);
             echo $this->Form->control('dia');
-            echo "<table>";
-            echo "<tr>";
-            echo "<td>";
-            echo "Horário de início";
-            echo "</td>";
-            echo "<td>";
-            echo $this->Form->control('inicio', ['label' => false]);
-            echo "</td>";
-            echo "</tr>";
-
-            echo "<tr>";
-            echo "<td>";
-            echo "Horário de finalização";
-            echo "</td>";
-            echo "<td>";
-            echo $this->Form->control('final', ['label' => false]);
-            echo "</td>";
-            echo "</tr>";
-            echo "</table>";
-
-            echo $this->Form->control('atividade');
-            echo $this->Form->control('horario', ['type' => 'hidden']);
             ?>
+            <table class="table table-bordered">
+                <tr>
+                    <td>
+                        <?= __('Horário de início') ?>
+                    </td>
+                    <td>
+                        <?php echo $this->Form->control('inicio', ['label' => false, 'class' => 'form-control']); ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <?= __('Horário de finalização') ?>
+                    </td>
+                    <td>
+                        <?php echo $this->Form->control('final', ['label' => false, 'class' => 'form-control']); ?>
+                    </td>
+                </tr>
+            </table>
+            <?php echo $this->Form->control('atividade', ['class' => 'form-control']); ?>
+            <?php echo $this->Form->control('horario', ['type' => 'hidden']); ?>
         </fieldset>
-        <?= $this->Form->button(__('Submit')) ?>
+        <div class="d-flex justify-content-end">
+            <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
+        </div>
         <?= $this->Form->end() ?>
-    </div>
 </div>

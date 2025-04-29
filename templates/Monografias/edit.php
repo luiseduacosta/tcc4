@@ -134,6 +134,6 @@ $user = $this->getRequest()->getAttribute('identity');
 
     </fieldset>
 
-    <?= $this->Form->button(__('Confirma')) ?>
+    <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
 </div>

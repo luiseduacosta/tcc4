@@ -26,12 +26,12 @@ class InstituicoesController extends AppController
 
         $query = $this->Instituicoes->find('all', [
             'contain' => ['Supervisores', 'Areainstituicoes'],
-            'order' => ['instituicao' => 'ASC']
+            'order' => ['Instituicoes.instituicao' => 'ASC']
         ]);
-        $instituicaoestagios = $this->paginate($query);
+        $instituicoes = $this->paginate($query);
         $this->Authorization->skipAuthorization();
 
-        $this->set(compact('instituicaoestagios'));
+        $this->set(compact('instituicoes'));
     }
 
     /**
@@ -45,7 +45,7 @@ class InstituicoesController extends AppController
     {
         $this->Authorization->skipAuthorization();
         try {
-            $instituicaoestagio = $this->Instituicoes->get($id, [
+            $instituicao = $this->Instituicoes->get($id, [
                 'contain' => ['Areainstituicoes', 'Supervisores', 'Estagiarios' => ['Alunos', 'Instituicoes', 'Professores', 'Supervisores', 'Turmaestagios'], 'Muralestagios', 'Visitas']
             ]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
@@ -53,7 +53,7 @@ class InstituicoesController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $this->set(compact('instituicaoestagio'));
+        $this->set(compact('instituicao'));
     }
 
     /**
@@ -64,13 +64,13 @@ class InstituicoesController extends AppController
     public function add()
     {
 
-        $instituicaoestagio = $this->Instituicoes->newEmptyEntity();
-        $this->Authorization->authorize($instituicaoestagio);
+        $instituicao = $this->Instituicoes->newEmptyEntity();
+        $this->Authorization->authorize($instituicao);
 
         if ($this->request->is('post')) {
-            $instituicaoestagio = $this->Instituicoes->patchEntity($instituicaoestagio, $this->request->getData());
-            if ($this->Instituicoes->save($instituicaoestagio)) {
-                $this->Flash->success(__('Instituição de estagio criada.'));
+            $instituicao = $this->Instituicoes->patchEntity($instituicao, $this->request->getData());
+            if ($this->Instituicoes->save($instituicao)) {
+                $this->Flash->success(__('Instituição de estágio criada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
@@ -78,7 +78,7 @@ class InstituicoesController extends AppController
         }
         $areainstituicoes = $this->Instituicoes->Areainstituicoes->find('list');
         $supervisores = $this->Instituicoes->Supervisores->find('list');
-        $this->set(compact('instituicaoestagio', 'areainstituicoes', 'supervisores'));
+        $this->set(compact('instituicao', 'areainstituicoes', 'supervisores'));
     }
 
     /**
@@ -91,22 +91,22 @@ class InstituicoesController extends AppController
     public function edit($id = null)
     {
 
-        $instituicaoestagio = $this->Instituicoes->get($id, [
+        $instituicao = $this->Instituicoes->get($id, [
             'contain' => ['Supervisores'],
         ]);
-        $this->Authorization->authorize($instituicaoestagio);
+        $this->Authorization->authorize($instituicao);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $instituicaoestagio = $this->Instituicoes->patchEntity($instituicaoestagio, $this->request->getData());
-            if ($this->Instituicoes->save($instituicaoestagio)) {
+            $instituicao = $this->Instituicoes->patchEntity($instituicao, $this->request->getData());
+            if ($this->Instituicoes->save($instituicao)) {
                 $this->Flash->success(__('Instituição de estágio atualizada.'));
 
-                return $this->redirect(['action' => 'view', $instituicaoestagio->id]);
+                return $this->redirect(['action' => 'view', $instituicao->id]);
             }
-            $this->Flash->error(__('Instituição de estágio não foia atualizada.'));
+            $this->Flash->error(__('Instituição de estágio não foi atualizada.'));
         }
         $areainstituicoes = $this->Instituicoes->Areainstituicoes->find('list');
         $supervisores = $this->Instituicoes->Supervisores->find('list');
-        $this->set(compact('instituicaoestagio', 'areainstituicoes', 'supervisores'));
+        $this->set(compact('instituicao', 'areainstituicoes', 'supervisores'));
     }
 
     /**
@@ -120,9 +120,9 @@ class InstituicoesController extends AppController
     {
 
         $this->request->allowMethod(['post', 'delete']);
-        $instituicaoestagio = $this->Instituicoes->get($id);
-        $this->Authorization->authorize($instituicaoestagio);
-        if ($this->Instituicoes->delete($instituicaoestagio)) {
+        $instituicao = $this->Instituicoes->get($id);
+        $this->Authorization->authorize($instituicao);
+        if ($this->Instituicoes->delete($instituicao)) {
             $this->Flash->success(__('Instituição de estágio excluída.'));
         } else {
             $this->Flash->error(__('Instituição de estágio não foi excluída.'));

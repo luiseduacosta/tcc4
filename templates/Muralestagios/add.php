@@ -30,7 +30,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('instituicao_id', ['label' => ['text' => 'Instituição'], 'options' => $instituicaoestagios, 'empty' => 'Selecione']);
         echo $this->Form->control('instituicao', ['type' => 'hidden']);
         echo $this->Form->control('convenio', ['label' => ['text' => 'Convênio'], 'options' => ['0' => 'Não', '1' => 'Sim']]);
-        echo $this->Form->control('vagas');
+        echo $this->Form->control('vagas', ['label' => ['text' => 'Vagas'], 'type' => 'number']);
         echo $this->Form->control('beneficios', ['label' => ['text' => 'Benefícios']]);
         echo $this->Form->control('final_de_semana', ['label' => ['text' => 'Final de semana'], 'options' => ['0' => 'Não', '1' => 'Sim']]);
         echo $this->Form->control('cargaHoraria', ['label' => ['text' => 'Carga horária']]);
@@ -43,15 +43,17 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('horarioSelecao', ['label' => ['text' => 'Horário da seleção']]);
         echo $this->Form->control('localSelecao', ['label' => ['text' => 'Local da seleção']]);
         echo $this->Form->control('formaSelecao', ['label' => ['text' => 'Forma de seleção'], 'options' => ['0' => 'Entrevista', '1' => 'CR', '2' => 'Prova', '3' => 'Outras (especificar em "Outras informações")']]);
-        echo $this->Form->control('contato', ['label' => ['text' => 'Contato']]);
+        echo $this->Form->control('contato', ['label' => ['text' => 'Contato'], 'type' => 'email']);
         echo $this->Form->control('periodo', ['label' => ['text' => 'Período'], 'value' => $periodo, 'readonly']);
         echo $this->Form->control('datafax', ['type' => 'hidden', 'empty' => true]);
         echo $this->Form->control('localInscricao', ['label' => ['text' => 'Local da inscrição'], 'options' => ['0' => 'Somente no mural da Coordenação de Estágio/ESS', '1' => 'Diretamente na Instituição e no mural da Coordenação de Estágio/ESS']]);
-        echo $this->Form->control('email');
-        echo $this->Form->control('outras', ['type' => 'textarea', 'label' => ['text' => 'Outras informações']]);
+        echo $this->Form->control('email', ['label' => ['text' => 'Email'], 'type' => 'email']);
+        echo $this->Form->control('outras', ['type' => 'textarea', 'rows' => 5, 'style' => 'height: 200', 'label' => ['text' => 'Outras informações']]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <div class="d-flex justify-content-end">
+        <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
+    </div>
     <?= $this->Form->end() ?>
 </div>
 

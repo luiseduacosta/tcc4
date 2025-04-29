@@ -41,9 +41,9 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($configura->termo_compromisso_inicio) ?></td>
                     <td><?= h($configura->termo_compromisso_final) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $configura->id]) ?>
-                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $configura->id]) ?>
-                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $configura->id], ['confirm' => __('Are you sure you want to delete # {0}?', $configura->id)]) ?>
+                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $configura->id], ['class' => 'btn btn-primary']) ?>
+                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $configura->id], ['class' => 'btn btn-primary']) ?>
+                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $configura->id], ['confirm' => __('Tem certeza que deseja excluir a configuração # {0}?', $configura->id), 'class' => 'btn btn-danger']) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

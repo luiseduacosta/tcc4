@@ -89,7 +89,7 @@ $user = $this->getRequest()->getAttribute('identity');
             </tr>
             <tr>
                 <th><?= __('Observacoes') ?></th>
-                <td><?= h($aluno->observacoes) ?></td>
+                <td><?= $aluno->observacoes ?></td>
             </tr>
         <?php endif; ?>
     </table>

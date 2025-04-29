@@ -47,14 +47,14 @@ if ($cress) {
 <nav class="column">
     <div class="side-nav">
         <h4 class="heading"><?= __('Actions') ?></h4>
-        <?= $this->Html->link(__('List Avaliacoes'), ['action' => 'index/' . $estagiario->id . '/' . $estagiario->registro], ['class' => 'side-nav-item']) ?>
+        <?= $this->Html->link(__('Listar Avaliações'), ['action' => 'index/' . $estagiario->id . '/' . $estagiario->registro], ['class' => 'side-nav-item']) ?>
     </div>
 </nav>
 
 <h1>Formulário de avalição da(a) discente <?= $estagiario->estudante->nome ?></h1>
 
-<div class="column-responsive column-80">
-    <div class="avaliacoes form content">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+
         <?= $this->Form->create($avaliacao) ?>
         <?php
         $this->Form->setTemplates(["textarea" => "<div class='col-8'><textarea class='form-control' name = '{{name}}' {{attrs}}>{{value}}</textarea></div>",
@@ -135,7 +135,7 @@ if ($cress) {
             <?= $this->Form->input('avaliacao11-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
 
             <legend>
-                <?= ('12) Você recebeu e acompanhou o programa da Disciplina OTP?') ?>
+                <?= ('12) Você recebeu e acompanhou o programa da Disciplina OTP?') ?>
             </legend>
             <?= $this->Form->input('avaliacao12', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Sim', 1 => 'Não']]); ?>
 
@@ -150,14 +150,13 @@ if ($cress) {
             <p>Se sim, quais?</p>
             <?= $this->Form->input('avaliacao13-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
 
-            <p>14) Como avalia a experiência do estágio remoto neste semestre? Será possível a continuidade do estágio na modalidade remota no próximo semestre?') </p>
+            <p>14) Como avalia a experiência do estágio remoto neste semestre? Será possível a continuidade do estágio na modalidade remota no próximo semestre?</p>
             <?= $this->Form->input('avaliacao14', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
 
             <p>Sugestões e observações:</p>
             <?= $this->Form->input('observacoes', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
 
         </fieldset>
-        <?= $this->Form->button(__('Submit')) ?>
+        <?= $this->Form->button(__('Salvar'), ['class' => 'btn btn-primary']) ?>
         <?= $this->Form->end() ?>
-    </div>
 </div>

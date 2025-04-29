@@ -30,7 +30,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
     <?= $this->Form->control('nome', ['label' => 'Busca por nome', 'value' => $this->getRequest()->getSession()->read('estudante')]) ?>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Submit', ['class' => 'btn btn-primary'])) ?>
     <?= $this->Form->end() ?>
 
     <table class="table table-striped table-hover table-responsive">

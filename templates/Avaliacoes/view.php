@@ -15,7 +15,7 @@ if ($supervisora) {
 
 $regiao = isset($avaliacao->estagiario['supervisor']['regiao']);
 if ($regiao) {
-    $regiao = $avaliacao->estagiario['supervisor']['nome'];
+    $regiao = $avaliacao->estagiario['supervisor']['regiao'];
 } else {
     $regiao = '__';
 }
@@ -24,7 +24,7 @@ $cress = isset($avaliacao->estagiario['supervisor']['cress']);
 if ($cress) {
     $cress = $avaliacao->estagiario['supervisor']['cress'];
 } else {
-    $cress = '_____';
+    $cress = '_________';
 }
 
 $professora = isset($avaliacao->estagiario['docente']['nome']);
@@ -50,24 +50,33 @@ if ($professora) {
 
 <?php echo $this->element('menu_mural') ?>
 
-<nav class="column">
-    <div class="side-nav">
-        <h4 class="heading"><?= __('Ações') ?></h4>
-        <?php if ($this->getRequest()->getSession()->read('id_categoria') == 1): ?>
-            <?= $this->Html->link(__('Editar avaliação'), ['action' => 'edit', $avaliacao->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Excluir avaliação'), ['action' => 'delete', $avaliacao->id], ['confirm' => __('Are you sure you want to delete # {0}?', $avaliacao->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('Listar avaliações'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('Nova avaliação'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerSupervisores"
+        aria-controls="navbarTogglerSupervisores" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerSupervisores">
+        <?php if (isset($user) && ($user->categoria == '1' || $user->categoria == '4')): ?>
+            <li class="nav-item">
+            <?= $this->Html->link(__('Editar avaliação'), ['action' => 'edit', $avaliacao->id], ['class' => 'btn btn-primary']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Form->postLink(__('Excluir avaliação'), ['action' => 'delete', $avaliacao->id], ['confirm' => __('Tem certeza que deseja excluir a avaliação # {0}?', $avaliacao->id), 'class' => 'btn btn-danger']) ?>
+            </li>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Listar avaliações'), ['action' => 'index', '?' => $estagiario->id . '/' . $estagiario->registro], ['class' => 'btn btn-primary']) ?>
+            </li>
         <?php endif; ?>
-        <?= $this->Html->link(__('Imprimir avaliação'), ['action' => 'imprimeavaliacaopdf/' . $avaliacao->id], ['class' => 'side-nav-item']) ?>
-    </div>
+        <li class="nav-item">
+            <?= $this->Html->link(__('Imprimir avaliação'), ['action' => 'imprimeavaliacaopdf/' . $avaliacao->id], ['class' => 'btn btn-primary']) ?>
+        </li>
+    </ul>
 </nav>
 
-<div class="column-responsive column-80">
-    <div class="avaliacaoes view content">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
         <h3><?= 'Avaliação da(o) estagiario(a) ' . $avaliacao->estagiario['estudante']['nome'] ?></h3>
         <p><span style="font-size: 100%; text-align: justify; font-weight: normal">Campo de estágio <?= $avaliacao->estagiario['instituicao']['instituicao'] ?>. Supervisor(a) <?= $supervisora ?>, Cress <?= $cress ?>. Período de estágio <?= $avaliacao->estagiario['periodo'] ?>. Nível: <?= $avaliacao->estagiario['nivel'] ?>. Supervisão acadêmica: <?= $professora ?></span></p>
-        <table>
+        <table class="table table-striped table-responsive table-hover">
             <tr>
                 <th><?= __('Id') ?></th>
                 <td><?= $avaliacao->id ?></td>
@@ -362,5 +371,4 @@ if ($professora) {
                 <td><?= h($avaliacao->observacoes) ?></td>
             </tr>
         </table>
-    </div>
 </div>

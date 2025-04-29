@@ -5,7 +5,7 @@
  */
 use Cake\ORM\TableRegistry;
 $user = $this->getRequest()->getAttribute('identity');
-// pr($user->categoria);
+// pr($user);
 // die();   
 ?>
 
@@ -115,7 +115,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
                 <?php if (isset($user) && $user->categoria == '4'): ?>
                     <li class="nav-item">
-                        <?php echo $this->Html->link("Meus dados", "/supervisores/view/" . $user['supervisor_id'], ['class' => 'nav-link']); ?>
+                        <?php echo $this->Html->link("Meus dados", "/supervisores/view/" . $user->supervisor_id, ['class' => 'nav-link']); ?>
                     </li>
                 <?php endif; ?>
 

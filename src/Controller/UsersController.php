@@ -92,6 +92,8 @@ class UsersController extends AppController
                     $supervisor = $this->fetchTable('Supervisores')->find()
                         ->where(['Supervisores.email' => $result->getData()->email])
                         ->first();
+                    // debug($supervisor);
+                    // die();
                     if (empty($supervisor)) {
                         return $this->redirect(['controller' => 'Supervisores', 'action' => 'add', '?' => ['cress' => $result->getData()->numero, 'email' => $result->getData()->email]]);
                     } else {

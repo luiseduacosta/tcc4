@@ -60,14 +60,14 @@ $user = $this->getRequest()->getAttribute('identity');
     <table class="table table-striped table-hover table-responsive">
         <thead class="table-dark">
             <tr>
-                <th><?= $this->Paginator->sort('id') ?></th>
+                <th><?= $this->Paginator->sort('id', 'ID') ?></th>
                 <th><?= $this->Paginator->sort('instituicao', 'Instituição') ?></th>
-                <th><?= $this->Paginator->sort('vagas') ?></th>
-                <th><?= $this->Paginator->sort('beneficios') ?></th>
+                <th><?= $this->Paginator->sort('vagas', 'Vagas') ?></th>
+                <th><?= $this->Paginator->sort('beneficios', 'Benefícios') ?></th>
                 <th><?= $this->Paginator->sort('final_de_semana', 'Final de semana') ?></th>
-                <th><?= $this->Paginator->sort('cargaHoraria', 'CH') ?></th>
-                <th><?= $this->Paginator->sort('dataInscricao', 'Inscrição') ?></th>
-                <th><?= $this->Paginator->sort('dataSelecao', 'Seleção') ?></th>
+                <th><?= $this->Paginator->sort('cargaHoraria', 'Carga horária') ?></th>
+                <th><?= $this->Paginator->sort('dataInscricao', 'Data de inscrição') ?></th>
+                <th><?= $this->Paginator->sort('dataSelecao', 'Data de seleção') ?></th>
                 <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
                 <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
                     <th class="actions"><?= __('Ações') ?></th>

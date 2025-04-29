@@ -17,10 +17,14 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerSupervisores">
         <?= $this->Html->link(__('Listar supervisores(as)'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
-        <?php if (isset($user) && $user['categoria'] == 1): ?>
+        <?php if (isset($user) && $user->categoria ==  '1'): ?>
             <?= $this->Html->link(__('Editar supervisor(a)'), ['action' => 'edit', $supervisor->id], ['class' => 'btn btn-primary']) ?>
             <?= $this->Html->link(__('Cadastrar supervisor(a)'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
             <?= $this->Form->postLink(__('Exclur supervisor(a)'), ['action' => 'delete', $supervisor->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $supervisor->id), 'class' => 'btn btn-danger']) ?>
+        <?php elseif (isset($user) && $user->categoria == '4'): ?>
+            <?php if ($user->numero == $supervisor->cress): ?>
+                <?= $this->Html->link(__('Editar supervisor(a)'), ['action' => 'edit', $supervisor->id], ['class' => 'btn btn-primary']) ?>
+            <?php endif; ?>
         <?php endif; ?>
     </ul>
 </nav>
@@ -50,11 +54,11 @@ $user = $this->getRequest()->getAttribute('identity');
             <table>
                 <tr>
                     <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($supervisor->id, ['places' => 0]) ?></td>
+                    <td><?= $this->Number->format($supervisor->id, ['pattern' => '######']) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Cress') ?></th>
-                    <td><?= $this->Number->format($supervisor->cress, ['pattern' => '#####']) ?></td>
+                    <td><?= $this->Number->format($supervisor->cress, ['pattern' => '######']) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Região') ?></th>
@@ -62,7 +66,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 </tr>
                 <tr>
                     <th><?= __('CPF') ?></th>
-                    <td><?= $this->Number->format($supervisor->cpf, ['pattern' => '###.###.###-##']) ?></td>
+                    <td><?= $supervisor->cpf ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Cargo na instituição') ?></th>
@@ -163,15 +167,15 @@ $user = $this->getRequest()->getAttribute('identity');
                     </tr>
                     <?php foreach ($supervisor->instituicoes as $instituicaoestagios): ?>
                         <tr>
-                            <td><?= h($instituicaoestagios->id) ?></td>
+                            <td><?= $this->Number->format($instituicaoestagios->id, ['pattern' => '######']) ?></td>
                             <td><?= h($instituicaoestagios->instituicao) ?></td>
-                            <td><?= h($instituicaoestagios->cnpj) ?></td>
+                            <td><?= $this->Number->format($instituicaoestagios->cnpj, ['pattern' => '##.###.###/####-##']) ?></td>
                             <td><?= h($instituicaoestagios->email) ?></td>
                             <td><?= h($instituicaoestagios->endereco) ?></td>
                             <td><?= h($instituicaoestagios->bairro) ?></td>
                             <td><?= h($instituicaoestagios->municipio) ?></td>
-                            <td><?= h($instituicaoestagios->cep) ?></td>
-                            <td><?= h($instituicaoestagios->telefone) ?></td>
+                            <td><?= $this->Number->format($instituicaoestagios->cep, ['pattern' => '#####-###']) ?></td>
+                            <td><?= $this->Number->format($instituicaoestagios->telefone, ['pattern' => '####-####']) ?></td>
                             <td><?= h($instituicaoestagios->convenio) ?></td>
                             <td><?= h($instituicaoestagios->expira) ?></td>
                             <td><?= h($instituicaoestagios->seguro) ?></td>

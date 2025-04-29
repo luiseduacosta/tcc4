@@ -11,14 +11,14 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php echo $this->element('menu_mural') ?>
 
 <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 4 || $this->getRequest()->getAttribute('identity')['categoria'] == 3): ?>
-    <?= $this->Html->link(__('Nova Avaliação'), ['action' => 'add/' . $id], ['class' => 'btn btn-primary float-end']) ?>
+    <?= $this->Html->link(__('Nova Avaliação'), ['action' => 'add', $id], ['class' => 'btn btn-primary float-end']) ?>
 <?php endif; ?>
 
 <h3><?= __('Avaliações') ?></h3>
 
-<div class="table-responsive">
-    <table>
-        <thead>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <table class="table table-striped table-responsive table-hover">
+        <thead class="table-dark">
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
                 <th><?= $this->Paginator->sort('estagiario.avaliacao.id', 'Avaliação') ?></th>
@@ -59,7 +59,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
                     <td><?= $c_estagiario->periodo ?></td>
                     <td><?= $c_estagiario->nivel ?></td>
-                    <td><?= $c_estagiario->has('instituicaoestagio') ? $c_estagiario->instituicaoestagio->instituicao : '' ?></td>
+                    <td><?= $c_estagiario->has('instituicao') ? $c_estagiario->instituicao->instituicao : '' ?></td>
                     <td><?= $c_estagiario->has('supervisor') ? $c_estagiario->supervisor->nome : '' ?></td>
                     <td><?= $c_estagiario->ch ?></td>
                     <td><?= $c_estagiario->nota ?></td>
@@ -67,9 +67,9 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                         <?php if (isset($c_estagiario->avaliacao->id)): ?>
                             <td class="actions">
-                                <?= $this->Html->link(__('View'), ['action' => 'view', $c_estagiario->avaliacao->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $c_estagiario->avaliacao->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $c_estagiario->avaliacao->id], ['confirm' => __('Are you sure you want to delete # {0}?', $c_estagiario->avaliacao->id)]) ?>
+                                <?= $this->Html->link(__('Ver'), ['action' => 'view', $c_estagiario->avaliacao->id]) ?>
+                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $c_estagiario->avaliacao->id]) ?>
+                                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $c_estagiario->avaliacao->id], ['confirm' => __('Tem certeza que deseja excluir a avaliação # {0}?', $c_estagiario->avaliacao->id)]) ?>
                             </td>
                         <?php endif; ?>
                     <?php endif; ?>

@@ -42,10 +42,18 @@ if ($professora) {
 <div class="table-responsive">
     <table>
         <tr>
-            <th>Período</th><th>Nível</th><th>Instituição</th><th>Supervisor</th><th>Professor(a)</th>
+            <th>Período</th>
+            <th>Nível</th>
+            <th>Instituição</th>
+            <th>Supervisor</th>
+            <th>Professor(a)</th>
         </tr>
         <tr>
-            <td><?= $estagiario->periodo ?></td><td><?= $estagiario->nivel ?></td><td><?= $estagiario->instituicaoestagio->instituicao ?></td><td><?= $supervisora ?></td><td><?= $professora ?></td>
+            <td><?= $estagiario->periodo ?></td>
+            <td><?= $estagiario->nivel ?></td>
+            <td><?= $estagiario->instituicao->instituicao ?></td>
+            <td><?= $supervisora ?></td>
+            <td><?= $professora ?></td>
         </tr>
     </table>
 </div>
@@ -76,9 +84,9 @@ if ($professora) {
                     <td><?= h($folhadeatividade->horario) ?></td>
                     <td><?= h($folhadeatividade->atividade) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $folhadeatividade->id]) ?>
+                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $folhadeatividade->id], ['class' => 'btn btn-info']) ?>
                         <?php if ($user->categoria == '1' || $user->categoria == '2'): ?>
-                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $folhadeatividade->id]) ?>
+                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $folhadeatividade->id], ['class' => 'btn btn-warning']) ?>
                             <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $folhadeatividade->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $folhadeatividade->id), 'class' => 'btn btn-danger']) ?>
                         <?php endif; ?>
                     </td>

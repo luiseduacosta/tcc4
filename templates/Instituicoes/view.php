@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Instituicao $instituicao
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($instituicaoestagio);
+// pr($instituicao);
 ?>
 
 <?php echo $this->element('menu_mural') ?>
@@ -16,13 +16,13 @@ $user = $this->getRequest()->getAttribute('identity');
         </li>
         <?php if (isset($user) && $user->categoria == '1'): ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $instituicaoestagio->id], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $instituicao->id], ['class' => 'btn btn-primary']) ?>
             </li>
             <li class="nav-item">
                 <?= $this->Html->link(__('Nova'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicaoestagio->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $instituicaoestagio->id), 'class' => 'btn btn-danger float-right']) ?>
+                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $instituicao->id), 'class' => 'btn btn-danger float-right']) ?>
             </li>
         <?php endif; ?>
 </div>
@@ -59,94 +59,94 @@ $user = $this->getRequest()->getAttribute('identity');
             <table class="table table-responsive table-hover table-striped">
                 <tr>
                     <th><?= __('Id') ?></th>
-                    <td><?= $instituicaoestagio->id ?></td>
+                    <td><?= $instituicao->id ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Instituição') ?></th>
-                    <td><?= $instituicaoestagio->instituicao ?></td>
+                    <td><?= $instituicao->instituicao ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Área instituicao') ?></th>
-                    <td><?= $instituicaoestagio->has('areainstituicao') ? $this->Html->link($instituicaoestagio->areainstituicao->area, ['controller' => 'Areainstituicoes', 'action' => 'view', $instituicaoestagio->areainstituicao->id]) : '' ?>
+                    <td><?= $instituicao->has('areainstituicao') ? $this->Html->link($instituicao->areainstituicao->area, ['controller' => 'Areainstituicoes', 'action' => 'view', $instituicao->areainstituicao->id]) : '' ?>
                     </td>
                 </tr>
                 <tr>
                     <th><?= __('Natureza') ?></th>
-                    <td><?= h($instituicaoestagio->natureza) ?></td>
+                    <td><?= h($instituicao->natureza) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Cnpj') ?></th>
-                    <td><?= h($instituicaoestagio->cnpj) ?></td>
+                    <td><?= h($instituicao->cnpj) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('E-mail') ?></th>
-                    <td><?= h($instituicaoestagio->email) ?></td>
+                    <td><?= h($instituicao->email) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Url') ?></th>
-                    <td><?= h($instituicaoestagio->url) ?></td>
+                    <td><?= h($instituicao->url) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Telefone') ?></th>
-                    <td><?= h($instituicaoestagio->telefone) ?></td>
+                    <td><?= h($instituicao->telefone) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Fax') ?></th>
-                    <td><?= h($instituicaoestagio->fax) ?></td>
+                    <td><?= h($instituicao->fax) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Cep') ?></th>
-                    <td><?= h($instituicaoestagio->cep) ?></td>
+                    <td><?= h($instituicao->cep) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Endereço') ?></th>
-                    <td><?= h($instituicaoestagio->endereco) ?></td>
+                    <td><?= h($instituicao->endereco) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Bairro') ?></th>
-                    <td><?= h($instituicaoestagio->bairro) ?></td>
+                    <td><?= h($instituicao->bairro) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Município') ?></th>
-                    <td><?= h($instituicaoestagio->municipio) ?></td>
+                    <td><?= h($instituicao->municipio) ?></td>
                 </tr>
 
                 <tr>
                     <th><?= __('Beneficios') ?></th>
-                    <td><?= h($instituicaoestagio->beneficio) ?></td>
+                    <td><?= h($instituicao->beneficio) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Fim de Semana') ?></th>
-                    <td><?= ($instituicaoestagio->fim_de_semana == 0) ? 'Não' : 'Sim'; ?></td>
+                    <td><?= ($instituicao->fim_de_semana == 0) ? 'Não' : 'Sim'; ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Local de inscrição') ?></th>
-                    <td><?= h($instituicaoestagio->localInscricao) ?></td>
+                    <td><?= h($instituicao->localInscricao) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Seguro') ?></th>
-                    <td><?= ($instituicaoestagio->seguro == 0) ? 'Não' : 'Sim'; ?></td>
+                    <td><?= ($instituicao->seguro == 0) ? 'Não' : 'Sim'; ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Avaliação') ?></th>
-                    <td><?= h($instituicaoestagio->avaliacao) ?></td>
+                    <td><?= h($instituicao->avaliacao) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Área') ?></th>
-                    <td><?= $instituicaoestagio->area ?></td>
+                    <td><?= $instituicao->area ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Convênio') ?></th>
-                    <td><?= ($instituicaoestagio->convenio == 0) ? 'Não' : 'Sim' ?></td>
+                    <td><?= ($instituicao->convenio == 0) ? 'Não' : 'Sim' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Expira') ?></th>
-                    <td><?= ($instituicaoestagio->expira) ? date('d-m-Y', strtotime($instituicaoestagio->expira)) : 'Sem informação' ?>
+                    <td><?= ($instituicao->expira) ? date('d-m-Y', strtotime($instituicao->expira)) : 'Sem informação' ?>
                     </td>
                 </tr>
                 <tr>
                     <th><?= __('Observações') ?></th>
-                    <td><?= h($instituicaoestagio->observacoes) ?></td>
+                    <td><?= h($instituicao->observacoes) ?></td>
                 </tr>
             </table>
         </div>
@@ -154,7 +154,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <div class="tab-content">
             <div id="supervisores" class="tab-pane container fade">
                 <h3><?= __('Supervisores') ?></h3>
-                <?php if (!empty($instituicaoestagio->supervisores)): ?>
+                <?php if (!empty($instituicao->supervisores)): ?>
                     <table class="table table-responsive table-hover table-striped">
                         <tr>
                             <th><?= __('Id') ?></th>
@@ -163,7 +163,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <th><?= __('Observações') ?></th>
                             <th class="row"><?= __('Ações') ?></th>
                         </tr>
-                        <?php foreach ($instituicaoestagio->supervisores as $supervisores): ?>
+                        <?php foreach ($instituicao->supervisores as $supervisores): ?>
                             <tr>
                                 <td><?= h($supervisores->id) ?></td>
                                 <td><?= (isset($user) && $user->categoria == 1) ? $this->Html->link($supervisores->nome, ['controller' => 'Supervisores', 'action' => 'view', $supervisores->id]) : $supervisores->nome ?>
@@ -190,7 +190,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <div class="tab-content">
             <div id="estagiarios" class="tab-pane container fade">
                 <h3><?= __('Estagiarios') ?></h3>
-                <?php if (!empty($instituicaoestagio->estagiarios)): ?>
+                <?php if (!empty($instituicao->estagiarios)): ?>
                     <table class="table table-striped table-hover table-responsive">
                         <tr>
                             <th><?= __('Id') ?></th>
@@ -213,7 +213,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <th class="row"><?= __('Ações') ?></th>
                             <?php endif; ?>
                         </tr>
-                        <?php foreach ($instituicaoestagio->estagiarios as $estagiarios): ?>
+                        <?php foreach ($instituicao->estagiarios as $estagiarios): ?>
                             <?php // pr($estagiarios->areaestagio); ?>
                             <tr>
                                 <td><?= h($estagiarios->id) ?></td>
@@ -269,7 +269,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <div class="tab-content">
             <div id="muraldeestagio" class="tab-pane container fade">
                 <h3><?= __('Ofertas de vagas no Mural de estágios') ?></h3>
-                <?php if (!empty($instituicaoestagio->muralestagios)): ?>
+                <?php if (!empty($instituicao->muralestagios)): ?>
                     <table class="table table-responsive table-hover table-striped">
                         <tr>
                             <th><?= __('Id') ?></th>
@@ -280,7 +280,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <th class="actions"><?= __('Ações') ?></th>
                             <?php endif; ?>
                         </tr>
-                        <?php foreach ($instituicaoestagio->muralestagios as $muralestagios): ?>
+                        <?php foreach ($instituicao->muralestagios as $muralestagios): ?>
                             <?php // pr($muralestagios) ?>
                             <tr>
                                 <td><?= h($muralestagios->id) ?></td>
@@ -305,7 +305,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <div class="tab-content">
             <div id="visitas" class="tab-pane container fade">
                 <h3><?= __('Visitas realizadas') ?></h3>
-                <?php if (!empty($instituicaoestagio->visitas)): ?>
+                <?php if (!empty($instituicao->visitas)): ?>
                     <table class="table table-responsive table-hover table-striped">
                         <tr>
                             <th><?= __('Id') ?></th>
@@ -319,7 +319,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <th class="row"><?= __('Ações') ?></th>
                             <?php endif; ?>
                         </tr>
-                        <?php foreach ($instituicaoestagio->visitas as $visitas): ?>
+                        <?php foreach ($instituicao->visitas as $visitas): ?>
                             <tr>
                                 <td><?= h($visitas->id) ?></td>
                                 <td><?= h($visitas->estagio_id) ?></td>

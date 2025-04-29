@@ -20,7 +20,7 @@ class AvaliacaoPolicy {
      * @return bool
      */
     public function canAdd(IdentityInterface $user, Avaliacao $avaliacao) {
-        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '4';
+        return isset($user->categoria) && ($user->categoria == '1' || $user->categoria == '4');
     }
 
     /**
@@ -31,7 +31,7 @@ class AvaliacaoPolicy {
      * @return bool
      */
     public function canEdit(IdentityInterface $user, Avaliacao $avaliacao) {
-        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '4';
+        return isset($user->categoria) && ($user->categoria == '1' || $user->categoria == '4');
     }
 
     /**
@@ -42,7 +42,7 @@ class AvaliacaoPolicy {
      * @return bool
      */
     public function canDelete(IdentityInterface $user, Avaliacao $avaliacao) {
-        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '4';
+        return isset($user->categoria) && ($user->categoria == '1' || $user->categoria == '4');
     }
 
     /**
