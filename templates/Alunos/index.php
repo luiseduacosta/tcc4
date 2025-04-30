@@ -47,13 +47,16 @@ $user = $this->getRequest()->getAttribute('identity');
                 <table class="table table-striped table-hover table-responsive">
                     <thead class="table-dark">
                         <tr>
-                            <th><?= $this->Paginator->sort('id') ?></th>
-                            <th><?= $this->Paginator->sort('registro') ?></th>
-                            <th><?= $this->Paginator->sort('nome') ?></th>
-                            <th><?= $this->Paginator->sort('nascimento') ?></th>
+                            <th><?= $this->Paginator->sort('id', 'ID') ?></th>
+                            <th><?= $this->Paginator->sort('registro', 'Registro') ?></th>
+                            <th><?= $this->Paginator->sort('nome', 'Nome') ?></th>
+                            <th><?= $this->Paginator->sort('nomesocial', 'Nome social') ?></th>
+                            <th><?= $this->Paginator->sort('nascimento', 'Data de nascimento') ?></th>
                             <th><?= $this->Paginator->sort('cpf', 'CPF') ?></th>
-                            <th><?= $this->Paginator->sort('identidade') ?></th>
+                            <th><?= $this->Paginator->sort('identidade', 'RG') ?></th>
                             <th><?= $this->Paginator->sort('orgao', 'Orgão') ?></th>
+                            <th><?= $this->Paginator->sort('ingresso', 'Ingresso') ?></th>
+                            <th><?= $this->Paginator->sort('turno', 'Turno') ?></th>
                             <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
                             <?php if (isset($user) && $user->categoria == '1'): ?>
                                 <th class="row"><?= __('Ações') ?></th>
@@ -67,20 +70,23 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <td><?= $aluno->registro ?></td>
                                 <td><?= $this->Html->link($aluno->nome, ['controller' => 'Alunos', 'action' => 'view', $aluno->id]) ?>
                                 </td>
+                                <td><?= h($aluno->nomesocial) ?></td>
                                 <?php if (empty($aluno->nascimento)): ?>
                                     <td>Sem dados</td>
                                 <?php else: ?>
-                                    <td><?= date('d-m-Y', strtotime(h($aluno->nascimento))) ?></td>
+                                <td><?= $aluno->nascimento->i18nFormat('dd-MM-yyyy') ?></td>
                                 <?php endif; ?>
                                 <td><?= h($aluno->cpf) ?></td>
                                 <td><?= h($aluno->identidade) ?></td>
                                 <td><?= h($aluno->orgao) ?></td>
+                                <td><?= h($aluno->ingresso) ?></td>
+                                <td><?= h($aluno->turno) ?></td>
                                 <td><?= h($aluno->observacoes) ?></td>
                                 <td class="row">
-                                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $aluno->id]) ?>
+                                    <?= $this->Html->link(__('Ver'), ['controller' => 'Alunos', 'action' => 'view', $aluno->id]) ?>
                                     <?php if (isset($user) && $user->categoria == '1'): ?>
-                                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $aluno->id]) ?>
-                                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id)]) ?>
+                                        <?= $this->Html->link(__('Editar'), ['controller' => 'Alunos', 'action' => 'edit', $aluno->id]) ?>
+                                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Alunos', 'action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id)]) ?>
                                     <?php endif; ?>
                                 </td>
                             </tr>
@@ -95,18 +101,18 @@ $user = $this->getRequest()->getAttribute('identity');
         <div class="tab-content">
             <div id="aluno2" class="tab-pane container fade">
                 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
-                    <h3><?= __('Alunos') ?></h3>
+                    <h3><?= __('Alunos comunicação') ?></h3>
                     <table class="table table-striped table-hover table-responsive">
                         <thead class="table-dark">
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
-                                <th><?= $this->Paginator->sort('registro') ?></th>
-                                <th><?= $this->Paginator->sort('nome') ?></th>
-                                <th><?= $this->Paginator->sort('email') ?></th>
-                                <th><?= $this->Paginator->sort('codigo_telefone') ?></th>
-                                <th><?= $this->Paginator->sort('telefone') ?></th>
-                                <th><?= $this->Paginator->sort('codigo_celular') ?></th>
-                                <th><?= $this->Paginator->sort('celular') ?></th>
+                                <th><?= $this->Paginator->sort('id', 'ID') ?></th>
+                                <th><?= $this->Paginator->sort('registro', 'Registro') ?></th>
+                                <th><?= $this->Paginator->sort('nome', 'Nome') ?></th>
+                                <th><?= $this->Paginator->sort('email', 'E-mail') ?></th>
+                                <th><?= $this->Paginator->sort('codigo_telefone', 'DDD') ?></th>
+                                <th><?= $this->Paginator->sort('telefone', 'Telefone') ?></th>
+                                <th><?= $this->Paginator->sort('codigo_celular', 'DDD') ?></th>
+                                <th><?= $this->Paginator->sort('celular', 'Celular') ?></th>
                                 <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
                                 <th class="row"><?= __('Ações') ?></th>
                             </tr>
@@ -126,10 +132,10 @@ $user = $this->getRequest()->getAttribute('identity');
                                     <td><?= h($aluno->celular) ?></td>
                                     <td><?= h($aluno->observacoes) ?></td>
                                     <td class="row">
-                                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $aluno->id]) ?>
+                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Alunos', 'action' => 'view', $aluno->id]) ?>
                                         <?php if (isset($user) && $user->categoria == '1'): ?>
-                                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $aluno->id]) ?>
-                                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id)]) ?>
+                                            <?= $this->Html->link(__('Editar'), ['controller' => 'Alunos', 'action' => 'edit', $aluno->id]) ?>
+                                            <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Alunos', 'action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id)]) ?>
                                         <?php endif; ?>
 
                                     </td>
@@ -146,17 +152,17 @@ $user = $this->getRequest()->getAttribute('identity');
         <div class="tab-content">
             <div id="aluno3" class="tab-pane container fade">
                 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
-                    <h3><?= __('Alunos') ?></h3>
+                    <h3><?= __('Alunos endereço') ?></h3>
                     <table class="table table-striped table-hover table-responsive">
                         <thead class="table-dark">
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
-                                <th><?= $this->Paginator->sort('registro') ?></th>
-                                <th><?= $this->Paginator->sort('nome') ?></th>
+                                <th><?= $this->Paginator->sort('id', 'ID') ?></th>
+                                <th><?= $this->Paginator->sort('registro', 'Registro') ?></th>
+                                <th><?= $this->Paginator->sort('nome', 'Nome') ?></th>
                                 <th><?= $this->Paginator->sort('cep', 'CEP') ?></th>
                                 <th><?= $this->Paginator->sort('endereco', 'Endereço') ?></th>
-                                <th><?= $this->Paginator->sort('municipio') ?></th>
-                                <th><?= $this->Paginator->sort('bairro') ?></th>
+                                <th><?= $this->Paginator->sort('municipio', 'Município') ?></th>
+                                <th><?= $this->Paginator->sort('bairro', 'Bairro') ?></th>
                                 <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
                                 <th class="row"><?= __('Ações') ?></th>
                             </tr>
@@ -174,10 +180,10 @@ $user = $this->getRequest()->getAttribute('identity');
                                     <td><?= h($aluno->bairro) ?></td>
                                     <td><?= h($aluno->observacoes) ?></td>
                                     <td class="row">
-                                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $aluno->id]) ?>
+                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Alunos', 'action' => 'view', $aluno->id]) ?>
                                         <?php if (isset($user) && $user->categoria == '1'): ?>
-                                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $aluno->id]) ?>
-                                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id)]) ?>
+                                            <?= $this->Html->link(__('Editar'), ['controller' => 'Alunos', 'action' => 'edit', $aluno->id]) ?>
+                                            <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Alunos', 'action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id)]) ?>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
@@ -189,7 +195,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </div>
     </div>
 
-    <?php $this->element('templates') ?>
+    <?= $this->element('templates') ?>
 
     <div class="d-flex justify-content-center">
         <div class="paginator">

@@ -23,7 +23,7 @@ $submit = [
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create(null) ?>
-    <fieldset>
+    <fieldset class="border p-2">
         <legend><?= __('Declaração de ' . $totalperiodos . 'º' . ' período do(a) aluno(a)') ?></legend>
         <?php
         if ($aluno['periodonovo']):
@@ -31,24 +31,24 @@ $submit = [
         else:
             echo $this->Form->control('novoperiodo', ['label' => ['text' => 'Período de ingresso'], 'value' => $aluno-['ingresso']]);
         endif;
-        echo $this->Form->control('nome', ['readonly']);
+        echo $this->Form->control('nome', ['label' => 'Nome', 'readonly']);
         echo $this->Form->control('nomesocial', ['label' => ['text' => 'Nome social']]);
-        echo $this->Form->control('registro', ['readonly']);
-        echo $this->Form->control('ingresso', ['readonly']);
+        echo $this->Form->control('registro', ['label' => 'Registro', 'readonly']);
+        echo $this->Form->control('ingresso', ['label' => 'Ingresso', 'readonly']);
         echo $this->Form->control('turno', ['options' => ['diurno' => 'Diurno', 'noturno' => 'Noturno']]);
         echo $this->Form->control('codigo_telefone', ['label' => ['text' => 'DDD']]);
-        echo $this->Form->control('telefone');
+        echo $this->Form->control('telefone', ['label' => ['text' => 'Telefone']]);
         echo $this->Form->control('codigo_celular', ['label' => ['text' => 'DDD']]);
-        echo $this->Form->control('celular');
-        echo $this->Form->control('email');
+        echo $this->Form->control('celular', ['label' => ['text' => 'Celular']]);
+        echo $this->Form->control('email', ['label' => ['text' => 'E-mail']]);
         echo $this->Form->control('cpf', ['label' => ['text' => 'CPF']]);
         echo $this->Form->control('identidade', ['label' => ['text' => 'Carteira de identidade']]);
         echo $this->Form->control('orgao', ['label' => ['text' => 'Orgão emissor']]);
         echo $this->Form->control('nascimento', ['empty' => true]);
         echo $this->Form->control('endereco', ['label' => ['text' => 'Endereço']]);
         echo $this->Form->control('cep', ['label' => ['text' => 'CEP']]);
-        echo $this->Form->control('municipio');
-        echo $this->Form->control('bairro');
+        echo $this->Form->control('municipio', ['label' => ['text' => 'Município']]);
+        echo $this->Form->control('bairro', ['label' => ['text' => 'Bairro']]);
         echo $this->Form->control('observacoes', ['label' => ['text' => 'Observações']]);
         ?>
     </fieldset>

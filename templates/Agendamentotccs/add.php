@@ -64,6 +64,8 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('avaliacao', ['type' => 'hidden', 'value' => 's/d']);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Confirma')) ?>
+    <div class="d-flex justify-content-center">
+        <?= $this->Form->button(__('Confirmar', ['class' => 'btn btn-primary'])) ?>
+    </div>
     <?= $this->Form->end() ?>
 </div>

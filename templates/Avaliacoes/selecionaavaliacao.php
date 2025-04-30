@@ -10,6 +10,13 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_mural') ?>
 
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAvaliacoes"
+        aria-controls="navbarTogglerAvaliacoes" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
 <h3><?= __('Estágios cursados pela(o) estudande ') ?></h3>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">

@@ -10,28 +10,26 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="d-flex justify-content-start">
     <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerEstagiario"
-            aria-controls="navbarTogglerEstagiario" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerTurma"
+            aria-controls="navbarTogglerTurma" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerEstagiario">
-            <ul class="navbar-nav ms-auto mt-lg-0">
-                <li class="nav-item">
+        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerTurma">
+            <li class="nav-item">
                     <?= $this->Html->link(__('Listar turma de estágios'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
+            </li>
+            <?php if (isset($user) && $user->categoria == 1): ?>
+                <li class="nav-item">
+                    <?= $this->Html->link(__('Editar turma de estágio'), ['action' => 'edit', $turmaestagio->id], ['class' => 'btn btn-primary float-start']) ?>
                 </li>
-                <?php if (isset($user) && $user->categoria == 1): ?>
-                    <li class="nav-item">
-                        <?= $this->Html->link(__('Editar turma de estágio'), ['action' => 'edit', $turmaestagio->id], ['class' => 'btn btn-primary float-start']) ?>
-                    </li>
-                    <li class="nav-item">
-                        <?= $this->Form->postLink(__('Excluir turma de estágio'), ['action' => 'delete', $turmaestagio->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $turmaestagio->id), 'class' => 'btn btn-danger float-start']) ?>
-                    </li>
-                    <li class="nav-item">
-                        <?= $this->Html->link(__('Nova turma de estágio'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
-                    </li>
-                <?php endif; ?>
-            </ul>
-        </div>
+                <li class="nav-item">
+                    <?= $this->Form->postLink(__('Excluir turma de estágio'), ['action' => 'delete', $turmaestagio->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $turmaestagio->id), 'class' => 'btn btn-danger float-start']) ?>
+                </li>
+                <li class="nav-item">
+                    <?= $this->Html->link(__('Nova turma de estágio'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                </li>
+            <?php endif; ?>
+        </ul>
     </nav>
 </div>
 
@@ -49,7 +47,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <h4><?= __('Estagiários') ?></h4>
 <?php if (!empty($turmaestagio->estagiarios)): ?>
-    <table class="table table-stripted table-hover table-responsive">
+    <table class="table table-striped table-hover table-responsive">
         <tr>
             <th><?= __('Id') ?></th>
             <th><?= __('Aluno') ?></th>

@@ -21,20 +21,20 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?= $this->Html->link(__('Agendar Oficina'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
                 </li>
                 <li class="nav-item">
-                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id], ['class' => 'btn btn-primary float-end']) ?>
+                    <?= $this->Html->link(__('Editar'), ['controller' => 'Agendamentotccs', 'action' => 'edit', $agendamentotcc->id], ['class' => 'btn btn-primary float-end']) ?>
                 </li>
                 <li class="nav-item">
-                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $agendamentotcc->id), 'class' => 'btn btn-danger float-start']) ?>
+                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Agendamentotccs', 'action' => 'delete', $agendamentotcc->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $agendamentotcc->id), 'class' => 'btn btn-danger float-start']) ?>
                 </li>
             <?php endif; ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Agendamentos marcados'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+                <?= $this->Html->link(__('Agendamentos marcados'), ['controller' => 'Agendamentotccs', 'action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Ata da Oficna'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+                <?= $this->Html->link(__('Ata da Oficina'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Declarações de participção'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+                <?= $this->Html->link(__('Declarações de participação'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
             </li>
         </ul>
     </div>

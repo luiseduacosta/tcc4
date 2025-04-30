@@ -51,11 +51,11 @@ if ($professora) {
 <?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerSupervisores"
-        aria-controls="navbarTogglerSupervisores" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAvaliacoes"
+        aria-controls="navbarTogglerAvaliacoes" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerSupervisores">
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAvaliacoes">
         <?php if (isset($user) && ($user->categoria == '1' || $user->categoria == '4')): ?>
             <li class="nav-item">
             <?= $this->Html->link(__('Editar avaliação'), ['action' => 'edit', $avaliacao->id], ['class' => 'btn btn-primary']) ?>
@@ -64,7 +64,7 @@ if ($professora) {
                 <?= $this->Form->postLink(__('Excluir avaliação'), ['action' => 'delete', $avaliacao->id], ['confirm' => __('Tem certeza que deseja excluir a avaliação # {0}?', $avaliacao->id), 'class' => 'btn btn-danger']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Listar avaliações'), ['action' => 'index', '?' => $estagiario->id . '/' . $estagiario->registro], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Listar avaliações'), ['action' => 'index', '?' => $avaliacao->estagiario['id'] . '/' . $avaliacao->estagiario['registro']], ['class' => 'btn btn-primary']) ?>
             </li>
         <?php endif; ?>
         <li class="nav-item">

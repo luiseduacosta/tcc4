@@ -16,32 +16,32 @@ $user = $this->getRequest()->getAttribute('identity');
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAreamonografiaView">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Editar área da monografia'), ['action' => 'edit', $areamonografia->id], ['class' => 'btn btn-primary float-start']) ?>
+                <?= $this->Html->link(__('Editar área da monografia'), ['controller' => 'Areamonografias', 'action' => 'edit', $areamonografia->id], ['class' => 'btn btn-primary float-start']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir área da monografia'), ['action' => 'delete', $areamonografia->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $areamonografia->id), 'class' => 'btn btn-danger float-start']) ?>
+                <?= $this->Form->postLink(__('Excluir área da monografia'), ['controller' => 'Areamonografias', 'action' => 'delete', $areamonografia->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $areamonografia->id), 'class' => 'btn btn-danger float-start']) ?>
             </li>
         <?php endif; ?>
     </ul>
 </nav>
+
+<?= $this->element('templates') ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= h($areamonografia->area) ?></h3>
     <table class="table table-striped table-hover table-responsive">
         <thead class="table-light">
             <tr>
-                <th scope="row"><?= __('Id') ?></th>
+                <th scope="row"><?= __('ID') ?></th>
                 <td><?= $this->Number->format($areamonografia->id) ?></td>
             </tr>
-
             <tr>
-                <th scope="row"><?= __('Area') ?></th>
+                <th scope="row"><?= __('Área') ?></th>
                 <td><?= h($areamonografia->area) ?></td>
             </tr>
+        </tbody>
     </table>
 </div>
-
-<?php // pr($areamonografia->monografias); ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h4><?= __('Monografias') ?></h4>
@@ -56,7 +56,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 </tr>
             </thead>
             <?php foreach ($areamonografia->monografias as $monografias): ?>
-                <?php // pr($monografias->docente->nome); ?>
                 <tr>
                     <?php if (isset($monografias->tccestudantes) && count($monografias->tccestudantes) > 0): ?>
                         <td>
@@ -66,7 +65,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         </td>
                     <?php endif; ?>
 
-                    <td><?= $this->Html->link(h($monografias->titulo), ['controller' => 'monografias', 'action' => 'view', $monografias->id]) ?>
+                    <td><?= $this->Html->link(h($monografias->titulo), ['controller' => 'Monografias', 'action' => 'view', $monografias->id]) ?>
                     </td>
                     <td><?= h($monografias['periodo']) ?></td>
                      <td><?= $this->Html->link(h($monografias->docentes['nome']), ['controller' => 'Docentes', 'action' => 'view', $monografias->docentes['id']]) ?>
@@ -76,8 +75,6 @@ $user = $this->getRequest()->getAttribute('identity');
         </table>
     <?php endif; ?>
 </div>
-
-<?php // pr($areamonografia->docentes); ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h4><?= __('Professores da área') ?></h4>
@@ -89,7 +86,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 </tr>
             </thead>
             <?php foreach ($areamonografia->docentes as $docentes): ?>
-                <?php // pr($docentes);  ?>
                 <tr>
                     <td><?= $this->Html->link(h($docentes['nome']), ['controller' => 'Docentes', 'action' => 'view', $docentes['id']]) ?>
                     </td>

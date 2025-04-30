@@ -8,7 +8,7 @@
 
 <?php echo $this->element('menu_mural') ?>
 
-<div class='table-responsive'>
+<div class='container col-lg-8 shadow p-3 mb-5 bg-white rounded'>
     <table class='table table-hover table-striped table-responsive'>
         <thead class='thead-light'>
             <tr>

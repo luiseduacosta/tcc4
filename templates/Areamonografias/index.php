@@ -29,15 +29,15 @@ $user = $this->getRequest()->getAttribute('identity');
     <table class="table table-striped table-hover table-responsive">
         <thead class="table-dark">
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('area') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('monografias') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('area', 'Área') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('monografias', 'Monografias') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($areas as $area): ?>
                 <?php // pr(count($area->monografias)); ?>
                 <tr>
-                    <td><?= $this->Html->link(h($area->area), ['controller' => 'areamonografias', 'action' => 'view', $area->id]) ?>
+                    <td><?= $this->Html->link(h($area->area), ['controller' => 'Areamonografias', 'action' => 'view', $area->id]) ?>
                     </td>
                     <td><?= $this->Number->format(count($area->monografias)) ?></td>
                 </tr>
@@ -45,18 +45,19 @@ $user = $this->getRequest()->getAttribute('identity');
         </tbody>
     </table>
 
+    <?= $this->element('templates') ?>
+
     <div class="d-flex justify-content-center">
-        <?= $this->element('templates') ?>
 
         <div class="paginator">
             <ul class="pagination">
                 <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
                 <?= $this->Paginator->prev('< ' . __('anterior')) ?>
                 <?= $this->Paginator->numbers() ?>
-                <?= $this->Paginator->next(__('próximo')) ?>
-                <?= $this->Paginator->last(__('último')) ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
             </ul>
-            <p><?= $this->Paginator->counter(__('Página {{page}} do {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?>
+            <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?>
             </p>
         </div>
     </div>

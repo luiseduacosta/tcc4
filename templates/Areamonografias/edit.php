@@ -35,10 +35,11 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset class="border p-2">
         <legend><?= __('Editar área da monografia') ?></legend>
         <?php
-        echo $this->Form->control('id');
-        echo $this->Form->control('area', ['label' => 'Área da monografia']);
+        echo $this->Form->control('area', ['label' => 'Área', 'class' => 'form-control']);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Confirma')) ?>
+    <div class="d-flex justify-content-center">
+        <?= $this->Form->button(__('Confirmar', ['class' => 'btn btn-primary'])) ?>
+    </div>
     <?= $this->Form->end() ?>
 </div>

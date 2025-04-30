@@ -14,7 +14,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerVisitas">
-        <?php if (isset($user) && $user->categoria == '1'); ?>
+        <?php if (isset($user) && $user->categoria == '1'): ?>
             <li class="nav-item">
                 <?= $this->Html->link(__('Nova visita'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
             </li>
@@ -24,12 +24,12 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <h3><?= __('Visitas instituicionais') ?></h3>
 
-<div class="table-responsive">
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <table class="table table-striped table-hover table-responsive">
         <thead class="table-dark">
             <tr>
                 <th><?= $this->Paginator->sort('id', 'ID') ?></th>
-                <th><?= $this->Paginator->sort('instituicaoestagio_id', 'Instituição') ?></th>
+                <th><?= $this->Paginator->sort('instituicao_id', 'Instituição') ?></th>
                 <th><?= $this->Paginator->sort('data', 'Data') ?></th>
                 <th><?= $this->Paginator->sort('motivo', 'Motivo') ?></th>
                 <th><?= $this->Paginator->sort('responsavel', 'Responsável') ?></th>
@@ -41,8 +41,8 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php foreach ($visitas as $visita): ?>
                 <tr>
                     <td><?= $visita->id ?></td>
-                    <td><?= $visita->has('instituicaoestagio') ? $this->Html->link($visita->instituicaoestagio->instituicao, ['controller' => 'Instituicoes', 'action' => 'view', $visita->instituicaoestagio->id]) : '' ?></td>
-                    <td><?= date('d-m-Y', strtotime(h($visita->data))) ?></td>
+                    <td><?= $visita->has('instituicao') ? $this->Html->link($visita->instituicao->instituicao, ['controller' => 'Instituicoes', 'action' => 'view', $visita->instituicao->id]) : '' ?></td>
+                    <td><?= $visita->data->i18nFormat('dd-MM-yyyy') ?></td>
                     <td><?= h($visita->motivo) ?></td>
                     <td><?= h($visita->responsavel) ?></td>
                     <td><?= h($visita->avaliacao) ?></td>

@@ -14,11 +14,13 @@ $user = $this->getRequest()->getAttribute('identity');
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerTccestudantesAdd">
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+        <?php if (isset($user) && $user->categoria == '1'): ?>
             <li class="item-link"><?= $this->Html->link(__('Estudantes autores'), ['action' => 'index']) ?> </li>
         <?php endif; ?>
     </ul>
 </nav>
+
+<?= $this->element('templates') ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3 class="text-center"><?= __('Inserir estudante(s) autor(es) de TCC') ?></h3>

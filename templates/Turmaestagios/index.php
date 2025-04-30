@@ -8,27 +8,25 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?= $this->element('menu_mural') ?>
 
-<?php if (isset($user) && $user->categoria_id == 1): ?>
-    <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerEstagiario"
-            aria-controls="navbarTogglerEstagiario" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerTurma"
+            aria-controls="navbarTogglerTurma" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerEstagiario">
-            <ul class="navbar-nav ms-auto mt-lg-0">
-                <li class="nav-item">
-                    <?= $this->Html->link(__('Nova turma de estágio'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
-                </li>
-            </ul>
-        </div>
-    </nav>
-<?php endif; ?>
+    </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerTurma">
+    <?php if (isset($user) && $user->categoria == '1'): ?>
+        <li class="nav-item">
+            <?= $this->Html->link(__('Nova turma de estágio'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
+        </li>
+    <?php endif; ?>
+    </ul>
+</nav>
 
 <h3><?= __('Turmas de estágios') ?></h3>
 
-<div class="container ">
-    <table class="table table-stripted table-hover table-responsive">
-        <thead>
+<div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+    <table class="table table-striped table-hover table-responsive">
+        <thead class="table-dark">
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
                 <th><?= $this->Paginator->sort('area') ?></th>

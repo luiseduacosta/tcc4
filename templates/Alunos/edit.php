@@ -35,24 +35,29 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset class="border p-2">
         <legend><?= __('Editar aluno(a)') ?></legend>
         <?php
-        echo $this->Form->control('nome');
-        echo $this->Form->control('registro');
-        echo $this->Form->control('nascimento', ['empty' => true]);
-        echo $this->Form->control('cpf', ['label' => 'CPF']);
-        echo $this->Form->control('identidade', ['label' => 'RG']);
-        echo $this->Form->control('orgao', ['label' => 'Orgão emissor']);
-        echo $this->Form->control('email');
-        echo $this->Form->control('codigo_telefone', ['label' => 'DDD']);
-        echo $this->Form->control('telefone');
-        echo $this->Form->control('codigo_celular', ['label' => 'DDD']);
-        echo $this->Form->control('celular');
-        echo $this->Form->control('cep', ['label' => 'CEP']);
-        echo $this->Form->control('endereco', ['Endereço']);
-        echo $this->Form->control('municipio', ['label' => 'Município']);
-        echo $this->Form->control('bairro');
-        echo $this->Form->control('observacoes', ['label' => 'Observações']);
+        echo $this->Form->control('nome', ['label' => 'Nome', 'class' => 'form-control']);
+        echo $this->Form->control('nomesocial', ['label' => 'Nome social', 'class' => 'form-control']);
+        echo $this->Form->control('registro', ['label' => 'Registro', 'class' => 'form-control']);
+        echo $this->Form->control('ingresso', ['label' => 'Ingresso', 'class' => 'form-control']);
+        echo $this->Form->control('turno', ['label' => 'Turno', 'class' => 'form-control']);
+        echo $this->Form->control('nascimento', ['label' => 'Data de nascimento', 'empty' => true, 'class' => 'form-control']);
+        echo $this->Form->control('cpf', ['label' => 'CPF', 'class' => 'form-control']);
+        echo $this->Form->control('identidade', ['label' => 'RG', 'class' => 'form-control']);
+        echo $this->Form->control('orgao', ['label' => 'Orgão emissor', 'class' => 'form-control']);
+        echo $this->Form->control('email', ['label' => 'E-mail', 'class' => 'form-control']);
+        echo $this->Form->control('codigo_telefone', ['label' => 'DDD', 'class' => 'form-control']);
+        echo $this->Form->control('telefone', ['label' => 'Telefone', 'class' => 'form-control']);
+        echo $this->Form->control('codigo_celular', ['label' => 'DDD', 'class' => 'form-control']);
+        echo $this->Form->control('celular', ['label' => 'Celular', 'class' => 'form-control']);
+        echo $this->Form->control('cep', ['label' => 'CEP', 'class' => 'form-control']);
+        echo $this->Form->control('endereco', ['label' => 'Endereço', 'class' => 'form-control']);
+        echo $this->Form->control('municipio', ['label' => 'Município', 'class' => 'form-control']);
+        echo $this->Form->control('bairro', ['label' => 'Bairro', 'class' => 'form-control']);
+        echo $this->Form->control('observacoes', ['label' => 'Observações', 'class' => 'form-control']);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <div class="d-flex justify-content-center">
+        <?= $this->Form->button(__('Confirmar alterações', ['class' => 'btn btn-primary'])) ?>
+    </div>
     <?= $this->Form->end() ?>
 </div>
