@@ -9,26 +9,12 @@ $user = $this->getRequest()->getAttribute('identity');
 <!-- jQuery Mask -->
 <script>
     $(document).ready(function() {
-        $('#cpf').mask('000.000.000-00', {
-            translation: {
-                '0': { pattern: /[0-9]/ }
-            }
-        });
-        $('#cep').mask('00000-000', {
-            translation: {
-                '0': { pattern: /[0-9]/ }
-            }
-        });
-        $('#telefone').mask('(00) 0000-0000', {
-            translation: {
-                '0': { pattern: /[0-9]/ }
-            }
-        });
-        $('#celular').mask('(00) 00000-0000', { 
-            translation: {
-                '0': { pattern: /[0-9]/ }
-            }
-        });
+        $('#cpf').mask('000.000.000-00');
+        $('#cep').mask('00000-000');
+        $('#ddd_telefone').mask('00');
+        $('#ddd_celular').mask('00');
+        $('#telefone').mask('0000.0000');
+        $('#celular').mask('00000.0000');
     });
 </script>
 

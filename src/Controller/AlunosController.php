@@ -155,6 +155,12 @@ class AlunosController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+    /**
+     * Carga Horária
+     *
+     * @param string|null $ordem Ordem.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+     */
     public function cargahoraria($ordem = null)
     {
         $this->Authorization->skipAuthorization();
@@ -173,7 +179,7 @@ class AlunosController extends AppController
 
         $i = 0;
         foreach ($alunos as $aluno):
-            //pr($aluno['estagiarios']);
+            // pr($aluno['estagiarios']);
             // pr(sizeof($aluno['estagiarios']));
             // die();
             $cargahorariatotal[$i]['id'] = $aluno['Aluno']['id'];
@@ -212,12 +218,26 @@ class AlunosController extends AppController
         // die();
     }
 
+    /**
+     * Declaração de Período
+     *
+     * @param string|null $id Aluno id.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
     public function declaracaoperiodo($id = null)
     {
 
         $this->Authorization->skipAuthorization();
         $user = $this->getRequest()->getAttribute('identity');
-        $aluno = $this->Alunos->find()->where(['Alunos.id' => $user->estudante_id])->first();
+        if (isset($user) && $user->categoria == '2') {
+            $aluno = $this->Alunos->find()->where(['Alunos.id' => $user->estudante_id])->first();
+        } elseif (isset($user) && $user->categoria == '1') {
+            $aluno = $this->Alunos->find()->where(['Alunos.id' => $id])->first();
+        } else {
+            $this->Flash->error(__('Operação não autorizada.'));
+            return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
+        }
         // pr($aluno);
         // die();
         if ($this->request->is(['post', 'put'])) {
@@ -285,6 +305,13 @@ class AlunosController extends AppController
 
     }
 
+    /**
+     * Certificado de Período
+     *
+     * @param string|null $id Aluno id.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
     public function certificadoperiodo($id = NULL)
     {
 
@@ -292,55 +319,25 @@ class AlunosController extends AppController
         $user = $this->getRequest()->getAttribute('identity');
 
         if (isset($user) && $user->categoria == '2') {
-            $aluno_id = $user->estudante_id;
-            if ($id == $aluno_id) {
-                /**
-                 * @var $option
-                 * Para consultar a tabela alunos com o id.
-                 */
-                $option = "id = $aluno_id";
-                // echo "Aluno Id autorizado";
+            if ($id == $user->estudante_id) {
+                $aluno = $this->Alunos->find()->where(['Alunos.id' => $id])->first();
             } else {
-                $estudante_registro = $user->numero;
-                if ($estudante_registro == $user->numero) {
-                    /**
-                     * @var $option
-                     * Para consultar a tabela alunos com o registro
-                     */
-                    $option = "Alunos.registro  =  $estudante_registro";
-                    // echo "Aluno registro autorizado";
-                } else {
-                    // echo "Registros não coincidem" . "<br>";
-                    $this->Flash->error(__('1. Operação não autorizada.'));
-                    return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo?registro=' . $user->numero]);
-                    // die('Aluno não autorizado.');
-                }
+                $this->Flash->error(__('1. Operação não autorizada.'));
+                return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo?registro=' . $user->numero]);
             }
         } elseif (isset($user) && $user->categoria == '1') {
-            echo "Administrador autorizado";
+            $aluno = $this->Alunos->find()->where(['Alunos.id' => $id])->first();
         } else {
             $this->Flash->error(__('2. Operação não autorizada.'));
             return $this->redirect(['controller' => 'Muralestagios', 'action' => 'index']);
-            // die('Professores e Supervisores não autorizados');
         }
 
-        /**
-         * Consulto a tabela alunos com o registro ou com o id
-         */
-        $aluno = $this->Alunos->find()
-            ->where([$option])
-            ->first();
-
-        // pr($aluno);
-        // die();
         /**
          * Calculo a partir do ingresso em que periodo o aluno esté neste momento.
          */
         /* Capturo o periodo do calendario academico atual */
         $periodoacademicoatual = $this->fetchTable('Configuracoes')
             ->find()->select(['periodo_calendario_academico'])->first();
-        // pr($periodoacademicoatual);
-        // die();
         /**
          * Separo o periodo em duas partes: o ano e o indicador de primeiro ou segundo semestre.
          */
@@ -351,20 +348,19 @@ class AlunosController extends AppController
          */
         $novoperiodo = $this->getRequest()->getData('novoperiodo');
         if ($novoperiodo) {
-            $periodo_inicial = $this->getRequest()->getData('novoperiodo');
+            $periodo_inicial = $novoperiodo;
         } else {
             $periodo_inicial = $aluno->ingresso;
         }
 
         $inicial = explode('-', $periodo_inicial);
         $atual = explode('-', $periodo_atual);
-        // echo $atual[0] . ' ' . $inicial[0] . '<br>';
 
         /**
          * Calculo o total de semestres
          */
         $semestres = (($atual[0] - $inicial[0]) + 1) * 2;
-        // pr($semestres);
+
 
         /** Se começa no semestre 1 e finaliza no 2 então são anos inteiros */
         if (($inicial[1] == 1) && ($atual[1] == 2)) {
@@ -392,20 +388,24 @@ class AlunosController extends AppController
             return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', '?' => ['registro' => $this->getRequest()->getAttribute('identity')['registro']]]);
         }
 
-        // pr($totalperiodos);
         if (isset($this->getRequest()->getData()['novoperiodo'])) {
             $aluno->periodonovo = $this->getRequest()->getData()['novoperiodo'];
         } else {
             $aluno->periodonovo = $aluno->ingresso;
         }
 
-        // pr($aluno);
-        // die();
         $this->set('aluno', $aluno);
         $this->set('totalperiodos', $totalperiodos);
 
     }
 
+    /**
+     * Certificado de Período PDF
+     *
+     * @param string|null $id Aluno id.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
     public function certificadoperiodopdf($id = NULL)
     {
         $this->Authorization->skipAuthorization();
@@ -440,6 +440,11 @@ class AlunosController extends AppController
         $this->set('totalperiodos', $totalperiodos);
     }
 
+    /**
+     * Planilha de CRESS
+     *
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+     */
     public function planilhacress($id = NULL)
     {
         $this->Authorization->skipAuthorization();
@@ -476,6 +481,11 @@ class AlunosController extends AppController
         // die();
     }
 
+    /**
+     * Planilha de Seguro
+     *
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+     */
     public function planilhaseguro($id = NULL)
     {
 
@@ -700,6 +710,13 @@ class AlunosController extends AppController
         die();
     }
 
+    /**
+     * Busca aluno por id
+     *
+     * @param string|null $id Aluno id.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
     public function getaluno($id = null)
     {
         $this->Authorization->skipAuthorization();
