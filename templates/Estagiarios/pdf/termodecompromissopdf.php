@@ -1,13 +1,13 @@
 <?php
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
+ * @var \Cake\I18n\FrozenTime $hoje
+ * 
  */
-setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
-date_default_timezone_set('America/Sao_Paulo');
-$my_timezone = date_default_timezone_get();
-$hoje = date(DATE_RFC822);
-// die($hoje);
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
+
+I18n::setLocale('pt-BR');
+$hoje = FrozenTime::now('America/Sao_Paulo', 'pt-BR');
 ?>
 
 <style>
@@ -20,9 +20,14 @@ $hoje = date(DATE_RFC822);
         text-align: center;
     }
 </style>
+
 <?php
-if ($estagiario->nivel === '9'):
+if ($estagiario->nivel == '9'):
+    $estagio = 'ESTÁGIO NÃO OBRIGATÓRIO';
     $nivel = ' <b>não obrigatório</b> ';
+else:
+    $estagio = 'ESTÁGIO OBRIGATÓRIO';
+    $nivel = ' <b>nível ' . $estagiario->nivel . '</b> ';
 endif;
 
 $supervisor = is_null($estagiario->supervisor) ? "____________________" : $estagiario->supervisor->nome;
@@ -39,7 +44,7 @@ $cress = is_null($estagiario->supervisor) ? "_____" : $estagiario->supervisor->c
 </p>
 
 <p style="text-align:justify; font-size: 90%;">
-    O presente TERMO DE COMPROMISSO DE ESTÁGIO que entre si assinam a Coordenação de Estágio da Escola de Serviço Social/UFRJ, o (a) Estudante <?= trim($estagiario->aluno->nome); ?>, a  instituição <?= $estagiario->instituicaoestagio->instituicao; ?> e o (a) Supervisor (a) de Campo <?= $supervisor; ?>, visa estabelecer condições gerais que regulam a realização de ESTÁGIO OBRIGATÓRIO. Ficam estabelecidas entre as partes as seguintes condições básicas para a realização do estágio:
+    O presente TERMO DE COMPROMISSO DE ESTÁGIO que entre si assinam a Coordenação de Estágio da Escola de Serviço Social/UFRJ, o (a) Estudante <?= trim($estagiario->aluno->nome); ?>, a  instituição <?= $estagiario->instituicao->instituicao; ?> e o (a) Supervisor (a) de Campo <?= $supervisor; ?>, visa estabelecer condições gerais que regulam a realização de <?= $estagio ?>. Ficam estabelecidas entre as partes as seguintes condições básicas para a realização do estágio:
 </p>
 
 <p style="text-align:justify; font-size: 90%;">
@@ -85,7 +90,7 @@ $cress = is_null($estagiario->supervisor) ? "_____" : $estagiario->supervisor->c
 
 <h2 style="font-size: 120%; font-weight: bold;">DAS ORIENTAÇÕES GERAIS</h2>
 <p style="text-align:justify; font-size: 90%;">
-    Art. 20. O presente Termo de Compromisso terá validade de <?= strftime('%d de %B de %Y', strtotime($configuracao->termo_compromisso_inicio)); ?> a <?= strftime('%d de %B de %Y', strtotime($configuracao->termo_compromisso_final)); ?>, correspondente ao nível <?= $estagiario->nivel; ?> de Estágio. Sua interrupção antes do período previsto acarretará prejuízo para o aluno na sua avaliação acadêmica.<br>
+    Art. 20. O presente Termo de Compromisso terá validade de <?= $configuracao->termo_compromisso_inicio->i18nFormat("dd ' de' MMMM ' de ' yyyy"); ?> a <?= $configuracao->termo_compromisso_final->i18nFormat("dd ' de' MMMM ' de ' yyyy"); ?>, correspondente ao nível <?= $nivel; ?> de Estágio. Sua interrupção antes do período previsto acarretará prejuízo para o aluno na sua avaliação acadêmica.<br>
     Art. 21. Os casos omissos serão encaminhados à Coordenação de Estágio para serem dirimidos.
 </p>
 
@@ -93,7 +98,7 @@ $cress = is_null($estagiario->supervisor) ? "_____" : $estagiario->supervisor->c
 <br />
 <br />
 
-<p style="text-align:right; font-size: 90%;">Rio de Janeiro, <?= strftime('%d de %B de %Y', strtotime($hoje)); ?>.</p>
+<p style="text-align:right; font-size: 90%;">Rio de Janeiro, <?= $hoje->i18nFormat("dd ' de' MMMM ' de ' yyyy"); ?>.</p>
 
 <br />
 <br />

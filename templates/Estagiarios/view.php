@@ -4,8 +4,6 @@
  * @var \App\Model\Entity\Estagiario $estagiario
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($estagiario->aluno);
-// die();
 ?>
 
 <?php echo $this->element('menu_mural') ?>
@@ -25,13 +23,13 @@ $user = $this->getRequest()->getAttribute('identity');
             </li>
             <li class="nav-item">
 
-                <?= $this->Html->link(__('Inserir Estagiario'), ['action' => 'add'], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Inserir Estagiario'), ['action' => 'add', '?' => ['aluno_id' => $estagiario->aluno_id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
             </li>
             <li class="nav-item">
                 <?= $this->Html->link(__('Editar Estagiario'), ['action' => 'edit', $estagiario->id], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'estagiarios', 'action' => 'novotermocompromisso', '?' => ['aluno_id' => $estagiario->aluno_id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'estagiarios', 'action' => 'novotermocompromisso', '?' => ['aluno_id' => $estagiario->aluno_id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
             </li>
         <?php endif; ?>
 
@@ -62,26 +60,6 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class='container col-lg-8 shadow p-3 mb-5 bg-white rounded'>
 
-    <div class="row">
-        <div class="col-auto">
-            <?= $this->Html->link(__('Listar Estagiarios'), ['action' => 'index'], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
-            <?php if (isset($user) && $user->categoria == '1'): ?>
-                <?= $this->Form->postLink(__('Excluir Estagiario'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $estagiario->id), 'class' => 'btn btn-danger float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
-                <?= $this->Html->link(__('Inserir Estagiario'), ['action' => 'add'], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
-                <?= $this->Html->link(__('Editar Estagiario'), ['action' => 'edit', $estagiario->id], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
-                <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'estagiarios', 'action' => 'termodecompromisso', $estagiario->id], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
-            <?php endif; ?>
-            <?php if (isset($user) && ($user->categoria == '1' && $user->categoria == '4')): ?>
-                <?= $this->Html->link(__('Preencher Avaliação'), ['controller' => 'avaliacoes', 'action' => 'add', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
-            <?php endif; ?>
-            <?php if (isset($user) && $user->categoria == '1'): ?>
-                <?= $this->Html->link(__('Imprimir Avaliação'), ['action' => 'avaliacaodiscentepdf', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
-                <?= $this->Html->link(__('Preencher Atividades'), ['controller' => 'folhadeatividades', 'action' => 'view', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
-                <?= $this->Html->link(__('Imprimir Atividades'), ['controller' => 'estagiarios', 'action' => 'folhadeatividadespdf', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
-                <?= $this->Html->link(__('Declaração de estágio'), ['action' => 'declaracaodeestagiopdf', $estagiario->id], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
-            <?php endif; ?>
-        </div>
-
         <div class="container">
             <h3><?= h($estagiario->aluno['nome']) ?></h3>
             <table class="table table-striped table-hover table-responsive">
@@ -97,7 +75,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <th><?= __('Aluno') ?></th>
                     <?php if (isset($user) && $user->categoria == '1'): ?>
-                        <td><?= isset($estagiario->alunos) ? $this->Html->link($estagiario->alunos['nome'], ['controller' => 'Estudantes', 'action' => 'view', $estagiario->alunos['id']]) : '' ?>
+                        <td><?= isset($estagiario->aluno) ? $this->Html->link($estagiario->aluno['nome'], ['controller' => 'Estudantes', 'action' => 'view', $estagiario->aluno['id']]) : '' ?>
                         </td>
                     <?php else: ?>
                         <td><?= $estagiario->hasValue('aluno') ? $estagiario->aluno['nome'] : '' ?></td>
@@ -115,7 +93,11 @@ $user = $this->getRequest()->getAttribute('identity');
 
                 <tr>
                     <th><?= __('Nível') ?></th>
-                    <td><?= h($estagiario->nivel) ?></td>
+                    <?php if ($estagiario->nivel == 9): ?>
+                        <td>Não curricular</td>
+                    <?php else: ?>
+                        <td><?= h($estagiario->nivel) ?></td>
+                    <?php endif; ?>
                 </tr>
 
                 <tr>
@@ -189,6 +171,11 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <th><?= __('Observações') ?></th>
                     <td name='observacoes'><?= h($estagiario->observacoes) ?></td>
+                </tr>
+                <tr>
+                    <td colspan='2' class="text-center">
+                        <?= $this->Html->link(__('Imprime termo de compromisso'), ['action' => 'termodecompromissopdf', $estagiario->id], ['class' => 'btn btn-warning mx-auto', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
+                    </td>
                 </tr>
             </table>
         </div>

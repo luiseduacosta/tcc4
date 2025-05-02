@@ -99,8 +99,12 @@ class EstagiariosController extends AppController
         $this->Authorization->skipAuthorization();
 
         $estagiario = $this->Estagiarios->newEmptyEntity();
-        if ($this->request->is('post')) {
+        // pr($this->request->getData());
+        // die();
+        if ($this->request->is(['patch', 'post', 'put'])) {
             $estagiario = $this->Estagiarios->patchEntity($estagiario, $this->request->getData());
+            // pr($estagiario);
+            // die();
             if ($this->Estagiarios->save($estagiario)) {
                 $this->Flash->success(__('Registro de estagiario inserido.'));
 
@@ -109,11 +113,15 @@ class EstagiariosController extends AppController
             $this->Flash->error(__('Registro de estagiario nao foi inserido. Tente novamente.'));
         }
 
+        $this->Authorization->skipAuthorization();
         $aluno_id = $this->getRequest()->getQuery('aluno_id');
         if ($aluno_id) {
-            $estagiario = $this->Estagiarios->find()->where(['aluno_id' => $aluno_id])->order(['nivel' => 'asc'])->first();
+            $estagiario = $this->Estagiarios->find()
+                ->where(['aluno_id' => $aluno_id])
+                ->order(['nivel' => 'desc'])
+                ->first();
             if ($estagiario) {
-                $this->Flash->success(__('O aluno é estagiário no periodo ' . $estagiario->periodo . ' e nível ' . $estagiario->nivel));
+                $this->Flash->success(__('O aluno é estagiário ' . $estagiario->nivel . ' no periodo ' . $estagiario->periodo));
                 $nivel = $estagiario->nivel + 1;
                 $ajuste2020 = $estagiario->ajuste2020;
                 if ($ajuste2020 == 1) { // Ajuste 2020 sim
@@ -136,7 +144,8 @@ class EstagiariosController extends AppController
             $alunos = $this->fetchTable('Alunos')->find('list');
             $this->set('alunos', $alunos);
         }
-
+        $periodo = $this->fetchTable('Configuracoes')->find()->select(['mural_periodo_atual'])->first();
+        $this->set('periodo', $periodo);
         $instituicoes = $this->fetchTable('Instituicoes')->find('list');
         $supervisores = $this->fetchTable('Supervisores')->find('list');
         $professores = $this->fetchTable('Professores')->find('list');
@@ -468,183 +477,29 @@ class EstagiariosController extends AppController
      */
     public function novotermocompromisso($id = NULL)
     {
-
+        $this->viewBuilder()->enableAutoLayout(false);
         $this->Authorization->skipAuthorization();
         $aluno_id = $this->getRequest()->getQuery('aluno_id');
         if ($aluno_id == null) {
             $this->Flash->error(__('Selecionar o aluno para o termo de compromisso'));
             return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
         } else {
-            $estagiario = $this->Estagiarios->find()->order(['nivel' => 'asc'])->where(['aluno_id' => $aluno_id])->first();
+            $estagiario = $this->Estagiarios->find()
+                ->where(['aluno_id' => $aluno_id])
+                ->order(['nivel' => 'desc'])
+                ->first();
             if ($estagiario) {
-                $this->Flash->success(__('O aluno é estagiário no periodo ' . $estagiario->periodo . ' e nível ' . $estagiario->nivel));
                 /** Compara periodo e se é diferente então aumenta o nivel e adiciona um novo estagiario senão edita o estagiario para atualizar a instituição e o supervisor */
                 $configuraperiodoatual = $this->fetchTable('Configuracao')->find()->select('mural_periodo_atual')->first();
                 $periodoatual = $configuraperiodoatual->mural_periodo_atual;
                 if ($estagiario->periodo == $periodoatual) {
-                    $nivel = $estagiario->nivel;
                     return $this->redirect(['controller' => 'Estagiarios', 'action' => 'edit', $estagiario->id]); // Redireciona para a atualização do estagiario
                 } else {
-                    $nivel = $estagiario->nivel + 1;
-                    if ($estagiario->ajuste2020 == 0 && $nivel > 4) { // Aumenta o nível até 4 antes do ajuste curricular
-                        $nivel = 9; // Estágio não curricular
-                    } elseif ($estagiario->ajuste2020 == 1 && $nivel > 3) { // Aumenta o nível até 3 depois do ajuste curricular
-                        $nivel = 9; // Estágio não curricular
-                    }
-                    return $this->redirect(['controller' => 'Estagiarios', 'action' => 'add', '?' => ['aluno_id' => $aluno_id, 'nivel' => $nivel]]);
+                    return $this->redirect(['controller' => 'Estagiarios', 'action' => 'add', '?' => ['aluno_id' => $aluno_id]]);
                 }
             } else {
                 $this->Flash->success(__('O aluno ainda não é estagiário'));
-                return $this->redirect(['controller' => 'Estagiarios', 'action' => 'add', '?' => ['aluno_id' => $aluno_id, 'nivel' => 1]]);
-            }
-        }
-        // pr($estagiario);
-        // die();
-        /** Envio os dados para o formulário */
-        if ($aluno_id) {
-
-            $this->set('aluno_id', $aluno_id);
-
-            /** Todos os períodos */
-            $periodototal = $this->Estagiarios->find('list', [
-                'keyField' => 'periodo',
-                'valueField' => 'periodo',
-                'order' => ['periodo' => 'asc']
-            ]);
-            $periodos = $periodototal->toArray();
-            $periodoatual = end($periodos);
-
-            if (empty($periodoatual)) {
-                $configuracao = $this->fetchTable('Configuracao')->find()->first();
-                $periodoatual = $configuracao->mural_periodo_atual;
-            }
-            $this->set('periodoatual', $periodoatual);
-
-            $estagiario = $this->Estagiarios->find()
-                ->contain(['Alunos', 'Supervisores', 'Professores', 'Instituicoes'])
-                ->where(['Estagiarios.aluno_id' => $aluno_id])
-                ->order(['Estagiarios.nivel' => 'asc'])
-                ->all()
-                ->last();
-            /** Ajusto o valor do nivel de estágio com o periodo e o ajuste2020 */
-            if ($estagiario) {
-                if ($estagiario->periodo == $periodoatual) {
-                    $nivel = $estagiario->nivel; // Mesmo período não muda o nível
-                } elseif ($estagiario->periodo != $periodoatual) {
-                    $nivel = $estagiario->nivel + 1; // Novo período aumenta o nível
-                    if ($estagiario->ajuste2020 == 0 && $nivel > 4) { // Aumenta o nível até 4 antes do ajuste curricular
-                        $nivel = 9; // Estágio não curricular
-                    } elseif ($estagiario->ajuste2020 == 1 && $nivel > 3) { // Aumenta o nível até 3 depois do ajuste curricular
-                        $nivel = 9; // Estágio não curricular
-                    } else {
-                        $nivel; // Já aumentou o nível no início
-                    }
-                    $this->set('nivel', $nivel);
-                }
-                $this->set('nomealuno', $estagiario->aluno['nome']);
-                $this->set('registro', $estagiario->aluno['registro']);
-                $this->set('nivel', $nivel);
-                $this->set('estagiario', $estagiario);
-            } else {
-                $aluno = $this->fetchTable('Alunos')
-                    ->find()
-                    ->where(['id' => $aluno_id])
-                    ->first();
-                $nivel = 1; // Se não é estagiário então o nível é 1
-                $this->set('nomealuno', $aluno->nome);
-                $this->set('registro', $aluno->registro);
-                $this->set('nivel', $nivel);
-            }
-
-            /** Instituições */
-            $instituicoes = $this->fetchTable('Instituicoes')->find('list');
-            $this->set('instituicoes', $instituicoes);
-            if ($estagiario->instituicao_id) {
-                $this->set('instituicao_id', $estagiario->instituicao_id);
-            }
-
-            /** Supervisores */
-            if ($estagiario) { // ou $instituicao_id
-                $supervisoresdainstituicao = $this->fetchTable('Instituicoes')->find()
-                    ->contain(['Supervisores'])
-                    ->where(['Instituicoes.id' => $estagiario->instituicao_id])
-                    ->first();
-            } else {
-                $supervisores = $this->fetchTable('Supervisores')->find('list');
-                $this->set('supervisores', $supervisores);
-            }
-            if (!empty($supervisoresdainstituicao)) {
-                $todosossupervisores[] = null;
-                foreach ($supervisoresdainstituicao as $supervisor) {
-                    foreach ($supervisor['supervisores'] as $cadasupervisor) {
-                        $todosossupervisores[$cadasupervisor->id] = $cadasupervisor->nome;
-                    }
-                }
-                /** Elimina do array todos os registros null */
-                $super = array_filter($todosossupervisores);
-                if (empty($super)) {
-                    $this->set('supervisores', ['0' => 'Sem supervisor(a) cadastrado']);
-                } else {
-                    $this->set('supervisores', $super);
-                }
-            } else {
-                $this->set('supervisores', ['0' => 'Sem supervisor(a) cadastrado']);
-            }
-            if ($estagiario->supervisor_id) {
-                $this->set('supervisor_id', $estagiario->supervisor_id);
-            }
-
-            /** Professores */
-            $professores = $this->fetchTable('Professores')->find('list');
-            $this->set('professores', $professores);
-
-            /** Turmas */
-            $turmaestagios = $this->fetchTable('Turmaestagios')->find('list');
-            $this->set('turmaestagios', $turmaestagios);
-
-        } else {
-            $this->Flash->error(__('Selecionar o aluno para o termo de compromisso'));
-            return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
-
-            $estagiario = $this->Estagiarios->find()
-                ->where(['Estagiarios.aluno_id' => $this->request->getData('aluno_id')])
-                ->first();
-            /** Se for um estagiário pode ser inserir um novo registro ou atualizar a depender o periodo */
-            if ($estagiario) {
-                if ($estagiario->periodo != $this->request->getData('periodo')) {
-                    /** Inserção */
-                    $estagiario = $this->Estagiarios->newEmptyEntity();
-                    $estagiario = $this->Estagiarios->patchEntity($estagiario, $this->request->getData());
-                    if ($this->Estagiarios->save($estagiario)) {
-                        $this->Flash->success(__('Registro de estagiario inserido.'));
-                        return $this->redirect(['controller' => 'Estagiarios', 'action' => 'termodecompromissopdf', $estagiario->id]);
-                    }
-                    // pr($estagiario->getErrors());
-                    $this->Flash->error(__('Registro de estagiário não foi inserido. Tente novamente.'));
-                } else {
-                    /** Atualização */
-                    $estagiario = $this->Estagiarios->patchEntity($estagiario, $this->request->getData());
-                    if ($this->Estagiarios->save($estagiario)) {
-                        $this->Flash->success(__('Registro de estagiario atualizado.'));
-                        return $this->redirect(['controller' => 'Estagiarios', 'action' => 'termodecompromissopdf', $estagiario->id]);
-                    }
-                    // pr($estagiario->getErrors());
-                    // die();
-                    $this->Flash->error(__('Registro de estagiário não foi atualizado. Tente novamente.'));
-                }
-            } else {
-                /**
-                 * Cadastro um estagiario novo com nivel = 1
-                 */
-                $estagiario = $this->Estagiarios->newEmptyEntity();
-                $data = $this->request->getData();
-                $data['nivel'] = 1;
-                $estagiario = $this->Estagiarios->patchEntity($estagiario, $data);
-                if ($this->Estagiarios->save($estagiario)) {
-                    $this->Flash->success(__('Registro de estagiario inserido.'));
-                    return $this->redirect(['controller' => 'Estagiarios', 'action' => 'termodecompromissopdf', $estagiario->id]);
-                }
-                $this->Flash->error(__('Registro de estagiário novo não foi inserido. Tente novamente.'));
+                return $this->redirect(['controller' => 'Estagiarios', 'action' => 'add', '?' => ['aluno_id' => $aluno_id]]);
             }
         }
     }
@@ -669,8 +524,7 @@ class EstagiariosController extends AppController
         }
         // pr($estagiario->first());
         // die();
-        $configuracaotabela = $this->fetchTable('Configuracao')->find()->select('mural_periodo_atual')->first();
-        $periodoatual = $configuracaotabela->mural_periodo_atual;
+        $configuracao = $this->fetchTable('Configuracao')->find()->where(['Configuracao.id' => 1])->first();
         // pr($configuracao);
         // die();
 
@@ -684,7 +538,7 @@ class EstagiariosController extends AppController
                 'filename' => 'termo_de_compromisso_' . $id . '.pdf' //// This can be omitted if you want file name based on URL.
             ]
         );
-        $this->set('periodoatual', $periodoatual);
+        $this->set('configuracao', $configuracao);
         $this->set('estagiario', $estagiario->first());
     }
 
@@ -709,6 +563,12 @@ class EstagiariosController extends AppController
         $this->set('estagiario', $estagiario);
     }
 
+    /**
+     * declaracaodeestagiopdf method
+     *
+     * @param string|null $id Estagiario id.
+     * @return \Cake\Http\Response|null|void Renders view otherwise.
+     */
     public function declaracaodeestagiopdf($id = NULL)
     {
         $this->Authorization->skipAuthorization();
@@ -716,8 +576,6 @@ class EstagiariosController extends AppController
             ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
             ->where(['Estagiarios.id' => $id])
             ->first();
-        // pr($estagio);
-        // die('estagio');
 
         if (!$estagiario) {
             $this->Flash->error(__('Sem estagio cadastrado.'));

@@ -24,7 +24,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?= $this->Html->link(__('Declaração de período'), ['controller' => 'Alunos', 'action' => 'certificadoperiodo', $aluno->id], ['class' => 'btn btn-primary']) ?>
                 </li>
                 <li class="nav-item">
-                    <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'Estagiarios', 'action' => 'novotermocompromisso', $aluno->id], ['class' => 'btn btn-primary']) ?>
+                    <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'Estagiarios', 'action' => 'novotermocompromisso', '?' => ['aluno_id' => $aluno->id]], ['class' => 'btn btn-primary']) ?>
                 </li>
                 <li class="nav-item">
                     <?= $this->Html->link(__('Novo Aluno'), ['controller' => 'Alunos', 'action' => 'add'], ['class' => 'btn btn-primary']) ?>
@@ -44,7 +44,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?= $this->Html->link(__('Declaração de período'), ['controller' => 'Alunos', 'action' => 'certificadoperiodo', $aluno->id], ['class' => 'btn btn-primary']) ?>
                     </li>
                     <li class="nav-item">
-                        <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'Estagiarios', 'action' => 'novotermocompromisso', $aluno->id], ['class' => 'btn btn-primary']) ?>
+                        <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'Estagiarios', 'action' => 'novotermocompromisso', '?' => ['aluno_id' => $aluno->id]], ['class' => 'btn btn-primary']) ?>
                     </li>
                 <?php endif; ?>
             <?php endif ?>
@@ -52,8 +52,6 @@ $user = $this->getRequest()->getAttribute('identity');
     </div>
 </nav>
 
-<div class="d-flex justify-content-start py-2">
-</div>
 
 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
     <h3><?= h($aluno->nome) ?></h3>
@@ -220,7 +218,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($estagiarios->nivel) ?></td>
                     <td><?= h($estagiarios->periodo) ?></td>
                     <td><?= h($estagiarios->tc) ?></td>
-                    <td><?= $estagiarios->tc_solicitacao->i18nFormat('dd-MM-yyyy') ?></td>
+                    <td><?= $estagiarios->tc_solicitacao ? $estagiarios->tc_solicitacao->i18nFormat('dd-MM-yyyy') : '' ?></td>
                     <td><?= $estagiarios->has('instituicao') ? $this->Html->link($estagiarios->instituicao['instituicao'], ['controller' => 'Instituicoes', 'action' => 'view', $estagiarios->instituicao_id]) : '' ?>
                     </td>
                     <td><?= $estagiarios->has('supervisor') ? $this->Html->link($estagiarios->supervisor['nome'], ['controller' => 'Supervisores', 'action' => 'view', $estagiarios->supervisor_id]) : '' ?>

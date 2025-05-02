@@ -99,7 +99,7 @@ $now = new \Cake\I18n\FrozenTime();
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($estagiario) ?>
     <fieldset class="border p-2">
-        <legend><?= __('Estagiário') ?></legend>
+        <legend><?= __('Novo estagiário') ?></legend>
         <?php
         if (isset($aluno)) {
             echo $this->Form->control('aluno_id', ['label' => 'Aluno', 'options' => [$aluno->id => $aluno->nome], 'readonly' => true]);
@@ -108,24 +108,23 @@ $now = new \Cake\I18n\FrozenTime();
         }
         echo $this->Form->control('registro', ['label' => 'DRE', 'value' => $aluno->registro, 'type' => 'text', 'readonly' => true]);
         echo $this->Form->control('turno', ['label' => 'Turno', 'options' => ['D' => 'Diurno', 'N' => 'Noturno', 'I' => 'Indefinido']]);
-        echo $this->Form->control('nivel', ['label' => 'Nível', 'options' => ['1' => 1, '2' => 2, '3' => 3, '4' => 4, '9' => 9], 'value' => $nivel]);
+        echo $this->Form->control('nivel', ['label' => 'Nível', 'options' => ['1' => 1, '2' => 2, '3' => 3, '4' => 4, '9' => 'Não curricular'], 'value' => $nivel]);
         echo $this->Form->control('tc', ['label' => 'Termo de compromisso', 'options' => ['0' => 'Sem TC', '1' => 'Com TC']]);
         echo $this->Form->control('tc_solicitacao', ['label' => 'Solicitação de TC', 'empty' => true, 'type' => 'date', 'value' => $now->i18nFormat('dd-MM-yyyy'), 'readonly' => true]);
         echo $this->Form->control('ajuste2020', ['label' => 'Ajuste 2020', 'empty' => true, 'type' => 'select', 'options' => ['0' => 'Não', '1' => 'Sim'], 'readonly' => false]);
         echo $this->Form->control('instituicao_id', ['label' => 'Instituição', 'empty' => ['' => 'Selecione uma instituição'], 'options' => $instituicoes, 'onchange' => 'getsupervisores(this.value)']);
         echo $this->Form->control('supervisor_id', ['label' => 'Supervisor', 'options' => $supervisores, 'empty' => true]);
         echo $this->Form->control('professor_id', ['label' => 'Professor', 'options' => $professores, 'empty' => true]);
-        $digito = ((date('m')) > 6) ? '-2' : '-1';
-        echo $this->Form->control('periodo', ['label' => 'Período', 'value' => date('Y') . $digito]);
+        echo $this->Form->control('periodo', ['label' => 'Período', 'value' => $periodo->mural_periodo_atual]);
         echo $this->Form->control('turmaestagio_id', ['label' => 'Turma de estágio', 'options' => $turmaestagios, 'empty' => true]);
         if (isset($user->categoria) && $user->categoria == '1') {
-            echo $this->Form->control('nota', ['label' => 'Nota']);
-            echo $this->Form->control('ch', ['label' => 'Carga horária']);
-            echo $this->Form->control('observacoes', ['type' => 'textarea', 'rows' => '3', 'cols' => '40', 'label' => 'Observações']);
+            echo $this->Form->control('nota', ['label' => 'Nota', 'value' => '', 'readonly' => true]);
+            echo $this->Form->control('ch', ['label' => 'Carga horária', 'value' => '', 'readonly' => true]);
+            echo $this->Form->control('observacoes', ['type' => 'textarea', 'rows' => '3', 'cols' => '40', 'label' => 'Observações', 'value' => '']);
         }
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Confirmar')) ?>
+    <?= $this->Form->button(__('Confirma'), ['class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
 </div>
 

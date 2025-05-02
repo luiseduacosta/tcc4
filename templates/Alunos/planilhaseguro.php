@@ -58,7 +58,7 @@
             </tr>
         </thead>
         <?php foreach ($t_seguro as $cada_aluno): ?>
-            <?php pr($cada_aluno);  ?>
+            <?php // pr($cada_aluno);  ?>
             <?php // die(); ?>
             <tr>
                 <td>

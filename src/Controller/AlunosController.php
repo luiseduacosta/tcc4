@@ -168,9 +168,9 @@ class AlunosController extends AppController
         ini_set('memory_limit', '2048M');
         $ordem = $this->getRequest()->getQuery('ordem');
 
-        if (empty($ordem)):
+        if (empty($ordem)) {
             $ordem = 'q_semestres';
-        endif;
+        }
 
         $alunos = $this->Alunos->find()
             ->contain(['Estagiarios'])
@@ -179,47 +179,36 @@ class AlunosController extends AppController
 
         $i = 0;
         foreach ($alunos as $aluno):
-            // pr($aluno['estagiarios']);
-            // pr(sizeof($aluno['estagiarios']));
-            // die();
             $cargahorariatotal[$i]['id'] = $aluno['Aluno']['id'];
             $cargahorariatotal[$i]['registro'] = $aluno['Aluno']['registro'];
             $cargahorariatotal[$i]['q_semestres'] = sizeof($aluno['estagiarios']);
             $carga_estagio = null;
             $y = 0;
             foreach ($aluno['estagiarios'] as $estagiario):
-                // pr($estagiario);
-                // die();
                 if ($estagiario['nivel'] == 1):
                     $cargahorariatotal[$i][$y]['ch'] = $estagiario['ch'];
                     $cargahorariatotal[$i][$y]['nivel'] = $estagiario['nivel'];
                     $cargahorariatotal[$i][$y]['periodo'] = $estagiario['periodo'];
                     $carga_estagio['ch'] = $carga_estagio['ch'] + $estagiario['ch'];
-                    // $criterio[$i][$ordem] = $c_estagio['periodo'];
                 else:
                     $cargahorariatotal[$i][$y]['ch'] = $estagiario['ch'];
                     $cargahorariatotal[$i][$y]['nivel'] = $estagiario['nivel'];
                     $cargahorariatotal[$i][$y]['periodo'] = $estagiario['periodo'];
                     $carga_estagio['ch'] = $carga_estagio['ch'] + $estagiario['ch'];
-                    // $criterio[$i][$ordem] = NULL;
                 endif;
                 $y++;
             endforeach;
             $cargahorariatotal[$i]['ch_total'] = $carga_estagio['ch'];
             $criterio[$i] = $cargahorariatotal[$i][$ordem];
             $i++;
-            //            endif;
         endforeach;
 
         array_multisort($criterio, SORT_ASC, $cargahorariatotal);
-        // pr($cargahorariatotal);
-        // die();
         $this->set('cargahorariatotal', $cargahorariatotal);
-        // die();
     }
 
     /**
-     * Declaração de Período
+     * Declaração de Período (ob)
      *
      * @param string|null $id Aluno id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
@@ -344,7 +333,10 @@ class AlunosController extends AppController
         if ($totalperiodos == null) {
             /** Capturo o periodo do calendario academico atual */
             $periodoacademicoatual = $this->fetchTable('Configuracoes')
-                ->find()->select(['periodo_calendario_academico'])->first();
+                ->find()
+                ->select(['periodo_calendario_academico'])
+                ->first();
+
             $periodo_atual = $periodoacademicoatual->periodo_calendario_academico;
             $periodo_inicial = $aluno->ingresso;
 
@@ -383,7 +375,9 @@ class AlunosController extends AppController
              */
             /* Capturo o periodo do calendario academico atual */
             $periodoacademicoatual = $this->fetchTable('Configuracoes')
-                ->find()->select(['periodo_calendario_academico'])->first();
+                ->find()
+                ->select(['periodo_calendario_academico'])
+                ->first();
             /**
              * Separo o periodo em duas partes: o ano e o indicador de primeiro ou segundo semestre.
              */
@@ -401,7 +395,7 @@ class AlunosController extends AppController
                     return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', $id]);
                 }
             }
-            if (strlen($aluno['ingresso']) < 6) {
+            if (strlen($aluno->ingresso) < 6) {
                 $this->Flash->error(__('Período de ingresso incompleto: falta indicar se for no 1° ou 2° semestre'));
                 if (isset($this->getRequest()->getAttribute('identity')['categoria']) && $this->getRequest()->getAttribute('identity')['categoria'] == '2') {
                     return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', $this->getRequest()->getAttribute('identity')['estudante_id']]);
@@ -512,14 +506,13 @@ class AlunosController extends AppController
     /**
      * Planilha de CRESS
      *
+     * @param string|null $periodo Período.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      */
     public function planilhacress($id = NULL)
     {
         $this->Authorization->skipAuthorization();
         $periodo = $this->getRequest()->getQuery('periodo') ?: NULL;
-        // pr($periodo);
-        // die();
         $ordem = 'Alunos.nome';
 
         /* Todos os periódos */
@@ -533,7 +526,6 @@ class AlunosController extends AppController
         if (empty($periodo)) {
             $periodo = end($periodos);
         }
-        // pr($periodos);
 
         $cress = $this->Alunos->Estagiarios->find()
             ->contain(['Alunos', 'Instituicoes', 'Supervisores', 'Professores'])
@@ -542,17 +534,15 @@ class AlunosController extends AppController
             ->order(['Alunos.nome'])
             ->all();
 
-        // pr($cress);
-        // die();
         $this->set('cress', $cress);
         $this->set('periodos', $periodos);
         $this->set('periodoselecionado', $periodo);
-        // die();
     }
 
     /**
      * Planilha de Seguro
      *
+     * @param string|null $periodo Período.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      */
     public function planilhaseguro($id = NULL)
@@ -566,7 +556,7 @@ class AlunosController extends AppController
         $periodototal = $this->Alunos->Estagiarios->find('list', [
             'keyField' => 'periodo',
             'valueField' => 'periodo',
-            'order' => 'periodo'
+            'order' => ['periodo' => 'desc']
         ]);
         $periodos = $periodototal->toArray();
 
@@ -593,8 +583,6 @@ class AlunosController extends AppController
 
         $i = 0;
         foreach ($seguro as $c_seguro) {
-            // pr($c_seguro);
-            // die();
             if ($c_seguro->nivel == 1) {
 
                 // Início
@@ -690,79 +678,72 @@ class AlunosController extends AppController
                 // Final
                 $final = $c_seguro->periodo;
 
-                // echo "Nível: " . $c_seguro['Estagiario']['nivel'] . " Período: " . $c_seguro['Estagiario']['periodo'] . " Início: " . $inicio . " Final: " . $final . '<br>';
             }
 
             $t_seguro[$i]['id'] = $c_seguro->aluno->id;
             $t_seguro[$i]['estagiario_id'] = $c_seguro->id;
             $t_seguro[$i]['nome'] = $c_seguro->aluno->nome;
             $t_seguro[$i]['cpf'] = $c_seguro->aluno->cpf;
-            $t_seguro[$i]['nascimento'] = $c_seguro->aluno->nascimento;
+            $t_seguro[$i]['nascimento'] = $c_seguro->aluno->nascimento ? $c_seguro->aluno->nascimento->i18nFormat('dd-MM-yyyy') : '';
             $t_seguro[$i]['sexo'] = "";
             $t_seguro[$i]['registro'] = $c_seguro->aluno->registro;
             $t_seguro[$i]['curso'] = "UFRJ/Serviço Social";
             if ($c_seguro->nivel == 9):
-                // pr("Não");
                 $t_seguro[$i]['nivel'] = "Não obrigatório";
             else:
-                // pr($c_seguro['Estagiario']['nivel']);
                 $t_seguro[$i]['nivel'] = $c_seguro->nivel;
             endif;
             $t_seguro[$i]['periodo'] = $c_seguro->periodo;
             $t_seguro[$i]['inicio'] = $inicio;
             $t_seguro[$i]['final'] = $final;
             $t_seguro[$i]['instituicao'] = isset($c_seguro->instituicao->instituicao) ? $c_seguro->instituicao->instituicao : 'Sem informação';
-            $criterio[$i] = $t_seguro[$i][$ordem];
+            $criterio[$i] = $t_seguro[$i]['nome'];
 
             $i++;
         }
         if (!empty($t_seguro)) {
             array_multisort($criterio, SORT_ASC, $t_seguro);
         }
-        // pr($t_seguro);
         $this->set('t_seguro', $t_seguro);
         $this->set('periodos', $periodos);
         $this->set('periodoselecionado', $periodo);
-        // die();
     }
 
     /**
-     * Busca aluno por id
+     * Busca estagiário por id
      *
-     * @param string|null $id Aluno id.
+     * @param string|null $id Estagiário id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function buscaaluno($id = null)
+    public function buscaestagiario($id = null)
     {
         $this->viewBuilder()->disableAutoLayout();
-        // $id = 1877;
         $this->Authorization->skipAuthorization();
-        // $this->request->allowMethod(['ajax']);
-        // $this->autoRender = false;
-        $aluno = $this->Alunos->Estagiarios->find(
+        $this->request->allowMethod(['ajax']);
+
+        $id = $this->request->getData('id');
+
+        $estagiario = $this->Alunos->Estagiarios->find(
             'all',
         )
             ->where(['Estagiarios.aluno_id' => $id])
             ->order(['Estagiarios.nivel' => 'desc'])
             ->first();
-        // pr($aluno);
 
-        $configuracao = $this->fetchTable('Configuracao')->find()->first();
+        $configuracao = $this->fetchTable('Configuracao')->find()
+            ->select(['Configuracao.mural_periodo_atual'])
+            ->first();
         $periodoatual = $configuracao->mural_periodo_atual;
 
-        // pr($aluno);
-
-        if ($aluno) {
-            // echo $periodoatual . ' ' . $aluno->periodo . "<br>";
-            // die();
-            if ($periodoatual > $aluno->periodo) {
-                $nivel = $aluno->nivel + 1;
-                if ($aluno->ajuste2020 == 1) {
+        if ($estagiario) {
+            if ($periodoatual > $estagiario->periodo) {
+                $nivel = $estagiario->nivel + 1;
+                if ($estagiario->ajuste2020 == 1) {
                     if ($nivel > 3) {
                         $nivel = 9;
                     }
-                } elseif ($aluno->ajuste2020 == 0) {
+                } elseif ($estagiario->ajuste2020 == 0) {
                     if ($nivel > 4) {
                         $nivel = 9;
                     }
@@ -770,13 +751,19 @@ class AlunosController extends AppController
                     $nivel;
                 }
             } else {
-                $nivel = $aluno->nivel;
+                $nivel = $estagiario->nivel;
             }
-            $aluno->nivel = $nivel;
+            $estagiario->nivel = $nivel;
+            return $this->response
+                ->withType('application/json')
+                ->withStringBody(json_encode($estagiario));
 
+        } else {
+            return $this->response
+                ->withType('application/json')
+                ->withStatus(404)
+                ->withStringBody(json_encode(['error' => 'Estagiário não encontrado']));
         }
-        // pr($aluno);
-        die();
     }
 
     /**
@@ -795,15 +782,15 @@ class AlunosController extends AppController
 
         try {
 
-            $configuracao = $this->fetchTable('Configuracao')->find()->first();
+            $configuracao = $this->fetchTable('Configuracao')->find()
+                ->select(['Configuracao.mural_periodo_atual'])
+                ->first();
             $periodoatual = $configuracao->mural_periodo_atual;
 
             $aluno = $this->Alunos->Estagiarios->find()
                 ->where(['Estagiarios.aluno_id' => $id])
                 ->order(['Estagiarios.nivel' => 'desc'])
                 ->first();
-
-            // pr($aluno);
 
             if ($aluno) {
                 if ($periodoatual > $aluno->periodo) {
@@ -823,7 +810,6 @@ class AlunosController extends AppController
                     $nivel = $aluno->nivel;
                 }
                 $aluno->nivel = $nivel;
-                // pr($aluno);
 
                 return $this->response
                     ->withType('application/json')

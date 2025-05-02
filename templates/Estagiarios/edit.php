@@ -70,6 +70,10 @@ $user = $this->getRequest()->getAttribute('identity');
             }
         });
     }
+    $(document).ready(function() {
+        $('#nota').mask('00,00');
+        $('#ch').mask('000');
+    });
 </script>
 
 
@@ -99,28 +103,40 @@ $user = $this->getRequest()->getAttribute('identity');
     </div>
 </nav>
 
+<?php
+$niveis = [
+    '1' => '1',
+    '2' => '2',
+    '3' => '3',
+    '4' => '4',
+    '9' => 'Estágio extra-curricular',
+];
+?>
+
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($estagiario) ?>
     <fieldset class="border p-2">
         <legend><?= __('Editar estagiário') ?></legend>
         <?php
         echo $this->Form->control('aluno_id', ['options' => $alunos, 'onchange' => 'getaluno(this.value)', 'empty' => true]);
-        echo $this->Form->control('registro');
-        echo $this->Form->control('turno');
-        echo $this->Form->control('nivel');
-        echo $this->Form->control('tc');
-        echo $this->Form->control('tc_solicitacao', ['empty' => true]);
+        echo $this->Form->control('registro', ['label' => 'DRE']);
+        echo $this->Form->control('turno', ['label' => 'Turno']);
+        echo $this->Form->control('nivel', ['options' => $niveis, 'empty' => true, 'label' => 'Nível']);
+        echo $this->Form->control('tc', ['label' => 'Termo de compromisso']);
+        echo $this->Form->control('tc_solicitacao', ['empty' => true, 'label' => 'Solicitação de termo de compromisso']);
         echo $this->Form->control('instituicao_id', ['options' => $instituicoes, 'onchange' => 'getsupervisores(this.value)', 'empty' => true]);
         echo $this->Form->control('supervisor_id', ['options' => $supervisores, 'empty' => true]);
         echo $this->Form->control('professor_id', ['options' => $professores, 'empty' => true]);
-        echo $this->Form->control('periodo');
+        echo $this->Form->control('periodo', ['label' => 'Semestre']);
         echo $this->Form->control('turmaestagio_id', ['label' => 'Turma', 'options' => $turmaestagios, 'empty' => true]);
-        echo $this->Form->control('nota');
-        echo $this->Form->control('ch', ['label' => 'Carga horária']);
-        echo $this->Form->control('observacoes', ['type' => 'textarea', 'rows' => '3', 'cols' => '40', 'label' => 'Observações']);
+        if (isset($user->categoria) && $user->categoria == '1') {
+            echo $this->Form->control('nota', ['label' => 'Nota', 'type' => 'number', 'step' => '0.01', 'placeholder' => '00.00']);
+            echo $this->Form->control('ch', ['label' => 'Carga horária', 'type' => 'number', 'placeholder' => '000']);
+            echo $this->Form->control('observacoes', ['type' => 'textarea', 'rows' => '3', 'cols' => '40', 'label' => 'Observações']);
+        }
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Confirmar')) ?>
+    <?= $this->Form->button(__('Confirmar', ['class' => 'btn btn-primary'])) ?>
     <?= $this->Form->end() ?>
 </div>
 

@@ -1,15 +1,23 @@
 <?php
-
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
+/*
+ * @var \Cake\I18n\FrozenTime $hoje
+ * 
  */
 
+ use Cake\I18n\FrozenTime;
+ use Cake\I18n\I18n;
+ 
+ I18n::setLocale('pt-BR');
+ $hoje = FrozenTime::now('America/Sao_Paulo', 'pt-BR');
+ 
 ?>
 <?php
 
+// pr($estagiario->aluno->nome);
+// die();
+
 $nivel = $estagiario->nivel;
-if ($nivel > 4) {
+if ($nivel == '9') {
     $nivel = "estágio extra-curricular";
 }
 
@@ -32,10 +40,6 @@ if (empty($cress)) {
     $cress = '_______';
 }
 
-$dia = strftime('%e', time());
-$mes = strftime('%B', time());
-$ano = strftime('%Y', time());
-
 ?>
 
 <h1 style="text-align:center">
@@ -47,13 +51,13 @@ Declaração de Estágio Curricular
 <br />
 <br />
 <p style="text-align:justify; line-height: 2.5;">
-Declaramos que o/a estudante <b><?= $estagiario->estudante->nome; ?></b> 
-inscrito(a) no CPF sob o nº <?= $estagiario->estudante->cpf; ?> 
-e no RG nº <?= $estagiario->estudante->identidade; ?> 
-expedido por <?= $estagiario->estudante->orgao; ?>, 
+Declaramos que o/a estudante <b><?= $estagiario->aluno->nome; ?></b> 
+inscrito(a) no CPF sob o nº <?= $estagiario->aluno->cpf; ?> 
+e no RG nº <?= $estagiario->aluno->identidade; ?> 
+expedido por <?= $estagiario->aluno->orgao; ?> 
 matriculado(a) no Curso de Serviço Social da 
-Universidade Federal do Rio de Janeiro com o número <?= $estagiario->estudante->registro; ?>, 
-estagiou na instituição <b><?= $estagiario->instituicaoestagio->instituicao; ?></b>, 
+Universidade Federal do Rio de Janeiro com o número <?= $estagiario->aluno->registro; ?>, 
+estagiou na instituição <b><?= $estagiario->instituicao->instituicao; ?></b>, 
 com a supervisão profissional do/a Assistente Social <b><?= $supervisora; ?></b> 
 registrada no CRESS <?= $regiao; ?>&ordf; região 
 com o número <?= $cress; ?>, 
@@ -63,24 +67,24 @@ com uma carga horária de <?= $horas; ?> horas.
 
 <p style="text-align:justify; line-height: 2.5;">
 As atividades desenvolvidas correspondem ao 
-nível <?= $estagiario->nivel; ?> do currículo da Escola de Serviço Social da UFRJ.
+nível <?= $nivel; ?> do currículo da Escola de Serviço Social da UFRJ.
 </p>
 <br />
 <br />
-<p style="text-align:right">Rio de Janeiro, <?= $dia; ?> de <?= $mes; ?> de <?= $ano; ?>.</p>
+<p style="text-align:right">Rio de Janeiro, <?= $hoje->i18nFormat("dd ' de ' MMMM ' de ' yyyy") ?>.</p>
 
 <br style='line-height: 10.0'/>
 
 <table style="width:100%">
 <tr>
 <td style="text-decoration: overline;">Coordenação de Estágio</td>
-<td style="text-decoration: overline;"><?= $estagiario->estudante->nome ?></td>
+<td style="text-decoration: overline;"><?= $estagiario->aluno->nome ?></td>
 <td style="text-decoration: overline;"><?= $supervisora ?></td>
 </tr>
 
 <tr>
 <td>Escola de Serviço Social</td>
-<td>DRE: <?= $estagiario->estudante->registro; ?></td>
+<td>DRE: <?= $estagiario->aluno->registro; ?></td>
 <td>CRESS: <?= $cress; ?> da <?= $regiao; ?>&ordf; Região</td>
 </tr>
 
