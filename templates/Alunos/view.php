@@ -76,6 +76,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th><?= __('Ingresso') ?></th>
+            <td><?= h($aluno->ingresso) ?></td>
         </tr>
         <tr>
             <th><?= __('Turno') ?></th>
@@ -84,7 +85,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php if (isset($user) && ($user->categoria == '1' || ($user->categoria == '2' && $aluno->id == $user->estudante_id))): ?>
             <tr>
                 <th><?= __('Data de nascimento') ?></th>
-                <td><?= $aluno->nascimento->i18nFormat('dd-MM-yyyy') ?></td>
+                <td><?= $aluno->nascimento ? $aluno->nascimento->i18nFormat('dd-MM-yyyy') : '' ?></td>
             </tr>            
             <tr>
                 <th><?= __('CPF') ?></th>

@@ -9,9 +9,31 @@ $user = $this->getRequest()->getAttribute('identity');
 <script>
     $(document).ready(function() {
         $('#cpf').mask('000.000.000-00');
-        $('#telefone').mask('(00) 0000.0000');
-        $('#celular').mask('(00) 00000.0000');
+        if ($('#codigo-telefone').val() == null) {
+            codigo = '21';
+        } else {
+            codigo = $('#codigo-telefone').val();
+        }
+        if ($('#telefone').val().length == 9) {
+            $('#telefone').val('(' + codigo + ') ' + $('#telefone').val());
+        } else {
+            $('#telefone').mask('(00) 0000-0000');
+        }
+        if ($('#codigo-celular').val() == null) {
+            codigo = '21';
+        } else {
+            codigo = $('#codigo-celular').val();
+        }
+        if ($('#celular').val().length == 10) {
+            $('#celular').val('(' + codigo + ') ' + $('#celular').val());
+        } else {
+            $('#celular').mask('(00) 00000-0000');
+        }
+        $('#nascimento').mask('00/00/0000');
         $('#cep').mask('00000-000');
+        $('#ingresso').mask('0000-0');
+        $('#novoperiodo').val($('#ingresso').val());
+        $('#novoperiodo').mask('0000-0');
     });
 </script>
 

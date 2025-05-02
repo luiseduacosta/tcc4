@@ -126,7 +126,7 @@ class EstagiariosTable extends Table
                         ->notEmptyString('instituicao_id');
 
                 $validator
-                        ->notEmptyString('supervisor_id');
+                        ->allowEmptyString('supervisor_id');
 
                 $validator
                         ->scalar('periodo')

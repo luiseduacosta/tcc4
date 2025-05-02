@@ -251,3 +251,23 @@ setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 \Cake\I18n\Date::setToStringFormat('dd/MM/yyyy');
 \Cake\I18n\FrozenTime::setToStringFormat('HH:mm:ss');
 \Cake\I18n\FrozenDate::setToStringFormat('dd/MM/yyyy');
+
+/*
+ * Configuração do CakePdf
+ */
+Configure::write('CakePdf', [
+    'engine' => [
+        'className' => 'CakePdf.DomPdf',
+        'options' => [
+            'isRemoteEnabled' => true
+        ]
+    ],
+    'margin' => [
+        'bottom' => 10,
+        'left' => 10,
+        'right' => 10,
+        'top' => 10
+    ],
+    'orientation' => 'portrait',
+    'download' => true
+]);

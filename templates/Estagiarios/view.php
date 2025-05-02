@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Estagiario $estagiario
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($estagiario);
+// pr($estagiario->aluno);
 // die();
 ?>
 

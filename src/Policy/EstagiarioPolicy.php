@@ -59,5 +59,16 @@ class EstagiarioPolicy
                 return true;
         }
 
+        /**
+         * Check if $user can create Novo Termo de Compromisso
+         *
+         * @param \Authorization\IdentityInterface $user The user.
+         * @param \App\Model\Entity\Estagiario $estagiario
+         * @return bool
+         */
+        public function canNovotermodecompromisso(IdentityInterface $user, Estagiario $estagiario)
+        {
+                return isset($user->categoria) && ($user->categoria == '1' || $user->categoria == '2');
+        }
 
 }

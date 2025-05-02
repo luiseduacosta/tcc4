@@ -76,6 +76,7 @@ AuthorizationServiceProviderInterface
         }
 
         // Load more plugins here
+        $this->addPlugin('CakePdf');
     }
 
     /**
