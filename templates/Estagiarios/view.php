@@ -74,10 +74,10 @@ $user = $this->getRequest()->getAttribute('identity');
         <tr>
             <th><?= __('Aluno') ?></th>
             <?php if (isset($user) && $user->categoria == '1'): ?>
-                <td><?= isset($estagiario->aluno) ? $this->Html->link($estagiario->aluno['nome'], ['controller' => 'Estudantes', 'action' => 'view', $estagiario->aluno['id']]) : '' ?>
+                <td><?= isset($estagiario->aluno) ? $this->Html->link($estagiario->aluno['nome'], ['controller' => 'Alunos', 'action' => 'view', $estagiario->aluno['id']]) : '' ?>
                 </td>
             <?php else: ?>
-                <td><?= $estagiario->hasValue('aluno') ? $estagiario->aluno['nome'] : '' ?></td>
+                <td><?= $estagiario->aluno['nome'] ?></td>
             <?php endif; ?>
         </tr>
         <tr>

@@ -71,6 +71,7 @@ class EstagiariosTable extends Table
 
                 $this->hasOne('Avaliacoes', [
                         'foreignKey' => 'estagiario_id',
+                        'joinType' => 'INNER',
                 ]);
 
                 $this->hasMany('Folhadeatividades', [
@@ -85,6 +86,12 @@ class EstagiariosTable extends Table
                         'joinType' => 'LEFT'
                 ]);
 
+        }
+
+        public function beforeFind($event, $query, $options, $primary)
+        {
+                $query->order(['Estagiarios.registro' => 'ASC', 'Estagiarios.nivel' => 'ASC']);
+                return $query;
         }
 
         /**

@@ -207,7 +207,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 </tr>
             </thead>
             <?php foreach ($aluno->estagiarios as $estagiarios): ?>
-                <?php // pr($estagiarios); ?>
                 <tr>
                     <?php // pr($estagiarios); ?>
                     <td><?= h($estagiarios->id) ?></td>

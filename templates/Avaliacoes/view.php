@@ -74,7 +74,7 @@ if ($professora) {
 </nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-        <h3><?= 'Avaliação da(o) estagiario(a) ' . $avaliacao->estagiario['estudante']['nome'] ?></h3>
+        <h3><?= 'Avaliação da(o) estagiario(a) ' . $avaliacao->estagiario['aluno']['nome'] ?></h3>
         <p><span style="font-size: 100%; text-align: justify; font-weight: normal">Campo de estágio <?= $avaliacao->estagiario['instituicao']['instituicao'] ?>. Supervisor(a) <?= $supervisora ?>, Cress <?= $cress ?>. Período de estágio <?= $avaliacao->estagiario['periodo'] ?>. Nível: <?= $avaliacao->estagiario['nivel'] ?>. Supervisão acadêmica: <?= $professora ?></span></p>
         <table class="table table-striped table-responsive table-hover">
             <tr>

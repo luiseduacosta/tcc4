@@ -69,7 +69,7 @@ use Cake\I18n\I18n;
             }
         }
         $aluno = $this->Alunos->get($id, [
-            'contain' => ['Estagiarios' => ['Instituicoes', 'Alunos', 'Supervisores', 'Professores', 'Turmaestagios'], 'Muralinscricoes' => 'Muralestagios']
+            'contain' => ['Estagiarios' => ['Instituicoes', 'Alunos', 'Supervisores', 'Professores', 'Turmaestagios'], 'Muralinscricoes' => ['Muralestagios']]
         ]);
         $this->set(compact('aluno'));
     }
