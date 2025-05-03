@@ -61,19 +61,19 @@ class EstagiariosController extends AppController
                 ->contain(['Alunos', 'Professores', 'Supervisores', 'Instituicoes', 'Turmaestagios']);
         }
         if ($nivel) {
-            $query->where(['Estagiarios.nivel' => $nivel]);
+            $query->where(['Estagiarios.nivel' => $nivel, 'Estagiarios.periodo' => $periodo]);
         }
         if ($instituicao) {
-            $query->where(['Instituicoes.id' => $instituicao]);
+            $query->where(['Instituicoes.id' => $instituicao, 'Estagiarios.periodo' => $periodo]);
         }
         if ($supervisor) {
-            $query->where(['Supervisores.id' => $supervisor]);
+            $query->where(['Supervisores.id' => $supervisor, 'Estagiarios.periodo' => $periodo]);
         }
         if ($professor) {
-            $query->where(['Professores.id' => $professor]);
+            $query->where(['Professores.id' => $professor, 'Estagiarios.periodo' => $periodo]);
         }
         if ($turmaestagio) {
-            $query->where(['Turmaestagios.id' => $turmaestagio]);
+            $query->where(['Turmaestagios.id' => $turmaestagio, 'Estagiarios.periodo' => $periodo]);
         }
         $config = $this->paginate = ['sortableFields' => ['id', 'Alunos.nome', 'registro', 'turno', 'nivel', 'Instituicoes.instituicao', 'Supervisores.nome', 'Professores.nome', 'nota', 'ch']];
         $estagiarios = $this->paginate($query, $config);
