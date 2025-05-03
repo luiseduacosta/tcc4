@@ -1,7 +1,8 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Avaliacao[]|\Cake\Collection\CollectionInterface $avaliacao
+ * @var \App\Model\Entity\Avaliacao[]|\Cake\Collection\CollectionInterface $avaliacoes
+ * @var \App\Model\Entity\Estagiario $estagiario
  */
 // pr($estagiario->item->estudante);
 // die();

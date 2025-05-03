@@ -2,6 +2,27 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estagiario[]|\Cake\Collection\CollectionInterface $estagiarios
+ * @var \Cake\Datasource\PaginatorInterface $paginator
+ * @var string $periodo
+ * @var string $nivel
+ * @var string $instituicao
+ * @var string $supervisor
+ * @var string $professor
+ * @var string $turmaestagio
+ * @var string $periodos
+ * @var string $instituicoes
+ * @var string $supervisores
+ * @var string $professores
+ * @var string $turmaestagios
+ * @var \App\Model\Entity\Estagiario $estagiario
+ * @var \App\Model\Entity\Aluno $aluno
+ * @var \App\Model\Entity\Instituicao $instituicao
+ * @var \App\Model\Entity\Supervisor $supervisor
+ * @var \App\Model\Entity\Professor $professor
+ * @var \App\Model\Entity\Turmaestagio $turmaestagio
+ * @var \App\Model\Entity\User $user
+ * @var \Cake\I18n\FrozenTime $now
+ * @var \Cake\ORM\Query $query
  */
 $user = $this->getRequest()->getAttribute('identity');
 // pr($estagiarios);
@@ -136,7 +157,6 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php endif; ?>
 
 </div>
-
 
 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Estagiarios') ?></h3>

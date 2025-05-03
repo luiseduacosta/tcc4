@@ -105,10 +105,10 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php
 $niveis = [
-    '1' => '1',
-    '2' => '2',
-    '3' => '3',
-    '4' => '4',
+    '1' => '1º',
+    '2' => '2º',
+    '3' => '3º',
+    '4' => '4º',
     '9' => 'Estágio extra-curricular',
 ];
 ?>

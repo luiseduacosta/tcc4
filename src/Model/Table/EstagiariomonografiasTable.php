@@ -157,5 +157,4 @@ class EstagiariomonografiasTable extends Table
 
                 return $rules;
         }
-
 }
