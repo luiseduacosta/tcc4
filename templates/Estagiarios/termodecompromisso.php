@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Estagiario $estagiarios
+ * @var \App\Model\Entity\Estagiario $estagiario
  */
 if (isset($estudanteestagiario)) {
     // pr($estudanteestagiario);

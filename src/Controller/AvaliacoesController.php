@@ -266,7 +266,7 @@ class AvaliacoesController extends AppController
                 ->first();
             if (is_null($avaliacao)) {
                 $this->Flash->error(__('Avaliação não encontrada.'));
-                return $this->redirect(['controller' => 'estagiarios', 'action' => 'index', $estagiario_id]);
+                return $this->redirect(['controller' => 'estagiarios', 'action' => 'view', $estagiario_id]);
             }
         }
 
