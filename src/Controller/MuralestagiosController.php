@@ -4,12 +4,21 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
+
 /**
  * Muralestagios Controller
  *
  * @property \App\Model\Table\MuralestagiosTable $Muralestagios
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * @property \Cake\ORM\TableRegistry $Muralestagios
+ * @property \Cake\ORM\TableRegistry $Instituicoes
+ * @property \Cake\ORM\TableRegistry $Turmaestagios
+ * @property \Cake\ORM\TableRegistry $Professores
+ * @property \Cake\ORM\TableRegistry $Muralinscricoes
+ * @property \Cake\ORM\TableRegistry $Alunos
  * 
  * @method \App\Model\Entity\Muralestagio[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\ORM\Query;
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
 
 /**
  * Estudantes Controller
@@ -12,6 +14,11 @@ use Cake\ORM\Query;
  * @property \App\Model\Table\EstudantesTable $Estudantes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * @property \Cake\ORM\TableRegistry $Estudantes
+ * @property \Cake\ORM\TableRegistry $Estagiarios
+ * @property \Cake\ORM\TableRegistry $Supervisores
+ * @property \Cake\ORM\TableRegistry $Instituicoes
+ * @property \Cake\ORM\TableRegistry $Docentes
  *
  * @method \App\Model\Entity\Estudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */

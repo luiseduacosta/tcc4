@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
+
 /**
  * Agendamentotccs Controller
  *
  * @property \App\Model\Table\AgendamentotccsTable $Agendamentotccs
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- *  
+ * @property \Cake\ORM\TableRegistry $Agendamentotccs           
+ * @property \Cake\ORM\TableRegistry $Estudantes
+ * @property \Cake\ORM\TableRegistry $Docentes
  * @method \App\Model\Entity\Agendamentotcc[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AgendamentotccsController extends AppController

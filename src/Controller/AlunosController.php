@@ -4,16 +4,25 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
+
 /**
  * Alunos Controller
  *
  * @property \App\Model\Table\AlunosTable $Alunos
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- *  
+ * @property \Cake\ORM\TableRegistry $Alunos
+ * @property \Cake\ORM\TableRegistry $Estagiarios
+ * @property \Cake\ORM\TableRegistry $Instituicoes
+ * @property \Cake\ORM\TableRegistry $Supervisores
+ * @property \Cake\ORM\TableRegistry $Professores
+ * 
  * @method \App\Model\Entity\Aluno[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class AlunosController extends AppController
+
+ class AlunosController extends AppController
 {
 
     /**
@@ -42,26 +51,23 @@ class AlunosController extends AppController
         $this->Authorization->skipAuthorization();
 
         if ($id === null) {
-            $registro = $this->getRequest()->getQuery('registro');
-            if (empty($registro)) {
-                echo "Sem parâmentros para localizar o aluno";
-                $this->Flash->error(__('1. Sem parâmentros para localizar o/a aluno/a?'));
-                return $this->redirect('/alunos/index');
-            }
-            $aluno = $this->Alunos->find()
-                ->where(['registro' => $registro])
+            $user = $this->getRequest()->getAttribute('identity');
+            if (isset($user) && $user->categoria == '2') {
+                $aluno = $this->Alunos->find()
+                ->where(['id' => $user->estudante_id])
                 ->select('alunos.id')
                 ->first();
-
-            if (empty($aluno)) {
-                echo "Sem parámentros para localizar o aluno";
-                $this->Flash->error(__('2. Sem parámentros para localizar o/a aluno/a?'));
-                return $this->redirect('/alunos/index');
+                if ($aluno) {
+                    $id = $aluno->id;
+                } else {
+                    $this->Flash->error(__('Sem parâmentros para localizar o aluno'));
+                    return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
+                }
             } else {
-                $id = $aluno->id;
+                $this->Flash->error(__('Você não tem permissão para acessar esta página'));
+                return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
             }
         }
-        // $this->Authorization->authorize($aluno);
         $aluno = $this->Alunos->get($id, [
             'contain' => ['Estagiarios' => ['Instituicoes', 'Alunos', 'Supervisores', 'Professores', 'Turmaestagios'], 'Muralinscricoes' => 'Muralestagios']
         ]);
@@ -105,6 +111,7 @@ class AlunosController extends AppController
         $aluno = $this->Alunos->get($id, [
             'contain' => [],
         ]);
+
         $user = $this->getRequest()->getAttribute('identity');
 
         if (isset($user) && $user->categoria == '1') {
@@ -130,6 +137,7 @@ class AlunosController extends AppController
             }
             $this->Flash->error(__('Dados do aluno não atualizados.'));
         }
+
         $this->set(compact('aluno'));
     }
 

@@ -8,6 +8,8 @@ use Cake\Routing\Router;
 use App\Controller\AppController;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
 
 /**
  * Monografias Controller
@@ -15,7 +17,11 @@ use Cake\Filesystem\Folder;
  * @property \App\Model\Table\MonografiasTable $Monografias
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- *
+ * @property \Cake\ORM\TableRegistry $Monografias
+ * @property \Cake\ORM\TableRegistry $Docentes
+ * @property \Cake\ORM\TableRegistry $Areamonografias
+ * @property \Cake\ORM\TableRegistry $Tccestudantes
+ * 
  * @method \App\Model\Entity\Monografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class MonografiasController extends AppController {

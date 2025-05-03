@@ -6,6 +6,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
 
 /**
  * Docentes Controller
@@ -13,7 +15,9 @@ use Cake\Event\Event;
  * @property \App\Model\Table\ProfessoresTable $Docentes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * 
+ * @property \Cake\ORM\TableRegistry $Docentes
+ * @property \Cake\ORM\TableRegistry $Monografias
+ * @property \Cake\ORM\TableRegistry $Areamonografias
  * @method \App\Model\Entity\Docente[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocentesController extends AppController

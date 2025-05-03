@@ -3,13 +3,17 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
+
 /**
  * Complementos Controller
  *
  * @property \App\Model\Table\ComplementosTable $Complementos
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * 
+ * @property \Cake\ORM\TableRegistry $Complementos
+ * @property \Cake\ORM\TableRegistry $Estagiarios
  * @method \App\Model\Entity\Complemento[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ComplementosController extends AppController

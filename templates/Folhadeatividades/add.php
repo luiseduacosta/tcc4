@@ -21,36 +21,22 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
+<?= $this->element('templates') ?>
+
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
         <?= $this->Form->create($folhadeatividade) ?>
         <fieldset>
             <legend><?= __('Adicionar atividade') ?></legend>
             <?php
-            echo $this->Form->control('estagiario_id', ['options' => [$estagiario->id => $estagiario->estudante->nome], 'readonly']);
-            echo $this->Form->control('dia');
+            echo $this->Form->control('estagiario_id', ['options' => [$estagiario->id => $estagiario->aluno->nome], 'readonly', 'class' => 'form-control']);
+            echo $this->Form->control('dia', ['class' => 'form-control']);
+            echo $this->Form->control('inicio', ['label' => __('Horário de início'), 'class' => 'form-control']);
+            echo $this->Form->control('final', ['label' => __('Horário de finalização'), 'class' => 'form-control']);
+            echo $this->Form->control('atividade', ['class' => 'form-control']);
+            echo $this->Form->control('horario', ['type' => 'hidden']);
             ?>
-            <table class="table table-bordered">
-                <tr>
-                    <td>
-                        <?= __('Horário de início') ?>
-                    </td>
-                    <td>
-                        <?php echo $this->Form->control('inicio', ['label' => false, 'class' => 'form-control']); ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <?= __('Horário de finalização') ?>
-                    </td>
-                    <td>
-                        <?php echo $this->Form->control('final', ['label' => false, 'class' => 'form-control']); ?>
-                    </td>
-                </tr>
-            </table>
-            <?php echo $this->Form->control('atividade', ['class' => 'form-control']); ?>
-            <?php echo $this->Form->control('horario', ['type' => 'hidden']); ?>
         </fieldset>
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-center mt-3">
             <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
         </div>
         <?= $this->Form->end() ?>

@@ -73,8 +73,9 @@ class EstagiariosTable extends Table
                         'foreignKey' => 'estagiario_id',
                 ]);
 
-                $this->hasOne('Folhadeatividades', [
+                $this->hasMany('Folhadeatividades', [
                         'foreignKey' => 'estagiario_id',
+                        'order' => ['Folhadeatividades.dia' => 'ASC'],
                 ]);
 
                 $this->belongsTo('Tccestudantes', [

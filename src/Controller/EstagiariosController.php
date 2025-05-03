@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\ORM\Rule\IsUnique;
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
 
 /**
  * Estagiarios Controller
@@ -12,6 +14,12 @@ use Cake\ORM\Rule\IsUnique;
  * @property \App\Model\Table\EstagiariosTable $Estagiarios
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * @property \Cake\ORM\TableRegistry $Estagiarios
+ * @property \Cake\ORM\TableRegistry $Alunos
+ * @property \Cake\ORM\TableRegistry $Supervisores
+ * @property \Cake\ORM\TableRegistry $Instituicoes
+ * @property \Cake\ORM\TableRegistry $Professores
+ * @property \Cake\ORM\TableRegistry $Turmaestagios
  *
  * @method \App\Model\Entity\Estagiario[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -312,22 +320,23 @@ class EstagiariosController extends AppController
      */
     public function selecionafolhadeatividades($id = NULL)
     {
-
-        /* No login foi capturado o id do estagiário */
-        $id = $this->getRequest()->getSession()->read('estagiario_id');
-        if (is_null($id)) {
-            $this->Flash->error(__('Selecionar o estudante e o estágio'));
-            return $this->redirect('/Alunos/index');
-        } else {
-            $estagiarioquery = $this->Estagiarios->find()
+        $user = $this->getRequest()->getSession()->read('Auth.User');
+        if (isset($user) && $user['categoria'] == '2') {
+            $estagiario = $this->Estagiarios->find()
                 ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
-                ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('registro')]);
-            $estagiario = $estagiarioquery->all();
-            //pr($estagiario);
-            // die();
+                ->where(['Estagiarios.aluno_id' => $user['estudante_id']])
+                ->order(['Estagiarios.periodo' => 'desc'])
+                ->first();
+            if ($estagiario) {
+                $this->set('estagiario', $estagiario);
+            } else {
+                $this->Flash->error(__('Ainda não tem estágio cadastrado'));
+                return $this->redirect(['controller' => 'Alunos', 'action' => 'view', $user['estudante_id']]);
+            }
+        } else {
+            $this->Flash->error(__('Você não tem permissão para acessar esta página'));
+            return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
         }
-
-        $this->set('estagiario', $estagiario);
     }
 
     /**
@@ -390,17 +399,18 @@ class EstagiariosController extends AppController
     public function avaliacaodiscentepdf($id = NULL)
     {
 
+        $this->Authorization->skipAuthorization();
         $this->viewBuilder()->disableAutoLayout();
         $estagiario_id = $this->getRequest()->getQuery('estagiario_id');
 
-        $estagiario = $this->Estagiarios->find()
-            ->contain(['Alunos', 'Supervisores', 'Instituicoes', 'Professores'])
-            ->where(['Estagiarios.id' => $estagiario_id])
-            ->first();
-
-        if (!$estagiario) {
+        if ($estagiario_id) {
+            $estagiario = $this->Estagiarios->find()
+                ->contain(['Alunos', 'Supervisores', 'Instituicoes', 'Professores', 'Avaliacoes'])
+                ->where(['Estagiarios.id' => $estagiario_id])
+                ->first();
+        } else {
             $this->Flash->error(__('Sem estagiarios cadastrados'));
-            return $this->redirect(['estagiario' => $estagiario, 'action' => 'view', $estagiario_id]);
+            return $this->redirect(['controller' => 'estagiarios', 'action' => 'view', $estagiario_id]);
         }
 
         $this->viewBuilder()->enableAutoLayout(false);

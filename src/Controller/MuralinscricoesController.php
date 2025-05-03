@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
+
 /**
  * Muralinscricoes Controller
  *
  * @property \App\Model\Table\MuralinscricoesTable $Muralinscricoes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * 
+ * @property \Cake\ORM\TableRegistry $Muralinscricoes
+ * @property \Cake\ORM\TableRegistry $Alunos
+ * @property \Cake\ORM\TableRegistry $Muralestagios
+ * @property \Cake\ORM\TableRegistry $Instituicoes
+ *
  * @method \App\Model\Entity\Muralinscricao[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class MuralinscricoesController extends AppController

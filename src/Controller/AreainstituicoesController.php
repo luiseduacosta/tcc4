@@ -3,12 +3,17 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
+
 /**
  * Areainstituicoes Controller
  *
  * @property \App\Model\Table\AreainstituicoesTable $Areainstituicoes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * @property \Cake\ORM\TableRegistry $Areainstituicoes
+ * @property \Cake\ORM\TableRegistry $Instituicoes
  * 
  * @method \App\Model\Entity\Areainstituicao[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */

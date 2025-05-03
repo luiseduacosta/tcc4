@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
+
 /**
  * Instituicoes Controller
  *
  * @property \App\Model\Table\InstituicoesTable $Instituicoes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * 
+ * @property \Cake\ORM\TableRegistry $Instituicoes
+ * @property \Cake\ORM\TableRegistry $Areainstituicoes
+ * @property \Cake\ORM\TableRegistry $Supervisores
+ * @property \Cake\ORM\TableRegistry $Estagiarios
+ * @property \Cake\ORM\TableRegistry $Muralestagios
+ * @property \Cake\ORM\TableRegistry $Visitas
  * @method \App\Model\Entity\Instituicoes[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class InstituicoesController extends AppController

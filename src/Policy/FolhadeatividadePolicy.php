@@ -56,4 +56,25 @@ class FolhadeatividadePolicy {
         return true;
     }
 
+    /**
+     * Check if $user can atividade Folhadeatividade
+     *
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Folhadeatividade $folhadeatividade
+     * @return bool
+     */
+    public function canAtividade(IdentityInterface $user, Folhadeatividade $folhadeatividade) {
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '2';
+    }
+
+    /**
+     * Check if $user can folhadeatividades pdf
+     *
+     * @param \Authorization\IdentityInterface $user The user.
+     * @param \App\Model\Entity\Folhadeatividade $folhadeatividade
+     * @return bool
+     */
+    public function canFolhadeatividadespdf(IdentityInterface $user, Folhadeatividade $folhadeatividade) {
+        return isset($user->categoria) && $user->categoria == '1' || $user->categoria == '2';
+    }
 }

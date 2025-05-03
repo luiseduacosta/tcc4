@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
+
 /**
  * Professores Controller
  *
  * @property \App\Model\Table\ProfessoresTable $Professores
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * @property \Cake\ORM\TableRegistry $Professores
+ * @property \Cake\ORM\TableRegistry $Estagiarios
+ * @property \Cake\ORM\TableRegistry $Alunos
+ * @property \Cake\ORM\TableRegistry $Supervisores
+ * @property \Cake\ORM\TableRegistry $Instituicoes
  * 
  * @method \App\Model\Entity\Professor[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */

@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
+
 /**
  * Areamonografias Controller
  *
  * @property \App\Model\Table\AreamonografiasTable $Areamonografias
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * 
+ * @property \Cake\ORM\TableRegistry $Areamonografias
+ * @property \Cake\ORM\TableRegistry $Docentes
+ * @property \Cake\ORM\TableRegistry $Monografias
  * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AreamonografiasController extends AppController
