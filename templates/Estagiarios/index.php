@@ -19,6 +19,31 @@ $user = $this->getRequest()->getAttribute('identity');
             window.location = url + '/index?periodo=' + periodo;
         })
 
+        $("#EstagiarioNivel").change(function () {
+            var nivel = $(this).val();
+            window.location = url + '/index?periodo=' + $('#EstagiarioPeriodo').val() + '&nivel=' + nivel;
+        })
+
+        $("#EstagiarioInstituicao").change(function () {
+            var instituicao = $(this).val();
+            window.location = url + '/index?periodo=' + $('#EstagiarioPeriodo').val() + '&instituicao=' + instituicao;
+        })
+
+        $("#EstagiarioSupervisor").change(function () {
+            var supervisor = $(this).val();
+            window.location = url + '/index?periodo=' + $('#EstagiarioPeriodo').val() + '&supervisor=' + supervisor;
+        })
+
+        $("#EstagiarioProfessor").change(function () {
+            var professor = $(this).val();
+            window.location = url + '/index?periodo=' + $('#EstagiarioPeriodo').val() + '&professor=' + professor;
+        })
+
+        $("#EstagiarioTurmaestagio").change(function () {
+            var turmaestagio = $(this).val();
+            window.location = url + '/index?periodo=' + $('#EstagiarioPeriodo').val() + '&turmaestagio=' + turmaestagio;
+        })
+        
     })
 </script>
 
@@ -53,7 +78,65 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php endif; ?>
 </div>
 
-<?= $this->element('templates') ?>
+<div class="row">
+
+<?php $niveis = ['1' => '1º', '2' => '2º', '3' => '3º', '4' => '4º', '9' => 'Não curricular']; ?>
+
+    <div class="col-sm-2">
+            <?= $this->Form->create($estagiarios); ?>
+            <div class="form-group row">
+            <div class="col-sm-4 p-1">
+                <?= $this->Form->control('nivel', ['id' => 'EstagiarioNivel', 'type' => 'select', 'label' => false, 'options' => $niveis, 'empty' => 'Nível', 'class' => 'form-control']); ?>
+            </div>
+            </div>
+    </div>
+
+<?php if (!empty($instituicoes)): ?>
+        <div class="col-sm-2">
+            <?= $this->Form->create($estagiarios); ?>
+            <div class="form-group row">
+            <div class="col-sm-4 p-1">
+                <?= $this->Form->control('instituicao_id', ['id' => 'EstagiarioInstituicao', 'type' => 'select', 'label' => false, 'options' => $instituicoes, 'empty' => 'Instituição', 'class' => 'form-control']); ?>
+            </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($supervisores)): ?>
+        <div class="col-sm-2">
+            <?= $this->Form->create($estagiarios); ?>
+        <div class="form-group row">
+            <div class="col-sm-4 p-1">
+                <?= $this->Form->control('supervisor_id', ['id' => 'EstagiarioSupervisor', 'type' => 'select', 'label' => false, 'options' => $supervisores, 'empty' => 'Supervisor', 'class' => 'form-control']); ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($professores)): ?>
+        <div class="col-sm-2">
+            <?= $this->Form->create($estagiarios); ?>
+            <div class="form-group row">
+            <div class="col-sm-4 p-1">
+                <?= $this->Form->control('professor_id', ['id' => 'EstagiarioProfessor', 'type' => 'select', 'label' => false, 'options' => $professores, 'empty' => 'Professor', 'class' => 'form-control']); ?>
+            </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($turmaestagios)): ?>
+        <div class="col-sm-2">
+            <?= $this->Form->create($estagiarios); ?>
+        <div class="form-group row">
+                <div class="col-sm-4 p-1">
+                    <?= $this->Form->control('turmaestagio_id', ['id' => 'EstagiarioTurmaestagio', 'type' => 'select', 'label' => false, 'options' => $turmaestagios, 'empty' => 'Turma', 'class' => 'form-control']); ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+</div>
+
 
 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Estagiarios') ?></h3>
@@ -61,7 +144,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <thead class="thead-dark">
             <tr>
                 <th><?= $this->Paginator->sort('Estagiarios.id', 'Id') ?></th>
-                <th><?= $this->Paginator->sort('Estudantes.nome', 'Estudante') ?></th>
+                <th><?= $this->Paginator->sort('Alunos.nome', 'Estudante') ?></th>
                 <th><?= $this->Paginator->sort('registro') ?></th>
                 <th><?= $this->Paginator->sort('ajuste2020', 'Ajuste 2020') ?></th>
                 <th><?= $this->Paginator->sort('turno') ?></th>
@@ -74,9 +157,8 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('periodo', 'Período') ?></th>
                 <th><?= $this->Paginator->sort('Turmaestagio.area', 'Turma de estágio') ?></th>
                 <?php if (isset($user) && $user->categoria == '1'): ?>
-                    <th><?= $this->Paginator->sort('nota') ?></th>
-                    <th><?= $this->Paginator->sort('nota') ?></th>
-                    <th><?= $this->Paginator->sort('Estagiarios.ch', 'Carga horária') ?></th>
+                    <th><?= $this->Paginator->sort('nota', 'Nota') ?></th>
+                    <th><?= $this->Paginator->sort('ch', 'Carga horária') ?></th>
                     <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
                     <th class="row"><?= __('Ações') ?></th>
                 <?php endif; ?>
@@ -96,7 +178,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($estagiario->nivel) ?></td>
                     <td><?= $estagiario->tc ?></td>
                     <?php if (isset($estagiario->tc_solicitacao)): ?>
-                        <td><?= date('d-m-Y', strtotime(h($estagiario->tc_solicitacao))) ?></td>
+                        <td><?= $estagiario->tc_solicitacao->i18nFormat('dd-MM-yyyy') ?></td>
                     <?php else: ?>
                         <td>Sem dados</td>
                     <?php endif; ?>

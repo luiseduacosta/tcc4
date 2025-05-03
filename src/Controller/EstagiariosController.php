@@ -40,6 +40,11 @@ class EstagiariosController extends AppController
     public function index($id = NULL)
     {
 
+        $instituicao = $this->getRequest()->getQuery('instituicao');
+        $supervisor = $this->getRequest()->getQuery('supervisor');
+        $professor = $this->getRequest()->getQuery('professor');
+        $turmaestagio = $this->getRequest()->getQuery('turmaestagio');
+        $nivel = $this->getRequest()->getQuery('nivel');
         $periodo = $this->getRequest()->getQuery('periodo');
         if (empty($periodo)) {
             $configuracao = $this->fetchTable('Configuracoes');
@@ -55,7 +60,22 @@ class EstagiariosController extends AppController
             $query = $this->Estagiarios->find('all')
                 ->contain(['Alunos', 'Professores', 'Supervisores', 'Instituicoes', 'Turmaestagios']);
         }
-        $config = $this->paginate = ['sortableFields' => ['id', 'Alunos.nome', 'registro', 'turno', 'nivel', 'Instituicoes.instituicao', 'Supervisores.nome', 'Professores.nome']];
+        if ($nivel) {
+            $query->where(['Estagiarios.nivel' => $nivel]);
+        }
+        if ($instituicao) {
+            $query->where(['Instituicoes.id' => $instituicao]);
+        }
+        if ($supervisor) {
+            $query->where(['Supervisores.id' => $supervisor]);
+        }
+        if ($professor) {
+            $query->where(['Professores.id' => $professor]);
+        }
+        if ($turmaestagio) {
+            $query->where(['Turmaestagios.id' => $turmaestagio]);
+        }
+        $config = $this->paginate = ['sortableFields' => ['id', 'Alunos.nome', 'registro', 'turno', 'nivel', 'Instituicoes.instituicao', 'Supervisores.nome', 'Professores.nome', 'nota', 'ch']];
         $estagiarios = $this->paginate($query, $config);
 
         /* Todos os periódos */
@@ -65,13 +85,57 @@ class EstagiariosController extends AppController
             'order' => ['periodo' => 'asc']
         ]);
         $periodos = $periodototal->toArray();
-        $ultimoperiodo = end($periodos);
-        if ($ultimoperiodo > $periodo) {
-            $this->Flash->error(__('Período atual selecionado ' . $periodo . ' é anterior ao último periódo cursado ' . $ultimoperiodo));
+
+        $instituicoes = $this->Estagiarios->find('all', [
+            'contain' => ['Instituicoes', 'Supervisores', 'Professores', 'Turmaestagios'],
+            'order' => ['Instituicoes.instituicao' => 'asc'],
+            'conditions' => ['Estagiarios.periodo' => $periodo],
+            'group' => ['Instituicoes.id']
+        ]);
+        $instituicoes = $instituicoes->toArray();
+
+        $listainstituicoes = [];
+        $listasupervisores = [];
+        $listaprofessores = [];
+        $listaturmaestagios = [];
+
+        foreach ($instituicoes as $instituicao) {
+            if (!empty($instituicao->instituicao->id)) {
+                $listainstituicoes[$instituicao->instituicao->id] = $instituicao->instituicao->instituicao;
+                asort($listainstituicoes);
+            }
+        }
+        foreach ($instituicoes as $supervisor) {
+            if (!empty($supervisor->supervisor->id)) {
+                $listasupervisores[$supervisor->supervisor->id] = $supervisor->supervisor->nome;
+                asort($listasupervisores);
+            }
+        }
+        foreach ($instituicoes as $professor) {
+            if (!empty($professor->professor->id)) {
+                $listaprofessores[$professor->professor->id] = $professor->professor->nome;
+                asort($listaprofessores);
+            }
+        }
+        foreach ($instituicoes as $turmaestagio) {
+            if (!empty($turmaestagio->turmaestagio->id)) {
+                $listaturmaestagios[$turmaestagio->turmaestagio->id] = $turmaestagio->turmaestagio->area;
+                asort($listaturmaestagios);
+            }
         }
 
-        $this->set('periodo', $periodo);
-        $this->set('periodos', $periodos);
+        if (!empty($listainstituicoes)) {
+            $this->set('instituicoes', $listainstituicoes);
+        }
+        if (!empty($listasupervisores)) {
+            $this->set('supervisores', $listasupervisores);
+        }
+        if (!empty($listaprofessores)) {
+            $this->set('professores', $listaprofessores);
+        }
+        if (!empty($listaturmaestagios)) {
+            $this->set('turmaestagios', $listaturmaestagios);
+        }
 
         $this->set(compact('estagiarios', 'periodo', 'periodos'));
     }

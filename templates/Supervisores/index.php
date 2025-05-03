@@ -70,6 +70,8 @@
     </table>
 </div>
 
+<?= $this->element('templates') ?>
+
 <div class="d-flex justify-content-center">
     <div class="paginator">
         <ul class="pagination">

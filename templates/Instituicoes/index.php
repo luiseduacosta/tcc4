@@ -87,15 +87,15 @@ $user = $this->getRequest()->getAttribute('identity');
                 <caption>Instituições endereço</caption>
                 <thead class="table-dark">
                     <tr>
-                        <th><?= $this->Paginator->sort('id') ?></th>
-                        <th><?= $this->Paginator->sort('instituicao') ?></th>
+                        <th><?= $this->Paginator->sort('id', 'ID') ?></th>
+                        <th><?= $this->Paginator->sort('instituicao', 'Instituição') ?></th>
                         <th><?= $this->Paginator->sort('url', 'URL') ?></th>
                         <th><?= $this->Paginator->sort('endereco', 'Endereço') ?></th>
-                        <th><?= $this->Paginator->sort('bairro') ?></th>
-                        <th><?= $this->Paginator->sort('municipio') ?></th>
-                        <th><?= $this->Paginator->sort('cep') ?></th>
-                        <th><?= $this->Paginator->sort('telefone') ?></th>
-                        <th><?= $this->Paginator->sort('fax') ?></th>
+                        <th><?= $this->Paginator->sort('bairro', 'Bairro') ?></th>
+                        <th><?= $this->Paginator->sort('municipio', 'Município') ?></th>
+                        <th><?= $this->Paginator->sort('cep', 'CEP') ?></th>
+                        <th><?= $this->Paginator->sort('telefone', 'Telefone') ?></th>
+                        <th><?= $this->Paginator->sort('fax', 'Fax') ?></th>
                         <th class="row"><?= __('Ações') ?></th>
                     </tr>
                 </thead>
@@ -132,14 +132,14 @@ $user = $this->getRequest()->getAttribute('identity');
                 <caption>Instituições endereço</caption>
                 <thead class="table-dark">
                     <tr>
-                        <th><?= $this->Paginator->sort('id') ?></th>
-                        <th><?= $this->Paginator->sort('instituicao') ?></th>
-                        <th><?= $this->Paginator->sort('beneficio') ?></th>
-                        <th><?= $this->Paginator->sort('fim_de_semana') ?></th>
-                        <th><?= $this->Paginator->sort('localInscricao') ?></th>
-                        <th><?= $this->Paginator->sort('convenio') ?></th>
-                        <th><?= $this->Paginator->sort('expira') ?></th>
-                        <th><?= $this->Paginator->sort('seguro') ?></th>
+                        <th><?= $this->Paginator->sort('id', 'ID') ?></th>
+                        <th><?= $this->Paginator->sort('instituicao', 'Instituição') ?></th>
+                        <th><?= $this->Paginator->sort('beneficio', 'Benefícios') ?></th>
+                        <th><?= $this->Paginator->sort('fim_de_semana', 'Fim de semana') ?></th>
+                        <th><?= $this->Paginator->sort('localInscricao', 'Local de inscrição') ?></th>
+                        <th><?= $this->Paginator->sort('convenio', 'Convenio') ?></th>
+                        <th><?= $this->Paginator->sort('expira', 'Expira') ?></th>
+                        <th><?= $this->Paginator->sort('seguro', 'Seguro') ?></th>
                         <th class="row"><?= __('Ações') ?></th>
                     </tr>
                 </thead>
