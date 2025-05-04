@@ -224,7 +224,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?= $this->Paginator->last(__('last') . ' >>') ?>
             </ul>
         </div>
+        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+        </p>
     </div>
-    <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
-    </p>
 </div>
