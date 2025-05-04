@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-
+use Cake\ORM\TableRegistry;
 /**
  * Estagiariomonografias Controller
  *
@@ -24,7 +24,7 @@ class EstagiariomonografiasController extends AppController
 
         parent::beforeFilter($event);
 
-        $this->Authentication->addUnauthenticatedActions(['view', 'index', 'indexold', 'busca', 'registro']);
+        $this->Authentication->addUnauthenticatedActions(['view', 'index', 'busca', 'registro']);
     }
 
     /**
@@ -34,134 +34,70 @@ class EstagiariomonografiasController extends AppController
      */
     public function indexold()
     {
-
         $this->Authorization->skipAuthorization();
-        $this->paginate = [
-            'conditions' => ['nivel' => 4],
-            'contain' => ['Tccestudantes', 'Estudantes'],
-        ];
-        $estagiariomonografias = $this->paginate($this->Estagiariomonografias);
+        $estagiariomonografias = $this->Estagiariomonografias->find('all', [
+            'conditions' => ['or' => [['ajuste2020' => '0', 'nivel' => 4], ['ajuste2020' => '1', 'nivel' => 3]]],
+            'contain' => ['Estudantes' => ['Tccestudantes' => ['Monografias']]],
+        ]);
         // pr($estagiarios);
         $this->set(compact('estagiariomonografias'));
     }
 
     /**
-     * Lista method
+     * Index method
      *
+     * @param string|null $periodo
      * @return \Cake\Http\Response|null
      */
-    public function index()
+    public function index($periodo = null)
     {
-
         $this->Authorization->skipAuthorization();
-        $parametros = $this->request->getQueryParams();
-        // pr($parametros);
-        // die();
-        if (!empty($parametros)):
-            $criterio = $parametros['sort'];
-            $orientacao = $parametros['direction'];
-            $direcao = $orientacao == 'asc' ? SORT_ASC : SORT_DESC;
-        else:
-            $criterio = 'nome';
-            $direcao = SORT_ASC;
-        endif;
-        // echo $criterio;
-        // echo $direcao;
-        // die();
-
         if ($this->request->is('post')) {
-            // echo "Post" . "<br>";
-            if ($this->request->getData()):
-                $dados = $this->request->getData();
-                $periodo = $dados['periodo'];
-                $this->request->getSession()->write('periodo', $periodo);
-            endif;
+            $periodo = $this->request->getData('periodo');
+        } else {
+            $periodo = $this->request->getQuery('periodo');
         }
-        ;
+        $periodos = $this->Estagiariomonografias->find('list', [
+            'keyField' => 'periodo',
+            'valueField' => 'periodo'
+        ])
+        ->order(['periodo' => 'DESC']);
 
-        $periodo = $this->request->getSession()->read('periodo');
-        // echo $periodo . "<br>";
-        // die();
-        if (!empty($periodo)):
-            $estagiariomonografias = $this->Estagiariomonografias->find('all', [
-                'conditions' => ['nivel' => 4, 'periodo' => $periodo],
-                'contain' => ['Tccestudantes', 'Estudantes'],
-            ]);
-        else:
-            $estagiariomonografias = $this->Estagiariomonografias->find('all', [
-                'conditions' => ['nivel' => 4],
-                'contain' => ['Tccestudantes', 'Estudantes'],
-            ]);
-        endif;
-        $this->Authorization->authorize($this->Estagiariomonografias);
-        // debug($estagiarios);
-        // die('estagiarios');
-        $periodos = $this->Estagiariomonografias->find('all', [
-            'conditions' => ['nivel' => 4],
-            'fields' => ['periodo'],
-            'group' => ['periodo']
-        ]);
-        // pr($periodos);
-        // die('periodos');
-        foreach ($periodos as $c_periodo):
-            $totalperiodos[$c_periodo['periodo']] = $c_periodo['periodo'];
-        endforeach;
-        // die();
-        // pr($totalperiodos);
+        if (empty($periodo)) {
+            $periodo = end($periodos); // Pega o último elemento do array
+        }
+
         $this->set('periodo', $periodo);
-        $this->set('periodos', $totalperiodos);
-        // die();
-        $i = 0;
-        // pr($estagiarios);
-        $ordem = null;
-        foreach ($estagiariomonografias as $c_estagiario):
-            // pr($c_estagiario);
-            // die();
-            $estudantes[$i]['registro'] = $c_estagiario->registro;
-            $estudantes[$i]['turno'] = $c_estagiario->turno;
-            $estudantes[$i]['nivel'] = $c_estagiario->nivel;
-            $estudantes[$i]['periodo'] = $c_estagiario->periodo;
+        $this->set('periodos', $periodos->toArray());
 
-            if (isset($c_estagiario->tccestudante['monografia_id']) && $c_estagiario->tccestudante['monografia_id']):
-                $estudantes[$i]['id'] = $c_estagiario->tccestudante->id;
-                $estudantes[$i]['nome'] = $c_estagiario->tccestudante->nome;
-
-                $monografiastable = $this->fetchTable('Monografias');
-                $monografia = $monografiastable->find('all', [
-                    'conditions' => ['Monografias.id' => $c_estagiario->tccestudante->monografia_id]
-                ]);
-                // pr($monografia);
-                $totalmonografia = $monografia->first();
-                // debug($totalmonografia);
-                // die();
-                $estudantes[$i]['monografia_id'] = $c_estagiario->tccestudante->monografia_id;
-                $estudantes[$i]['titulo'] = $totalmonografia['titulo'];
-                $estudantes[$i]['periodo_monog'] = $totalmonografia['periodo'];
-                $ordem[$i][$criterio] = $estudantes[$i][$criterio];
-                // die();
-            else:
-                $estudantes[$i]['nome'] = $c_estagiario->estudante['nome'];
-                $estudantes[$i]['registro'] = $c_estagiario->estudante['registro'];
-                $estudantes[$i]['monografia_id'] = '';
-                $estudantes[$i]['titulo'] = '';
-                $estudantes[$i]['periodo_monog'] = '';
-                $ordem[$i][$criterio] = $estudantes[$i][$criterio];
-            endif;
-
-            // die();
-            $i++;
-        endforeach;
-        // pr($ordem);
-        // die('estudantes');
-        if (isset($ordem) && !empty($ordem)):
-            array_multisort($ordem, $direcao, $estudantes);
-            $this->set(compact('estudantes'));
-        else:
-            $this->Flash->error(__('Não há estudantes que tenham concluído o 4 nivel no período: ' . $periodo));
-            $this->redirect(['controller' => 'estagiariomonografias', 'action' => 'index']);
-        endif;
-
-        // die('sort');
+        if ($periodo) {
+            $estagiariomonografias = $this->Estagiariomonografias->find();
+            $estagiariomonografias = $estagiariomonografias->where([
+                'Estagiariomonografias.periodo' => $periodo
+            ]);
+            $estagiariomonografias = $estagiariomonografias->where([
+                'or' => [
+                    ['ajuste2020' => '0', 'nivel' => 4],
+                    ['ajuste2020' => '1', 'nivel' => 3]
+                ]
+            ]);
+        } else {
+            $estagiariomonografias = $this->Estagiariomonografias->find();
+            $estagiariomonografias = $estagiariomonografias->where([
+                'or' => [
+                    ['ajuste2020' => '0', 'nivel' => 4],
+                    ['ajuste2020' => '1', 'nivel' => 3]
+                ]
+            ]);
+        }
+        $estagiariomonografias = $estagiariomonografias->contain(['Estudantes' => ['Tccestudantes' => ['Monografias']]]);
+        if (empty($estagiariomonografias->toArray())) {
+            $this->Flash->error(__('Nenhum registro encontrado para o período ' . $periodo . ' selecionado.'));
+            return $this->redirect(['action' => 'index']);
+        } else {
+            $estagiariomonografias = $estagiariomonografias->toArray();
+            $this->set(compact('estagiariomonografias', 'periodo', 'periodos'));
+        }
     }
 
     /**
@@ -206,13 +142,13 @@ class EstagiariomonografiasController extends AppController
             'limit' => 200
         ]);
 
-        $Professores = $this->Estagiariomonografias->Docentes->find('list', [
+        $professores = $this->Estagiariomonografias->Docentes->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome',
             'limit' => 200
         ]);
 
-        $this->set(compact('estagiariomonografia', 'alunos', 'Professores'));
+        $this->set(compact('estagiariomonografia', 'alunos', 'professores'));
     }
 
     /**

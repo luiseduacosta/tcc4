@@ -37,6 +37,7 @@ class TccestudantesTable extends Table
         parent::initialize($config);
 
         $this->setTable('tccestudantes');
+        $this->setAlias('Tccestudantes');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
@@ -46,20 +47,11 @@ class TccestudantesTable extends Table
             'joinType' => 'INNER'
         ]);
 
-        // Tccestudantes com alunos
-        $this->hasOne('Alunos', [
-            'targetForeignKey' => 'registro',
-            'foreignKey' => false,
-            'conditions' => 'Tccestudantes.registro = Alunos.registro',
-            'joinType' => 'LEFT'
-        ]);
-
         // Tccestudantes com estudantes para usar em Monografias
         $this->hasOne('Estudantes', [
-            'targetForeignKey' => 'registro',
             'foreignKey' => false,
             'conditions' => 'Tccestudantes.registro = Estudantes.registro',
-            'joinType' => 'LEFT'
+            'joinType' => 'INNER'
         ]);
     }
 

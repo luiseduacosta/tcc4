@@ -16,8 +16,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\InstituicoesTable&\Cake\ORM\Association\BelongsTo $Institucoes
  * @property \App\Model\Table\TurmaestagiosTable&\Cake\ORM\Association\BelongsTo $Turmaestagios
  * @property \App\Model\Table\AvaliacoesTable&\Cake\ORM\Association\HasOne $Avaliacoes
- * @property \App\Model\Table\FolhadeatividadesTable&\Cake\ORM\Association\HasOne $Folhadeatividades
- * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\BelongsTo $Tccestudantes
+ * @property \App\Model\Table\FolhadeatividadesTable&\Cake\ORM\Association\HasMany $Folhadeatividades
  *
  * @method \App\Model\Entity\Estagiariomonografia get($primaryKey, $options = [])
  * @method \App\Model\Entity\Estagiariomonografia newEntity($data = null, array $options = [])
@@ -47,7 +46,10 @@ class EstagiariomonografiasTable extends Table
                 $this->setPrimaryKey('id');
 
                 $this->belongsTo('Estudantes', [
+                        'className' => 'Estudantes',
+                        'targetForeignKey' => 'id',
                         'foreignKey' => 'aluno_id',
+                        'joinType' => 'INNER'
                 ]);
                 $this->belongsTo('Supervisores', [
                         'foreignKey' => 'supervisor_id',
@@ -64,16 +66,9 @@ class EstagiariomonografiasTable extends Table
                 $this->hasOne('Avaliacoes', [
                         'foreignKey' => 'estagiario_id',
                 ]);
-                $this->hasOne('Folhadeatividades', [
+                $this->hasMany('Folhadeatividades', [
                         'foreignKey' => 'estagiario_id',
                 ]);
-                $this->belongsTo('Tccestudantes', [
-                        'className' => 'Tccestudantes',
-                        'foreignKey' => FALSE,
-                        'conditions' => 'Estagiariomonografias.registro = Tccestudantes.registro',
-                        'joinType' => 'LEFT'
-                ]);
-
         }
 
         /**

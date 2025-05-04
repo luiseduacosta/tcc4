@@ -30,7 +30,6 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Turmaestagio[] $turmestagios
  * @property \App\Model\Entity\Avaliacao[] $avaliacoes
  * @property \App\Model\Entity\Folhadeatividade[] $folhadeatividades
- * @property \App\Model\Entity\Tccestudante[] $tccestudantes
  */
 class Estagiariomonografia extends Entity
 {
@@ -68,6 +67,5 @@ class Estagiariomonografia extends Entity
         'areaestagios' => true,
         'avaliacoes' => true,
         'folhadeatividades' => true,
-        'tccestudantes' => true
     ];
 }

@@ -6,23 +6,16 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<?= $this->element('menu_monografias') ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var url = "<?= $this->Html->Url->build(['controller' => 'estagiariomonografias', 'action' => 'index']); ?>";
+        $('#EstagiarioPeriodo').change(function() {
+            window.location = url + '/index?periodo=' + $(this).val();
+        });
+    });
+</script>
 
-<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerEstagiarios"
-            aria-controls="navbarTogglerEstagiarios" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerEstagiarios">
-        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerEstagiarios">
-            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                <li class="nav-item">
-                    <?= $this->Html->link(__('Novo estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
-                </li>
-            <?php endif; ?>
-        </ul>
-    </div>
-</nav>
+<?= $this->element('menu_monografias') ?>
 
 <?= $this->element('templates') ?>
 
@@ -30,42 +23,63 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <h3><?= __('Estagiarios por período e por TCC concluída') ?></h3>
 
-    <?= $this->Form->create(null, ['url' => ['action' => 'index']]) ?>
-    <?= $this->Form->control('periodo', ['label' => 'Busca por 4º periodo de estágio', 'options' => $periodos, 'value' => $this->getRequest()->getSession()->read('periodo'), 'empty' => $periodo]) ?>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+    <div class="col-sm-5">
+        <?= $this->Form->create(null, ['url' => ['action' => 'index']]) ?>
+        <div class="form-group row">
+            <?= $this->Form->control('periodo', ['id' => 'EstagiarioPeriodo', 'type' => 'select', 'label' => 'Período', 'options' => $periodos, 'empty' => [$periodo => $periodo], 'class' => 'form-control']); ?>
+        </div>
+    </div>
 
+    <?php if ($estagiariomonografias): ?>
     <table class="table table-striped table-hover table-responsive">
         <thead class="table-dark">
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('registro') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('turno') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('nivel') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('periodo') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('titulo') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('periodo_monog') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('registro', ['label' => 'DRE']) ?></th>
+                <th scope="col"><?= $this->Paginator->sort('nome', ['label' => 'Estudante']) ?></th>
+                <th scope="col"><?= $this->Paginator->sort('turno', ['label' => 'Turno']) ?></th>
+                <th scope="col"><?= $this->Paginator->sort('nivel', ['label' => 'Nível']) ?></th>
+                <th scope="col"><?= $this->Paginator->sort('periodo', ['label' => 'Período']) ?></th>
+                <th scope="col"><?= $this->Paginator->sort('titulo', ['label' => 'Título']) ?></th>
+                <th scope="col"><?= $this->Paginator->sort('periodo_monog', ['label' => 'Período de monografia']) ?></th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($estudantes as $c_estudante): ?>
-                <?php // pr($c_estudante) ?>
+            <?php foreach ($estagiariomonografias as $c_estagiariomonografia): ?>
+                <?php // pr($c_estagiariomonografia->estudante->tccestudante->monografia) ?>
                 <tr>
-                    <td><?= h($c_estudante['registro']) ?></td>
-                    <?php if (!empty($c_estudante['id'])): ?>
-                        <td><?= $this->Html->link($c_estudante['nome'], ['controller' => 'Tccestudantes', 'action' => 'view', $c_estudante['id']]) ?>
+                    <td><?= h($c_estagiariomonografia->estudante->registro) ?></td>
+                    <?php if (!empty($c_estagiariomonografia->estudante->id)): ?>
+                        <td><?= $this->Html->link($c_estagiariomonografia->estudante->nome, ['controller' => 'Tccestudantes', 'action' => 'view', $c_estagiariomonografia->estudante->id]) ?>
                         </td>
                     <?php else: ?>
-                        <td><?= h($c_estudante['nome']) ?></td>
+                        <td><?= h($c_estagiariomonografia->estudante->nome) ?></td>
                     <?php endif; ?>
-                    <td><?= h($c_estudante['turno']) ?></td>
-                    <td><?= h($c_estudante['nivel']) ?></td>
-                    <td><?= h($c_estudante['periodo']) ?></td>
-                    <td><?= $this->Html->link($c_estudante['titulo'], ['controller' => 'Monografias', 'action' => 'view', $c_estudante['monografia_id']]) ?>
+                    <td><?= h($c_estagiariomonografia->turno) ?></td>
+                    <td><?= h($c_estagiariomonografia->nivel) ?></td>
+                    <td><?= h($c_estagiariomonografia->periodo) ?></td>
+                    <td><?= $this->Html->link($c_estagiariomonografia->estudante->tccestudante->monografia->titulo, ['controller' => 'Monografias', 'action' => 'view', $c_estagiariomonografia->estudante->tccestudante->monografia->id]) ?>
                     </td>
-                    <td><?= h($c_estudante['periodo_monog']) ?></td>
+                    <td><?= h($c_estagiariomonografia->estudante->tccestudante->monografia->periodo_monog) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?php endif; ?>
+
+    <?php if ($this->Paginator->hasPage()): ?>
+        <?= $this->element('templates') ?>
+        <div class="d-flex justify-content-center">
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('first')) ?>
+                <?= $this->Paginator->prev('< ' . __('previous')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('next') . ' >') ?>
+                <?= $this->Paginator->last(__('last') . ' >>') ?>
+            </ul>
+        </div>
+        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+        </p>
+    </div>
+    <?php endif; ?>
 </div>

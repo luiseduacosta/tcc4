@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // die();
 ?>
 
-<?php echo $this->element('menu_monografias'); ?>
+<?= $this->element('menu_monografias') ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= h($estagiariomonografia->estudante->nome) ?></h3>
@@ -35,38 +35,38 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
 
         <tr>
-            <th scope="row"><?= __('Nivel') ?></th>
+            <th scope="row"><?= __('Nível') ?></th>
             <td><?= h($estagiariomonografia->nivel) ?></td>
         </tr>
 
         <tr>
             <th scope="row"><?= __('Docente') ?></th>
-            <td><?= $estagiariomonografia->has('docentemonografia') ? $this->Html->link($estagiariomonografia->docentemonografia->id, ['controller' => 'Professoresmonografia', 'action' => 'view', $estagiariomonografia->docentemonografia->id]) : '' ?>
+            <td><?= $estagiariomonografia->has('docente') ? $this->Html->link($estagiariomonografia->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $estagiariomonografia->docente->id]) : '' ?>
             </td>
         </tr>
 
         <tr>
-            <th scope="row"><?= __('Periodo') ?></th>
+            <th scope="row"><?= __('Período') ?></th>
             <td><?= h($estagiariomonografia->periodo) ?></td>
         </tr>
 
         <tr>
-            <th scope="row"><?= __('Termo compromisso') ?></th>
+            <th scope="row"><?= __('Termo de compromisso') ?></th>
             <td><?= $estagiariomonografia->tc ?></td>
         </tr>
 
         <tr>
-            <th scope="row"><?= __('Tc Solicitacao') ?></th>
+            <th scope="row"><?= __('Solicitação de TC') ?></th>
             <td><?= h($estagiariomonografia->tc_solicitacao) ?></td>
         </tr>
 
         <tr>
-            <th scope="row"><?= __('Instituicao') ?></th>
+            <th scope="row"><?= __('Instituição') ?></th>
             <td><?= $estagiariomonografia->instituicao_id ?></td>
         </tr>
 
         <tr>
-            <th scope="row"><?= __('Supervisor') ?></th>
+            <th scope="row"><?= __('Supervisor(a)') ?></th>
             <td><?= $estagiariomonografia->supervisor_id ?></td>
         </tr>
 
@@ -81,12 +81,12 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
 
         <tr>
-            <th scope="row"><?= __('Ch') ?></th>
+            <th scope="row"><?= __('Carga horária') ?></th>
             <td><?= $this->Number->format($estagiariomonografia->ch) ?></td>
         </tr>
 
         <tr>
-            <th scope="row"><?= __('Observacoes') ?></th>
+            <th scope="row"><?= __('Observações') ?></th>
             <td><?= h($estagiariomonografia->observacoes) ?></td>
         </tr>
     </table>

@@ -34,12 +34,14 @@ class EstudantesTable extends Table
         parent::initialize($config);
 
         $this->setTable('alunos');
+        $this->setAlias('Estudantes');
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 
         /** A tabela Estagiarios tem um campo aluno_id que se conexta com o id de Estudantess */
-        $this->hasMany('Estagiarios', [
-            'targetForeignKey' => 'aluno_id',
+        $this->hasMany('Estagiariomonografias', [
+            'className' => 'Estagiariomonografias',
+            'targetForeignKey' => 'id',
             'foreignKey' => 'aluno_id',
             'joinType' => 'INNER'
         ]);
@@ -49,7 +51,7 @@ class EstudantesTable extends Table
             'targetForeignKey' => 'registro',
             'foreignKey' => false,
             'conditions' => 'Estudantes.registro = Tccestudantes.registro',
-            'joinType' => 'LEFT'
+            'joinType' => 'INNER'
         ]);
     }
 
