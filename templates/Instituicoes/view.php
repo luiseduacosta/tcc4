@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Instituicao $instituicao
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($instituicao);
+// pr($instituicao->muralestagios);
 ?>
 
 <?php echo $this->element('menu_mural') ?>
@@ -60,7 +60,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="row">
     <div class="tab-content">
         <div id="instituicao" class="tab-pane container active show">
-            <h3><?= $instituicaoestagio->instituicao ?></h3>
+            <h3><?= $instituicao->instituicao ?></h3>
             <table class="table table-responsive table-hover table-striped">
                 <tr>
                     <th><?= __('Id') ?></th>
@@ -286,7 +286,6 @@ $user = $this->getRequest()->getAttribute('identity');
                             <?php endif; ?>
                         </tr>
                         <?php foreach ($instituicao->muralestagios as $muralestagios): ?>
-                            <?php // pr($muralestagios) ?>
                             <tr>
                                 <td><?= h($muralestagios->id) ?></td>
                                 <td><?= $this->Html->link($muralestagios->instituicao, ['controller' => 'muralestagios', 'action' => 'view', $muralestagios->id]) ?>

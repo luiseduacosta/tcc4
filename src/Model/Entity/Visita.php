@@ -9,7 +9,7 @@ use Cake\ORM\Entity;
  * Visita Entity
  *
  * @property int $id
- * @property int $instituicaoestagio_id
+ * @property int $instituicao_id
  * @property \Cake\I18n\FrozenDate $data
  * @property string $motivo
  * @property string $responsavel
@@ -30,7 +30,7 @@ class Visita extends Entity
      * @var array
      */
     protected $_accessible = [
-        'estagio_id' => true,
+        'instituicao_id' => true,
         'data' => true,
         'motivo' => true,
         'responsavel' => true,
