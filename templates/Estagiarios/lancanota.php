@@ -60,7 +60,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('ch', 'CH') ?></th>
                 <th><?= $this->Paginator->sort('folhadeatividades', 'Folha de atividades') ?></th>
                 <th><?= $this->Paginator->sort('avaliacao', 'Avaliação discente') ?></th>
-                <th class="actions"><?= __('Ações') ?></th>
+                <th><?= __('Ações') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -94,7 +94,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php else: ?>
                         <td></td>
                     <?php endif; ?>
-                    <td class="row">
+                    <td>
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $estagiario['id']]) ?>
                         <?php if ($this->getRequest()->getSession()->read('categoria') == 1): ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $estagiario['id']]) ?>

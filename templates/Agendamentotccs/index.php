@@ -61,14 +61,11 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($agendamentotcc->sala) ?></td>
                     <td><?= h($agendamentotcc->titulo) ?></td>
                     <td><?= h($agendamentotcc->avaliacao) ?></td>
-                    <td class="row">
+                    <td>
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $agendamentotcc->id]) ?>
                         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id]) ?>
-                            <?= $this->Form->postLink(__('Excluir'), ['
-                            action' => 'delete',
-                                $agendamentotcc->id
-                            ], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $agendamentotcc->id)]) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $agendamentotcc->id)]) ?>
                         <?php endif; ?>
                     </td>
                 </tr>

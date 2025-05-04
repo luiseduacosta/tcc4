@@ -39,7 +39,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('estagiario.ch', 'Carga horária') ?></th>
                 <th><?= $this->Paginator->sort('estagiario.nota', 'Nota') ?></th>
                 <?php if (isset($user) && $user->categoria == '1'): ?>
-                    <th class="actions"><?= __('Ações') ?></th>
+                    <th><?= __('Ações') ?></th>
                 <?php endif; ?>
             </tr>
         </thead>
@@ -67,7 +67,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         
                     <?php if (isset($user) && $user->categoria == '1'): ?>
                         <?php if (isset($c_estagiario->estagiario->id)): ?>
-                            <td class="actions">
+                            <td>
                                 <?= $this->Html->link(__('Ver'), ['action' => 'view', $c_estagiario->id]) ?>
                                 <?= $this->Html->link(__('Editar'), ['action' => 'edit', $c_estagiario->id]) ?>
                                 <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $c_estagiario->id], ['confirm' => __('Tem certeza que deseja excluir a avaliação # {0}?', $c_estagiario->id)]) ?>

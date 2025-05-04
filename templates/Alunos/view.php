@@ -153,7 +153,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <th><?= __('Data') ?></th>
                     <th><?= __('Período') ?></th>
                     <th><?= __('Timestamp') ?></th>
-                    <th class="row"><?= __('Ações') ?></th>
+                    <th><?= __('Ações') ?></th>
                 </tr>
             </thead>
             <?php foreach ($aluno->muralinscricoes as $muralinscricoes): ?>
@@ -165,7 +165,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= $muralinscricoes->data->i18nFormat('dd-MM-yyyy') ?></td>
                     <td><?= h($muralinscricoes->periodo) ?></td>
                     <td><?= $muralinscricoes->timestamp->i18nFormat('dd-MM-yyyy') ?></td>
-                    <td class="row">
+                    <td>
                         <?= $this->Html->link(__('Ver'), ['controller' => 'Muralinscricoes', 'action' => 'view', $muralinscricoes->id]) ?>
                         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                             <?= $this->Html->link(__('Editar'), ['controller' => 'Muralinscricoes', 'action' => 'edit', $muralinscricoes->id]) ?>
@@ -202,7 +202,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <th><?= __('Nota') ?></th>
                         <th><?= __('CH') ?></th>
                         <th><?= __('Observações') ?></th>
-                        <th class="row"><?= __('Ações') ?></th>
+                        <th><?= __('Ações') ?></th>
                     <?php endif ?>
                 </tr>
             </thead>
@@ -230,7 +230,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <td><?= h($estagiarios->nota) ?></td>
                         <td><?= h($estagiarios->ch) ?></td>
                         <td><?= h($estagiarios->observacoes) ?></td>
-                        <td class="row">
+                        <td>
                             <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
                             <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                                 <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>

@@ -27,7 +27,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
                 <th><?= $this->Paginator->sort('periodo_especial') ?></th>
-                <th class="actions"><?= __('Ações') ?></th>
+                <th><?= __('Ações') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -35,9 +35,8 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <td><?= $complemento->id ?></td>
                     <td><?= h($complemento->periodo_especial) ?></td>
-                    <td class="row">
+                    <td>
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $complemento->id]) ?>
-
                         <?= $this->Html->link(__('Editar'), ['action' => 'edit', $complemento->id]) ?>
                         <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $complemento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $complemento->id)]) ?>
 

@@ -301,7 +301,7 @@ $this->assign('title', __('Mural de Estágios'));
                             <th><?= __('Periodo') ?></th>
                             <?php if (isset($user) && $user->categoria == 1): ?>
                                 <th><?= __('Timestamp') ?></th>
-                                <th class="actions"><?= __('Ações') ?></th>
+                                <th><?= __('Ações') ?></th>
                             <?php endif; ?>
                         </tr>
                         <?php foreach ($muralestagio->muralinscricoes as $muralinscricoes): ?>
@@ -317,7 +317,7 @@ $this->assign('title', __('Mural de Estágios'));
                                 <td><?= h($muralinscricoes->periodo) ?></td>
                                 <?php if (isset($user) && $user->categoria == 1): ?>
                                     <td><?= $muralinscricoes->timestamp->i18nFormat('dd-MM-yyyy') ?></td>
-                                    <td class="row">
+                                    <td>
                                         <?= $this->Html->link(__('Ver'), ['controller' => 'Muralinscricoes', 'action' => 'view', $muralinscricoes->id]) ?>
                                         <?= $this->Html->link(__('Editar'), ['controller' => 'Muralinscricoes', 'action' => 'edit', $muralinscricoes->id]) ?>
                                         <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Muralinscricoes', 'action' => 'delete', $muralinscricoes->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $muralinscricoes->id)]) ?>

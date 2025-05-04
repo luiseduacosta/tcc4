@@ -166,7 +166,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <th><?= __('Nome') ?></th>
                             <th><?= __('Cress') ?></th>
                             <th><?= __('Observações') ?></th>
-                            <th class="row"><?= __('Ações') ?></th>
+                            <th><?= __('Ações') ?></th>
                         </tr>
                         <?php foreach ($instituicao->supervisores as $supervisores): ?>
                             <tr>
@@ -176,7 +176,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <td><?= h($supervisores->cress) ?></td>
                                 <td><?= h($supervisores->observacoes) ?></td>
                                 <?php if (isset($user) && $user->categoria == 1): ?>
-                                    <td class="row">
+                                    <td>
                                         <?= $this->Html->link(__('Ver'), ['controller' => 'Supervisores', 'action' => 'view', $supervisores->id]) ?>
                                         <?php if (isset($user) && $user->categoria == '1'): ?>
                                             <?= $this->Html->link(__('Editar'), ['controller' => 'Supervisores', 'action' => 'edit', $supervisores->id]) ?>
@@ -215,7 +215,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <th><?= __('Nota') ?></th>
                                 <th><?= __('CH') ?></th>
                                 <th><?= __('Observações') ?></th>
-                                <th class="row"><?= __('Ações') ?></th>
+                                <th><?= __('Ações') ?></th>
                             <?php endif; ?>
                         </tr>
                         <?php foreach ($instituicao->estagiarios as $estagiarios): ?>
@@ -258,7 +258,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                     <td><?= $this->Number->format($estagiarios->nota, ['places' => 2]) ?></td>
                                     <td><?= h($estagiarios->ch) ?></td>
                                     <td><?= h($estagiarios->observacoes) ?></td>
-                                    <td class="row">
+                                    <td>
                                         <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
                                         <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
                                         <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $estagiarios->id)]) ?>
@@ -282,7 +282,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <th><?= __('Vagas') ?></th>
                             <th><?= __('Periodo') ?></th>
                             <?php if (isset($user) && $user->categoria == '1'): ?>
-                                <th class="actions"><?= __('Ações') ?></th>
+                                <th><?= __('Ações') ?></th>
                             <?php endif; ?>
                         </tr>
                         <?php foreach ($instituicao->muralestagios as $muralestagios): ?>
@@ -294,7 +294,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <td><?= h($muralestagios->vagas) ?></td>
                                 <td><?= h($muralestagios->periodo) ?></td>
                                 <?php if (isset($user) && $user->categoria == '1'): ?>
-                                    <td class="row">
+                                    <td>
                                         <?= $this->Html->link(__('Ver'), ['controller' => 'Muralestagios', 'action' => 'view', $muralestagios->id]) ?>
                                         <?= $this->Html->link(__('Editar'), ['controller' => 'Muralestagios', 'action' => 'edit', $muralestagios->id]) ?>
                                         <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Muralestagios', 'action' => 'delete', $muralestagios->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralestagios->id)]) ?>
@@ -321,7 +321,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <th><?= __('Descrição') ?></th>
                             <th><?= __('Avaliação') ?></th>
                             <?php if (isset($user) && $user->categoria == '1'): ?>
-                                <th class="row"><?= __('Ações') ?></th>
+                                <th><?= __('Ações') ?></th>
                             <?php endif; ?>
                         </tr>
                         <?php foreach ($instituicao->visitas as $visitas): ?>
@@ -334,7 +334,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <td><?= h($visitas->descricao) ?></td>
                                 <td><?= h($visitas->avaliacao) ?></td>
                                 <?php if (isset($user) && $user->categoria == '1'): ?>
-                                    <td class="row">
+                                    <td>
                                         <?= $this->Html->link(__('Ver'), ['controller' => 'Visitas', 'action' => 'view', $visitas->id]) ?>
                                         <?= $this->Html->link(__('Editar'), ['controller' => 'Visitas', 'action' => 'edit', $visitas->id]) ?>
                                         <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Visitas', 'action' => 'delete', $visitas->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $visitas->id)]) ?>

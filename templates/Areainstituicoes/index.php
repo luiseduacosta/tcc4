@@ -28,7 +28,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <tr>
                 <th><?= $this->Paginator->sort('id', 'ID') ?></th>
                 <th><?= $this->Paginator->sort('area', 'Área') ?></th>
-                <th class="actions"><?= __('Ações') ?></th>
+                <th><?= __('Ações') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -36,7 +36,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <td><?= $areainstituicao->id ?></td>
                     <td><?= h($areainstituicao->area) ?></td>
-                    <td class="actions">
+                    <td>
                         <?= $this->Html->link(__('Ver'), ['controller' => 'Areainstituicoes', 'action' => 'view', $areainstituicao->id]) ?>
                         <?= $this->Html->link(__('Editar'), ['controller' => 'Areainstituicoes', 'action' => 'edit', $areainstituicao->id]) ?>
                         <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Areainstituicoes', 'action' => 'delete', $areainstituicao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $areainstituicao->id)]) ?>

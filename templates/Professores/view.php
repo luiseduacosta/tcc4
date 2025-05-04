@@ -265,7 +265,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <th><?= __('Nota') ?></th>
                         <th><?= __('CH') ?></th>
                         <th><?= __('Observações') ?></th>
-                        <th class="row"><?= __('Ações') ?></th>
+                        <th><?= __('Ações') ?></th>
                     <?php endif; ?>
                 </tr>
                 <?php foreach ($professor->estagiarios as $estagiarios): ?>
@@ -289,7 +289,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($estagiarios->nota) ?></td>
                             <td><?= h($estagiarios->ch) ?></td>
                             <td><?= h($estagiarios->observacoes) ?></td>
-                            <td class="row">
+                            <td>
                                 <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
                                 <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
                                 <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiarios->id)]) ?>
@@ -322,7 +322,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <th><?= __('Nota') ?></th>
                         <th><?= __('CH') ?></th>
                         <th><?= __('Observações') ?></th>
-                        <th class="actions"><?= __('Ações') ?></th>
+                        <th><?= __('Ações') ?></th>
                     <?php endif; ?>
                 </tr>
                 <?php foreach ($professor->estagiarios as $estagiarios): ?>
@@ -354,7 +354,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($estagiarios->nota) ?></td>
                             <td><?= h($estagiarios->ch) ?></td>
                             <td><?= h($estagiarios->observacoes) ?></td>
-                            <td class="row">
+                            <td>
                                 <?= $this->Html->link(__('Atividades'), ['controller' => 'Folhadeatividades', 'action' => 'index', '?' => ['estagiario_id' => $estagiarios->id]]) ?>
                                 <?php if (isset($user) && $user->categoria == '1'): ?>
                                     <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>

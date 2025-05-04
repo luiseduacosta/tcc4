@@ -55,7 +55,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('data') ?></th>
                 <th><?= $this->Paginator->sort('periodo') ?></th>
                 <th><?= $this->Paginator->sort('timestamp') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
+                <th><?= __('Ações') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -70,7 +70,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= date('d-m-Y', strtotime(h($muralinscricao->data))) ?></td>
                     <td><?= h($muralinscricao->periodo) ?></td>
                     <td><?= h($muralinscricao->timestamp) ?></td>
-                    <td class="ros">
+                    <td>
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $muralinscricao->id]) ?>
                         <?php if (isset($user) && $user->categoria == '1'): ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $muralinscricao->id]) ?>
