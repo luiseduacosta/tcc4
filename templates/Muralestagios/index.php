@@ -38,6 +38,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php endif; ?>
 </nav>
 
+<p class='h3' style="text-align: center;">Mural de estágios da ESS/UFRJ. Período: <?= $periodo; ?></p>
 <?php if (isset($user) && $user['categoria'] == '1'): ?>
     <?= $this->Form->create($muralestagios); ?>
     <div class="d-flex justify-content-center">
@@ -49,14 +50,11 @@ $user = $this->getRequest()->getAttribute('identity');
         </div>
     </div>
     <?= $this->Form->end(); ?>
-<?php else: ?>
-    <h1 style="text-align: center;">Mural de estágios da ESS/UFRJ. Período: <?= $periodo; ?></h1>
 <?php endif; ?>
 
 <?= $this->element('templates') ?>
 
 <div class="container col-lg-10 shadow p-3 mb-5 bg-white rounded">
-    <h3><?= __('Mural de estagios') ?></h3>
     <table class="table table-striped table-hover table-responsive">
         <thead class="table-dark">
             <tr>
