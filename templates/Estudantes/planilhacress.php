@@ -2,6 +2,7 @@ s<?php
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estudante $estudante
+ * @var \Cake\ORM\ResultSet<\App\Model\Entity\Estudante> $estudantes
  */
 // pr($cress);
 // pr($periodos);

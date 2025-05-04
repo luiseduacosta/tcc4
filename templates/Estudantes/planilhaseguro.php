@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Estudante $estudante
+ * @var \Cake\ORM\ResultSet<\App\Model\Entity\Estudante> $estudantes
  */
 $user = $this->getRequest()->getAttribute('identity');
 ?>
