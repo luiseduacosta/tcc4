@@ -53,7 +53,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <th><?= $this->Paginator->sort('natureza', 'Natureza') ?></th>
                         <th><?= $this->Paginator->sort('cnpj', 'CNPJ') ?></th>
                         <th><?= $this->Paginator->sort('email', 'Email') ?></th>
-                        <th class="row"><?= __('Ações') ?></th>
+                        <th><?= __('Ações') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +67,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($instituicao->natureza) ?></td>
                             <td><?= h($instituicao->cnpj) ?></td>
                             <td><?= h($instituicao->email) ?></td>
-                            <td class="row">
+                            <td>
                                 <?= $this->Html->link(__('View'), ['action' => 'view', $instituicao->id]) ?>
                                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $instituicao->id]) ?>
@@ -96,7 +96,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <th><?= $this->Paginator->sort('cep', 'CEP') ?></th>
                         <th><?= $this->Paginator->sort('telefone', 'Telefone') ?></th>
                         <th><?= $this->Paginator->sort('fax', 'Fax') ?></th>
-                        <th class="row"><?= __('Ações') ?></th>
+                        <th><?= __('Ações') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -112,7 +112,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($instituicao->cep) ?></td>
                             <td><?= h($instituicao->telefone) ?></td>
                             <td><?= h($instituicao->fax) ?></td>
-                            <td class="row">
+                            <td>
                                 <?= $this->Html->link(__('View'), ['action' => 'view', $instituicao->id]) ?>
                                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $instituicao->id]) ?>
@@ -140,7 +140,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <th><?= $this->Paginator->sort('convenio', 'Convenio') ?></th>
                         <th><?= $this->Paginator->sort('expira', 'Expira') ?></th>
                         <th><?= $this->Paginator->sort('seguro', 'Seguro') ?></th>
-                        <th class="row"><?= __('Ações') ?></th>
+                        <th><?= __('Ações') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -155,7 +155,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($instituicao->convenio) ?></td>
                             <td><?= h($instituicao->expira) ?></td>
                             <td><?= h($instituicao->seguro) ?></td>
-                            <td class="row">
+                            <td>
                                 <?= $this->Html->link(__('View'), ['action' => 'view', $instituicao->id]) ?>
                                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $instituicao->id]) ?>

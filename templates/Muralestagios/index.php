@@ -70,7 +70,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('dataSelecao', 'Data de seleção') ?></th>
                 <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
                 <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
-                    <th class="actions"><?= __('Ações') ?></th>
+                    <th><?= __('Ações') ?></th>
                 <?php endif; ?>
             </tr>
         </thead>
@@ -88,7 +88,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= isset($muralestagio->dataSelecao) ? $muralestagio->dataSelecao->i18nFormat('dd-MM-yyyy') : '' ?></td>
                     <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
                     <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
-                        <td class="actions">
+                        <td>
                             <?= $this->Html->link(__('Ver'), ['action' => 'view', $muralestagio->id]) ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $muralestagio->id]) ?>
                             <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $muralestagio->id], ['confirm' => __('Tem certeza quer quer excluir este registro # {0}?', $muralestagio->id)]) ?>

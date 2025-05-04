@@ -30,7 +30,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
                 <th><?= $this->Paginator->sort('area') ?></th>
-                <th class="actions"><?= __('Ações') ?></th>
+                <th><?= __('Ações') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -38,7 +38,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <td><?= $turmaestagio->id ?></td>
                     <td><?= h($turmaestagio->area) ?></td>
-                    <td class="actions">
+                    <td>
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $turmaestagio->id]) ?>
                         <?php if (isset($user) && $user->categoria_id == 1): ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $turmaestagio->id]) ?>

@@ -27,11 +27,25 @@ class AvaliacoesController extends AppController
     /**
      * Index method
      *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function index()
+    {
+        $this->Authorization->skipAuthorization();
+        $user = $this->getRequest()->getAttribute('identity');
+        $this->set('user', $user);
+        $avaliacoes = $this->Avaliacoes->find()->contain(['Estagiarios' => ['Alunos', 'Supervisores', 'Instituicoes']]);
+        $this->set('estagiarios', $this->paginate($avaliacoes));
+    }
+
+    /**
+     * Avaliacoes method
+     *
      * @param string|null $id Estagiario id.
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function index($id = NULL)
+    public function avaliacoes($id = NULL)
     {
         /** O id enviado pelo submenu_navegacao corresponde ao estagiario_id */
         $this->Authorization->skipAuthorization();
@@ -40,7 +54,7 @@ class AvaliacoesController extends AppController
             $this->Flash->error(__('Selecionar estagiário'));
             $user = $this->getRequest()->getAttribute('identity');
             if ($user->categoria == '2'):
-                return $this->redirect(['controller' => 'alunos', 'action' => 'view', $user->numero]);
+                return $this->redirect(['controller' => 'alunos', 'action' => 'view', $user->estudante->id]);
             else:
                 return $this->redirect(['controller' => 'alunos', 'action' => 'index']);
             endif;
@@ -84,7 +98,7 @@ class AvaliacoesController extends AppController
             endif;
         } else {
             $estagiario = $this->Avaliacoes->Estagiarios->find()
-                ->contain(['Supervisores', 'Estudantes', 'Professores', 'Folhadeatividades'])
+                ->contain(['Supervisores', 'Alunos', 'Professores', 'Folhadeatividades'])
                 ->where(['Supervisores.cress' => $cress])
                 ->order(['periodo' => 'desc'])
                 ->first();
@@ -103,7 +117,7 @@ class AvaliacoesController extends AppController
     {
 
         $avaliacao = $this->Avaliacoes->get($id, [
-            'contain' => ['Estagiarios' => ['Estudantes', 'Professores', 'Instituicaoestagios', 'Supervisores']],
+            'contain' => ['Estagiarios' => ['Alunos', 'Professores', 'Instituicoes', 'Supervisores']],
         ]);
         $this->Authorization->authorize($avaliacao);
 
@@ -266,7 +280,7 @@ class AvaliacoesController extends AppController
                 ->first();
             if (is_null($avaliacao)) {
                 $this->Flash->error(__('Avaliação não encontrada.'));
-                return $this->redirect(['controller' => 'estagiarios', 'action' => 'index', $estagiario_id]);
+                return $this->redirect(['controller' => 'estagiarios', 'action' => 'view', $estagiario_id]);
             }
         }
 

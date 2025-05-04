@@ -10,9 +10,7 @@ $now = new \Cake\I18n\FrozenTime();
 // pr($aluno);
 ?>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
+<script type="text/javascript">
     function getaluno(id) {
         $.ajax({
             url: '<?= $this->Url->build(['controller' => 'Alunos', 'action' => 'getaluno']) ?>',
@@ -117,7 +115,7 @@ $now = new \Cake\I18n\FrozenTime();
         echo $this->Form->control('professor_id', ['label' => 'Professor', 'options' => $professores, 'empty' => true]);
         echo $this->Form->control('periodo', ['label' => 'Período', 'value' => $periodo->mural_periodo_atual]);
         echo $this->Form->control('turmaestagio_id', ['label' => 'Turma de estágio', 'options' => $turmaestagios, 'empty' => true]);
-        if (isset($user->categoria) && $user->categoria == '1') {
+        if (isset($user) && $user->categoria == '1') {
             echo $this->Form->control('nota', ['label' => 'Nota', 'value' => '', 'readonly' => true]);
             echo $this->Form->control('ch', ['label' => 'Carga horária', 'value' => '', 'readonly' => true]);
             echo $this->Form->control('observacoes', ['type' => 'textarea', 'rows' => '3', 'cols' => '40', 'label' => 'Observações', 'value' => '']);

@@ -26,7 +26,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('estagiario->ch', 'Carga horária') ?></th>
                 <th><?= $this->Paginator->sort('estagiario->nota', 'Nota') ?></th>
                 <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
-                    <th class="actions"><?= __('Ações') ?></th>
+                    <th><?= __('Ações') ?></th>
                 <?php endif; ?>
             </tr>
         </thead>
@@ -58,7 +58,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
                     <?php if ($this->getRequest()->getAttribute('identity')['categoria'] == 1): ?>
                         <?php if (isset($c_estagiario->id)): ?>
-                            <td class="actions">
+                            <td>
                                 <?= $this->Html->link(__('View'), ['action' => 'view', $c_estagiario->id], ['class' => 'btn btn-info']) ?>
                                 <?= $this->Html->link(__('Editar'), ['action' => 'edit', $c_estagiario->id], ['class' => 'btn btn-warning']) ?>
                                 <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $c_estagiario->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $c_estagiario->id), 'class' => 'btn btn-danger']) ?>

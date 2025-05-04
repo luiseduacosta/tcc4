@@ -6,7 +6,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<script>
+<script type="text/javascript">
     function getaluno(id) {
         $.ajax({
             url: '<?= $this->Url->build(['controller' => 'Alunos', 'action' => 'getaluno']) ?>',

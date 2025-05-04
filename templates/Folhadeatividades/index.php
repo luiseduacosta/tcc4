@@ -79,7 +79,7 @@ if ($professora) {
                 <th><?= $this->Paginator->sort('final') ?></th>
                 <th><?= $this->Paginator->sort('horario', 'Horas') ?></th>
                 <th><?= $this->Paginator->sort('atividade') ?></th>
-                <th class="actions"><?= __('Ações') ?></th>
+                <th><?= __('Ações') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -93,7 +93,7 @@ if ($professora) {
                     <td><?= h($folhadeatividade->final) ?></td>
                     <td><?= h($folhadeatividade->horario) ?></td>
                     <td><?= h($folhadeatividade->atividade) ?></td>
-                    <td class="actions">
+                    <td>
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $folhadeatividade->id], ['class' => 'btn btn-info']) ?>
                         <?php if ($user->categoria == '1' || $user->categoria == '2'): ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $folhadeatividade->id], ['class' => 'btn btn-warning']) ?>

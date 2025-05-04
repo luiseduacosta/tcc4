@@ -37,7 +37,7 @@
                 <th><?= $this->Paginator->sort('codigo_cel', 'DDD') ?></th>
                 <th><?= $this->Paginator->sort('celular', 'Celular') ?></th>
                 <th><?= $this->Paginator->sort('email', 'E-mail') ?></th>
-                <th class="row"><?= __('Ações') ?></th>
+                <th><?= __('Ações') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -57,7 +57,7 @@
                     <td><?= h($supervisor->codigo_cel) ?></td>
                     <td><?= h($supervisor->celular) ?></td>
                     <td><?= h($supervisor->email) ?></td>
-                    <td class="row">
+                    <td>
                         <?= $this->Html->link(__('Ver'), ['controller' => 'Supervisores', 'action' => 'view', $supervisor->id]) ?>
                         <?php if (isset($user) && $user['categoria'] == '1'): ?>
                             <?= $this->Html->link(__('Editar'), ['controller' => 'Supervisores', 'action' => 'edit', $supervisor->id]) ?>

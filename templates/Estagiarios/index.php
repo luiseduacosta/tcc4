@@ -64,7 +64,7 @@ $user = $this->getRequest()->getAttribute('identity');
             var turmaestagio = $(this).val();
             window.location = url + '/index?periodo=' + $('#EstagiarioPeriodo').val() + '&turmaestagio=' + turmaestagio;
         })
-        
+
     })
 </script>
 
@@ -84,41 +84,35 @@ $user = $this->getRequest()->getAttribute('identity');
     </nav>
 <?php endif; ?>
 
-<div class="f-flex justify-content-center py-2">
+<div class="d-flex justify-content-center py-1">
     <?php if (isset($user) && $user->categoria == '1'): ?>
-        <?= $this->Form->create($estagiarios); ?>
-        <div class="form-group row">
-            <label for='EstagiarioPeriodo' class="col-sm-1 col-form-label p-2">Período</label>
-            <div class="col-sm-1 p-1">
-                <?= $this->Form->control('periodo', ['id' => 'EstagiarioPeriodo', 'type' => 'select', 'label' => false, 'options' => $periodos, 'empty' => [$periodo => $periodo], 'class' => 'form-control']); ?>
-            </div>
-        </div>
-        <?= $this->Form->end(); ?>
-    <?php else: ?>
-        <h1 style="text-align: center;">Estagiários da ESS/UFRJ. Período: <?= $periodo ?></h1>
+        <p class="h3">Estagiários da ESS/UFRJ</p>
     <?php endif; ?>
 </div>
 
-<div class="row">
+<div class="row justify-content-start bg-dark p-1">
 
-<?php $niveis = ['1' => '1º', '2' => '2º', '3' => '3º', '4' => '4º', '9' => 'Não curricular']; ?>
-
-    <div class="col-sm-2">
-            <?= $this->Form->create($estagiarios); ?>
-            <div class="form-group row">
-            <div class="col-sm-4 p-1">
-                <?= $this->Form->control('nivel', ['id' => 'EstagiarioNivel', 'type' => 'select', 'label' => false, 'options' => $niveis, 'empty' => 'Nível', 'class' => 'form-control']); ?>
-            </div>
-            </div>
+    <div class="col-sm-1">
+        <?= $this->Form->create($estagiarios); ?>
+        <div class="form-group row">
+            <?= $this->Form->control('periodo', ['id' => 'EstagiarioPeriodo', 'type' => 'select', 'label' => false, 'options' => $periodos, 'empty' => [$periodo => $periodo], 'class' => 'form-control']); ?>
+        </div>
     </div>
 
-<?php if (!empty($instituicoes)): ?>
+    <?php $niveis = ['1' => '1º', '2' => '2º', '3' => '3º', '4' => '4º', '9' => 'Não curricular']; ?>
+
+    <div class="col-sm-1">
+        <?= $this->Form->create($estagiarios); ?>
+        <div class="form-group row">
+            <?= $this->Form->control('nivel', ['id' => 'EstagiarioNivel', 'type' => 'select', 'label' => false, 'options' => $niveis, 'empty' => 'Nível', 'class' => 'form-control']); ?>
+        </div>
+    </div>
+
+    <?php if (!empty($instituicoes)): ?>
         <div class="col-sm-2">
             <?= $this->Form->create($estagiarios); ?>
             <div class="form-group row">
-            <div class="col-sm-4 p-1">
                 <?= $this->Form->control('instituicao_id', ['id' => 'EstagiarioInstituicao', 'type' => 'select', 'label' => false, 'options' => $instituicoes, 'empty' => 'Instituição', 'class' => 'form-control']); ?>
-            </div>
             </div>
         </div>
     <?php endif; ?>
@@ -126,10 +120,8 @@ $user = $this->getRequest()->getAttribute('identity');
     <?php if (!empty($supervisores)): ?>
         <div class="col-sm-2">
             <?= $this->Form->create($estagiarios); ?>
-        <div class="form-group row">
-            <div class="col-sm-4 p-1">
-                <?= $this->Form->control('supervisor_id', ['id' => 'EstagiarioSupervisor', 'type' => 'select', 'label' => false, 'options' => $supervisores, 'empty' => 'Supervisor', 'class' => 'form-control']); ?>
-                </div>
+            <div class="form-group row">
+                <?= $this->Form->control('supervisor_id', ['id' => 'EstagiarioSupervisor', 'type' => 'select', 'label' => false, 'options' => $supervisores, 'empty' => 'Supervisor(a)', 'class' => 'form-control']); ?>
             </div>
         </div>
     <?php endif; ?>
@@ -138,20 +130,16 @@ $user = $this->getRequest()->getAttribute('identity');
         <div class="col-sm-2">
             <?= $this->Form->create($estagiarios); ?>
             <div class="form-group row">
-            <div class="col-sm-4 p-1">
-                <?= $this->Form->control('professor_id', ['id' => 'EstagiarioProfessor', 'type' => 'select', 'label' => false, 'options' => $professores, 'empty' => 'Professor', 'class' => 'form-control']); ?>
-            </div>
+                <?= $this->Form->control('professor_id', ['id' => 'EstagiarioProfessor', 'type' => 'select', 'label' => false, 'options' => $professores, 'empty' => 'Professor(a)', 'class' => 'form-control']); ?>
             </div>
         </div>
     <?php endif; ?>
 
     <?php if (!empty($turmaestagios)): ?>
-        <div class="col-sm-2">
+        <div class="col-sm-1">
             <?= $this->Form->create($estagiarios); ?>
-        <div class="form-group row">
-                <div class="col-sm-4 p-1">
-                    <?= $this->Form->control('turmaestagio_id', ['id' => 'EstagiarioTurmaestagio', 'type' => 'select', 'label' => false, 'options' => $turmaestagios, 'empty' => 'Turma', 'class' => 'form-control']); ?>
-                </div>
+            <div class="form-group row">
+                <?= $this->Form->control('turmaestagio_id', ['id' => 'EstagiarioTurmaestagio', 'type' => 'select', 'label' => false, 'options' => $turmaestagios, 'empty' => 'Turma', 'class' => 'form-control']); ?>
             </div>
         </div>
     <?php endif; ?>
@@ -159,28 +147,24 @@ $user = $this->getRequest()->getAttribute('identity');
 </div>
 
 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
-    <h3><?= __('Estagiarios') ?></h3>
     <table class="table table-striped table-hover table-responsive">
-        <thead class="thead-dark">
+        <thead class="table-info">
             <tr>
                 <th><?= $this->Paginator->sort('Estagiarios.id', 'Id') ?></th>
                 <th><?= $this->Paginator->sort('Alunos.nome', 'Estudante') ?></th>
-                <th><?= $this->Paginator->sort('registro') ?></th>
+                <th><?= $this->Paginator->sort('registro', ) ?></th>
                 <th><?= $this->Paginator->sort('ajuste2020', 'Ajuste 2020') ?></th>
-                <th><?= $this->Paginator->sort('turno') ?></th>
-                <th><?= $this->Paginator->sort('nivel') ?></th>
-                <th><?= $this->Paginator->sort('tc') ?></th>
-                <th><?= $this->Paginator->sort('tc_solicitacao') ?></th>
-                <th><?= $this->Paginator->sort('Instituicoes.instituicao', 'Instituicao') ?></th>
+                <th><?= $this->Paginator->sort('turno', 'Turno') ?></th>
+                <th><?= $this->Paginator->sort('nivel', 'Nível') ?></th>
+                <th><?= $this->Paginator->sort('Instituicoes.instituicao', 'Instituição') ?></th>
                 <th><?= $this->Paginator->sort('Supervisores.nome', 'Supervisor(a)') ?></th>
                 <th><?= $this->Paginator->sort('Docentes.nome', 'Professor(a)') ?></th>
                 <th><?= $this->Paginator->sort('periodo', 'Período') ?></th>
-                <th><?= $this->Paginator->sort('Turmaestagio.area', 'Turma de estágio') ?></th>
+                <th><?= $this->Paginator->sort('Turmaestagio.area', 'Turma') ?></th>
                 <?php if (isset($user) && $user->categoria == '1'): ?>
                     <th><?= $this->Paginator->sort('nota', 'Nota') ?></th>
                     <th><?= $this->Paginator->sort('ch', 'Carga horária') ?></th>
-                    <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
-                    <th class="row"><?= __('Ações') ?></th>
+                    <th><?= __('Ações') ?></th>
                 <?php endif; ?>
             </tr>
         </thead>
@@ -190,26 +174,20 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php // pr($estagiario); ?>
                     <td><?= $this->Html->link($estagiario->id, ['controller' => 'estagiarios', 'action' => 'view', $estagiario->id]) ?>
                     </td>
-                    <td><?= $estagiario->hasValue('aluno') ? $this->Html->link($estagiario->aluno->nome, ['controller' => 'Alunos', 'action' => 'view', $estagiario->aluno_id]) : '' ?>
+                    <td><?= $estagiario->hasValue('aluno') ? $this->Html->link($estagiario->aluno['nome'], ['controller' => 'Alunos', 'action' => 'view', $estagiario->aluno_id]) : '' ?>
                     </td>
                     <td><?= $estagiario->registro ?></td>
                     <td><?= h($estagiario->ajuste2020) == 0 ? 'Não' : 'Sim' ?></td>
                     <td><?= h($estagiario->turno) ?></td>
                     <td><?= h($estagiario->nivel) ?></td>
-                    <td><?= $estagiario->tc ?></td>
-                    <?php if (isset($estagiario->tc_solicitacao)): ?>
-                        <td><?= $estagiario->tc_solicitacao->i18nFormat('dd-MM-yyyy') ?></td>
-                    <?php else: ?>
-                        <td>Sem dados</td>
-                    <?php endif; ?>
-                    <td><?= $estagiario->hasValue('instituicao') ? $this->Html->link($estagiario->instituicao->instituicao, ['controller' => 'Instituicoes', 'action' => 'view', $estagiario->instituicao->id]) : '' ?>
+                    <td><?= $estagiario->hasValue('instituicao') ? $this->Html->link($estagiario->instituicao['instituicao'], ['controller' => 'Instituicoes', 'action' => 'view', $estagiario->instituicao['id']]) : '' ?>
                     </td>
-                    <td><?= $estagiario->hasValue('supervisor') ? $this->Html->link($estagiario->supervisor->nome, ['controller' => 'Supervisores', 'action' => 'view', $estagiario->supervisor->id]) : 'Sem dados' ?>
+                    <td><?= $estagiario->hasValue('supervisor') ? $this->Html->link($estagiario->supervisor['nome'], ['controller' => 'Supervisores', 'action' => 'view', $estagiario->supervisor['id']]) : 'Sem dados' ?>
                     </td>
-                    <td><?= $estagiario->hasValue('professor') ? $this->Html->link($estagiario->professor->nome, ['controller' => 'Professores', 'action' => 'view', $estagiario->professor->id]) : 'Sem dados' ?>
+                    <td><?= $estagiario->hasValue('professor') ? $this->Html->link($estagiario->professor['nome'], ['controller' => 'Professores', 'action' => 'view', $estagiario->professor['id']]) : 'Sem dados' ?>
                     </td>
                     <td><?= h($estagiario->periodo) ?></td>
-                    <td><?= $estagiario->hasValue('turmaestagio') ? $this->Html->link($estagiario->turmaestagio->area, ['controller' => 'Turmaestagios', 'action' => 'view', $estagiario->turmaestagio->turmestagio_id]) : '' ?>
+                    <td><?= $estagiario->hasValue('turmaestagio') ? $this->Html->link($estagiario->turmaestagio['area'], ['controller' => 'Turmaestagios', 'action' => 'view', $estagiario->turmaestagio['turmestagio_id']]) : '' ?>
                     </td>
                     <?php if (isset($user) && $user->categoria == '1'): ?>
                         <?php if (isset($estagiario->nota)): ?>
@@ -222,8 +200,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?php else: ?>
                             <td>Sem dados</td>
                         <?php endif; ?>
-                        <td><?= h($estagiario->observacoes) ?></td>
-                        <td class="row">
+                        <td>
                             <?= $this->Html->link(__('Ver'), ['action' => 'view', $estagiario->id]) ?>
                             <?php if (isset($user) && $user->categoria == 1): ?>
                                 <?= $this->Html->link(__('Editar'), ['action' => 'edit', $estagiario->id]) ?>

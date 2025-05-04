@@ -29,7 +29,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 </th>
                 <th><?= $this->Paginator->sort('termo_compromisso_final', 'Data de finalização do termo de compromisso') ?>
                 </th>
-                <th class="actions"><?= __('Ações') ?></th>
+                <th><?= __('Ações') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -40,9 +40,9 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($configura->termo_compromisso_periodo) ?></td>
                     <td><?= h($configura->termo_compromisso_inicio) ?></td>
                     <td><?= h($configura->termo_compromisso_final) ?></td>
-                    <td class="actions">
-                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $configura->id], ['class' => 'btn btn-primary']) ?>
-                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $configura->id], ['class' => 'btn btn-primary']) ?>
+                    <td>
+                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $configura->id], ['class' => 'btn btn-primary']) ?>
+                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $configura->id], ['class' => 'btn btn-primary']) ?>
                         <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $configura->id], ['confirm' => __('Tem certeza que deseja excluir a configuração # {0}?', $configura->id), 'class' => 'btn btn-danger']) ?>
                     </td>
                 </tr>

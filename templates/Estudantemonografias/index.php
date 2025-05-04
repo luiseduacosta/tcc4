@@ -62,7 +62,9 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
+
     <?= $this->element('templates') ?>
+
     <div class="d-flex justify-content-center">
         <div class="paginator">
             <ul class="pagination">

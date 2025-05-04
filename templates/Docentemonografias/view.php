@@ -171,7 +171,7 @@ $user = $this->getRequest()->getAttribute('identity');
             </tr>
 
         </table>
-        <div class="row">
+        <div>
             <p><?= __('Observações') ?></p>
             <?= $this->Text->autoParagraph(h($docentemonografia->observacoes)); ?>
         </div>

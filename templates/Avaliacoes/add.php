@@ -159,7 +159,7 @@ if ($cress) {
                 </div>
             </div>
  
-            <p>Fundamente se achar necessário: </p>
+            <legend style="font-weight: normal;">Fundamente se achar necessário: </legend>
             <div class="row">
                 <div class="col-md-6">
                     <?= $this->Form->input('avaliacao9-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 100]); ?>
@@ -175,7 +175,7 @@ if ($cress) {
                 </div>
             </div>
 
-            <p>Justifique a resposta se achar necessário:</p>
+            <legend style="font-weight: normal;">Justifique a resposta se achar necessário:</legend>
             <div class="row">
                 <div class="col-md-6">
                     <?= $this->Form->input('avaliacao10-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
@@ -191,7 +191,7 @@ if ($cress) {
                 </div>
             </div>
 
-            <p>Como você avalia esta interação? (Responda se achar necessário)</p>
+            <legend style="font-weight: normal;">Como você avalia esta interação? (Responda se achar necessário)</legend>
             <div class="row">
                 <div class="col-md-6">
             <?= $this->Form->input('avaliacao11-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
@@ -207,7 +207,7 @@ if ($cress) {
                 </div>
             </div>
 
-            <p>Sugestões ao que foi desenvolvido?</p>
+            <legend style="font-weight: normal;">Sugestões ao que foi desenvolvido?</legend>
             <div class="row">
                 <div class="col-md-6">
                     <?= $this->Form->input('avaliacao12-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
@@ -223,7 +223,7 @@ if ($cress) {
                 </div>
             </div>
 
-            <p>Se sim, quais?</p>
+            <legend style="font-weight: normal;">Se sim, quais?</legend>
             <div class="row">
                 <div class="col-md-6">
                     <?= $this->Form->input('avaliacao13-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
@@ -239,7 +239,7 @@ if ($cress) {
                 </div>
             </div>
 
-            <p>Sugestões e observações:</p>
+            <legend style="font-weight: normal;">Sugestões e observações:</legend>
             <div class="row">
                 <div class="col-md-6">
                     <?= $this->Form->input('observacoes', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>

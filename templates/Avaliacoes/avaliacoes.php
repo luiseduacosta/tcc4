@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Avaliaco[]|\Cake\Collection\CollectionInterface $avaliacaoes
+ * @var \App\Model\Entity\Avaliacao[]|\Cake\Collection\CollectionInterface $avaliacaoes
  */
 $user = $this->getRequest()->getAttribute('identity');
 // pr($estagiario);
@@ -15,6 +15,13 @@ $user = $this->getRequest()->getAttribute('identity');
         aria-controls="navbarTogglerAvaliacoes" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAvaliacoes">
+        <?php if (isset($user) && $user->categoria == '1'): ?>
+            <li class="nav-item">
+                <?= $this->Html->link(__('Nova Avaliação'), ['action' => 'add', $id], ['class' => 'btn btn-primary float-end']) ?>
+            </li>                
+        <?php endif; ?>
+    </ul>
 </nav>
 
 <h3><?= __('Avaliações') ?></h3>
@@ -24,16 +31,15 @@ $user = $this->getRequest()->getAttribute('identity');
         <thead class="table-dark">
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('estagiario.avaliacao.id', 'Avaliação on-line') ?></th>
-                <th><?= $this->Paginator->sort('estagiario.avaliacao.id', 'Imprime avaliação') ?></th>
+                <th><?= $this->Paginator->sort('estagiario.avaliacao.id', 'Avaliação') ?></th>
                 <th><?= $this->Paginator->sort('estagiario->estudante->nome', 'Estudante') ?></th>
-                <th><?= $this->Paginator->sort('estagiario->folhadeatividade->id', 'Folha de atividades') ?></th>
                 <th><?= $this->Paginator->sort('estagiario->periodo', 'Período') ?></th>
-                <th><?= $this->Paginator->sort('estagiario->docente->nome', 'Docente') ?></th>
                 <th><?= $this->Paginator->sort('estagiario->nivel', 'Nível') ?></th>
+                <th><?= $this->Paginator->sort('estagiario->instituicaoestagio->instituicao', 'Instituição') ?></th>
+                <th><?= $this->Paginator->sort('estagiario->supervisor->nome', 'Supervisor(a)') ?></th>
                 <th><?= $this->Paginator->sort('estagiario->ch', 'Carga horária') ?></th>
                 <th><?= $this->Paginator->sort('estagiario->nota', 'Nota') ?></th>
-                <?php if (isset($user) && $user->categoria == 1): ?>
+                <?php if (isset($user) && $user->categoria == '1'): ?>
                     <th><?= __('Ações') ?></th>
                 <?php endif; ?>
             </tr>
@@ -43,34 +49,32 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?php // pr($c_estagiario); ?>
                 <?php // die(); ?>
                 <tr>
-                    <?php if (isset($user) && $user->categoria == 1): ?>
+                    <?php if (isset($user) && $user->categoria == '1'): ?>
                         <td><?= isset($c_estagiario->id) ? $this->Html->link($c_estagiario->id, ['controller' => 'estagiarios', 'action' => 'view', $c_estagiario->id]) : '' ?></td>
                     <?php else: ?>
                         <td><?= isset($c_estagiario->id) ? $c_estagiario->id : '' ?></td>
                     <?php endif; ?>
 
-                    <?php if (isset($user) && ($user->categoria == 1 || $user->categoria == 4)): ?>
-                        <td><?= $c_estagiario->has('avaliacao') ? $this->Html->link('Ver avaliação', ['controller' => 'Avaliacoes', 'action' => 'view', $c_estagiario->avaliacao->id], ['class' => 'btn btn-success']) : $this->Html->link('Fazer avaliação on-line', ['controller' => 'avaliacoes', 'action' => 'add', $c_estagiario->id], ['class' => 'btn btn-warning']) ?></td>
+                    <?php if (isset($user) && ($user->categoria == '1' || $user->categoria == '4')): ?>
+                        <td><?= $c_estagiario->has('avaliacao') ? $this->Html->link('Ver avaliação', ['controller' => 'Avaliacoes', 'action' => 'view', $c_estagiario->avaliacao->id], ['class' => 'btn btn-success']) : $this->Html->link('Fazer avaliação', ['controller' => 'avaliacoes', 'action' => 'add', $c_estagiario->id], ['class' => 'btn btn-warning']) ?></td>
                     <?php else: ?>
                         <td><?= $c_estagiario->has('avaliacao') ? $this->Html->link('Ver avaliação', ['controller' => 'Avaliacoes', 'action' => 'view', $c_estagiario->avaliacao->id], ['class' => 'btn btn-success']) : 'Sem avaliação on-line' ?></td>
                     <?php endif; ?>
 
-                    <td><?= $this->Html->link('Imprime avaliação discente', ['controller' => 'estagiarios', 'action' => 'avaliacaodiscentepdf', $c_estagiario->id], ['class' => 'btn btn-success']) ?></td>    
-
-                    <?php if (isset($user) && $user->categoria == 1): ?>
+                    <?php if (isset($user) && $user->categoria == '1'): ?>
                         <td><?= $c_estagiario->has('estudante') ? $this->Html->link($c_estagiario->estudante->nome, ['controller' => 'estudantes', 'action' => 'view', $c_estagiario->estudante->id]) : '' ?></td>
                     <?php else: ?>
                         <td><?= $c_estagiario->has('estudante') ? $c_estagiario->estudante->nome : '' ?></td>
                     <?php endif; ?>
 
-                    <td><?= $c_estagiario->has('folhadeatividade') ? $this->Html->link('Ver folha de atividades on-line', ['controller' => 'folhadeatividades', 'action' => 'index', $c_estagiario->id], ['class' => 'btn btn-success']) : $this->Html->link('Imprimir folha', ['controller' => 'estagiarios', 'action' => 'folhadeatividadespdf', $c_estagiario->id]) ?></td>
                     <td><?= $c_estagiario->periodo ?></td>
-                    <td><?= $c_estagiario->has('docente') ? $c_estagiario->docente->nome : '' ?></td>
                     <td><?= $c_estagiario->nivel ?></td>
+                    <td><?= $c_estagiario->has('instituicao') ? $c_estagiario->instituicao->instituicao : '' ?></td>
+                    <td><?= $c_estagiario->has('supervisor') ? $c_estagiario->supervisor->nome : '' ?></td>
                     <td><?= $c_estagiario->ch ?></td>
                     <td><?= $c_estagiario->nota ?></td>
 
-                    <?php if (isset($user) && $user->categoria == 1): ?>
+                    <?php if (isset($user) && $user->categoria == '1'): ?>
                         <?php if (isset($c_estagiario->avaliacao->id)): ?>
                             <td>
                                 <?= $this->Html->link(__('Ver'), ['action' => 'view', $c_estagiario->avaliacao->id]) ?>
@@ -83,4 +87,19 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php endforeach; ?>
         </tbody>
     </table>
+</div>
+
+<?= $this->element('templates') ?>
+
+<div class="d-flex justify-content-center">
+    <div class="paginator">
+        <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next(__('próximo') . ' >') ?>
+            <?= $this->Paginator->last(__('último') . ' >>') ?>
+        </ul>
+        <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?></p>   
+    </div>
 </div>

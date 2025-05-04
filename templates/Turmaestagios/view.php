@@ -68,7 +68,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= __('Observacoes') ?></th>
             <?php endif; ?>
             <?php if (isset($user) && $user->categoria_id == 1): ?>
-                <th class="actions"><?= __('Ações') ?></th>
+                <th><?= __('Ações') ?></th>
             <?php endif; ?>
         </tr>
         <?php foreach ($turmaestagio->estagiarios as $estagiarios): ?>
@@ -111,7 +111,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($estagiarios->observacoes) ?></td>
                 <?php endif; ?>
 
-                <td class="actions">
+                <td>
                     <?php if (isset($user) && $user->categoria_id == 1): ?>
                         <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
                         <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>

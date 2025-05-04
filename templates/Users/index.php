@@ -30,7 +30,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('categoria') ?></th>
-                <th scope="col" class="actions"><?= __('Ações') ?></th>
+                <th scope="col"><?= __('Ações') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -39,7 +39,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= $this->Number->format($user->id) ?></td>
                     <td><?= h($user->email) ?></td>
                     <td><?= h($user->categoria) ?></td>
-                    <td class="actions">
+                    <td>
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $user->id]) ?>
                         <?= $this->Html->link(__('Editar'), ['action' => 'edit', $user->id]) ?>
                         <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>

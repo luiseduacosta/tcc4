@@ -59,7 +59,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <th><?= $this->Paginator->sort('turno', 'Turno') ?></th>
                             <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
                             <?php if (isset($user) && $user->categoria == '1'): ?>
-                                <th class="row"><?= __('Ações') ?></th>
+                                <th><?= __('Ações') ?></th>
                             <?php endif; ?>
                         </tr>
                     </thead>
@@ -82,7 +82,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <td><?= h($aluno->ingresso) ?></td>
                                 <td><?= h($aluno->turno) ?></td>
                                 <td><?= h($aluno->observacoes) ?></td>
-                                <td class="row">
+                                <td>
                                     <?= $this->Html->link(__('Ver'), ['controller' => 'Alunos', 'action' => 'view', $aluno->id]) ?>
                                     <?php if (isset($user) && $user->categoria == '1'): ?>
                                         <?= $this->Html->link(__('Editar'), ['controller' => 'Alunos', 'action' => 'edit', $aluno->id]) ?>
@@ -114,10 +114,9 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <th><?= $this->Paginator->sort('codigo_celular', 'DDD') ?></th>
                                 <th><?= $this->Paginator->sort('celular', 'Celular') ?></th>
                                 <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
-                                <th class="row"><?= __('Ações') ?></th>
+                                <th><?= __('Ações') ?></th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <?php foreach ($alunos as $aluno): ?>
                                 <tr>
@@ -131,13 +130,12 @@ $user = $this->getRequest()->getAttribute('identity');
                                     <td><?= $this->Number->format($aluno->codigo_celular) ?></td>
                                     <td><?= h($aluno->celular) ?></td>
                                     <td><?= h($aluno->observacoes) ?></td>
-                                    <td class="row">
+                                    <td>
                                         <?= $this->Html->link(__('Ver'), ['controller' => 'Alunos', 'action' => 'view', $aluno->id]) ?>
                                         <?php if (isset($user) && $user->categoria == '1'): ?>
                                             <?= $this->Html->link(__('Editar'), ['controller' => 'Alunos', 'action' => 'edit', $aluno->id]) ?>
                                             <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Alunos', 'action' => 'delete', $aluno->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $aluno->id)]) ?>
                                         <?php endif; ?>
-
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -164,7 +162,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <th><?= $this->Paginator->sort('municipio', 'Município') ?></th>
                                 <th><?= $this->Paginator->sort('bairro', 'Bairro') ?></th>
                                 <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
-                                <th class="row"><?= __('Ações') ?></th>
+                                <th><?= __('Ações') ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -179,7 +177,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                     <td><?= h($aluno->municipio) ?></td>
                                     <td><?= h($aluno->bairro) ?></td>
                                     <td><?= h($aluno->observacoes) ?></td>
-                                    <td class="row">
+                                    <td>
                                         <?= $this->Html->link(__('Ver'), ['controller' => 'Alunos', 'action' => 'view', $aluno->id]) ?>
                                         <?php if (isset($user) && $user->categoria == '1'): ?>
                                             <?= $this->Html->link(__('Editar'), ['controller' => 'Alunos', 'action' => 'edit', $aluno->id]) ?>

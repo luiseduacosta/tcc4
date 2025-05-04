@@ -10,7 +10,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($instituicao_id);
 ?>
 
-<script>
+<script type="text/javascript">
     function getsupervisores(id) {
         $.ajax(
             {
