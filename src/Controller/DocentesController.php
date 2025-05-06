@@ -52,17 +52,9 @@ class DocentesController extends AppController
      */
     public function view($id = null)
     {
-
-        $user = $this->Authentication->getIdentity();
         $this->Authorization->skipAuthorization();
-        if (isset($user)) {
-            $this->Authorization->authorize($user);
-        } else {
-            $this->Flash->error(__('Usuário não autorizado'));
-            return $this->redirect(['action' => 'index']);
-        }
         if (empty($id)) {
-            $this->Flash->error(__('Registro docente não encontrado'));
+            $this->Flash->error(__('Registro ID do docente não encontrado'));
             return $this->redirect(['action' => 'index']);
         }
         $docente = $this->fetchTable("Docentes")
@@ -72,12 +64,6 @@ class DocentesController extends AppController
                     'contain' => ['Monografias', 'Areamonografias'],
                 ]
             );
-        if (isset($user)) {
-            $this->Authorization->authorize($docente);
-        } else {
-            $this->Flash->error(__('Recurso não autorizado'));
-            return $this->redirect(['action' => 'index']);
-        }
         if (empty($docente)) {
             $this->Flash->error(__('Registro docente não encontrado'));
             return $this->redirect(['action' => 'index']);

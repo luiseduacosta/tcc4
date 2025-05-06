@@ -32,24 +32,40 @@ class EstagiariomonografiasController extends AppController
      *
      * @return \Cake\Http\Response|null
      */
-    public function indexold()
+    public function index()
     {
         $this->Authorization->skipAuthorization();
+        $this->viewBuilder()->setTemplate('index');
+
+        $periodo = $this->request->getQuery('periodo');
+        $periodos = $this->Estagiariomonografias->find('list', [
+            'keyField' => 'periodo',
+            'valueField' => 'periodo'
+        ])
+        ->order(['periodo' => 'ASC']);
+        $periodos = $periodos->toArray();
+        if (empty($periodo)) {
+            $periodo = end($periodos); // Pega o último elemento do array
+        }
+
+        // $periodo = '2008-1';
         $estagiariomonografias = $this->Estagiariomonografias->find('all', [
-            'conditions' => ['or' => [['ajuste2020' => '0', 'nivel' => 4], ['ajuste2020' => '1', 'nivel' => 3]]],
-            'contain' => ['Estudantes' => ['Tccestudantes' => ['Monografias']]],
+            'fields' => ['Estudantes.id', 'Estudantes.nome', 'Estudantes.registro', 'Estagiariomonografias.id', 'Estagiariomonografias.periodo', 'Estagiariomonografias.ajuste2020', 'Estagiariomonografias.nivel', 'Tccestudantes.monografia_id', 'Tccestudantes.registro', 'Tccestudantes.id', 'Tccestudantes.nome', 'Monografias.id', 'Monografias.titulo', 'Monografias.periodo'],
+            'conditions' => ['or' => [['ajuste2020' => '0', 'nivel' => 4], ['ajuste2020' => '1', 'nivel' => 3]], 
+            'Estagiariomonografias.periodo' => $periodo],
+            'contain' => ['Estudantes', 'Tccestudantes' => ['Monografias']],
+            'order' => ['Estudantes.nome' => 'ASC']
         ]);
-        // pr($estagiarios);
-        $this->set(compact('estagiariomonografias'));
+        $this->set(compact('estagiariomonografias', 'periodo', 'periodos'));
     }
 
     /**
-     * Index method
+     * Indexb method
      *
      * @param string|null $periodo
      * @return \Cake\Http\Response|null
      */
-    public function index($periodo = null)
+    public function indexbak($periodo = null)
     {
         $this->Authorization->skipAuthorization();
         if ($this->request->is('post')) {

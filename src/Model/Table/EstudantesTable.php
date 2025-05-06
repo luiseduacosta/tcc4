@@ -48,10 +48,11 @@ class EstudantesTable extends Table
 
         /** A tabela Tccestudantes tem um campo registro que se conexta com o registro */
         $this->hasOne('Tccestudantes', [
+            'className' => 'Tccestudantes',
             'targetForeignKey' => 'registro',
-            'foreignKey' => false,
+            'foreignKey' => 'registro',
             'conditions' => 'Estudantes.registro = Tccestudantes.registro',
-            'joinType' => 'INNER'
+            'joinType' => 'LEFT'
         ]);
     }
 

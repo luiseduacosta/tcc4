@@ -28,7 +28,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <h3><?= __('Monografias') ?></h3>
 
     <?= $this->Form->create($monografias); ?>
-    <div class="form-group row p-1">
+    <div class="form-group row p-2">
         <div class="col-8">
             <label class='form-label'>Busca por título</label>
             <?= $this->Form->control('titulo', ['label' => false, 'class' => 'form-control']); ?>

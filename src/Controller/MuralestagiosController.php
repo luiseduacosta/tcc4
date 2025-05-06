@@ -68,7 +68,6 @@ class MuralestagiosController extends AppController
             $directions = 'DESC';
         }   
 
-        // die();
         if (($periodo == null) || empty($periodo)) {
             $configuracaotable = $this->fetchTable('Configuracao');
             $periodoconfiguracao = $configuracaotable->find()->first();
@@ -197,8 +196,8 @@ class MuralestagiosController extends AppController
                 return $this->redirect(['action' => 'view', $muralestagio->id]);
             }
             $erro = $muralestagio->getErrors();
-            pr($erro);
-            $this->Flash->error(__('Registro muralestagio não foi atualizado. Tente novamente.'));
+            // pr($erro);
+            // $this->Flash->error(__('Registro muralestagio não foi atualizado. Tente novamente.'));
         }
         $instituicoes = $this->Muralestagios->Instituicoes->find('list');
         $turmaestagios = $this->Muralestagios->Turmaestagios->find('list');

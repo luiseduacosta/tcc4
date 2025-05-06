@@ -67,7 +67,7 @@ class TccestudantesController extends AppController
         $this->Authorization->skipAuthorization();
         $tccestudantetable = $this->fetchTable('Tccestudantes'); // Estranho, mas necessário
         $tccestudante = $tccestudantetable->get($id, [
-            'contain' => ['Monografias', 'Alunos'],
+            'contain' => ['Monografias', 'Estudantes'],
         ]);
         $this->set('tccestudante', $tccestudante);
     }
@@ -88,7 +88,7 @@ class TccestudantesController extends AppController
             $registro = $estudante_id;
 
             /* Nome do aluno */
-            $estudantetable = $this->fetchTable('Alunos');
+            $estudantetable = $this->fetchTable('Estudantes');
             $resultado = $estudantetable->find('all');
             $resultado->where(['registro' => $estudante_id]);
             $resultado->select(['nome']);
@@ -120,7 +120,7 @@ class TccestudantesController extends AppController
             }
             $this->Flash->error(__('Estudante autor de TCC não foi inserido. Tente novamento.'));
         }
-        $estudantetable = $this->fetchTable('Alunos');
+        $estudantetable = $this->fetchTable('Estudantes');
         $estudantes = $estudantetable->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $estudantes->order(['nome' => 'asc']);
         // pr($estudantes);
@@ -144,9 +144,9 @@ class TccestudantesController extends AppController
         ]);
         $this->Authorization->authorize($tccestudante);
 
-        $monografiatable = $this->fetchTable('Monografias');
-        $monografias = $monografiatable->find('list', ['keyField' => 'id', 'valueField' => 'titulo']);
-        $monografias->order(['titulo' => 'asc']);
+        $monografias = $this->fetchTable('Monografias')
+        ->find('list', ['keyField' => 'id', 'valueField' => 'titulo'])
+        ->order(['titulo' => 'asc']);
         $monografias = $monografias->toArray();
 
         if ($this->request->is(['patch', 'post', 'put'])) {

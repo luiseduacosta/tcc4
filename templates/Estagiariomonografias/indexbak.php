@@ -23,15 +23,11 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <h3><?= __('Estagiarios por período e por TCC concluída') ?></h3>
 
-    <div class="col-sm-5 p-2">
+    <div class="col-sm-5">
         <?= $this->Form->create(null, ['url' => ['action' => 'index']]) ?>
         <div class="form-group row">
-            <label class="col-form-label col-2" for="periodo">Período</label>
-            <div class="col-sm-5">
-                <?= $this->Form->control('periodo', ['id' => 'EstagiarioPeriodo', 'type' => 'select', 'label' => false, 'options' => $periodos, 'empty' => [$periodo => $periodo], 'class' => 'form-control']); ?>
-            </div>
+            <?= $this->Form->control('periodo', ['id' => 'EstagiarioPeriodo', 'type' => 'select', 'label' => 'Período', 'options' => $periodos, 'empty' => [$periodo => $periodo], 'class' => 'form-control']); ?>
         </div>
-        <?= $this->Form->end() ?>
     </div>
 
     <?php if ($estagiariomonografias): ?>
@@ -49,11 +45,11 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($estagiariomonografias as $c_estagiariomonografia): ?>
-                <?php // pr($c_estagiariomonografia) ?>
+                <?php // pr($c_estagiariomonografia->estudante->tccestudante->monografia) ?>
                 <tr>
                     <td><?= h($c_estagiariomonografia->estudante->registro) ?></td>
-                    <?php if (!empty($c_estagiariomonografia->tccestudante->id)): ?>
-                        <td><?= $this->Html->link($c_estagiariomonografia->tccestudante->nome, ['controller' => 'Tccestudantes', 'action' => 'view', $c_estagiariomonografia->tccestudante->id]) ?>
+                    <?php if (!empty($c_estagiariomonografia->estudante->id)): ?>
+                        <td><?= $this->Html->link($c_estagiariomonografia->estudante->nome, ['controller' => 'Tccestudantes', 'action' => 'view', $c_estagiariomonografia->estudante->id]) ?>
                         </td>
                     <?php else: ?>
                         <td><?= h($c_estagiariomonografia->estudante->nome) ?></td>
@@ -61,17 +57,9 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($c_estagiariomonografia->turno) ?></td>
                     <td><?= h($c_estagiariomonografia->nivel) ?></td>
                     <td><?= h($c_estagiariomonografia->periodo) ?></td>
-                    <?php if (!empty($c_estagiariomonografia->tccestudante->id)): ?>
-                        <td><?= $this->Html->link($c_estagiariomonografia->tccestudante->monografia->titulo, ['controller' => 'Monografias', 'action' => 'view', $c_estagiariomonografia->tccestudante->monografia->id]) ?>
-                        </td>
-                    <?php else: ?>
-                        <td><?= 'Não possui monografia' ?></td>
-                    <?php endif; ?>
-                    <?php if (!empty($c_estagiariomonografia->tccestudante->id)): ?>
-                        <td><?= h($c_estagiariomonografia->tccestudante->monografia->periodo) ?></td>
-                    <?php else: ?>
-                        <td><?= 'Não possui monografia' ?></td>
-                    <?php endif; ?>
+                    <td><?= $this->Html->link($c_estagiariomonografia->estudante->tccestudante->monografia->titulo, ['controller' => 'Monografias', 'action' => 'view', $c_estagiariomonografia->estudante->tccestudante->monografia->id]) ?>
+                    </td>
+                    <td><?= h($c_estagiariomonografia->estudante->tccestudante->monografia->periodo_monog) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
