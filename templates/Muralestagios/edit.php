@@ -53,7 +53,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('horarioSelecao', ['label' => ['text' => 'Horário da seleção']]);
         echo $this->Form->control('localSelecao', ['label' => ['text' => 'Local da seleção']]);
         echo $this->Form->control('formaSelecao', ['label' => ['text' => 'Forma da seleção'], 'options' => ['0' => 'Entrevista', '1' => 'CR', '2' => 'Prova', '3' => 'Outras']]);
-        echo $this->Form->control('contato', ['label' => ['text' => 'Contato'], 'type' => 'email']);
+        echo $this->Form->control('contato', ['label' => ['text' => 'Contato'], 'type' => 'text']);
         echo $this->Form->control('email', ['label' => ['text' => 'Email'], 'type' => 'email']);
         echo $this->Form->control('periodo', ['label' => ['text' => 'Período'], 'options' => $periodos]);
         echo $this->Form->control('datafax', ['empty' => true, 'label' => ['text' => 'Data do fax']]);

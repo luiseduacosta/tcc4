@@ -4,8 +4,6 @@
  * @var \App\Model\Entity\Muralestagio[]|\Cake\Collection\CollectionInterface $muralestagios
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($periodo);
-// pr($muralestagios);
 ?>
 
 <script type="text/javascript">
@@ -16,7 +14,7 @@ $user = $this->getRequest()->getAttribute('identity');
         $("#MuralestagioPeriodo").change(function () {
             var periodo = $(this).val();
             // alert(url + '/index/' + periodo);
-            window.location = url + '/index/' + periodo;
+            window.location = url + '/index?periodo=' + periodo;
         })
 
     })
@@ -39,7 +37,8 @@ $user = $this->getRequest()->getAttribute('identity');
 </nav>
 
 <p class='h3' style="text-align: center;">Mural de estágios da ESS/UFRJ. Período: <?= $periodo; ?></p>
-<?php if (isset($user) && $user['categoria'] == '1'): ?>
+
+<?php if (isset($user) && $user->categoria == '1'): ?>
     <?= $this->Form->create($muralestagios); ?>
     <div class="d-flex justify-content-center">
         <div class="col-1 p-3">
@@ -58,16 +57,17 @@ $user = $this->getRequest()->getAttribute('identity');
     <table class="table table-striped table-hover table-responsive">
         <thead class="table-dark">
             <tr>
-                <th><?= $this->Paginator->sort('id', 'ID') ?></th>
+                <?php if (isset($user) && $user->categoria == '1'): ?>
+                    <th><?= $this->Paginator->sort('instituicao_id', 'ID') ?></th>
+                <?php endif; ?>
                 <th><?= $this->Paginator->sort('instituicao', 'Instituição') ?></th>
                 <th><?= $this->Paginator->sort('vagas', 'Vagas') ?></th>
                 <th><?= $this->Paginator->sort('beneficios', 'Benefícios') ?></th>
                 <th><?= $this->Paginator->sort('final_de_semana', 'Final de semana') ?></th>
                 <th><?= $this->Paginator->sort('cargaHoraria', 'Carga horária') ?></th>
-                <th><?= $this->Paginator->sort('dataInscricao', 'Data de inscrição') ?></th>
+                <th><?= $this->Paginator->sort('dataInscricao', 'Encerramento') ?></th>
                 <th><?= $this->Paginator->sort('dataSelecao', 'Data de seleção') ?></th>
-                <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
-                <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
+                <?php if (isset($user) && $user->categoria == '1'): ?>
                     <th><?= __('Ações') ?></th>
                 <?php endif; ?>
             </tr>
@@ -75,17 +75,20 @@ $user = $this->getRequest()->getAttribute('identity');
         <tbody>
             <?php foreach ($muralestagios as $muralestagio): ?>
                 <tr>
-                    <td><?= $this->Html->link($muralestagio->id, ['controller' => 'Muralestagios', 'action' => 'view', $muralestagio->id]) ?></td>
-                    <td><?= $muralestagio->instituicao_id ? $this->Html->link($muralestagio->instituicao, ['controller' => 'Instituicoes', 'action' => 'view', $muralestagio->instituicao_id]) : $muralestagio->instituicao ?>
+                    <?php if (isset($user) && $user->categoria == '1'): ?>
+                        <td><?= $this->Html->link($muralestagio->instituicao_id, ['controller' => 'Instituicoes', 'action' => 'view', $muralestagio->instituicao_id]) ?></td>
+                    <?php endif; ?>
+                    <td><?= $this->Html->link($muralestagio->instituicao, ['controller' => 'Muralestagios', 'action' => 'view', $muralestagio->id]) ?>
                     </td>
                     <td><?= $this->Number->format($muralestagio->vagas, ['pattern' => '##']) ?></td>
                     <td><?= $this->Text->autoParagraph($muralestagio->beneficios) ?></td>
                     <td><?= (h($muralestagio->final_de_semana) == 0) ? 'Não' : 'Sim' ?></td>
                     <td><?= $this->Number->format($muralestagio->cargaHoraria, ['pattern' => '##']) ?></td>
-                    <td><?= isset($muralestagio->dataInscricao) ? $muralestagio->dataInscricao->i18nFormat('dd-MM-yyyy') : '' ?></td>
-                    <td><?= isset($muralestagio->dataSelecao) ? $muralestagio->dataSelecao->i18nFormat('dd-MM-yyyy') : '' ?></td>
-                    <?php if (is_null($this->getRequest()->getAttribute('identity'))): ?>
-                    <?php elseif ($this->getRequest()->getAttribute('identity')['categoria'] == '1'): ?>
+                    <td><?= isset($muralestagio->dataInscricao) ? $muralestagio->dataInscricao->i18nFormat('dd-MM-yyyy') : '' ?>
+                    </td>
+                    <td><?= isset($muralestagio->dataSelecao) ? $muralestagio->dataSelecao->i18nFormat('dd-MM-yyyy') : '' ?>
+                    </td>
+                    <?php if (isset($user) && $user->categoria == '1'): ?>
                         <td>
                             <?= $this->Html->link(__('Ver'), ['action' => 'view', $muralestagio->id]) ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $muralestagio->id]) ?>

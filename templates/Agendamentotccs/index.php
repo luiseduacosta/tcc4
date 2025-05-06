@@ -34,12 +34,12 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('Professores.nome', 'Orientador') ?></th>
                 <th><?= $this->Paginator->sort('Professores1.nome', 'Banca 1') ?></th>
                 <th><?= $this->Paginator->sort('Professores2.nome', 'Banca 2') ?></th>
-                <th><?= $this->Paginator->sort('data') ?></th>
-                <th><?= $this->Paginator->sort('horario') ?></th>
-                <th><?= $this->Paginator->sort('sala') ?></th>
-                <th><?= $this->Paginator->sort('titulo') ?></th>
+                <th><?= $this->Paginator->sort('Agendamentotccs.data', 'Data') ?></th>
+                <th><?= $this->Paginator->sort('Agendamentotccs.horario', 'Horário') ?></th>
+                <th><?= $this->Paginator->sort('Agendamentotccs.sala', 'Sala') ?></th>
+                <th><?= $this->Paginator->sort('Monografias.titulo', 'Título') ?></th>
                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                    <th><?= $this->Paginator->sort('avaliacao') ?></th>
+                    <th><?= $this->Paginator->sort('Agendamentotccs.avaliacao', 'Avaliação') ?></th>
                     <th><?= __('Ações') ?></th>
                 <?php endif; ?>
             </tr>

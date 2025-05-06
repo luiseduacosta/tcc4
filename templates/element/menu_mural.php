@@ -122,20 +122,13 @@ $user = $this->getRequest()->getAttribute('identity');
                 <li class="nav-item">
                     <?php echo $this->Html->link('Fale conosco', 'mailto: estagio@ess.ufrj.br', ['class' => 'nav-link']); ?>
                 </li>
-                </ul>
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <?php if (isset($user)): ?>
-                    <li class="nav-item">
-                        <?php echo $this->Html->link('Sair', ['controller' => 'users', 'action' => 'logout'], ['class' => 'nav-link']); ?>
-                    </li>
-                <?php else: ?>
-                    <li class="nav-item">
-                        <?php echo $this->Html->link('Entrar', ['controller' => 'users', 'action' => 'login'], ['class' => 'nav-link']); ?>
-                    </li>
-                <?php endif; ?>
+            </ul>
+                
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
                 <li class="nav-item">
                     <?php echo $this->Html->link('TCC', ['controller' => 'Monografias', 'action' => 'index'], ['class' => 'btn btn-info']); ?>
-                </li>
+                </li>      
                 <?php if (isset($user) && !empty($user)): ?>
                     <?php if ($user->categoria == 2) {
                         $aluno = TableRegistry::getTableLocator()->get('Alunos')->find()->where(['Alunos.id' => $user->estudante_id])->first();
@@ -147,6 +140,17 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?php else: ?>
                     <li class='nav-item'><span class="btn btn-secondary"><?= 'Visitante' ?></span></li>
                 <?php endif; ?>
+
+                <?php if (isset($user)): ?>
+                    <li class="nav-item">
+                        <?php echo $this->Html->link('Sair', ['controller' => 'users', 'action' => 'logout'], ['class' => 'nav-link']); ?>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <?php echo $this->Html->link('Entrar', ['controller' => 'users', 'action' => 'login'], ['class' => 'nav-link']); ?>
+                    </li>
+                <?php endif; ?>
+
             </ul>
         </div>
     </div>

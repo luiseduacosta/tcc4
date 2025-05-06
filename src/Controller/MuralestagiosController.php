@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
-
+use Cake\ORM\TableRegistry;
 /**
  * Muralestagios Controller
  *
@@ -25,6 +25,23 @@ use Cake\I18n\I18n;
 class MuralestagiosController extends AppController
 {
 
+    /**
+     * Initialization method
+     *
+     * @return void
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+
+    }
+
+    /**
+     * Before filter method
+     *
+     * @param \Cake\Event\EventInterface $event Event
+     * @return void
+     */
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
 
@@ -38,11 +55,11 @@ class MuralestagiosController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index($periodo = NULL)
+    public function index($id = NULL)
     {
-
         $this->Authorization->skipAuthorization();
-        if (is_null($periodo) || empty($periodo)) {
+        $periodo = $this->request->getQuery('periodo');
+        if (($periodo == null) || empty($periodo)) {
             $configuracaotable = $this->fetchTable('Configuracao');
             $periodoconfiguracao = $configuracaotable->find()->first();
             $periodo = $periodoconfiguracao->mural_periodo_atual;
@@ -50,22 +67,21 @@ class MuralestagiosController extends AppController
 
         if ($periodo) {
             $muralestagios = $this->Muralestagios->find('all', [
-                'conditions' => ['muralestagios.periodo' => $periodo],
-                'order' => ['id' => 'DESC']
+                'conditions' => ['muralestagios.periodo' => $periodo]
             ]);
         } else {
-            $muralestagios = $this->Muralestagios->find('all');
+            $this->Flash->error(__('Selecionar período.'));
+            return $this->redirect(['action' => 'index']);
         }
 
-        $this->set('muralestagios', $this->paginate($muralestagios));
-
-        /* Todos os periódos */
+        /* Todos os períodos */
         $periodototal = $this->Muralestagios->find('list', [
             'keyField' => 'periodo',
             'valueField' => 'periodo'
         ]);
         $periodos = $periodototal->toArray();
 
+        $this->set('muralestagios', $this->paginate($muralestagios));
         $this->set('periodos', $periodos);
         $this->set('periodo', $periodo);
     }

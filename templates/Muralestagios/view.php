@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Muralestagio $muralestagio
  * @var \Cake\I18n\FrozenTime $now
  */
-
+$hoje = new \Cake\I18n\FrozenTime();
 $user = $this->getRequest()->getAttribute('identity');
 
 $this->assign('title', __('Mural de Estágios'));
@@ -254,7 +254,7 @@ $this->assign('title', __('Mural de Estágios'));
                     <!--
                         Para os outros usuários as inscrições dependem da data de encerramento
                         //-->
-                    <?php if (now()->i18nFormat('Y-m-d') < $muralestagio->dataInscricao->i18nFormat('Y-m-d')): ?>
+                    <?php if ($hoje->i18nFormat('Y-m-d') < $muralestagio->dataInscricao->i18nFormat('Y-m-d')): ?>
                         <tr>
                             <td colspan=2 style="text-align: center">
 

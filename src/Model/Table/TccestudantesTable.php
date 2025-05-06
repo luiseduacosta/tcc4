@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
  * Tccestudantes Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Monografias
- * @property \Cake\ORM\Association\HasOne $Alunos
  * @property \Cake\ORM\Association\HasOne $Estudantes
  * 
  * @method \App\Model\Entity\Tccestudante get($primaryKey, $options = [])

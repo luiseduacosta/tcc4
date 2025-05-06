@@ -54,13 +54,12 @@ class MonografiasController extends AppController {
             $query = $this->Monografias->find()
                     ->contain(['Docentes', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']]);
         }
-        // debug($query);
+
         $monografias = $this->paginate($query, [
             'sortableFields' => [
                 'Monografias.titulo',
                 'Monografias.periodo',
                 'Monografias.url',
-                'Tccestudantes.nome',
                 'Docentes.nome',
                 'Areamonografias.area'
             ]
