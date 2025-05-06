@@ -36,7 +36,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <fieldset>
             <legend><?= __('Editar visita') ?></legend>
             <?php
-            echo $this->Form->control('instituicaoestagio_id', ['options' => $instituicaoestagios]);
+            echo $this->Form->control('instituicao_id', ['options' => $instituicoes]);
             echo $this->Form->control('data', ['label' => ['text' => 'Data'], 'class' => 'form-control']);
             echo $this->Form->control('motivo', ['label' => ['text' => 'Motivo'], 'class' => 'form-control']);
             echo $this->Form->control('responsavel', ['label' => ['text' => 'Responsável'], 'class' => 'form-control']);

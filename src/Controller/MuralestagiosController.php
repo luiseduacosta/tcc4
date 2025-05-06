@@ -59,6 +59,16 @@ class MuralestagiosController extends AppController
     {
         $this->Authorization->skipAuthorization();
         $periodo = $this->request->getQuery('periodo');
+        $sort = $this->request->getQuery('sort');
+        if ($sort == null) {
+            $sort = 'dataInscricao';
+        }
+        $directions = $this->request->getQuery('direction');
+        if ($directions == null) {
+            $directions = 'DESC';
+        }   
+
+        // die();
         if (($periodo == null) || empty($periodo)) {
             $configuracaotable = $this->fetchTable('Configuracao');
             $periodoconfiguracao = $configuracaotable->find()->first();
@@ -67,7 +77,8 @@ class MuralestagiosController extends AppController
 
         if ($periodo) {
             $muralestagios = $this->Muralestagios->find('all', [
-                'conditions' => ['muralestagios.periodo' => $periodo]
+                'conditions' => ['muralestagios.periodo' => $periodo],
+                'order' => [$sort => $directions]
             ]);
         } else {
             $this->Flash->error(__('Selecionar período.'));
@@ -150,12 +161,12 @@ class MuralestagiosController extends AppController
             }
             $this->Flash->error(__('Registro de mural de estágio não foi feito. Tente novamente.'));
         }
-        $instituicaoestagios = $this->fetchTable('Instituicoes')->find('list');
+        $instituicoes = $this->fetchTable('Instituicoes')->find('list');
         $turmaestagios = $this->fetchTable('Turmaestagios')->find('list');
         $professores = $this->fetchTable('Professores')->find('list');
         // pr($professores);
         // die();
-        $this->set(compact('muralestagio', 'instituicaoestagios', 'turmaestagios', 'professores', 'periodo'));
+        $this->set(compact('muralestagio', 'instituicoes', 'turmaestagios', 'professores', 'periodo'));
     }
 
     /**
@@ -179,25 +190,20 @@ class MuralestagiosController extends AppController
             'contain' => ['Instituicoes'],
         ]);
         $this->Authorization->authorize($muralestagio);
-
         if ($this->request->is(['patch', 'post', 'put'])) {
-            // pr($muralestagio);
-            // pr($this->request->getData());
-            // die();
             $muralestagio = $this->Muralestagios->patchEntity($muralestagio, $this->request->getData());
             if ($this->Muralestagios->save($muralestagio)) {
                 $this->Flash->success(__('Registro muralestagio atualizado.'));
-
                 return $this->redirect(['action' => 'view', $muralestagio->id]);
             }
-            // $erro = $muralestagio->getErrors();
-            // pr($erro);
+            $erro = $muralestagio->getErrors();
+            pr($erro);
             $this->Flash->error(__('Registro muralestagio não foi atualizado. Tente novamente.'));
         }
-        $instituicaoestagios = $this->Muralestagios->Instituicoes->find('list');
+        $instituicoes = $this->Muralestagios->Instituicoes->find('list');
         $turmaestagios = $this->Muralestagios->Turmaestagios->find('list');
         $professores = $this->Muralestagios->Professores->find('list');
-        $this->set(compact('muralestagio', 'instituicaoestagios', 'turmaestagios', 'professores', 'periodos'));
+        $this->set(compact('muralestagio', 'instituicoes', 'turmaestagios', 'professores', 'periodos'));
     }
 
     /**

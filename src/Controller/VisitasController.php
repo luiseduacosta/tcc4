@@ -28,7 +28,7 @@ class VisitasController extends AppController
     {
 
         $this->paginate = [
-            'contain' => ['Instituicaoestagios'],
+            'contain' => ['instituicoes'],
         ];
         $visitas = $this->paginate($this->Visitas);
         $this->Authorization->authorize($this->Visitas);
@@ -46,7 +46,7 @@ class VisitasController extends AppController
     {
 
         $visita = $this->Visitas->get($id, [
-            'contain' => ['Instituicaoestagios'],
+            'contain' => ['instituicoes'],
         ]);
         $this->Authorization->authorize($visita);
         $this->set(compact('visita'));
@@ -72,8 +72,8 @@ class VisitasController extends AppController
             }
             $this->Flash->error(__('Visita não inserida.'));
         }
-        $instituicaoestagios = $this->Visitas->Instituicaoestagios->find('list', ['limit' => 200]);
-        $this->set(compact('visita', 'instituicaoestagios'));
+        $instituicoes = $this->Visitas->instituicoes->find('list', ['limit' => 200]);
+        $this->set(compact('visita', 'instituicoes'));
     }
 
     /**
@@ -100,8 +100,8 @@ class VisitasController extends AppController
             }
             $this->Flash->error(__('Visita não atualizada.'));
         }
-        $instituicaoestagios = $this->Visitas->Instituicaoestagios->find('list', ['limit' => 200]);
-        $this->set(compact('visita', 'instituicaoestagios'));
+        $instituicoes = $this->Visitas->instituicoes->find('list', ['limit' => 200]);
+        $this->set(compact('visita', 'instituicoes'));
     }
 
     /**

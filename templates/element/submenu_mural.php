@@ -36,7 +36,7 @@
                     <?php echo $this->Html->link("Estagiários", "/Estagiarios/index", ['class' => 'nav-link', 'style' => 'background-color: #2b6c9c; color: white']); ?>
                 </li>
                 <li class="nav-item">
-                    <?php echo $this->Html->link("Instituições", "/Instituicaoestagios/index", ['escape' => FALSE, 'class' => 'nav-link', 'style' => 'background-color: #2b6c9c; color: white']); ?>
+                    <?php echo $this->Html->link("Instituições", "/instituicoes/index", ['escape' => FALSE, 'class' => 'nav-link', 'style' => 'background-color: #2b6c9c; color: white']); ?>
                 </li>
                 <li class="nav-item">
                     <?php echo $this->Html->link("Supervisores", "/Supervisores/index/ordem:nome", ['class' => 'nav-link', 'style' => 'background-color: #2b6c9c; color: white']); ?>

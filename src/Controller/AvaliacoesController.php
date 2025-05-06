@@ -234,7 +234,7 @@ class AvaliacoesController extends AppController
             if ($user->categoria == '2') {
                 $dre = $user->numero;
                 $estagiario = $this->Avaliacoes->Estagiarios->find()
-                    ->contain(['Estudantes', 'Supervisores', 'Instituicaoestagios'])
+                    ->contain(['Estudantes', 'Supervisores', 'instituicoes'])
                     ->where(['Estagiarios.registro' => $dre])
                     ->first();
                 
@@ -250,7 +250,7 @@ class AvaliacoesController extends AppController
             }
         } else {
             $estagiario = $this->Avaliacoes->Estagiarios->find()
-                ->contain(['Estudantes', 'Supervisores', 'Instituicaoestagios'])
+                ->contain(['Estudantes', 'Supervisores', 'instituicoes'])
                 ->where(['Estagiarios.id' => $id])
                 ->first();
         }

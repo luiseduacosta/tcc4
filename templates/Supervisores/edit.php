@@ -69,7 +69,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('num_inscricao', ['label' => 'Inscrição para curso de supervisores', 'type' => 'number']);
         echo $this->Form->control('curso_turma', ['label' => 'Turma do curso de supervisores', 'type' => 'number']);
         echo $this->Form->control('observacoes', ['label' => 'Observações', 'type' => 'textarea']);
-        echo $this->Form->control('instituicaoestagios._ids', ['label' => 'Instituição', 'options' => $instituicaoestagios]);
+        echo $this->Form->control('instituicoes._ids', ['label' => 'Instituição', 'options' => $instituicoes]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>

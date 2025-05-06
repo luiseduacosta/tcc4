@@ -600,7 +600,7 @@ class EstagiariosController extends AppController
                 $estagiarioslancanota[$i]['nivel'] = $c_estagio['nivel'];
                 $estagiarioslancanota[$i]['nota'] = $c_estagio['nota'];
                 $estagiarioslancanota[$i]['ch'] = $c_estagio['ch'];
-                // pr($c_estagio->instituicaoestagio);
+                // pr($c_estagio->instituicao);
                 // pr($c_estagio->supervisor);
                 // pr($c_estagio->docente);
                 // pr($c_estagio->estudante);
@@ -611,8 +611,8 @@ class EstagiariosController extends AppController
                 if ($folha):
                     // pr($folha);
                 endif;
-                $estagiarioslancanota[$i]['instituicao_id'] = $c_estagio->instituicaoestagio->id;
-                $estagiarioslancanota[$i]['instituicao'] = $c_estagio->instituicaoestagio->instituicao;
+                $estagiarioslancanota[$i]['instituicao_id'] = $c_estagio->instituicao->id;
+                $estagiarioslancanota[$i]['instituicao'] = $c_estagio->instituicao->instituicao;
                 $estagiarioslancanota[$i]['supervisor_id'] = $c_estagio->supervisor->id;
                 $estagiarioslancanota[$i]['supervisora'] = $c_estagio->supervisor->nome;
                 $estagiarioslancanota[$i]['professor_id'] = $c_estagio->docente->id;

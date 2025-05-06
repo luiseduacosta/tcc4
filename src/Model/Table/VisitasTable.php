@@ -102,7 +102,7 @@ class VisitasTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['instituicaoestagio_id'], 'Instituicaoestagios'), ['errorField' => 'instituicaoestagio_id']);
+        $rules->add($rules->existsIn(['instituicao_id'], 'instituicoes'), ['errorField' => 'instituicao_id']);
 
         return $rules;
     }

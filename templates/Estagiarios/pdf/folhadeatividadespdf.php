@@ -85,7 +85,7 @@ if ($professora) {
         Período de realização do estágio: <?= $estagiario->periodo; ?><br>
         Nível de estágio: <?= $estagiario->nivel; ?><br>
         Supervisor(a) de campo: <?= $supervisora; ?> CRESS: <?= $cress; ?> Celular: <?= '('. $codigo_celular . ')' . $celular; ?><br />
-        Campo de estágio: <?= $estagiario->instituicaoestagio->instituicao; ?><br>
+        Campo de estágio: <?= $estagiario->instituicao->instituicao; ?><br>
         Supervisor(a) acadêmico(a): <?= $professora; ?>
 </div>
 

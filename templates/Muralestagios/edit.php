@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Muralestagio $muralestagio
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($muralestagio);
 ?>
 
 <?php echo $this->element('menu_mural') ?>
@@ -37,8 +36,8 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset>
         <legend><?= __('Editar Mural de estágio') ?></legend>
         <?php
-        echo $this->Form->control('instituicao_id', ['label' => ['text' => 'Instituição'], 'options' => $instituicaoestagios, 'empty' => true, 'readonly']);
-        echo $this->Form->control('instituicao', ['label' => ['text' => 'Instituição'], 'value' => $muralestagio->instituicao_id, 'readonly']);
+        echo $this->Form->control('instituicao_id', ['label' => ['text' => 'Instituição ID'], 'type' => 'text', 'value' => $muralestagio->instituicao_id ?? '', 'readonly']);
+        echo $this->Form->control('instituicao', ['label' => ['text' => 'Instituição'], 'type' => 'text', 'value' => $muralestagio->instituicao, 'readonly']);
         echo $this->Form->control('convenio', ['label' => ['text' => 'Convênio'], 'options' => ['0' => 'Não', '1' => 'Sim']]);
         echo $this->Form->control('vagas', ['label' => ['text' => 'Vagas'], 'type' => 'number']);
         echo $this->Form->control('beneficios', ['label' => ['text' => 'Benefícios']]);
@@ -61,7 +60,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('outras', ['id' => 'muralestagioOutras', 'type' => 'textarea', 'rows' => 5, 'style' => 'height: 200', 'label' => ['text' => 'Outras informações']]);
         ?>
     </fieldset>
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-center">
         <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
     </div>
     <?= $this->Form->end() ?>

@@ -285,7 +285,7 @@ class FolhadeatividadesController extends AppController
         } else {
             $estagiariotable = $this->fetchTable('Estagiarios');
             $estagiarioquery = $estagiariotable->find()
-                ->contain(['Estudantes', 'Supervisores', 'Instituicaoestagios'])
+                ->contain(['Estudantes', 'Supervisores', 'instituicoes'])
                 ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('numero')]);
             $estagiario = $estagiarioquery->all();
             $this->set('estagiario', $estagiario);

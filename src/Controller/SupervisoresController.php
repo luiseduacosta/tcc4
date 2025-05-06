@@ -82,8 +82,8 @@ class SupervisoresController extends AppController
             }
             $this->Flash->error(__('O registro da supervisora não foi realizado. Tente novamente.'));
         }
-        $instituicaoestagios = $this->Supervisores->Instituicoes->find('list');
-        $this->set(compact('supervisor', 'instituicaoestagios'));
+        $instituicoes = $this->Supervisores->Instituicoes->find('list');
+        $this->set(compact('supervisor', 'instituicoes'));
     }
 
     /**
@@ -110,8 +110,8 @@ class SupervisoresController extends AppController
             }
             $this->Flash->error(__('A supervisora não foi atualizada. Tente novamente.'));
         }
-        $instituicaoestagios = $this->Supervisores->Instituicoes->find('list');
-        $this->set(compact('supervisor', 'instituicaoestagios'));
+        $instituicoes = $this->Supervisores->Instituicoes->find('list');
+        $this->set(compact('supervisor', 'instituicoes'));
     }
 
     /**

@@ -80,7 +80,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($instituicao->natureza) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Cnpj') ?></th>
+                    <th><?= __('CNPJ') ?></th>
                     <td><?= h($instituicao->cnpj) ?></td>
                 </tr>
                 <tr>
@@ -100,7 +100,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($instituicao->fax) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Cep') ?></th>
+                    <th><?= __('CEP') ?></th>
                     <td><?= h($instituicao->cep) ?></td>
                 </tr>
                 <tr>

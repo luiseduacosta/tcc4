@@ -56,7 +56,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php
         /** Dados pessoais */
         echo $this->Form->control('nome', ['label' => ['text' => 'Nome']]);
-        echo $this->Form->control('cpf', ['pattern' => '\d{3}\.\d{3}\.\d{3}-\d{2}', 'keypress()', 'placeholder' => '000.000.000-00', 'required' => true]);
+        echo $this->Form->control('cpf', ['label' => ['text' => 'CPF'], 'value' => $professor->cpf, 'readonly' => false, 'pattern' => '\d{3}\.\d{3}\.\d{3}-\d{2}', 'placeholder' => '000.000.000-00', 'required' => true]);
         echo $this->Form->control('datanascimento', ['empty' => false, 'label' => ['text' => 'Data de Nascimento']]);
         echo $this->Form->control('localnascimento', ['label' => ['text' => 'Local de Nascimento']]);
         echo $this->Form->control('sexo', ['options' => ['0' => 'Feminino', '1' => 'Masculino', '2' => 'Não informado'], 'default' => '0', 'label' => ['text' => 'Sexo']]);
@@ -106,6 +106,6 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('observacoes', ['label' => ['text' => 'Outra inoformações']]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit'), ['class' => 'btn btn-primary']) ?>
+    <?= $this->Form->button(__('Confirma'), ['class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
 </div>

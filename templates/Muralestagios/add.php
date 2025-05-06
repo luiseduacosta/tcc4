@@ -27,7 +27,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset>
         <legend><?= __('Novo mural de estágio') ?></legend>
         <?php
-        echo $this->Form->control('instituicao_id', ['label' => ['text' => 'Instituição'], 'options' => $instituicaoestagios, 'empty' => 'Selecione']);
+        echo $this->Form->control('instituicao_id', ['label' => ['text' => 'Instituição'], 'options' => $instituicoes, 'empty' => 'Selecione']);
         echo $this->Form->control('instituicao', ['type' => 'hidden']);
         echo $this->Form->control('convenio', ['label' => ['text' => 'Convênio'], 'options' => ['0' => 'Não', '1' => 'Sim']]);
         echo $this->Form->control('vagas', ['label' => ['text' => 'Vagas'], 'type' => 'number']);

@@ -165,26 +165,26 @@ $user = $this->getRequest()->getAttribute('identity');
                         <th><?= __('Observações') ?></th>
                         <th><?= __('Ações') ?></th>
                     </tr>
-                    <?php foreach ($supervisor->instituicoes as $instituicaoestagios): ?>
+                    <?php foreach ($supervisor->instituicoes as $instituicoes): ?>
                         <tr>
-                            <td><?= $this->Number->format($instituicaoestagios->id, ['pattern' => '######']) ?></td>
-                            <td><?= h($instituicaoestagios->instituicao) ?></td>
-                            <td><?= $this->Number->format($instituicaoestagios->cnpj, ['pattern' => '##.###.###/####-##']) ?></td>
-                            <td><?= h($instituicaoestagios->email) ?></td>
-                            <td><?= h($instituicaoestagios->endereco) ?></td>
-                            <td><?= h($instituicaoestagios->bairro) ?></td>
-                            <td><?= h($instituicaoestagios->municipio) ?></td>
-                            <td><?= $this->Number->format($instituicaoestagios->cep, ['pattern' => '#####-###']) ?></td>
-                            <td><?= $this->Number->format($instituicaoestagios->telefone, ['pattern' => '####-####']) ?></td>
-                            <td><?= h($instituicaoestagios->convenio) ?></td>
-                            <td><?= h($instituicaoestagios->expira) ?></td>
-                            <td><?= h($instituicaoestagios->seguro) ?></td>
-                            <td><?= $this->Text->autoParagraph(h($instituicaoestagios->observacoes)) ?></td>
+                            <td><?= $this->Number->format($instituicoes->id, ['pattern' => '######']) ?></td>
+                            <td><?= h($instituicoes->instituicao) ?></td>
+                            <td><?= $this->Number->format($instituicoes->cnpj, ['pattern' => '##.###.###/####-##']) ?></td>
+                            <td><?= h($instituicoes->email) ?></td>
+                            <td><?= h($instituicoes->endereco) ?></td>
+                            <td><?= h($instituicoes->bairro) ?></td>
+                            <td><?= h($instituicoes->municipio) ?></td>
+                            <td><?= $this->Number->format($instituicoes->cep, ['pattern' => '#####-###']) ?></td>
+                            <td><?= $this->Number->format($instituicoes->telefone, ['pattern' => '####-####']) ?></td>
+                            <td><?= h($instituicoes->convenio) ?></td>
+                            <td><?= h($instituicoes->expira) ?></td>
+                            <td><?= h($instituicoes->seguro) ?></td>
+                            <td><?= $this->Text->autoParagraph(h($instituicoes->observacoes)) ?></td>
                             <td>
-                                <?= $this->Html->link(__('Ver'), ['controller' => 'Instituicoes', 'action' => 'view', $instituicaoestagios->id]) ?>
+                                <?= $this->Html->link(__('Ver'), ['controller' => 'Instituicoes', 'action' => 'view', $instituicoes->id]) ?>
                                 <?php if (isset($user) && $user['categoria'] == 1): ?>
-                                    <?= $this->Html->link(__('Editar'), ['controller' => 'Instituicoes', 'action' => 'edit', $instituicaoestagios->id]) ?>
-                                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Instituicoes', 'action' => 'delete', $instituicaoestagios->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $instituicaoestagios->id)]) ?>
+                                    <?= $this->Html->link(__('Editar'), ['controller' => 'Instituicoes', 'action' => 'edit', $instituicoes->id]) ?>
+                                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Instituicoes', 'action' => 'delete', $instituicoes->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $instituicoes->id)]) ?>
                                 <?php endif; ?>
                             </td>
                         </tr>
