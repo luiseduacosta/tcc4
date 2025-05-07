@@ -33,7 +33,15 @@ use Cake\I18n\I18n;
     public function index()
     {
 
-        $alunos = $this->paginate($this->Alunos);
+        $sort = $this->getRequest()->getQuery('sort');
+        $direction = $this->getRequest()->getQuery('direction');
+        if (empty($sort)) {
+            $sort = 'nome';
+        }
+        if (empty($direction)) {
+            $direction = 'ASC';
+        }
+        $alunos = $this->paginate($this->Alunos, ['order' => ['Alunos.' . $sort => $direction]]);
         $this->Authorization->skipAuthorization();
         $this->set(compact('alunos'));
     }

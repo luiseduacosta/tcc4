@@ -10,8 +10,8 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $instituicao
- * @property int|null $areainstituicoes_id
- * @property int|null $area
+ * @property int|null $area_instituicoes_id
+ * @property string|null $area
  * @property string|null $natureza
  * @property string $cnpj
  * @property string $email

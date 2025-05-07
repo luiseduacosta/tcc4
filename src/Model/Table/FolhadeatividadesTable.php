@@ -40,6 +40,7 @@ class FolhadeatividadesTable extends Table {
         parent::initialize($config);
 
         $this->setTable('folhadeatividades');
+        $this->setAlias('Folhadeatividades');
         $this->setDisplayField('atividade');
         $this->setPrimaryKey('id');
 
@@ -50,7 +51,7 @@ class FolhadeatividadesTable extends Table {
 
     public function beforeFind($event, $query, $options, $primary) {
 
-        $query->order(['dia' => 'ASC']);
+        $query->order(['Folhadeatividades.dia' => 'ASC']);
         return $query;
     }
 

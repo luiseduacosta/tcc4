@@ -59,39 +59,27 @@ class MuralestagiosController extends AppController
     {
         $this->Authorization->skipAuthorization();
         $periodo = $this->request->getQuery('periodo');
-        $sort = $this->request->getQuery('sort');
-        if ($sort == null) {
-            $sort = 'dataInscricao';
-        }
-        $directions = $this->request->getQuery('direction');
-        if ($directions == null) {
-            $directions = 'DESC';
-        }   
-
         if (($periodo == null) || empty($periodo)) {
             $configuracaotable = $this->fetchTable('Configuracao');
             $periodoconfiguracao = $configuracaotable->find()->first();
             $periodo = $periodoconfiguracao->mural_periodo_atual;
         }
-
         if ($periodo) {
             $muralestagios = $this->Muralestagios->find('all', [
-                'conditions' => ['muralestagios.periodo' => $periodo],
-                'order' => [$sort => $directions]
+                'conditions' => ['Muralestagios.periodo' => $periodo],
             ]);
         } else {
             $this->Flash->error(__('Selecionar período.'));
             return $this->redirect(['action' => 'index']);
         }
-
         /* Todos os períodos */
         $periodototal = $this->Muralestagios->find('list', [
             'keyField' => 'periodo',
             'valueField' => 'periodo'
         ]);
         $periodos = $periodototal->toArray();
-
-        $this->set('muralestagios', $this->paginate($muralestagios));
+        $options = ['sortableFields' => ['Muralestagios.instituicao', 'Muralestagios.vagas', 'Muralestagios.beneficios', 'Muralestagios.final_de_semana', 'Muralestagios.cargaHoraria', 'Muralestagios.dataInscricao', 'Muralestagios.dataSelecao']];
+        $this->set('muralestagios', $this->paginate($muralestagios, ['order' => ['Muralestagios.dataInscricao' => 'DESC']]));
         $this->set('periodos', $periodos);
         $this->set('periodo', $periodo);
     }

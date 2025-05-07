@@ -212,19 +212,43 @@ ServerRequest::addDetector('tablet', function ($request) {
  * table, model, controller names or whatever other string is passed to the
  * inflection functions.
  */
-//Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
-//Inflector::rules('irregular', ['red' => 'redlings']);
-//Inflector::rules('uninflected', ['dontinflectme']);
-// Inflector::rules('transliteration', ['/å/' => 'aa']);
 
-Inflector::rules('irregular', ['administrador' => 'administradores']);
-Inflector::rules('irregular', ['configuracao' => 'configuracoes']);
-Inflector::rules('irregular', ['inscricao' => 'inscricoes']);
-Inflector::rules('irregular', ['muralinscricao' => 'muralinscricoes']);
-Inflector::rules('irregular', ['instituicao' => 'instituicoes']);
-Inflector::rules('irregular', ['professor' => 'professores']);
-Inflector::rules('irregular', ['supervisor' => 'supervisores']);
-Inflector::rules('irregular', ['avaliacao' => 'avaliacoes']);
+// Portuguese language inflection rules
+Inflector::rules('singular', [
+        '/^(.*)(oes|aes|aos)$/i' => '\1ao',
+        '/^(.*)(a|e|o|u)is$/i' => '\1\2l',
+        '/^(.*)e?is$/i' => '\1il',
+        '/^(.*)(r|s|z)es$/i' => '\1\2',
+        '/^(.*)ns$/i' => '\1m',
+        '/^(.*)s$/i' => '\1'
+], true);
+
+Inflector::rules('plural', [
+    '/^(.*)ao$/i' => '\1oes',
+    '/^(.*)(r|s|z)$/i' => '\1\2es',
+    '/^(.*)(a|e|o|u)l$/i' => '\1\2is',
+    '/^(.*)il$/i' => '\1is',
+    '/^(.*)(m|n)$/i' => '\1ns',
+    '/^(.*)$/i' => '\1s'    
+], true);
+
+// Irregular words
+Inflector::rules('irregular', [
+    'administrador' => 'administradores',
+    'professor' => 'professores',
+    'supervisor' => 'supervisores',
+    'configuracao' => 'configuracoes',
+    'inscricao' => 'inscricoes',
+    'muralinscricao' => 'muralinscricoes',
+    'instituicao' => 'instituicoes',
+    'areainstituicao' => 'areainstituicoes',
+    'avaliacao' => 'avaliacoes'
+], true);
+
+// Uninflected words
+Inflector::rules('uninflected', [
+    'atlas', 'lapis', 'onibus', 'pires', 'virus', '.*x'
+], true);
 
 /*
  * Enable immutable time objects in the ORM.
@@ -271,3 +295,5 @@ Configure::write('CakePdf', [
     'orientation' => 'portrait',
     'download' => true
 ]);
+
+ 

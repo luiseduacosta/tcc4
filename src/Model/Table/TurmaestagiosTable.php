@@ -59,7 +59,7 @@ class TurmaestagiosTable extends Table {
 
     public function beforeFind($event, $query, $options, $primary) {
 
-        $query->order(['area' => 'ASC']);
+        $query->order(['Turmaestagios.area' => 'ASC']);
         return $query;
     }
 

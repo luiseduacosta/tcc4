@@ -41,7 +41,7 @@ class MuralinscricoesTable extends Table
         parent::initialize($config);
 
         $this->setTable('inscricoes');
-        $this->setAlias('muralinscricoes');
+        $this->setAlias('Muralinscricoes');
         $this->setDisplayField('registro');
         $this->setPrimaryKey('id');
 

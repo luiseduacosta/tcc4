@@ -40,7 +40,7 @@ class AreainstituicoesTable extends Table {
         parent::initialize($config);
 
         $this->setTable('area_instituicoes');
-        $this->setAlias('areainstituicoes');
+        $this->setAlias('Areainstituicoes');
         $this->setDisplayField('area');
         $this->setPrimaryKey('id');
 
@@ -51,7 +51,7 @@ class AreainstituicoesTable extends Table {
 
     public function beforeFind($event, $query, $options, $primary) {
 
-        $query->order(['area' => 'ASC']);
+        $query->order(['Areainstituicoes.area' => 'ASC']);
         return $query;
     }
 

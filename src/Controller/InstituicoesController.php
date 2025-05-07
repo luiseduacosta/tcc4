@@ -31,14 +31,11 @@ class InstituicoesController extends AppController
      */
     public function index()
     {
-
         $query = $this->Instituicoes->find('all', [
-            'contain' => ['Supervisores', 'Areainstituicoes'],
-            'order' => ['Instituicoes.instituicao' => 'ASC']
+            'contain' => ['Areainstituicoes'],
         ]);
-        $instituicoes = $this->paginate($query);
         $this->Authorization->skipAuthorization();
-
+        $instituicoes = $this->paginate($query, ['order' => ['Instituicoes.instituicao' => 'ASC']]);
         $this->set(compact('instituicoes'));
     }
 

@@ -41,10 +41,10 @@ class AreainstituicoesController extends AppController
      */
     public function view($id = null)
     {
+        $this->Authorization->skipAuthorization();
         $areainstituicao = $this->Areainstituicoes->get($id, [
             'contain' => [],
         ]);
-        $this->Authorization->authorize($areainstituicao);
         $this->set(compact('areainstituicao'));
     }
 

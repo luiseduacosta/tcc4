@@ -47,22 +47,23 @@ $user = $this->getRequest()->getAttribute('identity');
                 <caption>Instituições</caption>
                 <thead class="table-dark">
                     <tr>
-                        <th><?= $this->Paginator->sort('id', 'ID') ?></th>
-                        <th><?= $this->Paginator->sort('instituicao', 'Instituição') ?></th>
-                        <th><?= $this->Paginator->sort('areainstituicoes_id', 'Área institucional') ?></th>
-                        <th><?= $this->Paginator->sort('natureza', 'Natureza') ?></th>
-                        <th><?= $this->Paginator->sort('cnpj', 'CNPJ') ?></th>
-                        <th><?= $this->Paginator->sort('email', 'Email') ?></th>
+                        <th><?= $this->Paginator->sort('Instituicoes.id', 'ID') ?></th>
+                        <th><?= $this->Paginator->sort('Instituicoes.instituicao', 'Instituição') ?></th>
+                        <th><?= $this->Paginator->sort('Instituicoes.area_instituicoes_id', 'Área institucional') ?></th>
+                        <th><?= $this->Paginator->sort('Instituicoes.natureza', 'Natureza') ?></th>
+                        <th><?= $this->Paginator->sort('Instituicoes.cnpj', 'CNPJ') ?></th>
+                        <th><?= $this->Paginator->sort('Instituicoes.email', 'Email') ?></th>
                         <th><?= __('Ações') ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($instituicoes as $instituicao): ?>
+                        <?php // pr($instituicao); ?>
                         <tr>
                             <td><?= $instituicao->id ?></td>
                             <td><?= $this->Html->link($instituicao->instituicao, ['controller' => 'Instituicoes', 'action' => 'view', $instituicao->id]) ?>
                             </td>
-                            <td><?= $instituicao->has('areainstituicao') ? $this->Html->link($instituicao->areainstituicao->area, ['controller' => 'Areainstituicoes', 'action' => 'view', $instituicao->areainstituicao->id]) : '' ?>
+                            <td><?= $instituicao->has('areainstituicao') ? $this->Html->link($instituicao->areainstituicao->area, ['controller' => 'Areainstituicoes', 'action' => 'view', $instituicao->areainstituicao->id]) : 's/d' ?>
                             </td>
                             <td><?= h($instituicao->natureza) ?></td>
                             <td><?= h($instituicao->cnpj) ?></td>

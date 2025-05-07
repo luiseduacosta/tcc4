@@ -70,13 +70,6 @@ class AlunosTable extends Table
                     ]);
         }
 
-        public function beforeFind($event, $query, $options, $primary)
-        {
-
-                $query->order(['Alunos.nome' => 'ASC']);
-                return $query;
-        }
-
         /**
          * Default validation rules.
          *

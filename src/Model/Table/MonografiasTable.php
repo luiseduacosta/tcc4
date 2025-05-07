@@ -43,6 +43,7 @@ class MonografiasTable extends Table
                 parent::initialize($config);
 
                 $this->setTable('monografias');
+                $this->setAlias('Monografias');
                 $this->setDisplayField('titulo');
                 $this->setPrimaryKey('id');
 

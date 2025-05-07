@@ -45,6 +45,7 @@ class AgendamentotccsTable extends Table
                 parent::initialize($config);
 
                 $this->setTable('agendamentotccs');
+                $this->setAlias('Agendamentotccs');
                 $this->setDisplayField('id');
                 $this->setPrimaryKey('id');
 

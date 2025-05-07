@@ -44,6 +44,7 @@ class AreamonografiasTable extends Table
 
         $this->setTable('areamonografias');
         $this->setDisplayField('area');
+        $this->setAlias('Areamonografias');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Monografias', [

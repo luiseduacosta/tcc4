@@ -45,7 +45,7 @@ class MuralestagiosTable extends Table
                 parent::initialize($config);
 
                 $this->setTable('mural_estagio');
-                $this->setAlias('muralestagios');
+                $this->setAlias('Muralestagios');
                 $this->setDisplayField('instituicao');
                 $this->setPrimaryKey('id');
 
@@ -62,13 +62,6 @@ class MuralestagiosTable extends Table
                 $this->hasMany('Muralinscricoes', [
                         'foreignKey' => ['muralestagio_id'],
                 ]);
-        }
-
-        public function beforeFind($event, $query, $options, $primary)
-        {
-
-                $query->order(['muralestagios.dataInscricao' => 'DESC']);
-                return $query;
         }
 
         /**

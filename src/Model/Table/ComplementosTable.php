@@ -40,7 +40,7 @@ class ComplementosTable extends Table
         parent::initialize($config);
 
         $this->setTable('complementos');
-
+        $this->setAlias('Complementos');
         $this->hasMany('Estagiarios', [
             'foreignKey' => 'complemento_id',
         ]);

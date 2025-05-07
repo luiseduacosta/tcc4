@@ -43,7 +43,7 @@ class UsersTable extends Table {
         parent::initialize($config);
 
         $this->setTable('users');
-        $this->setAlias('userestagios');
+        $this->setAlias('Users');
         $this->setDisplayField('email');
         $this->setPrimaryKey('id');
 

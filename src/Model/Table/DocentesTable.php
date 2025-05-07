@@ -39,6 +39,7 @@ class DocentesTable extends Table
                 parent::initialize($config);
 
                 $this->setTable('professores');
+                $this->setAlias('Docentes');
                 $this->setDisplayField('id');
                 $this->setPrimaryKey('id');
 
