@@ -55,19 +55,19 @@ $user = $this->getRequest()->getAttribute('identity');
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <?php echo $this->Html->link("Alunos", "/Alunos/index", ['class' => 'nav-link']); ?>
+                        <?php echo $this->Html->link("Aluno(as)", "/Alunos/index", ['class' => 'nav-link']); ?>
                     </li>
                     <li class="nav-item">
-                        <?php echo $this->Html->link("Estagiários", "/Estagiarios/index", ['class' => 'nav-link']); ?>
+                        <?php echo $this->Html->link("Estagiário(as)", "/Estagiarios/index", ['class' => 'nav-link']); ?>
                     </li>
                     <li class="nav-item">
                         <?php echo $this->Html->link("Instituições", "/Instituicoes/index", ['escape' => FALSE, 'class' => 'nav-link']); ?>
                     </li>
                     <li class="nav-item">
-                        <?php echo $this->Html->link("Supervisores", "/Supervisores/index/ordem:nome", ['class' => 'nav-link']); ?>
+                        <?php echo $this->Html->link("Supervisore(as)", "/Supervisores/index/ordem:nome", ['class' => 'nav-link']); ?>
                     </li>
                     <li class="nav-item">
-                        <?php echo $this->Html->link("Professores", "/Professores/index/", ['class' => 'nav-link']); ?>
+                        <?php echo $this->Html->link("Professore(as)", "/Professores/index/", ['class' => 'nav-link']); ?>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -80,7 +80,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <?php echo $this->Html->link('Configuração', '/Configuracao/view/1', ['class' => 'dropdown-item']); ?>
                             </li>
                             <li class="nav-item">
-                                <?php echo $this->Html->link('Usuários', '/users/index', ['class' => 'dropdown-item']); ?>
+                                <?php echo $this->Html->link('Usuário(a)s', '/users/index', ['class' => 'dropdown-item']); ?>
                             </li>
                             <li class="nav-item">
                                 <?php echo $this->Html->link('Planilha seguro', '/alunos/planilhaseguro/', ['class' => 'dropdown-item']); ?>

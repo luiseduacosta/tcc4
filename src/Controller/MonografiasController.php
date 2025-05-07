@@ -49,12 +49,12 @@ class MonografiasController extends AppController {
             $titulo = $this->request->getData()['titulo'];
             $query = $this->Monografias->find()
                     ->where(['titulo LIKE' => "%" . $titulo . "%"])
-                    ->contain(['Docentes', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']]);
+                    ->contain(['Docentes', 'Areamonografias', 'Tccestudantes']);
         } else {
             $query = $this->Monografias->find()
-                    ->contain(['Docentes', 'Areamonografias', 'Tccestudantes' => ['sort' => 'Tccestudantes.nome']]);
+                    ->contain(['Docentes', 'Areamonografias', 'Tccestudantes']);
         }
-
+        $query->order(['Monografias.titulo' => 'asc']);
         $monografias = $this->paginate($query, [
             'sortableFields' => [
                 'Monografias.titulo',

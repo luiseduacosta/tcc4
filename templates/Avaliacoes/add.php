@@ -8,6 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 // pr($estagiario);
 // die();
 ?>
+
 <?php
 $dia = strftime('%e', time());
 $mes = strftime('%B', time());
@@ -58,200 +59,192 @@ if ($cress) {
     </ul>
 </nav>
 
-<h1>Formulário de avalição da(a) discente <?= $estagiario->aluno->nome ?></h1>
+<?php $this->Form->setTemplates(['formStart' => '<form{{attrs}}>']); ?>
+<?php $this->Form->setTemplates(['formEnd' => '</form>']); ?>
+<?php $this->Form->setTemplates(['fieldset' => '<fieldset class="border p-3 mb-4" {{attrs}}>{{content}}</fieldset>']); ?>
+<?php $this->Form->setTemplates(['select' => '<select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select>']); ?>
+<?php $this->Form->setTemplates(['option' => '<option value="{{value}}"{{attrs}}>{{text}}</option>']); ?>
+<?php $this->Form->setTemplates(['legend' => '<legend class="h3">{{text}}</legend>']); ?>
+<?php $this->Form->setTemplates(['label' => '<label class="form-label" {{attrs}}>{{text}}</label>']); ?>
+<?php $this->Form->setTemplates(['input' => '<input class="form-control" type="{{type}}" name="{{name}}"{{attrs}}>']); ?>
+<?php $this->Form->setTemplates(['radioWrapper' => '<div class="form-check form-check-inline">{{label}}{{input}}</div>']); ?>
+<?php $this->Form->setTemplates(['radio' => '<input class="form-check-input" type="radio" name="{{name}}" value="{{value}}"{{attrs}}>']); ?>
+<?php $this->Form->setTemplates(['textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>']); ?>
+<?php $this->Form->setTemplates(['requiredClass' => 'required']); ?>
+<?php $this->Form->setTemplates(['submitContainer' => '<div class="submit">{{content}}</div>']); ?>
 
-<?php $this->element('templates') ?>
+<?= $this->element('templates'); ?>
+
+<h1>Formulário de avalição da(a) discente <?= $estagiario->aluno->nome ?></h1>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
 
-        <?= $this->Form->create($avaliacao) ?>
+    <?= $this->Form->create($avaliacao) ?>
 
-        <fieldset>
+    <fieldset>
 
-            <?= $this->Form->control('estagiario_id', ['options' => [$estagiario->id => $estagiario->aluno->nome]]); ?>
+        <?= $this->Form->control('estagiario_id', ['options' => [$estagiario->id => $estagiario->aluno->nome]]); ?>
 
-            <legend style="font-weight: normal;">1. ASSIDUIDADE</legend>
-            <div class="row">
-                <?= __('1) Desenvolveu as atividades propostas com frequência, ausentando-se apenas com conhecimento e acordado com o(a) supervisor(a) de campo e ou acadêmico(a), seja por motivo de saúde, seja por situações estabelecidas na Lei 11788/2008, entre outras:') ?>
+        <legend>1. ASSIDUIDADE. Desenvolveu as atividades propostas com frequência,
+            ausentando-se apenas com conhecimento e acordado com o(a) supervisor(a) de campo e ou acadêmico(a), seja por
+            motivo de saúde, seja por situações estabelecidas na Lei 11788/2008, entre outras.</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao1', ['type' => 'radio', 'legend' => true, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao1', ['type' => 'radio', 'legend' => true, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
-                </div>
-            </div>
+        </div>
 
-            <legend style="font-weight: normal;">2. PONTUALIDADE</legend>
-            <div class="row">
-                <?= __('2) Cumpre horário estabelecido no Plano de Estágio:') ?>
+        <legend style="font-weight: normal;">2. PONTUALIDADE. Cumpre horário estabelecido no Plano de Estágio.</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao2', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao2', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
-                </div>
-            </div>
+        </div>
 
-            <legend style="font-weight: normal;">3. COMPROMISSO</legend>
-            <div class="row">
-                <?= __('3) Cumpre com as ações e estratégias previstas no Plano de Estágio:') ?>
+        <legend style="font-weight: normal;">3. COMPROMISSO. Cumpre com as ações e estratégias previstas no Plano de
+            Estágio.</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao3', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao3', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
-                </div>
-            </div>
+        </div>
 
-            <legend style="font-weight: normal;">4. RELACIONAMENTO COM O(A) USUÁRIO(A)</legend>
-            <div class="row">
-                <?= __('4) Na relação com o(a) usuário(a): compromisso ético-político no atendimento ao usuário(a):') ?>
+        <legend style="font-weight: normal;">4. RELACIONAMENTO COM O(A) USUÁRIO(A). Na relação com o(a) usuário(a):
+            compromisso ético-político no atendimento ao usuário(a).</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao4', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao4', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
-                </div>
-            </div>
+        </div>
 
-            <legend style="font-weight: normal;">5. INTEGRAÇÃO E ARTICULAÇÃO</legend>
-            <div class="row">
-                <?= __('5) Na relação com outro(a)s profissionais: Integração e articulação à equipe da área de estágio, cooperação e habilidade de trabalhar em equipe multiprofissional:') ?>
+        <legend style="font-weight: normal;">5. INTEGRAÇÃO E ARTICULAÇÃO. Na relação com outro(a)s profissionais:
+            Integração e articulação à equipe da área de estágio, cooperação e habilidade de trabalhar em equipe
+            multiprofissional.</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao5', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao5', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
-                </div>
-            </div>
+        </div>
 
-            <legend style="font-weight: normal;">6. CRITICIDADE E INICATIVA</legend>
-            <div class="row">
-                <?= __('6) Capacidade crítica, interventiva, propositiva e investigativa no enfrentamento das diversas questões existentes no campo de estágio:') ?>
+        <legend style="font-weight: normal;">6. CRITICIDADE E INICATIVA. Capacidade crítica, interventiva, propositiva e
+            investigativa no enfrentamento das diversas questões existentes no campo de estágio.</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao6', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao6', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
-                </div>
-            </div>
+        </div>
 
-            <legend style="font-weight: normal;">7. APEENSÃO DO REFERENCIAL TEÓRICO-METODOLÓGICO, ÉTICO-POLÍTICO E INVESTIGATIVO E APLICAÇÃO NAS ATIVIDADES INERENTES AO CAMPO</legend>
-            <div class="row">
-                <?= __('7) Apreensão do referencial teórico-metodológico, ético-político e investigativo e aplicação nas atividades inerentes ao campo e previstas no Plano de Estágio:') ?>
+        <legend style="font-weight: normal;">7. APREENSÃO DO REFERENCIAL TEÓRICO-METODOLÓGICO, ÉTICO-POLÍTICO E
+            INVESTIGATIVO E APLICAÇÃO NAS ATIVIDADES INERENTES AO CAMPO</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao7', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao7', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
-                </div>
-            </div>
+        </div>
 
-            <legend style="font-weight: normal;">8. AVALIAÇÃO DO DESSEMPENHO DO(A) ESTAGIÁRIO(A) NA ELABORAÇÃO DE RELATÓRIOS, PESQUISAS, PROJETOS DE PESQUISA E INTERVENÇÃO, ETC:</legend>
-                <?= __('8) Avaliação do desempenho do(a) estagiário(a) na elaboração de relatórios, pesquisas, projetos de pesquisa e intervenção, etc:') ?>
+        <legend style="font-weight: normal;">8. AVALIAÇÃO DO DESSEMPENHO DO(A) ESTAGIÁRIO(A) NA ELABORAÇÃO DE
+            RELATÓRIOS, PESQUISAS, PROJETOS DE PESQUISA E INTERVENÇÃO, ETC:</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao8', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao8', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
-                </div>
-            </div>
-            
-            <legend style="font-weight: normal;">9. AS ATIVIDADES PREVISTAS NO PLANO DE ESTÁGIO EM ARTECIAÇÃO COM O NÍVEL DE FORMAÇÃO ACADÊMICA FORAM EFETUADAS PLENAMENTE?</legend>
-            <div class="row">
-                <?= __('9) As atividades previstas no Plano de Estágio em articulação com o nível de formação acadêmica foram efetuadas plenamente?') ?>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao9', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Sim', 1 => 'Não']]); ?>
-                </div>
-            </div>
- 
-            <legend style="font-weight: normal;">Fundamente se achar necessário: </legend>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao9-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 100]); ?>
-                </div>
-            </div>
+        </div>
 
-            <legend style="font-weight: normal;">10. O desempenho das atividades desenvolvidas pelo(a) estagiário(a) e o processo de supervisão foram afetados pelas condições de trabalho no campo de estágio e, em particular, pelas condições estabelecidas pelo estágio remoto?</legend>
-                <?= __('10) O desempenho das atividades desenvolvidas pelo(a) estagiário(a) e o processo de supervisão foram afetados pelas condições de trabalho no campo de estágio e, em particular, pelas condições estabelecidas pelo estágio remoto?') ?>
+        <legend style="font-weight: normal;">9. AS ATIVIDADES PREVISTAS NO PLANO DE ESTÁGIO EM ARTECIAÇÃO COM O NÍVEL DE
+            FORMAÇÃO ACADÊMICA FORAM EFETUADAS PLENAMENTE?</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao9', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Sim', 1 => 'Não']]); ?>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao10', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Sim', 1 => 'Não']]); ?>
-                </div>
-            </div>
+        </div>
 
-            <legend style="font-weight: normal;">Justifique a resposta se achar necessário:</legend>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao10-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
-                </div>
+        <legend style="font-weight: normal;">Fundamente se achar necessário: </legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao9-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 100]); ?>
             </div>
-            
-            <legend style="font-weight: normal;">11. Quanto à integração Disciplina de OTP/Coordenação de Estágio da ESS/Campo de Estágio: houve algum tipo de interlocução entre os 3 segmentos: aluno(a), professor(a) e supervisor(a)?</legend>
-                <?= __('11) Quanto à integração Disciplina de OTP/Coordenação de Estágio da ESS/Campo de Estágio: houve algum tipo de interlocução entre os 3 segmentos: aluno(a), professor(a) e supervisor(a)?') ?>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao11', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Sim', 1 => 'Não']]); ?>
-                </div>
-            </div>
+        </div>
 
-            <legend style="font-weight: normal;">Como você avalia esta interação? (Responda se achar necessário)</legend>
-            <div class="row">
-                <div class="col-md-6">
-            <?= $this->Form->input('avaliacao11-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
-                </div>
+        <legend style="font-weight: normal;">10. O desempenho das atividades desenvolvidas pelo(a) estagiário(a) e o
+            processo de supervisão foram afetados pelas condições de trabalho no campo de estágio e, em particular,
+            pelas condições estabelecidas pelo estágio remoto?</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao10', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Sim', 1 => 'Não']]); ?>
             </div>
+        </div>
 
-            <legend style="font-weight: normal;">12. Você recebeu e acompanhou o programa da Disciplina OTP?</legend>
-                <?= __('12) Você recebeu e acompanhou o programa da Disciplina OTP?') ?>
+        <legend style="font-weight: normal;">Justifique a resposta se achar necessário:</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao10-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao12', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Sim', 1 => 'Não']]); ?>
-                </div>
-            </div>
+        </div>
 
-            <legend style="font-weight: normal;">Sugestões ao que foi desenvolvido?</legend>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao12-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
-                </div>
+        <legend style="font-weight: normal;">11. Quanto à integração Disciplina de OTP/Coordenação de Estágio da
+            ESS/Campo de Estágio: houve algum tipo de interlocução entre os 3 segmentos: aluno(a), professor(a) e
+            supervisor(a)?
+        </legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao11', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Sim', 1 => 'Não']]); ?>
             </div>
+        </div>
 
-            <legend style="font-weight: normal;">13. Há questões que você considera que devam ser mais enfatizadas na disciplina de OTP?</legend>
-                <?= __('13) Há questões que você considera que devam ser mais enfatizadas na disciplina de OTP?') ?>
+        <legend style="font-weight: normal;">Como você avalia esta interação? (Responda se achar necessário)</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao11-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao13', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Sim', 1 => 'Não']]); ?>
-                </div>
-            </div>
+        </div>
 
-            <legend style="font-weight: normal;">Se sim, quais?</legend>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao13-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
-                </div>
+        <legend style="font-weight: normal;">12. Você recebeu e acompanhou o programa da Disciplina OTP?</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao12', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Sim', 1 => 'Não']]); ?>
             </div>
+        </div>
 
-            <legend style="font-weight: normal;">14. Como avalia a experiência do estágio remoto neste semestre? Será possível a continuidade do estágio na modalidade remota no próximo semestre?</legend>
-                <?= __('14) Como avalia a experiência do estágio remoto neste semestre? Será possível a continuidade do estágio na modalidade remota no próximo semestre?') ?>
+        <legend style="font-weight: normal;">Sugestões ao que foi desenvolvido?</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao12-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('avaliacao14', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
-                </div>
-            </div>
+        </div>
 
-            <legend style="font-weight: normal;">Sugestões e observações:</legend>
-            <div class="row">
-                <div class="col-md-6">
-                    <?= $this->Form->input('observacoes', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
-                </div>
+        <legend style="font-weight: normal;">13. Há questões que você considera que devam ser mais enfatizadas na
+            disciplina de OTP?</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao13', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Sim', 1 => 'Não']]); ?>
             </div>
+        </div>
 
-        </fieldset>
-        <?= $this->Form->button(__('Submit', ['class' => 'btn btn-primary'])) ?>
-        <?= $this->Form->end() ?>
-    </div>
+        <legend style="font-weight: normal;">Se sim, quais?</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao13-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
+            </div>
+        </div>
+
+        <legend style="font-weight: normal;">14. Como avalia a experiência do estágio remoto neste semestre? Será
+            possível a continuidade do estágio na modalidade remota no próximo semestre?</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('avaliacao14', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
+            </div>
+        </div>
+
+        <legend style="font-weight: normal;">Sugestões e observações:</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->Form->input('observacoes', ['type' => 'textarea', 'rows' => 5, 'cols' => 60, 'label' => false, 'class' => 'form-control']); ?>
+            </div>
+        </div>
+
+    </fieldset>
+
+    <?= $this->Form->button(__('Confirma', ['class' => 'btn btn-primary'])) ?>
+    <?= $this->Form->end() ?>
+
 </div>
-
-<?php
-$this->Html->script('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js');
-?>
