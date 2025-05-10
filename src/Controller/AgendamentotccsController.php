@@ -89,8 +89,7 @@ class AgendamentotccsController extends AppController
             $dados = $this->request->getData();
             $horarioarray = explode(':', $dados['horario']);
             if (empty($horarioarray[2])):
-                // echo "Horario incompleto" . "<br>";
-                $dados['horario'] = $dados['horario'] . ':00';
+                $dados['horario'] .= ':00';
             endif;
             $agendamentotcc = $this->Agendamentotccs->patchEntity($agendamentotcc, $dados);
             if ($this->Agendamentotccs->save($agendamentotcc)) {
@@ -100,19 +99,17 @@ class AgendamentotccsController extends AppController
             }
             $this->Flash->error(__('Agendamento TCC não foi inserido. Tente novamente'));
         }
-        $qalunos = $this->Agendamentotccs->Alunos->find('list', [
+        $alunos = $this->Agendamentotccs->Alunos->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome'
         ]);
-        $qalunos->order('nome');
-        $alunos = $qalunos->toArray();
+        $alunos->order('nome');
         // pr($alunos);
-        $qProfessores = $this->Agendamentotccs->Professores->find('list', [
+        $professores = $this->Agendamentotccs->Professores->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome'
         ]);
-        $qProfessores->order('nome');
-        $professores = $qProfessores->toArray();
+        $professores->order('nome');
 
         $this->set(compact('agendamentotcc', 'alunos', 'professores'));
     }

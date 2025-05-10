@@ -32,7 +32,23 @@ use Cake\I18n\I18n;
      */
     public function index()
     {
-
+        $this->Authorization->skipAuthorization();
+        $user = $this->getRequest()->getAttribute('identity');
+        if (isset($user) && $user->categoria == '2') {
+            $aluno = $this->Alunos->find()
+            ->where(['id' => $user->estudante_id])
+            ->select('alunos.id')
+            ->first();
+            if ($aluno) {
+                $id = $aluno->id;
+            } else {
+                $this->Flash->error(__('Sem parâmentros para localizar o aluno'));
+                return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
+            }
+        } else {
+            $this->Flash->error(__('Você não tem permissão para acessar esta página'));
+            return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
+        }
         $sort = $this->getRequest()->getQuery('sort');
         $direction = $this->getRequest()->getQuery('direction');
         if (empty($sort)) {
@@ -42,7 +58,6 @@ use Cake\I18n\I18n;
             $direction = 'ASC';
         }
         $alunos = $this->paginate($this->Alunos, ['order' => ['Alunos.' . $sort => $direction]]);
-        $this->Authorization->skipAuthorization();
         $this->set(compact('alunos'));
     }
 
@@ -55,9 +70,6 @@ use Cake\I18n\I18n;
      */
     public function view($id = null)
     {
-        /** Corrigir autorização */
-        $this->Authorization->skipAuthorization();
-
         if ($id === null) {
             $user = $this->getRequest()->getAttribute('identity');
             if (isset($user) && $user->categoria == '2') {
@@ -162,13 +174,22 @@ use Cake\I18n\I18n;
         $this->request->allowMethod(['post', 'delete']);
         $aluno = $this->Alunos->get($id);
         $this->Authorization->authorize($aluno);
+        $estagiarios = $this->Alunos->Estagiarios->find()
+            ->where(['Estagiarios.aluno_id' => $id])
+            ->first();
+        if ($estagiarios) {
+            $this->Flash->error(__('Aluno possui estagiários, não pode ser excluído.'));
+            return $this->redirect(['action' => 'view', $id]);
+        }
         if ($this->Alunos->delete($aluno)) {
             $this->Flash->success(__('Dados do aluno excluídos.'));
+            return $this->redirect(['action' => 'index']);
         } else {
             $this->Flash->error(__('Dados do aluno não excluídos.'));
+            // pr($aluno->getErrors());
+            // die();
+            return $this->redirect(['action' => 'view', $id]);
         }
-
-        return $this->redirect(['action' => 'index']);
     }
 
     /**
@@ -193,6 +214,8 @@ use Cake\I18n\I18n;
             ->limit(20)
             ->toArray();
 
+        $criterio[] = null;
+        $cargahorariatotal[] = null;
         $i = 0;
         foreach ($alunos as $aluno):
             $cargahorariatotal[$i]['id'] = $aluno['Aluno']['id'];
@@ -236,13 +259,19 @@ use Cake\I18n\I18n;
         $this->Authorization->skipAuthorization();
         $user = $this->getRequest()->getAttribute('identity');
         if (isset($user) && $user->categoria == '2') {
-            $aluno = $this->Alunos->find()->where(['Alunos.id' => $user->estudante_id])->order(['Alunos.id' => 'asc'])->first();
+            $aluno = $this->Alunos->find()
+                ->where(['Alunos.id' => $user->estudante_id])
+                ->order(['Alunos.id' => 'asc'])
+                ->first();
         } elseif (isset($user) && $user->categoria == '1') {
             if ($id === null) {
                 $this->Flash->error(__("Operação não pode ser realizada: 'id' não informado."));
                 return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
             } else {
-                $aluno = $this->Alunos->find()->where(['Alunos.id' => $id])->order(['Alunos.id' => 'asc'])->first();
+                $aluno = $this->Alunos->find()
+                ->where(['Alunos.id' => $id])
+                ->order(['Alunos.id' => 'asc'])
+                ->first();
             }
         } else {
             $this->Flash->error(__('Operação não autorizada.'));
@@ -252,7 +281,8 @@ use Cake\I18n\I18n;
             $aluno = $this->request->getData();
 
             $periodoacademicoatual = $this->fetchTable('Configuracoes')
-                ->find()->select(['periodo_calendario_academico'])
+                ->find()
+                ->select(['periodo_calendario_academico'])
                 ->first();
             /**
              * Separo o periodo em duas partes: o ano e o indicador de primeiro ou segundo semestre.
@@ -324,17 +354,21 @@ use Cake\I18n\I18n;
 
         if (isset($user) && $user->categoria == '2') {
             if ($id == $user->estudante_id) {
-                $aluno = $this->Alunos->find()->where(['Alunos.id' => $id])->first();
+                $aluno = $this->Alunos->find()
+                ->where(['Alunos.id' => $id])
+                ->first();
             } else {
                 $this->Flash->error(__('1. Usuário aluno não autorizado.'));
-                return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo?registro=' . $user->numero]);
+                return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', '?' => ['registro' => $user->numero]]);
             }
         } elseif (isset($user) && $user->categoria == '1') {
             if ($id === null) {
                 $this->Flash->error(__("Administrador: operação não pode ser realizada porque o'id' não foi informado."));
                 return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
             } else {
-                $aluno = $this->Alunos->find()->where(['Alunos.id' => $id])->first();
+                $aluno = $this->Alunos->find()
+                ->where(['Alunos.id' => $id])
+                ->first();
             }
         } else {
             $this->Flash->error(__('2. Outros usuários não autorizados.'));
@@ -406,7 +440,7 @@ use Cake\I18n\I18n;
             if (strlen($novoperiodo) < 6) {
                 $this->Flash->error(__('Período de ingresso incompleto: falta indicar se for no 1° ou 2° semestre'));
                 if (isset($this->getRequest()->getAttribute('identity')['categoria']) && $this->getRequest()->getAttribute('identity')['categoria'] == '2') {
-                    return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', $this->getRequest()->getAttribute('identity')['estudante_id']]);
+                    return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', '?' => ['aluno_id' => $this->getRequest()->getAttribute('identity')['estudante_id']] ]);
                 } else {
                     return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', $id]);
                 }
@@ -414,7 +448,7 @@ use Cake\I18n\I18n;
             if (strlen($aluno->ingresso) < 6) {
                 $this->Flash->error(__('Período de ingresso incompleto: falta indicar se for no 1° ou 2° semestre'));
                 if (isset($this->getRequest()->getAttribute('identity')['categoria']) && $this->getRequest()->getAttribute('identity')['categoria'] == '2') {
-                    return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', $this->getRequest()->getAttribute('identity')['estudante_id']]);
+                    return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', '?' => ['aluno_id' => $this->getRequest()->getAttribute('identity')['estudante_id']]]);
                 } else {
                     return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', $id]);
                 }
@@ -535,7 +569,7 @@ use Cake\I18n\I18n;
         $periodototal = $this->Alunos->Estagiarios->find('list', [
             'keyField' => 'periodo',
             'valueField' => 'periodo',
-            'order' => 'periodo'
+            'order' => ['periodo' => 'desc']
         ]);
         $periodos = $periodototal->toArray();
         /* Se o periodo não veio anexo como parametro então o período é o último da lista dos períodos */
@@ -591,116 +625,103 @@ use Cake\I18n\I18n;
                 'Alunos.registro',
                 'Estagiarios.id',
                 'Estagiarios.nivel',
+                'Estagiarios.ajuste2020',
                 'Estagiarios.periodo',
                 'Instituicoes.instituicao'
             ])
-            ->order(['Estagiarios.nivel'])
+            ->order(['Estagiarios.nivel' => 'asc'])
             ->all();
 
         $i = 0;
         foreach ($seguro as $c_seguro) {
-            if ($c_seguro->nivel == 1) {
 
+            /** Calcula quando iniciou o estágio para cada nivel */
+            $semestre = explode('-', $c_seguro->periodo);
+            $ano = $semestre[0];
+            $indicasemestre = $semestre[1];
+
+            if ($c_seguro->nivel == 1) {
                 // Início
                 $inicio = $c_seguro->periodo;
 
-                // Final
-                $semestre = explode('-', $c_seguro->periodo);
-                $ano = $semestre[0];
-                $indicasemestre = $semestre[1];
-
-                if ($indicasemestre == 1) {
-                    $novoano = $ano + 1;
-                    $novoindicasemestre = $indicasemestre + 1;
-                    $final = $novoano . "-" . $novoindicasemestre;
-                } elseif ($indicasemestre == 2) {
-                    $novoano = $ano + 2;
-                    $final = $novoano . "-" . 1;
-                }
             } elseif ($c_seguro->nivel == 2) {
-
-                $semestre = explode('-', $c_seguro->periodo);
-                $ano = $semestre[0];
-                $indicasemestre = $semestre[1];
-
                 // Início
-                if ($indicasemestre == 1) {
-                    $novoano = $ano - 1;
-                    $inicio = $novoano . "-" . 2;
-                } elseif ($indicasemestre == 2) {
-                    $inicio = $ano . "-" . "1";
+                switch ($indicasemestre) {
+                    case 1:
+                        $novoano = $ano - 1;
+                        $inicio = $novoano . "-" . 2;
+                        break;
+                    case 2:
+                        $novoano = $ano - 1;
+                        $inicio = $novoano . "-" . 1;
+                        break;
                 }
 
-                // Final
-                if ($indicasemestre == 1) {
-                    $novoano = $ano + 1;
-                    $final = $novoano . "-" . 1;
-                } elseif ($indicasemestre == 2) {
-                    $novoano = $ano + 1;
-                    $final = $novoano . "-" . "2";
-                }
             } elseif ($c_seguro->nivel == 3) {
-
-                $semestre = explode('-', $c_seguro->periodo);
-                $ano = $semestre[0];
-                $indicasemestre = $semestre[1];
-
                 // Início
-                $novoano = $ano - 1;
-                $inicio = $novoano . "-" . $indicasemestre;
-
-                // Final
-                if ($indicasemestre == 1) {
-                    // $ano = $ano + 1;
-                    $final = $ano . "-" . 2;
-                } elseif ($indicasemestre == 2) {
-                    $novoano = $ano + 1;
-                    $final = $novoano . "-" . 1;
+                switch ($indicasemestre) {
+                    case 1:
+                        $novoano = $ano - 2;
+                        $inicio = $novoano . "-" . 2;
+                        break;
+                    case 2:
+                        $novoano = $ano - 1;
+                        $inicio = $novoano . "-" . 1;
+                        break;
                 }
+
             } elseif ($c_seguro->nivel == 4) {
-
-                $semestre = explode('-', $c_seguro->periodo);
-                $ano = $semestre[0];
-                $indicasemestre = $semestre[1];
-
                 // Início
-                if ($indicasemestre == 1) {
-                    $ano = $ano - 2;
-                    $inicio = $ano . "-" . 2;
-                } elseif ($indicasemestre == 2) {
-                    $ano = $ano - 1;
-                    $inicio = $ano . "-" . 1;
+                switch ($indicasemestre) {
+                    case 1:
+                        $novoano = $ano - 2;
+                        $inicio = $novoano . "-" . 2;
+                        break;
+                    case 2:
+                        $novoano = $ano - 1;
+                        $inicio = $novoano . "-" . 1;
+                        break;
                 }
-
-                // Final
-                $final = $c_seguro->periodo;
-
+ 
                 // Estagio não obrigatório. Conto como estágio 9
             } elseif ($c_seguro->nivel == 9) {
 
-                $semestre = explode('-', $c_seguro->periodo);
-                $ano = $semestre[0];
-                $indicasemestre = $semestre[1];
-
                 // Início
-                if ($indicasemestre == 1) {
-                    $ano = $ano - 2;
-                    $inicio = $ano . "-" . 1;
-                } elseif ($indicasemestre == 2) {
-                    $ano = $ano - 2;
-                    $inicio = $ano . "-" . 2;
+                switch ($indicasemestre) {
+                    case 1:
+                        $novoano = $ano - 2;
+                        $inicio = $novoano . "-" . 1;
+                        break;
+                    case 2:
+                        $novoano = $ano - 2;
+                        $inicio = $novoano . "-" . 2;
+                        break;
                 }
+            }
 
-                // Final
-                $final = $c_seguro->periodo;
-
+            // Final = $inicio + 3 ou 4 semestres 
+            $iniciodoestagio = explode('-', $inicio);
+            $anoinicio = $iniciodoestagio[0];
+            $semestreinicio = $iniciodoestagio[1];
+            if ($c_seguro->ajuste2020 == 0) { // 4 semestres de estágio
+                if ($semestreinicio == 1) {
+                    $final = $anoinicio + 1 . "-" . 2;
+                } elseif ($semestreinicio == 2) {
+                    $final = $anoinicio + 2 . "-" . 1;
+                }
+            } elseif ($c_seguro->ajuste2020 == 1) { // 3 semestres de estágio
+                if ($semestreinicio == 1) {
+                    $final = $anoinicio + 1 . "-" . 1;
+                } elseif ($semestreinicio == 2) {
+                    $final = $anoinicio + 1 . "-" . 2;
+                }
             }
 
             $t_seguro[$i]['id'] = $c_seguro->aluno->id;
             $t_seguro[$i]['estagiario_id'] = $c_seguro->id;
             $t_seguro[$i]['nome'] = $c_seguro->aluno->nome;
             $t_seguro[$i]['cpf'] = $c_seguro->aluno->cpf;
-            $t_seguro[$i]['nascimento'] = $c_seguro->aluno->nascimento ? $c_seguro->aluno->nascimento->i18nFormat('dd-MM-yyyy') : '';
+            $t_seguro[$i]['nascimento'] = isset($c_seguro->aluno->nascimento) ? $c_seguro->aluno->nascimento->i18nFormat('dd-MM-yyyy') : '';
             $t_seguro[$i]['sexo'] = "";
             $t_seguro[$i]['registro'] = $c_seguro->aluno->registro;
             $t_seguro[$i]['curso'] = "UFRJ/Serviço Social";
@@ -709,14 +730,16 @@ use Cake\I18n\I18n;
             else:
                 $t_seguro[$i]['nivel'] = $c_seguro->nivel;
             endif;
+            $t_seguro[$i]['ajuste2020'] = $c_seguro->ajuste2020;            
             $t_seguro[$i]['periodo'] = $c_seguro->periodo;
             $t_seguro[$i]['inicio'] = $inicio;
             $t_seguro[$i]['final'] = $final;
-            $t_seguro[$i]['instituicao'] = isset($c_seguro->instituicao->instituicao) ? $c_seguro->instituicao->instituicao : 'Sem informação';
+            $t_seguro[$i]['instituicao'] = $c_seguro->instituicao->instituicao ?? 'Sem informação';
             $criterio[$i] = $t_seguro[$i]['nome'];
 
             $i++;
         }
+ 
         if (!empty($t_seguro)) {
             array_multisort($criterio, SORT_ASC, $t_seguro);
         }
@@ -755,16 +778,20 @@ use Cake\I18n\I18n;
         if ($estagiario) {
             if ($periodoatual > $estagiario->periodo) {
                 $nivel = $estagiario->nivel + 1;
-                if ($estagiario->ajuste2020 == 1) {
-                    if ($nivel > 3) {
-                        $nivel = 9;
-                    }
-                } elseif ($estagiario->ajuste2020 == 0) {
-                    if ($nivel > 4) {
-                        $nivel = 9;
-                    }
-                } else {
-                    $nivel;
+                switch ($estagiario->ajuste2020) {
+                    case 1:
+                        if ($nivel > 3) {
+                            $nivel = 9;
+                        }
+                        break;
+                    case 0:
+                        if ($nivel > 4) {
+                            $nivel = 9;
+                        }
+                        break;
+                    default:
+                        $nivel;
+                        break;
                 }
             } else {
                 $nivel = $estagiario->nivel;

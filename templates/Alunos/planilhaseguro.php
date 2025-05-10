@@ -51,6 +51,7 @@
                 <th>DRE</th>
                 <th>Curso</th>
                 <th>Nível</th>
+                <th>Ajuste 2020</th>
                 <th>Período</th>
                 <th>Início</th>
                 <th>Final</th>
@@ -85,6 +86,15 @@
                 </td>
                 <td>
                     <?php echo $cada_aluno['nivel']; ?>
+                </td>
+                <td>
+                    <?php if ($cada_aluno['ajuste2020'] == 0): ?>
+                        <?php echo "4 períodos"; ?>
+                    <?php elseif ($cada_aluno['ajuste2020'] == 1): ?>
+                        <?php echo "3 períodos"; ?>
+                    <?php else: ?>
+                        <?php echo "s/d"; ?>
+                    <?php endif; ?>
                 </td>
                 <td>
                     <?php echo $cada_aluno['periodo']; ?>
