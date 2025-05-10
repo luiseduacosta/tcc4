@@ -46,7 +46,7 @@ class EstagiariosController extends AppController
         $turmaestagio = $this->getRequest()->getQuery('turmaestagio');
         $nivel = $this->getRequest()->getQuery('nivel');
         $periodo = $this->getRequest()->getQuery('periodo');
-        if (empty($periodo)) {
+        if ($periodo === null) {
             $configuracao = $this->fetchTable('Configuracoes');
             $periodo_atual = $configuracao->find()->select(['mural_periodo_atual'])->first();
             $periodo = $periodo_atual->mural_periodo_atual;
@@ -171,12 +171,8 @@ class EstagiariosController extends AppController
         $this->Authorization->skipAuthorization();
 
         $estagiario = $this->Estagiarios->newEmptyEntity();
-        // pr($this->request->getData());
-        // die();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $estagiario = $this->Estagiarios->patchEntity($estagiario, $this->request->getData());
-            // pr($estagiario);
-            // die();
             if ($this->Estagiarios->save($estagiario)) {
                 $this->Flash->success(__('Registro de estagiario inserido.'));
 
@@ -270,7 +266,7 @@ class EstagiariosController extends AppController
 
         $this->Authorization->skipAuthorization();
         $this->viewBuilder()->enableAutoLayout(false);
-        if (is_null($id)) {
+        if ($id === null) {
             throw new \Cake\Http\Exception\NotFoundException(__('Sem parâmetros para localizar o estagiário'));
         } else {
             $estagiario = $this->Estagiarios->find()
@@ -338,7 +334,7 @@ class EstagiariosController extends AppController
             ->where(['Estagiarios.id' => $id])
             ->first();
 
-        if (!$estagiario) {
+        if ($estagiario === null) {
             $this->Flash->error(__('Sem estagio cadastrado.'));
             return $this->redirect(['controller' => 'estagiarios', 'action' => 'view', $id]);
         }
@@ -358,7 +354,7 @@ class EstagiariosController extends AppController
             return $this->redirect('/Alunos/view/' . $estagiario->aluno->id);
         }
 
-        if (empty($estagiario->supervisor->id)) {
+        if ($estagiario->supervisor->id === null) {
             $this->Flash->error(__("Falta o supervisor de estágio"));
             return $this->redirect('/Estagiarios/view/' . $estagiario->id);
         }
@@ -391,11 +387,11 @@ class EstagiariosController extends AppController
                 ->where(['Estagiarios.aluno_id' => $user['estudante_id']])
                 ->order(['Estagiarios.periodo' => 'desc'])
                 ->first();
-            if ($estagiario) {
-                $this->set('estagiario', $estagiario);
-            } else {
+            if ($estagiario === null) {
                 $this->Flash->error(__('Ainda não tem estágio cadastrado'));
                 return $this->redirect(['controller' => 'Alunos', 'action' => 'view', $user['estudante_id']]);
+            } else {
+                $this->set('estagiario', $estagiario);
             }
         } else {
             $this->Flash->error(__('Você não tem permissão para acessar esta página'));
@@ -421,8 +417,10 @@ class EstagiariosController extends AppController
         // die();
         $this->viewBuilder()->enableAutoLayout(false);
 
-        if ($estagiario) {
-            $this->viewBuilder()->enableAutoLayout(false);
+        if ($estagiario === null) {
+            $this->Flash->error(__('Sem estagiario cadastrado'));
+            return $this->redirect(['controller' => 'estagiarios', 'action' => 'index']);
+        } else {
             $this->viewBuilder()->setClassName('CakePdf.Pdf');
             $this->viewBuilder()->setOption(
                 'pdfConfig',
@@ -433,9 +431,6 @@ class EstagiariosController extends AppController
                 ]
             );
             $this->set('estagiario', $estagiario);
-        } else {
-            $this->Flash->error(__('Sem estagiario cadastrado'));
-            return $this->redirect(['controller' => 'estagiarios', 'action' => 'index']);
         }
     }
 
@@ -444,7 +439,7 @@ class EstagiariosController extends AppController
 
         /* No login foi capturado o id do estagiário */
         $id = $this->getRequest()->getSession()->read('estagiario_id');
-        if (is_null($id)) {
+        if ($id === null) {
             $this->Flash->error(__('Selecionar o estudante estagiário'));
             return $this->redirect('/Alunos/index');
         } else {
@@ -455,7 +450,6 @@ class EstagiariosController extends AppController
             //pr($estagiario);
             // die();
         }
-
 
         $this->set('estagiario', $estagiario);
     }
@@ -509,7 +503,7 @@ class EstagiariosController extends AppController
             ]);
         }
         $this->Authorization->authorize($estagiario);
-        if (!$estagiario) {
+        if ($estagiario === null) {
             $this->Flash->error(__('Estagiário não encontrado.'));
             return $this->redirect(['action' => 'index']);
         }

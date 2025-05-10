@@ -79,7 +79,7 @@ class EstagiariomonografiasController extends AppController
         ])
         ->order(['periodo' => 'DESC']);
 
-        if (empty($periodo)) {
+        if ($periodo === null) {
             $periodo = end($periodos); // Pega o último elemento do array
         }
 
@@ -107,7 +107,7 @@ class EstagiariomonografiasController extends AppController
             ]);
         }
         $estagiariomonografias = $estagiariomonografias->contain(['Estudantes' => ['Tccestudantes' => ['Monografias']]]);
-        if (empty($estagiariomonografias->toArray())) {
+        if ($estagiariomonografias->toArray() === []) {
             $this->Flash->error(__('Nenhum registro encontrado para o período ' . $periodo . ' selecionado.'));
             return $this->redirect(['action' => 'index']);
         } else {
@@ -201,8 +201,6 @@ class EstagiariomonografiasController extends AppController
                 'limit' => 200
             ]
         );
-        // debug($alunos);
-        // die("alunos");
         $docentemonografias = $this->Estagiariomonografias->Docentes->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome',

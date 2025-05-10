@@ -123,7 +123,6 @@ class DocentesController extends AppController
         $docente = $this->fetchTable("Docentes")->get($id, [
             'contain' => [],
         ]);
-        ;
         $this->Authorization->authorize($docente);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $docente = $this->Docentes->patchEntity($docente, $this->request->getData());
@@ -151,7 +150,7 @@ class DocentesController extends AppController
         $docente = $this->Docentes->get($id);
         $this->Authorization->authorize($docente);
 
-        if (empty($docente)):
+        if ($docente === null):
             $this->Flash->error(__('Registro docente não encontrado'));
             return $this->redirect(['action' => 'index']);
         endif;

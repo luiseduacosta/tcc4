@@ -104,7 +104,6 @@ class AgendamentotccsController extends AppController
             'valueField' => 'nome'
         ]);
         $alunos->order('nome');
-        // pr($alunos);
         $professores = $this->Agendamentotccs->Professores->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome'
@@ -131,11 +130,9 @@ class AgendamentotccsController extends AppController
 
             /* Ajusta o horário */
             $dados = $this->request->getData();
-            // pr($dados);
-            // die();
             $horarioarray = explode(':', $dados['horario']);
             if (empty($horarioarray[2])):
-                $dados['horario'] = $dados['horario'] . ':00';
+                $dados['horario'] .= ':00';
             endif;
             /* Finaliza ajuste de horario */
 
@@ -147,18 +144,16 @@ class AgendamentotccsController extends AppController
             }
             $this->Flash->error(__('Agendamento TCC não foi atualizado. Tente novamente.'));
         }
-        $qalunos = $this->Agendamentotccs->Alunos->find('list', [
+        $alunos = $this->Agendamentotccs->Alunos->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome'
         ]);
-        $qalunos->order(['nome' => 'asc']);
-        $alunos = $qalunos->toArray();
-        $qProfessores = $this->Agendamentotccs->Professores->find('list', [
+        $alunos->order(['nome' => 'asc']);
+        $professores = $this->Agendamentotccs->Professores->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome'
         ]);
-        $qProfessores->order('nome');
-        $professores = $qProfessores->toArray();
+        $professores->order(['nome' => 'asc']);
 
         $this->set(compact('agendamentotcc', 'alunos', 'professores'));
     }
