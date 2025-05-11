@@ -24,23 +24,23 @@ return [
 ];
 
 return [
-        'formStart' => '<form class="form-horizontal" {{attrs}}>',
-        'legend' => '<legend>{{text}}</legend>',
-        'inputContainerError' => '<div class="input {{class}} {{type}}{{required}} error">{{content}}{{error}}</div>',
-        'inputContainer'=>'<div class="form-group">
+    'formStart' => '<form class="form-horizontal" {{attrs}}>',
+    'legend' => '<legend>{{text}}</legend>',
+    'inputContainerError' => '<div class="input {{class}} {{type}}{{required}} error">{{content}}{{error}}</div>',
+    'inputContainer'=>'<div class="form-group">
                     <label class="col-md-4 control-label">{{legend}}</label>
                     <div class="col-md-8">{{content}}</div></div>',
-        'input'=>'<input type="{{type}}" name="{{name}}" class="form-control input-small" {{attrs}} />',
-        'submitContainer'=>'<div class="form-actions">
+    'input'=>'<input type="{{type}}" name="{{name}}" class="form-control input-small" {{attrs}} />',
+    'submitContainer'=>'<div class="form-actions">
                     <div class="row">
                         <div class="col-md-offset-3 col-md-9">
                             {{content}}
                         </div>
                     </div>
                 </div>',
-        'select' => '<div class="form-group">
+    'select' => '<div class="form-group">
                     <label class="col-md-4 control-label" {{attrs}}>{{legend}}</label>
                     <div class="col-md-8"><select class="form-control input medium" name="{{name}}"{{attrs}}>{{content}}</select></div></div>',
-        'label' => '<label class="col-md-4 control-label" {{attrs}}>{{text}}{{label}}</label>',
+    'label' => '<label class="col-md-4 control-label" {{attrs}}>{{text}}{{label}}</label>',
 
 ];

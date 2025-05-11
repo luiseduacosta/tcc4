@@ -16,9 +16,11 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class='nav-item'>
-                <?= $this->Html->link(__('Novo Agendamento de Tcc'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
-            </li>
+            <?php if (isset($user) && $user->categoria == '1'): ?>
+                <li class='nav-item'>
+                    <?= $this->Html->link(__('Agendar Oficina TCC'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                </li>
+            <?php endif; ?>
         </ul>
     </div>
 </nav>
@@ -40,8 +42,8 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th><?= $this->Paginator->sort('Monografias.titulo', 'Título') ?></th>
                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                     <th><?= $this->Paginator->sort('Agendamentotccs.avaliacao', 'Avaliação') ?></th>
-                    <th><?= __('Ações') ?></th>
                 <?php endif; ?>
+                <th><?= __('Ações') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -60,10 +62,12 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($agendamentotcc->horario) ?></td>
                     <td><?= h($agendamentotcc->sala) ?></td>
                     <td><?= h($agendamentotcc->titulo) ?></td>
-                    <td><?= h($agendamentotcc->avaliacao) ?></td>
+                    <?php if (isset($user) && $user->categoria == '1'): ?>
+                        <td><?= h($agendamentotcc->avaliacao) ?></td>
+                    <?php endif; ?>
                     <td>
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $agendamentotcc->id]) ?>
-                        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+                        <?php if (isset($user) && $user->categoria == '1'): ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id]) ?>
                             <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $agendamentotcc->id)]) ?>
                         <?php endif; ?>
