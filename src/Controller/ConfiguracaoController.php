@@ -14,6 +14,7 @@ use Cake\I18n\I18n;
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @property \Cake\ORM\TableRegistry $Configuracao
+ * 
  * @method \App\Model\Entity\Configuracao[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ConfiguracaoController extends AppController

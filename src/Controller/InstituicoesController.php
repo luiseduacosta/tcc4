@@ -19,6 +19,7 @@ use Cake\I18n\I18n;
  * @property \Cake\ORM\TableRegistry $Estagiarios
  * @property \Cake\ORM\TableRegistry $Muralestagios
  * @property \Cake\ORM\TableRegistry $Visitas
+ * 
  * @method \App\Model\Entity\Instituicoes[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class InstituicoesController extends AppController

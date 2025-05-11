@@ -15,6 +15,7 @@ use Cake\I18n\I18n;
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @property \Cake\ORM\TableRegistry $Complementos
  * @property \Cake\ORM\TableRegistry $Estagiarios
+ * 
  * @method \App\Model\Entity\Complemento[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ComplementosController extends AppController

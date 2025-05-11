@@ -16,6 +16,7 @@ use Cake\I18n\I18n;
  * @property \Cake\ORM\TableRegistry $Areamonografias
  * @property \Cake\ORM\TableRegistry $Docentes
  * @property \Cake\ORM\TableRegistry $Monografias
+ * 
  * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AreamonografiasController extends AppController

@@ -16,6 +16,7 @@ use Cake\I18n\I18n;
  * @property \Cake\ORM\TableRegistry $Agendamentotccs           
  * @property \Cake\ORM\TableRegistry $Estudantes
  * @property \Cake\ORM\TableRegistry $Docentes
+ * 
  * @method \App\Model\Entity\Agendamentotcc[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AgendamentotccsController extends AppController

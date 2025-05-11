@@ -19,6 +19,7 @@ use Cake\I18n\I18n;
  * @property \Cake\ORM\TableRegistry $Supervisores
  * @property \Cake\ORM\TableRegistry $Instituicoes
  * @property \Cake\ORM\TableRegistry $Professores
+ * 
  * @method \App\Model\Entity\Avaliaco[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AvaliacoesController extends AppController

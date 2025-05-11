@@ -13,6 +13,12 @@ use Cake\ORM\TableRegistry;
  * @property \App\Model\Table\EstagiariomonografiasTable $Estagiariomonografias
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * @property \Cake\ORM\Query $Estagiariomonografias
+ * @property \Cake\ORM\Query $Estudantes
+ * @property \Cake\ORM\Query $Docentes
+ * @property \Cake\ORM\Query $Areaestagios
+ * @property \Cake\ORM\Query $Monografias
+ * @property \Cake\ORM\Query $Tccestudantes
  * 
  * @method \App\Model\Entity\Estagiariomonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -126,7 +132,7 @@ class EstagiariomonografiasController extends AppController
     {
 
         $estagiariomonografia = $this->Estagiariomonografias->get($id, [
-            'contain' => ['Estudantes', 'Docentemonografias'],
+            'contain' => ['Estudantes', 'Docentes'],
         ]);
         $this->Authorization->authorize($estagiariomonografia);
         $this->set('estagiariomonografia', $estagiariomonografia);
