@@ -64,6 +64,7 @@ $submit = [
 ]
     ?>
 
+<div class="container">
 <?php if ((isset($ultimoestagio) && $ultimoestagio) || (isset($estudante_semestagio) && $estudante_semestagio)): ?>
     <div class="row">
         <div class="container">
@@ -74,8 +75,10 @@ $submit = [
                 if (isset($atualizar)) {
                     echo $this->Form->control('id', ['value' => $ultimoestagio->id, 'type' => 'hidden', 'readonly']);
                 }
+                ?>
+                <?php
                 // Estudante estagiário
-                <?php if (isset($ultimoestagio) && $ultimoestagio): ?>
+                if (isset($ultimoestagio) && $ultimoestagio): ?>
                     <fieldset>
                     <legend>Estagiário</legend>
                     <?= $this->Form->control('registro', ['value' => $ultimoestagio->estudante->registro, 'readonly']); ?>
@@ -143,3 +146,4 @@ $submit = [
         </div>
     </div>
 <?php endif; ?>
+</div>
