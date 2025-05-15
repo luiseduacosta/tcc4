@@ -318,11 +318,11 @@ class EstagiariosController extends AppController
                     ->order(['nivel' => 'asc'])
                     ->all();
 
-                    $this->set('estagiario', $estagiario);
-
                 if (empty($estagiario)) {    
                     $this->Flash->error(__('Selecionar o estágio do(a) estudante'));
                     return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);        
+                } else {
+                    $this->set('estagiario', $estagiario);
                 }
             }
         } else {
