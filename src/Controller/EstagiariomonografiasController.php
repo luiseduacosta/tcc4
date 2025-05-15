@@ -48,7 +48,6 @@ class EstagiariomonografiasController extends AppController
             $periodo = end($periodos); // Pega o último elemento do array
         }
 
-        // $periodo = '2008-1';
         $estagiariomonografias = $this->Estagiariomonografias->find('all', [
             'fields' => ['Estudantes.id', 'Estudantes.nome', 'Estudantes.registro', 'Estagiariomonografias.id', 'Estagiariomonografias.periodo', 'Estagiariomonografias.ajuste2020', 'Estagiariomonografias.nivel', 'Tccestudantes.monografia_id', 'Tccestudantes.registro', 'Tccestudantes.id', 'Tccestudantes.nome', 'Monografias.id', 'Monografias.titulo', 'Monografias.periodo'],
             'conditions' => ['or' => [['ajuste2020' => '0', 'nivel' => 4], ['ajuste2020' => '1', 'nivel' => 3]], 
@@ -60,7 +59,7 @@ class EstagiariomonografiasController extends AppController
     }
 
     /**
-     * Indexb method
+     * Indexbak method
      *
      * @param string|null $periodo
      * @return \Cake\Http\Response|null
@@ -148,20 +147,19 @@ class EstagiariomonografiasController extends AppController
             if ($this->Estagiariomonografias->save($estagiariomonografia)) {
                 $this->Flash->success(__('Registros de estagiário inserido.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $estagiariomonografia->id]);
             }
             $this->Flash->error(__('Registro estagiário não foi inserido. Tente novamente.'));
+            $this->redirect(['action' => 'index']);
         }
         $alunos = $this->Estagiariomonografias->Estudantes->find('list', [
             'keyField' => 'id',
-            'valueField' => 'nome',
-            'limit' => 200
+            'valueField' => 'nome'
         ]);
 
         $professores = $this->Estagiariomonografias->Docentes->find('list', [
             'keyField' => 'id',
-            'valueField' => 'nome',
-            'limit' => 200
+            'valueField' => 'nome'
         ]);
 
         $this->set(compact('estagiariomonografia', 'alunos', 'professores'));
@@ -197,19 +195,16 @@ class EstagiariomonografiasController extends AppController
             'list',
             [
                 'keyField' => 'id',
-                'valueField' => 'nome',
-                'limit' => 200
+                'valueField' => 'nome'
             ]
         );
         $docentemonografias = $this->Estagiariomonografias->Docentes->find('list', [
             'keyField' => 'id',
-            'valueField' => 'nome',
-            'limit' => 200
+            'valueField' => 'nome'
         ]);
         $areas = $this->Estagiariomonografias->Areaestagios->find('list', [
             'keyField' => 'id',
-            'valueField' => 'area',
-            'limit' => 200
+            'valueField' => 'area'
         ]);
 
         $this->set(compact('estagiariomonografia', 'alunos', 'docentemonografias', 'areas'));
@@ -248,7 +243,6 @@ class EstagiariomonografiasController extends AppController
         else:
             echo 'Digitar a busca';
         endif;
-        // die();
     }
 
     public function registro($id = null)

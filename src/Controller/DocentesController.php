@@ -31,7 +31,7 @@ class DocentesController extends AppController
     }
 
     /**
-     * Index0 method
+     * Index method
      *
      * @return \Cake\Http\Response|null
      */

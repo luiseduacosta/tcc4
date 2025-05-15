@@ -533,10 +533,6 @@ use Cake\I18n\I18n;
                 ->where(['Alunos.id' => $id])
                 ->first();
         }
-        // pr($id);
-        // pr($totalperiodos);
-        // pr($aluno);
-        // die('aluno');
 
         $this->viewBuilder()->enableAutoLayout(false);
         $this->viewBuilder()->setClassName('CakePdf.Pdf');

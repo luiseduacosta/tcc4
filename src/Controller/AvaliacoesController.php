@@ -33,8 +33,8 @@ class AvaliacoesController extends AppController
     {
         $this->Authorization->skipAuthorization();
         $user = $this->getRequest()->getAttribute('identity');
-        $this->set('user', $user);
         $avaliacoes = $this->Avaliacoes->find()->contain(['Estagiarios' => ['Alunos', 'Supervisores', 'Instituicoes']]);
+        $this->set('user', $user);
         $this->set('estagiarios', $this->paginate($avaliacoes));
     }
 
@@ -50,7 +50,7 @@ class AvaliacoesController extends AppController
         /** O id enviado pelo submenu_navegacao corresponde ao estagiario_id */
         $this->Authorization->skipAuthorization();
         $estagiario_id = $this->getRequest()->getQuery('estagiario_id');
-        if ($estagiario_id == NULL) {
+        if ($estagiario_id === NULL) {
             $this->Flash->error(__('Selecionar estagiário'));
             $user = $this->getRequest()->getAttribute('identity');
             if ($user->categoria == '2'):
