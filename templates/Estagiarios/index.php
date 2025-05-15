@@ -25,8 +25,6 @@
  * @var \Cake\ORM\Query $query
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($estagiarios);
-// pr($periodo);
 ?>
 
 <script type="text/javascript">
@@ -148,7 +146,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
     <table class="table table-striped table-hover table-responsive">
-        <thead class="table-info">
+        <thead class="table-dark">
             <tr>
                 <th><?= $this->Paginator->sort('Estagiarios.id', 'Id') ?></th>
                 <th><?= $this->Paginator->sort('Alunos.nome', 'Estudante') ?></th>

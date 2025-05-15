@@ -23,7 +23,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?= $this->Html->link(__('Listar Estagiarios'), ['action' => 'index'], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
             </li>
             <li class="nav-item">
-
                 <?= $this->Html->link(__('Inserir Estagiario'), ['action' => 'add', '?' => ['aluno_id' => $estagiario->aluno_id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
             </li>
             <li class="nav-item">
@@ -84,12 +83,10 @@ $user = $this->getRequest()->getAttribute('identity');
             <th><?= __('Ajuste 2020') ?></th>
             <td><?= h($estagiario->ajuste2020) == 0 ? 'Não' : 'Sim' ?></td>
         </tr>
-
         <tr>
             <th><?= __('Turno') ?></th>
             <td><?= h($estagiario->turno) ?></td>
         </tr>
-
         <tr>
             <th><?= __('Nível') ?></th>
             <?php if ($estagiario->nivel == 9): ?>
@@ -98,7 +95,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 <td><?= h($estagiario->nivel) ?></td>
             <?php endif; ?>
         </tr>
-
         <tr>
             <th><?= __('Instituição') ?></th>
             <?php if (isset($user) && $user->categoria == '1'): ?>
@@ -109,7 +105,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 </td>
             <?php endif; ?>
         </tr>
-
         <tr>
             <th><?= __('Supervisor(a)') ?></th>
             <?php if (!empty($estagiario->supervisor['nome'])): ?>
@@ -123,7 +118,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 <td>Sem informaçao</td>
             <?php endif; ?>
         </tr>
-
         <tr>
             <th><?= __('Professor') ?></th>
             <?php if (!empty($estagiario->professor['nome'])): ?>
@@ -137,7 +131,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 <td>Sem informaçao</td>
             <?php endif; ?>
         </tr>
-
         <tr>
             <th><?= __('Período') ?></th>
             <td><?= h($estagiario->periodo) ?></td>

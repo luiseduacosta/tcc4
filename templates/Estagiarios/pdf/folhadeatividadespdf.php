@@ -94,6 +94,7 @@ if ($professora) {
         1º Mês: digitar nome do mês:
     </p>
 </div>
+
 <table>
     <tr>
         <th style='width: 20%'>
@@ -293,6 +294,7 @@ if ($professora) {
         2º Mês: digitar nome do mês:
     </p>
 </div>
+
 <table>
     <tr>
         <th style='width: 20%'>
@@ -492,6 +494,7 @@ if ($professora) {
         3º Mês: digitar nome do mês:
     </p>
 </div>
+
 <table>
     <tr>
         <th style='width: 20%'>
@@ -890,6 +893,7 @@ if ($professora) {
         5º Mês: digitar nome do mês:
     </p>
 </div>
+
 <table>
     <tr>
         <th style='width: 20%'>

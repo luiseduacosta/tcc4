@@ -76,7 +76,6 @@ $user = $this->getRequest()->getAttribute('identity');
     });
 </script>
 
-
 <?php echo $this->element('menu_mural'); ?>
 
 <?= $this->element('templates') ?>
@@ -88,7 +87,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+            <?php if (isset($user) && $user->categoria == '1'): ?>
                 <li class="nav-item">
                     <?=
                         $this->Form->postLink(
@@ -129,7 +128,7 @@ $niveis = [
         echo $this->Form->control('professor_id', ['options' => $professores, 'empty' => true]);
         echo $this->Form->control('periodo', ['label' => 'Semestre']);
         echo $this->Form->control('turmaestagio_id', ['label' => 'Turma', 'options' => $turmaestagios, 'empty' => true]);
-        if (isset($user->categoria) && $user->categoria == '1') {
+        if (isset($user) && $user->categoria == '1') {
             echo $this->Form->control('nota', ['label' => 'Nota', 'type' => 'number', 'step' => '0.01', 'placeholder' => '00.00']);
             echo $this->Form->control('ch', ['label' => 'Carga horária', 'type' => 'number', 'placeholder' => '000']);
             echo $this->Form->control('observacoes', ['type' => 'textarea', 'rows' => '3', 'cols' => '40', 'label' => 'Observações']);

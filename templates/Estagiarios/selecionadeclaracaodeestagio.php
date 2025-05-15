@@ -15,7 +15,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <h3><?= __('Estágios cursados pela(o) estudande ') ?></h3>
     <div class="table-responsive">
         <table class="table table-striped table-hover table-responsive">
-            <thead>
+            <thead class="table-dark">
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('estagiario.avaliacao.id', 'Declaração') ?></th>
@@ -33,8 +33,6 @@ $user = $this->getRequest()->getAttribute('identity');
             </thead>
             <tbody>
                 <?php foreach ($estagiario as $c_estagiario): ?>
-                    <?php // pr($c_estagiario); ?>
-                    <?php // die(); ?>
                     <tr>
                         <?php if (isset($user) && $user->categoria == '1'): ?>
                             <td><?= isset($c_estagiario->id) ? $this->Html->link($c_estagiario->id, ['controller' => 'estagiarios', 'action' => 'view', $c_estagiario->id]) : '' ?></td>

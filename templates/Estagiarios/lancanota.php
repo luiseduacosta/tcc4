@@ -4,9 +4,6 @@
  * @var \App\Model\Entity\Estagiario[]|\Cake\Collection\CollectionInterface $estagiarios
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($estagiarios);
-// pr($periodo);
-// die();
 ?>
 
 <script type="text/javascript">
@@ -25,9 +22,6 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_mural'); ?>
 
-<?php
-// die();
-?>
 <div class="row justify-content-center">
     <div class="col-auto">
         <?php if (isset($user) && $user->categoria == '1'): ?>
@@ -45,9 +39,9 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Estagiários') ?></h3>
     <table class="table table-striped table-hover table-responsive">
-        <thead>
+        <thead class="table-dark">
             <tr>
-                <?php if ($this->getRequest()->getSession()->read('categoria') == 1): ?>
+                <?php if (isset($user) && $user->categoria == 1): ?>
                     <th><?= $this->Paginator->sort('id') ?></th>
                 <?php endif; ?>
                 <th><?= $this->Paginator->sort('Alunos.nome', 'Aluno') ?></th>
@@ -65,8 +59,6 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($estagiarios as $estagiario): ?>
-                <?php // pr($estagiario); ?>
-                <?php // die(); ?>
                 <tr>
                     <?php if (isset($user) && $user->categoria == '1'): ?>
                         <td><?= $estagiario->id ?></td>
@@ -96,7 +88,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php endif; ?>
                     <td>
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $estagiario['id']]) ?>
-                        <?php if ($this->getRequest()->getSession()->read('categoria') == 1): ?>
+                        <?php if (isset($user) && $user->categoria == '1'): ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $estagiario['id']]) ?>
                             <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $estagiario['id']], ['confirm' => __('Tem certeza de excluir este registro # {0}?', $estagiario['id'])]) ?>
                         <?php endif; ?>

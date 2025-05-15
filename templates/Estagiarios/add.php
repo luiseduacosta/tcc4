@@ -7,7 +7,6 @@
  */
 $user = $this->request->getAttribute('identity');
 $now = new \Cake\I18n\FrozenTime();
-// pr($aluno);
 ?>
 
 <script type="text/javascript">

@@ -4,10 +4,6 @@
  * @var \App\Model\Entity\Estagiario $estagiario
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($supervisores);
-// pr($supervisor_id);
-// pr($instituicoes);
-// pr($instituicao_id);
 ?>
 
 <script type="text/javascript">

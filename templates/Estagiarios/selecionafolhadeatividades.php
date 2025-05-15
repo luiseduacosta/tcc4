@@ -5,19 +5,16 @@
  * @var \App\Model\Entity\Estagiario $estagiario
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($estagiario);
-// die();
 ?>
 
 <?php echo $this->element('menu_mural'); ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h3><?= __('Estágios cursados pela(o) estudande ') ?></h3>
-    <div class="table table-responsive table-hover table-striped">
         <table class="table table-striped table-hover table-responsive">
-            <thead>
+            <thead class="table-dark">
                 <tr>
-                    <?php if ($this->getRequest()->getAttribute('identity')['categoria_id']): ?>
+                    <?php if (isset($user) && $user->categoria == '1'): ?>
                         <th><?= $this->Paginator->sort('id') ?></th>
                     <?php endif; ?>
                     <th><?= $this->Paginator->sort('estagiario.avaliacao.id', 'Imprime folha de atividades') ?></th>
@@ -28,15 +25,13 @@ $user = $this->getRequest()->getAttribute('identity');
                     <th><?= $this->Paginator->sort('estagiario->supervisor->nome', 'Supervisor(a)') ?></th>
                     <th><?= $this->Paginator->sort('estagiario->ch', 'Carga horária') ?></th>
                     <th><?= $this->Paginator->sort('estagiario->nota', 'Nota') ?></th>
-                    <?php if ($this->getRequest()->getAttribute('identity')['categoria_id'] == 1): ?>
+                    <?php if (isset($user) && $user->categoria == '1'): ?>
                         <th><?= __('Ações') ?></th>
                     <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($estagiario as $c_estagiario): ?>
-                    <?php // pr($c_estagiario); ?>
-                    <?php // die(); ?>
                     <tr>
                         <?php if (isset($user) && $user->categoria == '1'): ?>
                             <td><?= isset($c_estagiario->id) ? $this->Html->link($c_estagiario->id, ['controller' => 'estagiarios', 'action' => 'view', $c_estagiario->id]) : '' ?></td>
@@ -71,5 +66,4 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
 </div>

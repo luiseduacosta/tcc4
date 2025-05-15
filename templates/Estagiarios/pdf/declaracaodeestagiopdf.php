@@ -11,6 +11,7 @@
  $hoje = FrozenTime::now('America/Sao_Paulo', 'pt-BR');
  
 ?>
+
 <?php
 
 // pr($estagiario->aluno->nome);
