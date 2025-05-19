@@ -46,7 +46,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($tccestudantes as $tccestudante): ?>
-                <?php pr($tccestudante); ?>
+                <?php // pr($tccestudante); ?>
                 <tr>
                     <td><?= $this->Number->format($tccestudante->id) ?></td>
                     <td><?= h($tccestudante->registro) ?></td>

@@ -97,7 +97,6 @@ $user = $this->getRequest()->getAttribute('identity');
                     }
                 ?>
             </dd>
-
             <dt class="col-sm-3"><?= __('Data nascimento') ?></dt>
             <dd class="col-sm-9">
                 <?= $professor->datanascimento ? $professor->datanascimento->i18nFormat('dd-MM-yyyy') : 's/d' ?>
