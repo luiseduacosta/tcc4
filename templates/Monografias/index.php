@@ -52,7 +52,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($monografias as $monografia): ?>
-                <?php // pr($monografia->docentes); ?>
+                <?php // pr($monografia); ?>
                 <?php // die(pr($titulo)); ?>
                 <tr>
 

@@ -56,15 +56,31 @@ class ProfessoresController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
-        if ($id === null) {
-            $siape = $this->getRequest()->getQuery('siape');
-            if (isset($siape)):
-                $idquery = $this->Professores->find()
-                    ->where(['siape' => $siape])
-                    ->first();
-                $id = $idquery->id;
-            endif;
+        if (isset($user) && ($user->categoria == '1' || $user->categoria == '3')) {
+            if ($id === null) {
+                $siape = $this->getRequest()->getQuery('siape');
+                if (isset($siape)) {
+                    $query = $this->Professores->find()
+                        ->where(['siape' => $siape])
+                        ->first();
+                    $id = $query->id;
+                } else {
+                    if ($user->categoria == '3') {
+                        $siape = $user->numero;
+                        if (isset($siape)) {
+                            $query = $this->Professores->find()
+                                ->where(['siape' => $siape])
+                                ->first();
+                            $id = $query->id;
+                            }
+                    }
+                }
+            };
+        } else {
+            $this->Flash->error(__('Acesso não autorizado'));
+            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
+
         /** Têm Professores com muitos estagiários: aumentar a memória */
         ini_set('memory_limit', '2048M');
         $professor = $this->Professores->get(

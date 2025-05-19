@@ -22,8 +22,24 @@ use Cake\I18n\I18n;
  * @method \App\Model\Entity\Aluno[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 
- class AlunosController extends AppController
+/**
+ * AlunosController handles actions related to the management of students (alunos).
+ * It provides functionalities for viewing, adding, editing, and deleting students,
+ * as well as generating various PDF documents related to student evaluations and activities.
+ * The controller also manages the filtering and pagination of student records based on certain criteria.
+ */
+class AlunosController extends AppController
 {
+
+    /**
+     * initialize method
+     *
+     * @return void
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+    }
 
     /**
      * Index method
@@ -32,16 +48,13 @@ use Cake\I18n\I18n;
      */
     public function index()
     {
+
         $this->Authorization->skipAuthorization();
         $user = $this->getRequest()->getAttribute('identity');
-        if (isset($user) && $user->categoria == '2') {
+        if (isset($user) && $user->categoria == '1') {
             $aluno = $this->Alunos->find()
-            ->where(['id' => $user->estudante_id])
-            ->select('alunos.id')
-            ->first();
-            if ($aluno) {
-                $id = $aluno->id;
-            } else {
+                ->all();
+            if (empty($aluno)) {
                 $this->Flash->error(__('Sem parâmentros para localizar o aluno'));
                 return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
             }
@@ -70,18 +83,20 @@ use Cake\I18n\I18n;
      */
     public function view($id = null)
     {
+
+        $this->Authorization->skipAuthorization();
         if ($id === null) {
             $user = $this->getRequest()->getAttribute('identity');
             if (isset($user) && $user->categoria == '2') {
                 $aluno = $this->Alunos->find()
-                ->where(['id' => $user->estudante_id])
-                ->select('alunos.id')
-                ->first();
-                if ($aluno) {
-                    $id = $aluno->id;
-                } else {
+                    ->where(['id' => $user->estudante_id])
+                    ->select('alunos.id')
+                    ->first();
+                if (empty($aluno)) {
                     $this->Flash->error(__('Sem parâmentros para localizar o aluno'));
                     return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
+                } else {
+                    $id = $aluno->id;
                 }
             } else {
                 $this->Flash->error(__('Você não tem permissão para acessar esta página'));

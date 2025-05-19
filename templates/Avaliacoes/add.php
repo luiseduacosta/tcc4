@@ -72,6 +72,7 @@ if ($cress) {
 <?php $this->Form->setTemplates(['textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>']); ?>
 <?php $this->Form->setTemplates(['requiredClass' => 'required']); ?>
 <?php $this->Form->setTemplates(['submitContainer' => '<div class="submit">{{content}}</div>']); ?>
+<?php $this->Form->setTemplates(['button' => '<button{{attrs}}>{{text}}</button>']); ?>
 
 <?= $this->element('templates'); ?>
 
@@ -85,7 +86,7 @@ if ($cress) {
 
         <?= $this->Form->control('estagiario_id', ['options' => [$estagiario->id => $estagiario->aluno->nome]]); ?>
 
-        <legend>1. ASSIDUIDADE. Desenvolveu as atividades propostas com frequência,
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">1. ASSIDUIDADE. Desenvolveu as atividades propostas com frequência,
             ausentando-se apenas com conhecimento e acordado com o(a) supervisor(a) de campo e ou acadêmico(a), seja por
             motivo de saúde, seja por situações estabelecidas na Lei 11788/2008, entre outras.</legend>
         <div class="row">
@@ -94,14 +95,14 @@ if ($cress) {
             </div>
         </div>
 
-        <legend style="font-weight: normal;">2. PONTUALIDADE. Cumpre horário estabelecido no Plano de Estágio.</legend>
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">2. PONTUALIDADE. Cumpre horário estabelecido no Plano de Estágio.</legend>
         <div class="row">
             <div class="col-md-12">
                 <?= $this->Form->input('avaliacao2', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Ruim', 1 => 'Regular', 2 => 'Bom', 3 => 'Excelente']]); ?>
             </div>
         </div>
 
-        <legend style="font-weight: normal;">3. COMPROMISSO. Cumpre com as ações e estratégias previstas no Plano de
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">3. COMPROMISSO. Cumpre com as ações e estratégias previstas no Plano de
             Estágio.</legend>
         <div class="row">
             <div class="col-md-12">
@@ -109,7 +110,7 @@ if ($cress) {
             </div>
         </div>
 
-        <legend style="font-weight: normal;">4. RELACIONAMENTO COM O(A) USUÁRIO(A). Na relação com o(a) usuário(a):
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">4. RELACIONAMENTO COM O(A) USUÁRIO(A). Na relação com o(a) usuário(a):
             compromisso ético-político no atendimento ao usuário(a).</legend>
         <div class="row">
             <div class="col-md-12">
@@ -117,7 +118,7 @@ if ($cress) {
             </div>
         </div>
 
-        <legend style="font-weight: normal;">5. INTEGRAÇÃO E ARTICULAÇÃO. Na relação com outro(a)s profissionais:
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">5. INTEGRAÇÃO E ARTICULAÇÃO. Na relação com outro(a)s profissionais:
             Integração e articulação à equipe da área de estágio, cooperação e habilidade de trabalhar em equipe
             multiprofissional.</legend>
         <div class="row">
@@ -126,7 +127,7 @@ if ($cress) {
             </div>
         </div>
 
-        <legend style="font-weight: normal;">6. CRITICIDADE E INICATIVA. Capacidade crítica, interventiva, propositiva e
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">6. CRITICIDADE E INICATIVA. Capacidade crítica, interventiva, propositiva e
             investigativa no enfrentamento das diversas questões existentes no campo de estágio.</legend>
         <div class="row">
             <div class="col-md-12">
@@ -134,7 +135,7 @@ if ($cress) {
             </div>
         </div>
 
-        <legend style="font-weight: normal;">7. APREENSÃO DO REFERENCIAL TEÓRICO-METODOLÓGICO, ÉTICO-POLÍTICO E
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">7. APREENSÃO DO REFERENCIAL TEÓRICO-METODOLÓGICO, ÉTICO-POLÍTICO E
             INVESTIGATIVO E APLICAÇÃO NAS ATIVIDADES INERENTES AO CAMPO</legend>
         <div class="row">
             <div class="col-md-12">
@@ -142,7 +143,7 @@ if ($cress) {
             </div>
         </div>
 
-        <legend style="font-weight: normal;">8. AVALIAÇÃO DO DESSEMPENHO DO(A) ESTAGIÁRIO(A) NA ELABORAÇÃO DE
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">8. AVALIAÇÃO DO DESSEMPENHO DO(A) ESTAGIÁRIO(A) NA ELABORAÇÃO DE
             RELATÓRIOS, PESQUISAS, PROJETOS DE PESQUISA E INTERVENÇÃO, ETC:</legend>
         <div class="row">
             <div class="col-md-12">
@@ -150,7 +151,7 @@ if ($cress) {
             </div>
         </div>
 
-        <legend style="font-weight: normal;">9. AS ATIVIDADES PREVISTAS NO PLANO DE ESTÁGIO EM ARTECIAÇÃO COM O NÍVEL DE
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">9. AS ATIVIDADES PREVISTAS NO PLANO DE ESTÁGIO EM ARTECIAÇÃO COM O NÍVEL DE
             FORMAÇÃO ACADÊMICA FORAM EFETUADAS PLENAMENTE?</legend>
         <div class="row">
             <div class="col-md-12">
@@ -158,14 +159,14 @@ if ($cress) {
             </div>
         </div>
 
-        <legend style="font-weight: normal;">Fundamente se achar necessário: </legend>
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">Fundamente se achar necessário:</legend>
         <div class="row">
             <div class="col-md-12">
                 <?= $this->Form->input('avaliacao9-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 100]); ?>
             </div>
         </div>
 
-        <legend style="font-weight: normal;">10. O desempenho das atividades desenvolvidas pelo(a) estagiário(a) e o
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">10. O desempenho das atividades desenvolvidas pelo(a) estagiário(a) e o
             processo de supervisão foram afetados pelas condições de trabalho no campo de estágio e, em particular,
             pelas condições estabelecidas pelo estágio remoto?</legend>
         <div class="row">
@@ -174,14 +175,14 @@ if ($cress) {
             </div>
         </div>
 
-        <legend style="font-weight: normal;">Justifique a resposta se achar necessário:</legend>
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">Justifique a resposta se achar necessário:</legend>
         <div class="row">
             <div class="col-md-12">
                 <?= $this->Form->input('avaliacao10-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
             </div>
         </div>
 
-        <legend style="font-weight: normal;">11. Quanto à integração Disciplina de OTP/Coordenação de Estágio da
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">11. Quanto à integração Disciplina de OTP/Coordenação de Estágio da
             ESS/Campo de Estágio: houve algum tipo de interlocução entre os 3 segmentos: aluno(a), professor(a) e
             supervisor(a)?
         </legend>
@@ -191,28 +192,28 @@ if ($cress) {
             </div>
         </div>
 
-        <legend style="font-weight: normal;">Como você avalia esta interação? (Responda se achar necessário)</legend>
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">Como você avalia esta interação? (Responda se achar necessário)</legend>
         <div class="row">
             <div class="col-md-12">
                 <?= $this->Form->input('avaliacao11-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
             </div>
         </div>
 
-        <legend style="font-weight: normal;">12. Você recebeu e acompanhou o programa da Disciplina OTP?</legend>
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">12. Você recebeu e acompanhou o programa da Disciplina OTP?</legend>
         <div class="row">
             <div class="col-md-12">
                 <?= $this->Form->input('avaliacao12', ['type' => 'radio', 'legend' => false, 'options' => [0 => 'Sim', 1 => 'Não']]); ?>
             </div>
         </div>
 
-        <legend style="font-weight: normal;">Sugestões ao que foi desenvolvido?</legend>
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">Sugestões ao que foi desenvolvido?</legend>
         <div class="row">
             <div class="col-md-12">
                 <?= $this->Form->input('avaliacao12-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
             </div>
         </div>
 
-        <legend style="font-weight: normal;">13. Há questões que você considera que devam ser mais enfatizadas na
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">13. Há questões que você considera que devam ser mais enfatizadas na
             disciplina de OTP?</legend>
         <div class="row">
             <div class="col-md-12">
@@ -220,14 +221,14 @@ if ($cress) {
             </div>
         </div>
 
-        <legend style="font-weight: normal;">Se sim, quais?</legend>
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">Se sim, quais?</legend>
         <div class="row">
             <div class="col-md-12">
                 <?= $this->Form->input('avaliacao13-1', ['type' => 'textarea', 'label' => false, 'class' => 'form-control', 'rows' => 5, 'cols' => 60]); ?>
             </div>
         </div>
 
-        <legend style="font-weight: normal;">14. Como avalia a experiência do estágio remoto neste semestre? Será
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">14. Como avalia a experiência do estágio remoto neste semestre? Será
             possível a continuidade do estágio na modalidade remota no próximo semestre?</legend>
         <div class="row">
             <div class="col-md-12">
@@ -235,7 +236,7 @@ if ($cress) {
             </div>
         </div>
 
-        <legend style="font-weight: normal;">Sugestões e observações:</legend>
+        <legend style="font-size: 16px; font-weight: normal; text-align: justify;">15. Sugestões e observações:</legend>
         <div class="row">
             <div class="col-md-12">
                 <?= $this->Form->input('observacoes', ['type' => 'textarea', 'rows' => 5, 'cols' => 60, 'label' => false, 'class' => 'form-control']); ?>
@@ -244,7 +245,7 @@ if ($cress) {
 
     </fieldset>
 
-    <?= $this->Form->button(__('Confirma', ['class' => 'btn btn-primary'])) ?>
+    <?= $this->Form->button(__('Confirma'), ['type' => 'submit', 'class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
 
 </div>

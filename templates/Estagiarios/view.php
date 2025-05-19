@@ -158,7 +158,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <td>Sem informaçao</td>
             <?php endif; ?>
             <tr>
-                <th><?= __('CH') ?></th>
+                <th><?= __('Carga horária') ?></th>
                 <td><?= $this->Number->format($estagiario->ch) ?></td>
             </tr>
             <tr>

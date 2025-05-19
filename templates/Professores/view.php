@@ -84,13 +84,17 @@ $user = $this->getRequest()->getAttribute('identity');
             <dt class="col-sm-3"><?= __('Sexo') ?></dt>
             <dd class="col-sm-9">
                 <?php
-                if ($professor->sexo == '0') {
-                    echo 'Feminino';
-                } elseif ($professor->sexo == '1') {
-                    echo 'Masculino';
-                } elseif ($professor->sexo == '2') {
-                    echo 'Não informado';
-                }
+                switch ($professor->sexo) {
+                    case '0':
+                        echo 'Feminino';
+                        break;
+                    case '1':
+                        echo 'Masculino';
+                        break;
+                    case '2':
+                        echo 'Não informado';
+                        break;
+                    }
                 ?>
             </dd>
 

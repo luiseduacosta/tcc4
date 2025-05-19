@@ -46,12 +46,12 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($tccestudantes as $tccestudante): ?>
-                <?php // pr($tccestudante); ?>
+                <?php pr($tccestudante); ?>
                 <tr>
                     <td><?= $this->Number->format($tccestudante->id) ?></td>
                     <td><?= h($tccestudante->registro) ?></td>
                     <td><?= $this->Html->link(h($tccestudante->nome), ['controller' => 'tccestudantes', 'action' => 'view', $tccestudante->id]) ?>
-                    </td>
+                     </td>
                     <td><?= $tccestudante->has('monografia') ? $this->Html->link(h($tccestudante->monografia['titulo']), ['controller' => 'monografias', 'action' => 'view', $tccestudante->monografia['id']]) : "" ?>
                     </td>
                 </tr>

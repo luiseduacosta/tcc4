@@ -23,9 +23,20 @@ use Cake\I18n\I18n;
  *
  * @method \App\Model\Entity\Estagiario[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
+/**
+ * EstagiariosController handles actions related to the management of interns (estagiarios).
+ * It provides functionalities for viewing, adding, editing, and deleting interns,
+ * as well as generating various PDF documents related to intern evaluations and activities.
+ * The controller also manages the filtering and pagination of intern records based on certain criteria.
+ */
 class EstagiariosController extends AppController
 {
 
+    /**
+     * initialize method
+     *
+     * @return void
+     */
     public function initialize(): void
     {
         parent::initialize();
@@ -298,44 +309,6 @@ class EstagiariosController extends AppController
     }
 
     /**
-     * selecionadeclaracaodeestagio method
-     *
-     * @param string|null $id Estagiario id.
-     * @return \Cake\Http\Response|null|void Renders view otherwise.
-     */
-    public function selecionadeclaracaodeestagio($id = NULL)
-    {
-        $this->Authorization->skipAuthorization();
-        $user = $this->getRequest()->getAttribute('identity');
-
-        /* No login foi capturado o id do estagiário */
-        $id = $this->getRequest()->getSession()->read('estagiario_id');
-        if ($id === NULL) {
-            if (isset($user) && $user->categoria == '2') {
-                $estagiario = $this->Estagiarios->find()
-                    ->contain(['Alunos', 'Supervisores', 'Instituicoes'])                
-                    ->where(['registro' => $user->numero])
-                    ->order(['nivel' => 'asc'])
-                    ->all();
-
-                if (empty($estagiario)) {    
-                    $this->Flash->error(__('Selecionar o estágio do(a) estudante'));
-                    return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);        
-                } else {
-                    $this->set('estagiario', $estagiario);
-                }
-            }
-        } else {
-            /** Deveria capturar todos os estágios do aluno */
-            $estagiario = $this->Estagiarios->find()
-                ->contain(['Alunos', 'Supervisores', 'Instituicoes'])                
-                ->where(['id' => $id])
-                ->order(['nivel' => 'asc'])
-                ->first();
-        }
-    }
-
-    /**
      * declaracaodeestagiopdf method
      *
      * @param string|null $id Estagiario id.
@@ -388,33 +361,6 @@ class EstagiariosController extends AppController
     }
 
     /**
-     * selecionafolhadeatividades method
-     *
-     * @param string|null $id Estagiario id.
-     * @return \Cake\Http\Response|null|void Renders view otherwise.
-     */
-    public function selecionafolhadeatividades($id = NULL)
-    {
-        $user = $this->getRequest()->getSession()->read('Auth.User');
-        if (isset($user) && $user['categoria'] == '2') {
-            $estagiario = $this->Estagiarios->find()
-                ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
-                ->where(['Estagiarios.aluno_id' => $user['estudante_id']])
-                ->order(['Estagiarios.periodo' => 'desc'])
-                ->first();
-            if ($estagiario === null) {
-                $this->Flash->error(__('Ainda não tem estágio cadastrado'));
-                return $this->redirect(['controller' => 'Alunos', 'action' => 'view', $user['estudante_id']]);
-            } else {
-                $this->set('estagiario', $estagiario);
-            }
-        } else {
-            $this->Flash->error(__('Você não tem permissão para acessar esta página'));
-            return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
-        }
-    }
-
-    /**
      * folhadeatividadespdf method
      *
      * @param string|null $id Estagiario id.
@@ -449,26 +395,46 @@ class EstagiariosController extends AppController
         }
     }
 
+    /**
+     * selecionaavaliacaodiscente method
+     *
+     * @param string|null $id Estagiario id.
+     * @return \Cake\Http\Response|null|void Renders view otherwise.
+     */
     public function selecionaavaliacaodiscente($id = NULL)
     {
-
+        $estagiario_id = $this->getRequest()->getQuery(
+            'estagiario_id'
+        );
+        $this->Authorization->skipAuthorization();
         /* No login foi capturado o id do estagiário */
-        $id = $this->getRequest()->getSession()->read('estagiario_id');
-        if ($id === null) {
-            $this->Flash->error(__('Selecionar o estudante estagiário'));
-            return $this->redirect('/Alunos/index');
+        if (empty($estagiario_id)) {
+            $user = $this->getRequest()->getAttribute('identity');
+            if (isset($user) && $user->categoria == '2') {
+                $estagiario = $this->Estagiarios->find()
+                    ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
+                    ->where(['Estagiarios.aluno_id' => $user->estudante_id]);
+                $estagiario = $estagiario->first();
+            } else {
+                $this->Flash->error(__('Selecionar o estudante estagiário'));
+                return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
+            }
         } else {
-            $estagiarioquery = $this->Estagiarios->find()
+            $estagiario = $this->Estagiarios->find()
                 ->contain(['Alunos', 'Supervisores', 'Instituicoes'])
-                ->where(['Estagiarios.registro' => $this->getRequest()->getSession()->read('registro')]);
-            $estagiario = $estagiarioquery->all();
-            //pr($estagiario);
-            // die();
+                ->where(['Estagiarios.id' => $estagiario_id]);
+            $estagiario = $estagiario->first();
         }
 
         $this->set('estagiario', $estagiario);
     }
 
+    /**
+     * avaliacaodiscentepdf method
+     *
+     * @param string|null $id Estagiario id.
+     * @return \Cake\Http\Response|null|void Renders view otherwise.
+     */
     public function avaliacaodiscentepdf($id = NULL)
     {
 
