@@ -15,7 +15,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerEstudantesView">
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+        <?php if (isset($user) && $user->categoria == '1'): ?>
             <li class="nav-item">
                 <?= $this->Html->link(__('Novo Estudante'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
             </li>
@@ -33,64 +33,64 @@ $user = $this->getRequest()->getAttribute('identity');
 </nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <h3><?= h($aluno->nome) ?></h3>
+    <h3><?= h($estudante->nome) ?></h3>
     <table class="table table-striped table-hover table-responsive">
         <tr>
             <th><?= __('Nome') ?></th>
-            <td><?= h($aluno->nome) ?></td>
+            <td><?= h($estudante->nome) ?></td>
         </tr>
         <tr>
             <th><?= __('Registro') ?></th>
-            <td><?= h($aluno->registro) ?></td>
+            <td><?= h($estudante->registro) ?></td>
         </tr>
-        <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
+        <?php if (isset($user) && $user->categoria == '1'): ?>
             <tr>
                 <th><?= __('Nascimento') ?></th>
-                <td><?= h($aluno->nascimento) ?></td>
+                <td><?= h($estudante->nascimento) ?></td>
             </tr>
             <tr>
                 <th><?= __('Telefone') ?></th>
-                <td><?= '(' . h($aluno->codigo_telefone) . ')' . h($aluno->telefone) ?></td>
+                <td><?= '(' . h($estudante->codigo_telefone) . ')' . h($estudante->telefone) ?></td>
             </tr>
             <tr>
                 <th><?= __('Celular') ?></th>
-                <td><?= '(' . h($aluno->codigo_celular) . ')' . h($aluno->celular) ?></td>
+                <td><?= '(' . h($estudante->codigo_celular) . ')' . h($estudante->celular) ?></td>
             </tr>
             <tr>
                 <th><?= __('Email') ?></th>
-                <td><?= h($aluno->email) ?></td>
+                <td><?= h($estudante->email) ?></td>
             </tr>
             <tr>
                 <th><?= __('Cpf') ?></th>
-                <td><?= h($aluno->cpf) ?></td>
+                <td><?= h($estudante->cpf) ?></td>
             </tr>
             <tr>
                 <th><?= __('Identidade') ?></th>
-                <td><?= h($aluno->identidade) ?></td>
+                <td><?= h($estudante->identidade) ?></td>
             </tr>
             <tr>
                 <th><?= __('Orgao') ?></th>
-                <td><?= h($aluno->orgao) ?></td>
+                <td><?= h($estudante->orgao) ?></td>
             </tr>
             <tr>
                 <th><?= __('Endereço') ?></th>
-                <td><?= h($aluno->endereco) ?></td>
+                <td><?= h($estudante->endereco) ?></td>
             </tr>
             <tr>
                 <th><?= __('Cep') ?></th>
-                <td><?= h($aluno->cep) ?></td>
+                <td><?= h($estudante->cep) ?></td>
             </tr>
             <tr>
                 <th><?= __('Município') ?></th>
-                <td><?= h($aluno->municipio) ?></td>
+                <td><?= h($estudante->municipio) ?></td>
             </tr>
             <tr>
                 <th><?= __('Bairro') ?></th>
-                <td><?= h($aluno->bairro) ?></td>
+                <td><?= h($estudante->bairro) ?></td>
             </tr>
             <tr>
                 <th><?= __('Observacoes') ?></th>
-                <td><?= $aluno->observacoes ?></td>
+                <td><?= $estudante->observacoes ?></td>
             </tr>
         <?php endif; ?>
     </table>

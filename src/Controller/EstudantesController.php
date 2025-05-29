@@ -150,11 +150,11 @@ class EstudantesController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
-        $aluno = $this->Estudantes->get($id, [
+        $estudante = $this->Estudantes->get($id, [
             'contain' => [],
         ]);
 
-        $this->set('aluno', $aluno);
+        $this->set('estudante', $estudante);
     }
 
     /**
@@ -173,7 +173,7 @@ class EstudantesController extends AppController
             if ($this->Estudantes->save($estudante)) {
                 $this->Flash->success(__('Estudante registrado.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $estudante->id]);
             }
             $this->Flash->error(__('Não foi possível registrar o estudante. Tente novamente.'));
         }
@@ -193,11 +193,7 @@ class EstudantesController extends AppController
         $estudante = $this->Estudantes->get($id, [
             'contain' => [],
         ]);
-        // pr($estudante);
-        // pr($this->request->getData());
-        // die();
         $this->Authorization->authorize($estudante);
-        // die();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $estudanteatualiza = $this->Estudantes->patchEntity($estudante, $this->request->getData());
             // debug($estudanteatualiza);
@@ -223,7 +219,13 @@ class EstudantesController extends AppController
 
         $this->request->allowMethod(['post', 'delete']);
         $estudantetable = $this->fetchTable('Estudantes');
-        $estudante = $estudantetable->get($id);
+        $estudante = $estudantetable->get($id, [
+            'contain' => ['Muralinscricoes', 'Estagiarios', 'Tccestudantes']
+        ]);
+        if ($estudante->muralinscricoes || $estudante->estagiarios || $estudante->tccestudantes) {
+            $this->Flash->error(__('Registro de estudante não excluído. O estudante possui registros de inscriçoes, estágio e/ou TCC.'));
+            return $this->redirect(['action' => 'view', $id]);
+        }
         $this->Authorization->authorize($estudante);
         if ($this->Estudantes->delete($estudante)) {
             $this->Flash->success(__('Registro de estudante excluído.'));

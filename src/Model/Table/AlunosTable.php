@@ -12,8 +12,8 @@ use Cake\Validation\Validator;
 /**
  * Alunos Model
  *
- * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
  * @property \App\Model\Table\MuralinscricoesTable&\Cake\ORM\Association\HasMany $Muralinscricoes
+ * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasOne $Tccestudantes
  * 
@@ -62,7 +62,7 @@ class AlunosTable extends Table
                 ]);
 
                 $this->hasOne('Tccestudantes', [
-                        'propertyName' => 'tccestudantes',
+                        'propertyName' => 'Tccestudantes',
                         'targetForeignKey' => 'registro',
                         'foreignKey' => false,
                         'conditions' => 'Alunos.registro = Tccestudantes.registro',

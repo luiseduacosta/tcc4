@@ -9,6 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Estudantes Model (clone de Alunos para usar com Monografias)
  * 
+ * @property \App\Model\Table\MuralinscricoesTable&\Cake\ORM\Association\HasMany $Muralinscricoes
  * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasOne $Tccestudantes
  *
@@ -38,9 +39,16 @@ class EstudantesTable extends Table
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 
+        $this->hasMany('Muralinscricoes', [
+            'className' => 'Muralinscricoes',
+            'targetForeignKey' => 'id',
+            'foreignKey' => 'aluno_id',
+            'joinType' => 'INNER'
+        ]);
+
         /** A tabela Estagiarios tem um campo aluno_id que se conexta com o id de Estudantess */
-        $this->hasMany('Estagiariomonografias', [
-            'className' => 'Estagiariomonografias',
+        $this->hasMany('Estagiarios', [
+            'className' => 'Estagiarios',
             'targetForeignKey' => 'id',
             'foreignKey' => 'aluno_id',
             'joinType' => 'INNER'
