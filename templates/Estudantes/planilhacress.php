@@ -4,10 +4,6 @@ s<?php
  * @var \App\Model\Entity\Estudante $estudante
  * @var \Cake\ORM\ResultSet<\App\Model\Entity\Estudante> $estudantes
  */
-// pr($cress);
-// pr($periodos);
-// pr($periodoselecionado);
-// die();
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
