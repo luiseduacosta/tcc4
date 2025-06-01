@@ -477,12 +477,12 @@ class EstagiariosController extends AppController
 
         if ($id === null) {
             $this->Flash->error(__('Sem parâmetro para localizar o estagiário.'));
-            throw new \Cake\Http\Exception\NotFoundException(__('Sem parâmetro para localizar o estagiário.'));
-        } else {
-            $estagiario = $this->Estagiarios->get($id, [
-                'contain' => [],
-            ]);
+            return $this->redirect(['action' => 'index']);
         }
+        $this->Authorization->skipAuthorization();
+        $estagiario = $this->Estagiarios->get($id, [
+            'contain' => [],
+        ]);
         $this->Authorization->authorize($estagiario);
         if ($estagiario === null) {
             $this->Flash->error(__('Estagiário não encontrado.'));
@@ -503,6 +503,7 @@ class EstagiariosController extends AppController
             ->contain(['Supervisores'])
             ->where(['Instituicoes.id' => $estagiario->instituicao_id])
             ->first();
+        $supervisores = [];
         foreach ($supervisoresporinstituicao->supervisores as $supervisor) {
             $supervisores[$supervisor->id] = $supervisor->nome;
         }
@@ -525,13 +526,23 @@ class EstagiariosController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $estagiario = $this->Estagiarios->get($id);
-        if ($this->Estagiarios->delete($estagiario)) {
-            $this->Flash->success(__('Estagiário excluído.'));
-        } else {
-            $this->Flash->error(__('Não foi possível excluir o estagiário'));
+        if (!$estagiario) {
+            $this->Flash->error(__('Estagiário não encontrado.'));
+            return $this->redirect(['action' => 'index']);
         }
-
-        return $this->redirect(['controller' => 'alunos', 'action' => 'view', '?' => ['registro', $estagiario->registro]]);
+        $this->Authorization->authorize($estagiario);
+        $user = $this->getRequest()->getAttribute('identity');
+        if (isset($user) && $user->categoria == '1') {
+            if ($this->Estagiarios->delete($estagiario)) {
+                $this->Flash->success(__('Estagiário excluído.'));
+                return $this->redirect(['action'=> 'index']);
+            } else {
+                $this->Flash->error(__('Não foi possível excluir o estagiário'));
+            }
+        } else {
+            $this->Flash->error(__('Apenas administradores podem excluir estagiários'));
+        }
+        return $this->redirect(['action' => 'index']);
     }
 
     /**
@@ -542,64 +553,54 @@ class EstagiariosController extends AppController
      */
     public function lancanota($id = null)
     {
-
-        $siape = $this->getRequest()->getQuery('siape');
-
-        $query = $this->Estagiarios->Professores->find()
+        $this->Authorization->skipAuthorization();
+        $user = $this->getRequest()->getAttribute('identity');
+        if (isset($user) && $user->categoria == '3') {
+            $siape = $user->numero;
+        } elseif (isset($user) && $user->categoria == '1') {
+            $siape = $this->getRequest()->getQuery('siape');
+        }
+        if ($siape === null) {
+            $this->Flash->error(__('Sem parâmetro para localizar o estagiário do(a) professor(a).'));
+            return $this->redirect(['action' => 'index']);
+        }
+        $estagiarios = $this->Estagiarios->Professores->find()
             ->contain([
                 'Estagiarios' => [
                     'sort' => ['periodo' => 'desc'],
-                    'Alunos' => ['fields' => ['id', 'nome'], 'sort' => ['nome']],
-                    'Professores' => ['fields' => ['id', 'nome', 'siape']],
-                    'Supervisores' => ['fields' => ['id', 'nome']],
-                    'Instituicoes' => ['fields' => ['id', 'instituicao']],
-                    'Avaliacoes' => ['fields' => ['id', 'estagiario_id']]
-                ]
-            ])
-            ->where(['siape' => $siape]);
+                        'Alunos' => ['fields' => ['id', 'nome'], 'sort' => ['nome']],
+                        'Professores' => ['fields' => ['id', 'nome', 'siape']],
+                        'Supervisores' => ['fields' => ['id', 'nome']],
+                        'Instituicoes' => ['fields' => ['id', 'instituicao']],
+                        'Avaliacoes' => ['fields' => ['id', 'estagiario_id']]
+                    ]
+                ])
+                ->where(['Professores.siape' => $siape])
+                ->first();
 
-        // die();
-        // $estagiariosfolha = $query->distinct(['estagiario_id']);
-        $estagiarios = $query->first();
-        // pr($estagiarios);
+        $this->Authorization->skipAuthorization();
+
         $i = 0;
         $estagiarioslancanota[] = null;
+        $estagiarios = $estagiarios->estagiarios;
         foreach ($estagiarios as $estagiario):
-            // pr($estagiario);
-            // $estagiarioslancanota[$i]['periodo'] = $estagiario;
-            foreach ($estagiario->estagiarios as $c_estagio):
-                // pr($c_estagio);
+            foreach ($estagiario as $c_estagio):
                 $estagiarioslancanota[$i]['id'] = $c_estagio['id'];
                 $estagiarioslancanota[$i]['registro'] = $c_estagio['registro'];
                 $estagiarioslancanota[$i]['periodo'] = $c_estagio['periodo'];
                 $estagiarioslancanota[$i]['nivel'] = $c_estagio['nivel'];
                 $estagiarioslancanota[$i]['nota'] = $c_estagio['nota'];
                 $estagiarioslancanota[$i]['ch'] = $c_estagio['ch'];
-                // pr($c_estagio->instituicao);
-                // pr($c_estagio->supervisor);
-                // pr($c_estagio->docente);
-                // pr($c_estagio->estudante);
-                $folha = $this->fetchTable('Folhadeatividades')->find()
-                    ->where(['Folhadeatividades.estagiario_id' => $c_estagio->id])
-                    ->first();
-                if ($folha):
-                    // pr($folha);
-                endif;
-                $estagiarioslancanota[$i]['instituicao_id'] = $c_estagio->instituicao->id;
-                $estagiarioslancanota[$i]['instituicao'] = $c_estagio->instituicao->instituicao;
-                $estagiarioslancanota[$i]['supervisor_id'] = $c_estagio->supervisor->id;
-                $estagiarioslancanota[$i]['supervisora'] = $c_estagio->supervisor->nome;
-                $estagiarioslancanota[$i]['professor_id'] = $c_estagio->docente->id;
-                $estagiarioslancanota[$i]['docente'] = $c_estagio->docente->nome;
-                $estagiarioslancanota[$i]['estudante_id'] = $c_estagio->aluno->id;
-                $estagiarioslancanota[$i]['estudante'] = $c_estagio->estudante->nome;
-                if (isset($folha)):
-                    $estagiarioslancanota[$i]['folha_id'] = $folha->id;
-                else:
-                    $estagiarioslancanota[$i]['folha_id'] = null;
-                endif;
-                if (isset($c_estagio->avaliacao->id)):
-                    $estagiarioslancanota[$i]['avaliacao_id'] = $c_estagio->avaliacao->id;
+                $estagiarioslancanota[$i]['instituicao_id'] = $c_estagio['instituicao']['id'];
+                $estagiarioslancanota[$i]['instituicao'] = $c_estagio['instituicao']['instituicao'];
+                $estagiarioslancanota[$i]['supervisor_id'] = $c_estagio['supervisor']['id'];
+                $estagiarioslancanota[$i]['supervisora'] = $c_estagio['supervisor']['nome'];
+                $estagiarioslancanota[$i]['professor_id'] = $c_estagio['docente']['id'];
+                $estagiarioslancanota[$i]['docente'] = $c_estagio['docente']['nome'];
+                $estagiarioslancanota[$i]['estudante_id'] = $c_estagio['aluno']['id'];
+                $estagiarioslancanota[$i]['estudante'] = $c_estagio['aluno']['nome'];
+                if (isset($c_estagio['avaliacao']['id'])):
+                    $estagiarioslancanota[$i]['avaliacao_id'] = $c_estagio['avaliacao']['id'];
                 else:
                     $estagiarioslancanota[$i]['avaliacao_id'] = null;
                 endif;
@@ -607,8 +608,6 @@ class EstagiariosController extends AppController
             endforeach;
 
         endforeach;
-        // pr($estagiarioslancanota);
-        // die();
         $this->set('estagiarios', $estagiarioslancanota);
     }
 }

@@ -4,8 +4,6 @@
  * @var \App\Model\Entity\Tccestudante[]|\Cake\Collection\CollectionInterface $tccestudantes
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($user->categoria);
-// pr($tccestudantes);
 ?>
 
 <?php echo $this->element('menu_monografias') ?>
@@ -27,10 +25,17 @@ $user = $this->getRequest()->getAttribute('identity');
 <?= $this->element('templates') ?>
 
 <div class="d-flex justify-content-center">
-    <?= $this->Form->create(null, ['url' => ['action' => 'busca']]) ?>
-    <?= $this->Form->control('nome', ['label' => 'Busca por nome', 'class' => 'form-control']) ?>
-    <?= $this->Form->button(__('Submit', ['class' => 'btn btn-primary'])) ?>
-    <?= $this->Form->end() ?>
+    <?= $this->Form->create(null, ['url' => ['action' => 'index'], 'class' => 'form-inline']) ?>
+    <div class="form-group row">
+        <label for="nome" class="col-sm-3 form-label">Buscar por nome</label>
+        <div class="col-sm-5">
+            <?= $this->Form->control('nome', ['label' => false, 'class' => 'form-control']) ?>
+        </div>
+        <div class="col-sm-2">
+            <?= $this->Form->button(__('Confirma'), ['class' => 'btn btn-primary']) ?>
+        </div>
+        <?= $this->Form->end() ?>
+    </div>
 </div>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">

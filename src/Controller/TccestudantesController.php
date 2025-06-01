@@ -38,9 +38,23 @@ class TccestudantesController extends AppController
 
         $this->Authorization->skipAuthorization();
 
-        $query = $this->Tccestudantes->find()
-            ->contain(['Monografias'])
-            ->order(['nome']);
+        if ($this->request->is('post')) {
+            // echo "Post" . "<br>";
+            if ($this->request->getData()) {
+                $dados = $this->request->getData();
+                $busca = $dados['nome'];
+            
+                $query = $this->Tccestudantes->find()
+                    ->contain(['Monografias'])
+                    ->where(['nome LIKE' => "%" . $busca . "%"])
+                    ->order(['nome']);
+                }
+        } else {
+
+            $query = $this->Tccestudantes->find()
+                ->contain(['Monografias'])
+                ->order(['nome']);    
+        }
 
         $tccestudantes = $this->paginate($query, [
             'sortableFields' => [
@@ -183,58 +197,5 @@ class TccestudantesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
-    }
-
-    /**
-     * Busca Method
-     *
-     * @param string|null $busca
-     * @return string $estudantes
-     */
-    public function busca()
-    {
-
-        $this->Authorization->skipAuthorization();
-
-        if ($this->request->is('post')) {
-            // echo "Post" . "<br>";
-            if ($this->request->getData()):
-                $dados = $this->request->getData();
-                $busca = $dados['nome'];
-                // echo $busca;
-                // die();
-                $this->getRequest()->getSession()->write('estudante', $busca);
-                // $this->request->session()->write('estudante', $busca);
-                $this->paginate = [
-                    'conditions' => ['nome LIKE' => "%" . $busca . "%"],
-                    'order' => ['nome'],
-                    'contain' => ['Monografias']
-                ];
-            endif;
-        }
-
-        if (!isset($busca)):
-
-            $busca = $this->getRequest()->getSession()->read('estudante');
-            // echo $busca;
-            // die();
-            if (!empty($busca)):
-                $this->paginate = [
-                    'conditions' => ['nome LIKE' => "%" . $busca . "%"],
-                    'order' => ['nome'],
-                    'contain' => ['Monografias']
-                ];
-            else:
-                $this->paginate = [
-                    'order' => ['nome'],
-                    'contain' => ['Monografias']
-                ];
-            endif;
-        endif;
-
-        $estudantes = $this->paginate($this->Tccestudantes);
-        // debug($estudantes);
-        // die();
-        $this->set(compact('estudantes'));
     }
 }
