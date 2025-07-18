@@ -295,5 +295,4 @@ class AvaliacoesController extends AppController
         );
         $this->set('avaliacao', $avaliacao);
     }
-
 }

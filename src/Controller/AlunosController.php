@@ -883,5 +883,4 @@ class AlunosController extends AppController
                 ->withStringBody(json_encode(['error' => 'Erro ao buscar aluno']));
         }
     }
-
 }
