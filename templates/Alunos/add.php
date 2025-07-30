@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Aluno $aluno
  */
 $user = $this->getRequest()->getAttribute('identity');
- // pr($registro);
+// pr($registro);
 // die();
 ?>
 
