@@ -24,7 +24,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerSupervisores">
         <li class="nav-item">
-            <?= $this->Html->link(__('Listar supervisores'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Listar supervisores'), ['action' => 'index'], ['class' => 'btn btn-primary me-1']) ?>
         </li>
         <li class="nav-item">
             <?php if (isset($user) && $user->categoria == '1'): ?>
@@ -43,11 +43,11 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php $this->element('templates') ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <?= $this->Form->create($supervisor) ?>
+    <?= $this->Form->create($supervisor, ['url' => ['action' => 'edit', $supervisor->id], 'class' => 'form-inline']) ?>
     <fieldset>
         <legend><?= __('Editar Supervisor(a)') ?></legend>
         <?php
-        echo $this->Form->control('nome', ['label' => 'Nome', 'type' => 'text']);
+        echo $this->Form->control('nome', ['label' => 'Nome', 'type' => 'text', 'class' => 'form-control']);
         echo $this->Form->control('cpf', ['label' => 'CPF', 'type' => 'text']);
         echo $this->Form->control('cress', ['label' => 'CRESS', 'type' => 'number']);
         echo $this->Form->control('regiao', ['label' => 'Região', 'type' => 'number']);
@@ -65,13 +65,13 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('outros_estudos', ['label' => 'Outros estudos', 'type' => 'text']);
         echo $this->Form->control('area_curso', ['label' => 'Área do curso', 'type' => 'text']);
         echo $this->Form->control('ano_curso', ['label' => 'Ano do curso', 'type' => 'number']);
-        echo $this->Form->control('cargo', ['label' => 'Cargo', 'type' => 'text']);
+        echo $this->Form->control('cargo', ['label' => 'Cargo que ocupa', 'type' => 'text']);
         echo $this->Form->control('num_inscricao', ['label' => 'Inscrição para curso de supervisores', 'type' => 'number']);
         echo $this->Form->control('curso_turma', ['label' => 'Turma do curso de supervisores', 'type' => 'number']);
         echo $this->Form->control('observacoes', ['label' => 'Observações', 'type' => 'textarea']);
         echo $this->Form->control('instituicoes._ids', ['label' => 'Instituição', 'options' => $instituicoes]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+    <?= $this->Form->button(__('Salvar'), ['class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
 </div>

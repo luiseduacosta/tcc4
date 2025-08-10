@@ -39,15 +39,15 @@
 <?php // Wrapper content used to hide other content. ?>
 <?php $this->Form->setTemplates(['hiddenBlock' => '<div style="display:none;">{{content}}</div>']); ?>
 <?php // Generic input element. ?>
-<?php $this->Form->setTemplates(['input' => '<input type="{{type}}" name="{{name}}"{{attrs}}>']); ?>
+<?php $this->Form->setTemplates(['input' => '<div class="col-sm-9"><input type="{{type}}" name="{{name}}" class="form-control" {{attrs}}></div>']); ?>
 <?php // Submit input element. ?>
 <?php $this->Form->setTemplates(['inputSubmit' => '<input type="{{type}}"{{attrs}}>']); ?>
 <?php // Container element used by control(). ?>
-<?php $this->Form->setTemplates(['inputContainer' => '<div class="input {{type}}{{required}}">{{content}}</div>']); ?>
+<?php $this->Form->setTemplates(['inputContainer' => '<div class="row col-md-12" {{type}}{{required}}">{{content}}</div>']); ?>
 <?php // Container element used by control() when a field has an error. ?>
 <?php $this->Form->setTemplates(['inputContainerError' => '<div class="input {{type}}{{required}} error">{{content}}{{error}}</div>']); ?>
 <?php // Label element when inputs are not nested inside the label. ?>
-<?php $this->Form->setTemplates(['label' => '<label class="form-label {{attrs}}>{{text}}</label>']); ?>
+<?php $this->Form->setTemplates(['label' => '<label class="col-sm-3 form-label" {{attrs}}>{{text}}</label>']); ?>
 <?php // Label element used for radio and multi-checkbox inputs. ?>
 <?php $this->Form->setTemplates(['nestingLabel' => '{{hidden}}<label{{attrs}}>{{input}}{{text}}</label>']); ?>
 <?php // Legends created by allControls(). ?>
