@@ -40,7 +40,7 @@ $user = $this->getRequest()->getAttribute('identity');
             aria-controls="navbarTogglerMonografiasAdd" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMonografiasAdd">
+    <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerMonografiasAdd">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="nav-item">
                 <?= $this->Html->link(__('Monografias'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>

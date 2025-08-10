@@ -26,7 +26,7 @@ $user = $this->getRequest()->getAttribute('identity');
             aria-controls="navbarTogglerEstudantesEdit" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerEstudantesEdit">
+    <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerEstudantesEdit">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="item-link">
                 <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $estudante->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estudante->id), 'class' => 'btn btn-danger float-start']) ?>

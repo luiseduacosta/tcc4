@@ -50,7 +50,7 @@ if ($cress) {
         aria-controls="navbarTogglerAvaliacoes" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAvaliacoes">
+    <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerAvaliacoes">
         <?php if (isset($user) && ($user->categoria == '1' || $user->categoria == '4')): ?>
             <li class="nav-item">
                 <?= $this->Html->link(__('Listar avaliações'), ['action' => 'index', '?' => $estagiario->id . '/' . $estagiario->registro], ['class' => 'btn btn-primary']) ?>

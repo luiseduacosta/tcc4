@@ -13,7 +13,7 @@ $user = $this->getRequest()->getAttribute('identity');
         aria-controls="navbarTogglerAreainstituicoes" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAreainstituicoes">
+    <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerAreainstituicoes">
         <?php if (isset($user) && $user->categoria == '1'): ?>
             <li class="nav-item">
                 <?= $this->Html->link(__('Editar área instituição'), ['controller' => 'Areainstituicoes', 'action' => 'edit', $areainstituicao->id], ['class' => 'side-nav-item']) ?>

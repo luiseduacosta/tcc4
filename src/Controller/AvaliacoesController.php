@@ -183,10 +183,9 @@ class AvaliacoesController extends AppController
     public function edit($id = null)
     {
         $avaliacao = $this->Avaliacoes->get($id, [
-            'contain' => ['Estagiarios' => 'Estudantes'],
+            'contain' => ['Estagiarios' => ['Alunos', 'Professores', 'Instituicoes', 'Supervisores']],
         ]);
         $this->Authorization->authorize($avaliacao);
-        $estagiario = $avaliacao->estagiarios;
         if ($this->request->is(['patch', 'post', 'put'])) {
             $avaliacao = $this->Avaliacoes->patchEntity($avaliacao, $this->request->getData());
             if ($this->Avaliacoes->save($avaliacao)) {
@@ -195,7 +194,7 @@ class AvaliacoesController extends AppController
             }
             $this->Flash->error(__('Avaliação não atualizada. Tente novamente.'));
         }
-        $this->set(compact('avaliacao', 'estagiario'));
+        $this->set(compact('avaliacao'));
     }
 
     /**

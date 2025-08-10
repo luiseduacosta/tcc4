@@ -14,7 +14,7 @@ $user = $this->getRequest()->getAttribute('identity');
         aria-controls="navbarTogglerTccestudantesview" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerTccestudantesView">
+    <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerTccestudantesView">
             <?php if (isset($user) && $user->categoria == '1'): ?>
             <li class="nav-item">
                 <?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $tccestudante->id], ['class' => 'btn btn-primary float-end']) ?>

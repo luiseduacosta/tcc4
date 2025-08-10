@@ -5,6 +5,7 @@
  * @var \Cake\Collection\CollectionInterface|string[] $estagiarios
  */
 $user = $this->getRequest()->getAttribute('identity');
+$estagiario = $avaliacao->estagiario;
 // pr($estagiario);
 // die();
 ?>
@@ -13,26 +14,9 @@ $dia = strftime('%e', time());
 $mes = strftime('%B', time());
 $ano = strftime('%Y', time());
 
-$supervisora = isset($estagiario->supervisor->nome);
-if ($supervisora) {
-    $supervisora = $estagiario->supervisor->nome;
-} else {
-    $supervisora = "____________________";
-}
-
-$regiao = isset($estagiario->supervisor->regiao);
-if ($regiao) {
-    $regiao = $estagiario->supervisor->regiao;
-} else {
-    $regiao = '__';
-}
-
-$cress = isset($estagiario->supervisor->cress);
-if ($cress) {
-    $cress = $estagiario->supervisor->cress;
-} else {
-    $cress = '_____';
-}
+$supervisora = isset($estagiario->supervisor->nome) ? $estagiario->supervisor->nome : "____________________";
+$regiao = isset($estagiario->supervisor->regiao) ? $estagiario->supervisor->regiao : '__';
+$cress = isset($estagiario->supervisor->cress) ? $estagiario->supervisor->cress : '__________';
 ?>
 
 <style>
@@ -49,9 +33,9 @@ if ($cress) {
         aria-controls="navbarTogglerAvaliacoes" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAvaliacoes">
+    <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerAvaliacoes">
         <li class="nav-item">
-            <?= $this->Html->link(__('Listar Avaliações'), ['action' => 'index/' . $estagiario->id . '/' . $estagiario->registro], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Listar Avaliações'), ['action' => 'index', '?' => ['id' => $estagiario->id, 'registro' => $estagiario->registro]], ['class' => 'btn btn-primary']) ?>
         </li>
     </ul>
 </nav>    

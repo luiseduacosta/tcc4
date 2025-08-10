@@ -29,7 +29,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <span class="navbar-toggler-icon"></span>
     </button>
     <?php if (isset($user) && $user->categoria == '1'): ?>
-        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMural">
+        <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerMural">
             <li class="nav-item">
                 <?= $this->Html->link(__('Novo mural'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
             </li>

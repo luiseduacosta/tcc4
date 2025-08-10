@@ -44,7 +44,7 @@ $user = $this->getRequest()->getAttribute('identity');
         aria-controls="navbarTogglerAlunosEdit" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAlunosEdit">
+    <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerAlunosEdit">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <?= $this->Html->link(__('Listar Alunos'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
             <?=

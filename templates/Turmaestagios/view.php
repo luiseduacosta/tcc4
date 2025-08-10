@@ -14,7 +14,7 @@ $user = $this->getRequest()->getAttribute('identity');
             aria-controls="navbarTogglerTurma" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerTurma">
+        <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerTurma">
             <li class="nav-item">
                     <?= $this->Html->link(__('Listar turma de estágios'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
             </li>

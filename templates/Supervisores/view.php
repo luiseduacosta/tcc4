@@ -15,7 +15,7 @@ $user = $this->getRequest()->getAttribute('identity');
         aria-controls="navbarTogglerSupervisores" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerSupervisores">
+    <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerSupervisores">
         <?= $this->Html->link(__('Listar supervisores(as)'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
         <?php if (isset($user) && $user->categoria ==  '1'): ?>
             <?= $this->Html->link(__('Editar supervisor(a)'), ['action' => 'edit', $supervisor->id], ['class' => 'btn btn-primary']) ?>

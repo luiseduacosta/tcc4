@@ -13,7 +13,7 @@ $user = $this->getRequest()->getAttribute('identity');
         aria-controls="navbarTogglerVisitas" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerVisitas">
+    <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerVisitas">
         <li class="nav-item">
             <?= $this->Html->link(__('Listar visitas'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
         </li>

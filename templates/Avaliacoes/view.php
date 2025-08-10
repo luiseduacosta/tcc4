@@ -6,33 +6,10 @@
 $user = $this->getRequest()->getAttribute('identity');
 // pr($avaliacao);
 
-$supervisora = isset($avaliacao->estagiario['supervisor']['nome']);
-if ($supervisora) {
-    $supervisora = $avaliacao->estagiario['supervisor']['nome'];
-} else {
-    $supervisora = "____________________";
-}
-
-$regiao = isset($avaliacao->estagiario['supervisor']['regiao']);
-if ($regiao) {
-    $regiao = $avaliacao->estagiario['supervisor']['regiao'];
-} else {
-    $regiao = '__';
-}
-
-$cress = isset($avaliacao->estagiario['supervisor']['cress']);
-if ($cress) {
-    $cress = $avaliacao->estagiario['supervisor']['cress'];
-} else {
-    $cress = '_________';
-}
-
-$professora = isset($avaliacao->estagiario['docente']['nome']);
-if ($professora) {
-    $professora = $avaliacao->estagiario['docente']['nome'];
-} else {
-    $professora = '____________________';
-}
+$supervisora = isset($avaliacao->estagiario['supervisor']['nome']) ? $avaliacao->estagiario['supervisor']['nome'] : "____________________";
+$regiao = isset($avaliacao->estagiario['supervisor']['regiao']) ? $avaliacao->estagiario['supervisor']['regiao'] : '__';
+$cress = isset($avaliacao->estagiario['supervisor']['cress']) ? $avaliacao->estagiario['supervisor']['cress'] : '__________';
+$professora = isset($avaliacao->estagiario['docente']['nome']) ? $avaliacao->estagiario['docente']['nome'] : "____________________";
 ?>
 <style>
     table {
@@ -57,20 +34,20 @@ if ($professora) {
         aria-controls="navbarTogglerAvaliacoes" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerAvaliacoes">
+    <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerAvaliacoes">
         <?php if (isset($user) && ($user->categoria == '1' || $user->categoria == '4')): ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Editar avaliação'), ['action' => 'edit', $avaliacao->id], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Editar avaliação'), ['action' => 'edit', $avaliacao->id], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir avaliação'), ['action' => 'delete', $avaliacao->id], ['confirm' => __('Tem certeza que deseja excluir a avaliação # {0}?', $avaliacao->id), 'class' => 'btn btn-danger']) ?>
+                <?= $this->Form->postLink(__('Excluir avaliação'), ['action' => 'delete', $avaliacao->id], ['confirm' => __('Tem certeza que deseja excluir a avaliação # {0}?', $avaliacao->id), 'class' => 'btn btn-danger me-1']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Listar avaliações'), ['action' => 'index', '?' => $avaliacao->estagiario['id'] . '/' . $avaliacao->estagiario['registro']], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Listar avaliações'), ['action' => 'index', '?' => ['estagiario_id' => $avaliacao->estagiario['id'], 'registro' => $avaliacao->estagiario['registro']]], ['class' => 'btn btn-primary me-1']) ?>
             </li>
         <?php endif; ?>
         <li class="nav-item">
-            <?= $this->Html->link(__('Imprimir avaliação'), ['action' => 'imprimeavaliacaopdf/' . $avaliacao->id], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Imprimir avaliação'), ['action' => 'imprimeavaliacaopdf', '?' => ['estagiario_id' => $avaliacao->estagiario_id]], ['class' => 'btn btn-primary']) ?>
         </li>
     </ul>
 </nav>

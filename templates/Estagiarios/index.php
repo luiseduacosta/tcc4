@@ -74,7 +74,7 @@ $user = $this->getRequest()->getAttribute('identity');
             aria-controls="navbarTogglerMural" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerMural">
+        <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerMural">
             <li class="nav-item">
                 <?= $this->Html->link(__('Novo Estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
             </li>

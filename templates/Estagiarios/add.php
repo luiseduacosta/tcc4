@@ -82,7 +82,7 @@ $now = new \Cake\I18n\FrozenTime();
         aria-controls="navbarTogglerEstagiarioAdd" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerEstagiarioAdd">
+    <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerEstagiarioAdd">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="nav-item">
                 <?= $this->Html->link(__('Estagiarios'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>

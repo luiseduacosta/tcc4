@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php echo $this->element('menu_mural') ?>
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">
-    <ul class="collapse navbar-collapse list-unstyled">
+    <ul class="navbar-nav collapse navbar-collapse">
         <li class="nav-item">
             <?= $this->Html->link(__('Listar configurações'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
         </li>

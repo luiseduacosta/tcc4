@@ -13,7 +13,7 @@ $user = $this->getRequest()->getAttribute('identity');
             aria-controls="navbarTogglerUsersView" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="collapse navbar-collapse list-unstyled" id="navbarTogglerUserView">
+    <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerUserView">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="nav-item">
                 <?= $this->Html->link(__('Novo usuário'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>

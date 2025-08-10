@@ -1,42 +1,19 @@
 <?php
+use Cake\I18n\I18n;
+use Cake\I18n\FrozenTime;
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Avaliaco $avaliacao
+ * @var \App\Model\Entity\Avaliacao $avaliacao
  * @var \Cake\I18n\FrozenTime $hoje
  */
 
 I18n::setLocale('pt-BR');
-$hoje = FrozenTime::now('America/Sao_Paulo', 'pt-BR');
+$hoje = FrozenTime::now('America/Sao_Paulo');
 
-
-$supervisora = isset($avaliacao->supervisor->nome);
-if ($supervisora) {
-    $supervisora = $avaliacao->supervisor->nome;
-} else {
-    $supervisora = "____________________";
-}
-
-$regiao = isset($avaliacao->supervisor->regiao);
-if ($regiao) {
-    $regiao = $avaliacao->supervisor->regiao;
-} else {
-    $regiao = '__';
-}
-
-$cress = isset($avaliacao->supervisor->cress);
-if ($cress) {
-    $cress = $avaliacao->supervisor->cress;
-} else {
-    $cress = '_____';
-}
-
-$professora = isset($avaliacao->professor->nome);
-if ($professora) {
-    $professora = $avaliacao->professor->nome;
-} else {
-    $professora = '____________________';
-}
-
+$supervisora = isset($avaliacao->estagiario->supervisor->nome) ? $avaliacao->estagiario->supervisor->nome : "____________________";
+$regiao = isset($avaliacao->estagiario->supervisor->regiao) ? $avaliacao->estagiario->supervisor->regiao : '__';
+$cress = isset($avaliacao->estagiario->supervisor->cress) ? $avaliacao->estagiario->supervisor->cress : '_____';
+$professora = isset($avaliacao->estagiario->professor->nome) ? $avaliacao->estagiario->professor->nome : '____________________';
 ?>
 <style>
     table {
@@ -60,7 +37,7 @@ if ($professora) {
     <br />
 </h2>
 
-<p><span style="font-size: 100%; text-align: justify; font-weight: normal">Campo de estágio <?= $avaliacao->instituicao->instituicao ?>. Supervisor(a) <?= $avaliacao->supervisor->nome ?>, Cress <?= $avaliacao->supervisor->cress ?>. Período de estágio <?= $avaliacao->estagiario->periodo ?>. Nível: <?= $avaliacao->estagiario->nivel ?>. Supervisão acadêmica: <?= $professora ?></span></p>
+<p><span style="font-size: 100%; text-align: justify; font-weight: normal">Campo de estágio <?= $avaliacao->estagiario->instituicao->instituicao ?>. Supervisor(a) <?= $supervisora ?>, Cress <?= $cress ?>. Período de estágio <?= $avaliacao->estagiario->periodo ?>. Nível: <?= $avaliacao->estagiario->nivel ?>. Supervisão acadêmica: <?= $professora ?></span></p>
 
 <div class="container">
     <div class="row">
@@ -368,13 +345,13 @@ if ($professora) {
     <table class="table" style="width: 100%; background-color: white;">
         <tr>
             <td style="width: 33%"><span style="font-size: 100%; text-decoration: overline">Coordenação de Estágio</span></td>
-            <td style="width: 33%"><span style="font-size: 100%; text-decoration: overline"><?= $avaliacao->estagiario->estudante->nome ?></span></td>
+            <td style="width: 33%"><span style="font-size: 100%; text-decoration: overline"><?= $avaliacao->estagiario->aluno->nome ?></span></td>
             <td style="width: 33%"><span style="font-size: 100%; text-decoration: overline"><?= $supervisora ?></span></td>
         </tr>
 
         <tr>
             <td style="width: 33%"></td>
-            <td style="width: 33%"><span style="font-size: 100%">DRE: <?= $avaliacao->estagiario->estudante->registro ?></span></td>
+            <td style="width: 33%"><span style="font-size: 100%">DRE: <?= $avaliacao->estagiario->aluno->registro ?></span></td>
             <td style="width: 33%"><span style="font-size: 100%">CRESS <?= $regiao ?>ª Região <?= $cress ?></span></td>
         </tr>
     </table>
