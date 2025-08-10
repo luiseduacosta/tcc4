@@ -5,8 +5,6 @@
  */
 use Cake\ORM\TableRegistry;
 $user = $this->getRequest()->getAttribute('identity');
-// pr($user);
-// die();   
 ?>
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-secondary">
@@ -80,13 +78,13 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <?php echo $this->Html->link('Configuração', '/Configuracao/view/1', ['class' => 'dropdown-item']); ?>
                             </li>
                             <li class="nav-item">
-                                <?php echo $this->Html->link('Usuário(a)s', '/users/index', ['class' => 'dropdown-item']); ?>
+                                <?php echo $this->Html->link('Usuário(a)s', '/Users/index', ['class' => 'dropdown-item']); ?>
                             </li>
                             <li class="nav-item">
-                                <?php echo $this->Html->link('Planilha seguro', '/alunos/planilhaseguro/', ['class' => 'dropdown-item']); ?>
+                                <?php echo $this->Html->link('Planilha seguro', '/Alunos/planilhaseguro/', ['class' => 'dropdown-item']); ?>
                             </li>
                             <li class="nav-item">
-                                <?php echo $this->Html->link('Planilha CRESS', '/alunos/planilhacress/', ['class' => 'dropdown-item']); ?>
+                                <?php echo $this->Html->link('Planilha CRESS', '/Alunos/planilhacress/', ['class' => 'dropdown-item']); ?>
                             </li>
                             <li class="nav-item">
                                 <?php echo $this->Html->link('Carga horária', '/Alunos/cargahoraria/', ['class' => 'dropdown-item']); ?>
@@ -94,28 +92,25 @@ $user = $this->getRequest()->getAttribute('identity');
                             <li class="nav-item">
                                 <?php echo $this->Html->link('Complemento período', '/Complementos/index/', ['class' => 'dropdown-item']); ?>
                             </li>
-                            <li class="nav-item">
-                                <?php echo $this->Html->link('Extensão', '/Extensaos/index/', ['class' => 'dropdown-item']); ?>
-                            </li>
                         </ul>
                     </li>
                 <?php endif; ?>
 
                 <?php if (isset($user) && $user->categoria == '2'): ?>
                     <li class="nav-item">
-                        <?php echo $this->Html->link("Meus dados", "/alunos/view/" . $user['estudante_id'], ['class' => 'nav-link']); ?>
+                        <?php echo $this->Html->link("Meus dados", "/Alunos/view/" . $user['estudante_id'], ['class' => 'nav-link']); ?>
                     </li>
                 <?php endif; ?>
 
                 <?php if (isset($user) && $user->categoria == '3'): ?>
                     <li class="nav-item">
-                        <?php echo $this->Html->link("Meus dados", "/professores/view/" . $user['professor_id'], ['class' => 'nav-link']); ?>
+                        <?php echo $this->Html->link("Meus dados", "/Professores/view/" . $user['professor_id'], ['class' => 'nav-link']); ?>
                     </li>
                 <?php endif; ?>
 
                 <?php if (isset($user) && $user->categoria == '4'): ?>
                     <li class="nav-item">
-                        <?php echo $this->Html->link("Meus dados", "/supervisores/view/" . $user->supervisor_id, ['class' => 'nav-link']); ?>
+                        <?php echo $this->Html->link("Meus dados", "/Supervisores/view/" . $user->supervisor_id, ['class' => 'nav-link']); ?>
                     </li>
                 <?php endif; ?>
 
@@ -143,11 +138,11 @@ $user = $this->getRequest()->getAttribute('identity');
 
                 <?php if (isset($user)): ?>
                     <li class="nav-item">
-                        <?php echo $this->Html->link('Sair', ['controller' => 'users', 'action' => 'logout'], ['class' => 'nav-link']); ?>
+                        <?php echo $this->Html->link('Sair', ['controller' => 'Users', 'action' => 'logout'], ['class' => 'nav-link']); ?>
                     </li>
                 <?php else: ?>
                     <li class="nav-item">
-                        <?php echo $this->Html->link('Entrar', ['controller' => 'users', 'action' => 'login'], ['class' => 'nav-link']); ?>
+                        <?php echo $this->Html->link('Entrar', ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link']); ?>
                     </li>
                 <?php endif; ?>
 

@@ -6,10 +6,10 @@
 ?>
 
 <?php // BreadcrumbsHelper ?>
-<?php $this->Form->setTemplates(['wrapper' => '<ul{{attrs}}>{{content}}</ul>']); ?>
-<?php $this->Form->setTemplates(['item' => '<li{{attrs}}><a href="{{url}}"{{innerAttrs}}>{{title}}</a></li>{{separator}}']); ?>
-<?php $this->Form->setTemplates(['itemWithoutLink' => '<li{{attrs}}><span{{innerAttrs}}>{{title}}</span></li>{{separator}}']); ?>
-<?php $this->Form->setTemplates(['separator' => '<li{{attrs}}><span{{innerAttrs}}>{{separator}}</span></li>']); ?>
+<?php $this->Breadcrumbs->setTemplates(['wrapper' => '<ul{{attrs}}>{{content}}</ul>']); ?>
+<?php $this->Breadcrumbs->setTemplates(['item' => '<li{{attrs}}><a href="{{url}}"{{innerAttrs}}>{{title}}</a></li>{{separator}}']); ?>
+<?php $this->Breadcrumbs->setTemplates(['itemWithoutLink' => '<li{{attrs}}><span{{innerAttrs}}>{{title}}</span></li>{{separator}}']); ?>
+<?php $this->Breadcrumbs->setTemplates(['separator' => '<li{{attrs}}><span{{innerAttrs}}>{{separator}}</span></li>']); ?>
 
 <?php // FormHelper ?>
 <?php // Used for button elements in button(). ?>
@@ -78,7 +78,6 @@
 <?php $this->Form->setTemplates(['selectedClass' => 'selected']); ?>
 <?php // required class ?>
 <?php $this->Form->setTemplates(['requiredClass' => 'required']); ?>
-
 <?php $this->Form->setTemplates(["dateWidget" => "{{day}}{{month}}{{year}}{{hour}}{{minute}}{{second}}{{meridian}}"]); ?>
 
 <?php // PaginatorHelper ?>
@@ -100,32 +99,32 @@
 <?php $this->Paginator->setTemplates(['sortDescLocked' => '<a class="desc locked" href="{{url}}">{{text}}</a>']); ?>
 
 <?php // Default templates for HTML elements ?>
-<?php $this->Paginator->setTemplates(['meta' => '<meta{{attrs}}>']); ?>
-<?php $this->Paginator->setTemplates(['metalink' => '<link href="{{url}}"{{attrs}}>']); ?>
-<?php $this->Paginator->setTemplates(['link' => '<a href="{{url}}"{{attrs}}>{{content}}</a>']); ?>
-<?php $this->Paginator->setTemplates(['mailto' => '<a href="mailto:{{url}}"{{attrs}}>{{content}}</a>']); ?>
-<?php $this->Paginator->setTemplates(['image' => '<img src="{{url}}"{{attrs}}>']); ?>
-<?php $this->Paginator->setTemplates(['tableheader' => '<th{{attrs}}>{{content}}</th>']); ?>
-<?php $this->Paginator->setTemplates(['tableheaderrow' => '<tr{{attrs}}>{{content}}</tr>']); ?>
-<?php $this->Paginator->setTemplates(['tablecell' => '<td{{attrs}}>{{content}}</td>']); ?>
-<?php $this->Paginator->setTemplates(['tablerow' => '<tr{{attrs}}>{{content}}</tr>']); ?>
-<?php $this->Paginator->setTemplates(['block' => '<div{{attrs}}>{{content}}</div>']); ?>
-<?php $this->Paginator->setTemplates(['blockstart' => '<div{{attrs}}>']); ?>
-<?php $this->Paginator->setTemplates(['blockend' => '</div>']); ?>
-<?php $this->Paginator->setTemplates(['tag' => '<{{tag}}{{attrs}}>{{content}}</{{tag}}>']); ?>
-<?php $this->Paginator->setTemplates(['tagstart' => '<{{tag}}{{attrs}}>']); ?>
-<?php $this->Paginator->setTemplates(['tagend' => '</{{tag}}>']); ?>
-<?php $this->Paginator->setTemplates(['tagselfclosing' => '<{{tag}}{{attrs}}/>']); ?>
-<?php $this->Paginator->setTemplates(['para' => '<p{{attrs}}>{{content}}</p>']); ?>
-<?php $this->Paginator->setTemplates(['parastart' => '<p{{attrs}}>']); ?>
-<?php $this->Paginator->setTemplates(['css' => '<link rel="{{rel}}" href="{{url}}"{{attrs}}>']); ?>
-<?php $this->Paginator->setTemplates(['style' => '<style{{attrs}}>{{content}}</style>']); ?>
-<?php $this->Paginator->setTemplates(['charset' => '<meta charset="{{charset}}">']); ?>
-<?php $this->Paginator->setTemplates(['ul' => '<ul{{attrs}}>{{content}}</ul>']); ?>
-<?php $this->Paginator->setTemplates(['ol' => '<ol{{attrs}}>{{content}}</ol>']); ?>
-<?php $this->Paginator->setTemplates(['li' => '<li{{attrs}}>{{content}}</li>']); ?>
-<?php $this->Paginator->setTemplates(['javascriptblock' => '<script{{attrs}}>{{content}}</script>']); ?>
-<?php $this->Paginator->setTemplates(['javascriptstart' => '<script>']); ?>
-<?php $this->Paginator->setTemplates(['javascriptlink' => '<script src="{{url}}"{{attrs}}></script>']); ?>
-<?php $this->Paginator->setTemplates(['javascriptend' => '</script>']); ?>
-<?php $this->Paginator->setTemplates(['confirmJs' => '{{confirm}}']); ?>
+<?php $this->Html->setTemplates(['meta' => '<meta{{attrs}}>']); ?>
+<?php $this->Html->setTemplates(['metalink' => '<link href="{{url}}"{{attrs}}>']); ?>
+<?php $this->Html->setTemplates(['link' => '<a href="{{url}}"{{attrs}}>{{content}}</a>']); ?>
+<?php $this->Html->setTemplates(['mailto' => '<a href="mailto:{{url}}"{{attrs}}>{{content}}</a>']); ?>
+<?php $this->Html->setTemplates(['image' => '<img src="{{url}}"{{attrs}}>']); ?>
+<?php $this->Html->setTemplates(['tableheader' => '<th{{attrs}}>{{content}}</th>']); ?>
+<?php $this->Html->setTemplates(['tableheaderrow' => '<tr{{attrs}}>{{content}}</tr>']); ?>
+<?php $this->Html->setTemplates(['tablecell' => '<td{{attrs}}>{{content}}</td>']); ?>
+<?php $this->Html->setTemplates(['tablerow' => '<tr{{attrs}}>{{content}}</tr>']); ?>
+<?php $this->Html->setTemplates(['block' => '<div{{attrs}}>{{content}}</div>']); ?>
+<?php $this->Html->setTemplates(['blockstart' => '<div{{attrs}}>']); ?>
+<?php $this->Html->setTemplates(['blockend' => '</div>']); ?>
+<?php $this->Html->setTemplates(['tag' => '<{{tag}}{{attrs}}>{{content}}</{{tag}}>']); ?>
+<?php $this->Html->setTemplates(['tagstart' => '<{{tag}}{{attrs}}>']); ?>
+<?php $this->Html->setTemplates(['tagend' => '</{{tag}}>']); ?>
+<?php $this->Html->setTemplates(['tagselfclosing' => '<{{tag}}{{attrs}}/>']); ?>
+<?php $this->Html->setTemplates(['para' => '<p{{attrs}}>{{content}}</p>']); ?>
+<?php $this->Html->setTemplates(['parastart' => '<p{{attrs}}>']); ?>
+<?php $this->Html->setTemplates(['css' => '<link rel="{{rel}}" href="{{url}}"{{attrs}}>']); ?>
+<?php $this->Html->setTemplates(['style' => '<style{{attrs}}>{{content}}</style>']); ?>
+<?php $this->Html->setTemplates(['charset' => '<meta charset="{{charset}}">']); ?>
+<?php $this->Html->setTemplates(['ul' => '<ul{{attrs}}>{{content}}</ul>']); ?>
+<?php $this->Html->setTemplates(['ol' => '<ol{{attrs}}>{{content}}</ol>']); ?>
+<?php $this->Html->setTemplates(['li' => '<li{{attrs}}>{{content}}</li>']); ?>
+<?php $this->Html->setTemplates(['javascriptblock' => '<script{{attrs}}>{{content}}</script>']); ?>
+<?php $this->Html->setTemplates(['javascriptstart' => '<script>']); ?>
+<?php $this->Html->setTemplates(['javascriptlink' => '<script src="{{url}}"{{attrs}}></script>']); ?>
+<?php $this->Html->setTemplates(['javascriptend' => '</script>']); ?>
+<?php $this->Html->setTemplates(['confirmJs' => '{{confirm}}']); ?>
