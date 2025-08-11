@@ -54,6 +54,8 @@ class AppController extends Controller {
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
          */
         //$this->loadComponent('FormProtection');
+        $user = $this->request->getAttribute('identity');
+        $this->set('user', $user);
     }
 
     public function beforeFilter(\Cake\Event\EventInterface $event) {

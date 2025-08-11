@@ -4,8 +4,8 @@
  * @var \App\Model\Entity\Professor $professor
  */
 use Cake\I18n\FrozenDate;
-
-$user = $this->getRequest()->getAttribute('identity');
+ 
+// $user = $this->getRequest()->getAttribute('identity');
 ?>
 
 <?php echo $this->element('menu_mural') ?>
@@ -20,22 +20,22 @@ $user = $this->getRequest()->getAttribute('identity');
             <ul class="navbar-nav ms-auto mt-lg-0">
                 <?php if (isset($user) && $user->categoria == '1'): ?>
                     <li class="nav-item">
-                        <?= $this->Html->link(__('Editar Professor(a)'), ['action' => 'edit', $professor->id], ['class' => 'btn btn-primary float-start']) ?>
+                        <?= $this->Html->link(__('Editar Professor(a)'), ['action' => 'edit', $professor->id], ['class' => 'btn btn-primary me-1']) ?>
                     </li>
                     <li class="nav-item">
-                        <?= $this->Form->postLink(__('Excluir Professor(a)'), ['action' => 'delete', $professor->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $professor->id), 'class' => 'btn btn-danger float-start']) ?>
+                        <?= $this->Form->postLink(__('Excluir Professor(a)'), ['action' => 'delete', $professor->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $professor->id), 'class' => 'btn btn-danger me-1']) ?>
                     </li>
                     <li class="nav-item">
-                        <?= $this->Html->link(__('Listar Professore(a)s'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
+                        <?= $this->Html->link(__('Listar Professore(a)s'), ['action' => 'index'], ['class' => 'btn btn-primary me-1']) ?>
                     </li>
                     <li class="nav-item">
-                        <?= $this->Html->link(__('Novo(a) Professor(a)'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                        <?= $this->Html->link(__('Novo(a) Professor(a)'), ['action' => 'add'], ['class' => 'btn btn-primary me-1']) ?>
                     </li>
                 <?php endif; ?>
 
                 <?php if (isset($user) && $user->categoria == '3'): ?>
                     <li class="nav-item">
-                        <?= $this->Html->link(__('Editar Professor'), ['action' => 'edit', $professor->id], ['class' => 'btn btn-primary float-start']) ?>
+                        <?= $this->Html->link(__('Editar Professor'), ['action' => 'edit', $professor->id], ['class' => 'btn btn-primary me-1']) ?>
                     </li>
                 <?php endif; ?>
             </ul>

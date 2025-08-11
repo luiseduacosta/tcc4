@@ -54,8 +54,8 @@ class ProfessoresController extends AppController
      */
     public function view($id = null)
     {
-
         $this->Authorization->skipAuthorization();
+        $user = $this->Authentication->getIdentity();
         if (isset($user) && ($user->categoria == '1' || $user->categoria == '3')) {
             if ($id === null) {
                 $siape = $this->getRequest()->getQuery('siape');
@@ -65,7 +65,9 @@ class ProfessoresController extends AppController
                         ->first();
                     $id = $query->id;
                 } else {
-                    if ($user->categoria == '3') {
+                    if ($user->categoria == '3') { // Professor
+                        // Se for professor, pega o siape do usuário logado
+                        // e busca o professor correspondente
                         $siape = $user->numero;
                         if (isset($siape)) {
                             $query = $this->Professores->find()
@@ -77,7 +79,7 @@ class ProfessoresController extends AppController
                 }
             };
         } else {
-            $this->Flash->error(__('Acesso não autorizado'));
+            $this->Flash->error(__('Acesso não autorizado para este recurso.'));
             return $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
 

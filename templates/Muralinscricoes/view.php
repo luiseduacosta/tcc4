@@ -16,21 +16,21 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerMuralinscricao">
         <li class="nav-item">
-            <?= $this->Html->link(__('Voltar'), ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'btn btn-info']) ?>
+            <?= $this->Html->link(__('Voltar'), ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'btn btn-info me-1']) ?>
         </li>
         <li class="nav-item">
-            <?= $this->Html->link(__('Listar inscrições'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Listar inscrições'), ['action' => 'index'], ['class' => 'btn btn-primary me-1']) ?>
         </li>
         <?php if (isset($user) && $user->categoria == '1'): ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Editar inscrição'), ['action' => 'edit', $muralinscricao->id], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Editar inscrição'), ['action' => 'edit', $muralinscricao->id], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir inscrição'), ['action' => 'delete', $muralinscricao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'btn btn-danger']) ?>
+                <?= $this->Form->postLink(__('Excluir inscrição'), ['action' => 'delete', $muralinscricao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'btn btn-danger me-1']) ?>
             </li>
         <?php elseif (isset($user) && $user->categoria == '2'): ?>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir inscrição'), ['action' => 'delete', $muralinscricao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'btn btn-danger']) ?>
+                <?= $this->Form->postLink(__('Excluir inscrição'), ['action' => 'delete', $muralinscricao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'btn btn-danger me-1']) ?>
             </li>
         <?php endif; ?>
     </ul>

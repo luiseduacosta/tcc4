@@ -16,17 +16,17 @@ $user = $this->getRequest()->getAttribute('identity');
         </button>
         <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerTurma">
             <li class="nav-item">
-                    <?= $this->Html->link(__('Listar turma de estágios'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
+                    <?= $this->Html->link(__('Listar turma de estágios'), ['action' => 'index'], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <?php if (isset($user) && $user->categoria == 1): ?>
                 <li class="nav-item">
-                    <?= $this->Html->link(__('Editar turma de estágio'), ['action' => 'edit', $turmaestagio->id], ['class' => 'btn btn-primary float-start']) ?>
+                    <?= $this->Html->link(__('Editar turma de estágio'), ['action' => 'edit', $turmaestagio->id], ['class' => 'btn btn-primary me-1']) ?>
                 </li>
                 <li class="nav-item">
-                    <?= $this->Form->postLink(__('Excluir turma de estágio'), ['action' => 'delete', $turmaestagio->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $turmaestagio->id), 'class' => 'btn btn-danger float-start']) ?>
+                    <?= $this->Form->postLink(__('Excluir turma de estágio'), ['action' => 'delete', $turmaestagio->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $turmaestagio->id), 'class' => 'btn btn-danger me-1']) ?>
                 </li>
                 <li class="nav-item">
-                    <?= $this->Html->link(__('Nova turma de estágio'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                    <?= $this->Html->link(__('Nova turma de estágio'), ['action' => 'add'], ['class' => 'btn btn-primary me-1']) ?>
                 </li>
             <?php endif; ?>
         </ul>

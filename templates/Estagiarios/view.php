@@ -17,40 +17,40 @@ $user = $this->getRequest()->getAttribute('identity');
     <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerMural">
         <?php if (isset($user) && $user->categoria == '1'): ?>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir Estagiario'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $estagiario->id), 'class' => 'btn btn-danger float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Form->postLink(__('Excluir Estagiario'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $estagiario->id), 'class' => 'btn btn-danger me-1', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Listar Estagiarios'), ['action' => 'index'], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Listar Estagiarios'), ['action' => 'index'], ['class' => 'btn btn-primary me-1', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Inserir Estagiario'), ['action' => 'add', '?' => ['aluno_id' => $estagiario->aluno_id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Inserir Estagiario'), ['action' => 'add', '?' => ['aluno_id' => $estagiario->aluno_id]], ['class' => 'btn btn-primary me-1', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Editar Estagiario'), ['action' => 'edit', $estagiario->id], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Editar Estagiario'), ['action' => 'edit', $estagiario->id], ['class' => 'btn btn-primary me-1', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'estagiarios', 'action' => 'novotermocompromisso', '?' => ['aluno_id' => $estagiario->aluno_id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'estagiarios', 'action' => 'novotermocompromisso', '?' => ['aluno_id' => $estagiario->aluno_id]], ['class' => 'btn btn-primary me-1', 'style' => 'max-width:120px; word-wrap:break-word; font-size:14px']) ?>
             </li>
         <?php endif; ?>
 
         <?php if (isset($user) && ($user->categoria == '1' || $user->categoria == '4')): ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Preencher Avaliação'), ['controller' => 'avaliacoes', 'action' => 'add', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Preencher Avaliação'), ['controller' => 'avaliacoes', 'action' => 'add', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary me-1', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
             </li>
         <?php endif; ?>
 
         <?php if (isset($user) && $user->categoria == '1'): ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Imprimir Avaliação'), ['controller' => 'avaliacoes', 'action' => 'imprimeavaliacaopdf', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Imprimir Avaliação'), ['controller' => 'avaliacoes', 'action' => 'imprimeavaliacaopdf', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary me-1', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Preencher Atividades'), ['controller' => 'folhadeatividades', 'action' => 'atividade', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Preencher Atividades'), ['controller' => 'folhadeatividades', 'action' => 'atividade', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary me-1', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Imprimir Atividades'), ['controller' => 'folhadeatividades', 'action' => 'folhadeatividadespdf', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Imprimir Atividades'), ['controller' => 'folhadeatividades', 'action' => 'folhadeatividadespdf', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary me-1', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Declaração de estágio'), ['action' => 'declaracaodeestagiopdf', $estagiario->id], ['class' => 'btn btn-primary float-end', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Declaração de estágio'), ['action' => 'declaracaodeestagiopdf', $estagiario->id], ['class' => 'btn btn-primary me-1', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
             </li>
         <?php endif; ?>
     </ul>

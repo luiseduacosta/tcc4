@@ -129,7 +129,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         $aluno = TableRegistry::getTableLocator()->get('Alunos')->find()->where(['Alunos.id' => $user->estudante_id])->first();
                         ?>
                         <li class='nav-item'>
-                            <?= $this->Html->link($user->email, ['controller' => 'Alunos', 'action' => 'view', $aluno['id']], ['class' => 'btn btn-primary']) ?>
+                            <?= $this->Html->link($user->email, ['controller' => 'Alunos', 'action' => 'view', $user->estudante_id], ['class' => 'btn btn-primary']) ?>
                         </li>
                     <?php } ?>
                 <?php else: ?>

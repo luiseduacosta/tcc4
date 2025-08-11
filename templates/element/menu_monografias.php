@@ -44,14 +44,14 @@ $user = $this->getRequest()->getAttribute('identity');
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class='nav-item'>
-                    <?= $this->Html->link(__('Mural'), ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'btn btn-info']) ?>
+                    <?= $this->Html->link(__('Mural'), ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'btn btn-info me-1']) ?>
                 </li>
                 <?php if (isset($user) && !empty($user)): ?>
                     <?php if ($user->categoria == 2):
                         $estudante = TableRegistry::getTableLocator()->get('Estudantes')->find()->where(['Estudantes.id' => $user->estudante_id])->first();
                         ?>
                         <li class='nav-item'>
-                            <?= $this->Html->link($user->email, ['controller' => 'Estudantes', 'action' => 'view', $estudante->id], ['class' => 'btn btn-primary']) ?>
+                            <?= $this->Html->link($user->email, ['controller' => 'Estudantes', 'action' => 'view', $user->estudante_id], ['class' => 'btn btn-primary me-1']) ?>
                         </li>
                     <?php endif; ?>
                 <?php else: ?>

@@ -16,17 +16,17 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerInstituicao">
         <li class="nav-item">
-            <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+            <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'btn btn-primary me-1']) ?>
         </li>
         <?php if (isset($user) && $user->categoria == '1'): ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $instituicao->id], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $instituicao->id], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Nova'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Nova'), ['action' => 'add'], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $instituicao->id), 'class' => 'btn btn-danger float-right']) ?>
+                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $instituicao->id), 'class' => 'btn btn-danger me-1']) ?>
             </li>
         <?php endif; ?>
     </ul>

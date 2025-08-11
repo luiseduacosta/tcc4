@@ -39,6 +39,7 @@ class AlunosController extends AppController
     public function initialize(): void
     {
         parent::initialize();
+        $user = $this->getRequest()->getAttribute('identity');
     }
 
     /**
@@ -83,11 +84,10 @@ class AlunosController extends AppController
      */
     public function view($id = null)
     {
-
         $this->Authorization->skipAuthorization();
         if ($id === null) {
             $user = $this->getRequest()->getAttribute('identity');
-            if (isset($user) && $user->categoria == '2') {
+            if (isset($user)) {
                 $aluno = $this->Alunos->find()
                     ->where(['id' => $user->estudante_id])
                     ->select('alunos.id')
@@ -96,16 +96,29 @@ class AlunosController extends AppController
                     $this->Flash->error(__('Sem parâmentros para localizar o aluno'));
                     return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
                 } else {
-                    $id = $aluno->id;
+                    if ($user->categoria == 2 || $aluno->id == $this->getRequest()->getAttribute('identity')['estudante_id']) {
+                        $id = $aluno->id;
+                    } else {
+                        $this->Flash->error(__('Você não tem permissão para acessar esta página'));
+                        return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
+                    }
                 }
             } else {
                 $this->Flash->error(__('Você não tem permissão para acessar esta página'));
                 return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
             }
         }
-        $aluno = $this->Alunos->get($id, [
-            'contain' => ['Estagiarios' => ['Instituicoes', 'Alunos', 'Supervisores', 'Professores', 'Turmaestagios'], 'Muralinscricoes' => ['Muralestagios']]
-        ]);
+        $aluno = $this->Alunos->find()
+            ->contain([
+                'Estagiarios' => ['Instituicoes', 'Alunos', 'Supervisores', 'Professores', 'Turmaestagios'],
+                'Muralinscricoes' => ['Muralestagios']
+            ])
+            ->where(['Alunos.id' => $id])
+            ->first();
+        if (empty($aluno)) {
+            $this->Flash->error(__('Aluno não encontrado'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->set(compact('aluno'));
     }
 
@@ -117,10 +130,35 @@ class AlunosController extends AppController
     public function add()
     {
 
+        $dre = $this->getRequest()->getQuery('dre');
+        $email = $this->getRequest()->getQuery('email');
+        $this->Authorization->skipAuthorization();
         $aluno = $this->Alunos->newEmptyEntity();
-        $this->Authorization->authorize($aluno);
 
         if ($this->request->is('post')) {
+
+            if (empty($this->request->getData()['registro']) || empty($this->request->getData()['email'])) {
+                $this->Flash->error(__('DRE e Email são obrigatórios.'));
+                return $this->redirect(['action' => 'add']);
+            }
+
+            $registro = $this->Alunos->find()
+                ->where(['registro' => $this->request->getData()['registro']])
+                ->first();
+
+            if ($registro) {
+                $this->Flash->error(__('DRE já cadastrado.'));
+                return $this->redirect(['action' => 'add']);
+            }
+
+            $email = $this->Alunos->find()
+                ->where(['email' => $this->request->getData()['email']])
+                ->first();
+            if ($email) {
+                $this->Flash->error(__('Email já cadastrado.'));
+                return $this->redirect(['action' => 'add']);
+            }
+
             $aluno = $this->Alunos->patchEntity($aluno, $this->request->getData());
             if ($this->Alunos->save($aluno)) {
                 $this->Flash->success(__('Dados do aluno inseridos.'));
@@ -128,6 +166,10 @@ class AlunosController extends AppController
                 return $this->redirect(['action' => 'view', $aluno->id]);
             }
             $this->Flash->error(__('Dados do aluno não inseridos.'));
+        }
+        if (!empty($dre) && !empty($email)) {
+            $aluno->registro = $dre;
+            $aluno->email = $email;
         }
         $this->set(compact('aluno'));
     }
@@ -284,9 +326,9 @@ class AlunosController extends AppController
                 return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
             } else {
                 $aluno = $this->Alunos->find()
-                ->where(['Alunos.id' => $id])
-                ->order(['Alunos.id' => 'asc'])
-                ->first();
+                    ->where(['Alunos.id' => $id])
+                    ->order(['Alunos.id' => 'asc'])
+                    ->first();
             }
         } else {
             $this->Flash->error(__('Operação não autorizada.'));
@@ -370,8 +412,8 @@ class AlunosController extends AppController
         if (isset($user) && $user->categoria == '2') {
             if ($id == $user->estudante_id) {
                 $aluno = $this->Alunos->find()
-                ->where(['Alunos.id' => $id])
-                ->first();
+                    ->where(['Alunos.id' => $id])
+                    ->first();
             } else {
                 $this->Flash->error(__('1. Usuário aluno não autorizado.'));
                 return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', '?' => ['registro' => $user->numero]]);
@@ -382,8 +424,8 @@ class AlunosController extends AppController
                 return $this->redirect(['controller' => 'Alunos', 'action' => 'index']);
             } else {
                 $aluno = $this->Alunos->find()
-                ->where(['Alunos.id' => $id])
-                ->first();
+                    ->where(['Alunos.id' => $id])
+                    ->first();
             }
         } else {
             $this->Flash->error(__('2. Outros usuários não autorizados.'));
@@ -455,7 +497,7 @@ class AlunosController extends AppController
             if (strlen($novoperiodo) < 6) {
                 $this->Flash->error(__('Período de ingresso incompleto: falta indicar se for no 1° ou 2° semestre'));
                 if (isset($this->getRequest()->getAttribute('identity')['categoria']) && $this->getRequest()->getAttribute('identity')['categoria'] == '2') {
-                    return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', '?' => ['aluno_id' => $this->getRequest()->getAttribute('identity')['estudante_id']] ]);
+                    return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', '?' => ['aluno_id' => $this->getRequest()->getAttribute('identity')['estudante_id']]]);
                 } else {
                     return $this->redirect(['controller' => 'Alunos', 'action' => 'certificadoperiodo', $id]);
                 }
@@ -524,7 +566,7 @@ class AlunosController extends AppController
         $this->set('aluno', $aluno);
         $this->set('totalperiodos', $totalperiodos);
         $this->set('novoperiodo', $novoperiodo);
-        
+
     }
 
     /**
@@ -693,7 +735,7 @@ class AlunosController extends AppController
                         $inicio = $novoano . "-" . 1;
                         break;
                 }
- 
+
                 // Estagio não obrigatório. Conto como estágio 9
             } elseif ($c_seguro->nivel == 9) {
 
@@ -741,7 +783,7 @@ class AlunosController extends AppController
             else:
                 $t_seguro[$i]['nivel'] = $c_seguro->nivel;
             endif;
-            $t_seguro[$i]['ajuste2020'] = $c_seguro->ajuste2020;            
+            $t_seguro[$i]['ajuste2020'] = $c_seguro->ajuste2020;
             $t_seguro[$i]['periodo'] = $c_seguro->periodo;
             $t_seguro[$i]['inicio'] = $inicio;
             $t_seguro[$i]['final'] = $final;
@@ -750,7 +792,7 @@ class AlunosController extends AppController
 
             $i++;
         }
- 
+
         if (!empty($t_seguro)) {
             array_multisort($criterio, SORT_ASC, $t_seguro);
         }

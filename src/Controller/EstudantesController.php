@@ -150,10 +150,17 @@ class EstudantesController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
-        $estudante = $this->Estudantes->get($id, [
-            'contain' => [],
-        ]);
-
+        $estudante = $this->Estudantes->find()
+            ->contain([
+                'Estagiarios' => ['Instituicoes', 'Alunos', 'Supervisores', 'Professores', 'Turmaestagios'],
+                'Muralinscricoes' => ['Muralestagios']
+            ])
+            ->where(['Estudantes.id' => $id])
+            ->first();
+        if (!$estudante) {
+            $this->Flash->error(__('Usuário estudante cadastrado não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->set('estudante', $estudante);
     }
 

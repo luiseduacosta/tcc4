@@ -16,17 +16,17 @@ $user = $this->getRequest()->getAttribute('identity');
     <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerUserView">
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Novo usuário'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                <?= $this->Html->link(__('Novo usuário'), ['action' => 'add'], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Editar usuário'), ['action' => 'edit', $user->id], ['class' => 'btn btn-primary float-start']) ?>
+                <?= $this->Html->link(__('Editar usuário'), ['action' => 'edit', $user->id], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <li class="nva-item">
-                <?= $this->Form->postLink(__('Excluir usuaŕio'), ['action' => 'delete', $user->id], ['confirm' => __('Tem certeza que quer excluir # {0}?', $user->id), 'class' => 'btn btn-danger float-start']) ?>
+                <?= $this->Form->postLink(__('Excluir usuaŕio'), ['action' => 'delete', $user->id], ['confirm' => __('Tem certeza que quer excluir # {0}?', $user->id), 'class' => 'btn btn-danger me-1']) ?>
             </li>
         <?php endif; ?>
         <li class="nav-item">
-            <?= $this->Html->link(__('Listar usuarios'), ['action' => 'index'], ['class' => 'btn btn-primary float-start']) ?>
+            <?= $this->Html->link(__('Listar usuarios'), ['action' => 'index'], ['class' => 'btn btn-primary me-1']) ?>
         </li>
     </ul>
 </nav>

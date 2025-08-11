@@ -56,6 +56,7 @@ class UsersController extends AppController
                             ->where(['Alunos.email' => $result->getData()->email])
                             ->first();
                         if (empty($estudante)) {
+                            $this->Flash->error(__('Aluno não encontrado. Por favor, cadastre-se.'));
                             return $this->redirect(['controller' => 'Alunos', 'action' => 'add', '?' => ['dre' => $result->getData()->numero, 'email' => $result->getData()->email]]);
                         } else {
                             $user = $this->Users->get($result->getData()->id);
@@ -66,10 +67,19 @@ class UsersController extends AppController
                             }
                             $estudante_id = $estudante->id;
                         }
+                    } else {
+                        $alunos = $this->fetchTable('Alunos')->find()
+                            ->where(['Alunos.id' => $estudante_id])
+                            ->first();
+                        if (empty($alunos)) {
+                            $this->Flash->error(__('Aluno não encontrado. Por favor, cadastre-se.'));
+                            return $this->redirect(['controller' => 'Alunos', 'action' => 'add', '?' => ['dre' => $result->getData()->numero, 'email' => $result->getData()->email]]);
+                        } else {
+                            $controller = 'Alunos';
+                            $action = 'view';
+                            $id = $estudante_id;
+                        }
                     }
-                    $controller = 'Alunos';
-                    $action = 'view';
-                    $id = $estudante_id;
                     break;
 
                 case '3':
@@ -135,7 +145,7 @@ class UsersController extends AppController
             return $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
     }
-    
+
     public function logout()
     {
         // In the add, login, and logout methods

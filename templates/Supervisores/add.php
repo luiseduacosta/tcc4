@@ -54,7 +54,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('outros_estudos', ['label' => ['text' => 'Outros estudos'], 'type' => 'text']);
         echo $this->Form->control('area_curso', ['label' => ['text' => 'Área do curso'], 'type' => 'text']);
         echo $this->Form->control('ano_curso', ['label' => ['text' => 'Ano do curso'], 'type' => 'number', 'mask' => '0000', 'placeholder' => '0000']);
-        echo $this->Form->control('cargo', ['label' => ['text' => 'Cargo'], 'type' => 'text']);
+        echo $this->Form->control('cargo', ['label' => ['text' => 'Cargo que ocupa'], 'type' => 'text']);
         echo $this->Form->control('num_inscricao', ['label' => ['text' => 'Número de inscrição para o curso de supervisores'], 'type' => 'number']);
         echo $this->Form->control('curso_turma', ['label' => ['text' => 'Turma do curso de supervisores'], 'type' => 'number']);
         echo $this->Form->control('observacoes', ['label' => ['text' => 'Observações'], 'type' => 'textarea']);
