@@ -242,7 +242,10 @@ Inflector::rules('irregular', [
     'muralinscricao' => 'muralinscricoes',
     'instituicao' => 'instituicoes',
     'areainstituicao' => 'areainstituicoes',
-    'avaliacao' => 'avaliacoes'
+    'avaliacao' => 'avaliacoes',
+    'questionario' => 'questionarios',
+    'resposta' => 'respostas',
+    'questao' => 'questoes',
 ], true);
 
 // Uninflected words
@@ -295,5 +298,3 @@ Configure::write('CakePdf', [
     'orientation' => 'portrait',
     'download' => true
 ]);
-
- 

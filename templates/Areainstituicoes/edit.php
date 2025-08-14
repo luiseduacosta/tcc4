@@ -20,13 +20,13 @@ $user = $this->getRequest()->getAttribute('identity');
                 $this->Form->postLink(
                         __('Excluir'),
                         ['action' => 'delete', $areainstituicao->id],
-                        ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $areainstituicao->id), 'class' => 'side-nav-item']
+                        ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $areainstituicao->id), 'class' => 'btn btn-primary']
                 )
             ?>
             </li>
         <?php endif; ?>
         <li class="nav-item">
-            <?= $this->Html->link(__('Listar área instituições'), ['controller' => 'Areainstituicoes', 'action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Listar área instituições'), ['controller' => 'Areainstituicoes', 'action' => 'index'], ['class' => 'btn btn-primary']) ?>
         </li>
     </ul>
 </nav>

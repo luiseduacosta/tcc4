@@ -16,20 +16,20 @@ $user = $this->getRequest()->getAttribute('identity');
     <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerAreainstituicoes">
         <?php if (isset($user) && $user->categoria == '1'): ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Editar área instituição'), ['controller' => 'Areainstituicoes', 'action' => 'edit', $areainstituicao->id], ['class' => 'side-nav-item']) ?>
+                <?= $this->Html->link(__('Editar área instituição'), ['controller' => 'Areainstituicoes', 'action' => 'edit', $areainstituicao->id], ['class' => 'btn btn-primary']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Editar área instituição'), ['controller' => 'Areainstituicoes', 'action' => 'edit', $areainstituicao->id], ['class' => 'side-nav-item']) ?>
+                <?= $this->Html->link(__('Editar área instituição'), ['controller' => 'Areainstituicoes', 'action' => 'edit', $areainstituicao->id], ['class' => 'btn btn-primary']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir área instituição'), ['controller' => 'Areainstituicoes', 'action' => 'delete', $areainstituicao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $areainstituicao->id), 'class' => 'side-nav-item']) ?>
+                <?= $this->Form->postLink(__('Excluir área instituição'), ['controller' => 'Areainstituicoes', 'action' => 'delete', $areainstituicao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $areainstituicao->id), 'class' => 'btn btn-primary']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Nova área instituição'), ['controller' => 'Areainstituicoes', 'action' => 'add'], ['class' => 'side-nav-item']) ?>
+                <?= $this->Html->link(__('Nova área instituição'), ['controller' => 'Areainstituicoes', 'action' => 'add'], ['class' => 'btn btn-primary']) ?>
             </li>        
         <?php endif; ?>
         <li class="nav-item">
-            <?= $this->Html->link(__('Listar área instituições'), ['controller' => 'Areainstituicoes', 'action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Listar área instituições'), ['controller' => 'Areainstituicoes', 'action' => 'index'], ['class' => 'btn btn-primary']) ?>
         </li>
     </ul>
 </nav>

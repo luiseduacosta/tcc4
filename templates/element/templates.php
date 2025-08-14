@@ -69,7 +69,7 @@
 <?php // Wrapping container for radio input/label, ?>
 <?php $this->Form->setTemplates(['radioWrapper' => '<div class="form-check form-check-inline">{{label}}{{input}}</div>']); ?>
 <?php // Textarea input element, ?>
-<?php $this->Form->setTemplates(['textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>']); ?>
+<?php $this->Form->setTemplates(['textarea' => '<div class="col-sm-9"><textarea name="{{name}}"{{attrs}}>{{value}}</textarea></div>']); ?>
 <?php // Container for submit buttons. ?>
 <?php $this->Form->setTemplates(['submitContainer' => '<div class="submit">{{content}}</div>']); ?>
 <?php // Confirm javascript template for postLink() ?>

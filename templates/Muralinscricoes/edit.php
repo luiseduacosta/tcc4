@@ -24,13 +24,13 @@ $user = $this->getRequest()->getAttribute('identity');
                 $this->Form->postLink(
                     __ ('Excluir'),
                     ['action' => 'delete', $muralinscricao->id],
-                    ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'side-nav-item']
+                    ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'btn btn-primary']
                     )
                 ?>
         </li>
     <?php endif; ?>
         <li class='nav-link'>
-            <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
         </li>
     </ul>
 </nav>
