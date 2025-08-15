@@ -18,18 +18,18 @@
 
 <h3><?= __('Questionarios') ?></h3>
 
-<div class="table-responsive">
+<div class="container mt-4">
     <table class="table table-striped table-hover table-responsive">
         <thead class="thead-light">
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('title') ?></th>
-                <th><?= $this->Paginator->sort('created') ?></th>
-                <th><?= $this->Paginator->sort('modified') ?></th>
-                <th><?= $this->Paginator->sort('is_active') ?></th>
-                <th><?= $this->Paginator->sort('category') ?></th>
-                <th><?= $this->Paginator->sort('target_user_type') ?></th>
-                <th class="table-info"><?= __('Ações') ?></th>
+                <th><?= $this->Paginator->sort('title', 'Título') ?></th>
+                <th><?= $this->Paginator->sort('created', 'Criado') ?></th>
+                <th><?= $this->Paginator->sort('modified', 'Modificado') ?></th>
+                <th><?= $this->Paginator->sort('is_active', 'Activo') ?></th>
+                <th><?= $this->Paginator->sort('category', 'Categoria') ?></th>
+                <th><?= $this->Paginator->sort('target_user_type', 'Tipo de usuário alvo') ?></th>
+                <th><?= __('Ações') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -43,9 +43,9 @@
                     <td><?= h($questionario->category) ?></td>
                     <td><?= h($questionario->target_user_type) ?></td>
                     <td class="table-info">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $questionario->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $questionario->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $questionario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $questionario->id)]) ?>
+                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $questionario->id]) ?>
+                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $questionario->id]) ?>
+                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $questionario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $questionario->id)]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

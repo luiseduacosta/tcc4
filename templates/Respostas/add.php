@@ -10,11 +10,11 @@
 <?php echo $this->element('menu_mural') ?>
 <?php $this->element('templates') ?>
 
-<div class="row">
+<div class="container mt-1">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <ul class="navbar-nav collapse navbar-collapse">
             <li class="nav-item">
-                <?= $this->Html->link(__('List Respostas'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Listar respostas'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
             </li>
         </ul>
     </nav>
@@ -22,12 +22,43 @@
     <div class="container mt-4">
         <?= $this->Form->create($resposta) ?>
         <fieldset>
-            <legend><?= __('Nova resposta') ?></legend>
-            <?php
-            echo $this->Form->control('question_id', ['options' => $questiones]);
-            echo $this->Form->control('estagiarios_id', ['options' => $estagiarios]);
-            echo $this->Form->control('response');
-            ?>
+            <legend><?= $aluno->nome . ' estagiário nível ' . $estagiario->nivel ?></legend>
+            <?php foreach ($questiones as $questione): ?>
+                <?php
+                // pr("resposta_" . $questione->id);
+                $opcoes = $questione->options ? json_decode($questione->options, true) : [];
+                ?>
+                <?php
+                echo $this->Form->control('questione_id', [
+                    'type' => 'hidden',
+                    'value' => $questione->id
+                ]);
+                echo $this->Form->control('estagiario_id', [
+                    'type' => 'hidden',
+                    'value' => $estagiario_id
+                ]);
+                if ($questione->type === 'select' || $questione->type === 'radio') {
+                    $opcoes = array_combine($opcoes, $opcoes);
+                    echo $this->Form->control('avaliacao' . $questione->id, ['label' => $questione->text, 'type' => $questione->type, 'options' => $opcoes, 'empty' => 'Seleciona', 'class' => 'form-control']);
+                } elseif ($questione->type === 'boolean') {
+                    echo $this->Form->control('avaliacao' . $questione->id, ['label' => $questione->text, 'type' => 'checkbox', 'options' => ['0' => 'Não', '1' => 'Sim'], 'class' => 'form-check-input']);
+                } elseif ($questione->type === 'scale') {
+                    echo $this->Form->control('avaliacao' . $questione->id, ['label' => $questione->text, 'type' => 'number', 'min' => 1, 'max' => 5, 'class' => 'form-control']);
+                } elseif ($questione->type === 'text' || $questione->type === 'textarea') {
+                    echo $this->Form->control('avaliacao' . $questione->id, ['label' => $questione->text, 'type' => $questione->type, 'class' => 'form-control']);
+                } else {
+                    echo $this->Form->control('avaliacao' . $questione->id, ['label' => $questione->text, 'type' => 'text', 'class' => 'form-control']);
+                }
+                echo $this->Form->control('created', [
+                    'type' => 'hidden',
+                    'value' => date('Y-m-d H:i:s')
+                ]);
+                echo $this->Form->control('modified', [
+                    'type' => 'hidden',
+                    'value' => date('Y-m-d H:i:s')
+                ]);
+                ?>
+            <?php endforeach; ?>
         </fieldset>
         <?= $this->Form->button(__('Submit'), ['class' => 'btn btn-primary']) ?>
         <?= $this->Form->end() ?>

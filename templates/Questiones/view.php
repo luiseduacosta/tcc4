@@ -9,7 +9,7 @@
 
 <?php $this->element('templates') ?>
 
-<div class="row">
+<div class="container mt-1">
 
     <nav class="nav navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -18,21 +18,21 @@
         </button>
         <ul class="navbar-nav collapse navbar-collapse" id="navbarSupportedContent">
             <li class="nav-item">
-                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $questione->id], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $questione->id], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $questione->id], ['confirm' => __('Are you sure you want to delete # {0}?', $questione->id), 'class' => 'btn btn-danger']) ?>
+                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $questione->id], ['confirm' => __('Are you sure you want to delete # {0}?', $questione->id), 'class' => 'btn btn-danger me-1']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Html->link(__('Nova'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
+                <?= $this->Html->link(__('Nova'), ['action' => 'add'], ['class' => 'btn btn-primary me-1']) ?>
             </li>
         </ul>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-1">
         <h3><?= h($questione->type) ?></h3>
         <table class="table table-striped table-hover table-responsive">
             <tr>
@@ -41,16 +41,39 @@
                 </td>
             </tr>
             <tr>
-                <th><?= __('Type') ?></th>
-                <td><?= h($questione->type) ?></td>
-            </tr>
-            <tr>
                 <th><?= __('Id') ?></th>
                 <td><?= $this->Number->format($questione->id) ?></td>
             </tr>
             <tr>
-                <th><?= __('Order') ?></th>
-                <td><?= $questione->order === null ? '' : $this->Number->format($questione->order) ?></td>
+                <th><?= __('Text') ?></th>
+                <td><?= h($questione->text) ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Tipo') ?></th>
+                <td><?= h($questione->type) ?></td>
+            </tr>
+            <tr>
+                <th><?= __('Opções') ?></th>
+                <td>
+                    <?php
+                    if (!empty($questione->options)) {
+                        $i = 0;
+                        $opcoes = json_decode($questione->options, true);
+                        // pr($opcoes);
+                        for ($i = 0; $i <= array_key_last($opcoes); $i++):
+                            if ($i === array_key_last($opcoes)):
+                                echo $opcoes[$i];
+                            else:
+                                echo $opcoes[$i] . ', ';
+                            endif;
+                        endfor;
+                    }
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <th><?= __('Ordem') ?></th>
+                <td><?= $questione->ordem === null ? '' : $this->Number->format($questione->ordem) ?></td>
             </tr>
             <tr>
                 <th><?= __('Created') ?></th>
@@ -61,17 +84,5 @@
                 <td><?= h($questione->modified) ?></td>
             </tr>
         </table>
-        <div class="text">
-            <strong><?= __('Text') ?></strong>
-            <blockquote>
-                <?= $this->Text->autoParagraph(h($questione->text)); ?>
-            </blockquote>
-        </div>
-        <div class="text">
-            <strong><?= __('Options') ?></strong>
-            <blockquote>
-                <?= $this->Text->autoParagraph(h($questione->options)); ?>
-            </blockquote>
-        </div>
     </div>
 </div>

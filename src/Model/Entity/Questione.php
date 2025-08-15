@@ -15,7 +15,7 @@ use Cake\ORM\Entity;
  * @property string|null $options
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
- * @property int|null $order
+ * @property int|null $ordem
  *
  * @property \App\Model\Entity\Questionario $questionario
  */
@@ -37,7 +37,7 @@ class Questione extends Entity
         'options' => true,
         'created' => true,
         'modified' => true,
-        'order' => true,
+        'ordem' => true,
         'questionario' => true,
     ];
 }

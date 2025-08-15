@@ -81,8 +81,8 @@ class QuestionesTable extends Table
             ->allowEmptyString('options');
 
         $validator
-            ->integer('order')
-            ->allowEmptyString('order');
+            ->integer('ordem')
+            ->allowEmptyString('ordem');
 
         return $validator;
     }

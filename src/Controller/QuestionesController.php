@@ -21,10 +21,14 @@ class QuestionesController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
-        $this->paginate = [
+        $query = $this->Questiones->find('all', [
             'contain' => ['Questionarios'],
-        ];
-        $questiones = $this->paginate($this->Questiones);
+        ]);
+        $questiones = $this->paginate($query, [
+            // Ensure that the sorting is secure and only allows specific fields
+            'sortableFields' => ['id', 'questionario_id', 'created', 'modified'],
+            'limit' => 10,
+        ]);
 
         $this->set(compact('questiones'));
     }
@@ -52,14 +56,22 @@ class QuestionesController extends AppController
      */
     public function add()
     {
+        // pr($this->request->getData());
         $questione = $this->Questiones->newEmptyEntity();
+        $perguntas = $this->Questiones->find() 
+            ->order(['ordem' => 'DESC'])
+            ->contain(['Questionarios'])
+            ->first();
+        if ($perguntas->ordem) {
+            $this->set("ordem", $perguntas->ordem + 1);
+        }
         $this->Authorization->skipAuthorization();
         if ($this->request->is('post')) {
             $questione = $this->Questiones->patchEntity($questione, $this->request->getData());
             if ($this->Questiones->save($questione)) {
-                $this->Flash->success(__('The questione has been saved.'));
+                $this->Flash->success(__('Questão criada.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $questione->id]);
             }
             $this->Flash->error(__('The questione could not be saved. Please, try again.'));
         }
