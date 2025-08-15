@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\Questionario;
+
 /**
  * Questiones Controller
  *
@@ -13,6 +15,18 @@ namespace App\Controller;
  */
 class QuestionesController extends AppController
 {
+    public $paginate = [
+        "sortableFields" => [
+            "id",
+            "type",
+            "text",
+            "options",
+            "ordem",
+            "questionario.title",
+        ],
+        "order" => ["ordem" => "ASC"],
+        "limit" => 20
+    ];
     /**
      * Index method
      *
@@ -21,16 +35,10 @@ class QuestionesController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
-        $query = $this->Questiones->find('all', [
-            'contain' => ['Questionarios'],
-        ]);
-        $questiones = $this->paginate($query, [
-            // Ensure that the sorting is secure and only allows specific fields
-            'sortableFields' => ['id', 'questionario_id', 'created', 'modified'],
-            'limit' => 10,
-        ]);
+        $query = $this->Questiones->find()->contain(["Questionarios"]);
+        $questiones = $this->paginate($query);
 
-        $this->set(compact('questiones'));
+        $this->set(compact("questiones"));
     }
 
     /**
@@ -43,10 +51,10 @@ class QuestionesController extends AppController
     public function view($id = null)
     {
         $questione = $this->Questiones->get($id, [
-            'contain' => ['Questionarios'],
+            "contain" => ["Questionarios"],
         ]);
         $this->Authorization->skipAuthorization();
-        $this->set(compact('questione'));
+        $this->set(compact("questione"));
     }
 
     /**
@@ -58,25 +66,33 @@ class QuestionesController extends AppController
     {
         // pr($this->request->getData());
         $questione = $this->Questiones->newEmptyEntity();
-        $perguntas = $this->Questiones->find() 
-            ->order(['ordem' => 'DESC'])
-            ->contain(['Questionarios'])
+        $perguntas = $this->Questiones
+            ->find()
+            ->order(["ordem" => "DESC"])
+            ->contain(["Questionarios"])
             ->first();
         if ($perguntas->ordem) {
             $this->set("ordem", $perguntas->ordem + 1);
         }
         $this->Authorization->skipAuthorization();
-        if ($this->request->is('post')) {
-            $questione = $this->Questiones->patchEntity($questione, $this->request->getData());
+        if ($this->request->is("post")) {
+            $questione = $this->Questiones->patchEntity(
+                $questione,
+                $this->request->getData(),
+            );
             if ($this->Questiones->save($questione)) {
-                $this->Flash->success(__('Questão criada.'));
+                $this->Flash->success(__("Questão criada."));
 
-                return $this->redirect(['action' => 'view', $questione->id]);
+                return $this->redirect(["action" => "view", $questione->id]);
             }
-            $this->Flash->error(__('The questione could not be saved. Please, try again.'));
+            $this->Flash->error(
+                __("The questione could not be saved. Please, try again."),
+            );
         }
-        $questionarios = $this->Questiones->Questionarios->find('list', ['limit' => 200])->all();
-        $this->set(compact('questione', 'questionarios'));
+        $questionarios = $this->Questiones->Questionarios
+            ->find("list", ["limit" => 200])
+            ->all();
+        $this->set(compact("questione", "questionarios"));
     }
 
     /**
@@ -89,20 +105,28 @@ class QuestionesController extends AppController
     public function edit($id = null)
     {
         $questione = $this->Questiones->get($id, [
-            'contain' => [],
+            "contain" => [],
         ]);
         $this->Authorization->skipAuthorization();
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $questione = $this->Questiones->patchEntity($questione, $this->request->getData());
+        if ($this->request->is(["patch", "post", "put"])) {
+            $questione = $this->Questiones->patchEntity(
+                $questione,
+                $this->request->getData(),
+            );
             if ($this->Questiones->save($questione)) {
-                $this->Flash->success(__('The questione has been saved.'));
+                $this->Flash->success(__("The questione has been saved."));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(["action" => "view", $questione->id]);
             }
-            $this->Flash->error(__('The questione could not be saved. Please, try again.'));
+            $this->Flash->error(
+                __("The questione could not be saved. Please, try again."),
+            );
+            return $this->redirect(["action" => "index"]);
         }
-        $questionarios = $this->Questiones->Questionarios->find('list', ['limit' => 200])->all();
-        $this->set(compact('questione', 'questionarios'));
+        $questionarios = $this->Questiones->Questionarios
+            ->find("list", ["limit" => 200])
+            ->all();
+        $this->set(compact("questione", "questionarios"));
     }
 
     /**
@@ -114,15 +138,17 @@ class QuestionesController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->request->allowMethod(["post", "delete"]);
         $questione = $this->Questiones->get($id);
         $this->Authorization->skipAuthorization();
         if ($this->Questiones->delete($questione)) {
-            $this->Flash->success(__('The questione has been deleted.'));
+            $this->Flash->success(__("The questione has been deleted."));
         } else {
-            $this->Flash->error(__('The questione could not be deleted. Please, try again.'));
+            $this->Flash->error(
+                __("The questione could not be deleted. Please, try again."),
+            );
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(["action" => "index"]);
     }
 }
