@@ -34,7 +34,7 @@
                         "questionario->title",
                         "Questionário",
                     ) ?></th>
-                    <th><?= $this->Paginator->sort("text", "Texto") ?></th>
+                    <th><?= $this->Paginator->sort("text", "Questão") ?></th>
                     <th><?= $this->Paginator->sort("type", "Tipo") ?></th>
                     <th><?= $this->Paginator->sort("options", "Opções") ?></th>
                     <th><?= $this->Paginator->sort("ordem") ?></th>

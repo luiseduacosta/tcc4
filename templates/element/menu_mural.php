@@ -87,6 +87,9 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <?php echo $this->Html->link('Planilha CRESS', '/Alunos/planilhacress/', ['class' => 'dropdown-item']); ?>
                             </li>
                             <li class="nav-item">
+                                <?php echo $this->Html->link('Formulário de avaliação discente on-line', '/Questionarios/index', ['class' => 'dropdown-item']); ?>
+                            </li>
+                            <li class="nav-item">
                                 <?php echo $this->Html->link('Carga horária', '/Alunos/cargahoraria/', ['class' => 'dropdown-item']); ?>
                             </li>
                             <li class="nav-item">

@@ -8,7 +8,21 @@
 ?>
 
 <?php echo $this->element('menu_mural') ?>
-<?php $this->element('templates') ?>
+
+<?php $this->Form->setTemplates(['formStart' => '<form{{attrs}}>']); ?>
+<?php $this->Form->setTemplates(['formEnd' => '</form>']); ?>
+<?php $this->Form->setTemplates(['fieldset' => '<fieldset class="border p-3 mb-4" {{attrs}}>{{content}}</fieldset>']); ?>
+<?php $this->Form->setTemplates(['select' => '<select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select>']); ?>
+<?php $this->Form->setTemplates(['option' => '<option value="{{value}}"{{attrs}}>{{text}}</option>']); ?>
+<?php $this->Form->setTemplates(['legend' => '<legend class="h3">{{text}}</legend>']); ?>
+<?php $this->Form->setTemplates(['label' => '<label class="form-label" {{attrs}}>{{text}}</label>']); ?>
+<?php $this->Form->setTemplates(['input' => '<input class="form-control" type="{{type}}" name="{{name}}"{{attrs}}>']); ?>
+<?php $this->Form->setTemplates(['radioWrapper' => '<div class="form-check form-check-inline">{{label}}{{input}}</div>']); ?>
+<?php $this->Form->setTemplates(['radio' => '<input class="form-check-input" type="radio" name="{{name}}" value="{{value}}"{{attrs}}']); ?>
+<?php $this->Form->setTemplates(['textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>']); ?>
+<?php $this->Form->setTemplates(['requiredClass' => 'required']); ?>
+<?php $this->Form->setTemplates(['submitContainer' => '<div class="submit">{{content}}</div>']); ?>
+<?php $this->Form->setTemplates(['button' => '<button{{attrs}}>{{text}}</button>']); ?>
 
 <div class="container mt-1">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -37,11 +51,14 @@
                     'type' => 'hidden',
                     'value' => $estagiario_id
                 ]);
-                if ($questione->type === 'select' || $questione->type === 'radio') {
+                if ($questione->type === 'select') {
                     $opcoes = array_combine($opcoes, $opcoes);
                     echo $this->Form->control('avaliacao' . $questione->id, ['label' => $questione->text, 'type' => $questione->type, 'options' => $opcoes, 'empty' => 'Seleciona', 'class' => 'form-control']);
+                } elseif ($questione->type === 'radio' || $questione->type === 'checkbox') {
+                    $opcoes = array_combine($opcoes, $opcoes);
+                    echo $this->Form->control('avaliacao' . $questione->id, ['label' => $questione->text, 'type' => $questione->type, 'options' => $opcoes]);
                 } elseif ($questione->type === 'boolean') {
-                    echo $this->Form->control('avaliacao' . $questione->id, ['label' => $questione->text, 'type' => 'checkbox', 'options' => ['0' => 'Não', '1' => 'Sim'], 'class' => 'form-check-input']);
+                    echo $this->Form->control('avaliacao' . $questione->id, ['label' => $questione->text, 'type' => 'checkbox', 'options' => ['0' => 'Não', '1' => 'Sim']]);
                 } elseif ($questione->type === 'scale') {
                     echo $this->Form->control('avaliacao' . $questione->id, ['label' => $questione->text, 'type' => 'number', 'min' => 1, 'max' => 5, 'class' => 'form-control']);
                 } elseif ($questione->type === 'text' || $questione->type === 'textarea') {

@@ -37,7 +37,7 @@
         <table class="table table-striped table-hover table-responsive">
             <tr>
                 <th><?= __('Titulo') ?></th>
-                <td><?= h($questionario->title) ?></td>
+                <td><?= $this->Html->link($questionario->title, ['controller' => 'Questiones', 'action' => 'index']) ?></td>
             </tr>
             <tr>
                 <th><?= __('Categoria') ?></th>
@@ -71,19 +71,19 @@
             </blockquote>
         </div>
         <div class="container mt-4">
-            <h4><?= __('Questionários') ?></h4>
+            <h4><?= __('Questões') ?></h4>
             <?php if (!empty($questionario->questiones)): ?>
                 <div class="container mr-1">
                     <table class="table table-striped table-hover table-responsive">
                         <tr>
                             <th><?= __('Id') ?></th>
                             <th><?= __('Questionario Id') ?></th>
-                            <th><?= __('Text') ?></th>
-                            <th><?= __('Type') ?></th>
-                            <th><?= __('Options') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th><?= __('Modified') ?></th>
-                            <th><?= __('Order') ?></th>
+                            <th><?= __('Texto') ?></th>
+                            <th><?= __('Tipo') ?></th>
+                            <th><?= __('Opções') ?></th>
+                            <th><?= __('Criado') ?></th>
+                            <th><?= __('Modificado') ?></th>
+                            <th><?= __('Ordem') ?></th>
                             <th><?= __('Ações') ?></th>
                         </tr>
                         <?php foreach ($questionario->questiones as $questiones): ?>
@@ -95,7 +95,7 @@
                                 <td><?= h($questiones->options) ?></td>
                                 <td><?= h($questiones->created) ?></td>
                                 <td><?= h($questiones->modified) ?></td>
-                                <td><?= h($questiones->order) ?></td>
+                                <td><?= h($questiones->ordem) ?></td>
                                 <td class="table-info">
                                     <?= $this->Html->link(__('Ver'), ['controller' => 'Questiones', 'action' => 'view', $questiones->id]) ?>
                                     <?= $this->Html->link(__('Editar'), ['controller' => 'Questiones', 'action' => 'edit', $questiones->id]) ?>
