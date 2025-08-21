@@ -64,7 +64,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="tab-content">
         <div id="professor1" class="tab-pane container active show">
             <h3><?= __('Dados funcionais') ?></h3>
-        <table class="table table-striped table-hover table-responsive">
+            <table class="table table-striped table-hover table-responsive">
                 <thead class="table-dark">
                     <tr>
                         <th><?= $this->Paginator->sort('id') ?></th>
@@ -129,16 +129,17 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($professor->cpf) ?></td>
                             <td><?= h($professor->rg) ?></td>
                             <td><?= h($professor->orgaoexpedidor) ?></td>
-                            <td><?php 
-                                if ($professor->sexo == '0') {
-                                    echo 'Feminino';
-                                } elseif ($professor->sexo == '1') {
-                                    echo 'Masculino';
-                                } elseif ($professor->sexo == '2') {
-                                    echo 'Não informado';
-                                }
+                            <td><?php
+                            if ($professor->sexo == '0') {
+                                echo 'Feminino';
+                            } elseif ($professor->sexo == '1') {
+                                echo 'Masculino';
+                            } elseif ($professor->sexo == '2') {
+                                echo 'Não informado';
+                            }
                             ?></td>
-                            <td><?= $professor->datanascimento ? $professor->datanascimento->i18nFormat('dd-MM-yyyy') : '' ?></td>
+                            <td><?= $professor->datanascimento ? $professor->datanascimento->i18nFormat('dd-MM-yyyy') : '' ?>
+                            </td>
                             <td><?= h($professor->localnascimento) ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -347,14 +348,19 @@ $user = $this->getRequest()->getAttribute('identity');
         </div>
     </div>
 
-    <?= $this->element('templates'); ?>
+    <?= $this->element('templates') ?>
 
     <div class="d-flex justify-content-center">
         <div class="paginator">
             <ul class="pagination">
-                <?= $this->element('paginator') ?>
+                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('próximo') . ' >') ?>
+                <?= $this->Paginator->last(__('último') . ' >>') ?>
             </ul>
+            <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) de um total de {{count}}.')) ?>
+            </p>
         </div>
-        <?= $this->element('paginator_count') ?>
     </div>
 </div>

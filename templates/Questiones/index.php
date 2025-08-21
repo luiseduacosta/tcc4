@@ -80,14 +80,18 @@
                         <td><?= $questione->ordem === null
                             ? ""
                             : $this->Number->format($questione->ordem) ?></td>
-                        <td class="table-info">
+                        <td class="row">
                             <?= $this->Html->link(__("Ver"), [
                                 "action" => "view",
                                 $questione->id,
+                            ], [
+                                "class" => "btn btn-primary btn-sm btn-block p-1 mb-1",
                             ]) ?>
                             <?= $this->Html->link(__("Editar"), [
                                 "action" => "edit",
                                 $questione->id,
+                            ], [
+                                "class" => "btn btn-primary btn-sm btn-block p-1 mb-1",
                             ]) ?>
                             <?= $this->Form->postLink(
                                 __("Excluir"),
@@ -97,6 +101,7 @@
                                         "Tem certeza que deseja excluir este registro # {0}?",
                                         $questione->id,
                                     ),
+                                    'class' => 'btn btn-danger btn-sm btn-block p-1 mb-1',
                                 ],
                             ) ?>
                         </td>
@@ -116,7 +121,7 @@
         </ul>
         <p><?= $this->Paginator->counter(
             __(
-                "Página {{page}} de {{pages}}, mostrando {{current}} registros(s) de {{count}} em total",
+                "Página {{page}} de {{pages}}, mostrando {{current}} registros(s) de um total de {{count}}.",
             ),
         ) ?>
         </p>

@@ -33,11 +33,11 @@
     </nav>
 
     <div class="container mt-1">
-        <h3><?= h($questione->type) ?></h3>
+        <h3><?= h($questione->text) ?></h3>
         <table class="table table-striped table-hover table-responsive">
             <tr>
                 <th><?= __('Questionario') ?></th>
-                <td><?= $questione->has('questionario') ? $this->Html->link($questione->questionario->title, ['controller' => 'Questionarios', 'action' => 'view', $questione->questionario->id]) : '' ?>
+                <td><?= $questione->hasValue('questionario') ? $this->Html->link($questione->questionario->title, ['controller' => 'Questionarios', 'action' => 'view', $questione->questionario->id]) : '' ?>
                 </td>
             </tr>
             <tr>
@@ -76,12 +76,12 @@
                 <td><?= $questione->ordem === null ? '' : $this->Number->format($questione->ordem) ?></td>
             </tr>
             <tr>
-                <th><?= __('Created') ?></th>
-                <td><?= h($questione->created) ?></td>
+                <th><?= __('Criado') ?></th>
+                <td><?= $this->Time->format($questione->created, 'd-MM-Y HH:mm:ss') ?></td>
             </tr>
             <tr>
-                <th><?= __('Modified') ?></th>
-                <td><?= h($questione->modified) ?></td>
+                <th><?= __('Modificado') ?></th>
+                <td><?= $this->Time->format($questione->modified, 'd-MM-Y HH:mm:ss') ?></td>
             </tr>
         </table>
     </div>

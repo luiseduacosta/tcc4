@@ -90,10 +90,10 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= isset($muralestagio->dataSelecao) ? $muralestagio->dataSelecao->i18nFormat('dd-MM-yyyy') : '' ?>
                     </td>
                     <?php if (isset($user) && $user->categoria == '1'): ?>
-                        <td>
-                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $muralestagio->id]) ?>
-                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $muralestagio->id]) ?>
-                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $muralestagio->id], ['confirm' => __('Tem certeza quer quer excluir este registro # {0}?', $muralestagio->id)]) ?>
+                        <td class="row">
+                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $muralestagio->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
+                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $muralestagio->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $muralestagio->id], ['confirm' => __('Tem certeza quer quer excluir este registro # {0}?', $muralestagio->id), 'class' => 'btn btn-danger btn-sm btn-block mb-1']) ?>
                         </td>
                     <?php endif; ?>
                 </tr>
@@ -111,7 +111,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Paginator->next(__('próximo') . ' >') ?>
             <?= $this->Paginator->last(__('último') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?>
+        <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) de um total de {{count}}.')) ?>
         </p>
     </div>
 </div>

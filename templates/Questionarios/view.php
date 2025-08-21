@@ -81,8 +81,6 @@
                             <th><?= __('Texto') ?></th>
                             <th><?= __('Tipo') ?></th>
                             <th><?= __('Opções') ?></th>
-                            <th><?= __('Criado') ?></th>
-                            <th><?= __('Modificado') ?></th>
                             <th><?= __('Ordem') ?></th>
                             <th><?= __('Ações') ?></th>
                         </tr>
@@ -93,13 +91,11 @@
                                 <td><?= h($questiones->text) ?></td>
                                 <td><?= h($questiones->type) ?></td>
                                 <td><?= h($questiones->options) ?></td>
-                                <td><?= h($questiones->created) ?></td>
-                                <td><?= h($questiones->modified) ?></td>
                                 <td><?= h($questiones->ordem) ?></td>
-                                <td class="table-info">
-                                    <?= $this->Html->link(__('Ver'), ['controller' => 'Questiones', 'action' => 'view', $questiones->id]) ?>
-                                    <?= $this->Html->link(__('Editar'), ['controller' => 'Questiones', 'action' => 'edit', $questiones->id]) ?>
-                                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Questiones', 'action' => 'delete', $questiones->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $questiones->id)]) ?>
+                                <td class="row">
+                                    <?= $this->Html->link(__('Ver'), ['controller' => 'Questiones', 'action' => 'view', $questiones->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
+                                    <?= $this->Html->link(__('Editar'), ['controller' => 'Questiones', 'action' => 'edit', $questiones->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
+                                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Questiones', 'action' => 'delete', $questiones->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $questiones->id), 'class' => 'btn btn-danger btn-sm btn-block p-1 mb-1']) ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

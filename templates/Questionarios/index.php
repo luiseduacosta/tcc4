@@ -42,10 +42,10 @@
                     <td><?= h($questionario->is_active) ?></td>
                     <td><?= h($questionario->category) ?></td>
                     <td><?= h($questionario->target_user_type) ?></td>
-                    <td class="table-info">
-                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $questionario->id]) ?>
-                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $questionario->id]) ?>
-                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $questionario->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $questionario->id)]) ?>
+                    <td class="row">
+                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $questionario->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
+                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $questionario->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
+                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $questionario->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $questionario->id), 'class' => 'btn btn-danger btn-sm btn-block p-1 mb-1']) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -55,12 +55,12 @@
 
 <div class="paginator">
     <ul class="pagination">
-        <?= $this->Paginator->first('<< ' . __('first')) ?>
-        <?= $this->Paginator->prev('< ' . __('previous')) ?>
+        <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+        <?= $this->Paginator->prev('< ' . __('anterior')) ?>
         <?= $this->Paginator->numbers() ?>
-        <?= $this->Paginator->next(__('next') . ' >') ?>
-        <?= $this->Paginator->last(__('last') . ' >>') ?>
+        <?= $this->Paginator->next(__('próximo') . ' >') ?>
+        <?= $this->Paginator->last(__('último') . ' >>') ?>
     </ul>
-    <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+    <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registros de um total de {{count}}.')) ?>
     </p>
 </div>

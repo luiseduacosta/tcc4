@@ -43,7 +43,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
     <div class="tab-content">
         <div id="instituicao" class="tab-pane container active show">
-            <table class="table table-striped table-hover table-responsive">
+            <table class="table table-striped table-hover table-responsive caption-top">
                 <caption>Instituições</caption>
                 <thead class="table-dark">
                     <tr>
@@ -68,11 +68,11 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($instituicao->natureza) ?></td>
                             <td><?= h($instituicao->cnpj) ?></td>
                             <td><?= h($instituicao->email) ?></td>
-                            <td>
-                                <?= $this->Html->link(__('Ver'), ['action' => 'view', $instituicao->id]) ?>
+                            <td class="row">
+                                <?= $this->Html->link(__('Ver'), ['action' => 'view', $instituicao->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
                                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $instituicao->id]) ?>
-                                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $instituicao->id)]) ?>
+                                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $instituicao->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
+                                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $instituicao->id), 'class' => 'btn btn-danger btn-sm btn-block p-1 mb-1']) ?>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -84,7 +84,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <div class="tab-content">
         <div id="endereco" class="tab-pane container fade">
-            <table class="table table-striped table-hover table-responsive">
+            <table class="table table-striped table-hover table-responsive caption-top">
                 <caption>Instituições endereço</caption>
                 <thead class="table-dark">
                     <tr>
@@ -113,11 +113,11 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($instituicao->cep) ?></td>
                             <td><?= h($instituicao->telefone) ?></td>
                             <td><?= h($instituicao->fax) ?></td>
-                            <td>
-                                <?= $this->Html->link(__('Ver'), ['action' => 'view', $instituicao->id]) ?>
+                            <td class="row">
+                                <?= $this->Html->link(__('Ver'), ['action' => 'view', $instituicao->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
                                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $instituicao->id]) ?>
-                                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $instituicao->id)]) ?>
+                                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $instituicao->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
+                                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $instituicao->id), 'class' => 'btn btn-danger btn-sm btn-block p-1 mb-1']) ?>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -129,8 +129,8 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <div class="tab-content">
         <div id="estagio" class="tab-pane container fade">
-            <table class="table table-striped table-hover table-responsive">
-                <caption>Instituições endereço</caption>
+            <table class="table table-striped table-hover table-responsive caption-top">
+                <caption>Instituições estágio</caption>
                 <thead class="table-dark">
                     <tr>
                         <th><?= $this->Paginator->sort('id', 'ID') ?></th>
@@ -156,11 +156,11 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($instituicao->convenio) ?></td>
                             <td><?= h($instituicao->expira) ?></td>
                             <td><?= h($instituicao->seguro) ?></td>
-                            <td>
-                                <?= $this->Html->link(__('Ver'), ['action' => 'view', $instituicao->id]) ?>
+                            <td class="row">
+                                <?= $this->Html->link(__('Ver'), ['action' => 'view', $instituicao->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
                                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $instituicao->id]) ?>
-                                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Tem certeza que deseja excluir o registro # {0}?', $instituicao->id)]) ?>
+                                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $instituicao->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
+                                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Tem certeza que deseja excluir o registro # {0}?', $instituicao->id), 'class' => 'btn btn-danger btn-sm btn-block p-1 mb-1']) ?>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -181,7 +181,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?= $this->Paginator->next(__('próximo') . ' >') ?>
                 <?= $this->Paginator->last(__('último') . ' >>') ?>
             </ul>
-            <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?>
+            <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) de um total de {{count}}.')) ?>
             </p>
         </div>
     </div>
