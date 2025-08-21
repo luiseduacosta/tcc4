@@ -236,12 +236,12 @@ $user = $this->getRequest()->getAttribute("identity");
                             <td><?= $this->Text->autoParagraph(
                                 h($instituicoes->observacoes),
                             ) ?></td>
-                            <td>
+                            <td class="row">
                                 <?= $this->Html->link(__("Ver"), [
                                     "controller" => "Instituicoes",
                                     "action" => "view",
                                     $instituicoes->id,
-                                ]) ?>
+                                ], ["class" => "btn btn-primary btn-sm btn-block mb-1"]) ?>
                                 <?php if (
                                     isset($user) &&
                                     $user["categoria"] == 1
@@ -250,7 +250,7 @@ $user = $this->getRequest()->getAttribute("identity");
                                         "controller" => "Instituicoes",
                                         "action" => "edit",
                                         $instituicoes->id,
-                                    ]) ?>
+                                    ], ["class" => "btn btn-primary btn-sm btn-block mb-1"]) ?>
                                     <?= $this->Form->postLink(
                                         __("Excluir"),
                                         [
@@ -262,7 +262,7 @@ $user = $this->getRequest()->getAttribute("identity");
                                             "confirm" => __(
                                                 "Tem certeza que quer excluir o registro # {0}?",
                                                 $instituicoes->id,
-                                            ),
+                                            ), "class" => "btn btn-danger btn-sm btn-block mb-1"
                                         ],
                                     ) ?>
                                 <?php endif; ?>
@@ -309,7 +309,7 @@ $user = $this->getRequest()->getAttribute("identity");
                                 isset($user) &&
                                 $user->categoria == "1"
                             ): ?>
-                                <td><?= $estagiarios->has("professor")
+                                <td><?= $estagiarios->hasValue("professor")
                                     ? $this->Html->link(
                                         h($estagiarios->professor["nome"]),
                                         [
@@ -321,7 +321,7 @@ $user = $this->getRequest()->getAttribute("identity");
                                     : "" ?>
                                 </td>
                             <?php else: ?>
-                                <td><?= $estagiarios->has("professor")
+                                <td><?= $estagiarios->hasValue("professor")
                                     ? $estagiarios->professor["nome"]
                                     : "" ?>
                                 <?php endif; ?>
@@ -329,12 +329,12 @@ $user = $this->getRequest()->getAttribute("identity");
                             <td><?= h($estagiarios->nota) ?></td>
                             <td><?= h($estagiarios->ch) ?></td>
                             <td><?= h($estagiarios->observacoes) ?></td>
-                            <td>
+                            <td class="row">
                                 <?= $this->Html->link(__("Ver"), [
                                     "controller" => "Estagiarios",
                                     "action" => "view",
                                     $estagiarios->id,
-                                ]) ?>
+                                ], ["class" => "btn btn-primary btn-sm btn-block mb-1"]) ?>
                                 <?php if (
                                     isset($user) &&
                                     $user["categoria"] == "1"
@@ -343,7 +343,7 @@ $user = $this->getRequest()->getAttribute("identity");
                                         "controller" => "Estagiarios",
                                         "action" => "edit",
                                         $estagiarios->id,
-                                    ]) ?>
+                                    ], ["class" => "btn btn-primary btn-sm btn-block mb-1"]) ?>
                                     <?= $this->Form->postLink(
                                         __("Excluir"),
                                         [
@@ -355,7 +355,7 @@ $user = $this->getRequest()->getAttribute("identity");
                                             "confirm" => __(
                                                 "Tem certeza que deseja excluir este registo # {0}?",
                                                 $estagiarios->id,
-                                            ),
+                                            ), "class" => "btn btn-danger btn-sm btn-block mb-1",
                                         ],
                                     ) ?>
                                 <?php endif; ?>

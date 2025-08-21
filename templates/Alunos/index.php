@@ -122,12 +122,12 @@
                                 <td><?= h($aluno->ingresso) ?></td>
                                 <td><?= h($aluno->turno) ?></td>
                                 <td><?= h($aluno->observacoes) ?></td>
-                                <td>
+                                <td class="row">
                                     <?= $this->Html->link(__("Ver"), [
                                         "controller" => "Alunos",
                                         "action" => "view",
                                         $aluno->id,
-                                    ]) ?>
+                                    ], ["class" => "btn btn-primary btn-sm btn-block mb-1"]) ?>
                                     <?php if (
                                         isset($user) &&
                                         $user->categoria == "1"
@@ -136,7 +136,7 @@
                                             "controller" => "Alunos",
                                             "action" => "edit",
                                             $aluno->id,
-                                        ]) ?>
+                                        ], ["class" => "btn btn-primary btn-sm btn-block mb-1"]) ?>
                                         <?= $this->Form->postLink(
                                             __("Excluir"),
                                             [
@@ -148,7 +148,7 @@
                                                 "confirm" => __(
                                                     "Tem certeza que quer excluir o registro # {0}?",
                                                     $aluno->id,
-                                                ),
+                                                ), 'class' => 'btn btn-danger btn-sm btn-block mb-1',
                                             ],
                                         ) ?>
                                     <?php endif; ?>
@@ -229,12 +229,12 @@
                                     ) ?></td>
                                     <td><?= h($aluno->celular) ?></td>
                                     <td><?= h($aluno->observacoes) ?></td>
-                                    <td>
+                                    <td class="row">
                                         <?= $this->Html->link(__("Ver"), [
                                             "controller" => "Alunos",
                                             "action" => "view",
                                             $aluno->id,
-                                        ]) ?>
+                                        ], ["class" => "btn btn-primary btn-sm btn-block mb-1"]) ?>
                                         <?php if (
                                             isset($user) &&
                                             $user->categoria == "1"
@@ -245,7 +245,7 @@
                                                     "controller" => "Alunos",
                                                     "action" => "edit",
                                                     $aluno->id,
-                                                ],
+                                                ], ["class" => "btn btn-primary btn-sm btn-block mb-1"]
                                             ) ?>
                                             <?= $this->Form->postLink(
                                                 __("Excluir"),
@@ -258,7 +258,7 @@
                                                     "confirm" => __(
                                                         "Tem certeza que quer excluir o registro # {0}?",
                                                         $aluno->id,
-                                                    ),
+                                                    ), 'class' => 'btn btn-danger btn-sm btn-block mb-1',
                                                 ],
                                             ) ?>
                                         <?php endif; ?>
@@ -331,12 +331,12 @@
                                     <td><?= h($aluno->municipio) ?></td>
                                     <td><?= h($aluno->bairro) ?></td>
                                     <td><?= h($aluno->observacoes) ?></td>
-                                    <td>
+                                    <td class="row">
                                         <?= $this->Html->link(__("Ver"), [
                                             "controller" => "Alunos",
                                             "action" => "view",
                                             $aluno->id,
-                                        ]) ?>
+                                        ], ["class" => "btn btn-primary btn-sm btn-block mb-1"]) ?>
                                         <?php if (
                                             isset($user) &&
                                             $user->categoria == "1"
@@ -347,7 +347,7 @@
                                                     "controller" => "Alunos",
                                                     "action" => "edit",
                                                     $aluno->id,
-                                                ],
+                                                ], ["class" => "btn btn-primary btn-sm btn-block mb-1"]
                                             ) ?>
                                             <?= $this->Form->postLink(
                                                 __("Excluir"),
@@ -360,7 +360,7 @@
                                                     "confirm" => __(
                                                         "Tem certeza que quer excluir o registro # {0}?",
                                                         $aluno->id,
-                                                    ),
+                                                    ), 'class' => 'btn btn-danger btn-sm btn-block mb-1'
                                                 ],
                                             ) ?>
                                         <?php endif; ?>

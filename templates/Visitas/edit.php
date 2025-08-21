@@ -20,7 +20,7 @@ $user = $this->getRequest()->getAttribute('identity');
             $this->Form->postLink(
                 __('Excluir'),
                 ['action' => 'delete', $visita->id],
-                ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $visita->id), 'class' => 'btn btn-danger']
+                ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $visita->id), 'class' => 'btn btn-danger me-1']
             )
             ?>
             </li>
@@ -30,6 +30,8 @@ $user = $this->getRequest()->getAttribute('identity');
         </li>
     </ul>
 </nav>
+
+<?php $this->element("templates"); ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
         <?= $this->Form->create($visita) ?>
@@ -45,7 +47,7 @@ $user = $this->getRequest()->getAttribute('identity');
             ?>
         </fieldset>
         <div class="d-flex justify-content-center">
-            <?= $this->Form->button(__('Confirmar', ['class' => 'btn btn-primary'])) ?>
+            <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary mt-1']) ?>
         </div>
         <?= $this->Form->end() ?>
 </div>

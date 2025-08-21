@@ -57,11 +57,11 @@
                     <td><?= h($supervisor->codigo_cel) ?></td>
                     <td><?= h($supervisor->celular) ?></td>
                     <td><?= h($supervisor->email) ?></td>
-                    <td>
-                        <?= $this->Html->link(__('Ver'), ['controller' => 'Supervisores', 'action' => 'view', $supervisor->id]) ?>
+                    <td class="row">
+                        <?= $this->Html->link(__('Ver'), ['controller' => 'Supervisores', 'action' => 'view', $supervisor->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
                         <?php if (isset($user) && $user['categoria'] == '1'): ?>
-                            <?= $this->Html->link(__('Editar'), ['controller' => 'Supervisores', 'action' => 'edit', $supervisor->id]) ?>
-                            <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Supervisores', 'action' => 'delete', $supervisor->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $supervisor->id)]) ?>
+                            <?= $this->Html->link(__('Editar'), ['controller' => 'Supervisores', 'action' => 'edit', $supervisor->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Supervisores', 'action' => 'delete', $supervisor->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $supervisor->id), 'class' => 'btn btn-danger btn-sm btn-block mb-1']) ?>
                         <?php endif; ?>
                     </td>
                 </tr>

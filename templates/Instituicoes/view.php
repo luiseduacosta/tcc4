@@ -176,11 +176,11 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <td><?= h($supervisores->cress) ?></td>
                                 <td><?= h($supervisores->observacoes) ?></td>
                                 <?php if (isset($user) && $user->categoria == 1): ?>
-                                    <td>
-                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Supervisores', 'action' => 'view', $supervisores->id]) ?>
+                                    <td class="row">
+                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Supervisores', 'action' => 'view', $supervisores->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
                                         <?php if (isset($user) && $user->categoria == '1'): ?>
-                                            <?= $this->Html->link(__('Editar'), ['controller' => 'Supervisores', 'action' => 'edit', $supervisores->id]) ?>
-                                            <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Supervisores', 'action' => 'delete', $supervisores->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $supervisores->id)]) ?>
+                                            <?= $this->Html->link(__('Editar'), ['controller' => 'Supervisores', 'action' => 'edit', $supervisores->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
+                                            <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Supervisores', 'action' => 'delete', $supervisores->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $supervisores->id), 'class' => 'btn btn-danger btn-sm btn-block mb-1']) ?>
                                         <?php endif; ?>
 
                                     </td>
@@ -258,10 +258,10 @@ $user = $this->getRequest()->getAttribute('identity');
                                     <td><?= $this->Number->format($estagiarios->nota, ['places' => 2]) ?></td>
                                     <td><?= h($estagiarios->ch) ?></td>
                                     <td><?= h($estagiarios->observacoes) ?></td>
-                                    <td>
-                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
-                                        <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
-                                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $estagiarios->id)]) ?>
+                                    <td class="row">
+                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
+                                        <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
+                                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $estagiarios->id), 'class' => 'btn btn-danger btn-sm btn-block mb-1']) ?>
                                     </td>
                                 <?php endif; ?>
                             </tr>
@@ -293,10 +293,10 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <td><?= h($muralestagios->vagas) ?></td>
                                 <td><?= h($muralestagios->periodo) ?></td>
                                 <?php if (isset($user) && $user->categoria == '1'): ?>
-                                    <td>
-                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Muralestagios', 'action' => 'view', $muralestagios->id]) ?>
-                                        <?= $this->Html->link(__('Editar'), ['controller' => 'Muralestagios', 'action' => 'edit', $muralestagios->id]) ?>
-                                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Muralestagios', 'action' => 'delete', $muralestagios->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $muralestagios->id)]) ?>
+                                    <td class="row">
+                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Muralestagios', 'action' => 'view', $muralestagios->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
+                                        <?= $this->Html->link(__('Editar'), ['controller' => 'Muralestagios', 'action' => 'edit', $muralestagios->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
+                                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Muralestagios', 'action' => 'delete', $muralestagios->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $muralestagios->id), 'class' => 'btn btn-danger btn-sm btn-block mb-1']) ?>
                                     </td>
                                 <?php endif; ?>
                             </tr>
@@ -333,10 +333,10 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <td><?= h($visitas->descricao) ?></td>
                                 <td><?= h($visitas->avaliacao) ?></td>
                                 <?php if (isset($user) && $user->categoria == '1'): ?>
-                                    <td>
-                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Visitas', 'action' => 'view', $visitas->id]) ?>
-                                        <?= $this->Html->link(__('Editar'), ['controller' => 'Visitas', 'action' => 'edit', $visitas->id]) ?>
-                                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Visitas', 'action' => 'delete', $visitas->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $visitas->id)]) ?>
+                                    <td class="row">
+                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Visitas', 'action' => 'view', $visitas->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
+                                        <?= $this->Html->link(__('Editar'), ['controller' => 'Visitas', 'action' => 'edit', $visitas->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
+                                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Visitas', 'action' => 'delete', $visitas->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $visitas->id), 'class' => 'btn btn-danger btn-sm btn-block mb-1']) ?>
                                     </td>
                                 <?php endif; ?>
                             </tr>

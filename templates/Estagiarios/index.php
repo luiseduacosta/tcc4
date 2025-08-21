@@ -198,11 +198,11 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?php else: ?>
                             <td>Sem dados</td>
                         <?php endif; ?>
-                        <td>
-                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $estagiario->id]) ?>
+                        <td class="row">
+                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $estagiario->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
                             <?php if (isset($user) && $user->categoria == 1): ?>
-                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $estagiario->id]) ?>
-                                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiario->id)]) ?>
+                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $estagiario->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
+                                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $estagiario->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiario->id), 'class' => 'btn btn-danger btn-sm btn-block mb-1']) ?>
                             <?php endif; ?>
                         </td>
                     <?php endif; ?>

@@ -20,6 +20,8 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>    
 </nav>
 
+<?php $this->element("templates"); ?>
+
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
         <?= $this->Form->create($visita) ?>
         <fieldset>
@@ -34,7 +36,7 @@ $user = $this->getRequest()->getAttribute('identity');
             ?>
         </fieldset>
         <div class="d-flex justify-content-center">
-        <?= $this->Form->button(__('Confirmar', ['class' => 'btn btn-primary'])) ?>
+        <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
     </div>
     <?= $this->Form->end() ?>
 </div>

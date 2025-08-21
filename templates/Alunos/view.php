@@ -257,11 +257,11 @@ $user = $this->getRequest()->getAttribute('identity');
                                     <td><?= h($estagiarios->nota) ?></td>
                                     <td><?= h($estagiarios->ch) ?></td>
                                     <td><?= h($estagiarios->observacoes) ?></td>
-                                    <td>
-                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
+                                    <td class="row">
+                                        <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id], ['class' => 'btn btn-primary me-1']) ?>
                                         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
-                                            <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
-                                            <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiarios->id)]) ?>
+                                            <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id], ['class' => 'btn btn-primary me-1']) ?>
+                                            <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiarios->id), 'class' => 'btn btn-danger me-1']) ?>
                                         <?php endif ?>
                                     </td>
                                 <?php endif ?>

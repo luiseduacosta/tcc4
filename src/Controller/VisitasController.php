@@ -27,10 +27,10 @@ class VisitasController extends AppController
     public function index()
     {
 
-        $this->paginate = [
-            'contain' => ['instituicoes'],
-        ];
-        $visitas = $this->paginate($this->Visitas);
+        $query = $this->Visitas->find('all', [
+            'contain' => ['Instituicoes'],
+        ]);
+        $visitas = $this->paginate($query);
         $this->Authorization->authorize($this->Visitas);
         $this->set(compact('visitas'));
     }
@@ -46,7 +46,7 @@ class VisitasController extends AppController
     {
 
         $visita = $this->Visitas->get($id, [
-            'contain' => ['instituicoes'],
+            'contain' => ['Instituicoes'],
         ]);
         $this->Authorization->authorize($visita);
         $this->set(compact('visita'));
@@ -72,7 +72,7 @@ class VisitasController extends AppController
             }
             $this->Flash->error(__('Visita não inserida.'));
         }
-        $instituicoes = $this->Visitas->instituicoes->find('list', ['limit' => 200]);
+        $instituicoes = $this->Visitas->Instituicoes->find('list');
         $this->set(compact('visita', 'instituicoes'));
     }
 
@@ -87,20 +87,21 @@ class VisitasController extends AppController
     {
 
         $visita = $this->Visitas->get($id, [
-            'contain' => [],
+            'contain' => ['Instituicoes']
         ]);
+        // debug($visita);
         $this->Authorization->authorize($visita);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $visita = $this->Visitas->patchEntity($visita, $this->request->getData());
             if ($this->Visitas->save($visita)) {
                 $this->Flash->success(__('Visita atualizada.'));
-
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $visita->id]);
             }
             $this->Flash->error(__('Visita não atualizada.'));
+            return $this->redirect(['action' => 'view', $visita->id]);
         }
-        $instituicoes = $this->Visitas->instituicoes->find('list', ['limit' => 200]);
+        $instituicoes = $this->Visitas->Instituicoes->find('list');
         $this->set(compact('visita', 'instituicoes'));
     }
 

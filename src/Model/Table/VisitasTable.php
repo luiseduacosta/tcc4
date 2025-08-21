@@ -42,11 +42,11 @@ class VisitasTable extends Table
 
         $this->setTable('visita');
         $this->setAlias('Visitas');
-        $this->setDisplayField('estagio_id');
+        $this->setDisplayField('instituicao_id');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Instituicoes', [
-            'foreignKey' => 'estagio_id',
+            'foreignKey' => 'instituicao_id',
             'joinType' => 'INNER',
         ]);
     }
@@ -102,7 +102,7 @@ class VisitasTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['instituicao_id'], 'instituicoes'), ['errorField' => 'instituicao_id']);
+        $rules->add($rules->existsIn(['instituicao_id'], 'Instituicoes'), ['errorField' => 'instituicao_id']);
 
         return $rules;
     }

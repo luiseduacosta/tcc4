@@ -39,7 +39,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th><?= __('Instituição') ?></th>
-            <td><?= $visita->has('instituicao') ? $this->Html->link($visita->instituicao['id'], ['controller' => 'Instituicoes', 'action' => 'view', $visita->instituicao['id']]) : '' ?>
+            <td><?= $visita->has('instituicao') ? $this->Html->link($visita->instituicao['instituicao'], ['controller' => 'Instituicoes', 'action' => 'view', $visita->instituicao['id']]) : '' ?>
             </td>
         </tr>
         <tr>

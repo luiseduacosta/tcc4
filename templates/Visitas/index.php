@@ -46,10 +46,10 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($visita->motivo) ?></td>
                     <td><?= h($visita->responsavel) ?></td>
                     <td><?= h($visita->avaliacao) ?></td>
-                    <td>
-                        <?= $this->Html->link(__('Ver'), ['controller' => 'Visitas', 'action' => 'view', $visita->id]) ?>
-                        <?= $this->Html->link(__('Editar'), ['controller' => 'Visitas', 'action' => 'edit', $visita->id]) ?>
-                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Visitas', 'action' => 'delete', $visita->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $visita->id)]) ?>
+                    <td class="row">
+                        <?= $this->Html->link(__('Ver'), ['controller' => 'Visitas', 'action' => 'view', $visita->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
+                        <?= $this->Html->link(__('Editar'), ['controller' => 'Visitas', 'action' => 'edit', $visita->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
+                        <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Visitas', 'action' => 'delete', $visita->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $visita->id), 'class' => 'btn btn-danger btn-sm btn-block mb-1']) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -66,6 +66,6 @@ $user = $this->getRequest()->getAttribute('identity');
             <?= $this->Paginator->next(__('próximo') . ' >') ?>
             <?= $this->Paginator->last(__('último') . ' >>') ?>
     </ul>
-        <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?></p>
+        <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) do total em {{count}}.')) ?></p>
     </div>
 </div>
