@@ -37,7 +37,7 @@ class FolhadeatividadesController extends AppController
         $estagiario_id = $this->getRequest()->getQuery('estagiario_id');
         if (is_null($estagiario_id)) {
             $this->Flash->error(__('Selecione o estagiário e o período da folha de atividades'));
-            return $this->redirect('/estagiarios/index');
+            return $this->redirect(['controller' => 'Estagiarios', 'action' => 'index']);
         }
 
         $estagiario = $this->Folhadeatividades->Estagiarios->find()
@@ -46,8 +46,13 @@ class FolhadeatividadesController extends AppController
             ->select(['Estagiarios.nivel', 'Estagiarios.periodo', 'Alunos.nome', 'Supervisores.nome', 'Instituicoes.instituicao', 'Professores.nome'])
             ->first();
 
-        $folhadeatividades = $this->paginate($this->Folhadeatividades, ['conditions' => ['Folhadeatividades.estagiario_id' => $estagiario_id], 'order' => ['dia' => 'ASC']]);
-        $this->Authorization->authorize($this->Folhadeatividades);
+        $query = $this->Folhadeatividades->find()
+            ->where(['Folhadeatividades.estagiario_id' => $estagiario_id])
+            ->contain(['Estagiarios' => ['Alunos']])
+            ->order(['Folhadeatividades.dia' => 'ASC']);
+
+        $folhadeatividades = $this->paginate($query);
+        // $this->Authorization->authorize($this->Folhadeatividades);
 
         $this->set(compact('folhadeatividades', 'estagiario'));
     }

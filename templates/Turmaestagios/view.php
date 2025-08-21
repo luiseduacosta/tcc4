@@ -111,7 +111,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($estagiarios->observacoes) ?></td>
                 <?php endif; ?>
 
-                <td>
+                <td class="d-grid">
                     <?php if (isset($user) && $user->categoria_id == 1): ?>
                         <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
                         <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>

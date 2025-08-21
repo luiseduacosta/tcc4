@@ -8,19 +8,19 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <?php echo $this->element('menu_mural') ?>
 
-<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+<nav class="navbar navbar-expand-lg py-1 navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAtividades"
             aria-controls="navbarTogglerAtividades" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerAtividades">
         <?php if (isset($user) && $user->categoria == '1'): ?>
-            <li class='nav-link'>
-                <?= $this->Html->link(__('Nova atividade'), ['action' => 'add', '?' => ['estagiario_id' => $folhadeatividade->id]], ['class' => 'btn btn-primary']) ?>
+            <li class='nav-item'>
+                <?= $this->Html->link(__('Nova atividade'), ['action' => 'add', '?' => ['estagiario_id' => $folhadeatividade->id]], ['class' => 'btn btn-primary me-1']) ?>
             </li>
         <?php endif; ?>    
-        <li class='nav-link'>
-            <?= $this->Html->link(__('Listar atividades'), ['action' => 'atividade', '?' => ['estagiario_id' => $folhadeatividade->id]], ['class' => 'btn btn-primary']) ?>
+        <li class='nav-item'>
+            <?= $this->Html->link(__('Listar atividades'), ['action' => 'atividade', '?' => ['estagiario_id' => $folhadeatividade->id]], ['class' => 'btn btn-primary me-1']) ?>
         </li>
     </ul>
 </nav>

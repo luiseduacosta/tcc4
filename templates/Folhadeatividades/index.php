@@ -3,61 +3,48 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Folhadeatividade[]|\Cake\Collection\CollectionInterface $folhadeatividades
  */
+pr($estagiario);
+pr($folhadeatividades);
 $user = $this->getRequest()->getAttribute('identity');
 // pr($id);
 
-$supervisora = isset($estagiario->supervisor->nome);
-if ($supervisora) {
-    $supervisora = $estagiario->supervisor->nome;
-} else {
-    $supervisora = '_______________';
-}
-
-$cress = isset($estagiario->supervisor->cress);
-if ($cress) {
-    $cress = $estagiario->supervisor->cress;
-} else {
-    $cress = '_______________';
-}
-
-$professora = isset($estagiario->docente->nome);
-if ($professora) {
-    $professora = $estagiario->docente->nome;
-} else {
-    $professora = '_______________';
-}
+$supervisora = isset($estagiario->supervisor->nome) ? $estagiario->supervisor->nome : '_______________';
+$cress = isset($estagiario->supervisor->cress) ? $estagiario->supervisor->cress : '_______________';
+$professora = isset($estagiario->docente->nome) ? $estagiario->docente->nome : '_______________';
 ?>
 
 <?php echo $this->element('menu_mural') ?>
 
-<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
+<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAtividades"
-            aria-controls="navbarTogglerAtividades" aria-expanded="false" aria-label="Toggle navigation">
+        aria-controls="navbarTogglerAtividades" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerAtividades">
         <?php if ($user->categoria == '1' || $user->categoria == '2'): ?>
             <li class='nav-link'>
-                <?= $this->Html->link(__('Cadastra nova atividade'), ['action' => 'add/' . $id], ['class' => 'btn btn-primary float-right']) ?>
+                <?= $this->Html->link(__('Cadastra nova atividade'), ['action' => 'add/' . $id], ['class' => 'btn btn-primary me-1']) ?>
             </li>
         <?php endif; ?>
-            <li class='nav-link'>
-                <?= $this->Html->link(__('Imprime folha de atividades'), ['action' => 'folhadeatividadespdf/' . $id], ['class' => 'btn btn-primary float-left']) ?>
-            </li>
-    </ul>    
+        <li class='nav-link'>
+            <?= $this->Html->link(__('Imprime folha de atividades'), ['action' => 'folhadeatividadespdf/' . $id], ['class' => 'btn btn-primary']) ?>
+        </li>
+    </ul>
 </nav>
 
 <h3 class="text-center"><?= __('Folha de atividades da(o) estagiária(o) ' . $estagiario->estudante->nome) ?></h3>
 
 <div class="table-responsive">
-    <table>
-        <tr>
-            <th>Período</th>
-            <th>Nível</th>
-            <th>Instituição</th>
-            <th>Supervisor</th>
-            <th>Professor(a)</th>
-        </tr>
+    <table class="table table-responsive table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Período</th>
+                <th>Nível</th>
+                <th>Instituição</th>
+                <th>Supervisor</th>
+                <th>Professor(a)</th>
+            </tr>
+        </thead>
         <tr>
             <td><?= $estagiario->periodo ?></td>
             <td><?= $estagiario->nivel ?></td>
@@ -69,7 +56,7 @@ if ($professora) {
 </div>
 
 <div class="table-responsive">
-    <table>
+    <table class="table table-responsive table-striped table-hover">
         <thead>
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
@@ -125,6 +112,7 @@ if ($professora) {
         </tbody>
     </table>
 </div>
+
 <div class="paginator">
     <ul class="pagination">
         <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
@@ -133,5 +121,6 @@ if ($professora) {
         <?= $this->Paginator->next(__('próximo') . ' >') ?>
         <?= $this->Paginator->last(__('último') . ' >>') ?>
     </ul>
-    <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?></p>
+    <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) de um total de {{count}}.')) ?>
+    </p>
 </div>
