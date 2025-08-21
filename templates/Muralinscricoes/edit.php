@@ -24,7 +24,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 $this->Form->postLink(
                     __ ('Excluir'),
                     ['action' => 'delete', $muralinscricao->id],
-                    ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralinscricao->id), 'class' => 'btn btn-primary']
+                    ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $muralinscricao->id), 'class' => 'btn btn-primary']
                     )
                 ?>
         </li>
@@ -50,6 +50,6 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('timestamp');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Confirma')) ?>
     <?= $this->Form->end() ?>
 </div>

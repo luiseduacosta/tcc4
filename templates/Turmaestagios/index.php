@@ -42,7 +42,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $turmaestagio->id]) ?>
                         <?php if (isset($user) && $user->categoria_id == 1): ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $turmaestagio->id]) ?>
-                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $turmaestagio->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $turmaestagio->id), 'class' => 'btn btn-danger']) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $turmaestagio->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $turmaestagio->id), 'class' => 'btn btn-danger']) ?>
                         <?php endif; ?>
                     </td>
                 </tr>

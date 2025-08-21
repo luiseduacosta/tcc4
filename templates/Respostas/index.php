@@ -44,7 +44,7 @@
                         <td class="table-info">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $resposta->id]) ?>
                             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $resposta->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $resposta->id], ['confirm' => __('Are you sure you want to delete # {0}?', $resposta->id)]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $resposta->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $resposta->id)]) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -22,7 +22,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?= $this->Html->link(__('Editar área instituição'), ['controller' => 'Areainstituicoes', 'action' => 'edit', $areainstituicao->id], ['class' => 'btn btn-primary']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir área instituição'), ['controller' => 'Areainstituicoes', 'action' => 'delete', $areainstituicao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $areainstituicao->id), 'class' => 'btn btn-primary']) ?>
+                <?= $this->Form->postLink(__('Excluir área instituição'), ['controller' => 'Areainstituicoes', 'action' => 'delete', $areainstituicao->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $areainstituicao->id), 'class' => 'btn btn-primary']) ?>
             </li>
             <li class="nav-item">
                 <?= $this->Html->link(__('Nova área instituição'), ['controller' => 'Areainstituicoes', 'action' => 'add'], ['class' => 'btn btn-primary']) ?>

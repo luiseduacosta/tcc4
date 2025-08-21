@@ -242,7 +242,7 @@ $this->assign('title', __('Mural de Estágios'));
                             <div class='row justify-content-center'>
                                 <div class='col-auto'>
                                     <?=
-                                        $this->Form->submit('Inscrição', ['type' => 'Submit', 'label' => ['text' => 'Inscrição', 'class' => 'col-4'], 'class' => 'btn btn-primary']);
+                                        $this->Form->Confirma('Inscrição', ['type' => 'Confirma', 'label' => ['text' => 'Inscrição', 'class' => 'col-4'], 'class' => 'btn btn-primary']);
                                     $this->Form->end();
                                     ?>
                                 </div>
@@ -263,7 +263,7 @@ $this->assign('title', __('Mural de Estágios'));
                                 <div class='row justify-content-center'>
                                     <div class='col-auto'>
                                         <?=
-                                            $this->Form->submit('Inscrição', ['type' => 'Submit', 'label' => ['text' => 'Inscrição', 'class' => 'col-4'], 'class' => 'btn btn-primary']);
+                                            $this->Form->Confirma('Inscrição', ['type' => 'Confirma', 'label' => ['text' => 'Inscrição', 'class' => 'col-4'], 'class' => 'btn btn-primary']);
                                         ?>
                                         <?=
                                             $this->Form->end();

@@ -123,16 +123,16 @@ $user = $this->getRequest()->getAttribute('identity');
     </fieldset>
     
     <?php
-    $submit = [
-        "button" => "<div class='d-flex justify-content-center'><button type ='submit' class= 'btn btn-danger' {{attrs}}>{{text}}</button></div>"
+    $Confirma = [
+        "button" => "<div class='d-flex justify-content-center'><button type ='Confirma' class= 'btn btn-danger' {{attrs}}>{{text}}</button></div>"
     ]
     ?>
 
     <div class="d-flex justify-content-center">
         <div class="btn-group" role="group" aria-label="Confirma">
             <?= $this->Html->link('Imprime PDF', ['action' => 'certificadoperiodopdf', '?' => ['id' => $aluno->id, 'totalperiodos' => $totalperiodos]], ['class' => 'btn btn-lg btn-primary', 'rule' => 'button']); ?>
-            <?php $this->Form->setTemplates($submit); ?>
-            <?= $this->Form->button(__('Confirmar período'), ['type' => 'submit', 'class' => 'btn btn-lg btn-danger']) ?>
+            <?php $this->Form->setTemplates($Confirma); ?>
+            <?= $this->Form->button(__('Confirmar período'), ['type' => 'Confirma', 'class' => 'btn btn-lg btn-danger']) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>

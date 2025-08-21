@@ -38,7 +38,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td>
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $complemento->id]) ?>
                         <?= $this->Html->link(__('Editar'), ['action' => 'edit', $complemento->id]) ?>
-                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $complemento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $complemento->id)]) ?>
+                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $complemento->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $complemento->id)]) ?>
 
                     </td>
                 </tr>

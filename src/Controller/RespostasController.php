@@ -65,7 +65,7 @@ class RespostasController extends AppController
                 ->where(['Estagiarios.id' => $estagiario_id])
                 ->first();
             if (!$estagiario) {
-                $this->Flash->error(__('Estagiário não encontrado.'));
+                $this->Flash->error(__('Estagiário não localizado.'));
                 return $this->redirect(['action' => 'index']);
             } else {
                 $aluno = $this->fetchTable("Alunos")->find()
@@ -101,9 +101,10 @@ class RespostasController extends AppController
                 pr($resposta);
                 // die();
                 if ($this->Respostas->save($resposta)) {
-                    $this->Flash->success(__('The resposta has been saved.'));
+                    $this->Flash->success(__('Respuesta inserida.'));
+                    return $this->redirect(['action' => 'view', $resposta->id]);
                 } else {
-                    $this->Flash->error(__('The resposta could not be saved. Please, try again.'));
+                    $this->Flash->error(__('Respuesta não inserida. Tente novamente.'));
                 }
             }
             return $this->redirect(['action' => 'index']);
@@ -129,11 +130,11 @@ class RespostasController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $resposta = $this->Respostas->patchEntity($resposta, $this->request->getData());
             if ($this->Respostas->save($resposta)) {
-                $this->Flash->success(__('The resposta has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('Resposta atualizada.'));
+                return $this->redirect(['action' => 'view', $resposta->id]);
             }
-            $this->Flash->error(__('The resposta could not be saved. Please, try again.'));
+            $this->Flash->error(__('Resposta não atualizada. Tente novamente.'));
+            return $this->redirect(['action' => 'index']);
         }
         $questiones = $this->Respostas->Questiones->find('list', ['limit' => 200])->all();
         $estagiarios = $this->Respostas->Estagiarios->find('list', ['limit' => 200])->all();
@@ -153,11 +154,11 @@ class RespostasController extends AppController
         $resposta = $this->Respostas->get($id);
         $this->Authorization->skipAuthorization();
         if ($this->Respostas->delete($resposta)) {
-            $this->Flash->success(__('The resposta has been deleted.'));
+            $this->Flash->success(__('Resposta excluída.'));
         } else {
-            $this->Flash->error(__('The resposta could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Resposta não excluída. Tente novamente.'));
+            return $this->redirect(['action' => 'view', $resposta->id]);
         }
-
         return $this->redirect(['action' => 'index']);
     }
 }

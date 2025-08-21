@@ -94,7 +94,7 @@
                                 ["action" => "delete", $questione->id],
                                 [
                                     "confirm" => __(
-                                        "Are you sure you want to delete # {0}?",
+                                        "Tem certeza que deseja excluir este registro # {0}?",
                                         $questione->id,
                                     ),
                                 ],
@@ -108,15 +108,15 @@
 
     <div class="paginator">
         <ul class="pagination">
-            <?= $this->Paginator->first("<< " . __("first")) ?>
-            <?= $this->Paginator->prev("< " . __("previous")) ?>
+            <?= $this->Paginator->first("<< " . __("primeiro")) ?>
+            <?= $this->Paginator->prev("< " . __("anterior")) ?>
             <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__("next") . " >") ?>
-            <?= $this->Paginator->last(__("last") . " >>") ?>
+            <?= $this->Paginator->next(__("próximo") . " >") ?>
+            <?= $this->Paginator->last(__("último") . " >>") ?>
         </ul>
         <p><?= $this->Paginator->counter(
             __(
-                "Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total",
+                "Página {{page}} de {{pages}}, mostrando {{current}} registros(s) de {{count}} em total",
             ),
         ) ?>
         </p>

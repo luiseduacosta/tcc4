@@ -20,7 +20,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 $this->Form->postLink(
                         __('Excluir'),
                         ['action' => 'delete', $turmaestagio->id],
-                        ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $turmaestagio->id), 'class' => 'btn btn-danger float-end']
+                        ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $turmaestagio->id), 'class' => 'btn btn-danger float-end']
                 )
                 ?>
             </li>
@@ -42,7 +42,7 @@ $user = $this->getRequest()->getAttribute('identity');
         ?>
     </fieldset>
     <div class="d-flex justify-content-center">
-        <?= $this->Form->button(__('Submit', ['class' => 'btn btn-primary'])) ?>
+        <?= $this->Form->button(__('Confirma', ['class' => 'btn btn-primary'])) ?>
     </div>
     <?= $this->Form->end() ?>
 </div>

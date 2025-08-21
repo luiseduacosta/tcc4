@@ -61,7 +61,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td>
                                 <?= $this->Html->link(__('View'), ['action' => 'view', $c_estagiario->id], ['class' => 'btn btn-info']) ?>
                                 <?= $this->Html->link(__('Editar'), ['action' => 'edit', $c_estagiario->id], ['class' => 'btn btn-warning']) ?>
-                                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $c_estagiario->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $c_estagiario->id), 'class' => 'btn btn-danger']) ?>
+                                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $c_estagiario->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $c_estagiario->id), 'class' => 'btn btn-danger']) ?>
                             </td>
                         <?php endif; ?>
                     <?php endif; ?>

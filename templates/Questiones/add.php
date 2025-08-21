@@ -40,7 +40,7 @@
             echo $this->Form->control('ordem', ['label' => 'Ordem', 'value' => $ordem]);
             ?>
         </fieldset>
-        <?= $this->Form->button(__('Submit'), ['class' => 'btn btn-primary']) ?>
+        <?= $this->Form->button(__('Confirma'), ['class' => 'btn btn-primary']) ?>
         <?= $this->Form->end() ?>
     </div>
 </div>

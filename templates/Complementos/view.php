@@ -23,7 +23,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?= $this->Html->link(__('Editar registro'), ['action' => 'edit', $complemento->id], ['class' => 'btn btn-primary']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir registro'), ['action' => 'delete', $complemento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $complemento->id), 'class' => 'btn btn-danger']) ?>
+                <?= $this->Form->postLink(__('Excluir registro'), ['action' => 'delete', $complemento->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $complemento->id), 'class' => 'btn btn-danger']) ?>
             </li>
             <li class="nav-item">
                 <?= $this->Html->link(__('Novo registro'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
@@ -92,7 +92,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
                         <?php if (isset($usser) && ($user->categoria == '1')): ?>
                             <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
-                            <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Are you sure you want to delete # {0}?', $estagiarios->id)]) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $estagiarios->id)]) ?>
                         <?php endif; ?>
                     </td>
                 </tr>

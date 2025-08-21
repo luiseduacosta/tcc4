@@ -30,6 +30,6 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('periodo_especial');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Confirma')) ?>
     <?= $this->Form->end() ?>
 </div>

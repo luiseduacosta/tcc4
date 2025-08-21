@@ -17,7 +17,7 @@
                 <?= $this->Form->postLink(
                     __('Excluir'),
                     ['action' => 'delete', $questione->id],
-                    ['confirm' => __('Are you sure you want to delete # {0}?', $questione->id), 'class' => 'btn btn-danger me-1']
+                    ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $questione->id), 'class' => 'btn btn-danger me-1']
                 ) ?>
             </li>
             <li class="nav-item">
@@ -38,7 +38,7 @@
             echo $this->Form->control('ordem', ['label' => 'Ordem']);
             ?>
         </fieldset>
-        <?= $this->Form->button(__('Submit'), ['class' => 'btn btn-primary']) ?>
+        <?= $this->Form->button(__('Confirma'), ['class' => 'btn btn-primary']) ?>
         <?= $this->Form->end() ?>
     </div>
 </div>

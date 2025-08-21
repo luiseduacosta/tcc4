@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Entity\Questionario;
-
 /**
  * Questiones Controller
  *
@@ -25,7 +23,7 @@ class QuestionesController extends AppController
             "questionario.title",
         ],
         "order" => ["ordem" => "ASC"],
-        "limit" => 20
+        "limit" => 20,
     ];
     /**
      * Index method
@@ -81,13 +79,13 @@ class QuestionesController extends AppController
                 $this->request->getData(),
             );
             if ($this->Questiones->save($questione)) {
-                $this->Flash->success(__("Questão criada."));
-
+                $this->Flash->success(__("Pergunta inserida."));
                 return $this->redirect(["action" => "view", $questione->id]);
             }
             $this->Flash->error(
-                __("The questione could not be saved. Please, try again."),
+                __("Pergunta não inserida. Tente novamente."),
             );
+            return $this->redirect(["action" => "index"]);
         }
         $questionarios = $this->Questiones->Questionarios
             ->find("list", ["limit" => 200])
@@ -114,12 +112,11 @@ class QuestionesController extends AppController
                 $this->request->getData(),
             );
             if ($this->Questiones->save($questione)) {
-                $this->Flash->success(__("The questione has been saved."));
-
+                $this->Flash->success(__("Pergunta atualizada."));
                 return $this->redirect(["action" => "view", $questione->id]);
             }
             $this->Flash->error(
-                __("The questione could not be saved. Please, try again."),
+                __("Pergunta não atualizada. Tente novamente."),
             );
             return $this->redirect(["action" => "index"]);
         }
@@ -142,13 +139,12 @@ class QuestionesController extends AppController
         $questione = $this->Questiones->get($id);
         $this->Authorization->skipAuthorization();
         if ($this->Questiones->delete($questione)) {
-            $this->Flash->success(__("The questione has been deleted."));
+            $this->Flash->success(__("Pergunta excluída."));
         } else {
             $this->Flash->error(
-                __("The questione could not be deleted. Please, try again."),
-            );
+                __("Pergunta não excluída. Tente novamente."));
+            return $this->redirect(["action" => "view", $questione->id]);
         }
-
         return $this->redirect(["action" => "index"]);
     }
 }

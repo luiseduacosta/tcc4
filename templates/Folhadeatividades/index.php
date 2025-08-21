@@ -97,7 +97,7 @@ if ($professora) {
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $folhadeatividade->id], ['class' => 'btn btn-info']) ?>
                         <?php if ($user->categoria == '1' || $user->categoria == '2'): ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $folhadeatividade->id], ['class' => 'btn btn-warning']) ?>
-                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $folhadeatividade->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $folhadeatividade->id), 'class' => 'btn btn-danger']) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $folhadeatividade->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $folhadeatividade->id), 'class' => 'btn btn-danger']) ?>
                         <?php endif; ?>
                     </td>
                 </tr>

@@ -17,7 +17,7 @@
                 <?= $this->Form->postLink(
                     __('Excluir'),
                     ['action' => 'delete', $resposta->id],
-                    ['confirm' => __('Are you sure you want to delete # {0}?', $resposta->id), 'class' => 'btn btn-danger']
+                    ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $resposta->id), 'class' => 'btn btn-danger']
                 ) ?>
             </li>
             <li class="nav-item">
@@ -36,7 +36,7 @@
             echo $this->Form->control('response');
             ?>
         </fieldset>
-        <?= $this->Form->button(__('Submit'), ['class' => 'btn btn-primary']) ?>
+        <?= $this->Form->button(__('Confirma'), ['class' => 'btn btn-primary']) ?>
         <?= $this->Form->end() ?>
     </div>
 </div>

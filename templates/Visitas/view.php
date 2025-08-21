@@ -19,7 +19,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?= $this->Html->link(__('Editar visita'), ['controller' => 'Visitas', 'action' => 'edit', $visita->id], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <li class='nav-item'>
-                <?= $this->Form->postLink(__('Excluir visita'), ['controller' => 'Visitas', 'action' => 'delete', $visita->id], ['confirm' => __('Tem certeza que quer excluir este registro {0}?', $visita->id), 'class' => 'btn btn-danger me-1']) ?>
+                <?= $this->Form->postLink(__('Excluir visita'), ['controller' => 'Visitas', 'action' => 'delete', $visita->id], ['confirm' => __('Tem certeza que deseja excluir este registo {0}?', $visita->id), 'class' => 'btn btn-danger me-1']) ?>
             </li>
             <li class='nav-item'>
                 <?= $this->Html->link(__('Nova visita'), ['controller' => 'Visitas', 'action' => 'add'], ['class' => 'btn btn-primary me-1']) ?>

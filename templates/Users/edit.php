@@ -44,6 +44,6 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('categoria', ['options' => ['1' => 'Outro(a)s', '2' => 'estudante', '3' => 'professor', '4' => 'supervisor']]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Confirma')) ?>
     <?= $this->Form->end() ?>
 </div>

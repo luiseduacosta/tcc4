@@ -71,7 +71,7 @@ if ($cress) {
 <?php $this->Form->setTemplates(['radio' => '<input class="form-check-input" type="radio" name="{{name}}" value="{{value}}"{{attrs}}>']); ?>
 <?php $this->Form->setTemplates(['textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>']); ?>
 <?php $this->Form->setTemplates(['requiredClass' => 'required']); ?>
-<?php $this->Form->setTemplates(['submitContainer' => '<div class="submit">{{content}}</div>']); ?>
+<?php $this->Form->setTemplates(['submitContainer' => '<div class="Confirma">{{content}}</div>']); ?>
 <?php $this->Form->setTemplates(['button' => '<button{{attrs}}>{{text}}</button>']); ?>
 
 <?= $this->element('templates'); ?>
@@ -245,7 +245,7 @@ if ($cress) {
 
     </fieldset>
 
-    <?= $this->Form->button(__('Confirma'), ['type' => 'submit', 'class' => 'btn btn-primary']) ?>
+    <?= $this->Form->button(__('Confirma'), ['type' => 'Confirma', 'class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
 
 </div>

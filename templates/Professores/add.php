@@ -102,6 +102,6 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('observacoes', ['type' => 'textarea', 'rows' => '3', 'cols' => '40', 'label' => ['text' => 'Outras informações']]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Confirma')) ?>
     <?= $this->Form->end() ?>
 </div>

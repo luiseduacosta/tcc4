@@ -56,7 +56,7 @@
                 ["action" => "delete", $aluno->id],
                 [
                     "confirm" => __(
-                        "Tem certeza que quer excluir este registro # {0}?",
+                        "Tem certeza que deseja excluir este registo # {0}?",
                         $aluno->id,
                     ),
                     "class" => "btn btn-danger me-1",

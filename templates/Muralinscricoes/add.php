@@ -49,6 +49,6 @@ $user = $this->getRequest()->getAttribute('identity');
         endif;
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Confirma')) ?>
     <?= $this->Form->end() ?>
 </div>

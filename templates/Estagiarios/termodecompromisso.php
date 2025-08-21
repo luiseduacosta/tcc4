@@ -59,8 +59,8 @@ if (isset($supervisores)) {
 <?= $this->element('templates') ?>
 
 <?php
-$submit = [
-    "button" => "<div class='d-flex justify-content-center'><button type ='submit' class= 'btn btn-danger' {{attrs}}>{{text}}</button></div>"
+$Confirma = [
+    "button" => "<div class='d-flex justify-content-center'><button type ='Confirma' class= 'btn btn-danger' {{attrs}}>{{text}}</button></div>"
 ]
     ?>
 
@@ -138,8 +138,8 @@ $submit = [
                     <?php else: ?>
                         <?= $this->Html->link('Imprime PDF', ['action' => 'termodecompromissopdf'], ['class' => 'btn btn-lg btn-primary', 'rule' => 'button', 'style' => 'width: 200px']); ?>
                     <?php endif; ?>
-                    <?php $this->Form->setTemplates($submit); ?>
-                    <?= $this->Form->button(__('Confirmar alteraçoes antes de imprimir'), ['type' => 'submit', 'class' => 'btn btn-lg btn-danger btn-xs col-lg-3', 'style' => 'max-width:200px; word-wrap:break-word']) ?>
+                    <?php $this->Form->setTemplates($Confirma); ?>
+                    <?= $this->Form->button(__('Confirmar alteraçoes antes de imprimir'), ['type' => 'Confirma', 'class' => 'btn btn-lg btn-danger btn-xs col-lg-3', 'style' => 'max-width:200px; word-wrap:break-word']) ?>
                     <?= $this->Form->end() ?>
                 </div>
             </div>

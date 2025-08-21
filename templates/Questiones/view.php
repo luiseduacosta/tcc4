@@ -21,7 +21,7 @@
                 <?= $this->Html->link(__('Editar'), ['action' => 'edit', $questione->id], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $questione->id], ['confirm' => __('Are you sure you want to delete # {0}?', $questione->id), 'class' => 'btn btn-danger me-1']) ?>
+                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $questione->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $questione->id), 'class' => 'btn btn-danger me-1']) ?>
             </li>
             <li class="nav-item">
                 <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'btn btn-primary me-1']) ?>

@@ -72,7 +72,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <?= $this->Html->link(__('Ver'), ['action' => 'view', $instituicao->id]) ?>
                                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $instituicao->id]) ?>
-                                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Are you sure you want to delete # {0}?', $instituicao->id)]) ?>
+                                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $instituicao->id)]) ?>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -117,7 +117,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <?= $this->Html->link(__('Ver'), ['action' => 'view', $instituicao->id]) ?>
                                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $instituicao->id]) ?>
-                                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $instituicao->id)]) ?>
+                                    <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $instituicao->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $instituicao->id)]) ?>
                                 <?php endif; ?>
                             </td>
                         </tr>

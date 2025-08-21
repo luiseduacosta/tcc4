@@ -54,11 +54,11 @@ class QuestionariosController extends AppController
         if ($this->request->is('post')) {
             $questionario = $this->Questionarios->patchEntity($questionario, $this->request->getData());
             if ($this->Questionarios->save($questionario)) {
-                $this->Flash->success(__('The questionario has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('Questionário inserido.'));
+                return $this->redirect(['action' => 'view', $questionario->id]);
             }
-            $this->Flash->error(__('The questionario could not be saved. Please, try again.'));
+            $this->Flash->error(__('Questionário não inserido. Tente novamente.'));
+            return $this->redirect(['action' => 'index']);
         }
         $this->set(compact('questionario'));
     }
@@ -79,11 +79,11 @@ class QuestionariosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $questionario = $this->Questionarios->patchEntity($questionario, $this->request->getData());
             if ($this->Questionarios->save($questionario)) {
-                $this->Flash->success(__('The questionario has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('Questionário atualizado.'));
+                return $this->redirect(['action' => 'view', $questionario->id]);
             }
-            $this->Flash->error(__('The questionario could not be saved. Please, try again.'));
+            $this->Flash->error(__('Questionário não atualizado. Tente novamente.'));
+            return $this->redirect(['action' => 'index']);
         }
         $this->set(compact('questionario'));
     }
@@ -101,11 +101,11 @@ class QuestionariosController extends AppController
         $questionario = $this->Questionarios->get($id);
         $this->Authorization->skipAuthorization();
         if ($this->Questionarios->delete($questionario)) {
-            $this->Flash->success(__('The questionario has been deleted.'));
+            $this->Flash->success(__('Questionário excluído.'));
         } else {
-            $this->Flash->error(__('The questionario could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Questionário não excluído. Tente novamente.'));
+            return $this->redirect(['action' => 'view', $questionario->id]);
         }
-
         return $this->redirect(['action' => 'index']);
     }
 }

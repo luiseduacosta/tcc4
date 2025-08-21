@@ -40,7 +40,7 @@
 <?php $this->Form->setTemplates(['hiddenBlock' => '<div style="display:none;">{{content}}</div>']); ?>
 <?php // Generic input element. ?>
 <?php $this->Form->setTemplates(['input' => '<div class="col-sm-9"><input type="{{type}}" name="{{name}}" class="form-control" {{attrs}}></div>']); ?>
-<?php // Submit input element. ?>
+<?php // Confirma input element. ?>
 <?php $this->Form->setTemplates(['inputSubmit' => '<input type="{{type}}"{{attrs}}>']); ?>
 <?php // Container element used by control(). ?>
 <?php $this->Form->setTemplates(['inputContainer' => '<div class="row col-md-12" {{type}}{{required}}">{{content}}</div>']); ?>
@@ -70,8 +70,8 @@
 <?php $this->Form->setTemplates(['radioWrapper' => '<div class="form-check form-check-inline">{{label}}{{input}}</div>']); ?>
 <?php // Textarea input element, ?>
 <?php $this->Form->setTemplates(['textarea' => '<div class="col-sm-9"><textarea name="{{name}}"{{attrs}}>{{value}}</textarea></div>']); ?>
-<?php // Container for submit buttons. ?>
-<?php $this->Form->setTemplates(['submitContainer' => '<div class="submit">{{content}}</div>']); ?>
+<?php // Container for Confirma buttons. ?>
+<?php $this->Form->setTemplates(['submitContainer' => '<div class="Confirma">{{content}}</div>']); ?>
 <?php // Confirm javascript template for postLink() ?>
 <?php $this->Form->setTemplates(['confirmJs' => '{{confirm}}']); ?>
 <?php // selected class ?>

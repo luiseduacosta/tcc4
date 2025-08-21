@@ -69,7 +69,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $agendamentotcc->id]) ?>
                         <?php if (isset($user) && $user->categoria == '1'): ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $agendamentotcc->id]) ?>
-                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $agendamentotcc->id)]) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $agendamentotcc->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $agendamentotcc->id)]) ?>
                         <?php endif; ?>
                     </td>
                 </tr>

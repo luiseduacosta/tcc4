@@ -20,7 +20,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?= $this->Html->link(__('Editar Estudante'), ['action' => 'edit', $tccestudante->id], ['class' => 'btn btn-primary float-end']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir Estudante'), ['action' => 'delete', $tccestudante->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $tccestudante->id), 'class' => 'btn btn-danger float-end']) ?>
+                <?= $this->Form->postLink(__('Excluir Estudante'), ['action' => 'delete', $tccestudante->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $tccestudante->id), 'class' => 'btn btn-danger float-end']) ?>
             </li>
         <?php endif; ?>
     </ul>

@@ -21,7 +21,7 @@
 <?php $this->Form->setTemplates(['radio' => '<input class="form-check-input" type="radio" name="{{name}}" value="{{value}}"{{attrs}}']); ?>
 <?php $this->Form->setTemplates(['textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>']); ?>
 <?php $this->Form->setTemplates(['requiredClass' => 'required']); ?>
-<?php $this->Form->setTemplates(['submitContainer' => '<div class="submit">{{content}}</div>']); ?>
+<?php $this->Form->setTemplates(['submitContainer' => '<div class="Confirma">{{content}}</div>']); ?>
 <?php $this->Form->setTemplates(['button' => '<button{{attrs}}>{{text}}</button>']); ?>
 
 <div class="container mt-1">
@@ -77,7 +77,7 @@
                 ?>
             <?php endforeach; ?>
         </fieldset>
-        <?= $this->Form->button(__('Submit'), ['class' => 'btn btn-primary']) ?>
+        <?= $this->Form->button(__('Confirma'), ['class' => 'btn btn-primary']) ?>
         <?= $this->Form->end() ?>
     </div>
 </div>

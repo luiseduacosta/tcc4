@@ -42,7 +42,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td>
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $user->id]) ?>
                         <?= $this->Html->link(__('Editar'), ['action' => 'edit', $user->id]) ?>
-                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
+                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $user->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $user->id)]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

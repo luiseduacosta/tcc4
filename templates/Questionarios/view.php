@@ -21,7 +21,7 @@
                 <?= $this->Html->link(__('Editar'), ['action' => 'edit', $questionario->id], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $questionario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $questionario->id), 'class' => 'btn btn-danger me-1']) ?>
+                <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $questionario->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $questionario->id), 'class' => 'btn btn-danger me-1']) ?>
             </li>
             <li class="nav-item">
                 <?= $this->Html->link(__('Listar'), ['action' => 'index'], ['class' => 'btn btn-primary me-1']) ?>
@@ -32,7 +32,7 @@
         </ul>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-1">
         <h3><?= h($questionario->title) ?></h3>
         <table class="table table-striped table-hover table-responsive">
             <tr>
@@ -64,13 +64,13 @@
                 <td><?= $questionario->is_active ? __('Yes') : __('No'); ?></td>
             </tr>
         </table>
-        <div class="text">
+        <div class="container mt-1">
             <strong><?= __('Descrição') ?></strong>
             <blockquote>
                 <?= $this->Text->autoParagraph(h($questionario->description)); ?>
             </blockquote>
         </div>
-        <div class="container mt-4">
+        <div class="container mt-1">
             <h4><?= __('Questões') ?></h4>
             <?php if (!empty($questionario->questiones)): ?>
                 <div class="container mr-1">
@@ -99,7 +99,7 @@
                                 <td class="table-info">
                                     <?= $this->Html->link(__('Ver'), ['controller' => 'Questiones', 'action' => 'view', $questiones->id]) ?>
                                     <?= $this->Html->link(__('Editar'), ['controller' => 'Questiones', 'action' => 'edit', $questiones->id]) ?>
-                                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Questiones', 'action' => 'delete', $questiones->id], ['confirm' => __('Are you sure you want to delete # {0}?', $questiones->id)]) ?>
+                                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Questiones', 'action' => 'delete', $questiones->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $questiones->id)]) ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

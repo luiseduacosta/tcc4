@@ -19,7 +19,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?= $this->Html->link(__('Editar área da monografia'), ['controller' => 'Areamonografias', 'action' => 'edit', $areamonografia->id], ['class' => 'btn btn-primary float-start']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir área da monografia'), ['controller' => 'Areamonografias', 'action' => 'delete', $areamonografia->id], ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $areamonografia->id), 'class' => 'btn btn-danger float-start']) ?>
+                <?= $this->Form->postLink(__('Excluir área da monografia'), ['controller' => 'Areamonografias', 'action' => 'delete', $areamonografia->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $areamonografia->id), 'class' => 'btn btn-danger float-start']) ?>
             </li>
         <?php endif; ?>
     </ul>

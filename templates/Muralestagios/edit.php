@@ -22,7 +22,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 $this->Form->postLink(
                     __('Excluir'),
                     ['action' => 'delete', $muralestagio->id],
-                    ['confirm' => __('Tem certeza que quer excluir este registro # {0}?', $muralestagio->id), 'class' => 'btn btn-danger']
+                    ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $muralestagio->id), 'class' => 'btn btn-danger']
                 )
                 ?>
         </li>
