@@ -80,7 +80,7 @@
                         <td><?= $questione->ordem === null
                             ? ""
                             : $this->Number->format($questione->ordem) ?></td>
-                        <td class="row">
+                        <td class="d-grid">
                             <?= $this->Html->link(__("Ver"), [
                                 "action" => "view",
                                 $questione->id,

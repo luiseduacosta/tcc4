@@ -31,8 +31,12 @@
         <fieldset>
             <legend><?= __('Editar resposta') ?></legend>
             <?php
-            echo $this->Form->control('question_id', ['options' => $questiones]);
-            echo $this->Form->control('estagiarios_id', ['options' => $estagiarios]);
+            echo $this->Form->control('question_id', [
+                'options' => $questiones
+            ]);
+            echo $this->Form->control('estagiarios_id', [
+                'options' => $estagiarios
+            ]);
             echo $this->Form->control('response');
             ?>
         </fieldset>

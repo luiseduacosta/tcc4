@@ -68,7 +68,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($instituicao->natureza) ?></td>
                             <td><?= h($instituicao->cnpj) ?></td>
                             <td><?= h($instituicao->email) ?></td>
-                            <td class="row">
+                            <td class="d-grid">
                                 <?= $this->Html->link(__('Ver'), ['action' => 'view', $instituicao->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
                                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                                     <?= $this->Html->link(__('Editar'), ['action' => 'edit', $instituicao->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
@@ -113,7 +113,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($instituicao->cep) ?></td>
                             <td><?= h($instituicao->telefone) ?></td>
                             <td><?= h($instituicao->fax) ?></td>
-                            <td class="row">
+                            <td class="d-grid">
                                 <?= $this->Html->link(__('Ver'), ['action' => 'view', $instituicao->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
                                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                                     <?= $this->Html->link(__('Editar'), ['action' => 'edit', $instituicao->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
@@ -156,7 +156,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= h($instituicao->convenio) ?></td>
                             <td><?= h($instituicao->expira) ?></td>
                             <td><?= h($instituicao->seguro) ?></td>
-                            <td class="row">
+                            <td class="d-grid">
                                 <?= $this->Html->link(__('Ver'), ['action' => 'view', $instituicao->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
                                 <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
                                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $instituicao->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>

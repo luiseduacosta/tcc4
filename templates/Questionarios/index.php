@@ -42,7 +42,7 @@
                     <td><?= h($questionario->is_active) ?></td>
                     <td><?= h($questionario->category) ?></td>
                     <td><?= h($questionario->target_user_type) ?></td>
-                    <td class="row">
+                    <td class="d-grid">
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $questionario->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
                         <?= $this->Html->link(__('Editar'), ['action' => 'edit', $questionario->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
                         <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $questionario->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $questionario->id), 'class' => 'btn btn-danger btn-sm btn-block p-1 mb-1']) ?>

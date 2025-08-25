@@ -198,7 +198,7 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?php else: ?>
                             <td>Sem dados</td>
                         <?php endif; ?>
-                        <td class="row">
+                        <td class="d-grid">
                             <?= $this->Html->link(__('Ver'), ['action' => 'view', $estagiario->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
                             <?php if (isset($user) && $user->categoria == 1): ?>
                                 <?= $this->Html->link(__('Editar'), ['action' => 'edit', $estagiario->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>

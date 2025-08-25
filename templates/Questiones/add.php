@@ -35,7 +35,7 @@
             </div>
             <?php
             echo $this->Form->control('text', ['label' => 'Texto', 'class' => 'form-control']);
-            echo $this->Form->control('type', ['label' => 'Tipo (text, textarea, select, scale, boolean)', 'options' => ['text' => 'text', 'textarea' => 'textarea', 'radio' => 'radio', 'select' => 'select', 'scale' => 'scale (1 - 5)', 'boolean' => 'boolean (sim/não)'], 'class' => 'form-control']);
+            echo $this->Form->control('type', ['label' => 'Tipo (text, textarea, select, scale, boolean)', 'options' => ['text' => 'text', 'textarea' => 'textarea', 'radio' => 'radio', 'select' => 'select', 'escala' => 'escala (1 - 5)', 'boolean' => 'boolean (sim/não)'], 'class' => 'form-control']);
             echo $this->Form->control('options', ['label' => 'Opções', 'class' => 'form-control']);
             echo $this->Form->control('ordem', ['label' => 'Ordem', 'value' => $ordem]);
             ?>

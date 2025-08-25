@@ -90,7 +90,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= isset($muralestagio->dataSelecao) ? $muralestagio->dataSelecao->i18nFormat('dd-MM-yyyy') : '' ?>
                     </td>
                     <?php if (isset($user) && $user->categoria == '1'): ?>
-                        <td class="row">
+                        <td class="d-grid">
                             <?= $this->Html->link(__('Ver'), ['action' => 'view', $muralestagio->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
                             <?= $this->Html->link(__('Editar'), ['action' => 'edit', $muralestagio->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
                             <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $muralestagio->id], ['confirm' => __('Tem certeza quer quer excluir este registro # {0}?', $muralestagio->id), 'class' => 'btn btn-danger btn-sm btn-block mb-1']) ?>

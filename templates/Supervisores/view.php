@@ -236,7 +236,7 @@ $user = $this->getRequest()->getAttribute("identity");
                             <td><?= $this->Text->autoParagraph(
                                 h($instituicoes->observacoes),
                             ) ?></td>
-                            <td class="row">
+                            <td class="d-grid">
                                 <?= $this->Html->link(__("Ver"), [
                                     "controller" => "Instituicoes",
                                     "action" => "view",
@@ -329,7 +329,7 @@ $user = $this->getRequest()->getAttribute("identity");
                             <td><?= h($estagiarios->nota) ?></td>
                             <td><?= h($estagiarios->ch) ?></td>
                             <td><?= h($estagiarios->observacoes) ?></td>
-                            <td class="row">
+                            <td class="d-grid">
                                 <?= $this->Html->link(__("Ver"), [
                                     "controller" => "Estagiarios",
                                     "action" => "view",

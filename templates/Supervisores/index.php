@@ -57,7 +57,7 @@
                     <td><?= h($supervisor->codigo_cel) ?></td>
                     <td><?= h($supervisor->celular) ?></td>
                     <td><?= h($supervisor->email) ?></td>
-                    <td class="row">
+                    <td class="d-grid">
                         <?= $this->Html->link(__('Ver'), ['controller' => 'Supervisores', 'action' => 'view', $supervisor->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
                         <?php if (isset($user) && $user['categoria'] == '1'): ?>
                             <?= $this->Html->link(__('Editar'), ['controller' => 'Supervisores', 'action' => 'edit', $supervisor->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>

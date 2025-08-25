@@ -46,7 +46,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($visita->motivo) ?></td>
                     <td><?= h($visita->responsavel) ?></td>
                     <td><?= h($visita->avaliacao) ?></td>
-                    <td class="row">
+                    <td class="d-grid">
                         <?= $this->Html->link(__('Ver'), ['controller' => 'Visitas', 'action' => 'view', $visita->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
                         <?= $this->Html->link(__('Editar'), ['controller' => 'Visitas', 'action' => 'edit', $visita->id], ['class' => 'btn btn-primary btn-sm btn-block mb-1']) ?>
                         <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Visitas', 'action' => 'delete', $visita->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $visita->id), 'class' => 'btn btn-danger btn-sm btn-block mb-1']) ?>

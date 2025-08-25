@@ -122,7 +122,7 @@
                                 <td><?= h($aluno->ingresso) ?></td>
                                 <td><?= h($aluno->turno) ?></td>
                                 <td><?= h($aluno->observacoes) ?></td>
-                                <td class="row">
+                                <td class="d-grid">
                                     <?= $this->Html->link(__("Ver"), [
                                         "controller" => "Alunos",
                                         "action" => "view",
@@ -229,7 +229,7 @@
                                     ) ?></td>
                                     <td><?= h($aluno->celular) ?></td>
                                     <td><?= h($aluno->observacoes) ?></td>
-                                    <td class="row">
+                                    <td class="d-grid">
                                         <?= $this->Html->link(__("Ver"), [
                                             "controller" => "Alunos",
                                             "action" => "view",
@@ -331,7 +331,7 @@
                                     <td><?= h($aluno->municipio) ?></td>
                                     <td><?= h($aluno->bairro) ?></td>
                                     <td><?= h($aluno->observacoes) ?></td>
-                                    <td class="row">
+                                    <td class="d-grid">
                                         <?= $this->Html->link(__("Ver"), [
                                             "controller" => "Alunos",
                                             "action" => "view",
