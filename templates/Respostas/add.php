@@ -5,6 +5,7 @@
  * @var \Cake\Collection\CollectionInterface|string[] $questiones
  * @var \Cake\Collection\CollectionInterface|string[] $estagiarios
  */
+// pr($estagiario)
 ?>
 
 <?php echo $this->element('menu_mural') ?>
@@ -18,15 +19,10 @@
         </ul>
     </nav>
 
-    <?php $this->Form->setTemplates(['formStart' => '<form{{attrs}}>']); ?>
-    <?php // Close tag used by end(). ?>
-    <?php $this->Form->setTemplates(['formEnd' => '</form>']); ?>
-    <?php $this->Form->setTemplates(['inputContainer' => '<div class="form-group" {{type}}{{required}}">{{content}}</div>']); ?>
-
     <div class="container mt-4">
         <?= $this->Form->create($resposta, ['container' => false]) ?>
         <fieldset>
-            <legend><?= $aluno->nome . ' estagiário nível ' . $estagiario->nivel ?></legend>
+            <legend><?= $estagiario->aluno->nome . ' estagiário nível ' . $estagiario->nivel ?></legend>
             <?php
             echo $this->Form->control('estagiario_id', [
                 'div' => false,
@@ -41,9 +37,8 @@
             <?php foreach ($questiones as $questione): ?>
                 <div class="row mb-3">
                     <?php
-                    $opcoes = $questione->options ? $questione->options : (is_string($questione->options) ? json_decode($questione->options, true) : []);
+                    $opcoes = is_string($questione->options) ? json_decode($questione->options, true) : [];
                     if ($questione->type === 'select') {
-                        $opcoes = array_combine($opcoes, $opcoes);
                         echo $this->Form->control('avaliacao' . $questione->id, [
                             'type' => $questione->type,
                             'div' => false,
@@ -57,7 +52,6 @@
                             ]
                         ]);
                     } elseif ($questione->type === 'radio' || $questione->type === 'checkbox') {
-                        // $opcoes = array_combine($opcoes, $opcoes);
                         echo $this->Form->control('avaliacao' . $questione->id, [
                             'type' => "radio",
                             'div' => false,

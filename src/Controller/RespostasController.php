@@ -69,28 +69,19 @@ class RespostasController extends AppController
                 $this->Flash->error(__('Estagiário não localizado.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $aluno = $this->fetchTable("Alunos")->find()
-                    ->where(['Alunos.id' => $estagiario->aluno_id])
-                    ->first();
-            }
-            if ($aluno) {
                 $this->set('estagiario', $estagiario);
-                $this->set('aluno', $aluno);
-            } else {
-                $this->Flash->error(__('Aluno não encontrado.'));
-                return $this->redirect(['action' => 'index']);
             }
-            // pr($aluno);
         }
-        // die();
         $resposta = $this->Respostas->newEmptyEntity();
-        // pr($this->request->getData());
-        $campo = array_keys($this->request->getData());
+        // $campo = array_keys($this->request->getData());
         // pr($campo);
-        // die();
+        if ($this->request->getData()) {
+            pr($this->request->getData());
+            die();
+        }
         if ($this->request->is('post')) {
             for ($i = 0; $i <= count($this->request->getData()); $i++) {
-                $data['response'] = $this->request->getData()[$campo[$i]];
+                $data['response'] = $this->request->getData();
                 // pr($data);
                 // die();
                 // $data[$campo[$i]] = isset($data[$campo[$i]]) ? $data[$campo[$i]] : null;
@@ -107,7 +98,7 @@ class RespostasController extends AppController
             }
             return $this->redirect(['action' => 'index']);
         }
-        $questiones = $this->Respostas->Questiones->find('all', ['limit' => 200])->all();
+        $questiones = $this->Respostas->Questiones->find()->all();
         $estagiarios = $this->Respostas->Estagiarios->find('list', ['limit' => 200, 'fields' => ['id', 'registro'], 'order' => ['registro' => 'ASC']])->all();
         $this->set(compact('resposta', 'questiones', 'estagiario_id'));
     }
