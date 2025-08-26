@@ -41,7 +41,7 @@
             <?php foreach ($questiones as $questione): ?>
                 <div class="row mb-3">
                     <?php
-                    $opcoes = $questione->options ? json_decode($questione->options, true) : [];
+                    $opcoes = $questione->options ? $questione->options : (is_string($questione->options) ? json_decode($questione->options, true) : []);
                     if ($questione->type === 'select') {
                         $opcoes = array_combine($opcoes, $opcoes);
                         echo $this->Form->control('avaliacao' . $questione->id, [
