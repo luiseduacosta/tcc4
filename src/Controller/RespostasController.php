@@ -62,6 +62,7 @@ class RespostasController extends AppController
             return $this->redirect(['action' => 'index']);
         } else {
             $estagiario = $this->fetchTable('Estagiarios')->find()
+                ->contain(['Alunos'])
                 ->where(['Estagiarios.id' => $estagiario_id])
                 ->first();
             if (!$estagiario) {
@@ -86,19 +87,16 @@ class RespostasController extends AppController
         // pr($this->request->getData());
         $campo = array_keys($this->request->getData());
         // pr($campo);
-        // pr($this->request->getData());
-        // pr(count($this->request->getData()));
-        // pr($resposta);
         // die();
         if ($this->request->is('post')) {
             for ($i = 0; $i <= count($this->request->getData()); $i++) {
                 $data['response'] = $this->request->getData()[$campo[$i]];
-                pr($data);
+                // pr($data);
                 // die();
                 // $data[$campo[$i]] = isset($data[$campo[$i]]) ? $data[$campo[$i]] : null;
                 $resposta = $this->Respostas->newEmptyEntity();
                 $resposta = $this->Respostas->patchEntity($resposta, $data);
-                pr($resposta);
+                // pr($resposta);
                 // die();
                 if ($this->Respostas->save($resposta)) {
                     $this->Flash->success(__('Respuesta inserida.'));
