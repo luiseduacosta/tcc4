@@ -64,11 +64,13 @@
                             'label' => $questione->text,
                             'options' => $opcoes,
                             'class' => 'form-control',
+                            'nestedInput' => false,
                             'templates' => [
                                 'inputContainer' => '<div class="col-sm-12" {{type}}{{required}}">{{content}}</div>',
                                 'radioWrapper' => '<div class="form-check">{{label}}{{input}}</div>',
                                 'nestingLabel' => '<label class="form-check-label"{{attrs}}>{{text}}</label>',
-                                'radio' => '<input class="form-check-input" type="radio" name="{{name}}" value="{{value}}"{{attrs}}>'
+                                'radio' => '<input class="form-check-input" type="radio" name="{{name}}" value="{{value}}"{{attrs}}>',
+                                'labelOption' => '<label class="form-check-label"{{attrs}}>{{text}}</label>'
                             ]
                         ]);
                     } elseif ($questione->type === 'boolean') {
