@@ -35,7 +35,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
         <?php if (isset($user) && ($user->categoria == '1' || $user->categoria == '4')): ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Preencher Avaliação'), ['controller' => 'avaliacoes', 'action' => 'add', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary me-1', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
+                <?= $this->Html->link(__('Preencher Avaliação'), ['controller' => 'respostas', 'action' => 'add', '?' => ['estagiario_id' => $estagiario->id]], ['class' => 'btn btn-primary me-1', 'style' => 'max-width:100px; word-wrap:break-word; font-size:14px']) ?>
             </li>
         <?php endif; ?>
 

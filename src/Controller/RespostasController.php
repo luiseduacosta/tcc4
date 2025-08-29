@@ -21,12 +21,10 @@ class RespostasController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
-        $this->Respostas->contain = [
-            'Questiones',
-            'Estagiarios'
-        ];
-        $respostas = $this->paginate($this->Respostas);
-
+        $query = $this->Respostas->find()
+            ->contain(['Estagiarios' => ['Alunos']])
+            ->order(['Respostas.id' => 'DESC']);
+        $respostas = $this->paginate($query);
         $this->set(compact('respostas'));
     }
 
@@ -40,7 +38,7 @@ class RespostasController extends AppController
     public function view($id = null)
     {
         $resposta = $this->Respostas->get($id, [
-            'contain' => ['Questiones', 'Estagiarios'],
+            'contain' => ['Estagiarios' => ['Alunos']],
         ]);
         $this->Authorization->skipAuthorization();
         $this->set(compact('resposta'));
@@ -55,8 +53,7 @@ class RespostasController extends AppController
     {
         $this->Authorization->skipAuthorization();
 
-        $estagiario_id = 9855; // Default value for testing
-        // $estagiario_id = $this->request->getQuery('estagiario_id');
+        $estagiario_id = $this->request->getQuery('estagiario_id');
         if (!$estagiario_id) {
             $this->Flash->error(__('Estagiário não informado.'));
             return $this->redirect(['action' => 'index']);
@@ -69,37 +66,43 @@ class RespostasController extends AppController
                 $this->Flash->error(__('Estagiário não localizado.'));
                 return $this->redirect(['action' => 'index']);
             } else {
+                $resposta = $this->Respostas->find()
+                    ->where(['Respostas.estagiarios_id' => $estagiario_id])
+                    ->first();
+                if ($resposta) {
+                    $this->Flash->error(__('Este estagiário já possui uma avaliação preenchida.'));
+                    return $this->redirect(['action' => 'view', $resposta->id]);
+                }
                 $this->set('estagiario', $estagiario);
             }
         }
         $resposta = $this->Respostas->newEmptyEntity();
-        // $campo = array_keys($this->request->getData());
-        // pr($campo);
         if ($this->request->getData()) {
-            pr($this->request->getData());
-            die();
+            // pr($this->request->getData('estagiario_id'));
+            //
+            // die();
         }
         if ($this->request->is('post')) {
-            for ($i = 0; $i <= count($this->request->getData()); $i++) {
-                $data['response'] = $this->request->getData();
-                // pr($data);
-                // die();
-                // $data[$campo[$i]] = isset($data[$campo[$i]]) ? $data[$campo[$i]] : null;
-                $resposta = $this->Respostas->newEmptyEntity();
-                $resposta = $this->Respostas->patchEntity($resposta, $data);
-                // pr($resposta);
-                // die();
-                if ($this->Respostas->save($resposta)) {
-                    $this->Flash->success(__('Respuesta inserida.'));
-                    return $this->redirect(['action' => 'view', $resposta->id]);
-                } else {
-                    $this->Flash->error(__('Respuesta não inserida. Tente novamente.'));
-                }
+            $resposta = json_encode($this->request->getData(), JSON_PRETTY_PRINT);
+            $data['question_id'] = $this->request->getData('question_id') ?? 1;
+            $data['estagiarios_id'] = $this->request->getData('estagiario_id');
+            $data['response'] = json_encode($this->request->getData(), JSON_PRETTY_PRINT);
+            $data['created'] = date('Y-m-d H:i:s');
+            $data['modified'] = date('Y-m-d H:i:s');
+            // pr($data);
+            // die();
+            $resposta = $this->Respostas->newEmptyEntity();
+            $resposta = $this->Respostas->patchEntity($resposta, $data);
+
+            if ($this->Respostas->save($resposta)) {
+                $this->Flash->success(__('Respuesta inserida.'));
+                return $this->redirect(['action' => 'view', $resposta->id]);
+            } else {
+                $this->Flash->error(__('Respuesta não inserida. Tente novamente.'));
             }
-            return $this->redirect(['action' => 'index']);
+            // return $this->redirect(['action' => 'index']);
         }
         $questiones = $this->Respostas->Questiones->find()->all();
-        $estagiarios = $this->Respostas->Estagiarios->find('list', ['limit' => 200, 'fields' => ['id', 'registro'], 'order' => ['registro' => 'ASC']])->all();
         $this->set(compact('resposta', 'questiones', 'estagiario_id'));
     }
 

@@ -1,8 +1,12 @@
 <?php
+
+use Cake\I18n\Time;
 /**
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\Resposta> $respostas
  */
+// pr($respostas);
+// die();
 ?>
 
 <?php echo $this->element('menu_mural') ?>
@@ -24,8 +28,8 @@
             <thead class="thead-light">
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('question_id') ?></th>
-                    <th><?= $this->Paginator->sort('estagiarios_id') ?></th>
+                    <th><?= $this->Paginator->sort('estagiario.aluno.nome', 'Aluno') ?></th>
+                    <th><?= $this->Paginator->sort('estagiarios_id', 'Nível de estágio') ?></th>
                     <th><?= $this->Paginator->sort('created') ?></th>
                     <th><?= $this->Paginator->sort('modified') ?></th>
                     <th><?= __('Ações') ?></th>
@@ -35,16 +39,16 @@
                 <?php foreach ($respostas as $resposta): ?>
                     <tr>
                         <td><?= $this->Number->format($resposta->id) ?></td>
-                        <td><?= $resposta->has('questione') ? $this->Html->link($resposta->questione->type, ['controller' => 'Questiones', 'action' => 'view', $resposta->questione->id]) : '' ?>
+                        <td><?=  $this->Html->link($resposta->estagiario->aluno->nome, ['controller' => 'Questiones', 'action' => 'view', $resposta->estagiario->aluno->id]) ?>
                         </td>
-                        <td><?= $resposta->has('estagiario') ? $this->Html->link($resposta->estagiario->periodo, ['controller' => 'Estagiarios', 'action' => 'view', $resposta->estagiario->id]) : '' ?>
+                        <td><?= $resposta->has('estagiario') ? $this->Html->link($resposta->estagiario->nivel, ['controller' => 'Estagiarios', 'action' => 'view', $resposta->estagiario->id]) : '' ?>
                         </td>
-                        <td><?= h($resposta->created) ?></td>
-                        <td><?= h($resposta->modified) ?></td>
-                        <td class="table-info">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $resposta->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $resposta->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $resposta->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $resposta->id)]) ?>
+                        <td><?= $this->Time->format($resposta->created, 'd-MM-Y HH:mm:ss') ?></td>
+                        <td><?= $this->Time->format($resposta->modified, 'd-MM-Y HH:mm:ss') ?></td>
+                        <td class="d-grid">
+                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $resposta->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
+                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $resposta->id], ['class' => 'btn btn-primary btn-sm btn-block p-1 mb-1']) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $resposta->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $resposta->id), 'class' => 'btn btn-danger btn-sm btn-block p-1 mb-1']) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -37,8 +37,8 @@
                 <tr>
                     <td><?= $this->Number->format($questionario->id) ?></td>
                     <td><?= h($questionario->title) ?></td>
-                    <td><?= h($questionario->created) ?></td>
-                    <td><?= h($questionario->modified) ?></td>
+                    <td><?= $this->Time->format($questionario->created, 'd-MM-Y HH:mm:ss') ?></td>
+                    <td><?= $this->Time->format($questionario->modified, 'd-MM-Y HH:mm:ss') ?></td>
                     <td><?= h($questionario->is_active) ?></td>
                     <td><?= h($questionario->category) ?></td>
                     <td><?= h($questionario->target_user_type) ?></td>
