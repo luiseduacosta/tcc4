@@ -39,7 +39,7 @@ use Cake\I18n\Time;
                 <?php foreach ($respostas as $resposta): ?>
                     <tr>
                         <td><?= $this->Number->format($resposta->id) ?></td>
-                        <td><?=  $this->Html->link($resposta->estagiario->aluno->nome, ['controller' => 'Questiones', 'action' => 'view', $resposta->estagiario->aluno->id]) ?>
+                        <td><?= $this->Html->link($resposta->estagiario->aluno->nome, ['controller' => 'Questiones', 'action' => 'view', $resposta->estagiario->aluno->id]) ?>
                         </td>
                         <td><?= $resposta->has('estagiario') ? $this->Html->link($resposta->estagiario->nivel, ['controller' => 'Estagiarios', 'action' => 'view', $resposta->estagiario->id]) : '' ?>
                         </td>

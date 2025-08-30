@@ -29,6 +29,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Supervisor[] $supervisor
  * @property \App\Model\Entity\Instituicao[] $instituicao
  * @property \App\Model\Entity\Avaliacao[] $avaliacao
+ * @property \App\Model\Entity\Avaliacao[] $resposta
  * @property \App\Model\Entity\Folhadeatividade[] $folhadeatividade
  * @property \App\Model\Entity\Tccestudante[] $tccestudante
  */
@@ -44,28 +45,29 @@ class Estagiario extends Entity
      * @var array
      */
     protected $_accessible = [
-        'aluno_id' => true,
-        'registro' => true,
-        'turno' => true,
-        'nivel' => true,
-        'tc' => true,
-        'tc_solicitacao' => true,
-        'instituicao_id' => true,
-        'supervisor_id' => true,
-        'professor_id' => true,
-        'periodo' => true,
-        'area_id' => true,
-        'nota' => true,
-        'ch' => true,
-        'ajuste2020' => true,
-        'observacoes' => true,
-        'aluno' => true,
-        'professor' => true,
-        'turmaestagio' => true,
-        'supervisor' => true,
-        'instituicao' => true,
-        'avaliacao' => true,
-        'folhadeatividade' => true,
-        'tccestudante' => true
+        "aluno_id" => true,
+        "registro" => true,
+        "turno" => true,
+        "nivel" => true,
+        "tc" => true,
+        "tc_solicitacao" => true,
+        "instituicao_id" => true,
+        "supervisor_id" => true,
+        "professor_id" => true,
+        "periodo" => true,
+        "area_id" => true,
+        "nota" => true,
+        "ch" => true,
+        "ajuste2020" => true,
+        "observacoes" => true,
+        "aluno" => true,
+        "professor" => true,
+        "turmaestagio" => true,
+        "supervisor" => true,
+        "instituicao" => true,
+        "avaliacao" => true,
+        "resposta" => true,
+        "folhadeatividade" => true,
+        "tccestudante" => true,
     ];
 }

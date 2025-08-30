@@ -25,6 +25,7 @@ class QuestionesController extends AppController
         "order" => ["ordem" => "ASC"],
         "limit" => 20,
     ];
+
     /**
      * Index method
      *
@@ -82,9 +83,7 @@ class QuestionesController extends AppController
                 $this->Flash->success(__("Pergunta inserida."));
                 return $this->redirect(["action" => "view", $questione->id]);
             }
-            $this->Flash->error(
-                __("Pergunta não inserida. Tente novamente."),
-            );
+            $this->Flash->error(__("Pergunta não inserida. Tente novamente."));
             return $this->redirect(["action" => "index"]);
         }
         $questionarios = $this->Questiones->Questionarios
@@ -141,8 +140,7 @@ class QuestionesController extends AppController
         if ($this->Questiones->delete($questione)) {
             $this->Flash->success(__("Pergunta excluída."));
         } else {
-            $this->Flash->error(
-                __("Pergunta não excluída. Tente novamente."));
+            $this->Flash->error(__("Pergunta não excluída. Tente novamente."));
             return $this->redirect(["action" => "view", $questione->id]);
         }
         return $this->redirect(["action" => "index"]);
