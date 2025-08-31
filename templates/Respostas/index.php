@@ -12,7 +12,7 @@ use Cake\I18n\Time;
 <?php echo $this->element('menu_mural') ?>
 <?php $this->element('templates') ?>
 
-<div class="container">
+<div class="container mt-1">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <ul class="navbar-nav mr-auto">
@@ -39,7 +39,7 @@ use Cake\I18n\Time;
                 <?php foreach ($respostas as $resposta): ?>
                     <tr>
                         <td><?= $this->Number->format($resposta->id) ?></td>
-                        <td><?= $this->Html->link($resposta->estagiario->aluno->nome, ['controller' => 'Questiones', 'action' => 'view', $resposta->estagiario->aluno->id]) ?>
+                        <td><?= $this->Html->link($resposta->estagiario->aluno->nome, ['controller' => 'Respostas', 'action' => 'view', $resposta->id]) ?>
                         </td>
                         <td><?= $resposta->has('estagiario') ? $this->Html->link($resposta->estagiario->nivel, ['controller' => 'Estagiarios', 'action' => 'view', $resposta->estagiario->id]) : '' ?>
                         </td>
