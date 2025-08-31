@@ -9,7 +9,7 @@ use Cake\I18n\Time;
 ?>
 
 <?php echo $this->element('menu_mural') ?>
-<?php $this->element('templates') ?>
+<?php echo $this->element('templates') ?>
 
 <div class="container mt-1">
 
@@ -35,10 +35,10 @@ use Cake\I18n\Time;
     </nav>
 
     <div class="container mt-4">
-        <h3><?= h($resposta->id) ?></h3>
+        <h3><?= h($resposta->estagiario->aluno->nome) ?></h3>
         <table class="table table-responsive table-striped table-hover">
             <tr>
-                <th><?= __('Id') ?></th>
+                <th><?= __('Avaliação') ?></th>
                 <td><?= $this->Number->format($resposta->id) ?></td>
             </tr>
             <tr>
@@ -51,14 +51,18 @@ use Cake\I18n\Time;
                 <td><?= $resposta->has('estagiario') ? $this->Html->link($resposta->estagiario->nivel, ['controller' => 'Estagiarios', 'action' => 'view', $resposta->estagiario->id]) : '' ?>
                 </td>
             </tr>
-            <tr>
-                <td class="text">
-                    <strong><?= __('Resposta') ?></strong>
-                    <blockquote>
-                        <?= $this->Text->autoParagraph(h($resposta->response)); ?>
-                    </blockquote>
-                </td>
-            </tr>
+            <?php
+            $perguntas = json_decode($resposta->response, true);
+            foreach ($avaliacoes as $key => $value): ?>
+                <tr>
+                    <th>
+                        <?= h($key) ?>
+                    </th>
+                    <td>
+                        <?= h($value) ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
             <tr>
                 <th><?= __('Criado') ?></th>
                 <td><?= $this->Time->format($resposta->created, 'd-MM-Y HH:mm:ss') ?></td>

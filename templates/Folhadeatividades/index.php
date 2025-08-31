@@ -1,4 +1,6 @@
 <?php
+
+use Cake\I18n\Time;
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Folhadeatividade[]|\Cake\Collection\CollectionInterface $folhadeatividades
@@ -75,10 +77,10 @@ $professora = isset($estagiario->docente->nome) ? $estagiario->docente->nome : '
                 <tr>
                     <td><?= $folhadeatividade->id ?></td>
                     <td><?= $folhadeatividade->estagiario_id ?></td>
-                    <td><?= h($folhadeatividade->dia) ?></td>
-                    <td><?= h($folhadeatividade->inicio) ?></td>
-                    <td><?= h($folhadeatividade->final) ?></td>
-                    <td><?= h($folhadeatividade->horario) ?></td>
+                    <td><?= $this->Time->format($folhadeatividade->dia, 'd-MM-Y') ?></td>
+                    <td><?= $this->Time->format($folhadeatividade->inicio, 'HH:mm') ?></td>
+                    <td><?= $this->Time->format($folhadeatividade->final, 'HH:mm') ?></td>
+                    <td><?= $this->Time->format($folhadeatividade->horario, "HH:mm") ?></td>
                     <td><?= h($folhadeatividade->atividade) ?></td>
                     <td>
                         <?= $this->Html->link(__('Ver'), ['action' => 'view', $folhadeatividade->id], ['class' => 'btn btn-info']) ?>

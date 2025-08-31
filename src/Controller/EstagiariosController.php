@@ -212,7 +212,7 @@ class EstagiariosController extends AppController
      */
     public function view($id = null)
     {
-        /** Corrigir */
+        /** Restringir */
         $this->Authorization->skipAuthorization();
         // pr($id);
         $estagiario = $this->Estagiarios->get($id, [
@@ -223,6 +223,9 @@ class EstagiariosController extends AppController
                 "Professores",
                 "Turmaestagios",
                 "Respostas", // Adicionado para trazer as respostas das avaliações
+                "Folhadeatividades" => [
+                    "sort" => ["dia" => "desc"],
+                ],
             ],
         ]);
 
@@ -230,7 +233,39 @@ class EstagiariosController extends AppController
             $this->Flash->error(__("Estagiário não encontrado."));
             return $this->redirect(["action" => "index"]);
         }
-        $this->set(compact("estagiario"));
+
+        $resposta = $this->fetchTable("Respostas")->find()
+            ->where(['Respostas.estagiarios_id' => $estagiario->id])
+            ->first();
+
+        $avaliacoes = [];
+
+        if ($resposta) {
+
+            $respostas = json_decode($resposta->response, true);
+            // die();
+            foreach ($respostas as $key => $value) {
+                // echo substr($key, 0, 9) . ' ' . $value . '<br>';
+                if (substr($key, 0, 9) == 'avaliacao') {
+                    $pergunta_id = (int) substr($key, 9, 2);
+                    $pergunta = $this->fetchTable('Questiones')->get(intval($pergunta_id));
+                    if ($pergunta->type == 'select' || $pergunta->type == 'radio' || $pergunta->type == 'checkbox' || $pergunta->type == 'boolean') {
+                        $opcoes = json_decode($pergunta->options, true);
+                        foreach ($opcoes as $option_key => $option_value) {
+                            if ($option_key == $value) {
+                                $avaliacoes[$pergunta->text] = $option_value;
+                                // unset($avaliacoes[$option_key]);
+                                // unset($avaliacoes[$option_value]);
+                            }
+                        }
+                    } else {
+                        $avaliacoes[$pergunta->text] = $value;
+                    }
+                }
+            }
+        }
+
+        $this->set(compact("estagiario", "avaliacoes"));
     }
 
     /**
@@ -270,9 +305,9 @@ class EstagiariosController extends AppController
                 $this->Flash->success(
                     __(
                         "O aluno é estagiário " .
-                            $estagiario->nivel .
-                            " no periodo " .
-                            $estagiario->periodo,
+                        $estagiario->nivel .
+                        " no periodo " .
+                        $estagiario->periodo,
                     ),
                 );
                 $nivel = $estagiario->nivel + 1;

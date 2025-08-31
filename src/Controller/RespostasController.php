@@ -40,8 +40,31 @@ class RespostasController extends AppController
         $resposta = $this->Respostas->get($id, [
             'contain' => ['Estagiarios' => ['Alunos']],
         ]);
+        $respostas = json_decode($resposta->response, true);
+        // pr($respostas);
+        $avaliacoes = [];
+        // die();
+        foreach ($respostas as $key => $value) {
+            // echo substr($key, 0, 9) . ' ' . $value . '<br>';
+            if (substr($key, 0, 9) == 'avaliacao') {
+                $pergunta_id = (int) substr($key, 9, 2);
+                $pergunta = $this->fetchTable('Questiones')->get(intval($pergunta_id));
+                if ($pergunta->type == 'select' || $pergunta->type == 'radio' || $pergunta->type == 'checkbox' || $pergunta->type == 'boolean') {
+                    $opcoes = json_decode($pergunta->options, true);
+                    foreach ($opcoes as $option_key => $option_value) {
+                        if ($option_key == $value) {
+                            $avaliacoes[$pergunta->text] = $option_value;
+                            // unset($avaliacoes[$option_key]);
+                            // unset($avaliacoes[$option_value]);
+                        }
+                    }
+                } else {
+                    $avaliacoes[$pergunta->text] = $value;
+                }
+            }
+        }
         $this->Authorization->skipAuthorization();
-        $this->set(compact('resposta'));
+        $this->set(compact('resposta', 'avaliacoes'));
     }
 
     /**

@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Estagiario $estagiarios
  * @var \App\Model\Entity\Aluno $alunos
  */
+// pr($estagiario);
 $user = $this->getRequest()->getAttribute("identity"); ?>
 
 <?php echo $this->element("menu_mural"); ?>
@@ -189,7 +190,7 @@ $user = $this->getRequest()->getAttribute("identity"); ?>
     </div>
 
     <div class="view">
-        
+
         <div class="tab-content">
             <div id="estagiario" class="tab-pane container active show">
                 <table class="table table-striped table-hover table-responsive">
@@ -389,13 +390,21 @@ $user = $this->getRequest()->getAttribute("identity"); ?>
 
         <div class="tab-content">
             <div id="atividades" class="tab-pane container active show">
+                <?php // pr($estagiario->folhadeatividades); ?>
                 <?php if (empty($estagiario->folhadeatividades)): ?>
                     <div class="alert-warning" role="alert">
                         <h4 class="alert-heading">Atenção!</h4>
                         <p>Este estagiário ainda não possui atividades cadastradas.</p>
                         <hr>
-                        <p class="mb-0">Clique no botão "Preencher Atividades" para adicionar
-                            atividades.</p>
+                        <p class="mb-0">Clique no botão
+                            <?= $this->Html->link(
+                                "Preencher Atividades",
+                                ['controller' => 'folhadeatividades', 'action' => 'atividade', '?' => ['estagiario_id' => $estagiario->id]],
+                                ['class' => 'btn btn-primary me-1']
+                            ) ?>
+                            para adicionar
+                            atividades.
+                        </p>
                     </div>
                 <?php else: ?>
                     <table class="table table-striped table-hover table-responsive">
@@ -413,15 +422,27 @@ $user = $this->getRequest()->getAttribute("identity"); ?>
                         ): ?>
                             <tr>
                                 <td><?= h($folhadeatividade->id) ?></td>
-                                <td><?= h(
-                                    $folhadeatividade->dia->format("d-MM-Y"),
-                                ) ?></td>
-                                <td><?= h(
-                                    $folhadeatividade->inicio->format("HH:mm"),
-                                ) ?></td>
-                                <td><?= h(
-                                    $folhadeatividade->final->format("HH:mm"),
-                                ) ?></td>
+                                <td>
+                                    <?=
+                                        $this->Time->format($folhadeatividade->dia, "d-MM-Y")
+                                        ?>
+                                </td>
+                                <td>
+                                    <?=
+                                        $this->Time->format(
+                                            $folhadeatividade->inicio,
+                                            "HH:mm"
+                                        )
+                                        ?>
+                                </td>
+                                <td>
+                                    <?=
+                                        $this->Time->format(
+                                            $folhadeatividade->final,
+                                            "HH:mm"
+                                        )
+                                        ?>
+                                </td>
                                 <td class="text">
                                     <?= $this->Text->autoParagraph(
                                         h($folhadeatividade->atividade),
@@ -442,21 +463,29 @@ $user = $this->getRequest()->getAttribute("identity"); ?>
                         <h4 class="alert-heading">Atenção!</h4>
                         <p>Este estagiário ainda não possui avaliação.</p>
                         <hr>
-                        <p class="mb-0">Clique no botão "Preencher Avaliação" para adicionar uma
-                            avaliação.</p>
+                        <p class="mb-0">Clique no botão
+                            <?= $this->Html->link(
+                                "Preencher Avaliação",
+                                ['controller' => 'respostas', 'action' => 'add', '?' => ['estagiario_id' => $estagiario->id]],
+                                ['class' => 'btn btn-primary me-1']
+                            ) ?>
+                            para adicionar uma
+                            avaliação.
+                        </p>
                     </div>
                 <?php else: ?>
                     <table class="table table-striped table-hover table-responsive">
                         <tr>
-                            <td class="text">
-                                <strong><?= __("Resposta") ?></strong>
-                                <blockquote>
-                                    <?= $this->Text->autoParagraph(
-                                        h($estagiario->resposta->response),
-                                    ) ?>
-                                </blockquote>
+                            <td class="text" colspan="2">
+                                <strong><?= __("Avaliação") ?></strong>
                             </td>
                         </tr>
+                        <?php foreach ($avaliacoes as $key => $value): ?>
+                            <tr>
+                                <th><?= h($key) ?></th>
+                                <td><?= h($value) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
                         <tr>
                             <th><?= __("Criado") ?></th>
                             <td><?= $this->Time->format(
