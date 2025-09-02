@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\FrozenTime;
+use Cake\I18n\I18n;
 /**
  * Respostas Controller
  *
@@ -110,8 +112,8 @@ class RespostasController extends AppController
             $data['question_id'] = $this->request->getData('question_id') ?? 1;
             $data['estagiarios_id'] = $this->request->getData('estagiario_id');
             $data['response'] = json_encode($this->request->getData(), JSON_PRETTY_PRINT);
-            $data['created'] = date('Y-m-d H:i:s');
-            $data['modified'] = date('Y-m-d H:i:s');
+            $data['created'] = FrozenTime::now();
+            $data['modified'] = FrozenTime::now();
             // pr($data);
             // die();
             $resposta = $this->Respostas->newEmptyEntity();
@@ -139,11 +141,32 @@ class RespostasController extends AppController
     public function edit($id = null)
     {
         $resposta = $this->Respostas->get($id, [
-            'contain' => [],
+            'contain' => ['Estagiarios' => ['Alunos']],
         ]);
+        $respostas = json_decode($resposta->response, true);
+        $avaliacoes = [];
+        $i = 0;
+        foreach ($respostas as $key => $value) {
+            if (substr($key, 0, 9) == 'avaliacao') {
+                $pergunta_id = (int) substr($key, 9, 2);
+                $pergunta = $this->fetchTable('Questiones')->get(intval($pergunta_id));
+                $avaliacoes[$i]['pergunta_id'] = $pergunta_id;    
+                $avaliacoes[$i]['pergunta'] = $pergunta->text;
+                $avaliacoes[$i]['type'] = $pergunta->type;
+                $avaliacoes[$i]['value'] = $value;
+                if ($pergunta->type == 'select' || $pergunta->type == 'radio' || $pergunta->type == 'checkbox' || $pergunta->type == 'boolean') {
+                    $opcoes = json_decode($pergunta->options, true);
+                    $avaliacoes[$i]['opcoes'] = $opcoes;
+                } else {
+                    $avaliacoes[$i]['opcoes'] = null;
+                }
+            }
+            $i++;
+        }
         $this->Authorization->skipAuthorization();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $resposta = $this->Respostas->patchEntity($resposta, $this->request->getData());
+            $resposta->modified = FrozenTime::now();
             if ($this->Respostas->save($resposta)) {
                 $this->Flash->success(__('Resposta atualizada.'));
                 return $this->redirect(['action' => 'view', $resposta->id]);
@@ -153,7 +176,7 @@ class RespostasController extends AppController
         }
         $questiones = $this->Respostas->Questiones->find('list', ['limit' => 200])->all();
         $estagiarios = $this->Respostas->Estagiarios->find('list', ['limit' => 200])->all();
-        $this->set(compact('resposta', 'questiones', 'estagiarios'));
+        $this->set(compact('resposta', 'avaliacoes'));
     }
 
     /**

@@ -31,7 +31,8 @@
                 'value' => $estagiario_id,
                 'templates' => [
                     'inputContainer' => '<div class="d-none" {{type}}{{required}}">{{content}}</div>'
-                ]
+                ],
+                'class' => 'form-control'
             ]);
             ?>
             <?php foreach ($questiones as $questione): ?>
