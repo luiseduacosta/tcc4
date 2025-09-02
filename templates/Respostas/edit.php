@@ -29,7 +29,7 @@
     </nav>
 
     <div class="container mt-4">
-        <h1><?= $resposta->estagiario->aluno->nome . ' estagiário nível ' . $resposta->estagiario->nivel ?></h1>
+        <h1><?= $estagiario->aluno->nome . ' estagiário nível ' . $estagiario->nivel ?></h1>
         <?= $this->Form->create($resposta) ?>
         <fieldset>
             <legend><?= __('Editar resposta') ?></legend>

@@ -140,8 +140,10 @@ class RespostasController extends AppController
      */
     public function edit($id = null)
     {
-        $resposta = $this->Respostas->get($id, [
-            'contain' => ['Estagiarios' => ['Alunos']],
+        $this->Authorization->skipAuthorization();
+        $resposta = $this->Respostas->get($id);
+        $estagiario = $this->fetchTable('Estagiarios')->get($resposta->estagiarios_id, [
+            'contain' => ['Alunos']
         ]);
         $respostas = json_decode($resposta->response, true);
         $avaliacoes = [];
@@ -167,6 +169,7 @@ class RespostasController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $resposta = $this->Respostas->patchEntity($resposta, $this->request->getData());
             $resposta->modified = FrozenTime::now();
+            $resposta->response = json_encode($this->request->getData(), JSON_PRETTY_PRINT);
             if ($this->Respostas->save($resposta)) {
                 $this->Flash->success(__('Resposta atualizada.'));
                 return $this->redirect(['action' => 'view', $resposta->id]);
@@ -174,9 +177,7 @@ class RespostasController extends AppController
             $this->Flash->error(__('Resposta não atualizada. Tente novamente.'));
             return $this->redirect(['action' => 'index']);
         }
-        $questiones = $this->Respostas->Questiones->find('list', ['limit' => 200])->all();
-        $estagiarios = $this->Respostas->Estagiarios->find('list', ['limit' => 200])->all();
-        $this->set(compact('resposta', 'avaliacoes'));
+        $this->set(compact('resposta', 'avaliacoes', 'estagiario'));
     }
 
     /**
