@@ -135,7 +135,7 @@ $niveis = [
         }
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Confirmar', ['class' => 'btn btn-primary'])) ?>
+    <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
 </div>
 
