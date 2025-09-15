@@ -43,9 +43,14 @@ class AreainstituicoesController extends AppController
     public function view($id = null)
     {
         $this->Authorization->skipAuthorization();
-        $areainstituicao = $this->Areainstituicoes->get($id, [
-            'contain' => [],
-        ]);
+        try {
+            $areainstituicao = $this->Areainstituicoes->get($id, [
+                'contain' => [],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Área de instituição não encontrada.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->set(compact('areainstituicao'));
     }
 
@@ -63,10 +68,10 @@ class AreainstituicoesController extends AppController
             $areainstituicao = $this->Areainstituicoes->patchEntity($areainstituicao, $this->request->getData());
             if ($this->Areainstituicoes->save($areainstituicao)) {
                 $this->Flash->success(__('Área de instituição inserida.'));
-
                 return $this->redirect(['action' => 'view', $areainstituicao->id]);
             }
             $this->Flash->error(__('Área de instituição não inserida.'));
+            return $this->redirect(['action' => 'index']);
         }
         $this->set(compact('areainstituicao'));
     }
@@ -80,19 +85,25 @@ class AreainstituicoesController extends AppController
      */
     public function edit($id = null)
     {
-
-        $areainstituicao = $this->Areainstituicoes->get($id, [
-            'contain' => [],
-        ]);
+        $this->Authorization->skipAuthorization();
+        try {
+            $areainstituicao = $this->Areainstituicoes->get($id, [
+                'contain' => [],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Área de instituição não encontrada.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($areainstituicao);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $areainstituicao = $this->Areainstituicoes->patchEntity($areainstituicao, $this->request->getData());
             if ($this->Areainstituicoes->save($areainstituicao)) {
                 $this->Flash->success(__('Área de instituição atualizada.'));
-
                 return $this->redirect(['action' => 'view', $areainstituicao->id]);
             }
-            $this->Flash->error(__('Área de instituição não atualizada.'));
+            $this->Flash->error(__('Área de instituição não atualizada. Tente novamente'));
+            return $this->redirect(['action' => 'view', $areainstituicao->id]);
         }
         $this->set(compact('areainstituicao'));
     }
@@ -106,16 +117,23 @@ class AreainstituicoesController extends AppController
      */
     public function delete($id = null)
     {
-
+        $this->Authorization->skipAuthorization();
+        try {
+            $areainstituicao = $this->Areainstituicoes->get($id, [
+                'contain' => [],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Área de instituição não encontrada.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->request->allowMethod(['post', 'delete']);
-        $areainstituicao = $this->Areainstituicoes->get($id);
         $this->Authorization->authorize($areainstituicao);
         if ($this->Areainstituicoes->delete($areainstituicao)) {
             $this->Flash->success(__('Área da instituição excluída.'));
         } else {
-            $this->Flash->error(__('Área da instituição não excluída.'));
+            $this->Flash->error(__('Área da instituição não excluída. Tente novamente'));
+            return $this->redirect(['action' => 'view', $areainstituicao->id]);
         }
-
         return $this->redirect(['action' => 'index']);
     }
 }
