@@ -31,13 +31,13 @@ $user = $this->getRequest()->getAttribute('identity');
                 $this->Form->postLink(
                         __('Excluir'),
                         ['action' => 'delete', $instituicao->id],
-                        ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $instituicao->id), 'class' => 'btn btn-danger float-right']
+                        ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $instituicao->id), 'class' => 'btn btn-danger me-1']
                 )
                 ?>
             </li>
         <?php endif; ?>
         <li class="nav-item">
-            <?= $this->Html->link(__('Listar instituições'), ['action' => 'index'], ['class' => 'btn btn-primary float-end']) ?>
+            <?= $this->Html->link(__('Listar instituições'), ['action' => 'index'], ['class' => 'btn btn-primary me-1']) ?>
         </li>
     </ul>
 </nav>

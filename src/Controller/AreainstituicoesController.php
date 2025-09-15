@@ -45,7 +45,7 @@ class AreainstituicoesController extends AppController
         $this->Authorization->skipAuthorization();
         try {
             $areainstituicao = $this->Areainstituicoes->get($id, [
-                'contain' => [],
+                'contain' => ['Instituicoes' => ['sort' => ['instituicao' => 'ASC']]],
             ]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Área de instituição não encontrada.'));

@@ -10,7 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $instituicao
- * @property int|null $area_instituicoes_id
+ * @property int|null $areainstituicoes_id
  * @property string|null $area
  * @property string|null $natureza
  * @property string $cnpj
@@ -50,7 +50,7 @@ class Instituicao extends Entity
      */
     protected $_accessible = [
         'instituicao' => true,
-        'area_instituicoes_id' => true,
+        'areainstituicoes_id' => true,
         'area' => true,
         'natureza' => true,
         'cnpj' => true,

@@ -77,10 +77,10 @@ class InstituicoesController extends AppController
             $instituicao = $this->Instituicoes->patchEntity($instituicao, $this->request->getData());
             if ($this->Instituicoes->save($instituicao)) {
                 $this->Flash->success(__('Instituição de estágio criada.'));
-
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $instituicao->id]);
             }
             $this->Flash->error(__('Não foi possível criar a  instituição de estágio. Tente novamente.'));
+            return $this->redirect(['action' => 'index']);
         }
         $areainstituicoes = $this->Instituicoes->Areainstituicoes->find('list');
         $supervisores = $this->Instituicoes->Supervisores->find('list');
@@ -105,10 +105,10 @@ class InstituicoesController extends AppController
             $instituicao = $this->Instituicoes->patchEntity($instituicao, $this->request->getData());
             if ($this->Instituicoes->save($instituicao)) {
                 $this->Flash->success(__('Instituição de estágio atualizada.'));
-
                 return $this->redirect(['action' => 'view', $instituicao->id]);
             }
             $this->Flash->error(__('Instituição de estágio não foi atualizada.'));
+            return $this->redirect(['action' => 'index']);
         }
         $areainstituicoes = $this->Instituicoes->Areainstituicoes->find('list');
         $supervisores = $this->Instituicoes->Supervisores->find('list');
@@ -132,8 +132,8 @@ class InstituicoesController extends AppController
             $this->Flash->success(__('Instituição de estágio excluída.'));
         } else {
             $this->Flash->error(__('Instituição de estágio não foi excluída.'));
+            return $this->redirect(['action' => 'view', $instituicao->id]);
         }
-
         return $this->redirect(['action' => 'index']);
     }
 
@@ -147,9 +147,6 @@ class InstituicoesController extends AppController
         }
 
         $instituicao_id = $this->request->getData('id');
-
-        // $instituicao_id = 265; // Exemplo de ID da instituição, você pode substituir isso por um valor dinâmico
-
         try {
             $supervisores = $this->Instituicoes->Supervisores->find(
                 'list',

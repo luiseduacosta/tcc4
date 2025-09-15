@@ -50,7 +50,7 @@ class InstituicoesTable extends Table
 
         $this->belongsTo('Areainstituicoes', [
             'className' => 'Areainstituicoes',
-            'foreignKey' => 'area_instituicoes_id',
+            'foreignKey' => 'areainstituicoes_id',
         ]);
         $this->hasMany('Estagiarios', [
             'foreignKey' => 'instituicao_id',
@@ -191,7 +191,7 @@ class InstituicoesTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['area_instituicoes_id'], 'Areainstituicoes'), ['errorField' => 'area_instituicoes_id']);
+        $rules->add($rules->existsIn(['areainstituicoes_id'], 'Areainstituicoes'), ['errorField' => 'areainstituicoes_id']);
 
         return $rules;
     }
