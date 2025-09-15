@@ -42,7 +42,7 @@
                 </td>
 
                 <td>
-                    <?php // echo $this->Html->link($c_cargahorariatotal['registro'], '/alunos/view/' . $c_cargahorariatotal['id']); ?>
+                    <?php echo $this->Html->link($c_cargahorariatotal['registro'], '/alunos/view/' . $c_cargahorariatotal['id']); ?>
                 </td>
 
                 <td>
@@ -60,11 +60,13 @@
                         <td>
                             <?php echo $cada_cargahorariatotal['periodo']; ?>
                         </td>
+
                         <td>
                             <?php echo $cada_cargahorariatotal['ch']; ?>
                         </td>
 
                     <?php endif; ?>
+
                 <?php endforeach; ?>
 
                 <td>
