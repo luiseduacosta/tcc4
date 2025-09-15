@@ -321,42 +321,52 @@ class AlunosController extends AppController
             ->limit(20)
             ->toArray();
 
-        $criterio[] = null;
-        $cargahorariatotal[] = null;
-        $i = 0;
-        foreach ($alunos as $aluno):
-            $cargahorariatotal[$i]["id"] = $aluno["Aluno"]["id"];
-            $cargahorariatotal[$i]["registro"] = $aluno["Aluno"]["registro"];
-            $cargahorariatotal[$i]["q_semestres"] = sizeof(
-                $aluno["estagiarios"],
-            );
-            $carga_estagio = null;
-            $y = 0;
-            foreach ($aluno["estagiarios"] as $estagiario):
-                if ($estagiario["nivel"] == 1):
-                    $cargahorariatotal[$i][$y]["ch"] = $estagiario["ch"];
-                    $cargahorariatotal[$i][$y]["nivel"] = $estagiario["nivel"];
-                    $cargahorariatotal[$i][$y]["periodo"] =
-                        $estagiario["periodo"];
-                    $carga_estagio["ch"] =
-                        $carga_estagio["ch"] + $estagiario["ch"];
-                else:
-                    $cargahorariatotal[$i][$y]["ch"] = $estagiario["ch"];
-                    $cargahorariatotal[$i][$y]["nivel"] = $estagiario["nivel"];
-                    $cargahorariatotal[$i][$y]["periodo"] =
-                        $estagiario["periodo"];
-                    $carga_estagio["ch"] =
-                        $carga_estagio["ch"] + $estagiario["ch"];
-                endif;
-                $y++;
+        if (empty($alunos)) {
+            $this->Flash->error(__("Nenhum aluno encontrado."));
+            return $this->redirect(["action" => "index"]);
+        } else {
+            /**
+             * Monta um array com a carga horária total de cada aluno
+             */
+            $criterio[] = null;
+            $cargahorariatotal[] = null;
+            $i = 0;
+            foreach ($alunos as $aluno):
+                // pr($aluno);
+                $cargahorariatotal[$i]["id"] = $aluno["id"];
+                $cargahorariatotal[$i]["registro"] = $aluno["registro"];
+                $cargahorariatotal[$i]["q_semestres"] = sizeof(
+                    $aluno["estagiarios"],
+                );
+                $carga_estagio['ch'] = null;
+                $y = 0;
+                foreach ($aluno["estagiarios"] as $estagiario):
+                    // pr($estagiario['ch']);
+                    if ($estagiario["nivel"] == 1):
+                        $cargahorariatotal[$i][$y]["ch"] = $estagiario["ch"];
+                        $cargahorariatotal[$i][$y]["nivel"] = $estagiario["nivel"];
+                        $cargahorariatotal[$i][$y]["periodo"] =
+                            $estagiario["periodo"];
+                        $carga_estagio["ch"] =
+                            $carga_estagio["ch"] + $estagiario["ch"];
+                    else:
+                        $cargahorariatotal[$i][$y]["ch"] = $estagiario["ch"];
+                        $cargahorariatotal[$i][$y]["nivel"] = $estagiario["nivel"];
+                        $cargahorariatotal[$i][$y]["periodo"] =
+                            $estagiario["periodo"];
+                        $carga_estagio["ch"] =
+                            $carga_estagio["ch"] + $estagiario["ch"];
+                    endif;
+                    $y++;
+                endforeach;
+                $cargahorariatotal[$i]["ch_total"] = $carga_estagio["ch"];
+                $criterio[$i] = $cargahorariatotal[$i][$ordem];
+                $i++;
             endforeach;
-            $cargahorariatotal[$i]["ch_total"] = $carga_estagio["ch"];
-            $criterio[$i] = $cargahorariatotal[$i][$ordem];
-            $i++;
-        endforeach;
 
-        array_multisort($criterio, SORT_ASC, $cargahorariatotal);
-        $this->set("cargahorariatotal", $cargahorariatotal);
+            array_multisort($criterio, SORT_ASC, $cargahorariatotal);
+            $this->set("cargahorariatotal", $cargahorariatotal);
+        }
     }
 
     /**
@@ -597,10 +607,10 @@ class AlunosController extends AppController
                 );
                 if (
                     isset(
-                        $this->getRequest()->getAttribute("identity")[
-                            "categoria"
-                        ],
-                    ) &&
+                    $this->getRequest()->getAttribute("identity")[
+                        "categoria"
+                    ]
+                ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
@@ -630,10 +640,10 @@ class AlunosController extends AppController
                 );
                 if (
                     isset(
-                        $this->getRequest()->getAttribute("identity")[
-                            "categoria"
-                        ],
-                    ) &&
+                    $this->getRequest()->getAttribute("identity")[
+                        "categoria"
+                    ]
+                ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
@@ -696,10 +706,10 @@ class AlunosController extends AppController
                 );
                 if (
                     isset(
-                        $this->getRequest()->getAttribute("identity")[
-                            "categoria"
-                        ],
-                    ) &&
+                    $this->getRequest()->getAttribute("identity")[
+                        "categoria"
+                    ]
+                ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
