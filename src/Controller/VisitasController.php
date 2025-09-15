@@ -44,7 +44,10 @@ class VisitasController extends AppController
      */
     public function view($id = null)
     {
-
+        if (!$id) {
+            $this->Flash->error(__('Visita inválida.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $visita = $this->Visitas->get($id, [
             'contain' => ['Instituicoes'],
         ]);
@@ -59,7 +62,6 @@ class VisitasController extends AppController
      */
     public function add()
     {
-
         $visita = $this->Visitas->newEmptyEntity();
         $this->Authorization->authorize($visita);
 
@@ -68,9 +70,10 @@ class VisitasController extends AppController
             if ($this->Visitas->save($visita)) {
                 $this->Flash->success(__('Visita inserida.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $visita->id]);
             }
             $this->Flash->error(__('Visita não inserida.'));
+            return $this->redirect(['action' => 'index']);
         }
         $instituicoes = $this->Visitas->Instituicoes->find('list');
         $this->set(compact('visita', 'instituicoes'));
@@ -85,11 +88,13 @@ class VisitasController extends AppController
      */
     public function edit($id = null)
     {
-
+        if (!$id) {
+            $this->Flash->error(__('Visita inválida.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $visita = $this->Visitas->get($id, [
             'contain' => ['Instituicoes']
         ]);
-        // debug($visita);
         $this->Authorization->authorize($visita);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -114,7 +119,10 @@ class VisitasController extends AppController
      */
     public function delete($id = null)
     {
-
+        if (!$id) {
+            $this->Flash->error(__('Visita inválida.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->request->allowMethod(['post', 'delete']);
         $visita = $this->Visitas->get($id);
         $this->Authorization->authorize($visita);
