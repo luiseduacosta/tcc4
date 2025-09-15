@@ -10,9 +10,9 @@
 ?>
 
 <?= $this->element('menu_mural') ?>
-<?= $this->element('templates') ?>
 
 <div class="container mt-1">
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <ul class="navbar-nav collapse navbar-collapse">
             <li class="nav-item">
@@ -118,11 +118,12 @@
                     }
                     ?>
                 </div>
-            <?php
+                <?php
             }
             ?>
         </fieldset>
         <?= $this->Form->button(__('Confirma'), ['class' => 'btn btn-primary']) ?>
         <?= $this->Form->end() ?>
     </div>
+
 </div>

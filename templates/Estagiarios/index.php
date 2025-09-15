@@ -211,19 +211,18 @@ $user = $this->getRequest()->getAttribute('identity');
         </tbody>
     </table>
 
-    <?= $this->element('templates') ?>
+    <?= $this->element('paginator') ?>
 
-    <div class="d-flex justify-content-center">
-        <div class="paginator">
-            <ul class="pagination">
-                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
-                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
-                <?= $this->Paginator->numbers() ?>
-                <?= $this->Paginator->next(__('próximo') . ' >') ?>
-                <?= $this->Paginator->last(__('último') . ' >>') ?>
-            </ul>
-        <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro de um total de {{count}}.')) ?>
+    <div class="row">
+        <ul class="pagination justify-content-center">
+            <?= $this->Paginator->first('<< ' . __('Primeiro')) ?>
+            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next(__('próximo') . ' >') ?>
+            <?= $this->Paginator->last(__('Último') . ' >>') ?>
+        </ul>
+        <p class="text-center">
+            <?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro de um total de {{count}}.')) ?>
         </p>
-        </div>
     </div>
 </div>
