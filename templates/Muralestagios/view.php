@@ -243,7 +243,7 @@ $this->assign('title', __('Mural de Estágios'));
                                 <div class='col-auto'>
                                     <?=
                                         $this->Form->submit('Inscrição', ['type' => 'submit', 'label' => ['text' => 'Inscrição', 'class' => 'col-4'], 'class' => 'btn btn-primary']);
-                                        $this->Form->end();
+                                    $this->Form->end();
                                     ?>
                                 </div>
                             </div>
@@ -254,17 +254,20 @@ $this->assign('title', __('Mural de Estágios'));
                     <!--
                         Para os outros usuários as inscrições dependem da data de encerramento
                         //-->
-                    <?php if ($hoje->i18nFormat('Y-m-d') < $muralestagio->dataInscricao->i18nFormat('Y-m-d')): ?>
+                    <?php if (empty($muralestagio->dataInscricao)): ?>
+                        <?php $muralestagio->dataInscricao = $hoje->addDays(1); ?>
+                    <?php endif; ?>
+                    <?php if ($hoje->i18nFormat('yyyy-MM-dd') < $muralestagio->dataInscricao->i18nFormat('yyyy-MM-dd')): ?>
                         <tr>
                             <td colspan=2 style="text-align: center">
 
                                 <?= $this->Form->create(null, ['url' => ['controller' => 'Muralinscricoes', 'action' => 'add', '?' => ['muralestagio_id', $muralestagio->id]], 'type' => 'post']); ?>
                                 <?= $this->Form->input('muralestagio_id', ['type' => 'hidden', 'value' => $muralestagio->id]); ?>
-                                <?= $this->Form->input('registro', ['type' => 'hidden', 'value' => $user->numero, 'readonly', 'class' => 'form-control']); ?>
+                                <?= $this->Form->input('registro', ['type' => 'hidden', 'value' => $user->numero]); ?>
                                 <div class='row justify-content-center'>
                                     <div class='col-auto'>
                                         <?=
-                                            $this->Form->Confirma('Inscrição', ['type' => 'Confirma', 'label' => ['text' => 'Inscrição', 'class' => 'col-4'], 'class' => 'btn btn-primary']);
+                                            $this->Form->button('Fazer inscrição', ['type' => 'Confirma', 'label' => ['text' => 'Inscrição', 'class' => 'col-4'], 'class' => 'btn btn-primary']);
                                         ?>
                                         <?=
                                             $this->Form->end();

@@ -10,7 +10,6 @@ use Cake\I18n\Time;
 ?>
 
 <?php echo $this->element('menu_mural') ?>
-<?php $this->element('templates') ?>
 
 <div class="container mt-1">
 
@@ -56,17 +55,6 @@ use Cake\I18n\Time;
         </table>
     </div>
 
-    <div class="row mt-4">
-        <ul class="pagination justify-content-center">
-            <?= $this->Paginator->first('<< ' . __('primeiro'), ['templates' => ['first' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>']]) ?>
-            <?= $this->Paginator->prev('< ' . __('anterior'), ['templates' =>['prevActive' => '<li class="page-item"><a class="page-link" rel="prev" href="{{url}}">{{text}}</a></li>'], ['prevDisabled' => '<li class="page-item disabledá"><a class="page-link" href="" onclick="return false;">{{text}}</a></li>']]) ?>
-            <?= $this->Paginator->numbers(['templates' => ['number' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>'], ['current' => '<li class="page-item active"><a class="page-link" href="">{{text}}</a></li>']]) ?>
-            <?= $this->Paginator->next(__('próximo') . ' >', ['templates' => ['nextActive' => '<li class="page-item"><a class="page-link" rel="próximo" href="{{url}}">{{text}}</a></li>'], ['nextDisabled' => '<li class="page-item disabled"><a class="page-link" href="" onclick="return false;">{{text}}</a></li>']]) ?>
-            <?= $this->Paginator->last(__('último') . ' >>', ['templates' => ['last' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>']]) ?>
-        </ul>
-        <p class="text-center">
-            <?= $this->Paginator->counter( __('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) de um total de {{count}}.'), ['tempates' => [['counterRange' => '{{start}} - {{end}} de {{count}}'], ['counterPages' => '{{page}} de {{pages}}']]]) ?>
-        </p>
-    </div>
+    <?= $this->element('paginator') ?>
 
 </div>

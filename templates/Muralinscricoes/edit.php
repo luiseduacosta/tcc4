@@ -31,6 +31,11 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset>
         <legend><?= __('Editar inscrição') ?></legend>
         <?php
+        echo $this->Form->control('id', [
+            'value' => $muralinscricao->id,
+            'readonly' => true,
+            'type' => 'hidden'
+        ]);
         echo $this->Form->control('registro', [
             'value' => $muralinscricao->alunos['registro'],
             'readonly' => true,

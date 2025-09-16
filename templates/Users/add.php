@@ -20,6 +20,6 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('categoria', ['options' => ['2' => 'estudante', '3' => 'professor', '4' => 'supervisor']]);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Confirma')) ?>
+    <?= $this->Form->button(__('Confirma'), ['class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
 </div>

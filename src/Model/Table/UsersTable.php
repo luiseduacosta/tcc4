@@ -82,10 +82,12 @@ class UsersTable extends Table {
 
         $validator
             ->email('email')
+            ->requirePresence('email', 'create')
             ->notEmptyString('email');
 
         $validator
             ->scalar('password')
+            ->requirePresence('password', 'create')
             ->maxLength('password', 50)
             ->notEmptyString('password');
 
@@ -95,11 +97,9 @@ class UsersTable extends Table {
 
         $validator
             ->integer('numero')
-            ->requirePresence('numero', 'create')
-            ->notEmptyString('numero');
+            ->allowEmptyString('numero');
 
         $validator
-            /* ->dateTime('timestamp') */
             ->notEmptyDateTime('timestamp');
 
         return $validator;

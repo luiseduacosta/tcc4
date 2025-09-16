@@ -36,7 +36,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php else: ?>
             <h1 style="text-align: center;">Inscrições para seleção de estágio da ESS/UFRJ. Período: <?= $periodo; ?></h1>
         <?php endif; ?>
-    </div>    
+    </div>
 </nav>
 
 <div class="d-flex justify-content-start">
@@ -83,14 +83,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </table>
 </div>
 
-<div class="paginator">
-    <ul class="pagination">
-        <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
-        <?= $this->Paginator->prev('< ' . __('anterior')) ?>
-        <?= $this->Paginator->numbers() ?>
-        <?= $this->Paginator->next(__('próximo') . ' >') ?>
-        <?= $this->Paginator->last(__('último') . ' >>') ?>
-    </ul>
-    <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) do {{count}} total')) ?>
-    </p>
-</div>
+<?php $this->Paginator->setTemplates(['first' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>']); ?>
+<?php $this->Paginator->setTemplates(['last' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>']); ?>
+
+<?= $this->element('paginator') ?>

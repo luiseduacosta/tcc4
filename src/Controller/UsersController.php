@@ -43,10 +43,8 @@ class UsersController extends AppController
 
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
-        // debug($result);
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
-
             /**Verifica se o aluno está cadastrado */
             switch ($result->getData()->categoria) {
                 case '2':
@@ -75,6 +73,12 @@ class UsersController extends AppController
                             $this->Flash->error(__('Aluno não encontrado. Por favor, cadastre-se.'));
                             return $this->redirect(['controller' => 'Alunos', 'action' => 'add', '?' => ['dre' => $result->getData()->numero, 'email' => $result->getData()->email]]);
                         } else {
+                            $user = $this->Users->get($result->getData()->id);
+                            $data['numero'] = $alunos->registro;
+                            $user = $this->Users->patchEntity($user, $data);
+                            if ($this->Users->save($user)) {
+                                $this->Flash->success(__('Registro do(a) usuário(a) atualizado.'));
+                            }
                             $controller = 'Alunos';
                             $action = 'view';
                             $id = $estudante_id;
@@ -93,11 +97,13 @@ class UsersController extends AppController
                         } else {
                             $user = $this->Users->get($result->getData()->id);
                             $data['professor_id'] = $professor->id;
+                            $data['numero'] = $professor->siape;
                             $user = $this->Users->patchEntity($user, $data);
                             if ($this->Users->save($user)) {
                                 $this->Flash->success(__('Registro do(a) usuário(a) atualizado.'));
                             }
                             $professor_id = $professor->id;
+
                         }
                     }
                     $controller = 'Professores';
@@ -116,6 +122,7 @@ class UsersController extends AppController
                         } else {
                             $user = $this->Users->get($result->getData()->id);
                             $data['supervisor_id'] = $supervisor->id;
+                            $data['numero'] = $supervisor->cress;
                             $user = $this->Users->patchEntity($user, $data);
                             if ($this->Users->save($user)) {
                                 $this->Flash->success(__('Registro do(a) usuário(a) atualizado.'));
@@ -214,9 +221,11 @@ class UsersController extends AppController
                 $this->Flash->success(__('Usuário cadastrado.'));
                 switch ($user->categoria) {
                     case '2':
-                        $aluno = $this->fetchTable('Alunos')->find()
-                            ->where(['Alunos.dre' => $user->numero])
-                            ->first();
+                        if (isset($user->numero) || !empty($user->numero)) {
+                            $aluno = $this->fetchTable('Alunos')->find()
+                                ->where(['Alunos.registro' => $user->numero])
+                                ->first();
+                        }
                         if ($aluno) {
                             $data['estudante_id'] = $aluno->id;
                             $user = $this->Users->patchEntity($user, $data);
@@ -234,9 +243,11 @@ class UsersController extends AppController
                         break;
 
                     case '3':
-                        $professor = $this->fetchTable('Professores')->find()
-                            ->where(['Professores.siape' => $user->numero])
-                            ->first();
+                        if (isset($user->numero) || !empty($user->numero)) {
+                            $professor = $this->fetchTable('Professores')->find()
+                                ->where(['Professores.siape' => $user->numero])
+                                ->first();
+                        }
                         if ($professor) {
                             $data['professor_id'] = $professor->id;
                             $user = $this->Users->patchEntity($user, $data);
@@ -254,9 +265,11 @@ class UsersController extends AppController
                         break;
 
                     case '4':
-                        $supervisor = $this->fetchTable('Supervisores')->find()
-                            ->where(['Supervisores.cress' => $user->numero])
-                            ->first();
+                        if (isset($user->numero) || !empty($user->numero)) {
+                            $supervisor = $this->fetchTable('Supervisores')->find()
+                                ->where(['Supervisores.cress' => $user->numero])
+                                ->first();
+                        }
                         if ($supervisor) {
                             $data['supervisor_id'] = $supervisor->id;
                             $user = $this->Users->patchEntity($user, $data);

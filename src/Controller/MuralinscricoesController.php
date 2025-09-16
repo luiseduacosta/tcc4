@@ -96,7 +96,6 @@ class MuralinscricoesController extends AppController
         $this->Authorization->authorize($muralinscricao);
 
         if ($this->request->is('post', 'put', 'patch')) {
-
             // Pega os dados do formulário
             if ($this->request->getData('aluno_id')) {
                 $aluno = $this->fetchTable('Alunos')->get($this->request->getData('aluno_id'));
@@ -116,14 +115,13 @@ class MuralinscricoesController extends AppController
             } else {
                 $muralestagio = $this->Muralinscricoes->Muralestagios->get($muralestagio_id);
                 if (empty($muralestagio)) {
-                    $this->Flash->error(__('Mural de estágio não localizado')); 
+                    $this->Flash->error(__('Mural de estágio não localizado'));
                 } else {
                     $periodo_mural = $muralestagio->periodo;
                 }
             }
             /** Verifica se já fez inscricações para essa mesma vaga de estágio */
             $verifica = $this->Muralinscricoes->find()
-                ->contain([])
                 ->where(['muralestagio_id' => $muralestagio_id, 'registro' => $registro])
                 ->select(['id'])
                 ->first();
@@ -144,9 +142,8 @@ class MuralinscricoesController extends AppController
             }
 
             /** Pega o período atual */
-            $configuracaotable = $this->fetchTable('Configuracao');
-            $periodo = $configuracaotable->get(1);
-            $periodo = $periodo->mural_periodo_atual;
+            $periodo = $this->fetchTable('Configuracao')->get(1);
+            $periodo_atual = $periodo->mural_periodo_atual;
 
             /** Dados para fazer a inscrição */
             $data = [];
@@ -154,7 +151,7 @@ class MuralinscricoesController extends AppController
             $data['aluno_id'] = $aluno->id;
             $data['muralestagio_id'] = $muralestagio_id;
             $data['data'] = date('Y-m-d');
-            $data['periodo'] = $periodo_mural ?? $periodo;
+            $data['periodo'] = $periodo_mural ?? $periodo_atual;
             $data['timestamp'] = date('Y-m-d H:i:s');
 
             $muralinscricao = $this->Muralinscricoes->patchEntity($muralinscricao, $data);
@@ -244,26 +241,69 @@ class MuralinscricoesController extends AppController
      */
     public function edit($id = null)
     {
+
         try {
             $muralinscricao = $this->Muralinscricoes->get($id, [
                 'contain' => ['Alunos', 'Muralestagios'],
             ]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
-            $this->Flash->error(__('Registro muralinscricao não foi encontrado. Tente novamente.'));
+            $this->Flash->error(__('Registro de inscrição não foi encontrado. Tente novamente.'));
             return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'index']);
         }
         $this->Authorization->authorize($muralinscricao);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $muralinscricao = $this->Muralinscricoes->patchEntity($muralinscricao, $this->request->getData());
+
+            /** Ajusto o período conforme o mural de estágio selecionado */
+            $mural = $this->Muralinscricoes->get($this->request->getData('id'), [
+                'contain' => ['Muralestagios']
+            ]);
+            if (!$mural) {
+                $this->Flash->error(__('Mural de estágio não localizado'));
+                return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
+            } 
+            $data = $this->request->getData();
+            $data['periodo'] = $mural->muralestagios->periodo;
+
+            $muralinscricao = $this->Muralinscricoes->patchEntity($muralinscricao,$data);
             if ($this->Muralinscricoes->save($muralinscricao)) {
-                $this->Flash->success(__('Registro muralinscricao atualizado.'));
+                $this->Flash->success(__('Registro de inscrição atualizado.'));
                 return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'view', $muralinscricao->id]);
             }
-            $this->Flash->error(__('Registro muralinscricao não foi atualizado. Tente novamente.'));
+            $this->Flash->error(__('Registro de inscrição não foi atualizado. Tente novamente.'));
         }
 
-        $muralestagios = $this->Muralinscricoes->Muralestagios->find('list', ['order' => ['instituicao' => 'ASC']]);
-        $alunos = $this->Muralinscricoes->Alunos->find('list', ['order' => ['nome' => 'ASC']]);
+        /**  Muralestagios */
+        $mural = $this->Muralinscricoes->Muralestagios->find()
+            ->select([
+                'Muralestagios.id',
+                'instituicao_periodo' => $this->Muralinscricoes->Muralestagios->find()->func()->concat([
+                    'Muralestagios.periodo' => 'identifier',
+                    ' - ',
+                    'Muralestagios.instituicao' => 'identifier'
+                ])
+            ])
+            ->order(['Muralestagios.periodo' => 'DESC', 'Muralestagios.instituicao' => 'ASC'])
+            ->all();
+        foreach ($mural as $m) {
+            $muralestagios[$m->id] = $m->instituicao_periodo;
+        }
+
+        /**  Alunos */
+        $estudantes = $this->Muralinscricoes->Alunos->find()
+            ->select([
+                'id',
+                'registro_nome' => $this->Muralinscricoes->Alunos->find()->func()->concat([
+                    'Alunos.registro' => 'identifier',
+                    ' - ',
+                    'Alunos.nome' => 'identifier'
+                ])
+            ])
+            ->order(['Alunos.nome' => 'ASC'])
+            ->all();
+        foreach ($estudantes as $a) {
+            $alunos[$a->id] = $a->registro_nome;
+        }
+
         $this->set(compact('muralinscricao', 'muralestagios', 'alunos'));
     }
 

@@ -213,16 +213,4 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <?= $this->element('paginator') ?>
 
-    <div class="row">
-        <ul class="pagination justify-content-center">
-            <?= $this->Paginator->first('<< ' . __('Primeiro')) ?>
-            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('próximo') . ' >') ?>
-            <?= $this->Paginator->last(__('Último') . ' >>') ?>
-        </ul>
-        <p class="text-center">
-            <?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro de um total de {{count}}.')) ?>
-        </p>
-    </div>
 </div>
