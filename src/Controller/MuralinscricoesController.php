@@ -75,7 +75,7 @@ class MuralinscricoesController extends AppController
                 'contain' => ['Alunos', 'Muralestagios' => ['Instituicoes']]
             ]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
-            $this->Flash->error(__('Nao ha registros de inscricoes para esse numero!'));
+            $this->Flash->error(__('Nao ha registros de inscrições para esse número!'));
             return $this->redirect(['action' => 'index']);
         }
         $this->Authorization->authorize($muralinscricao);
@@ -234,7 +234,7 @@ class MuralinscricoesController extends AppController
         try {
             $muralinscricao = $this->Muralinscricoes->get($id);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
-            $this->Flash->error(__('Registro muralinscricao não foi encontrado. Tente novamente.'));
+            $this->Flash->error(__('Registro de inscrição não foi encontrado. Tente novamente.'));
             return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'index']);
         }
         $this->Authorization->authorize($muralinscricao);
