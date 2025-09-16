@@ -184,8 +184,8 @@ class MuralinscricoesController extends AppController
             }
         }
 
-        $estudantes = $this->Muralinscricoes->Alunos->find('list');
-        $muralestagios = $this->Muralinscricoes->Muralestagios->find('list');
+        $estudantes = $this->Muralinscricoes->Alunos->find('list', ['primaryKey' => 'registro', 'valueField' => 'nome' ,'order' => ['nome' => 'ASC']]);
+        $muralestagios = $this->Muralinscricoes->Muralestagios->find('list', ['order' => ['instituicao' => 'ASC']]);
         $this->set(compact('muralinscricao', 'estudantes', 'muralestagios', 'periodos', 'alunos'));
     }
 

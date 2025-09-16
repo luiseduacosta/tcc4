@@ -4,9 +4,6 @@
  * @var \App\Model\Entity\Muralinscricao $muralinscricao
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($alunonovos);
-// pr($alunoestagios);
-// die();
 ?>
 
 <?php echo $this->element('menu_mural') ?>
@@ -29,26 +26,26 @@ $user = $this->getRequest()->getAttribute('identity');
         <legend><?= __('Inscrição para seleção de estágio') ?></legend>
         <?php
         if (isset($user->categoria) && $user->categoria == 1):
+            echo $this->Form->control('aluno_id', ['label' => 'Aluno', 'options' => $estudantes]);
             echo $this->Form->control('registro', ['label' => 'Registro', 'placeholder' => 'Digite o DRE', 'options' => $estudantes, 'empty' => true]);
-            echo $this->Form->control('instituicao_id', ['label' => 'Mural de estágio', 'options' => $muralestagios, 'empty' => [$muralestagios_id->id => $muralestagios_id->instituicao], 'readonly' => true]);
+            echo $this->Form->control('instituicao_id', ['label' => 'Mural de estágio', 'options' => $muralestagios, 'empty' => 'Selecione o estágio']);
             echo $this->Form->control('data', ['value' => date('d-m-Y'), 'readonly' => true]);
-            echo $this->Form->control('periodo', ['label' => 'Período', 'value' => $muralestagios_id->periodo, 'readonly' => true]);
+            echo $this->Form->control('periodo', ['label' => 'Período', 'value' => end($periodos), 'readonly' => true]);
             echo $this->Form->control('timestamp', ['type' => 'hidden']);
-            echo $this->Form->control('aluno_id', ['label' => 'Aluno', 'options' => [$alunoestagio->id => $alunoestagio->nome]]);
         // die(pr($id_categoria));
         elseif (isset($user->categoria) && $user->categoria == 2):
-            echo $this->Form->control('registro', ['label' => 'Registro', 'value' => $alunonovos->registro, 'readonly' => true]);
-            echo $this->Form->control('instituicao_id', ['label' => 'Mural de estágio', 'options' => [$muralestagios_id->id => $muralestagios_id->instituicao], 'readonly' => true]);
+            echo $this->Form->control('aluno_id', ['label' => 'Aluno', 'options' => $estudantes]);
+            echo $this->Form->control('registro', ['label' => 'Registro', 'value' => $user->numero, 'readonly' => true]);
+            echo $this->Form->control('instituicao_id', ['label' => 'Mural de estágio', 'options' => [$muralestagios], 'readonly' => true]);
             echo $this->Form->control('data', ['type' => 'hidden', 'value' => date('Y-m-d')]);
-            echo $this->Form->control('periodo', ['label' => 'Período', 'options' => [$muralestagios_id->periodo => $muralestagios_id->periodo], 'readonly' => true]);
+            echo $this->Form->control('periodo', ['label' => 'Período', 'options' => $periodos, 'readonly' => false]);
             echo $this->Form->control('timestamp', ['type' => 'hidden']);
-            echo $this->Form->control('aluno_id', ['label' => 'Aluno', 'options' => [$alunoestagios->id => $alunoestagios->nome]]);
         else:
-            $this->Flash->error(__('Inscrição não pode ser realizada'));
-            echo $this->Html->link('Voltar para a lista', ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'btn btn-primary']);
+            $this->Flash->error(__('Usuário não autorizado para fazer inscrição.'));
+            echo $this->Html->link('Voltar para Mural', ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'btn btn-primary']);
         endif;
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Confirma')) ?>
+    <?= $this->Form->button(__('Confirma'), ['class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
 </div>
