@@ -44,13 +44,15 @@ class VisitasController extends AppController
      */
     public function view($id = null)
     {
-        if (!$id) {
-            $this->Flash->error(__('Visita inválida.'));
+        try {
+            $this->Authorization->skipAuthorization();
+            $visita = $this->Visitas->get($id, [
+                'contain' => ['Instituicoes'],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Nao ha registros de visitas para esse numero!'));
             return $this->redirect(['action' => 'index']);
         }
-        $visita = $this->Visitas->get($id, [
-            'contain' => ['Instituicoes'],
-        ]);
         $this->Authorization->authorize($visita);
         $this->set(compact('visita'));
     }
@@ -69,7 +71,6 @@ class VisitasController extends AppController
             $visita = $this->Visitas->patchEntity($visita, $this->request->getData());
             if ($this->Visitas->save($visita)) {
                 $this->Flash->success(__('Visita inserida.'));
-
                 return $this->redirect(['action' => 'view', $visita->id]);
             }
             $this->Flash->error(__('Visita não inserida.'));
@@ -88,13 +89,15 @@ class VisitasController extends AppController
      */
     public function edit($id = null)
     {
-        if (!$id) {
-            $this->Flash->error(__('Visita inválida.'));
+        try {
+            $this->Authorization->skipAuthorization();
+            $visita = $this->Visitas->get($id, [
+                'contain' => ['Instituicoes']
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Nao ha registros de visitas para esse numero!'));
             return $this->redirect(['action' => 'index']);
         }
-        $visita = $this->Visitas->get($id, [
-            'contain' => ['Instituicoes']
-        ]);
         $this->Authorization->authorize($visita);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -119,18 +122,20 @@ class VisitasController extends AppController
      */
     public function delete($id = null)
     {
-        if (!$id) {
-            $this->Flash->error(__('Visita inválida.'));
+        try {
+            $this->Authorization->skipAuthorization();
+            $visita = $this->Visitas->get($id);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Nao ha registros de visitas para esse numero!'));
             return $this->redirect(['action' => 'index']);
         }
-        $this->request->allowMethod(['post', 'delete']);
-        $visita = $this->Visitas->get($id);
         $this->Authorization->authorize($visita);
 
         if ($this->Visitas->delete($visita)) {
             $this->Flash->success(__('Visita excluída.'));
         } else {
             $this->Flash->error(__('Visita não excluída.'));
+            return $this->redirect(['action' => 'view', $visita->id]);
         }
 
         return $this->redirect(['action' => 'index']);

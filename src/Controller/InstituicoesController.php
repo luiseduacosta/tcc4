@@ -97,12 +97,17 @@ class InstituicoesController extends AppController
     public function edit($id = null)
     {
 
-        $instituicao = $this->Instituicoes->get($id, [
-            'contain' => ['Supervisores'],
-        ]);
-        $this->Authorization->authorize($instituicao);
+        try {
+            $instituicao = $this->Instituicoes->get($id, [
+                'contain' => ['Supervisores'],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Instituição não encontrada.'));
+            return $this->redirect(['action' => 'index']);
+        }
         if ($this->request->is(['patch', 'post', 'put'])) {
             $instituicao = $this->Instituicoes->patchEntity($instituicao, $this->request->getData());
+            $this->Authorization->authorize($instituicao);
             if ($this->Instituicoes->save($instituicao)) {
                 $this->Flash->success(__('Instituição de estágio atualizada.'));
                 return $this->redirect(['action' => 'view', $instituicao->id]);
@@ -124,9 +129,14 @@ class InstituicoesController extends AppController
      */
     public function delete($id = null)
     {
-
+        try {
+            $this->Authorization->skipAuthorization();
+            $instituicao = $this->Instituicoes->get($id);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Instituição não encontrada.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->request->allowMethod(['post', 'delete']);
-        $instituicao = $this->Instituicoes->get($id);
         $this->Authorization->authorize($instituicao);
         if ($this->Instituicoes->delete($instituicao)) {
             $this->Flash->success(__('Instituição de estágio excluída.'));
@@ -141,7 +151,6 @@ class InstituicoesController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
-
         if (!$this->request->is('post')) {
             return $this->response->withStatus(400);
         }

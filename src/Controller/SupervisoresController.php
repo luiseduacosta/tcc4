@@ -44,7 +44,6 @@ class SupervisoresController extends AppController
      */
     public function view($id = null)
     {
-
         $this->Authorization->skipAuthorization();
         if ($id === null):
             $cress = $this->getRequest()->getQuery('cress');
@@ -53,13 +52,15 @@ class SupervisoresController extends AppController
             $supervisor = $supervisorquery->first();
             $id = $supervisor->id;
         endif;
-
-        $supervisor = $this->Supervisores->get($id, [
-            'contain' => ['Instituicoes' => ['Areainstituicoes'], 'Estagiarios' => ['Alunos', 'Supervisores', 'Professores', 'Instituicoes']],
-        ]);
-        // pr($supervisor);
-        // die();
-        // $this->Authorization->authorize($supervisor);
+        try {
+            $this->Authorization->skipAuthorization();
+            $supervisor = $this->Supervisores->get($id, [
+                'contain' => ['Instituicoes' => ['Areainstituicoes'], 'Estagiarios' => ['Alunos', 'Supervisores', 'Professores', 'Instituicoes']],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Supervisora não encontrada.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->set(compact('supervisor'));
     }
 
@@ -81,6 +82,7 @@ class SupervisoresController extends AppController
                 return $this->redirect(['action' => 'view', $supervisor->id]);
             }
             $this->Flash->error(__('O registro da supervisora não foi realizado. Tente novamente.'));
+            return $this->redirect(['action' => 'index']);
         }
         $instituicoes = $this->Supervisores->Instituicoes->find('list');
         $this->set(compact('supervisor', 'instituicoes'));
@@ -95,20 +97,25 @@ class SupervisoresController extends AppController
      */
     public function edit($id = null)
     {
-
-        $supervisor = $this->Supervisores->get($id, [
-            'contain' => ['Instituicoes'],
-        ]);
+        try {
+            $this->Authorization->skipAuthorization();
+            $supervisor = $this->Supervisores->get($id, [
+                'contain' => ['Instituicoes'],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Supervisora não encontrada.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($supervisor);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $supervisor = $this->Supervisores->patchEntity($supervisor, $this->request->getData());
             if ($this->Supervisores->save($supervisor)) {
-                $this->Flash->success(__('Supervisora atualizada .'));
-
+                $this->Flash->success(__('Supervisora atualizada com sucesso.'));
                 return $this->redirect(['action' => 'view', $id]);
             }
             $this->Flash->error(__('A supervisora não foi atualizada. Tente novamente.'));
+            return $this->redirect(['action' => 'index']);
         }
         $instituicoes = $this->Supervisores->Instituicoes->find('list');
         $this->set(compact('supervisor', 'instituicoes'));
@@ -123,15 +130,20 @@ class SupervisoresController extends AppController
      */
     public function delete($id = null)
     {
-
-        $this->request->allowMethod(['post', 'delete']);
-        $supervisor = $this->Supervisores->get($id);
+        try {
+            $this->Authorization->skipAuthorization();
+            $supervisor = $this->Supervisores->get($id);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Supervisora não encontrada.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($supervisor);
 
         if ($this->Supervisores->delete($supervisor)) {
-            $this->Flash->success(__('Registro de supervisor(a) excluído.'));
+            $this->Flash->success(__('Registro de supervisora excluído com sucesso.'));
         } else {
-            $this->Flash->error(__('Registro de supervisor(a) não excluído.'));
+            $this->Flash->error(__('Registro de supervisora não excluído. Tente novamente.'));
+            return $this->redirect(['action' => 'view', $id]);
         }
 
         return $this->redirect(['action' => 'index']);

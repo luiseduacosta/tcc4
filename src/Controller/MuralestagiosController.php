@@ -66,14 +66,16 @@ class MuralestagiosController extends AppController
             $periodo = $periodoconfiguracao->mural_periodo_atual;
         }
         if ($periodo) {
-            $muralestagios = $this->Muralestagios->find('all', [
-                'conditions' => ['Muralestagios.periodo' => $periodo],
+            $muralestagios = $this->Muralestagios->find()
+            ->contain(['Instituicoes'])
+            ->where([
+                'Muralestagios.periodo' => $periodo,
             ]);
         } else {
             $this->Flash->error(__('Selecionar período.'));
             return $this->redirect(['action' => 'index']);
         }
-        /* Todos os períodos */
+        /** Todos os períodos */
         $periodototal = $this->Muralestagios->find('list', [
             'keyField' => 'periodo',
             'valueField' => 'periodo'
@@ -94,10 +96,16 @@ class MuralestagiosController extends AppController
      */
     public function view($id = null)
     {
-        $this->Authorization->skipAuthorization();
-        $muralestagio = $this->Muralestagios->get($id, [
-            'contain' => ['Instituicoes', 'Turmaestagios', 'Professores', 'Muralinscricoes' => ['Alunos', 'Muralestagios']]
-        ]);
+        try {
+            $this->Authorization->skipAuthorization();
+            $muralestagio = $this->Muralestagios->get($id, [
+                'contain' => ['Instituicoes', 'Turmaestagios', 'Professores', 'Muralinscricoes' => ['Alunos', 'Muralestagios']]
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Nao ha registros de estagios para esse numero!'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         /** Para o administrador selecionar o aluno */
         $alunotable = $this->fetchTable('Alunos');
         $alunos = $alunotable->find('list', [
@@ -116,7 +124,6 @@ class MuralestagiosController extends AppController
      */
     public function add()
     {
-
         if (empty($periodo)) {
             $configuracaotable = $this->fetchTable('Configuracao');
             $periodoconfiguracao = $configuracaotable->find()
@@ -129,7 +136,6 @@ class MuralestagiosController extends AppController
         $this->Authorization->authorize($muralestagio);
 
         if ($this->request->is('post')) {
-            // pr($this->request->getData('instituicao_id'));
             $instituicao = $this->Muralestagios->Instituicoes->find()
                 ->where(['id' => $this->request->getData('instituicao_id')])
                 ->select(['instituicao'])
@@ -144,7 +150,6 @@ class MuralestagiosController extends AppController
             $muralestagio = $this->Muralestagios->patchEntity($muralestagio, $dados);
             if ($this->Muralestagios->save($muralestagio)) {
                 $this->Flash->success(__('Registo de novo mural de estágio feito.'));
-
                 return $this->redirect(['action' => 'view', $muralestagio->id]);
             }
             $this->Flash->error(__('Registro de mural de estágio não foi feito. Tente novamente.'));
@@ -152,8 +157,6 @@ class MuralestagiosController extends AppController
         $instituicoes = $this->fetchTable('Instituicoes')->find('list');
         $turmaestagios = $this->fetchTable('Turmaestagios')->find('list');
         $professores = $this->fetchTable('Professores')->find('list');
-        // pr($professores);
-        // die();
         $this->set(compact('muralestagio', 'instituicoes', 'turmaestagios', 'professores', 'periodo'));
     }
 
@@ -166,17 +169,22 @@ class MuralestagiosController extends AppController
      */
     public function edit($id = null)
     {
-
-        /* Todos os periódos */
+        try {
+            $this->Authorization->skipAuthorization();
+            $muralestagio = $this->Muralestagios->get($id, [
+                'contain' => ['Instituicoes'],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Nao ha registros de estagios para esse numero!'));
+            return $this->redirect(['action' => 'index']);
+        }
+        /** Todos os periódos */
         $periodototal = $this->Muralestagios->find('list', [
             'keyField' => 'periodo',
             'valueField' => 'periodo'
         ]);
         $periodos = $periodototal->toArray();
 
-        $muralestagio = $this->Muralestagios->get($id, [
-            'contain' => ['Instituicoes'],
-        ]);
         $this->Authorization->authorize($muralestagio);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $muralestagio = $this->Muralestagios->patchEntity($muralestagio, $this->request->getData());
@@ -186,7 +194,7 @@ class MuralestagiosController extends AppController
             }
             $erro = $muralestagio->getErrors();
             // pr($erro);
-            // $this->Flash->error(__('Registro muralestagio não foi atualizado. Tente novamente.'));
+            $this->Flash->error(__('Registro muralestagio não foi atualizado. Tente novamente.'));
         }
         $instituicoes = $this->Muralestagios->Instituicoes->find('list');
         $turmaestagios = $this->Muralestagios->Turmaestagios->find('list');
@@ -203,17 +211,22 @@ class MuralestagiosController extends AppController
      */
     public function delete($id = null)
     {
-
         $this->request->allowMethod(['post', 'delete']);
-        $muralestagio = $this->Muralestagios->get($id);
+        try {
+            $this->Authorization->skipAuthorization();
+            $muralestagio = $this->Muralestagios->get($id);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Nao ha registros de estagios para esse numero!'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($muralestagio);
 
         if ($this->Muralestagios->delete($muralestagio)) {
             $this->Flash->success(__('Mural de estágio excluído.'));
         } else {
             $this->Flash->error(__('Mural de estágio não foi excluído.'));
+            return $this->redirect(['action' => 'view', $muralestagio->id]);
         }
-
         return $this->redirect(['action' => 'index']);
     }
 
