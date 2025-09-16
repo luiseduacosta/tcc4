@@ -155,7 +155,7 @@
     </fieldset>
     <div class="d-flex justify-content-center">
         <?= $this->Form->button(
-            __("Confirmar alterações", ["class" => "btn btn-primary"]),
+            __("Confirmar alterações"), ["class" => "btn btn-primary"],
         ) ?>
     </div>
     <?= $this->Form->end() ?>

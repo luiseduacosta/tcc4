@@ -57,7 +57,7 @@
 <?php // Multi-Checkbox wrapping container. ?>
 <?php $this->Form->setTemplates(['multicheckboxWrapper' => '<fieldset{{attrs}}>{{content}}</fieldset>']); ?>
 <?php // Option element used in select pickers. ?>
-<?php $this->Form->setTemplates(['option' => '<option  value="{{value}}"{{attrs}}>{{text}}</option>']); ?>
+<?php $this->Form->setTemplates(['option' => '<option value="{{value}}"{{attrs}}>{{text}}</option>']); ?>
 <?php // Option group element used in select pickers. ?>
 <?php $this->Form->setTemplates(['optgroup' => '<optgroup label="{{label}}"{{attrs}}>{{content}}</optgroup>']); ?>
 <?php // Select element, ?>

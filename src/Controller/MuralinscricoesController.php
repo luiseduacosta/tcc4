@@ -37,21 +37,19 @@ class MuralinscricoesController extends AppController
         }
 
         if ($periodo) {
-            $this->paginate = [
-                'contain' => ['Alunos', 'Muralestagios'],
-                'sortableFields' => ['id', 'registro', 'Alunos.nome', 'Muralestagios.instituicao', 'data', 'periodo', 'timestamp'],
-                'conditions' => ['muralinscricoes.periodo' => $periodo],
-                'order' => ['Alunos.nome']
-            ];
+            $query = $this->Muralinscricoes->find('all')
+                ->contain(['Alunos', 'Muralestagios'])
+                ->order(['Alunos.nome'])
+                ->where(['Muralinscricoes.periodo' => $periodo]);
         } else {
-            $this->paginate = [
-                'contain' => ['Alunos', 'Muralestagios'],
-                'sortableFields' => ['id', 'registro', 'Alunos.nome', 'Muralestagios.instituicao', 'data', 'periodo', 'timestamp'],
-                'order' => ['Alunos.nome']
-            ];
+            $query = $this->Muralinscricoes->find('all')
+                ->contain(['Alunos', 'Muralestagios'])
+                ->order(['Alunos.nome']);
         }
         $this->Authorization->authorize($this->Muralinscricoes);
-        $muralinscricoes = $this->paginate($this->Muralinscricoes);
+        $muralinscricoes = $this->paginate($query, [
+            'sortableFields' => ['id', 'registro', 'Alunos.nome', 'Muralestagios.instituicao', 'data', 'periodo', 'timestamp']
+        ]);
 
         $periodototal = $this->Muralinscricoes->find('list', [
             'keyField' => 'periodo',
@@ -97,7 +95,7 @@ class MuralinscricoesController extends AppController
             $this->set('muralestagio_id', $muralestagio_id);
         } else {
             $this->Flash->error(__('Selecionar um mural de estágio para a qual quer fazer inscrição.'));
-            return $this->redirect(['controller' => 'muralestagios' , 'action' => 'index']);
+            return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
         }
 
         $muralinscricao = $this->Muralinscricoes->newEmptyEntity();
@@ -112,7 +110,7 @@ class MuralinscricoesController extends AppController
                 }
                 if (empty($dre)) {
                     $this->Flash->error(__('Precisa do DRE do estudante para fazer inscrição'));
-                    return $this->redirect(['controller' => 'alunos' , 'action' => 'index']);
+                    return $this->redirect(['controller' => 'alunos', 'action' => 'index']);
                 }
                 /** Verifica se já fez inscricações para essa mesma vaga de estágio */
                 $verifica = $this->Muralinscricoes->find()
@@ -123,7 +121,7 @@ class MuralinscricoesController extends AppController
                 // pr($verifica_id);
                 if ($verifica) {
                     $this->Flash->error(__('Inscrição já realizada'));
-                    return $this->redirect(['controller' => 'muralinscricoes' , 'action' => 'view', $verifica->id]);
+                    return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'view', $verifica->id]);
                 }
                 $data = $this->request->getData();
 
@@ -145,7 +143,7 @@ class MuralinscricoesController extends AppController
                 // die();
             } else {
                 $this->Flash->error(__('Precisa do DRE do estudante para fazer inscrição'));
-                return $this->redirect(['controller' => 'alunos' , 'action' => 'index']);
+                return $this->redirect(['controller' => 'alunos', 'action' => 'index']);
             }
 
             $muralinscricao = $this->Muralinscricoes->patchEntity($muralinscricao, $data);
@@ -153,7 +151,7 @@ class MuralinscricoesController extends AppController
             // die();
             if ($this->Muralinscricoes->save($muralinscricao)) {
                 $this->Flash->success(__('Inscrição realizada!'));
-                return $this->redirect(['controller' => 'muralinscricoes' , 'action' => 'view', $muralinscricao->id]);
+                return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'view', $muralinscricao->id]);
             }
             $this->Flash->error(__('Não foi possível realizar a inscrição. Tente outra vez.'));
         }
@@ -175,7 +173,7 @@ class MuralinscricoesController extends AppController
             $this->set('muralestagios_id', $instituicao->first());
         else:
             $this->Flash->error(__('Selecionar uma instituição para a qual quer fazer inscrição.'));
-            return $this->redirect(['controller' => 'muralestagios' , 'action' => 'index']);
+            return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
         endif;
 
         $alunotable = $this->fetchTable('Alunos');
@@ -200,30 +198,25 @@ class MuralinscricoesController extends AppController
     {
         try {
             $muralinscricao = $this->Muralinscricoes->get($id, [
-                'contain' => ['Alunos'],
+                'contain' => ['Alunos', 'Muralestagios'],
             ]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro muralinscricao não foi encontrado. Tente novamente.'));
-            return $this->redirect(['controller' => 'muralinscricoes' , 'action' => 'index']);
+            return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'index']);
         }
         $this->Authorization->authorize($muralinscricao);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $muralinscricao = $this->Muralinscricoes->patchEntity($muralinscricao, $this->request->getData());
             if ($this->Muralinscricoes->save($muralinscricao)) {
                 $this->Flash->success(__('Registro muralinscricao atualizado.'));
-                return $this->redirect(['controller' => 'muralinscricoes' , 'action' => 'view', $muralinscricao->id]);
+                return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'view', $muralinscricao->id]);
             }
             $this->Flash->error(__('Registro muralinscricao não foi atualizado. Tente novamente.'));
         }
 
-        $periodototal = $this->Muralinscricoes->find('list', [
-            'keyField' => 'periodo',
-            'valueField' => 'periodo'
-        ]);
-        $periodos = $periodototal->toArray();
-        $estudantes = $this->Muralinscricoes->Alunos->find('list');
-        $muralestagios = $this->Muralinscricoes->Muralestagios->find('list');
-        $this->set(compact('muralinscricao', 'estudantes', 'muralestagios', 'periodos'));
+        $muralestagios = $this->Muralinscricoes->Muralestagios->find('list', ['order' => ['instituicao' => 'ASC']]);
+        $alunos = $this->Muralinscricoes->Alunos->find('list', ['order' => ['nome' => 'ASC']]);
+        $this->set(compact('muralinscricao', 'muralestagios', 'alunos'));
     }
 
     /**
@@ -240,7 +233,7 @@ class MuralinscricoesController extends AppController
             $muralinscricao = $this->Muralinscricoes->get($id);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro muralinscricao não foi encontrado. Tente novamente.'));
-            return $this->redirect(['controller' => 'muralinscricoes' , 'action' => 'index']);
+            return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'index']);
         }
         $this->Authorization->authorize($muralinscricao);
         if ($this->Muralinscricoes->delete($muralinscricao)) {

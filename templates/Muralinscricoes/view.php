@@ -16,7 +16,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </button>
     <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerMuralinscricao">
         <li class="nav-item">
-            <?= $this->Html->link(__('Voltar'), ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'btn btn-info me-1']) ?>
+            <?= $this->Html->link(__('Voltar'), ['controller' => 'Alunos', 'action' => 'view', $muralinscricao->aluno_id], ['class' => 'btn btn-info me-1']) ?>
         </li>
         <li class="nav-item">
             <?= $this->Html->link(__('Listar inscrições'), ['action' => 'index'], ['class' => 'btn btn-primary me-1']) ?>
@@ -48,7 +48,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <td><?= $muralinscricao->registro ?></td>
         </tr>
         <tr>
-            <th><?= __('Aluno') ?></th>
+            <th><?= __('Aluno(a)') ?></th>
             <td><?= $muralinscricao->has('alunos') ? $this->Html->link($muralinscricao->alunos['nome'], ['controller' => 'Alunos', 'action' => 'view', $muralinscricao->alunos['id']]) : '' ?>
             </td>
         </tr>
@@ -62,12 +62,12 @@ $user = $this->getRequest()->getAttribute('identity');
             <td><?= h($muralinscricao->periodo) ?></td>
         </tr>
         <tr>
-            <th><?= __('Data') ?></th>
-            <td><?= date('d-m-Y', strtotime(h($muralinscricao->data))) ?></td>
+            <th><?= __('Data de inscrição') ?></th>
+            <td><?= h($muralinscricao->data ? $muralinscricao->data->format('d-m-Y H:i:s') : '') ?></td>
         </tr>
         <tr>
-            <th><?= __('Timestamp') ?></th>
-            <td><?= date('d-m-Y', strtotime(h($muralinscricao->timestamp))) ?></td>
+            <th><?= __('Atualização') ?></th>
+            <td><?= h($muralinscricao->timestamp ? $muralinscricao->timestamp->format('d-m-Y H:i:s'): '') ?></td>
         </tr>
     </table>
 </div>
