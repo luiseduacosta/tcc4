@@ -236,7 +236,7 @@ $this->assign('title', __('Mural de Estágios'));
                 <?php if (isset($user) && $user->categoria == '1'): ?>
                     <tr>
                         <td colspan='2' style="text-align: center">
-                            <?= $this->Form->create(null, ['url' => ['controller' => 'Muralinscricoes', 'action' => 'add'], 'type' => 'post']); ?>
+                            <?= $this->Form->create(null, ['url' => ['controller' => 'Muralinscricoes', 'action' => 'add', '?' => ['muralestagio_id', $muralestagio->id]], 'type' => 'post']); ?>
                             <?= $this->Form->input('muralestagio_id', ['type' => 'hidden', 'value' => $muralestagio->id]); ?>
                             <?= $this->Form->input('registro', ['type' => 'select', 'options' => $alunos, 'empty' => 'Seleciona aluno', 'class' => 'form-control']); ?>
                             <div class='row justify-content-center'>
@@ -260,6 +260,7 @@ $this->assign('title', __('Mural de Estágios'));
 
                                 <?= $this->Form->create(null, ['url' => ['controller' => 'Muralinscricoes', 'action' => 'add', '?' => ['muralestagio_id', $muralestagio->id]], 'type' => 'post']); ?>
                                 <?= $this->Form->input('muralestagio_id', ['type' => 'hidden', 'value' => $muralestagio->id]); ?>
+                                <?= $this->Form->input('registro', ['type' => 'hidden', 'value' => $user->numero, 'readonly', 'class' => 'form-control']); ?>
                                 <div class='row justify-content-center'>
                                     <div class='col-auto'>
                                         <?=
