@@ -95,17 +95,26 @@ class MuralinscricoesController extends AppController
         $muralinscricao = $this->Muralinscricoes->newEmptyEntity();
         $this->Authorization->authorize($muralinscricao);
 
-        if ($this->request->is('post')) {
-            $registro = $this->request->getData('registro');
-            $muralestagio_id = $this->request->getData('muralestagio_id');
-            if (empty($muralestagio_id)) {
-                $this->Flash->error(__('Selecionar um mural de estágio para a qual quer fazer inscrição.'));
-                return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
+        if ($this->request->is('post', 'put', 'patch')) {
+
+            // Pega os dados do formulário
+            if ($this->request->getData('aluno_id')) {
+                $aluno = $this->fetchTable('Alunos')->get($this->request->getData('aluno_id'));
+                $registro = $aluno->registro;
+            } elseif ($this->request->getData('registro')) {
+                $registro = $this->request->getData('registro');
             }
             if (empty($registro)) {
                 $this->Flash->error(__('Precisa do DRE do estudante para fazer inscrição'));
                 return $this->redirect(['controller' => 'alunos', 'action' => 'index']);
             }
+
+            $muralestagio_id = $this->request->getData('muralestagio_id');
+            if (empty($muralestagio_id)) {
+                $this->Flash->error(__('Selecionar um mural de estágio para a qual quer fazer inscrição.'));
+                return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
+            }
+
             /** Verifica se já fez inscricações para essa mesma vaga de estágio */
             $verifica = $this->Muralinscricoes->find()
                 ->contain([])
@@ -174,18 +183,49 @@ class MuralinscricoesController extends AppController
             // return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
         endif;
 
-        $alunos = null;
+        $aluno = null;
         if ($user = $this->getRequest()->getAttribute('identity')) {
             if ($user->categoria == '2') {
-                $alunos = $this->fetchTable('Alunos')->find()
+                $aluno = $this->fetchTable('Alunos')->find()
                     ->where(['alunos.registro' => $user->numero])
                     ->select(['alunos.id', 'alunos.nome'])
                     ->first();
             }
         }
 
-        $estudantes = $this->Muralinscricoes->Alunos->find('list', ['primaryKey' => 'registro', 'valueField' => 'nome' ,'order' => ['nome' => 'ASC']]);
-        $muralestagios = $this->Muralinscricoes->Muralestagios->find('list', ['order' => ['instituicao' => 'ASC']]);
+        /**  Alunos */
+        $estudantes = $this->Muralinscricoes->Alunos->find()
+            ->select([
+                'id',
+                'registro_nome' => $this->Muralinscricoes->Alunos->find()->func()->concat([
+                    'Alunos.registro' => 'identifier',
+                    ' - ',
+                    'Alunos.nome' => 'identifier'
+                ])
+            ])
+            ->order(['Alunos.nome' => 'ASC'])
+            ->all();
+        foreach ($estudantes as $a) {
+            $alunos[$a->id] = $a->registro_nome;
+        }
+
+        /**  Muralestagios */
+        $mural = $this->Muralinscricoes->Muralestagios->find()
+            ->select([
+                'Muralestagios.id',
+                'instituicao_periodo' => $this->Muralinscricoes->Muralestagios->find()->func()->concat([
+                    'Muralestagios.periodo' => 'identifier',
+                    ' - ',
+                    'Muralestagios.instituicao' => 'identifier'
+                ])
+            ])
+            ->order(['Muralestagios.periodo' => 'DESC', 'Muralestagios.instituicao' => 'ASC'])
+            ->all();
+        foreach ($mural as $m) {
+            $muralestagios[$m->id] = $m->instituicao_periodo;
+        }
+
+        $estudantes = $this->Muralinscricoes->Alunos->find('list', ['keyField' => 'registro', 'valueField' => 'nome', 'order' => ['nome' => 'ASC']]);
         $this->set(compact('muralinscricao', 'estudantes', 'muralestagios', 'periodos', 'alunos'));
     }
 
@@ -240,9 +280,10 @@ class MuralinscricoesController extends AppController
         $this->Authorization->authorize($muralinscricao);
         if ($this->Muralinscricoes->delete($muralinscricao)) {
             $this->Flash->success(__('Inscrição excluída.'));
+            return $this->redirect(['controller' => 'Alunos', 'action' => 'view', $muralinscricao->aluno_id]);
         } else {
             $this->Flash->error(__('Não foi possível excluir a inscrição.'));
-            return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'index']);
+            return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'view', $muralinscricao->id]);
         }
     }
 }

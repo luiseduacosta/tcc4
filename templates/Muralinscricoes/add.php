@@ -26,15 +26,60 @@ $user = $this->getRequest()->getAttribute('identity');
         <legend><?= __('Inscrição para seleção de estágio') ?></legend>
         <?php
         if (isset($user->categoria) && $user->categoria == 1):
-            echo $this->Form->control('aluno_id', ['label' => 'Aluno', 'options' => $estudantes]);
-            echo $this->Form->control('registro', ['label' => 'Registro', 'placeholder' => 'Digite o DRE', 'options' => $estudantes, 'empty' => true]);
-            echo $this->Form->control('instituicao_id', ['label' => 'Mural de estágio', 'options' => $muralestagios, 'empty' => 'Selecione o estágio']);
-            echo $this->Form->control('data', ['value' => date('d-m-Y'), 'readonly' => true]);
-            echo $this->Form->control('periodo', ['label' => 'Período', 'value' => end($periodos), 'readonly' => true]);
+            echo $this->Form->control('aluno_id', [
+                'label' => 'Aluno(a)',
+                'options' => $alunos,
+                'empty' => 'Selecione o aluno',
+                'templates' => [
+                    'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
+                    'label' => '<label class="col-sm-2 form-label"{{attrs}}>{{text}}</label>',
+                    'select' => '<select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select>'
+                ]
+            ]);
+            echo $this->Form->control('registro', [
+                'type' => 'hidden',
+                'label' => 'Registro',
+                'placeholder' => 'Digite o DRE',
+                'options' => $estudantes,
+                'empty' => 'Selecione o aluno',
+                'templates' => [
+                    'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
+                    'label' => '<label class="col-sm-2 form-label"{{attrs}}>{{text}}</label>',
+                    'select' => '<select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select>'
+                ]
+            ]);
+            echo $this->Form->control('muralestagio_id', [
+                'label' => ['text' => 'Mural de estágio', 'class' => 'col-sm-2 form-label'],
+                'options' => $muralestagios,
+                'empty' => 'Selecione o estágio',
+                'templates' => [
+                    'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
+                    'select' => '<select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select>'
+                ]
+            ]);
+            echo $this->Form->control('data', [
+                'value' => date('d-m-Y'),
+                'readonly' => true,
+                'templates' => [
+                    'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-2">{{input}}</div></div>',
+                    'label' => '<label class="col-sm-2 form-label"{{attrs}}>{{text}}</label>',
+                    'input' => '<input class="col-sm-2 form-control " type="{{type}}" name="{{name}}"{{attrs}}/>'
+                ]
+            ]);
+            echo $this->Form->control('periodo', [
+                'type' => 'hidden',
+                'label' => ['text' => 'Período', 'class' => 'col-sm-2 form-label'],
+                'value' => end($periodos),
+                'readonly' => true,
+                'templates' => [
+                    'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-2">{{input}}</div></div>',
+                    'select' => '<select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select>'
+                ]
+            ]);
             echo $this->Form->control('timestamp', ['type' => 'hidden']);
-        // die(pr($id_categoria));
+            // die(pr($id_categoria));
         elseif (isset($user->categoria) && $user->categoria == 2):
-            echo $this->Form->control('aluno_id', ['label' => 'Aluno', 'options' => $estudantes]);
+            echo $this->Form->control('aluno_id', ['label' => 'Aluno(a)', 'options' => $estudantes]);
             echo $this->Form->control('registro', ['label' => 'Registro', 'value' => $user->numero, 'readonly' => true]);
             echo $this->Form->control('instituicao_id', ['label' => 'Mural de estágio', 'options' => [$muralestagios], 'readonly' => true]);
             echo $this->Form->control('data', ['type' => 'hidden', 'value' => date('Y-m-d')]);
@@ -46,6 +91,6 @@ $user = $this->getRequest()->getAttribute('identity');
         endif;
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Confirma'), ['class' => 'btn btn-primary']) ?>
+    <?= $this->Form->button(__('Confirma'), ['class' => 'btn btn-primary mt-1']) ?>
     <?= $this->Form->end() ?>
 </div>
