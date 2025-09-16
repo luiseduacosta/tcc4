@@ -84,76 +84,65 @@ class MuralinscricoesController extends AppController
 
     /**
      * Add method
-     *
+     * 
+     * @param string|null $id Muralestagio id.
+     * @param string|null $registro Registro dre.
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add($id = NULL)
+    public function add($id = NULL, $registro = NULL)
     {
         $this->Authorization->skipAuthorization();
-        $muralestagio_id = $this->request->getData('muralestagio_id');
-        if ($muralestagio_id) {
-            $this->set('muralestagio_id', $muralestagio_id);
-        } else {
-            $this->Flash->error(__('Selecionar um mural de estágio para a qual quer fazer inscrição.'));
-            return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
-        }
-
         $muralinscricao = $this->Muralinscricoes->newEmptyEntity();
         $this->Authorization->authorize($muralinscricao);
 
         if ($this->request->is('post')) {
-            $user = $this->request->getAttribute('identity');
-            if (isset($user) && ($user->get('categoria') == '1' || $user->get('categoria') == '2')) {
-                $dre = $user->get('numero');
-                if (empty($dre)) {
-                    $dre = $this->request->getData('registro');
-                }
-                if (empty($dre)) {
-                    $this->Flash->error(__('Precisa do DRE do estudante para fazer inscrição'));
-                    return $this->redirect(['controller' => 'alunos', 'action' => 'index']);
-                }
-                /** Verifica se já fez inscricações para essa mesma vaga de estágio */
-                $verifica = $this->Muralinscricoes->find()
-                    ->contain([])
-                    ->where(['muralestagio_id' => $muralestagio_id, 'registro' => $dre])
-                    ->select(['id'])
-                    ->first();
-                // pr($verifica_id);
-                if ($verifica) {
-                    $this->Flash->error(__('Inscrição já realizada'));
-                    return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'view', $verifica->id]);
-                }
-                $data = $this->request->getData();
-
-                $alunotable = $this->fetchTable('Alunos');
-                $aluno = $alunotable->find()
-                    ->where(['registro' => $dre])
-                    ->select(['id'])
-                    ->first();
-
-                $configuracaotable = $this->fetchTable('Configuracao');
-                $periodo = $configuracaotable->get(1);
-                $periodo = $periodo->mural_periodo_atual;
-
-                $data['registro'] = $dre;
-                $data['aluno_id'] = $aluno['id'];
-                $data['data'] = date('Y-m-d');
-                $data['periodo'] = $periodo;
-                // pr($data);
-                // die();
-            } else {
+            $registro = $this->request->getData('registro');
+            $muralestagio_id = $this->request->getData('muralestagio_id');
+            if (empty($muralestagio_id)) {
+                $this->Flash->error(__('Selecionar um mural de estágio para a qual quer fazer inscrição.'));
+                return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
+            }
+            if (empty($registro)) {
                 $this->Flash->error(__('Precisa do DRE do estudante para fazer inscrição'));
                 return $this->redirect(['controller' => 'alunos', 'action' => 'index']);
             }
+            /** Verifica se já fez inscricações para essa mesma vaga de estágio */
+            $verifica = $this->Muralinscricoes->find()
+                ->contain([])
+                ->where(['muralestagio_id' => $muralestagio_id, 'registro' => $registro])
+                ->select(['id'])
+                ->first();
+            
+            if ($verifica) {
+                $this->Flash->error(__('Inscrição já realizada'));
+                return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'view', $verifica->id]);
+            }
+
+            $aluno = $this->fetchTable('Alunos')->find()
+                ->where(['registro' => $registro])
+                ->select(['id'])
+                ->first();
+            if (!$aluno) {
+                $this->Flash->error(__('Aluno não localizado'));
+                return $this->redirect(['controller' => 'alunos', 'action' => 'index']);
+            }
+            $configuracaotable = $this->fetchTable('Configuracao');
+            $periodo = $configuracaotable->get(1);
+            $periodo = $periodo->mural_periodo_atual;
+            
+            $data['registro'] = $registro;
+            $data['aluno_id'] = $aluno->id;
+            $data['muralestagio_id'] = $muralestagio_id;
+            $data['data'] = date('Y-m-d');
+            $data['periodo'] = $periodo;
+            $data['timestamp'] = date('Y-m-d H:i:s');
 
             $muralinscricao = $this->Muralinscricoes->patchEntity($muralinscricao, $data);
-            // pr($muralinscricao);
-            // die();
             if ($this->Muralinscricoes->save($muralinscricao)) {
                 $this->Flash->success(__('Inscrição realizada!'));
                 return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'view', $muralinscricao->id]);
             }
-            $this->Flash->error(__('Não foi possível realizar a inscrição. Tente outra vez.'));
+            $this->Flash->error(__('Não foi possível realizar a inscrição. Tente novamente.'));
         }
 
         /** Periodos */
