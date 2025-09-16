@@ -31,7 +31,7 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="row">
         <?php if (isset($user) && $user->categoria == '1'): ?>
             <?= $this->Form->create($muralinscricoes, ['class' => 'form-inline']); ?>
-            <?= $this->Form->input('periodo', ['id' => 'MuralinscricoesPeriodo', 'type' => 'select', 'label' => ['text' => 'Período ', 'style' => 'display: inline;'], 'options' => $periodos, 'empty' => [$periodo => $periodo]], ['class' => 'form-control']); ?>
+            <?= $this->Form->input('periodo', ['id' => 'MuralinscricoesPeriodo', 'type' => 'select', 'label' => ['text' => 'Período ', 'style' => 'display: inline;'], 'options' => $periodos, 'empty' => [$periodo => $periodo], 'class' => 'form-control']); ?>
             <?= $this->Form->end(); ?>
         <?php else: ?>
             <h1 style="text-align: center;">Inscrições para seleção de estágio da ESS/UFRJ. Período: <?= $periodo; ?></h1>

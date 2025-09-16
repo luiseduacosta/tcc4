@@ -113,8 +113,14 @@ class MuralinscricoesController extends AppController
             if (empty($muralestagio_id)) {
                 $this->Flash->error(__('Selecionar um mural de estágio para a qual quer fazer inscrição.'));
                 return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
+            } else {
+                $muralestagio = $this->Muralinscricoes->Muralestagios->get($muralestagio_id);
+                if (empty($muralestagio)) {
+                    $this->Flash->error(__('Mural de estágio não localizado')); 
+                } else {
+                    $periodo_mural = $muralestagio->periodo;
+                }
             }
-
             /** Verifica se já fez inscricações para essa mesma vaga de estágio */
             $verifica = $this->Muralinscricoes->find()
                 ->contain([])
@@ -148,7 +154,7 @@ class MuralinscricoesController extends AppController
             $data['aluno_id'] = $aluno->id;
             $data['muralestagio_id'] = $muralestagio_id;
             $data['data'] = date('Y-m-d');
-            $data['periodo'] = $periodo;
+            $data['periodo'] = $periodo_mural ?? $periodo;
             $data['timestamp'] = date('Y-m-d H:i:s');
 
             $muralinscricao = $this->Muralinscricoes->patchEntity($muralinscricao, $data);
