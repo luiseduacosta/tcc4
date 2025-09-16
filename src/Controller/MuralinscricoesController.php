@@ -46,7 +46,7 @@ class MuralinscricoesController extends AppController
                 ->contain(['Alunos', 'Muralestagios'])
                 ->order(['Alunos.nome']);
         }
-        $this->Authorization->authorize($this->Muralinscricoes);
+        $this->Authorization->skipAuthorization();
         $muralinscricoes = $this->paginate($query, [
             'sortableFields' => ['id', 'registro', 'Alunos.nome', 'Muralestagios.instituicao', 'data', 'periodo', 'timestamp']
         ]);
@@ -72,7 +72,7 @@ class MuralinscricoesController extends AppController
         try {
             $this->Authorization->skipAuthorization();
             $muralinscricao = $this->Muralinscricoes->get($id, [
-                'contain' => ['Alunos', 'Muralestagios']
+                'contain' => ['Alunos', 'Muralestagios' => ['Instituicoes']]
             ]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Nao ha registros de inscricoes para esse numero!'));
@@ -112,12 +112,13 @@ class MuralinscricoesController extends AppController
                 ->where(['muralestagio_id' => $muralestagio_id, 'registro' => $registro])
                 ->select(['id'])
                 ->first();
-            
+
             if ($verifica) {
                 $this->Flash->error(__('Inscrição já realizada'));
                 return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'view', $verifica->id]);
             }
 
+            /** Pega o id do aluno */
             $aluno = $this->fetchTable('Alunos')->find()
                 ->where(['registro' => $registro])
                 ->select(['id'])
@@ -126,10 +127,14 @@ class MuralinscricoesController extends AppController
                 $this->Flash->error(__('Aluno não localizado'));
                 return $this->redirect(['controller' => 'alunos', 'action' => 'index']);
             }
+
+            /** Pega o período atual */
             $configuracaotable = $this->fetchTable('Configuracao');
             $periodo = $configuracaotable->get(1);
             $periodo = $periodo->mural_periodo_atual;
-            
+
+            /** Dados para fazer a inscrição */
+            $data = [];
             $data['registro'] = $registro;
             $data['aluno_id'] = $aluno->id;
             $data['muralestagio_id'] = $muralestagio_id;
@@ -157,23 +162,31 @@ class MuralinscricoesController extends AppController
         if ($muralestagios_id):
             $instituicao = $this->Muralinscricoes->Muralestagios->find()
                 ->where(['muralestagios.id' => $muralestagios_id])
-                ->select(['muralestagios.id', 'muralestagios.instituicao', 'muralestagios.periodo']);
-
-            $this->set('muralestagios_id', $instituicao->first());
+                ->select(['muralestagios.id', 'muralestagios.instituicao', 'muralestagios.periodo'])
+                ->first();
+            if (!$instituicao) {
+                $this->Flash->error(__('Mural de estágio não localizado'));
+                return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
+            }
+            $this->set('muralestagios_id', $instituicao);
         else:
             $this->Flash->error(__('Selecionar uma instituição para a qual quer fazer inscrição.'));
-            return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
+            // return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
         endif;
 
-        $alunotable = $this->fetchTable('Alunos');
-        $alunoestagios = $alunotable->find()
-            ->where(['alunos.registro' => $this->getRequest()->getSession()->read('numero')])
-            ->select(['alunos.id', 'alunos.nome']);
-        $alunoestagios = $alunoestagios->first();
+        $alunos = null;
+        if ($user = $this->getRequest()->getAttribute('identity')) {
+            if ($user->categoria == '2') {
+                $alunos = $this->fetchTable('Alunos')->find()
+                    ->where(['alunos.registro' => $user->numero])
+                    ->select(['alunos.id', 'alunos.nome'])
+                    ->first();
+            }
+        }
 
         $estudantes = $this->Muralinscricoes->Alunos->find('list');
         $muralestagios = $this->Muralinscricoes->Muralestagios->find('list');
-        $this->set(compact('muralinscricao', 'estudantes', 'muralestagios', 'periodos', 'alunoestagios'));
+        $this->set(compact('muralinscricao', 'estudantes', 'muralestagios', 'periodos', 'alunos'));
     }
 
     /**

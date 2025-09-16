@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Muralinscricao $muralinscricao
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($user->get('categoria'));
 ?>
 
 <?php echo $this->element('menu_mural') ?>
