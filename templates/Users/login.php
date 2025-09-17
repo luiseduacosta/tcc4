@@ -29,4 +29,8 @@ $user = $this->getRequest()->getAttribute('identity');
     </fieldset>
     <?= $this->Form->button(__('Login'), ['class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
+    <div class="btn-group mt-4" role="group" aria-label="Botões adicionais">
+        <?= $this->Html->link('Esqueceu a senha?', ['action' => 'add'], ['class' => 'btn btn-primary me-1']) ?>
+        <?= $this->Html->link('Cadastro de novo usuário(a)', ['action' => 'add'], ['class' => 'btn btn-info']) ?>
+    </div>
 </div>

@@ -13,11 +13,10 @@ use Cake\I18n\I18n;
  * @property \App\Model\Table\AlunosTable $Alunos
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Alunos
- * @property \Cake\ORM\TableRegistry $Estagiarios
- * @property \Cake\ORM\TableRegistry $Instituicoes
- * @property \Cake\ORM\TableRegistry $Supervisores
- * @property \Cake\ORM\TableRegistry $Professores
+ * @property \Cake\ORM\Table $Estagiarios
+ * @property \Cake\ORM\Table $Instituicoes
+ * @property \Cake\ORM\Table $Supervisores
+ * @property \Cake\ORM\Table $Professores
  *
  * @method \App\Model\Entity\Aluno[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -174,16 +173,15 @@ class AlunosController extends AppController
         $email = $this->getRequest()->getQuery("email");
         $this->Authorization->skipAuthorization();
         $aluno = $this->Alunos->newEmptyEntity();
-
-        if ($this->request->is("post")) {
+        if ($this->request->is("post", "put", "patch")) {
             if (
                 empty($this->request->getData()["registro"]) ||
                 empty($this->request->getData()["email"])
             ) {
                 $this->Flash->error(__("DRE e Email são obrigatórios."));
-                return $this->redirect(["action" => "add"]);
+                return $this->redirect(['controller' => 'Users', "action" => "login"]);
             }
-
+            // Verifica se o DRE ou email já estão cadastrados
             $registro = $this->Alunos
                 ->find()
                 ->where(["registro" => $this->request->getData()["registro"]])
@@ -209,7 +207,6 @@ class AlunosController extends AppController
             );
             if ($this->Alunos->save($aluno)) {
                 $this->Flash->success(__("Dados do aluno inseridos."));
-
                 return $this->redirect(["action" => "view", $aluno->id]);
             }
             $this->Flash->error(__("Dados do aluno não inseridos."));
@@ -235,7 +232,7 @@ class AlunosController extends AppController
             "contain" => [],
         ]);
 
-        // $user = $this->getRequest()->getAttribute("identity");
+        $user = $this->getRequest()->getAttribute("identity");
 
         if (isset($this->user) && $this->user->categoria == "1") {
             $this->Authorization->authorize($aluno);
@@ -252,16 +249,16 @@ class AlunosController extends AppController
         }
 
         if ($this->request->is(["patch", "post", "put"])) {
-            $aluno = $this->Alunos->patchEntity(
+            $entity = $this->Alunos->patchEntity(
                 $aluno,
                 $this->request->getData(),
             );
             if ($this->Alunos->save($aluno)) {
                 $this->Flash->success(__("Dados do aluno atualizados."));
-
                 return $this->redirect(["action" => "view", $aluno->id]);
             }
             $this->Flash->error(__("Dados do aluno não atualizados."));
+            $debug = $entity->getErrors();
         }
 
         $this->set(compact("aluno"));

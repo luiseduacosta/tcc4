@@ -128,7 +128,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?php echo $this->Html->link('TCC', ['controller' => 'Monografias', 'action' => 'index'], ['class' => 'btn btn-info']); ?>
                 </li>      
                 <?php if (isset($user) && !empty($user)): ?>
-                    <?php if ($user->categoria == 2) {
+                    <?php if ($user->categoria == 2 && !empty($user->estudante_id)) {
                         $aluno = TableRegistry::getTableLocator()->get('Alunos')->find()->where(['Alunos.id' => $user->estudante_id])->first();
                         ?>
                         <li class='nav-item'>

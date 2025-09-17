@@ -15,6 +15,10 @@
         $('#telefone').mask('(00) 0000.0000');
         $('#celular').mask('(00) 00000.0000');
         $('#cep').mask('00000-000');
+        $('#ingresso').mask('0000-0');
+        $('#novoperiodo').val($('#ingresso').val());
+        $('#novoperiodo').mask('0000-0');
+        $('#nascimento').mask('0000-00-00', { placeholder: "AAAA-MM-DD" });
     });
 </script>
 
@@ -54,30 +58,38 @@
             "class" => "form-control",
         ]);
         echo $this->Form->control("registro", [
+            'placeholder' => 'Número do DRE',
             "label" => "Registro",
             "class" => "form-control",
         ]);
         echo $this->Form->control("ingresso", [
+            'placeholder' => 'Ano e semestre, separado por hífen de ingresso no curso: ex: 2023-1',
             "label" => "Ingresso",
             "class" => "form-control",
         ]);
         echo $this->Form->control("turno", [
+            'placeholder' => 'diurno, noturno ou outro',
             "label" => "Turno",
             "class" => "form-control",
         ]);
         echo $this->Form->control("nascimento", [
+            "label" => "Data de nascimento",
+            "placeholder" => "AAAA-MM-DD",
             "empty" => true,
             "class" => "form-control",
         ]);
         echo $this->Form->control("cpf", [
+            'placeholder' => 'Número do CPF: ex: 000.000.000-00',
             "label" => "CPF",
             "class" => "form-control",
         ]);
         echo $this->Form->control("identidade", [
+            'placeholder' => 'Número da identidade: ex: 000000000',
             "label" => "RG",
             "class" => "form-control",
         ]);
         echo $this->Form->control("orgao", [
+            "placeholder" => "Orgão expedidor",
             "label" => "Orgão",
             "class" => "form-control",
         ]);
@@ -102,6 +114,7 @@
             "class" => "form-control",
         ]);
         echo $this->Form->control("cep", [
+            "placeholder" => "CEP: ex: 00000-000",
             "label" => "CEP",
             "class" => "form-control",
         ]);
@@ -125,8 +138,9 @@
     </fieldset>
     <div class="d-flex justify-content-center">
         <?= $this->Form->button(
-            __("Confirma", ["class" => "btn btn-primary mt-1"]),
-        ) ?>
+            __("Confirma"),
+            ["class" => "btn btn-primary mt-1"])
+         ?>
     </div>
     <?= $this->Form->end() ?>
 </div>

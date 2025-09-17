@@ -15,9 +15,44 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset class="border p-2">
         <legend><?= __('Adiciona usuário') ?></legend>
         <?php
-        echo $this->Form->control('email');
-        echo $this->Form->control('password');
-        echo $this->Form->control('categoria', ['options' => ['2' => 'estudante', '3' => 'professor', '4' => 'supervisor']]);
+        echo $this->Form->control('email', [
+            'required' => true,
+            'type' => 'email',
+            'label' => ['E-mail', 'class' => 'col-sm-2 form-label'],
+            'templates' => [
+                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-8">{{input}}</div></div>',
+                'input' => '<input class="col-sm-2 form-control " type="{{type}}" name="{{name}}"{{attrs}}/>'
+            ]
+        ]);
+        echo $this->Form->control('password', [
+            'required' => true,
+            'type' => 'password',
+            'label' => ['text' => 'Senha', 'class' => 'col-sm-2 form-label'],
+            'templates' => [
+                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-8">{{input}}</div></div>',
+                'input' => '<input class="col-sm-2 form-control " type="{{type}}" name="{{name}}"{{attrs}}/>'
+            ]
+        ]);
+        echo $this->Form->control('categoria', [
+            'label' => ['Categoria', 'class' => 'col-sm-2 form-label'],
+            'options' => ['2' => 'estudante', '3' => 'professor(a)', '4' => 'supervisor(a)'],
+            'templates' => [
+                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-7">{{input}}</div></div>',
+                'selectContainer' => '<div class="mb-1">{{content}}</div>'
+            ],
+            'empty' => '-- Selecione a categoria --',
+            'required' => true
+        ]);
+        echo $this->Form->control('numero', [
+            'label' => 'Número de DRE, CRESS ou SIAPE respectivamente',
+            'class' => 'col-sm-2 form-label',
+            'type' => 'number',
+            'required' => true,
+            'templates' => [
+                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-8">{{input}}</div></div>',
+                'input' => '<input class="col-sm-2 form-control " type="{{type}}" name="{{name}}"{{attrs}}/>'
+            ]
+        ]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Confirma'), ['class' => 'btn btn-primary']) ?>

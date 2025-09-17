@@ -7,8 +7,10 @@
 ?>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
+
         $('#cpf').mask('000.000.000-00');
+
         if ($('#codigo-telefone').val() == null) {
             codigo = '21';
         } else {
@@ -29,7 +31,7 @@
         } else {
             $('#celular').mask('(00) 00000-0000');
         }
-        $('#nascimento').mask('00/00/0000');
+        $('#nascimento').mask('0000-00-00', { placeholder: "AAAA-MM-DD" });
         $('#cep').mask('00000-000');
         $('#ingresso').mask('0000-0');
         $('#novoperiodo').val($('#ingresso').val());
@@ -74,6 +76,9 @@
     <fieldset class="border p-2">
         <legend><?= __("Editar aluno(a)") ?></legend>
         <?php
+        echo $this->Form->control("id", [
+            "type" => "hidden",
+        ]);
         echo $this->Form->control("nome", [
             "label" => "Nome",
             "class" => "form-control",
@@ -87,19 +92,27 @@
             "class" => "form-control",
         ]);
         echo $this->Form->control("ingresso", [
+            'placeholder' => 'Ano e período de ingresso: ex: 2023-1',
             "label" => "Ingresso",
             "class" => "form-control",
         ]);
         echo $this->Form->control("turno", [
+            'placeholder' => 'diurno, noturno ou outro',
             "label" => "Turno",
             "class" => "form-control",
         ]);
         echo $this->Form->control("nascimento", [
+            'value' => $aluno->nascimento ? $aluno->nascimento->format('Y-m-d') : '',
+            'placeholder' => 'AAAA-MM-DD',
+            'type' => 'text',
+            'pattern' => '\d{4}-\d{2}-\d{2}',
+            'title' => 'Formato: AAAA-MM-DD',
             "label" => "Data de nascimento",
             "empty" => true,
             "class" => "form-control",
         ]);
         echo $this->Form->control("cpf", [
+            'placeholder' => 'Número do CPF: ex: 000.000.000-00',
             "label" => "CPF",
             "class" => "form-control",
         ]);
@@ -155,7 +168,8 @@
     </fieldset>
     <div class="d-flex justify-content-center">
         <?= $this->Form->button(
-            __("Confirmar alterações"), ["class" => "btn btn-primary"],
+            __("Confirmar alterações"),
+            ["class" => "btn btn-primary"],
         ) ?>
     </div>
     <?= $this->Form->end() ?>

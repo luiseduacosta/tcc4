@@ -128,7 +128,7 @@ class AlunosTable extends Table
                         ->allowEmptyString('orgao');
 
                 $validator
-                        ->date('nascimento')
+                        ->date('nascimento', ['ymd'])
                         ->allowEmptyDate('nascimento');
 
                 $validator

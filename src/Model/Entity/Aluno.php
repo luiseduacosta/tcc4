@@ -20,6 +20,8 @@ use Cake\ORM\Entity;
  * @property string|null $identidade
  * @property string|null $orgao
  * @property \Cake\I18n\FrozenDate|null $nascimento
+ * @property string|null $ingresso
+ * @property string|null $turno
  * @property string|null $endereco
  * @property string|null $cep
  * @property string|null $municipio
@@ -53,6 +55,8 @@ class Aluno extends Entity
         'identidade' => true,
         'orgao' => true,
         'nascimento' => true,
+        'ingresso' => true,
+        'turno' => true,
         'endereco' => true,
         'cep' => true,
         'municipio' => true,

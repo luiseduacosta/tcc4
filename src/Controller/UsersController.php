@@ -75,6 +75,7 @@ class UsersController extends AppController
                         } else {
                             $user = $this->Users->get($result->getData()->id);
                             $data['numero'] = $alunos->registro;
+                            $data['estudante_id'] = $alunos->id;
                             $user = $this->Users->patchEntity($user, $data);
                             if ($this->Users->save($user)) {
                                 $this->Flash->success(__('Registro do(a) usuário(a) atualizado.'));
@@ -144,6 +145,10 @@ class UsersController extends AppController
                     return $this->redirect(['controller' => 'Users', 'action' => 'login']);
             }
             $this->Flash->success(__('Login realizado com sucesso'));
+            // pr($controller);
+            // pr($action);
+            // pr($id);
+            // die();
             return $this->redirect(['controller' => $controller, 'action' => $action, $id]);
         }
         // display error if user submitted and authentication failed
@@ -237,7 +242,7 @@ class UsersController extends AppController
                                 return $this->redirect(['controller' => 'Users', 'action' => 'login']);
                             }
                         } else {
-                            $this->Flash->error(__('Cadastrar aluno.'));
+                            $this->Flash->error(__('Ingresse para continuar com o cadastro do(a) aluno(a).'));
                             return $this->redirect(['controller' => 'Alunos', 'action' => 'add', '?' => ['dre' => $user->numero, 'email' => $user->email]]);
                         }
                         break;
@@ -259,7 +264,7 @@ class UsersController extends AppController
                                 return $this->redirect(['controller' => 'Users', 'action' => 'login']);
                             }
                         } else {
-                            $this->Flash->error(__('Cadastrar professor.'));
+                            $this->Flash->error(__('Ingresse para continuar com o cadastro do(a) professor(a).'));
                             return $this->redirect(['controller' => 'Professores', 'action' => 'add', '?' => ['siape' => $user->numero, 'email' => $user->email]]);
                         }
                         break;
@@ -281,7 +286,7 @@ class UsersController extends AppController
                                 return $this->redirect(['controller' => 'Users', 'action' => 'login']);
                             }
                         } else {
-                            $this->Flash->error(__('Cadastrar supervisor.'));
+                            $this->Flash->error(__('Ingresse novamente para continar com o cadastro do(a) supervisor(a).'));
                             return $this->redirect(['controller' => 'Supervisores', 'action' => 'add', '?' => ['cress' => $user->numero, 'email' => $user->email]]);
                         }
                         break;
