@@ -41,7 +41,7 @@ $Confirma = [
         echo $this->Form->control('cpf', ['label' => ['text' => 'CPF'], 'value' => $aluno->cpf]);
         echo $this->Form->control('identidade', ['label' => ['text' => 'Carteira de identidade'], 'value' => $aluno->identidade]);
         echo $this->Form->control('orgao', ['label' => ['text' => 'Orgão emissor'], 'value' => $aluno->orgao]);
-        echo $this->Form->control('nascimento', ['label' => ['text' => 'Data de nascimento'], 'value' => $aluno->nascimento, 'empty' => true]);
+        echo $this->Form->control('nascimento', ['label' => ['text' => 'Data de nascimento'], 'value' => $this->Time->format('Y-m-d', $aluno->nascimento), 'empty' => true]);
         echo $this->Form->control('endereco', ['label' => ['text' => 'Endereço'], 'value' => $aluno->endereco]);
         echo $this->Form->control('cep', ['label' => ['text' => 'CEP'], 'value' => $aluno->cep]);
         echo $this->Form->control('municipio', ['label' => ['text' => 'Município'], 'value' => $aluno->municipio]);

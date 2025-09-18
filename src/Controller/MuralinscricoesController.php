@@ -120,6 +120,17 @@ class MuralinscricoesController extends AppController
                     $periodo_mural = $muralestagio->periodo;
                 }
             }
+
+            $user = $this->request->getAttribute('identity')->getOriginalData();
+            $hoje = FrozenTime::now();
+            if (empty($muralestagio->dataInscricao)) { 
+                $muralestagio->dataInscricao = $hoje->addDays(1);
+            }
+            /** Verifica se o período de inscrição está aberto */
+            if ($user->categoria == 2 && $muralestagio->dataInscricao < $hoje) {
+                $this->Flash->error(__('Período de inscrição encerrado em {0}. Não é possível fazer inscrição.', $muralestagio->dataInscricaoo));
+                return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
+            }
             /** Verifica se já fez inscricações para essa mesma vaga de estágio */
             $verifica = $this->Muralinscricoes->find()
                 ->where(['muralestagio_id' => $muralestagio_id, 'registro' => $registro])
@@ -154,6 +165,8 @@ class MuralinscricoesController extends AppController
             $data['periodo'] = $periodo_mural ?? $periodo_atual;
             $data['timestamp'] = date('Y-m-d H:i:s');
 
+
+
             $muralinscricao = $this->Muralinscricoes->patchEntity($muralinscricao, $data);
             if ($this->Muralinscricoes->save($muralinscricao)) {
                 $this->Flash->success(__('Inscrição realizada!'));
@@ -162,50 +175,16 @@ class MuralinscricoesController extends AppController
             $this->Flash->error(__('Não foi possível realizar a inscrição. Tente novamente.'));
         }
 
-        /** Periodos */
-        $periodototal = $this->Muralinscricoes->find('list', [
-            'keyField' => 'periodo',
-            'valueField' => 'periodo'
-        ]);
-        $periodos = $periodototal->toArray();
-
-        /**  Muralestagios */
-        $muralestagios_id = $this->getRequest()->getQuery('muralestagio_id');
-        if ($muralestagios_id):
-            $instituicao = $this->Muralinscricoes->Muralestagios->find()
-                ->where(['muralestagios.id' => $muralestagios_id])
-                ->select(['muralestagios.id', 'muralestagios.instituicao', 'muralestagios.periodo'])
-                ->first();
-            if (!$instituicao) {
-                $this->Flash->error(__('Mural de estágio não localizado'));
-                return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
-            }
-            $this->set('muralestagios_id', $instituicao);
-        else:
-            $this->Flash->error(__('Selecionar uma instituição para a qual quer fazer inscrição.'));
-            // return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
-        endif;
-
-        $aluno = null;
-        if ($user = $this->getRequest()->getAttribute('identity')) {
-            if ($user->categoria == '2') {
-                $aluno = $this->fetchTable('Alunos')->find()
-                    ->where(['alunos.registro' => $user->numero])
-                    ->select(['alunos.id', 'alunos.nome'])
-                    ->first();
-            }
-        }
-
-        /**  Alunos com registro e nome */
+        /**  Alunos */
         $estudantes = $this->Muralinscricoes->Alunos->find()
             ->select([
-                'id',
-                'registro_nome' => $this->Muralinscricoes->Alunos->find()->func()->concat([
-                    'Alunos.registro' => 'identifier',
-                    ' - ',
-                    'Alunos.nome' => 'identifier'
+                    'id',
+                    'registro_nome' => $this->Muralinscricoes->Alunos->find()->func()->concat([
+                        'Alunos.registro' => 'identifier',
+                        ' - ',
+                        'Alunos.nome' => 'identifier'
+                    ])
                 ])
-            ])
             ->order(['Alunos.nome' => 'ASC'])
             ->all();
         foreach ($estudantes as $a) {
@@ -215,21 +194,19 @@ class MuralinscricoesController extends AppController
         /**  Muralestagios com período e instituição */
         $mural = $this->Muralinscricoes->Muralestagios->find()
             ->select([
-                'Muralestagios.id',
-                'instituicao_periodo' => $this->Muralinscricoes->Muralestagios->find()->func()->concat([
-                    'Muralestagios.periodo' => 'identifier',
-                    ' - ',
-                    'Muralestagios.instituicao' => 'identifier'
+                    'Muralestagios.id',
+                    'instituicao_periodo' => $this->Muralinscricoes->Muralestagios->find()->func()->concat([
+                        'Muralestagios.periodo' => 'identifier',
+                        ' - ',
+                        'Muralestagios.instituicao' => 'identifier'
+                    ])
                 ])
-            ])
             ->order(['Muralestagios.periodo' => 'DESC', 'Muralestagios.instituicao' => 'ASC'])
             ->all();
         foreach ($mural as $m) {
             $muralestagios[$m->id] = $m->instituicao_periodo;
         }
-
-        $estudantes = $this->Muralinscricoes->Alunos->find('list', ['keyField' => 'registro', 'valueField' => 'nome', 'order' => ['nome' => 'ASC']]);
-        $this->set(compact('muralinscricao', 'estudantes', 'muralestagios', 'periodos', 'alunos'));
+        $this->set(compact('muralinscricao', 'alunos', 'muralestagios'));
     }
 
     /**
@@ -260,11 +237,11 @@ class MuralinscricoesController extends AppController
             if (!$mural) {
                 $this->Flash->error(__('Mural de estágio não localizado'));
                 return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
-            } 
+            }
             $data = $this->request->getData();
             $data['periodo'] = $mural->muralestagios->periodo;
 
-            $muralinscricao = $this->Muralinscricoes->patchEntity($muralinscricao,$data);
+            $muralinscricao = $this->Muralinscricoes->patchEntity($muralinscricao, $data);
             if ($this->Muralinscricoes->save($muralinscricao)) {
                 $this->Flash->success(__('Registro de inscrição atualizado.'));
                 return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'view', $muralinscricao->id]);
@@ -275,13 +252,13 @@ class MuralinscricoesController extends AppController
         /**  Muralestagios */
         $mural = $this->Muralinscricoes->Muralestagios->find()
             ->select([
-                'Muralestagios.id',
-                'instituicao_periodo' => $this->Muralinscricoes->Muralestagios->find()->func()->concat([
-                    'Muralestagios.periodo' => 'identifier',
-                    ' - ',
-                    'Muralestagios.instituicao' => 'identifier'
+                    'Muralestagios.id',
+                    'instituicao_periodo' => $this->Muralinscricoes->Muralestagios->find()->func()->concat([
+                        'Muralestagios.periodo' => 'identifier',
+                        ' - ',
+                        'Muralestagios.instituicao' => 'identifier'
+                    ])
                 ])
-            ])
             ->order(['Muralestagios.periodo' => 'DESC', 'Muralestagios.instituicao' => 'ASC'])
             ->all();
         foreach ($mural as $m) {
@@ -291,13 +268,13 @@ class MuralinscricoesController extends AppController
         /**  Alunos */
         $estudantes = $this->Muralinscricoes->Alunos->find()
             ->select([
-                'id',
-                'registro_nome' => $this->Muralinscricoes->Alunos->find()->func()->concat([
-                    'Alunos.registro' => 'identifier',
-                    ' - ',
-                    'Alunos.nome' => 'identifier'
+                    'id',
+                    'registro_nome' => $this->Muralinscricoes->Alunos->find()->func()->concat([
+                        'Alunos.registro' => 'identifier',
+                        ' - ',
+                        'Alunos.nome' => 'identifier'
+                    ])
                 ])
-            ])
             ->order(['Alunos.nome' => 'ASC'])
             ->all();
         foreach ($estudantes as $a) {

@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Aluno $aluno
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($aluno);
+pr($aluno);
 // pr($novoperiodo);
 // pr($totalperiodos);
 // die();
@@ -33,7 +33,7 @@ $user = $this->getRequest()->getAttribute('identity');
         } else {
             $('#celular').mask('(00) 00000-0000');
         }
-        $('#nascimento').mask('00/00/0000');
+        $('#nascimento').mask('00-00-0000');
         $('#cep').mask('00000-000');
         $('#ingresso').mask('0000-0');
         if ($('#novoperiodo').val() == null) {
@@ -113,7 +113,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('cpf', ['label' => ['text' => 'CPF'], 'readonly' => false]);
         echo $this->Form->control('identidade', ['label' => ['text' => 'Carteira de identidade'], 'readonly' => true]);
         echo $this->Form->control('orgao', ['label' => ['text' => 'Orgão emissor'], 'readonly' => true]);
-        echo $this->Form->control('nascimento', ['empty' => true, 'readonly' => true]);
+        echo $this->Form->control('nascimento', ['type' => 'text', 'empty' => true, 'readonly' => true]);
         echo $this->Form->control('endereco', ['label' => ['text' => 'Endereço'], 'readonly' => true]);
         echo $this->Form->control('cep', ['label' => ['text' => 'CEP'], 'readonly' => true  ]);
         echo $this->Form->control('municipio', ['label' => ['text' => 'Município'], 'readonly' => true  ]);

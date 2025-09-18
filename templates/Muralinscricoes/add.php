@@ -40,7 +40,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 'type' => 'hidden',
                 'label' => 'Registro',
                 'placeholder' => 'Digite o DRE',
-                'options' => $estudantes,
+                'options' => $alunos,
                 'empty' => 'Selecione o aluno',
                 'templates' => [
                     'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
@@ -69,7 +69,7 @@ $user = $this->getRequest()->getAttribute('identity');
             echo $this->Form->control('periodo', [
                 'type' => 'hidden',
                 'label' => ['text' => 'Período', 'class' => 'col-sm-2 form-label'],
-                'value' => end($periodos),
+                'value' => null, // será definido pela escolha do mural no controller
                 'readonly' => true,
                 'templates' => [
                     'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-2">{{input}}</div></div>',
@@ -77,28 +77,54 @@ $user = $this->getRequest()->getAttribute('identity');
                 ]
             ]);
             echo $this->Form->control('timestamp', ['type' => 'hidden', 'value' => date('Y-m-d H:i:s'), 'readonly' => true]);
-        elseif (isset($user->categoria) && $user->categoria == 2):
-            echo $this->Form->control('aluno_id', ['label' => 'Aluno(a)', 'options' => $estudantes, 'readonly' => true, 'templates' => [
-                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
-                'label' => '<label class="col-sm-2 form-label"{{attrs}}>{{text}}</label>',
-                'select' => '<select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select>'
-            ]]);
-            echo $this->Form->control('registro', ['label' => 'Registro', 'value' => $user->numero, 'readonly' => true, 'templates' => [
-                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
-                'label' => '<label class="col-sm-2 form-label"{{attrs}}>{{text}}</label>',
-                'input' => '<input class="col-sm-9 form-control " type="{{type}}" name="{{name}}"{{attrs}}/>'
-            ]]);
-            echo $this->Form->control('instituicao_id', ['label' => 'Mural de estágio', 'options' => [$muralestagios], 'readonly' => true, 'templates' => [
-                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
-                'label' => '<label class="col-sm-2 form-label"{{attrs}}>{{text}}</label>',
-                'select' => '<select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select>'
-            ]]);
-            echo $this->Form->control('data', ['type' => 'hidden', 'value' => date('Y-m-d'), 'readonly' => true]);
-            echo $this->Form->control('periodo', ['label' => 'Período', 'options' => $periodos, 'readonly' => false, 'templates' => [
-                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-2">{{input}}</div></div>',
-                'label' => '<label class="col-sm-2 form-label"{{attrs}}>{{text}}</label>',
-                'select' => '<select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select>'
-            ]]);
+        elseif (isset($user) && $user->categoria == 2):
+            echo $this->Form->control('aluno_id', [
+                'label' => 'Aluno(a)',
+                'options' => [$alunos[$user->estudante_id]],
+                'readonly' => true,
+                'templates' => [
+                    'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
+                    'label' => '<label class="col-sm-2 form-label"{{attrs}}>{{text}}</label>',
+                    'select' => '<select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select>'
+                ]
+            ]);
+            echo $this->Form->control('registro', [
+                'label' => 'Registro',
+                'value' => $user->numero,
+                'readonly' => true,
+                'templates' => [
+                    'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
+                    'label' => '<label class="col-sm-2 form-label"{{attrs}}>{{text}}</label>',
+                    'input' => '<input class="col-sm-9 form-control " type="{{type}}" name="{{name}}"{{attrs}}/>'
+                ]
+            ]);
+            echo $this->Form->control('muralestagio_id', [
+                'label' => 'Mural de estágio',
+                'options' => $muralestagios,
+                'empty' => 'Selecione o estágio',
+                'readonly' => true,
+                'templates' => [
+                    'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
+                    'label' => '<label class="col-sm-2 form-label"{{attrs}}>{{text}}</label>',
+                    'select' => '<select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select>'
+                ]
+            ]);
+            echo $this->Form->control('data', [
+                'type' => 'hidden',
+                'value' => date('Y-m-d'),
+                'readonly' => true
+            ]);
+            echo $this->Form->control('periodo', [
+                'type' => 'hidden',
+                'label' => 'Período',
+                'value' => null, // será definido pela escolha do mural no controller
+                'readonly' => false,
+                'templates' => [
+                    'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-2">{{input}}</div></div>',
+                    'label' => '<label class="col-sm-2 form-label"{{attrs}}>{{text}}</label>',
+                    'input' => '<input class="col-sm-9 form-control " type="{{type}}" name="{{name}}"{{attrs}}/>'
+                ]
+            ]);
             echo $this->Form->control('timestamp', ['type' => 'hidden', 'value' => date('Y-m-d H:i:s'), 'readonly' => true]);
         else:
             $this->Flash->error(__('Usuário não autorizado para fazer inscrição.'));
