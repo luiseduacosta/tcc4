@@ -126,7 +126,7 @@ class MuralinscricoesController extends AppController
             if (empty($muralestagio->dataInscricao)) { 
                 $muralestagio->dataInscricao = $hoje->addDays(1);
             }
-            /** Verifica se o período de inscrição está aberto */
+            /** Verifica se o período de inscrição está aberto para o aluno fazer inscrição */
             if ($user->categoria == 2 && $muralestagio->dataInscricao < $hoje) {
                 $this->Flash->error(__('Período de inscrição encerrado em {0}. Não é possível fazer inscrição.', $muralestagio->dataInscricaoo));
                 return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
@@ -190,7 +190,6 @@ class MuralinscricoesController extends AppController
         }
 
         /**  Muralestagios com período e instituição */
-        /**  Muralestagios com o periodo */
         $mural = $this->Muralinscricoes->Muralestagios->find()
             ->select([
                     'Muralestagios.id',

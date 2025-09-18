@@ -23,7 +23,7 @@
                 ) ?>
             </li>
         <?php endif; ?>
-        <?php if (isset($user) && ($user->categoria == "2" || $user->categoria == "1")): ?>
+        <?php if (isset($user) && ($user->categoria == "1" || $user->categoria == "2")): ?>
             <li class="nav-item">
                 <?= $this->Html->link(
                     __("Inscrição para estágio"),
