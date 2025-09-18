@@ -165,8 +165,6 @@ class MuralinscricoesController extends AppController
             $data['periodo'] = $periodo_mural ?? $periodo_atual;
             $data['timestamp'] = date('Y-m-d H:i:s');
 
-
-
             $muralinscricao = $this->Muralinscricoes->patchEntity($muralinscricao, $data);
             if ($this->Muralinscricoes->save($muralinscricao)) {
                 $this->Flash->success(__('Inscrição realizada!'));
@@ -175,7 +173,7 @@ class MuralinscricoesController extends AppController
             $this->Flash->error(__('Não foi possível realizar a inscrição. Tente novamente.'));
         }
 
-        /**  Alunos */
+        /**  Alunos com o registro */
         $estudantes = $this->Muralinscricoes->Alunos->find()
             ->select([
                     'id',
@@ -192,6 +190,7 @@ class MuralinscricoesController extends AppController
         }
 
         /**  Muralestagios com período e instituição */
+        /**  Muralestagios com o periodo */
         $mural = $this->Muralinscricoes->Muralestagios->find()
             ->select([
                     'Muralestagios.id',
