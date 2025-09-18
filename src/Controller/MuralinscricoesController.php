@@ -196,7 +196,7 @@ class MuralinscricoesController extends AppController
             }
         }
 
-        /**  Alunos */
+        /**  Alunos com registro e nome */
         $estudantes = $this->Muralinscricoes->Alunos->find()
             ->select([
                 'id',
@@ -212,7 +212,7 @@ class MuralinscricoesController extends AppController
             $alunos[$a->id] = $a->registro_nome;
         }
 
-        /**  Muralestagios */
+        /**  Muralestagios com período e instituição */
         $mural = $this->Muralinscricoes->Muralestagios->find()
             ->select([
                 'Muralestagios.id',
