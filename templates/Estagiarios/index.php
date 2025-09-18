@@ -75,9 +75,20 @@ $user = $this->getRequest()->getAttribute('identity');
             <span class="navbar-toggler-icon"></span>
         </button>
         <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerMural">
-            <li class="nav-item">
-                <?= $this->Html->link(__('Novo Estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
-            </li>
+            <?php if (isset($user) && $user->categoria == "1"): ?>
+                <li class="nav-item">
+                    <?= $this->Html->link(__('Novo Estagiário'), ['action' => 'add'], ['class' => 'btn btn-primary float-right']) ?>
+                </li>
+            <?php endif; ?>
+            <?php if (isset($user) && ($user->categoria == "1" || $user->categoria == "2")): ?>
+                <li class="nav-item">
+                    <?= $this->Html->link(
+                        __("Inscrição para estágio"),
+                        ['controller' => 'Muralinscricoes', "action" => "index"],
+                        ["class" => "btn btn-primary me-1", 'aria-disabled' => 'false'],
+                    ) ?>
+                </li>
+            <?php endif; ?>
         </ul>
     </nav>
 <?php endif; ?>

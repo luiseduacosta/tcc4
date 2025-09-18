@@ -22,6 +22,9 @@ $user = $this->getRequest()->getAttribute('identity');
         </li>
         <?php if (isset($user) && $user->categoria == '1'): ?>
             <li class="nav-item">
+                <?= $this->Html->link(__('Nova inscrição'), ['action' => 'add'], ['class' => 'btn btn-primary me-1']) ?>
+            </li>
+            <li class="nav-item">
                 <?= $this->Html->link(__('Editar inscrição'), ['action' => 'edit', $muralinscricao->id], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <li class="nav-item">

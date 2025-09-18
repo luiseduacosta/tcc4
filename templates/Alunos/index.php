@@ -23,6 +23,16 @@
                 ) ?>
             </li>
         <?php endif; ?>
+        <?php if (isset($user) && ($user->categoria == "2" || $user->categoria == "1")): ?>
+            <li class="nav-item">
+                <?= $this->Html->link(
+                    __("Inscrição para estágio"),
+                    ['controller' => 'Muralinscricoes', "action" => "index"],
+                    ["class" => "btn btn-primary me-1", 'aria-disabled' => 'false'],
+                ) ?>
+            </li>
+        <?php endif; ?>
+        <!--  if user.categoria == '2':-->
     </ul>
 </nav>
 
