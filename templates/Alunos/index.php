@@ -26,8 +26,8 @@
         <?php if (isset($user) && ($user->categoria == "1" || $user->categoria == "2")): ?>
             <li class="nav-item">
                 <?= $this->Html->link(
-                    __("Inscrição para estágio"),
-                    ['controller' => 'Muralinscricoes', "action" => "index"],
+                    __("Inscrição para mural"),
+                    ['controller' => 'Muralinscricoes', "action" => "add"],
                     ["class" => "btn btn-primary me-1", 'aria-disabled' => 'false'],
                 ) ?>
             </li>
