@@ -27,6 +27,9 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?= $this->Html->link(__('Termo de compromisso'), ['controller' => 'Estagiarios', 'action' => 'novotermocompromisso', '?' => ['aluno_id' => $aluno->id]], ['class' => 'btn btn-primary me-1']) ?>
                 </li>
                 <li class="nav-item">
+                    <?= $this->Html->link(__('Adicionar estágio'), ['controller' => 'Estagiarios', 'action' => 'add', '?' => ['aluno_id' => $aluno->id]], ['class' => 'btn btn-primary me-1']) ?>
+                </li>
+                <li class="nav-item">
                     <?= $this->Html->link(__('Novo Aluno'), ['controller' => 'Alunos', 'action' => 'add'], ['class' => 'btn btn-primary me-1']) ?>
                 </li>
                 <li class="nav-item">

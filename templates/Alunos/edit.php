@@ -82,6 +82,11 @@
         echo $this->Form->control("nome", [
             "label" => "Nome",
             "class" => "form-control",
+            'templates' => [
+                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
+                'label' => '<label class="col-sm-3 form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>',
+            ],
         ]);
         echo $this->Form->control("nomesocial", [
             "label" => "Nome social",

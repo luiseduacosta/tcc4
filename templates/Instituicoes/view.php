@@ -232,7 +232,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <td><?= h($estagiarios->registro) ?></td>
 
                                 <?php if (isset($user) && $user->categoria == '1'): ?>
-                                    <td><?= $estagiarios->has('supervisor') ? $this->Html->link(h($estagiarios->supervisor->nome), ['controller' => 'supervisores', 'action' => 'view', $estagiarios->id_supervisor]) : '' ?>
+                                    <td><?= $estagiarios->has('supervisor') ? $this->Html->link(h($estagiarios->supervisor->nome), ['controller' => 'supervisores', 'action' => 'view', $estagiarios->supervisor_id]) : '' ?>
                                     </td>
                                 <?php else: ?>
                                     <td><?= $estagiarios->has('supervisor') ? $estagiarios->supervisor->nome : '' ?></td>

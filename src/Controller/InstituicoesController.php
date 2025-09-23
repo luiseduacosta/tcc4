@@ -97,6 +97,7 @@ class InstituicoesController extends AppController
     public function edit($id = null)
     {
 
+        $this->Authorization->skipAuthorization();
         try {
             $instituicao = $this->Instituicoes->get($id, [
                 'contain' => ['Supervisores'],

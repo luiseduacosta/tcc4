@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Estagiario $estagiario
  */
 $user = $this->getRequest()->getAttribute('identity');
+// pr($estagiario->supervisor_id);
 ?>
 
 <script type="text/javascript">
@@ -70,7 +71,7 @@ $user = $this->getRequest()->getAttribute('identity');
             }
         });
     }
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#nota').mask('00,00');
         $('#ch').mask('000');
     });
@@ -117,17 +118,73 @@ $niveis = [
     <fieldset class="border p-2">
         <legend><?= __('Editar estagiário') ?></legend>
         <?php
-        echo $this->Form->control('aluno_id', ['options' => $alunos, 'onchange' => 'getaluno(this.value)', 'empty' => true]);
+        echo $this->Form->control('aluno_id', [
+            'options' => $alunos,
+            'onchange' => 'getaluno(this.value)',
+            'empty' => true,
+            'label' => 'Aluno(a)',
+            'templates' => [
+                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
+                'label' => '<label class="col-sm-3 form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>',
+            ]
+        ]);
         echo $this->Form->control('registro', ['label' => 'DRE']);
         echo $this->Form->control('turno', ['label' => 'Turno']);
-        echo $this->Form->control('nivel', ['options' => $niveis, 'empty' => true, 'label' => 'Nível']);
+        echo $this->Form->control('nivel', [
+            'options' => $niveis,
+            'empty' => true,
+            'label' => 'Nível',
+            'templates' => [
+                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
+                'label' => '<label class="col-sm-3 form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>',
+            ]
+        ]);
         echo $this->Form->control('tc', ['label' => 'Termo de compromisso']);
         echo $this->Form->control('tc_solicitacao', ['empty' => true, 'label' => 'Solicitação de termo de compromisso']);
-        echo $this->Form->control('instituicao_id', ['options' => $instituicoes, 'onchange' => 'getsupervisores(this.value)', 'empty' => true]);
-        echo $this->Form->control('supervisor_id', ['options' => $supervisores, 'empty' => true]);
-        echo $this->Form->control('professor_id', ['options' => $professores, 'empty' => true]);
+        echo $this->Form->control('instituicao_id', [
+            'options' => $instituicoes,
+            'onchange' => 'getsupervisores(this.value)',
+            'empty' => true,
+            'label' => 'Instituição',
+            'templates' => [
+                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
+                'label' => '<label class="col-sm-3 form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>',
+            ]
+        ]);
+        echo $this->Form->control('supervisor_id', [
+            'options' => $supervisores,
+            'empty' => true,
+            'label' => 'Supervisor(a)',
+            'templates' => [
+                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
+                'label' => '<label class="col-sm-3 form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>',
+            ]
+        ]);
+        echo $this->Form->control('professor_id', [
+            'options' => $professores,
+            'empty' => true,
+            'label' => 'Professor(a)',
+            'templates' => [
+                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
+                'label' => '<label class="col-sm-3 form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>',
+            ]
+        ]);
         echo $this->Form->control('periodo', ['label' => 'Semestre']);
-        echo $this->Form->control('turmaestagio_id', ['label' => 'Turma', 'options' => $turmaestagios, 'empty' => true]);
+        echo $this->Form->control('turmaestagio_id', [
+            'label' => 'Turma',
+            'options' => $turmaestagios,
+            'empty' => true,
+            'templates' => [
+                'formGroup' => '<div class="form-group row">{{label}}<div class="col-sm-9">{{input}}</div></div>',
+                'label' => '<label class="col-sm-3 form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>',
+            ]
+        ]);
         if (isset($user) && $user->categoria == '1') {
             echo $this->Form->control('nota', ['label' => 'Nota', 'type' => 'number', 'step' => '0.01', 'placeholder' => '00.00']);
             echo $this->Form->control('ch', ['label' => 'Carga horária', 'type' => 'number', 'placeholder' => '000']);

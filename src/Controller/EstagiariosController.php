@@ -323,6 +323,29 @@ class EstagiariosController extends AppController
                         $nivel = 9;
                     }
                 }
+
+                $periodo = $this->fetchTable("Configuracoes")
+                    ->find()
+                    ->select(["mural_periodo_atual"])
+                    ->first();
+
+                if ($estagiario->periodo >= $periodo->mural_periodo_atual) {
+                    echo "Último estágio " . $estagiario->periodo . " é maior ou igual ao período atual " . $periodo->mural_periodo_atual . '<br';
+                }
+
+                if ($estagiario->periodo >= $periodo->mural_periodo_atual) {
+                    $this->Flash->error(
+                        __(
+                            "O período de estágio do aluno tem que ser igual o maior que o período atual " . $periodo->mural_periodo_atual
+                        ),
+                    );
+                    return $this->redirect([
+                        "controller" => "Estagiarios",
+                        "action" => "view",
+                        $estagiario->id,
+                    ]);
+                }
+
                 $this->set("nivel", $nivel);
             } else {
                 $this->Flash->success(__("O aluno não é estagiário"));
@@ -334,7 +357,26 @@ class EstagiariosController extends AppController
                 ->first();
             $this->set("aluno", $aluno);
         } else {
-            $alunos = $this->fetchTable("Alunos")->find("list");
+            $user = $this->getRequest()->getAttribute("identity");
+            if (isset($user) && $user->categoria == "2") {
+                $aluno_id = $user->estudante_id;
+            } else {
+                $this->Flash->error(
+                    __("Selecionar o aluno para o estágio."),
+                );
+                return $this->redirect([
+                    "controller" => "Estagiarios",
+                    "action" => "index",
+                ]);
+            }
+
+            $aluno = $this->fetchTable("Alunos")
+                ->find()
+                ->where(["id" => $user->estudante_id])
+                ->first();
+            $this->set("aluno", $aluno);
+
+            $alunos = $this->fetchTable("Alunos")->find("list", ['order' => ['nome' => 'asc']]);
             $this->set("alunos", $alunos);
         }
         $periodo = $this->fetchTable("Configuracoes")
@@ -343,10 +385,10 @@ class EstagiariosController extends AppController
             ->first();
         $this->set("periodo", $periodo);
 
-        $instituicoes = $this->fetchTable("Instituicoes")->find("list");
-        $supervisores = $this->fetchTable("Supervisores")->find("list");
-        $professores = $this->fetchTable("Professores")->find("list");
-        $turmaestagios = $this->fetchTable("Turmaestagios")->find("list");
+        $instituicoes = $this->fetchTable("Instituicoes")->find("list", ['order' => ['instituicao' => 'asc']]);
+        $supervisores = $this->fetchTable("Supervisores")->find("list", ['order' => ['nome' => 'asc']]);
+        $professores = $this->fetchTable("Professores")->find("list", ['order' => ['nome' => 'asc']]);
+        $turmaestagios = $this->fetchTable("Turmaestagios")->find("list", ['order' => ['area' => 'asc']]);
         $this->set(
             compact(
                 "estagiario",
@@ -644,13 +686,14 @@ class EstagiariosController extends AppController
         }
         $this->Authorization->skipAuthorization();
         $estagiario = $this->Estagiarios->get($id, [
-            "contain" => [],
+            "contain" => ['Alunos', 'Instituicoes', 'Professores', 'Supervisores', 'Turmaestagios'],
         ]);
         $this->Authorization->authorize($estagiario);
         if ($estagiario === null) {
             $this->Flash->error(__("Estagiário não encontrado."));
             return $this->redirect(["action" => "index"]);
         }
+
         if ($this->request->is(["patch", "post", "put"])) {
             $estagiario = $this->Estagiarios->patchEntity(
                 $estagiario,
@@ -669,25 +712,78 @@ class EstagiariosController extends AppController
         }
 
         /** Supervisores da instituição */
-        $supervisoresporinstituicao = $this->fetchTable("Instituicoes")
-            ->find()
-            ->contain(["Supervisores"])
-            ->where(["Instituicoes.id" => $estagiario->instituicao_id])
-            ->first();
-        $supervisores = [];
-        foreach ($supervisoresporinstituicao->supervisores as $supervisor) {
-            $supervisores[$supervisor->id] = $supervisor->nome;
+        // pr($estagiario->instituicao_id);
+        if ($estagiario->instituicao_id == null) {
+            $this->Flash->error(
+                __(
+                    "A instituição do estagiário não foi informada. Verifique.",
+                ),
+            );
+        } else {
+
+            // Verifica se a instituição existe
+            $instituicao = $this->fetchTable("Instituicoes")
+                ->find()
+                ->where(["Instituicoes.id" => $estagiario->instituicao_id])
+                ->first();
+            if ($instituicao === null) {
+                $this->Flash->error(
+                    __(
+                        "A instituição do estagiário não foi localizada. Verifique."
+                    ),
+                );
+                // Se a instituição não existe, não tenta buscar os supervisores
+                $supervisores = [];
+            } else {
+                // Busca os supervisores da instituição
+                $supervisoresporinstituicao = $this->fetchTable("Instituicoes")
+                    ->find()
+                    ->contain(["Supervisores"])
+                    ->where(["Instituicoes.id" => $estagiario->instituicao_id])
+                    ->first();
+                if ($supervisoresporinstituicao === null) {
+                    $this->Flash->error(
+                        __(
+                            "A instituição do estagiário não tem supervisores cadastrados.",
+                        ),
+                    );
+                } else {
+                    $supervisores = [];
+                    $selected = null;
+                    foreach ($supervisoresporinstituicao->supervisores as $supervisor) {
+                        if ($estagiario->supervisor_id == 0) {
+                            $estagiario->supervisor_id = null;
+                        } else {
+                            if ($supervisor->id == $estagiario->supervisor_id) {
+                                $selected = "selected";
+                            }
+                            $supervisores[$supervisor->id] = $supervisor->nome;
+                        }
+                    }
+                    if (!$selected) {
+                        $this->Flash->error(
+                            __(
+                                "O supervisor atual do estagiário não pertence a instituição. Verifique.",
+                            ),
+                        );
+                    }
+                    if (!empty($supervisores)) {
+                        asort($supervisores);
+                    }
+                }
+            }
         }
-        $alunos = $this->fetchTable("Alunos")->find("list");
-        $instituicoes = $this->fetchTable("Instituicoes")->find("list");
-        $professores = $this->fetchTable("Professores")->find("list");
-        $turamestagios = $this->fetchTable("Turmaestagios")->find("list");
+
+        $this->set("supervisores", $supervisores ?? []);
+        $alunos = $this->fetchTable("Alunos")->find("list", ['order' => ['nome' => 'asc']]);
+        $instituicoes = $this->fetchTable("Instituicoes")->find("list", ['order' => ['instituicao' => 'asc']]);
+        $professores = $this->fetchTable("Professores")->find("list", ['order' => ['nome' => 'asc']]);
+        $turamestagios = $this->fetchTable("Turmaestagios")->find("list", ['order' => ['area' => 'asc']]);
         $this->set(
             compact(
                 "estagiario",
                 "alunos",
                 "instituicoes",
-                "supervisores",
                 "professores",
                 "turamestagios",
             ),
