@@ -21,7 +21,7 @@ class UserPolicy
     public function canAdd(IdentityInterface $user, User $resourse)
     {
 
-        return $user->categoria == '1';
+        return true;
     }
 
     /**
@@ -33,7 +33,7 @@ class UserPolicy
      */
     public function canEdit(IdentityInterface $user, User $resource)
     {
-        return $user->categoria == '1';
+        return isset($user) && $user->categoria == '1';
     }
 
     /**
@@ -45,7 +45,7 @@ class UserPolicy
      */
     public function canDelete(IdentityInterface $user, User $resource)
     {
-        return $user->categoria == '1';
+        return isset($user) && ($user->categoria == '1');
     }
 
     /**
@@ -57,19 +57,7 @@ class UserPolicy
      */
     public function canView(IdentityInterface $user, User $resource)
     {
-        return $user->categoria == '1';
-    }
-
-    /**
-     * Check if $user can view User
-     *
-     * @param \Authorization\IdentityInterface $user The user.
-     * @param \App\Model\Entity\User $resource
-     * @return bool
-     */
-    public function canIndex(IdentityInterface $user, User $resource)
-    {
-        return $user->categoria == '1';
+        return isset($user) && $user->categoria == '1';
     }
 
 }

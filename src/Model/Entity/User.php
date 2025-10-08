@@ -13,8 +13,8 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string|null $email
  * @property string|null $password
- * @property string $categoria
- * @property int $numero
+ * @property numeric|null $categoria
+ * @property numeric|null $numero
  * @property int|null $estudante_id
  * @property int|null $supervisor_id
  * @property int|null $professor_id
@@ -24,6 +24,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Estudante[] $estudantes
  * @property \App\Model\Entity\Supervisor[] $supervisores
  * @property \App\Model\Entity\Professor[] $professores
+ *
  */
 class User extends Entity {
 
@@ -45,11 +46,10 @@ class User extends Entity {
         'supervisor_id' => true,
         'professor_id' => true,
         'timestamp' => true,
-        'role' => true,
         'alunos' => true,
         'estudantes' => true,
         'supervisores' => true,
-        'professores' => true
+        'professores' => true,
     ];
 
     // Add this method

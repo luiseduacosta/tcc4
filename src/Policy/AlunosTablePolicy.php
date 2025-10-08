@@ -20,7 +20,8 @@ class AlunosTablePolicy {
      * @return bool
      */
     public function canIndex(IdentityInterface $user, AlunosTable $alunos) {
-        return isset($user->categoria) && $user->categoria == '1';
+    
+        return isset($user) && ($user->categoria == '1' || $user->categoria == '2');
     }
 
 }

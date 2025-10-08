@@ -51,40 +51,27 @@ class AlunosController extends AppController
      */
     public function index()
     {
-        $this->Authorization->skipAuthorization();
-        // $user = $this->getRequest()->getAttribute('identity');
-        if (isset($this->user) && $this->user->categoria == "1") {
-            $aluno = $this->Alunos->find()->all();
-            if (empty($aluno)) {
-                $this->Flash->error(
-                    __("Sem parâmentros para localizar o aluno"),
-                );
-                return $this->redirect([
-                    "controller" => "Alunos",
-                    "action" => "index",
-                ]);
-            }
+        $user = $this->getRequest()->getAttribute("identity");
+        $alunos = $this->Alunos->find()
+            ->order(['nome' => 'ASC']);
+        if ($this->Authorization->skipAuthorization()) {
+            // pr($query->all());
+            // die();
         } else {
-            $this->Flash->error(
-                __("Você não tem permissão para acessar esta página"),
-            );
+            $this->Flash->error(__("Acesso não autorizado."));
             return $this->redirect([
                 "controller" => "Muralestagios",
                 "action" => "index",
             ]);
         }
-        $sort = $this->getRequest()->getQuery("sort");
-        $direction = $this->getRequest()->getQuery("direction");
-        if (empty($sort)) {
-            $sort = "nome";
+        if ($alunos->count() === 0) {
+            $this->Flash->error(__("Nenhum aluno encontrado."));
+            return $this->redirect([
+                "controller" => "Alunos",
+                "action" => "add",
+            ]);
         }
-        if (empty($direction)) {
-            $direction = "ASC";
-        }
-        $alunos = $this->paginate($this->Alunos, [
-            "order" => ["Alunos." . $sort => $direction],
-        ]);
-        $this->set(compact("alunos"));
+        $this->set('alunos', $this->paginate($alunos));
     }
 
     /**
@@ -97,50 +84,6 @@ class AlunosController extends AppController
     public function view($id = null)
     {
         $this->Authorization->skipAuthorization();
-        if ($id === null) {
-            // $user = $this->getRequest()->getAttribute("identity");
-            if (isset($this->user)) {
-                $aluno = $this->Alunos
-                    ->find()
-                    ->where(["id" => $this->user->estudante_id])
-                    ->select("alunos.id")
-                    ->first();
-                if (empty($aluno)) {
-                    $this->Flash->error(
-                        __("Sem parâmentros para localizar o aluno"),
-                    );
-                    return $this->redirect([
-                        "controller" => "Alunos",
-                        "action" => "index",
-                    ]);
-                } else {
-                    if (
-                        $this->user->categoria == 2 ||
-                        $aluno->id == $this->user->estudante_id
-                    ) {
-                        $id = $aluno->id;
-                    } else {
-                        $this->Flash->error(
-                            __(
-                                "Você não tem permissão para acessar esta página",
-                            ),
-                        );
-                        return $this->redirect([
-                            "controller" => "Muralestagios",
-                            "action" => "index",
-                        ]);
-                    }
-                }
-            } else {
-                $this->Flash->error(
-                    __("Você não tem permissão para acessar esta página"),
-                );
-                return $this->redirect([
-                    "controller" => "Muralestagios",
-                    "action" => "index",
-                ]);
-            }
-        }
         $aluno = $this->Alunos
             ->find()
             ->contain([
@@ -159,7 +102,13 @@ class AlunosController extends AppController
             $this->Flash->error(__("Aluno não encontrado"));
             return $this->redirect(["action" => "index"]);
         }
-        $this->set(compact("aluno"));
+        try {
+            $this->Authorization->authorize($aluno);
+            $this->set(compact("aluno"));
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__("Acesso não autorizado."));
+            return $this->redirect(["action" => "index"]);
+        }
     }
 
     /**
@@ -171,8 +120,14 @@ class AlunosController extends AppController
     {
         $dre = $this->getRequest()->getQuery("dre");
         $email = $this->getRequest()->getQuery("email");
-        $this->Authorization->skipAuthorization();
         $aluno = $this->Alunos->newEmptyEntity();
+        try {
+            $this->Authorization->authorize($aluno);
+            $this->set(compact("aluno"));
+        } catch (\Authorization\Exception\ForbiddenException $e) {
+            $this->Flash->error(__("Acesso não autorizado 1."));
+            return $this->redirect(["action" => "view", $user->estudante_id]);
+        }
         if ($this->request->is("post", "put", "patch")) {
             if (
                 empty($this->request->getData()["registro"]) ||
@@ -189,7 +144,7 @@ class AlunosController extends AppController
 
             if ($registro) {
                 $this->Flash->error(__("DRE já cadastrado."));
-                return $this->redirect(["action" => "add"]);
+                return $this->redirect(["action" => "view", $registro->id]);
             }
 
             $email = $this->Alunos
@@ -198,18 +153,21 @@ class AlunosController extends AppController
                 ->first();
             if ($email) {
                 $this->Flash->error(__("Email já cadastrado."));
-                return $this->redirect(["action" => "add"]);
+                return $this->redirect(["action" => "view", $email->id]);
             }
 
             $aluno = $this->Alunos->patchEntity(
                 $aluno,
                 $this->request->getData(),
             );
-            if ($this->Alunos->save($aluno)) {
-                $this->Flash->success(__("Dados do aluno inseridos."));
-                return $this->redirect(["action" => "view", $aluno->id]);
+            if ($this->Authorization->authorize($aluno)) {
+
+                if ($this->Alunos->save($aluno)) {
+                    $this->Flash->success(__("Dados do aluno inseridos."));
+                    return $this->redirect(["action" => "view", $aluno->id]);
+                }
+                $this->Flash->error(__("Dados do aluno não inseridos."));
             }
-            $this->Flash->error(__("Dados do aluno não inseridos."));
         }
         if (!empty($dre) && !empty($email)) {
             $aluno->registro = $dre;
@@ -227,10 +185,10 @@ class AlunosController extends AppController
      */
     public function edit($id = null)
     {
-        $this->Authorization->skipAuthorization();
         $aluno = $this->Alunos->get($id, [
             "contain" => [],
         ]);
+        $this->Authorization->authorize($aluno);
 
         $user = $this->getRequest()->getAttribute("identity");
 

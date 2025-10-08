@@ -61,11 +61,6 @@ class UsersTable extends Table {
         $this->belongsTo('Professores', [
             'foreignKey' => 'professor_id',
         ]);
-        
-        $this->belongsTo('Role', [
-            'foreignKey' => 'categoria',
-        ]);
-
     }
 
     /**
@@ -92,13 +87,26 @@ class UsersTable extends Table {
             ->notEmptyString('password');
 
         $validator
-            ->scalar('categoria')
-            ->notEmptyString('categoria');
+            ->numeric('categoria')
+            ->notEmptyString('categoria', 'A categoria é obrigatória.')
+            ->inList('categoria', ['1', '2', '3', '4'], 'Categoria inválida.');
 
         $validator
-            ->integer('numero')
+            ->numeric('numero')
             ->allowEmptyString('numero');
 
+        $validator
+            ->integer('estudante_id')
+            ->allowEmptyString('estudante_id');
+        
+        $validator
+            ->integer('supervisor_id')
+            ->allowEmptyString('supervisor_id');
+        
+        $validator
+            ->integer('professor_id')
+            ->allowEmptyString('professor_id');
+        
         $validator
             ->notEmptyDateTime('timestamp');
 
