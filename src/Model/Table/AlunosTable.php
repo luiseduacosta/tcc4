@@ -67,7 +67,7 @@ class AlunosTable extends Table
                         'foreignKey' => false,
                         'conditions' => 'Alunos.registro = Tccestudantes.registro',
                         'joinType' => 'LEFT'
-                    ]);
+                ]);
         }
 
         /**
@@ -168,7 +168,7 @@ class AlunosTable extends Table
          */
         public function buildRules(RulesChecker $rules): RulesChecker
         {
-                
+
                 $rules->add($rules->isUnique(['registro']), ['errorField' => 'registro']);
                 $rules->add($rules->isUnique(['email']), ['errorField' => 'email']);
 

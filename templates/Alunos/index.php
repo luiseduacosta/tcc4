@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Aluno[]|\Cake\Collection\CollectionInterface $alunos
  */
 // $user = $this->getRequest()->getAttribute('identity');
+// pr($alunos);
 ?>
 
 <?php echo $this->element("menu_mural"); ?>
@@ -21,6 +22,48 @@
                     ["action" => "add"],
                     ["class" => "btn btn-primary me-1"],
                 ) ?>
+            </li>
+            <li class="nav-item">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <?= $this->Form->create(null, ['action' => 'Alunos/buscaalunonome', 'method' => 'post', 'class' => 'form-inline']) ?>
+                        <?= $this->Form->control('nome', [
+                            'label' => false,
+                            'placeholder' => 'Busca aluno por nome',
+                            'templates' => [
+                                'input' => '<input class="form-control" type="{{type}}" name="{{name}}"{{attrs}}/>',
+                            ]
+                        ]) ?>
+                    </div>
+                    <div class="col-sm-3">
+                        <?= $this->Form->button(__("Buscar nome"), [
+                            'type' => 'submit',
+                            'class' => 'btn btn-primary me-1',
+                        ]) ?>
+                    </div>
+                    <?= $this->Form->end() ?>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <?= $this->Form->create(null, ['action' => 'Alunos/buscaalunoregistro', 'method' => 'post', 'class' => 'form-inline']) ?>
+                        <?= $this->Form->control('registro', [
+                            'label' => false,
+                            'placeholder' => 'Busca aluno por número de registro',
+                            'templates' => [
+                                'input' => '<input class="form-control" type="{{type}}" name="{{name}}"{{attrs}}/>',
+                            ]
+                        ]) ?>
+                    </div>
+                    <div class="col-sm-3">
+                        <?= $this->Form->button(__("Buscar registro"), [
+                            'type' => 'submit',
+                            'class' => 'btn btn-primary me-1',
+                        ]) ?>
+                    </div>
+                    <?= $this->Form->end() ?>
+                </div>
             </li>
         <?php endif; ?>
         <?php if (isset($user) && ($user->categoria == "1" || $user->categoria == "2")): ?>
@@ -122,9 +165,9 @@
                                 <?php if (empty($aluno->nascimento)): ?>
                                     <td>Sem dados</td>
                                 <?php else: ?>
-                                <td><?= $aluno->nascimento->i18nFormat(
-                                    "dd-MM-yyyy",
-                                ) ?></td>
+                                    <td><?= $aluno->nascimento->i18nFormat(
+                                        "dd-MM-yyyy",
+                                    ) ?></td>
                                 <?php endif; ?>
                                 <td><?= h($aluno->cpf) ?></td>
                                 <td><?= h($aluno->identidade) ?></td>
@@ -158,7 +201,8 @@
                                                 "confirm" => __(
                                                     "Tem certeza que quer excluir o registro # {0}?",
                                                     $aluno->id,
-                                                ), 'class' => 'btn btn-danger btn-sm btn-block mb-1',
+                                                ),
+                                                'class' => 'btn btn-danger btn-sm btn-block mb-1',
                                             ],
                                         ) ?>
                                     <?php endif; ?>
@@ -255,7 +299,8 @@
                                                     "controller" => "Alunos",
                                                     "action" => "edit",
                                                     $aluno->id,
-                                                ], ["class" => "btn btn-primary btn-sm btn-block mb-1"]
+                                                ],
+                                                ["class" => "btn btn-primary btn-sm btn-block mb-1"]
                                             ) ?>
                                             <?= $this->Form->postLink(
                                                 __("Excluir"),
@@ -268,7 +313,8 @@
                                                     "confirm" => __(
                                                         "Tem certeza que quer excluir o registro # {0}?",
                                                         $aluno->id,
-                                                    ), 'class' => 'btn btn-danger btn-sm btn-block mb-1',
+                                                    ),
+                                                    'class' => 'btn btn-danger btn-sm btn-block mb-1',
                                                 ],
                                             ) ?>
                                         <?php endif; ?>
@@ -357,7 +403,8 @@
                                                     "controller" => "Alunos",
                                                     "action" => "edit",
                                                     $aluno->id,
-                                                ], ["class" => "btn btn-primary btn-sm btn-block mb-1"]
+                                                ],
+                                                ["class" => "btn btn-primary btn-sm btn-block mb-1"]
                                             ) ?>
                                             <?= $this->Form->postLink(
                                                 __("Excluir"),
@@ -370,7 +417,8 @@
                                                     "confirm" => __(
                                                         "Tem certeza que quer excluir o registro # {0}?",
                                                         $aluno->id,
-                                                    ), 'class' => 'btn btn-danger btn-sm btn-block mb-1'
+                                                    ),
+                                                    'class' => 'btn btn-danger btn-sm btn-block mb-1'
                                                 ],
                                             ) ?>
                                         <?php endif; ?>

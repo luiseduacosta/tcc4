@@ -40,8 +40,8 @@ class AlunosController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-        $this->user = $this->getRequest()->getAttribute("identity");
-        $this->set("user", $this->user);
+        $user = $this->getRequest()->getAttribute("identity");
+        $this->set("user", $user);
     }
 
     /**
@@ -49,11 +49,45 @@ class AlunosController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
+    public function index($alunos = null)
     {
-        $user = $this->getRequest()->getAttribute("identity");
-        $alunos = $this->Alunos->find()
-            ->order(['nome' => 'ASC']);
+        $nome = $this->getRequest()->getQuery("nome");
+        $dre = $this->getRequest()->getQuery("dre");
+
+        if ($nome) {
+            $alunos = $this->Alunos->find()
+                ->where(["Alunos.nome LIKE" => "%{$nome}%"])
+                ->order(['nome' => 'ASC']);
+            $this->Authorization->skipAuthorization();
+            if ($alunos->count() === 0) {
+                $this->Flash->error(__("Nenhum aluno encontrado com o nome: {$nome}"));
+                // die('Nenhum aluno encontrado com o nome: ' . $nome);
+                return $this->redirect([
+                    "controller" => "Alunos",
+                    "action" => "index"
+                ]);
+            }
+        }
+        if ($dre) {
+            $alunos = $this->Alunos->find()
+                ->where(["Alunos.registro" => $dre])
+                ->order(['nome' => 'ASC']);
+            // debug($alunos);
+            // die();
+            $this->Authorization->skipAuthorization();
+            if ($alunos->count() === 0) {
+                $this->Flash->error(__("Nenhum aluno encontrado com o DRE: {$dre}"));
+                // die('Nenhum aluno encontrado com o DRE: ' . $dre);
+                return $this->redirect([
+                    "controller" => "Alunos",
+                    "action" => "index"
+                ]);
+            }
+        }
+        if (empty($alunos)) {
+            $alunos = $this->Alunos->find()->order(['nome' => 'ASC']);
+        }
+
         if ($this->Authorization->skipAuthorization()) {
             // pr($query->all());
             // die();
@@ -64,6 +98,7 @@ class AlunosController extends AppController
                 "action" => "index",
             ]);
         }
+
         if ($alunos->count() === 0) {
             $this->Flash->error(__("Nenhum aluno encontrado."));
             return $this->redirect([
@@ -126,7 +161,7 @@ class AlunosController extends AppController
             $this->set(compact("aluno"));
         } catch (\Authorization\Exception\ForbiddenException $e) {
             $this->Flash->error(__("Acesso não autorizado 1."));
-            return $this->redirect(["action" => "view", $user->estudante_id]);
+            return $this->redirect(["action" => "view", $this->user->estudante_id]);
         }
         if ($this->request->is("post", "put", "patch")) {
             if (
@@ -199,7 +234,7 @@ class AlunosController extends AppController
                 // $this->Authorization->authorize($aluno);
             } else {
                 $this->Flash->error(__("Usuário não autorizado."));
-                return $this->redirect(["action" => "index"]);
+                return $this->redirect(["action" => "view", $user->estudante_id]);
             }
         } else {
             $this->Flash->error(__("Operação não autorizada."));
@@ -1077,6 +1112,46 @@ class AlunosController extends AppController
                 ->withStringBody(
                     json_encode(["error" => "Erro ao buscar aluno"]),
                 );
+        }
+    }
+
+    /**
+     * Busca aluno por registro
+     * @param string|null $registro Aluno registro.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function buscaalunoregistro($registro = null)
+    {
+        $this->Authorization->skipAuthorization();
+        $registro = $this->request->getData("registro");
+        if ($registro) {
+            return $this->redirect(["controller" => "Alunos", "action" => "index", "?" => ["dre" => $registro]]);
+        } else {
+            $this->Flash->error(__("Digite um número de registro para busca"));
+            return $this->redirect(["controller" => "Alunos", "action" => "index"]);
+        }
+
+    }
+
+    /**
+     * Busca aluno por nome
+     * @param string|null $nome Aluno nome.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function buscaalunonome($nome = null)
+    {
+        $this->Authorization->skipAuthorization();
+        $nome = $this->request->getData("nome");
+        // pr($nome);
+        // die();
+        if ($nome) {
+            // $this->set("nome", trim($nome));
+            return $this->redirect(["controller" => "Alunos", "action" => "index", "?" => ["nome" => $nome]]);
+        } else {
+            $this->Flash->error(__("Digite um nome para busca"));
+            return $this->redirect(["controller" => "Alunos", "action" => "index"]);
         }
     }
 }
