@@ -26,12 +26,27 @@ class SupervisoresController extends AppController
     /**
      * Index method
      *
+     * @param string|null $nome Supervisor nome.
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
+    public function index($nome = null)
     {
+        $nome = $this->getRequest()->getData('nome');
+        if ($nome) {
+            $query = $this->Supervisores->find('all');
+            $query->where(['nome LIKE' => "%{$nome}%"]);
+            $query->order(['nome' => 'ASC']);
+        } else {
+            $query = $this->Supervisores->find('all');
+            $query->order(['nome' => 'ASC']);
+        }
+        if (!$query->toArray()) {
+            $this->Authorization->skipAuthorization();
+            $this->Flash->error(__('Nenhum supervisor encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->skipAuthorization();
-        $supervisores = $this->paginate($this->Supervisores);
+        $supervisores = $this->paginate($query);
         $this->set(compact('supervisores'));
     }
 
@@ -147,6 +162,31 @@ class SupervisoresController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Busca supervisor por nome
+     *
+     * @return \Cake\Http\Response|null|void
+     */
+    public function buscasupervisor($nome = null)
+    {
+        $this->Authorization->skipAuthorization();
+        $nome = $this->request->getData("nome");
+        if ($nome) {
+            // $this->set("nome", trim($nome));
+            return $this->redirect([
+                "controller" => "Supervisores",
+                "action" => "index",
+                "?" => ["nome" => $nome]
+            ]);
+        } else {
+            $this->Flash->error(__("Digite um nome para buscar"));
+            return $this->redirect([
+                "controller" => "Supervisores",
+                "action" => "index"
+            ]);
+        }
     }
 
 }

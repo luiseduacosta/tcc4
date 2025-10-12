@@ -46,7 +46,7 @@ class AlunosController extends AppController
 
     /**
      * Index method
-     *
+     * @param string|null $alunos
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index($alunos = null)
@@ -55,37 +55,41 @@ class AlunosController extends AppController
         $dre = $this->getRequest()->getQuery("dre");
 
         if ($nome) {
-            $alunos = $this->Alunos->find()
+            $alunos = $this->Alunos
+                ->find()
                 ->where(["Alunos.nome LIKE" => "%{$nome}%"])
-                ->order(['nome' => 'ASC']);
+                ->order(["nome" => "ASC"]);
             $this->Authorization->skipAuthorization();
             if ($alunos->count() === 0) {
-                $this->Flash->error(__("Nenhum aluno encontrado com o nome: {$nome}"));
+                $this->Flash->error(
+                    __("Nenhum(a) aluno(a) encontrado com o nome: {$nome}"),
+                );
                 // die('Nenhum aluno encontrado com o nome: ' . $nome);
                 return $this->redirect([
                     "controller" => "Alunos",
-                    "action" => "index"
+                    "action" => "index",
                 ]);
             }
         }
         if ($dre) {
-            $alunos = $this->Alunos->find()
+            $alunos = $this->Alunos
+                ->find()
                 ->where(["Alunos.registro" => $dre])
-                ->order(['nome' => 'ASC']);
-            // debug($alunos);
-            // die();
+                ->order(["nome" => "ASC"]);
             $this->Authorization->skipAuthorization();
             if ($alunos->count() === 0) {
-                $this->Flash->error(__("Nenhum aluno encontrado com o DRE: {$dre}"));
+                $this->Flash->error(
+                    __("Nenhum(a) aluno(a) encontrado com o DRE: {$dre}"),
+                );
                 // die('Nenhum aluno encontrado com o DRE: ' . $dre);
                 return $this->redirect([
                     "controller" => "Alunos",
-                    "action" => "index"
+                    "action" => "index",
                 ]);
             }
         }
         if (empty($alunos)) {
-            $alunos = $this->Alunos->find()->order(['nome' => 'ASC']);
+            $alunos = $this->Alunos->find()->order(["nome" => "ASC"]);
         }
 
         if ($this->Authorization->skipAuthorization()) {
@@ -106,7 +110,7 @@ class AlunosController extends AppController
                 "action" => "add",
             ]);
         }
-        $this->set('alunos', $this->paginate($alunos));
+        $this->set("alunos", $this->paginate($alunos));
     }
 
     /**
@@ -161,7 +165,10 @@ class AlunosController extends AppController
             $this->set(compact("aluno"));
         } catch (\Authorization\Exception\ForbiddenException $e) {
             $this->Flash->error(__("Acesso não autorizado 1."));
-            return $this->redirect(["action" => "view", $this->user->estudante_id]);
+            return $this->redirect([
+                "controller" => "Alunos",
+                "action" => "index",
+            ]);
         }
         if ($this->request->is("post", "put", "patch")) {
             if (
@@ -169,7 +176,10 @@ class AlunosController extends AppController
                 empty($this->request->getData()["email"])
             ) {
                 $this->Flash->error(__("DRE e Email são obrigatórios."));
-                return $this->redirect(['controller' => 'Users', "action" => "login"]);
+                return $this->redirect([
+                    "controller" => "Users",
+                    "action" => "login",
+                ]);
             }
             // Verifica se o DRE ou email já estão cadastrados
             $registro = $this->Alunos
@@ -196,7 +206,6 @@ class AlunosController extends AppController
                 $this->request->getData(),
             );
             if ($this->Authorization->authorize($aluno)) {
-
                 if ($this->Alunos->save($aluno)) {
                     $this->Flash->success(__("Dados do aluno inseridos."));
                     return $this->redirect(["action" => "view", $aluno->id]);
@@ -226,18 +235,20 @@ class AlunosController extends AppController
         $this->Authorization->authorize($aluno);
 
         $user = $this->getRequest()->getAttribute("identity");
-
-        if (isset($this->user) && $this->user->categoria == "1") {
-            $this->Authorization->authorize($aluno);
+        if (isset($user) && $user->categoria == "1") {
+            $this->Authorization->skipAuthorization();
         } elseif (isset($user) && $user->categoria == "2") {
             if ($aluno->id == $user->estudante_id) {
-                // $this->Authorization->authorize($aluno);
+                $this->Authorization->skipAuthorization();
             } else {
                 $this->Flash->error(__("Usuário não autorizado."));
-                return $this->redirect(["action" => "view", $user->estudante_id]);
+                return $this->redirect([
+                    "action" => "view",
+                    $user->estudante_id,
+                ]);
             }
         } else {
-            $this->Flash->error(__("Operação não autorizada."));
+            $this->Flash->error(__("Operação não autorizada 1."));
             return $this->redirect(["action" => "index"]);
         }
 
@@ -328,20 +339,22 @@ class AlunosController extends AppController
                 $cargahorariatotal[$i]["q_semestres"] = sizeof(
                     $aluno["estagiarios"],
                 );
-                $carga_estagio['ch'] = null;
+                $carga_estagio["ch"] = null;
                 $y = 0;
                 foreach ($aluno["estagiarios"] as $estagiario):
                     // pr($estagiario['ch']);
                     if ($estagiario["nivel"] == 1):
                         $cargahorariatotal[$i][$y]["ch"] = $estagiario["ch"];
-                        $cargahorariatotal[$i][$y]["nivel"] = $estagiario["nivel"];
+                        $cargahorariatotal[$i][$y]["nivel"] =
+                            $estagiario["nivel"];
                         $cargahorariatotal[$i][$y]["periodo"] =
                             $estagiario["periodo"];
                         $carga_estagio["ch"] =
                             $carga_estagio["ch"] + $estagiario["ch"];
                     else:
                         $cargahorariatotal[$i][$y]["ch"] = $estagiario["ch"];
-                        $cargahorariatotal[$i][$y]["nivel"] = $estagiario["nivel"];
+                        $cargahorariatotal[$i][$y]["nivel"] =
+                            $estagiario["nivel"];
                         $cargahorariatotal[$i][$y]["periodo"] =
                             $estagiario["periodo"];
                         $carga_estagio["ch"] =
@@ -360,7 +373,7 @@ class AlunosController extends AppController
     }
 
     /**
-     * Declaração de Período (ob)
+     * Declaração de Período
      *
      * @param string|null $id Aluno id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
@@ -597,10 +610,10 @@ class AlunosController extends AppController
                 );
                 if (
                     isset(
-                    $this->getRequest()->getAttribute("identity")[
-                        "categoria"
-                    ]
-                ) &&
+                        $this->getRequest()->getAttribute("identity")[
+                            "categoria"
+                        ]
+                    ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
@@ -630,10 +643,10 @@ class AlunosController extends AppController
                 );
                 if (
                     isset(
-                    $this->getRequest()->getAttribute("identity")[
-                        "categoria"
-                    ]
-                ) &&
+                        $this->getRequest()->getAttribute("identity")[
+                            "categoria"
+                        ]
+                    ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
@@ -692,14 +705,14 @@ class AlunosController extends AppController
             /** Se o período inicial é maior que o período atual então informar que há um erro */
             if ($totalperiodos <= 0) {
                 $this->Flash->error(
-                    __("Error: período inicial é maior que período atual"),
+                    __("Error: período inicial está na frente do período atual"),
                 );
                 if (
                     isset(
-                    $this->getRequest()->getAttribute("identity")[
-                        "categoria"
-                    ]
-                ) &&
+                        $this->getRequest()->getAttribute("identity")[
+                            "categoria"
+                        ]
+                    ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
@@ -771,7 +784,7 @@ class AlunosController extends AppController
         $this->viewBuilder()->setOption("pdfConfig", [
             "orientation" => "portrait",
             "download" => true, // This can be omitted if "filename" is specified.
-            "filename" => "declaracao_de_periodo_" . $id . ".pdf", //// This can be omitted if you want file name based on URL.
+            "filename" => "declaracao_de_periodo_" . $id . ".pdf", // This can be omitted if you want file name based on URL.
         ]);
 
         $this->set("aluno", $aluno);
@@ -1126,12 +1139,18 @@ class AlunosController extends AppController
         $this->Authorization->skipAuthorization();
         $registro = $this->request->getData("registro");
         if ($registro) {
-            return $this->redirect(["controller" => "Alunos", "action" => "index", "?" => ["dre" => $registro]]);
+            return $this->redirect([
+                "controller" => "Alunos",
+                "action" => "index",
+                "?" => ["dre" => $registro],
+            ]);
         } else {
             $this->Flash->error(__("Digite um número de registro para busca"));
-            return $this->redirect(["controller" => "Alunos", "action" => "index"]);
+            return $this->redirect([
+                "controller" => "Alunos",
+                "action" => "index",
+            ]);
         }
-
     }
 
     /**
@@ -1144,14 +1163,19 @@ class AlunosController extends AppController
     {
         $this->Authorization->skipAuthorization();
         $nome = $this->request->getData("nome");
-        // pr($nome);
-        // die();
         if ($nome) {
             // $this->set("nome", trim($nome));
-            return $this->redirect(["controller" => "Alunos", "action" => "index", "?" => ["nome" => $nome]]);
+            return $this->redirect([
+                "controller" => "Alunos",
+                "action" => "index",
+                "?" => ["nome" => $nome]
+            ]);
         } else {
             $this->Flash->error(__("Digite um nome para busca"));
-            return $this->redirect(["controller" => "Alunos", "action" => "index"]);
+            return $this->redirect([
+                "controller" => "Alunos",
+                "action" => "index"
+            ]);
         }
     }
 }

@@ -19,6 +19,23 @@ $user = $this->getRequest()->getAttribute('identity');
             <li class="nav-item">
                 <?= $this->Html->link(__('Nova instituição'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
             </li>
+            <div class="col-sm-2">
+                <?= $this->Form->create(null, ['url' => ['controller' => 'Instituicoes', 'action' => 'index'], 'method' => 'post', 'class' => 'form-inline']) ?>
+                <?= $this->Form->control('nome', [
+                    'type' => 'text',
+                    'label' => false,
+                    'placeholder' => 'Busca instituição',
+                    'class' => 'form-control'
+                ])
+                ?>
+            </div>
+            <div class="col-sm-1 me-1">
+                <?= $this->Form->button(__("Buscar"), [
+                    'type' => 'submit',
+                    'class' => 'btn btn-primary',
+                ]) ?>
+            </div>
+            <?= $this->Form->end() ?>
         <?php endif; ?>
     </ul>
 </nav>

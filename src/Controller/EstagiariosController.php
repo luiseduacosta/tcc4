@@ -74,6 +74,9 @@ class EstagiariosController extends AppController
                     "Supervisores",
                     "Instituicoes",
                     "Turmaestagios",
+                ])
+                ->order([
+                    "Alunos.nome" => "ASC",
                 ]);
         } else {
             $query = $this->Estagiarios
@@ -84,6 +87,9 @@ class EstagiariosController extends AppController
                     "Supervisores",
                     "Instituicoes",
                     "Turmaestagios",
+                ])
+                ->order([
+                    "Alunos.nome" => "ASC",
                 ]);
         }
         if ($nivel) {

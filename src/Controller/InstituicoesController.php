@@ -27,16 +27,35 @@ class InstituicoesController extends AppController
 
     /**
      * Index method
-     *
+     * 
+     * @param string|null $instituicao
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
+    public function index($instituicao = null)
     {
-        $query = $this->Instituicoes->find('all', [
-            'contain' => ['Areainstituicoes'],
-        ]);
-        $this->Authorization->skipAuthorization();
-        $instituicoes = $this->paginate($query, ['order' => ['Instituicoes.instituicao' => 'ASC']]);
+        $instituicao = $this->getRequest()->getData('nome');
+        if ($instituicao) {
+            $query = $this->Instituicoes->find('all');
+            $query->where(['Instituicoes.instituicao LIKE' => "%{$instituicao}%"]);
+            $query->contain(['Areainstituicoes']);
+            $query->order(['Instituicoes.instituicao' => 'ASC']);
+        } else {
+            $query = $this->Instituicoes->find('all', [
+                'contain' => ['Areainstituicoes'],
+                'order' => ['Instituicoes.instituicao' => 'ASC']
+            ]);
+        }
+        if (!$query->toArray()) {
+            $this->Authorization->skipAuthorization();
+            $this->Flash->error(__('Instituição: ' . $instituicao . ' não encontrada. Tente novamente.'));
+            return $this->redirect(['action' => 'index']);
+        }
+        if ($this->Authorization->skipAuthorization()) {
+            $instituicoes = $this->paginate($query);
+        } else {
+            $this->Flash->error(__('Acesso não autorizado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->set(compact('instituicoes'));
     }
 
@@ -148,6 +167,11 @@ class InstituicoesController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+    /**
+     * buscasupervisores method
+     *
+     * @return \Cake\Http\Response|null|void
+     */
     public function buscasupervisores()
     {
 
@@ -186,4 +210,27 @@ class InstituicoesController extends AppController
 
     }
 
+    /**
+     * buscainstituicao method
+     *
+     * @return \Cake\Http\Response|null|void
+     */
+    public function buscainstituicao()
+    {
+        $this->Authorization->skipAuthorization();
+        $instituicao = $this->getRequest()->getData('instituicao');
+        if ($instituicao) {
+            return $this->redirect([
+                "controller" => "Instituicoes",
+                "action" => "index",
+                "?" => ["instituicao" => $instituicao]
+            ]);
+        } else {
+            $this->Flash->error(__('Digite um nome para busca'));
+            return $this->redirect([
+                "controller" => "Instituicoes",
+                "action" => "index"
+            ]);
+        }
+    }   
 }

@@ -33,14 +33,28 @@ class ProfessoresController extends AppController
     /**
      * Index method
      *
+     * @param string|null $nome Professor nome.
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
+    public function index($nome = null)
     {
-
         $this->Authorization->skipAuthorization();
-
-        $professores = $this->paginate($this->Professores);
+        $nome = $this->getRequest()->getData('nome');
+        if ($nome) {
+            $query = $this->Professores->find('all');
+            $query->where(['nome LIKE' => "%{$nome}%"]);
+            $query->order(['nome' => 'ASC']);
+        } else {
+            $query = $this->Professores->find('all');
+            $query->order(['nome' => 'ASC']);
+        }
+        if (!$query->toArray()) {
+            $this->Authorization->skipAuthorization();
+            $this->Flash->error(__('Nenhum(a) professor(a) encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
+        $this->Authorization->skipAuthorization();
+        $professores = $this->paginate($query);
 
         $this->set(compact('professores'));
     }
@@ -227,5 +241,16 @@ class ProfessoresController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function buscaprofessor($nome = null) {
+        $this->Authorization->skipAuthorization();
+        $nome = $this->getRequest()->getData('nome');
+        if ($nome) {
+            return $this->redirect(['controller' => 'Professores', 'action' => 'index', '?' => ['nome' => $nome]]);
+        } else {
+            $this->Flash->error(__('Digite um nome para buscar'));
+            return $this->redirect(['controller' => 'Professores', 'action' => 'index']);
+        }
     }
 }

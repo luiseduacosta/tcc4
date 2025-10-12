@@ -16,8 +16,10 @@
         } else {
             codigo = $('#codigo-telefone').val();
         }
-        if ($('#telefone').val().length == 9) {
+        if ($('#telefone').val().length >= 8 && $('#telefone').val().length <= 10) {
             $('#telefone').val('(' + codigo + ') ' + $('#telefone').val());
+        } else if ($('#telefone').val().length == 15) {
+            $('#telefone').mask('(00) 00000-0000');
         } else {
             $('#telefone').mask('(00) 0000-0000');
         }
@@ -26,10 +28,12 @@
         } else {
             codigo = $('#codigo-celular').val();
         }
-        if ($('#celular').val().length == 10) {
+        if ($('#celular').val().length >= 8 && $('#celular').val().length <= 10) {
             $('#celular').val('(' + codigo + ') ' + $('#celular').val());
-        } else {
+        } else if ($('#celular').val().length == 15) {
             $('#celular').mask('(00) 00000-0000');
+        } else {
+            $('#celular').mask('(00) 0000-0000');
         }
         $('#nascimento').mask('0000-00-00', { placeholder: "AAAA-MM-DD" });
         $('#cep').mask('00000-000');

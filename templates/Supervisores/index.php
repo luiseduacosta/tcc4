@@ -13,11 +13,30 @@
             aria-controls="navbarTogglerSupervisor" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+    <div class="container-fluid">
+
         <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerSupervisor">
             <?php if (isset($user) && $user->categoria == '1'): ?>
-                <li class="nav-item">
+                <li class="nav-item me-1">
                     <?= $this->Html->link(__('Cadastra supervisora'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
                 </li>
+                <div class="col-sm-2">
+                <?= $this->Form->create(null, ['url' => ['controller' => 'Supervisores', 'action' => 'index'], 'method' => 'post', 'class' => 'form-inline']) ?>
+                <?= $this->Form->control('nome', [
+                    'type' => 'text',
+                    'label' => false,
+                    'placeholder' => 'Busca supervisor(a)',
+                    'class' => 'form-control'
+                ])
+                ?>
+            </div>
+            <div class="col-sm-1 me-1">
+                <?= $this->Form->button(__("Buscar"), [
+                    'type' => 'submit',
+                    'class' => 'btn btn-primary',
+                ]) ?>
+            </div>
+            <?= $this->Form->end() ?>
             <?php endif; ?>
         </ul>
     </div>

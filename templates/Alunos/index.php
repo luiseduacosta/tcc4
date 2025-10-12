@@ -18,53 +18,42 @@
         <?php if (isset($user) && $user->categoria == "1"): ?>
             <li class="nav-item">
                 <?= $this->Html->link(
-                    __("Novo aluno"),
+                    __("Novo(a) aluno(a)"),
                     ["action" => "add"],
                     ["class" => "btn btn-primary me-1"],
                 ) ?>
             </li>
-            <li class="nav-item">
-                <div class="row">
-                    <div class="col-sm-5">
-                        <?= $this->Form->create(null, ['action' => 'Alunos/buscaalunonome', 'method' => 'post', 'class' => 'form-inline']) ?>
-                        <?= $this->Form->control('nome', [
-                            'label' => false,
-                            'placeholder' => 'Busca aluno por nome',
-                            'templates' => [
-                                'input' => '<input class="form-control" type="{{type}}" name="{{name}}"{{attrs}}/>',
-                            ]
-                        ]) ?>
-                    </div>
-                    <div class="col-sm-3">
-                        <?= $this->Form->button(__("Buscar nome"), [
-                            'type' => 'submit',
-                            'class' => 'btn btn-primary me-1',
-                        ]) ?>
-                    </div>
-                    <?= $this->Form->end() ?>
-                </div>
-            </li>
-            <li class="nav-item">
-                <div class="row">
-                    <div class="col-sm-5">
-                        <?= $this->Form->create(null, ['action' => 'Alunos/buscaalunoregistro', 'method' => 'post', 'class' => 'form-inline']) ?>
-                        <?= $this->Form->control('registro', [
-                            'label' => false,
-                            'placeholder' => 'Busca aluno por número de registro',
-                            'templates' => [
-                                'input' => '<input class="form-control" type="{{type}}" name="{{name}}"{{attrs}}/>',
-                            ]
-                        ]) ?>
-                    </div>
-                    <div class="col-sm-3">
-                        <?= $this->Form->button(__("Buscar registro"), [
-                            'type' => 'submit',
-                            'class' => 'btn btn-primary me-1',
-                        ]) ?>
-                    </div>
-                    <?= $this->Form->end() ?>
-                </div>
-            </li>
+            <div class="col-sm-2">
+                <?= $this->Form->create(null, ['url' => ['controller' => 'Alunos', 'action' => 'buscaalunonome'], 'method' => 'post', 'class' => 'form-inline']) ?>
+                <?= $this->Form->control('nome', [
+                    'label' => false,
+                    'placeholder' => 'Busca aluno(a) por nome',
+                    'class' => 'form-control'
+                ])
+                ?>
+            </div>
+            <div class="col-sm-1 me-1">
+                <?= $this->Form->button(__("Buscar nome"), [
+                    'type' => 'submit',
+                    'class' => 'btn btn-primary',
+                ]) ?>
+            </div>
+            <?= $this->Form->end() ?>
+            <div class="col-sm-2">
+                <?= $this->Form->create(null, ['url' => ['controller' => 'Alunos', 'action' => 'buscaalunoregistro'], 'method' => 'post', 'class' => 'form-inline']) ?>
+                <?= $this->Form->control('registro', [
+                    'label' => false,
+                    'placeholder' => 'Busca aluno(a) por DRE',
+                    'class' => 'form-control'
+                ]) ?>
+            </div>
+            <div class="col-sm-1 me-1">
+                <?= $this->Form->button(__("Buscar registro"), [
+                    'type' => 'submit',
+                    'class' => 'btn btn-primary',
+                ]) ?>
+            </div>
+            <?= $this->Form->end() ?>
         <?php endif; ?>
         <?php if (isset($user) && ($user->categoria == "1" || $user->categoria == "2")): ?>
             <li class="nav-item">
