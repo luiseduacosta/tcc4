@@ -178,6 +178,7 @@ class SupervisoresController extends AppController
     /**
      * Busca supervisor por nome
      *
+     * @param string|null $nome Nome do supervisor.
      * @return \Cake\Http\Response|null|void
      */
     public function buscasupervisor($nome = null)
@@ -189,20 +190,22 @@ class SupervisoresController extends AppController
                 "conditions" => ["Supervisores.nome LIKE" => "%$nome%"],
                 "order" => ["Supervisores.nome" => "asc"]
             ]);
-            if (!$supervisores) {
+            if ($supervisores) {
+                $this->Flash->success(__("Supervisores encontrados com o nome '$nome'."));
+                $this->set(compact("supervisores"));
+                $this->render("index");
+                return $this->redirect([
+                    "controller" => "Supervisores",
+                    "action" => "index",
+                        "?" => ["nome" => $nome]
+                    ]);
+            } else {
                 $this->Flash->error(__("Nenhum supervisor encontrado com o nome '$nome'."));
                 return $this->redirect([
                     "controller" => "Supervisores",
                     "action" => "index"
                 ]);
             }
-            $this->set(compact("supervisores"));
-            $this->render("index");
-            return $this->redirect([
-                "controller" => "Supervisores",
-                "action" => "index",
-                "?" => ["nome" => $nome]
-            ]);
         } else {
             $this->Flash->error(__("Digite um nome para buscar"));
             return $this->redirect([
