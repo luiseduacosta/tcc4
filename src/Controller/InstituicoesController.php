@@ -28,23 +28,14 @@ class InstituicoesController extends AppController
     /**
      * Index method
      * 
-     * @param string|null $instituicao
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index($instituicao = null)
     {
-        $instituicao = $this->getRequest()->getData('nome');
-        if ($instituicao) {
-            $query = $this->Instituicoes->find('all');
-            $query->where(['Instituicoes.instituicao LIKE' => "%{$instituicao}%"]);
-            $query->contain(['Areainstituicoes']);
-            $query->order(['Instituicoes.instituicao' => 'ASC']);
-        } else {
-            $query = $this->Instituicoes->find('all', [
-                'contain' => ['Areainstituicoes'],
-                'order' => ['Instituicoes.instituicao' => 'ASC']
-            ]);
-        }
+        $query = $this->Instituicoes->find('all', [
+            'contain' => ['Areainstituicoes'],
+            'order' => ['Instituicoes.instituicao' => 'ASC']
+        ]);
         if (!$query->toArray()) {
             $this->Authorization->skipAuthorization();
             $this->Flash->error(__('Instituição: ' . $instituicao . ' não encontrada. Tente novamente.'));
@@ -218,13 +209,21 @@ class InstituicoesController extends AppController
     public function buscainstituicao()
     {
         $this->Authorization->skipAuthorization();
-        $instituicao = $this->getRequest()->getData('instituicao');
+        $instituicao = $this->getRequest()->getData('nome');
         if ($instituicao) {
-            return $this->redirect([
-                "controller" => "Instituicoes",
-                "action" => "index",
-                "?" => ["instituicao" => $instituicao]
-            ]);
+            $query = $this->Instituicoes->find('all');
+            $query->where(['instituicao LIKE' => "%{$instituicao}%"]);
+            $query->order(['instituicao' => 'ASC']);
+            if (!$query->toArray()) {
+                $this->Flash->error(__('Nenhum(a) instituição de estágio encontrado com o nome: ' . $instituicao));
+                return $this->redirect([
+                    "controller" => "Instituicoes",
+                    "action" => "index"
+                ]);
+            }
+            $instituicoes = $this->paginate($query);
+            $this->set('instituicoes', $instituicoes);
+            $this->render('index');
         } else {
             $this->Flash->error(__('Digite um nome para busca'));
             return $this->redirect([
@@ -232,5 +231,5 @@ class InstituicoesController extends AppController
                 "action" => "index"
             ]);
         }
-    }   
+    }
 }

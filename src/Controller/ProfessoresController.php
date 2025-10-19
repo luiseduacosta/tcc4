@@ -33,21 +33,13 @@ class ProfessoresController extends AppController
     /**
      * Index method
      *
-     * @param string|null $nome Professor nome.
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index($nome = null)
+    public function index()
     {
         $this->Authorization->skipAuthorization();
-        $nome = $this->getRequest()->getData('nome');
-        if ($nome) {
-            $query = $this->Professores->find('all');
-            $query->where(['nome LIKE' => "%{$nome}%"]);
-            $query->order(['nome' => 'ASC']);
-        } else {
-            $query = $this->Professores->find('all');
-            $query->order(['nome' => 'ASC']);
-        }
+        $query = $this->Professores->find('all');
+        $query->order(['nome' => 'ASC']);
         if (!$query->toArray()) {
             $this->Authorization->skipAuthorization();
             $this->Flash->error(__('Nenhum(a) professor(a) encontrado.'));
@@ -55,7 +47,6 @@ class ProfessoresController extends AppController
         }
         $this->Authorization->skipAuthorization();
         $professores = $this->paginate($query);
-
         $this->set(compact('professores'));
     }
 
@@ -88,10 +79,11 @@ class ProfessoresController extends AppController
                                 ->where(['siape' => $siape])
                                 ->first();
                             $id = $query->id;
-                            }
+                        }
                     }
                 }
-            };
+            }
+            ;
         } else {
             $this->Flash->error(__('Acesso não autorizado para este recurso.'));
             return $this->redirect(['controller' => 'Users', 'action' => 'login']);
@@ -243,11 +235,21 @@ class ProfessoresController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function buscaprofessor($nome = null) {
+    public function buscaprofessor($nome = null)
+    {
         $this->Authorization->skipAuthorization();
         $nome = $this->getRequest()->getData('nome');
         if ($nome) {
-            return $this->redirect(['controller' => 'Professores', 'action' => 'index', '?' => ['nome' => $nome]]);
+            $professores = $this->Professores->find('all');
+            $professores->where(['nome LIKE' => "%{$nome}%"]);
+            $professores->order(['nome' => 'ASC']);
+            if (!$professores->toArray()) {
+                $this->Flash->error(__('Nenhum(a) professor(a) encontrado com o nome: ' . $nome));
+                return $this->redirect(['controller' => 'Professores', 'action' => 'index']);
+            }
+            $professores = $this->paginate($professores);
+            $this->set('professores', $professores);
+            $this->render('index');
         } else {
             $this->Flash->error(__('Digite um nome para buscar'));
             return $this->redirect(['controller' => 'Professores', 'action' => 'index']);
