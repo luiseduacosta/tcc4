@@ -54,21 +54,22 @@ class DocentesController extends AppController
     public function view($id = null)
     {
         $this->Authorization->skipAuthorization();
+
         if (empty($id)) {
             $this->Flash->error(__('Registro ID do docente não encontrado'));
             return $this->redirect(['action' => 'index']);
         }
-        $docente = $this->fetchTable("Docentes")
-            ->get(
-                $id,
-                [
-                    'contain' => ['Monografias', 'Areamonografias'],
-                ]
-            );
-        if (empty($docente)) {
+
+        try {
+            $docente = $this->Docentes->get($id, [
+                'contain' => ['Monografias' => ['order' => ['nome' => 'DESC']], 'Areamonografias'],
+                'order' => ['nome' => 'DESC']
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro docente não encontrado'));
             return $this->redirect(['action' => 'index']);
         }
+
         $this->set('docente', $docente);
     }
 
@@ -113,7 +114,7 @@ class DocentesController extends AppController
                 $this->Flash->success(__('Registro docente inserido.'));
                 return $this->redirect(['action' => 'view', $docente->id]);
             }
-            $this->Flash->error(__('Registro docente inserido'));
+            $this->Flash->error(__('Registro docente não inserido. Tente novamente.'));
         }
         $this->set(compact('docente'));
     }
@@ -128,10 +129,17 @@ class DocentesController extends AppController
     public function edit($id = null)
     {
 
-        $docente = $this->fetchTable("Docentes")->get($id, [
-            'contain' => [],
-        ]);
+        $this->Authorization->skipAuthorization();
+        try {
+            $docente = $this->Docentes->get($id, [
+                'contain' => [],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro docente não encontrado'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($docente);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $docente = $this->Docentes->patchEntity($docente, $this->request->getData());
             if ($this->Docentes->save($docente)) {
@@ -139,7 +147,9 @@ class DocentesController extends AppController
                 return $this->redirect(['action' => 'view', $docente->id]);
             }
             $this->Flash->error(__('Registro docente não atualizado.'));
+            return $this->redirect(['action' => 'view', $docente->id]);
         }
+
         $this->set(compact('docente'));
     }
 
