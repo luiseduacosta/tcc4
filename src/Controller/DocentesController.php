@@ -85,25 +85,32 @@ class DocentesController extends AppController
 
         if ($this->request->is('post')) {
             $siape = $this->request->getData('siape');
+            if (empty($siape)) {
+                $this->Flash->error(__('Siape do(a) docente não informado'));
+                return $this->redirect(['action' => 'index']);
+            }
             $docentesiape = $this->Docentes->find()
                 ->where(['siape' => $siape])
                 ->first();
             if ($docentesiape):
-                $this->Flash->error(__('Siape do docente já cadastrado'));
+                $this->Flash->error(__('Siape do(a) docente já cadastrado'));
                 return $this->redirect(['action' => 'view', $docentesiape->id]);
             endif;
             $email = $this->request->getData('email');
+            if (empty($email)) {
+                $this->Flash->error(__('E-mail do(a) docente não informado'));
+                return $this->redirect(['action' => 'index']);
+            }
             $docenteemail = $this->Docentes->find()
                 ->where(['email' => $email])
                 ->first();
             if ($docenteemail):
-                $this->Flash->error(__('E-mail do docente já cadastrado'));
+                $this->Flash->error(__('E-mail do(a) docente já cadastrado'));
                 return $this->redirect(['action' => 'view', $docenteemail->id]);
             endif;
             $docente = $this->Docentes->patchEntity($docente, $this->request->getData());
             if ($this->Docentes->save($docente)) {
                 $this->Flash->success(__('Registro docente inserido.'));
-
                 return $this->redirect(['action' => 'view', $docente->id]);
             }
             $this->Flash->error(__('Registro docente inserido'));
@@ -129,7 +136,6 @@ class DocentesController extends AppController
             $docente = $this->Docentes->patchEntity($docente, $this->request->getData());
             if ($this->Docentes->save($docente)) {
                 $this->Flash->success(__('Registro docente atualizado.'));
-
                 return $this->redirect(['action' => 'view', $docente->id]);
             }
             $this->Flash->error(__('Registro docente não atualizado.'));
@@ -146,22 +152,20 @@ class DocentesController extends AppController
      */
     public function delete($id = null)
     {
-
-        $this->request->allowMethod(['post', 'delete']);
-        $docente = $this->Docentes->get($id);
-        $this->Authorization->authorize($docente);
-
-        if ($docente === null):
+        $this->Authorization->skipAuthorization();
+        try {
+            $docente = $this->Docentes->get($id);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro docente não encontrado'));
             return $this->redirect(['action' => 'index']);
-        endif;
-
+        }
+        $this->request->allowMethod(['post', 'delete']);
         if ($this->Docentes->delete($docente)) {
             $this->Flash->success(__('Registro docente excluído.'));
         } else {
             $this->Flash->error(__('Registro docente não excluídio'));
-        }
-
+            return $this->redirect(['action' => 'view', $docente->id]);
+        }        
         return $this->redirect(['action' => 'index']);
     }
 
