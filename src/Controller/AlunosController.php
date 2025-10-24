@@ -51,16 +51,22 @@ class AlunosController extends AppController
      */
     public function index()
     {
-        $alunos = $this->Alunos->find()->order(["nome" => "ASC"]);
+        $query = $this->Alunos->find();
         $this->Authorization->skipAuthorization();
-        if ($alunos->count() === 0) {
+        if ($query->toArray() == null) {
             $this->Flash->error(__("Nenhum aluno encontrado."));
             return $this->redirect([
                 "controller" => "Alunos",
                 "action" => "add",
             ]);
         }
-        $this->set("alunos", $this->paginate($alunos));
+        if ($this->request->getQuery("sort") === null) {
+            $query->order(["nome" => "ASC"]);
+        }
+        $alunos = $this->paginate($query, [
+            "sortableFields" => ["nome", "registro", "nascimento", "ingresso"],
+        ]);
+        $this->set("alunos", $alunos);
     }
 
     /**
@@ -560,10 +566,10 @@ class AlunosController extends AppController
                 );
                 if (
                     isset(
-                    $this->getRequest()->getAttribute("identity")[
-                        "categoria"
-                    ]
-                ) &&
+                        $this->getRequest()->getAttribute("identity")[
+                            "categoria"
+                        ],
+                    ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
@@ -593,10 +599,10 @@ class AlunosController extends AppController
                 );
                 if (
                     isset(
-                    $this->getRequest()->getAttribute("identity")[
-                        "categoria"
-                    ]
-                ) &&
+                        $this->getRequest()->getAttribute("identity")[
+                            "categoria"
+                        ],
+                    ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
@@ -655,14 +661,16 @@ class AlunosController extends AppController
             /** Se o período inicial é maior que o período atual então informar que há um erro */
             if ($totalperiodos <= 0) {
                 $this->Flash->error(
-                    __("Error: período inicial está na frente do período atual"),
+                    __(
+                        "Error: período inicial está na frente do período atual",
+                    ),
                 );
                 if (
                     isset(
-                    $this->getRequest()->getAttribute("identity")[
-                        "categoria"
-                    ]
-                ) &&
+                        $this->getRequest()->getAttribute("identity")[
+                            "categoria"
+                        ],
+                    ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
@@ -1134,7 +1142,7 @@ class AlunosController extends AppController
                 );
                 return $this->redirect([
                     "controller" => "Alunos",
-                    "action" => "index"
+                    "action" => "index",
                 ]);
             }
             $this->set("alunos", $this->paginate($alunos));
@@ -1143,7 +1151,7 @@ class AlunosController extends AppController
             $this->Flash->error(__("Digite um nome para busca"));
             return $this->redirect([
                 "controller" => "Alunos",
-                "action" => "index"
+                "action" => "index",
             ]);
         }
     }
