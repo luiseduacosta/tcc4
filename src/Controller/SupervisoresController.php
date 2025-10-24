@@ -30,15 +30,18 @@ class SupervisoresController extends AppController
      */
     public function index()
     {
-        $query = $this->Supervisores->find('all');
-        $query->order(['nome' => 'ASC']);
-        if (!$query->toArray()) {
-            $this->Authorization->skipAuthorization();
-            $this->Flash->error(__('Nenhum supervisor encontrado.'));
-            return $this->redirect(['action' => 'index']);
-        }
         $this->Authorization->skipAuthorization();
-        $supervisores = $this->paginate($query);
+        $query = $this->Supervisores->find();
+        if (!$query->toArray()) {
+            $this->Flash->error(__('Nenhum supervisor encontrado.'));
+            return $this->redirect(['action' => 'add']);
+        }
+        if ($this->request->getQuery('sort') === null) {
+            $query->order(['nome' => 'ASC']);
+        }
+        $supervisores = $this->paginate($query, [
+            'sortableFields' => ['nome', 'cress']
+        ]);
         $this->set(compact('supervisores'));
     }
 
