@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Controller\AppController;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
 
@@ -30,6 +33,14 @@ class ProfessoresController extends AppController
         $this->loadComponent('Authorization.Authorization');
     }
 
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+
+        parent::beforeFilter($event);
+        $this->Authentication->addUnauthenticatedActions(['index', 'view']);
+    }
+
+
     /**
      * Index method
      *
@@ -39,14 +50,16 @@ class ProfessoresController extends AppController
     {
         $this->Authorization->skipAuthorization();
         $query = $this->Professores->find('all');
-        $query->order(['nome' => 'ASC']);
-        if (!$query->toArray()) {
-            $this->Authorization->skipAuthorization();
+        if (!$query) {
             $this->Flash->error(__('Nenhum(a) professor(a) encontrado.'));
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect(['action' => 'add']);
         }
-        $this->Authorization->skipAuthorization();
-        $professores = $this->paginate($query);
+        if ($this->request->getQuery('sort') === null) {
+            $query->order(['nome' => 'ASC']);
+        }
+        $professores = $this->paginate($query, [
+            'sortableFields' => ['nome', 'siape', 'departamento', 'dataingresso', 'dataegresso']
+        ]);
         $this->set(compact('professores'));
     }
 

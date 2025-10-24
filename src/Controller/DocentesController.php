@@ -6,13 +6,14 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
 
 /**
  * Docentes Controller
  *
- * @property \App\Model\Table\ProfessoresTable $Docentes
+ * @property \App\Model\Table\DocentesTable $Docentes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @property \Cake\ORM\TableRegistry $Docentes
@@ -24,12 +25,20 @@ use Cake\I18n\I18n;
 class DocentesController extends AppController
 {
 
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->loadComponent('Authorization.Authorization');
+    }
+
+
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
-
         parent::beforeFilter($event);
         $this->Authentication->addUnauthenticatedActions(['index', 'view']);
     }
+
 
     /**
      * Index method
@@ -40,8 +49,19 @@ class DocentesController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
-        $docentes = $this->paginate($this->Docentes);
-        $this->set(compact('docentes'));
+        $query = $this->Docentes->find();
+        if ($query) {
+            if ($this->request->getQuery('sort') === null) {
+                $query->order(['nome' => 'ASC']);
+            }
+            $docentes = $this->paginate($query, [
+                'sortableFields' => ['nome', 'siape', 'departamento', 'dataingresso', 'dataegresso']
+            ]);
+            $this->set(compact('docentes'));
+        } else {
+            $this->Flash->error(__('Nenhum(a) docente encontrado.'));
+            return $this->redirect(['action' => 'add']);
+        }
     }
 
     /**
@@ -62,8 +82,7 @@ class DocentesController extends AppController
 
         try {
             $docente = $this->Docentes->get($id, [
-                'contain' => ['Monografias' => ['order' => ['nome' => 'DESC']], 'Areamonografias'],
-                'order' => ['nome' => 'DESC']
+                'contain' => ['Monografias' => ['sort' => ['titulo' => 'ASC']], 'Areamonografias']
             ]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro docente não encontrado'));
@@ -147,6 +166,7 @@ class DocentesController extends AppController
                 return $this->redirect(['action' => 'view', $docente->id]);
             }
             $this->Flash->error(__('Registro docente não atualizado.'));
+            debug($docente->getErrors());
             return $this->redirect(['action' => 'view', $docente->id]);
         }
 
@@ -175,7 +195,7 @@ class DocentesController extends AppController
         } else {
             $this->Flash->error(__('Registro docente não excluídio'));
             return $this->redirect(['action' => 'view', $docente->id]);
-        }        
+        }
         return $this->redirect(['action' => 'index']);
     }
 
