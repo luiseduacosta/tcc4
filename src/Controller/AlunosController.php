@@ -568,7 +568,7 @@ class AlunosController extends AppController
                     isset(
                         $this->getRequest()->getAttribute("identity")[
                             "categoria"
-                        ],
+                        ]
                     ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
@@ -601,7 +601,7 @@ class AlunosController extends AppController
                     isset(
                         $this->getRequest()->getAttribute("identity")[
                             "categoria"
-                        ],
+                        ]
                     ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
@@ -669,7 +669,7 @@ class AlunosController extends AppController
                     isset(
                         $this->getRequest()->getAttribute("identity")[
                             "categoria"
-                        ],
+                        ]
                     ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"

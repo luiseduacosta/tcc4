@@ -59,7 +59,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <thead class="table-dark">
             <tr>
                 <?php if (isset($user) && $user->categoria == '1'): ?>
-                    <th><?= $this->Paginator->sort('instituicao_id', 'ID') ?></th>
+                    <th><?= __('ID') ?></th>
                 <?php endif; ?>
                 <th><?= $this->Paginator->sort('instituicao', 'Instituição') ?></th>
                 <th><?= $this->Paginator->sort('vagas', 'Vagas') ?></th>

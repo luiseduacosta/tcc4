@@ -67,10 +67,11 @@ class MuralestagiosController extends AppController
         }
         if ($periodo) {
             $muralestagios = $this->Muralestagios->find()
-            ->contain(['Instituicoes'])
-            ->where([
-                'Muralestagios.periodo' => $periodo,
-            ]);
+                ->contain(['Instituicoes'])
+                ->where([
+                    'Muralestagios.periodo' => $periodo
+                ])
+                ->order(['Muralestagios.dataInscricao' => 'DESC']);
         } else {
             $this->Flash->error(__('Selecionar período.'));
             return $this->redirect(['action' => 'index']);
@@ -78,11 +79,22 @@ class MuralestagiosController extends AppController
         /** Todos os períodos */
         $periodototal = $this->Muralestagios->find('list', [
             'keyField' => 'periodo',
-            'valueField' => 'periodo'
+            'valueField' => 'periodo',
+            'group' => 'periodo',
+            'sort' => ['periodo' => 'DESC']
         ]);
         $periodos = $periodototal->toArray();
-        $options = ['sortableFields' => ['Muralestagios.instituicao', 'Muralestagios.vagas', 'Muralestagios.beneficios', 'Muralestagios.final_de_semana', 'Muralestagios.cargaHoraria', 'Muralestagios.dataInscricao', 'Muralestagios.dataSelecao']];
-        $this->set('muralestagios', $this->paginate($muralestagios, ['order' => ['Muralestagios.dataInscricao' => 'DESC']]));
+        if ($muralestagios->all()->isEmpty()) {
+            $this->Flash->warning(__('Nenhum registro de mural de estágio encontrado para o período selecionado.'));
+        } else {
+            if ($this->request->getQuery('sort') === null) {
+                $muralestagios->order(['Muralestagios.dataInscricao' => 'DESC']);
+            }
+        }
+        $mural = $this->paginate($muralestagios, [
+            'sortableFields' => ['instituicao', 'vagas', 'beneficios', 'final_de_semana', 'cargaHoraria', 'dataInscricao', 'dataSelecao']
+        ]);
+        $this->set('muralestagios', $mural);
         $this->set('periodos', $periodos);
         $this->set('periodo', $periodo);
     }
