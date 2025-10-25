@@ -5,13 +5,14 @@
  */
 $user = $this->getRequest()->getAttribute('identity');
 // pr($monografias);
+// die();
 ?>
 
 <?= $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerMonografias"
-            aria-controls="navbarTogglerMonografias" aria-expanded="false" aria-label="Toggle navigation">
+        aria-controls="navbarTogglerMonografias" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerMonografias">
@@ -44,7 +45,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('Monografias.titulo', 'Título') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Monografias.periodo', 'Período') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('Tccestudantes.nome', 'Estudante') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('Tccestudantes[0].nome', 'Estudante') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Docentes.nome', 'Orientador(a)') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Areamonografias.area', 'Área') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('Monografias.url', 'PDF') ?></th>
@@ -53,13 +54,13 @@ $user = $this->getRequest()->getAttribute('identity');
         <tbody>
             <?php foreach ($monografias as $monografia): ?>
                 <?php // pr($monografia); ?>
-                <?php // die(pr($titulo)); ?>
+                <?php // die(pr($monografia->titulo)); ?>
                 <tr>
 
                     <td>
                         <?=
-                        $this->Html->link(substr($monografia->titulo, 0, 55) . ' ...', ['action' => 'view', $monografia->id])
-                        ?>
+                            $this->Html->link(substr($monografia->titulo, 0, 55) . ' ...', ['action' => 'view', $monografia->id])
+                            ?>
                     </td>
 
                     <td><?= h($monografia->periodo) ?></td>
@@ -69,7 +70,6 @@ $user = $this->getRequest()->getAttribute('identity');
                         if (!(empty($monografia->tccestudantes))):
                             $q_estudantes = count($monografia->tccestudantes);
                             foreach ($monografia->tccestudantes as $tccestudante):
-                                // pr($tccestudante);
                                 echo $this->Html->link($tccestudante->nome, ['controller' => 'tccestudantes', 'action' => 'view', $tccestudante->id]);
                                 if ($q_estudantes > 1):
                                     echo ", ";

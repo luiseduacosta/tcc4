@@ -39,8 +39,8 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <td scope="row"><?= __('Nome') ?></td>
-            <?php if (!empty($tccestudante->estudante)): ?>
-                <td><?= $this->Html->link($tccestudante->estudante['nome'], ['controller' => 'estudantes', 'action' => 'view', $tccestudante->estudante['id']]) ?>
+            <?php if (!empty($tccestudante->estudantes)): ?>
+                <td><?= $this->Html->link($tccestudante->estudantes->nome, ['controller' => 'estudantes', 'action' => 'view', $tccestudante->estudante['id']]) ?>
                 </td>
             <?php else: ?>
                 <td><?= h($tccestudante->nome) ?></td>
@@ -48,7 +48,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <td scope="row"><?= __('Monografia') ?></td>
-            <td><?= $this->Html->link($tccestudante->monografia['titulo'], ['controller' => 'monografias', 'action' => 'view', $tccestudante->monografia['id']]) ?>
+            <td><?= $this->Html->link($tccestudante->monografias->titulo, ['controller' => 'monografias', 'action' => 'view', $tccestudante->monografias->id]) ?>
             </td>
         </tr>
     </table>

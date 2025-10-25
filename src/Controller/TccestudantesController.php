@@ -79,8 +79,7 @@ class TccestudantesController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
-        $tccestudantetable = $this->fetchTable('Tccestudantes'); // Estranho, mas necessário
-        $tccestudante = $tccestudantetable->get($id, [
+        $tccestudante = $this->Tccestudantes->get($id, [
             'contain' => ['Monografias', 'Estudantes'],
         ]);
         $this->set('tccestudante', $tccestudante);
