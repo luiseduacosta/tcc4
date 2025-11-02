@@ -101,19 +101,17 @@ class TccestudantesController extends AppController
             $registro = $estudante_id;
 
             /* Nome do aluno */
-            $estudantetable = $this->fetchTable('Estudantes');
-            $resultado = $estudantetable->find('all');
+            $resultado = $this->fetchTable('Estudantes')->find('all');
             $resultado->where(['registro' => $estudante_id]);
             $resultado->select(['nome']);
             $resultado->first();
-            $nome = $resultado->first()->nome;
+            $nome = $resultado->nome;
             // die();
             $this->set(compact('registro', 'nome'));
         endif;
 
         /* Titulo e id das monografias */
-        $tccestudantetable = $this->fetchTable('Tccestudantes');
-        $monografias = $tccestudantetable->Monografias->find(
+        $monografias = $this->fetchTable('Tccestudantes')->Monografias->find(
             'list',
             ['keyField' => 'id', 'valueField' => 'titulo']
         );
@@ -133,8 +131,7 @@ class TccestudantesController extends AppController
             }
             $this->Flash->error(__('Estudante autor de TCC não foi inserido. Tente novamento.'));
         }
-        $estudantetable = $this->fetchTable('Estudantes');
-        $estudantes = $estudantetable->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
+        $estudantes = $this->fetchTable('Estudantes')->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $estudantes->order(['nome' => 'asc']);
         $this->set(compact('monografia_id', 'estudante_id', 'monografias', 'tccestudante', 'estudantes'));
     }
@@ -149,8 +146,7 @@ class TccestudantesController extends AppController
     public function edit($id = null)
     {
 
-        $tccestudantetable = $this->fetchTable('Tccestudantes');
-        $tccestudante = $tccestudantetable->get($id, [
+        $tccestudante = $this->fetchTable('Tccestudantes')->get($id, [
             'contain' => ['Monografias'],
         ]);
         $this->Authorization->authorize($tccestudante);
