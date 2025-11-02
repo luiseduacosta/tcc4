@@ -9,17 +9,21 @@ $user = $this->getRequest()->getAttribute('identity');
 <?php echo $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerAreamonografiaView"
-        aria-controls="navbarTogglerAreamonografiaView" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarTogglerAreamonografiaView" aria-controls="navbarTogglerAreamonografiaView"
+        aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerAreamonografiaView">
+        <li class="nav-item">
+            <?= $this->Html->link(__('Listar'), ['controller' => 'Areamonografias', 'action' => 'index'], ['class' => 'btn btn-primary me-1']) ?>
+        </li>
         <?php if (isset($user->categoria) && $user->categoria == '1'): ?>
             <li class="nav-item">
-                <?= $this->Html->link(__('Editar área da monografia'), ['controller' => 'Areamonografias', 'action' => 'edit', $areamonografia->id], ['class' => 'btn btn-primary float-start']) ?>
+                <?= $this->Html->link(__('Editar'), ['controller' => 'Areamonografias', 'action' => 'edit', $areamonografia->id], ['class' => 'btn btn-primary me-1']) ?>
             </li>
             <li class="nav-item">
-                <?= $this->Form->postLink(__('Excluir área da monografia'), ['controller' => 'Areamonografias', 'action' => 'delete', $areamonografia->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $areamonografia->id), 'class' => 'btn btn-danger float-start']) ?>
+                <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Areamonografias', 'action' => 'delete', $areamonografia->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $areamonografia->id), 'class' => 'btn btn-danger float-start']) ?>
             </li>
         <?php endif; ?>
     </ul>
@@ -39,7 +43,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th scope="row"><?= __('Área') ?></th>
                 <td><?= h($areamonografia->area) ?></td>
             </tr>
-        </tbody>
+            </tbody>
     </table>
 </div>
 
@@ -68,7 +72,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= $this->Html->link(h($monografias->titulo), ['controller' => 'Monografias', 'action' => 'view', $monografias->id]) ?>
                     </td>
                     <td><?= h($monografias['periodo']) ?></td>
-                     <td><?= $this->Html->link(h($monografias->docentes['nome']), ['controller' => 'Docentes', 'action' => 'view', $monografias->docentes['id']]) ?>
+                    <td><?= $this->Html->link(h($monografias->docentes['nome']), ['controller' => 'Docentes', 'action' => 'view', $monografias->docentes['id']]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

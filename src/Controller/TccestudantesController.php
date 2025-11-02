@@ -39,21 +39,27 @@ class TccestudantesController extends AppController
         $this->Authorization->skipAuthorization();
 
         if ($this->request->is('post')) {
-            // echo "Post" . "<br>";
             if ($this->request->getData()) {
                 $dados = $this->request->getData();
                 $busca = $dados['nome'];
-            
+
                 $query = $this->Tccestudantes->find()
                     ->contain(['Monografias'])
-                    ->where(['nome LIKE' => "%" . $busca . "%"])
-                    ->order(['nome']);
-                }
+                    ->where(['nome LIKE' => "%" . $dados['nome'] . "%"]);
+            }
         } else {
 
             $query = $this->Tccestudantes->find()
-                ->contain(['Monografias'])
-                ->order(['nome']);    
+                ->contain(['Monografias']);
+        }
+        
+        if ($query) {
+            if ($this->request->getQuery('sort') === null) {
+                $query->order('nome');
+            }
+        } else {
+            $this->Flash->error(__('Nenhum registro encontrado.'));
+            return $this->redirect(['action' => 'add']);
         }
 
         $tccestudantes = $this->paginate($query, [
@@ -66,6 +72,7 @@ class TccestudantesController extends AppController
         ]);
 
         $this->set(compact('tccestudantes'));
+
     }
 
     /**
