@@ -136,8 +136,6 @@ class TccestudantesController extends AppController
         $estudantetable = $this->fetchTable('Estudantes');
         $estudantes = $estudantetable->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
         $estudantes->order(['nome' => 'asc']);
-        // pr($estudantes);
-        // die();
         $this->set(compact('monografia_id', 'estudante_id', 'monografias', 'tccestudante', 'estudantes'));
     }
 
@@ -158,8 +156,8 @@ class TccestudantesController extends AppController
         $this->Authorization->authorize($tccestudante);
 
         $monografias = $this->fetchTable('Monografias')
-        ->find('list', ['keyField' => 'id', 'valueField' => 'titulo'])
-        ->order(['titulo' => 'asc']);
+            ->find('list', ['keyField' => 'id', 'valueField' => 'titulo'])
+            ->order(['titulo' => 'asc']);
         $monografias = $monografias->toArray();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
