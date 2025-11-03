@@ -35,7 +35,7 @@ class FolhadeatividadesController extends AppController
 
         $this->Authorization->skipAuthorization();
         $estagiario_id = $this->getRequest()->getQuery('estagiario_id');
-        if (is_null($estagiario_id)) {
+        if ($estagiario_id === null) {
             $this->Flash->error(__('Selecione o estagiário e o período da folha de atividades'));
             return $this->redirect(['controller' => 'Estagiarios', 'action' => 'index']);
         }
@@ -51,9 +51,14 @@ class FolhadeatividadesController extends AppController
             ->contain(['Estagiarios' => ['Alunos']])
             ->order(['Folhadeatividades.dia' => 'ASC']);
 
+        if ($query) {
+            if ($this->request->getQuery('sort') === null) {
+                $query->order(['Folhadeatividades.dia' => 'ASC']);
+            }
+        } else {
+            $this->Flash->error(__('Nenhum registro encontrado.'));
+        }
         $folhadeatividades = $this->paginate($query);
-        // $this->Authorization->authorize($this->Folhadeatividades);
-
         $this->set(compact('folhadeatividades', 'estagiario'));
     }
 
@@ -114,7 +119,7 @@ class FolhadeatividadesController extends AppController
                     ->first();
                 if ($estagiario) {
                     $estagiario_id = $estagiario->estagiario->id;
-                    /** Verifica se o estagiário é o mesmo do usuário */        
+                    /** Verifica se o estagiário é o mesmo do usuário */
                     if ($user->estudante_id == $estagiario->estagiario->aluno_id) {
                         $folhadeatividade = $this->Folhadeatividades->Estagiarios->find()
                             ->where(['Estagiarios.id' => $estagiario_id])
@@ -187,10 +192,9 @@ class FolhadeatividadesController extends AppController
      */
     public function add($id = NULL)
     {
-
         $this->Authorization->skipAuthorization();
         $estagiario_id = $this->getRequest()->getQuery('estagiario_id');
-        if (is_null($estagiario_id)) {
+        if ($estagiario_id === null) {
             $this->Flash->error(__('Selecione o estagiário'));
             return $this->redirect(['controller' => 'Estagiarios', 'action' => 'index']);
         } else {
@@ -232,17 +236,20 @@ class FolhadeatividadesController extends AppController
      */
     public function edit($id = null)
     {
-
-        $folhadeatividade = $this->Folhadeatividades->get($id, [
-            'contain' => [],
-        ]);
+        try {
+            $folhadeatividade = $this->Folhadeatividades->get($id, [
+                'contain' => [],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($folhadeatividade);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $folhadeatividade = $this->Folhadeatividades->patchEntity($folhadeatividade, $this->request->getData());
             if ($this->Folhadeatividades->save($folhadeatividade)) {
                 $this->Flash->success(__('Atividade atualizada.'));
-
                 return $this->redirect(['action' => 'view', $id]);
             }
             $this->Flash->error(__('Não foi possível atualizar. Tente outra vez.'));
@@ -266,7 +273,12 @@ class FolhadeatividadesController extends AppController
     {
 
         $this->request->allowMethod(['post', 'delete']);
-        $folhadeatividade = $this->Folhadeatividades->get($id);
+        try {
+            $folhadeatividade = $this->Folhadeatividades->get($id);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($folhadeatividade);
 
         if ($this->Folhadeatividades->delete($folhadeatividade)) {
@@ -324,7 +336,7 @@ class FolhadeatividadesController extends AppController
                 ->where(['Estagiarios.id' => $estagiario_id])
                 ->first();
         }
-  
+
         $this->viewBuilder()->enableAutoLayout(false);
         $this->viewBuilder()->setClassName('CakePdf.Pdf');
         $this->viewBuilder()->setOption(

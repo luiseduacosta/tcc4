@@ -36,17 +36,16 @@ class InstituicoesController extends AppController
             'contain' => ['Areainstituicoes'],
             'order' => ['Instituicoes.instituicao' => 'ASC']
         ]);
-        if (!$query->toArray()) {
-            $this->Authorization->skipAuthorization();
+        $this->Authorization->skipAuthorization();
+        if ($query) {
+            if ($this->request->getQuery('sort') === null) {
+                $query->order(['Instituicoes.instituicao' => 'ASC']);
+            }
+        } else {
             $this->Flash->error(__('Instituição: ' . $instituicao . ' não encontrada. Tente novamente.'));
             return $this->redirect(['action' => 'index']);
         }
-        if ($this->Authorization->skipAuthorization()) {
-            $instituicoes = $this->paginate($query);
-        } else {
-            $this->Flash->error(__('Acesso não autorizado.'));
-            return $this->redirect(['action' => 'index']);
-        }
+        $instituicoes = $this->paginate($query);
         $this->set(compact('instituicoes'));
     }
 

@@ -185,9 +185,14 @@ class AlunosController extends AppController
      */
     public function edit($id = null)
     {
-        $aluno = $this->Alunos->get($id, [
-            "contain" => [],
-        ]);
+        try {
+            $aluno = $this->Alunos->get($id, [
+                "contain" => [],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__("Aluno não encontrado"));
+            return $this->redirect(["action" => "index"]);
+        }
         $this->Authorization->authorize($aluno);
 
         $user = $this->getRequest()->getAttribute("identity");
@@ -566,10 +571,10 @@ class AlunosController extends AppController
                 );
                 if (
                     isset(
-                        $this->getRequest()->getAttribute("identity")[
-                            "categoria"
-                        ]
-                    ) &&
+                    $this->getRequest()->getAttribute("identity")[
+                        "categoria"
+                    ]
+                ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
@@ -599,10 +604,10 @@ class AlunosController extends AppController
                 );
                 if (
                     isset(
-                        $this->getRequest()->getAttribute("identity")[
-                            "categoria"
-                        ]
-                    ) &&
+                    $this->getRequest()->getAttribute("identity")[
+                        "categoria"
+                    ]
+                ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
@@ -667,10 +672,10 @@ class AlunosController extends AppController
                 );
                 if (
                     isset(
-                        $this->getRequest()->getAttribute("identity")[
-                            "categoria"
-                        ]
-                    ) &&
+                    $this->getRequest()->getAttribute("identity")[
+                        "categoria"
+                    ]
+                ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"

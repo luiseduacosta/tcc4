@@ -43,37 +43,22 @@ class EstudantesController extends AppController
      */
     public function index()
     {
-
         $this->Authorization->skipAuthorization();
-
         $estudantesdetcc = $this->Estudantes->find()
             ->contain([
-                 'Tccestudantes',
+                'Tccestudantes',
                 'Estagiarios' => function (Query $q) {
-                    return $q->where(['nivel' => '4']);
+                    return $q->where(['nivel' => '4']); // Somente estudantes de 4º nível (corrigir para 3º nível)
                 }
-            ])
-            ->all();
-        // pr($estudantesdetcc);
-        // die();
-        $parameters = $this->request->getQueryParams();
-        if (isset($parameters) && !empty($parameters)):
-            // pr($parameters);
-            if (isset($parameters['page'])):
-                $pagina = $parameters['page'];
-            endif;
-            if (isset($parameters['sort'])):
-                $ordem = $parameters['sort'];
-            endif;
-            if (isset($parameters['direction'])):
-                $direcao = $parameters['direction'];
-            endif;
-        else:
-            $ordem = 'nome';
-            $direcao = 'asc';
-        endif;
-
-        $alunos = $this->paginate($this->Estudantes, ['order' => ['nome' => 'asc']]);
+            ]);
+        if ($estudantesdetcc->all()->isEmpty()) {
+            $this->Flash->warning(__('Nenhum estudante de TCC encontrado.'));
+            return $this->redirect(['action' => 'add']);
+        }
+        if ($this->request->getQuery('sort') === null) {
+            $estudantesdetcc->order(['Estudantes.nome' => 'ASC']);
+        }
+        $alunos = $this->paginate($estudantesdetcc);
         $this->set('alunos', $alunos);
     }
 
@@ -86,25 +71,11 @@ class EstudantesController extends AppController
     {
 
         $this->Authorization->skipAuthorization();
-
-        $parameters = $this->request->getQueryParams();
-        if (isset($parameters) && !empty($parameters)):
-            // pr($parameters);
-            if (isset($parameters['page'])):
-                $pagina = $parameters['page'];
-            endif;
-            if (isset($parameters['sort'])):
-                $ordem = $parameters['sort'];
-            endif;
-            if (isset($parameters['direction'])):
-                $direcao = $parameters['direction'];
-            endif;
-        else:
-            $ordem = 'nome';
-            $direcao = 'asc';
-        endif;
-
-        $alunos = $this->paginate($this->Estudantes, ['order' => ['registro' => 'asc']]);
+        $estudantesdetcc = $this->Estudantes->find();
+        if ($this->request->getQuery('sort') === null) {
+            $estudantesdetcc->order(['Estudantes.nome' => 'ASC']);
+        }
+        $alunos = $this->paginate($estudantesdetcc);
         $this->set(compact('alunos'));
     }
 
@@ -115,27 +86,12 @@ class EstudantesController extends AppController
      */
     public function index2()
     {
-
         $this->Authorization->skipAuthorization();
-
-        $parameters = $this->request->getQueryParams();
-        if (isset($parameters) && !empty($parameters)):
-            // pr($parameters);
-            if (isset($parameters['page'])):
-                $pagina = $parameters['page'];
-            endif;
-            if (isset($parameters['sort'])):
-                $ordem = $parameters['sort'];
-            endif;
-            if (isset($parameters['direction'])):
-                $direcao = $parameters['direction'];
-            endif;
-        else:
-            $ordem = 'nome';
-            $direcao = 'asc';
-        endif;
-
-        $alunos = $this->paginate($this->Estudantes, ['order' => ['registro' => 'asc']]);
+        $estudantesdetcc = $this->Estudantes->find();
+        if ($this->request->getQuery('sort') === null) {
+            $estudantesdetcc->order(['Estudantes.nome' => 'ASC']);
+        }
+        $alunos = $this->paginate($estudantesdetcc);
         $this->set(compact('alunos'));
     }
 
@@ -196,17 +152,20 @@ class EstudantesController extends AppController
      */
     public function edit($id = null)
     {
-
-        $estudante = $this->Estudantes->get($id, [
-            'contain' => [],
-        ]);
+        try {
+            $estudante = $this->Estudantes->get($id, [
+                'contain' => [],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($estudante);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $estudanteatualiza = $this->Estudantes->patchEntity($estudante, $this->request->getData());
+            $estudante = $this->Estudantes->patchEntity($estudante, $this->request->getData());
             // debug($estudanteatualiza);
-            if ($this->Estudantes->save($estudanteatualiza)) {
+            if ($this->Estudantes->save($estudante)) {
                 $this->Flash->success(__('Estudante atualizado.'));
-
                 return $this->redirect(['action' => 'view', $id]);
             }
             $this->Flash->error(__('Estudante não foi atualizado.'));
@@ -225,10 +184,14 @@ class EstudantesController extends AppController
     {
 
         $this->request->allowMethod(['post', 'delete']);
-        $estudantetable = $this->fetchTable('Estudantes');
-        $estudante = $estudantetable->get($id, [
-            'contain' => ['Muralinscricoes', 'Estagiarios', 'Tccestudantes']
-        ]);
+        try {
+            $estudante = $this->Estudantes->get($id, [
+                'contain' => ['Muralinscricoes', 'Estagiarios', 'Tccestudantes']
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         if ($estudante->muralinscricoes || $estudante->estagiarios || $estudante->tccestudantes) {
             $this->Flash->error(__('Registro de estudante não excluído. O estudante possui registros de inscriçoes, estágio e/ou TCC.'));
             return $this->redirect(['action' => 'view', $id]);
