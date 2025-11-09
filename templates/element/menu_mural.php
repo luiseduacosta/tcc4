@@ -62,10 +62,10 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?php echo $this->Html->link("Instituições", "/Instituicoes/index", ['escape' => FALSE, 'class' => 'nav-link']); ?>
                     </li>
                     <li class="nav-item">
-                        <?php echo $this->Html->link("Supervisore(as)", "/Supervisores/index/ordem:nome", ['class' => 'nav-link']); ?>
+                        <?php echo $this->Html->link("Supervisore(as)", "/Supervisores/index", ['class' => 'nav-link']); ?>
                     </li>
                     <li class="nav-item">
-                        <?php echo $this->Html->link("Professore(as)", "/Professores/index/", ['class' => 'nav-link']); ?>
+                        <?php echo $this->Html->link("Professore(as)", "/Professores/index", ['class' => 'nav-link']); ?>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -93,7 +93,7 @@ $user = $this->getRequest()->getAttribute('identity');
                                 <?php echo $this->Html->link('Carga horária', '/Alunos/cargahoraria/', ['class' => 'dropdown-item']); ?>
                             </li>
                             <li class="nav-item">
-                                <?php echo $this->Html->link('Complemento período', '/Complementos/index/', ['class' => 'dropdown-item']); ?>
+                                <?php echo $this->Html->link('Complemento período', '/Complementos/index', ['class' => 'dropdown-item']); ?>
                             </li>
                         </ul>
                     </li>

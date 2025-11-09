@@ -2,7 +2,8 @@
 /**
  * @var \App\View\AppView $this 
  * @var \App\Model\Entity\Supervisor[]|\Cake\Collection\CollectionInterface $supervisores 
- */ $user = $this->getRequest()->getAttribute('identity');
+ */ 
+$user = $this->getRequest()->getAttribute('identity');
 // pr($supervisores);
 ?>
 
@@ -18,10 +19,10 @@
         <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerSupervisor">
             <?php if (isset($user) && $user->categoria == '1'): ?>
                 <li class="nav-item me-1">
-                    <?= $this->Html->link(__('Cadastra supervisora'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                    <?= $this->Html->link(__('Cadastra supervisora'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
                 </li>
                 <div class="col-sm-2">
-                <?= $this->Form->create(null, ['url' => ['controller' => 'Supervisores', 'action' => 'index'], 'method' => 'post', 'class' => 'form-inline']) ?>
+                <?= $this->Form->create(null, ['url' => ['controller' => 'Supervisores', 'action' => 'buscasupervisor'], 'class' => 'form-inline']) ?>
                 <?= $this->Form->control('nome', [
                     'type' => 'text',
                     'label' => false,

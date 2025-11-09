@@ -49,68 +49,24 @@ class AlunosController extends AppController
      * @param string|null $alunos
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index($alunos = null)
+    public function index()
     {
-        $nome = $this->getRequest()->getQuery("nome");
-        $dre = $this->getRequest()->getQuery("dre");
-
-        if ($nome) {
-            $alunos = $this->Alunos
-                ->find()
-                ->where(["Alunos.nome LIKE" => "%{$nome}%"])
-                ->order(["nome" => "ASC"]);
-            $this->Authorization->skipAuthorization();
-            if ($alunos->count() === 0) {
-                $this->Flash->error(
-                    __("Nenhum(a) aluno(a) encontrado com o nome: {$nome}"),
-                );
-                // die('Nenhum aluno encontrado com o nome: ' . $nome);
-                return $this->redirect([
-                    "controller" => "Alunos",
-                    "action" => "index",
-                ]);
-            }
-        }
-        if ($dre) {
-            $alunos = $this->Alunos
-                ->find()
-                ->where(["Alunos.registro" => $dre])
-                ->order(["nome" => "ASC"]);
-            $this->Authorization->skipAuthorization();
-            if ($alunos->count() === 0) {
-                $this->Flash->error(
-                    __("Nenhum(a) aluno(a) encontrado com o DRE: {$dre}"),
-                );
-                // die('Nenhum aluno encontrado com o DRE: ' . $dre);
-                return $this->redirect([
-                    "controller" => "Alunos",
-                    "action" => "index",
-                ]);
-            }
-        }
-        if (empty($alunos)) {
-            $alunos = $this->Alunos->find()->order(["nome" => "ASC"]);
-        }
-
-        if ($this->Authorization->skipAuthorization()) {
-            // pr($query->all());
-            // die();
-        } else {
-            $this->Flash->error(__("Acesso não autorizado."));
-            return $this->redirect([
-                "controller" => "Muralestagios",
-                "action" => "index",
-            ]);
-        }
-
-        if ($alunos->count() === 0) {
+        $query = $this->Alunos->find();
+        $this->Authorization->skipAuthorization();
+        if ($query->toArray() == null) {
             $this->Flash->error(__("Nenhum aluno encontrado."));
             return $this->redirect([
                 "controller" => "Alunos",
                 "action" => "add",
             ]);
         }
-        $this->set("alunos", $this->paginate($alunos));
+        if ($this->request->getQuery("sort") === null) {
+            $query->order(["nome" => "ASC"]);
+        }
+        $alunos = $this->paginate($query, [
+            "sortableFields" => ["nome", "registro", "nascimento", "ingresso"],
+        ]);
+        $this->set("alunos", $alunos);
     }
 
     /**
@@ -229,9 +185,14 @@ class AlunosController extends AppController
      */
     public function edit($id = null)
     {
-        $aluno = $this->Alunos->get($id, [
-            "contain" => [],
-        ]);
+        try {
+            $aluno = $this->Alunos->get($id, [
+                "contain" => [],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__("Aluno não encontrado"));
+            return $this->redirect(["action" => "index"]);
+        }
         $this->Authorization->authorize($aluno);
 
         $user = $this->getRequest()->getAttribute("identity");
@@ -610,10 +571,10 @@ class AlunosController extends AppController
                 );
                 if (
                     isset(
-                        $this->getRequest()->getAttribute("identity")[
-                            "categoria"
-                        ]
-                    ) &&
+                    $this->getRequest()->getAttribute("identity")[
+                        "categoria"
+                    ]
+                ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
@@ -643,10 +604,10 @@ class AlunosController extends AppController
                 );
                 if (
                     isset(
-                        $this->getRequest()->getAttribute("identity")[
-                            "categoria"
-                        ]
-                    ) &&
+                    $this->getRequest()->getAttribute("identity")[
+                        "categoria"
+                    ]
+                ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
@@ -705,14 +666,16 @@ class AlunosController extends AppController
             /** Se o período inicial é maior que o período atual então informar que há um erro */
             if ($totalperiodos <= 0) {
                 $this->Flash->error(
-                    __("Error: período inicial está na frente do período atual"),
+                    __(
+                        "Error: período inicial está na frente do período atual",
+                    ),
                 );
                 if (
                     isset(
-                        $this->getRequest()->getAttribute("identity")[
-                            "categoria"
-                        ]
-                    ) &&
+                    $this->getRequest()->getAttribute("identity")[
+                        "categoria"
+                    ]
+                ) &&
                     $this->getRequest()->getAttribute("identity")[
                         "categoria"
                     ] == "2"
@@ -1139,11 +1102,21 @@ class AlunosController extends AppController
         $this->Authorization->skipAuthorization();
         $registro = $this->request->getData("registro");
         if ($registro) {
-            return $this->redirect([
-                "controller" => "Alunos",
-                "action" => "index",
-                "?" => ["dre" => $registro],
-            ]);
+            $aluno = $this->Alunos
+                ->find()
+                ->where(["Alunos.registro" => trim($registro)])
+                ->first();
+            if (empty($aluno)) {
+                $this->Flash->error(
+                    __("Nenhum aluno encontrado com o registro informado"),
+                );
+                return $this->redirect([
+                    "controller" => "Alunos",
+                    "action" => "index",
+                ]);
+            }
+            $this->set("aluno", $aluno);
+            $this->render("view");
         } else {
             $this->Flash->error(__("Digite um número de registro para busca"));
             return $this->redirect([
@@ -1164,17 +1137,26 @@ class AlunosController extends AppController
         $this->Authorization->skipAuthorization();
         $nome = $this->request->getData("nome");
         if ($nome) {
-            // $this->set("nome", trim($nome));
-            return $this->redirect([
-                "controller" => "Alunos",
-                "action" => "index",
-                "?" => ["nome" => $nome]
-            ]);
+            $alunos = $this->Alunos
+                ->find()
+                ->where(["Alunos.nome LIKE" => "%{$nome}%"])
+                ->order(["Alunos.nome" => "asc"]);
+            if (empty($alunos->toArray())) {
+                $this->Flash->error(
+                    __("Nenhum aluno encontrado com o nome informado"),
+                );
+                return $this->redirect([
+                    "controller" => "Alunos",
+                    "action" => "index",
+                ]);
+            }
+            $this->set("alunos", $this->paginate($alunos));
+            $this->render("index");
         } else {
             $this->Flash->error(__("Digite um nome para busca"));
             return $this->redirect([
                 "controller" => "Alunos",
-                "action" => "index"
+                "action" => "index",
             ]);
         }
     }

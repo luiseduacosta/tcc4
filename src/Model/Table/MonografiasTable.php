@@ -73,17 +73,20 @@ class MonografiasTable extends Table
                         'foreignKey' => 'banca3',
                 ]);
 
-                // Tccestudantes tem um campo monografia_id
-                $this->hasMany('Tccestudantes', [
-                        'propertyName' => 'tccestudantes',
-                        'foreignKey' => 'monografia_id',
-                        'joinType' => 'LEFT'
-                ]);
-
+                // Monografia tem um campo areamonografia_id
                 $this->belongsTo('Areamonografias', [
                         'propertyName' => 'areamonografias',
                         'className' => 'Areamonografias',
                         'foreignKey' => 'areamonografia_id',
+                        'joinType' => 'LEFT'
+                ]);
+
+                // Tccestudantes tem um campo monografia_id
+                $this->hasMany('Tccestudantes', [
+                        'propertyName' => 'tccestudantes',
+                        'className' => 'Tccestudantes',
+                        'foreignKey' => 'monografia_id',
+                        // 'conditions' => 'Monografias.id = Tccestudantes.monografia_id',
                         'joinType' => 'LEFT'
                 ]);
         }

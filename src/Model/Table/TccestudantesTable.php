@@ -43,22 +43,18 @@ class TccestudantesTable extends Table
         // Tccestudantes tem uma monografia
         $this->belongsTo('Monografias', [
             'foreignKey' => 'monografia_id',
+            'className' => 'Monografias',
+            'propertyName' => 'monografias',
             'joinType' => 'LEFT'
         ]);
 
         // Tccestudantes com estudantes para usar em Monografias
         $this->hasOne('Estudantes', [
+            'className' => 'Estudantes',
+            'propertyName' => 'estudantes',
             'foreignKey' => false,
             'targetForeignKey' => 'registro',
             'conditions' => 'Tccestudantes.registro = Estudantes.registro',
-            'joinType' => 'LEFT'
-        ]);
-
-        // Tccestudantes com estagiariomonografias para usar em Monografias
-        $this->hasMany('Estagiariomonografias', [
-            'foreignKey' => false,
-            'targetForeignKey' => 'registro',
-            'conditions' => 'Tccestudantes.registro = Estagiariomonografias.registro',
             'joinType' => 'LEFT'
         ]);
     }

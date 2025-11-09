@@ -26,27 +26,22 @@ class SupervisoresController extends AppController
     /**
      * Index method
      *
-     * @param string|null $nome Supervisor nome.
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index($nome = null)
+    public function index()
     {
-        $nome = $this->getRequest()->getData('nome');
-        if ($nome) {
-            $query = $this->Supervisores->find('all');
-            $query->where(['nome LIKE' => "%{$nome}%"]);
-            $query->order(['nome' => 'ASC']);
-        } else {
-            $query = $this->Supervisores->find('all');
-            $query->order(['nome' => 'ASC']);
-        }
-        if (!$query->toArray()) {
-            $this->Authorization->skipAuthorization();
-            $this->Flash->error(__('Nenhum supervisor encontrado.'));
-            return $this->redirect(['action' => 'index']);
-        }
         $this->Authorization->skipAuthorization();
-        $supervisores = $this->paginate($query);
+        $query = $this->Supervisores->find();
+        if (!$query->toArray()) {
+            $this->Flash->error(__('Nenhum supervisor encontrado.'));
+            return $this->redirect(['action' => 'add']);
+        }
+        if ($this->request->getQuery('sort') === null) {
+            $query->order(['nome' => 'ASC']);
+        }
+        $supervisores = $this->paginate($query, [
+            'sortableFields' => ['nome', 'cress']
+        ]);
         $this->set(compact('supervisores'));
     }
 
@@ -54,17 +49,29 @@ class SupervisoresController extends AppController
      * View method
      *
      * @param string|null $id Supervisor id.
+     * @param string|null $cress Supervisor cress.
+     * 
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($id = null, $cress = null)
     {
         $this->Authorization->skipAuthorization();
         if ($id === null):
             $cress = $this->getRequest()->getQuery('cress');
-            $supervisorquery = $this->Supervisores->find()
-                ->where(['cress' => $cress]);
-            $supervisor = $supervisorquery->first();
+            if (!$cress) {
+                $this->Authorization->skipAuthorization();
+                $this->Flash->error(__('Cress inválido.'));
+                return $this->redirect(['action' => 'index']);
+            }
+            $supervisor = $this->Supervisores->find()
+                ->where(['cress' => $cress])
+                ->first();
+            if (!$supervisor) {
+                $this->Authorization->skipAuthorization();
+                $this->Flash->error(__('Supervisora não encontrada.'));
+                return $this->redirect(['action' => 'index']);
+            }
             $id = $supervisor->id;
         endif;
         try {
@@ -86,7 +93,6 @@ class SupervisoresController extends AppController
      */
     public function add()
     {
-
         $supervisor = $this->Supervisores->newEmptyEntity();
         $this->Authorization->authorize($supervisor);
 
@@ -167,19 +173,29 @@ class SupervisoresController extends AppController
     /**
      * Busca supervisor por nome
      *
+     * @param string|null $nome Nome do supervisor.
      * @return \Cake\Http\Response|null|void
      */
     public function buscasupervisor($nome = null)
     {
         $this->Authorization->skipAuthorization();
-        $nome = $this->request->getData("nome");
+        $nome = trim($this->request->getData("nome"));
         if ($nome) {
-            // $this->set("nome", trim($nome));
-            return $this->redirect([
-                "controller" => "Supervisores",
-                "action" => "index",
-                "?" => ["nome" => $nome]
+            $supervisores = $this->Supervisores->find("all", [
+                "conditions" => ["Supervisores.nome LIKE" => "%$nome%"],
+                "order" => ["Supervisores.nome" => "asc"]
             ]);
+            if ($supervisores->toArray()) {
+                $this->Flash->success(__("Supervisores encontrados com o nome '$nome'."));
+                $this->set("supervisores", $this->paginate($supervisores));
+                $this->render("index");
+            } else {
+                $this->Flash->error(__("Nenhum supervisor encontrado com o nome '$nome'."));
+                return $this->redirect([
+                    "controller" => "Supervisores",
+                    "action" => "index"
+                ]);
+            }
         } else {
             $this->Flash->error(__("Digite um nome para buscar"));
             return $this->redirect([

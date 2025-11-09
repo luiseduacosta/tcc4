@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Controller\AppController;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
 
@@ -30,32 +33,33 @@ class ProfessoresController extends AppController
         $this->loadComponent('Authorization.Authorization');
     }
 
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+
+        parent::beforeFilter($event);
+        $this->Authentication->addUnauthenticatedActions(['index', 'view']);
+    }
+
+
     /**
      * Index method
      *
-     * @param string|null $nome Professor nome.
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index($nome = null)
+    public function index()
     {
         $this->Authorization->skipAuthorization();
-        $nome = $this->getRequest()->getData('nome');
-        if ($nome) {
-            $query = $this->Professores->find('all');
-            $query->where(['nome LIKE' => "%{$nome}%"]);
-            $query->order(['nome' => 'ASC']);
-        } else {
-            $query = $this->Professores->find('all');
-            $query->order(['nome' => 'ASC']);
-        }
-        if (!$query->toArray()) {
-            $this->Authorization->skipAuthorization();
+        $query = $this->Professores->find('all');
+        if (!$query) {
             $this->Flash->error(__('Nenhum(a) professor(a) encontrado.'));
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect(['action' => 'add']);
         }
-        $this->Authorization->skipAuthorization();
-        $professores = $this->paginate($query);
-
+        if ($this->request->getQuery('sort') === null) {
+            $query->order(['nome' => 'ASC']);
+        }
+        $professores = $this->paginate($query, [
+            'sortableFields' => ['nome', 'siape', 'departamento', 'dataingresso', 'dataegresso']
+        ]);
         $this->set(compact('professores'));
     }
 
@@ -88,10 +92,11 @@ class ProfessoresController extends AppController
                                 ->where(['siape' => $siape])
                                 ->first();
                             $id = $query->id;
-                            }
+                        }
                     }
                 }
-            };
+            }
+            ;
         } else {
             $this->Flash->error(__('Acesso não autorizado para este recurso.'));
             return $this->redirect(['controller' => 'Users', 'action' => 'login']);
@@ -243,11 +248,21 @@ class ProfessoresController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function buscaprofessor($nome = null) {
+    public function buscaprofessor($nome = null)
+    {
         $this->Authorization->skipAuthorization();
         $nome = $this->getRequest()->getData('nome');
         if ($nome) {
-            return $this->redirect(['controller' => 'Professores', 'action' => 'index', '?' => ['nome' => $nome]]);
+            $professores = $this->Professores->find('all');
+            $professores->where(['nome LIKE' => "%{$nome}%"]);
+            $professores->order(['nome' => 'ASC']);
+            if (!$professores->toArray()) {
+                $this->Flash->error(__('Nenhum(a) professor(a) encontrado com o nome: ' . $nome));
+                return $this->redirect(['controller' => 'Professores', 'action' => 'index']);
+            }
+            $professores = $this->paginate($professores);
+            $this->set('professores', $professores);
+            $this->render('index');
         } else {
             $this->Flash->error(__('Digite um nome para buscar'));
             return $this->redirect(['controller' => 'Professores', 'action' => 'index']);

@@ -55,6 +55,7 @@ class EstagiariosController extends AppController
         $turmaestagio = $this->getRequest()->getQuery("turmaestagio");
         $nivel = $this->getRequest()->getQuery("nivel");
         $periodo = $this->getRequest()->getQuery("periodo");
+        $this->Authorization->skipAuthorization();
         if ($periodo === null) {
             $configuracao = $this->fetchTable("Configuracoes");
             $periodo_atual = $configuracao
@@ -63,7 +64,6 @@ class EstagiariosController extends AppController
                 ->first();
             $periodo = $periodo_atual->mural_periodo_atual;
         }
-        $this->Authorization->skipAuthorization();
         if ($periodo) {
             $query = $this->Estagiarios
                 ->find("all")
@@ -281,10 +281,9 @@ class EstagiariosController extends AppController
      */
     public function add($id = null)
     {
+        $estagiario = $this->Estagiarios->newEmptyEntity();
         /** Corrigir para autorizar ao $estagiario */
         $this->Authorization->skipAuthorization();
-
-        $estagiario = $this->Estagiarios->newEmptyEntity();
         if ($this->request->is(["patch", "post", "put"])) {
             $estagiario = $this->Estagiarios->patchEntity(
                 $estagiario,
@@ -298,8 +297,6 @@ class EstagiariosController extends AppController
                 __("Registro de estagiario nao foi inserido. Tente novamente."),
             );
         }
-
-        $this->Authorization->skipAuthorization();
         $aluno_id = $this->getRequest()->getQuery("aluno_id");
         if ($aluno_id) {
             $estagiario = $this->Estagiarios
@@ -414,9 +411,8 @@ class EstagiariosController extends AppController
     public function novotermocompromisso($id = null)
     {
         $this->viewBuilder()->enableAutoLayout(false);
-        $this->Authorization->skipAuthorization();
-
         $aluno_id = $this->getRequest()->getQuery("aluno_id");
+        $this->Authorization->skipAuthorization();
         if (empty($aluno_id)) {
             $user = $this->getRequest()->getAttribute("identity");
             if (isset($user) && $user->categoria == "2") {
@@ -640,9 +636,9 @@ class EstagiariosController extends AppController
      */
     public function avaliacaodiscentepdf($id = null)
     {
-        $this->Authorization->skipAuthorization();
         $this->viewBuilder()->disableAutoLayout();
         $estagiario_id = $this->getRequest()->getQuery("estagiario_id");
+        $this->Authorization->skipAuthorization();
 
         if ($estagiario_id) {
             $estagiario = $this->Estagiarios
@@ -691,9 +687,11 @@ class EstagiariosController extends AppController
             return $this->redirect(["action" => "index"]);
         }
         $this->Authorization->skipAuthorization();
+
         $estagiario = $this->Estagiarios->get($id, [
             "contain" => ['Alunos', 'Instituicoes', 'Professores', 'Supervisores', 'Turmaestagios'],
         ]);
+
         $this->Authorization->authorize($estagiario);
         if ($estagiario === null) {
             $this->Flash->error(__("Estagiário não encontrado."));
@@ -726,7 +724,6 @@ class EstagiariosController extends AppController
                 ),
             );
         } else {
-
             // Verifica se a instituição existe
             $instituicao = $this->fetchTable("Instituicoes")
                 ->find()

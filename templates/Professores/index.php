@@ -19,14 +19,14 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?= $this->Html->link(__('Nova professora'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
             </li>
             <div class="col-sm-2">
-                <?= $this->Form->create(null, ['url' => ['controller' => 'Professores', 'action' => 'index'], 'method' => 'post', 'class' => 'form-inline']) ?>
+                <?= $this->Form->create(null, ['url' => ['controller' => 'Professores', 'action' => 'buscaprofessor'], 'class' => 'form-inline']) ?>
                 <?= $this->Form->control('nome', [
                     'type' => 'text',
                     'label' => false,
                     'placeholder' => 'Busca professor(a)',
                     'class' => 'form-control'
                 ])
-                ?>
+                    ?>
             </div>
             <div class="col-sm-1 me-1">
                 <?= $this->Form->button(__("Buscar"), [

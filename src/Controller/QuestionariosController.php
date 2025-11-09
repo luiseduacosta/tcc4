@@ -22,7 +22,6 @@ class QuestionariosController extends AppController
     {
         $this->Authorization->skipAuthorization();
         $questionarios = $this->paginate($this->Questionarios);
-
         $this->set(compact('questionarios'));
     }
 
@@ -35,9 +34,14 @@ class QuestionariosController extends AppController
      */
     public function view($id = null)
     {
-        $questionario = $this->Questionarios->get($id, [
-            'contain' => ['Questiones'],
-        ]);
+        try {
+            $questionario = $this->Questionarios->get($id, [
+                'contain' => ['Questiones'],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->skipAuthorization();
         $this->set(compact('questionario'));
     }
@@ -72,9 +76,15 @@ class QuestionariosController extends AppController
      */
     public function edit($id = null)
     {
-        $questionario = $this->Questionarios->get($id, [
-            'contain' => [],
-        ]);
+        try {
+            $questionario = $this->Questionarios->get($id, [
+                'contain' => [],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $this->Authorization->skipAuthorization();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $questionario = $this->Questionarios->patchEntity($questionario, $this->request->getData());
@@ -98,7 +108,12 @@ class QuestionariosController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $questionario = $this->Questionarios->get($id);
+        try {
+            $questionario = $this->Questionarios->get($id);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->skipAuthorization();
         if ($this->Questionarios->delete($questionario)) {
             $this->Flash->success(__('Questionário excluído.'));

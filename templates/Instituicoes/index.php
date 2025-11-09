@@ -20,7 +20,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <?= $this->Html->link(__('Nova instituição'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
             </li>
             <div class="col-sm-2">
-                <?= $this->Form->create(null, ['url' => ['controller' => 'Instituicoes', 'action' => 'index'], 'method' => 'post', 'class' => 'form-inline']) ?>
+                <?= $this->Form->create(null, ['url' => ['controller' => 'Instituicoes', 'action' => 'buscainstituicao'], 'class' => 'form-inline']) ?>
                 <?= $this->Form->control('nome', [
                     'type' => 'text',
                     'label' => false,
