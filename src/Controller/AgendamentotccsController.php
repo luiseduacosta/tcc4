@@ -45,6 +45,10 @@ class AgendamentotccsController extends AppController
                 "Professorbanca2",
             ]);
 
+        if ($this->request->getQuery("sort") === null) {
+            $query->order(["Alunos.nome" => "ASC"]);
+        }
+
         $agendamentotccs = $this->paginate($query, [
             "sortableFields" => [
                 "Alunos.nome",

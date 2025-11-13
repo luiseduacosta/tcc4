@@ -18,7 +18,7 @@ declare(strict_types=1);
 /*
  * Configure paths required to find CakePHP + general filepath constants
  */
-require __DIR__ . '/paths.php';
+require __DIR__ . "/paths.php";
 
 /*
  * Bootstrap CakePHP.
@@ -29,7 +29,7 @@ require __DIR__ . '/paths.php';
  * - Registering the CakePHP autoloader.
  * - Setting the default application paths.
  */
-require CORE_PATH . 'config' . DS . 'bootstrap.php';
+require CORE_PATH . "config" . DS . "bootstrap.php";
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
@@ -60,7 +60,7 @@ use Cake\Utility\Inflector;
  * If you use .env files, be careful to not commit them to source control to avoid
  * security risks. See https://github.com/josegonzalez/php-dotenv#general-security-information
  * for more information for recommended practices.
-*/
+ */
 // if (!env('APP_NAME') && file_exists(CONFIG . '.env')) {
 //     $dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
 //     $dotenv->parse()
@@ -78,8 +78,8 @@ use Cake\Utility\Inflector;
  * that changes from configuration that does not. This makes deployment simpler.
  */
 try {
-    Configure::config('default', new PhpConfig());
-    Configure::load('app', 'default', false);
+    Configure::config("default", new PhpConfig());
+    Configure::load("app", "default", false);
 } catch (\Exception $e) {
     exit($e->getMessage() . "\n");
 }
@@ -88,69 +88,69 @@ try {
  * Load an environment local configuration file to provide overrides to your configuration.
  * Notice: For security reasons app_local.php **should not** be included in your git repo.
  */
-if (file_exists(CONFIG . 'app_local.php')) {
-    Configure::load('app_local', 'default');
+if (file_exists(CONFIG . "app_local.php")) {
+    Configure::load("app_local", "default");
 }
 
 /*
  * When debug = true the metadata cache should only último
  * for a short time.
  */
-if (Configure::read('debug')) {
-    Configure::write('Cache._cake_model_.duration', '+2 minutes');
-    Configure::write('Cache._cake_core_.duration', '+2 minutes');
+if (Configure::read("debug")) {
+    Configure::write("Cache._cake_model_.duration", "+2 minutes");
+    Configure::write("Cache._cake_core_.duration", "+2 minutes");
     // disable router cache during development
-    Configure::write('Cache._cake_routes_.duration', '+2 seconds');
+    Configure::write("Cache._cake_routes_.duration", "+2 seconds");
 }
 
 /*
  * Set the default server timezone. Using UTC makes time calculations / conversions easier.
  * Check http://php.net/manual/en/timezones.php for list of valid timezone strings.
  */
-date_default_timezone_set(Configure::read('App.defaultTimezone'));
+date_default_timezone_set(Configure::read("App.defaultTimezone"));
 
 /*
  * Configure the mbstring extension to use the correct encoding.
  */
-mb_internal_encoding(Configure::read('App.encoding'));
+mb_internal_encoding(Configure::read("App.encoding"));
 
 /*
  * Set the default locale. This controls how dates, number and currency is
  * formatted and sets the default language to use for translations.
  */
-ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
+ini_set("intl.default_locale", Configure::read("App.defaultLocale"));
 
 /*
  * Register application error and exception handlers.
  */
-$isCli = PHP_SAPI === 'cli';
+$isCli = PHP_SAPI === "cli";
 if ($isCli) {
-    (new ErrorTrap(Configure::read('Error')))->register();
+    new ErrorTrap(Configure::read("Error"))->register();
 } else {
-    (new ExceptionTrap(Configure::read('Error')))->register();
+    new ExceptionTrap(Configure::read("Error"))->register();
 }
 
 /*
  * Include the CLI bootstrap overrides.
  */
 if ($isCli) {
-    require __DIR__ . '/bootstrap_cli.php';
+    require __DIR__ . "/bootstrap_cli.php";
 }
 
 /*
  * Set the full base URL.
  * This URL is used as the base of all absolute links.
  */
-$fullBaseUrl = Configure::read('App.fullBaseUrl');
+$fullBaseUrl = Configure::read("App.fullBaseUrl");
 if (!$fullBaseUrl) {
     $s = null;
-    if (env('HTTPS')) {
-        $s = 's';
+    if (env("HTTPS")) {
+        $s = "s";
     }
 
-    $httpHost = env('HTTP_HOST');
+    $httpHost = env("HTTP_HOST");
     if (isset($httpHost)) {
-        $fullBaseUrl = 'http' . $s . '://' . $httpHost;
+        $fullBaseUrl = "http" . $s . "://" . $httpHost;
     }
     unset($httpHost, $s);
 }
@@ -159,22 +159,22 @@ if ($fullBaseUrl) {
 }
 unset($fullBaseUrl);
 
-Cache::setConfig(Configure::consume('Cache'));
-ConnectionManager::setConfig(Configure::consume('Datasources'));
-TransportFactory::setConfig(Configure::consume('EmailTransport'));
-Mailer::setConfig(Configure::consume('Email'));
-Log::setConfig(Configure::consume('Log'));
-Security::setSalt(Configure::consume('Security.salt'));
+Cache::setConfig(Configure::consume("Cache"));
+ConnectionManager::setConfig(Configure::consume("Datasources"));
+TransportFactory::setConfig(Configure::consume("EmailTransport"));
+Mailer::setConfig(Configure::consume("Email"));
+Log::setConfig(Configure::consume("Log"));
+Security::setSalt(Configure::consume("Security.salt"));
 
 /*
  * Setup detectors for mobile and tablet.
  */
-ServerRequest::addDetector('mobile', function ($request) {
+ServerRequest::addDetector("mobile", function ($request) {
     $detector = new \Detection\MobileDetect();
 
     return $detector->isMobile();
 });
-ServerRequest::addDetector('tablet', function ($request) {
+ServerRequest::addDetector("tablet", function ($request) {
     $detector = new \Detection\MobileDetect();
 
     return $detector->isTablet();
@@ -214,44 +214,56 @@ ServerRequest::addDetector('tablet', function ($request) {
  */
 
 // Portuguese language inflection rules
-Inflector::rules('singular', [
+Inflector::rules(
+    "singular",
+    [
         '/^(.*)(oes|aes|aos)$/i' => '\1ao',
         '/^(.*)(a|e|o|u)is$/i' => '\1\2l',
         '/^(.*)e?is$/i' => '\1il',
         '/^(.*)(r|s|z)es$/i' => '\1\2',
         '/^(.*)ns$/i' => '\1m',
-        '/^(.*)s$/i' => '\1'
-], true);
+        '/^(.*)s$/i' => '\1',
+    ],
+    true,
+);
 
-Inflector::rules('plural', [
-    '/^(.*)ao$/i' => '\1oes',
-    '/^(.*)(r|s|z)$/i' => '\1\2es',
-    '/^(.*)(a|e|o|u)l$/i' => '\1\2is',
-    '/^(.*)il$/i' => '\1is',
-    '/^(.*)(m|n)$/i' => '\1ns',
-    '/^(.*)$/i' => '\1s'    
-], true);
+Inflector::rules(
+    "plural",
+    [
+        '/^(.*)ao$/i' => '\1oes',
+        '/^(.*)(r|s|z)$/i' => '\1\2es',
+        '/^(.*)(a|e|o|u)l$/i' => '\1\2is',
+        '/^(.*)il$/i' => '\1is',
+        '/^(.*)(m|n)$/i' => '\1ns',
+        '/^(.*)$/i' => '\1s',
+    ],
+    true,
+);
 
 // Irregular words
-Inflector::rules('irregular', [
-    'administrador' => 'administradores',
-    'professor' => 'professores',
-    'supervisor' => 'supervisores',
-    'configuracao' => 'configuracoes',
-    'inscricao' => 'inscricoes',
-    'muralinscricao' => 'muralinscricoes',
-    'instituicao' => 'instituicoes',
-    'areainstituicao' => 'areainstituicoes',
-    'avaliacao' => 'avaliacoes',
-    'questionario' => 'questionarios',
-    'resposta' => 'respostas',
-    'questao' => 'questoes',
-], true);
+Inflector::rules(
+    "irregular",
+    [
+        "administrador" => "administradores",
+        "professor" => "professores",
+        "supervisor" => "supervisores",
+        "configuracao" => "configuracoes",
+        "inscricao" => "inscricoes",
+        "muralinscricao" => "muralinscricoes",
+        "instituicao" => "instituicoes",
+        "areainstituicao" => "areainstituicoes",
+        "avaliacao" => "avaliacoes",
+        "questao" => "questoes",
+    ],
+    true,
+);
 
 // Uninflected words
-Inflector::rules('uninflected', [
-    'atlas', 'lapis', 'onibus', 'pires', 'virus', '.*x'
-], true);
+Inflector::rules(
+    "uninflected",
+    ["atlas", "lapis", "onibus", "pires", "virus", ".*x"],
+    true,
+);
 
 /*
  * Enable immutable time objects in the ORM.
@@ -271,30 +283,30 @@ Type::build('timestamp')
     ->useImmutable();*/
 
 /* https://discourse.cakephp.org/t/cakephp-locale-pt-br-and-dateformat/1002/14 */
-date_default_timezone_set('America/Sao_Paulo');
-setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+date_default_timezone_set("America/Sao_Paulo");
+setlocale(LC_ALL, "pt_BR", "pt_BR.utf-8", "pt_BR.utf-8", "portuguese");
 
-\Cake\I18n\Time::setToStringFormat('HH:mm:ss');
-\Cake\I18n\Date::setToStringFormat('dd/MM/yyyy');
-\Cake\I18n\FrozenTime::setToStringFormat('HH:mm:ss');
-\Cake\I18n\FrozenDate::setToStringFormat('dd/MM/yyyy');
+\Cake\I18n\Time::setToStringFormat("HH:mm:ss");
+\Cake\I18n\Date::setToStringFormat("dd/MM/yyyy");
+\Cake\I18n\FrozenTime::setToStringFormat("HH:mm:ss");
+\Cake\I18n\FrozenDate::setToStringFormat("dd/MM/yyyy");
 
 /*
  * Configuração do CakePdf
  */
-Configure::write('CakePdf', [
-    'engine' => [
-        'className' => 'CakePdf.DomPdf',
-        'options' => [
-            'isRemoteEnabled' => true
-        ]
+Configure::write("CakePdf", [
+    "engine" => [
+        "className" => "CakePdf.DomPdf",
+        "options" => [
+            "isRemoteEnabled" => true,
+        ],
     ],
-    'margin' => [
-        'bottom' => 10,
-        'left' => 10,
-        'right' => 10,
-        'top' => 10
+    "margin" => [
+        "bottom" => 10,
+        "left" => 10,
+        "right" => 10,
+        "top" => 10,
     ],
-    'orientation' => 'portrait',
-    'download' => true
+    "orientation" => "portrait",
+    "download" => true,
 ]);
