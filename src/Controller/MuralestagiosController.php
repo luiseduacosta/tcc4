@@ -61,7 +61,7 @@ class MuralestagiosController extends AppController
         $this->Authorization->skipAuthorization();
         $periodo = $this->request->getQuery('periodo');
         if (($periodo == null) || empty($periodo)) {
-            $configuracaotable = $this->fetchTable('Configuracao');
+            $configuracaotable = $this->fetchTable('Configuracoes');
             $periodoconfiguracao = $configuracaotable->find()->first();
             $periodo = $periodoconfiguracao->mural_periodo_atual;
         }
@@ -137,7 +137,7 @@ class MuralestagiosController extends AppController
     public function add()
     {
         if (empty($periodo)) {
-            $configuracaotable = $this->fetchTable('Configuracao');
+            $configuracaotable = $this->fetchTable('Configuracoes');
             $periodoconfiguracao = $configuracaotable->find()
                 ->select(['mural_periodo_atual'])
                 ->first();

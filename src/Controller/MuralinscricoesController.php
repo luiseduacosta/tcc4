@@ -31,7 +31,7 @@ class MuralinscricoesController extends AppController
     public function index($periodo = NULL)
     {
         if (empty($periodo)) {
-            $configuracaotable = $this->fetchTable('Configuracao');
+            $configuracaotable = $this->fetchTable('Configuracoes');
             $periodoconfiguracao = $configuracaotable->get(1);
             $periodo = $periodoconfiguracao->mural_periodo_atual;
         }
@@ -153,7 +153,7 @@ class MuralinscricoesController extends AppController
             }
 
             /** Pega o período atual */
-            $periodo = $this->fetchTable('Configuracao')->get(1);
+            $periodo = $this->fetchTable('Configuracoes')->get(1);
             $periodo_atual = $periodo->mural_periodo_atual;
 
             /** Dados para fazer a inscrição */
