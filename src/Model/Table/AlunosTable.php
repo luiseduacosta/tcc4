@@ -15,7 +15,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\MuralinscricoesTable&\Cake\ORM\Association\HasMany $Muralinscricoes
  * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
- * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasOne $Tccestudantes
  * 
  * @method \App\Model\Entity\Aluno newEmptyEntity()
  * @method \App\Model\Entity\Aluno newEntity(array $data, array $options = [])
@@ -59,14 +58,6 @@ class AlunosTable extends Table
 
                 $this->hasMany('Users', [
                         'foreignKey' => 'aluno_id',
-                ]);
-
-                $this->hasOne('Tccestudantes', [
-                        'propertyName' => 'Tccestudantes',
-                        'targetForeignKey' => 'registro',
-                        'foreignKey' => false,
-                        'conditions' => 'Alunos.registro = Tccestudantes.registro',
-                        'joinType' => 'LEFT'
                 ]);
         }
 

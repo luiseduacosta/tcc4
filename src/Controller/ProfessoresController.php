@@ -229,20 +229,28 @@ class ProfessoresController extends AppController
     public function delete($id = null)
     {
 
-        $this->request->allowMethod(['post', 'delete']);
-        $professor = $this->Professores->get($id, [
-            'contain' => ['Estagiarios']
-        ]);
-        $this->Authorization->authorize($professor);
+        $this->Authorization->skipAuthorization();
+        try {
+            $professor = $this->Professores->get($id, [
+                'contain' => ['Estagiarios']
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Professor(a) não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
 
+        $this->Authorization->authorize($professor);
         if (sizeof($professor->estagiarios) > 0) {
             $this->Flash->error(__('Professor(a) tem estagiários associados'));
             return $this->redirect(['controller' => 'Professores', 'action' => 'view', $id]);
         }
-        if ($this->Professores->delete($professor)) {
-            $this->Flash->success(__('Registro professor(a) excluído.'));
-        } else {
-            $this->Flash->error(__('Registro professor(a) não foi excluído. Tente novamente.'));
+
+        if ($this->request->is(['post', 'delete'])) {  
+            if ($this->Professores->delete($professor)) {
+                $this->Flash->success(__('Registro professor(a) excluído.'));
+            } else {
+                $this->Flash->error(__('Registro professor(a) não foi excluído. Tente novamente.'));
+            }
         }
 
         return $this->redirect(['action' => 'index']);

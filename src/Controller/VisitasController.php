@@ -131,13 +131,14 @@ class VisitasController extends AppController
         }
         $this->Authorization->authorize($visita);
 
-        if ($this->Visitas->delete($visita)) {
-            $this->Flash->success(__('Visita excluída.'));
-        } else {
-            $this->Flash->error(__('Visita não excluída.'));
-            return $this->redirect(['action' => 'view', $visita->id]);
+        if ($this->request->is(['post', 'delete'])) {
+            if ($this->Visitas->delete($visita)) {
+                $this->Flash->success(__('Visita excluída.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('Visita não excluída.'));
+                return $this->redirect(['action' => 'view', $visita->id]);
+            }
         }
-
-        return $this->redirect(['action' => 'index']);
     }
 }

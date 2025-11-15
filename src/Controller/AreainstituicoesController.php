@@ -126,13 +126,14 @@ class AreainstituicoesController extends AppController
             $this->Flash->error(__('Área de instituição não encontrada.'));
             return $this->redirect(['action' => 'index']);
         }
-        $this->request->allowMethod(['post', 'delete']);
-        $this->Authorization->authorize($areainstituicao);
-        if ($this->Areainstituicoes->delete($areainstituicao)) {
-            $this->Flash->success(__('Área da instituição excluída.'));
-        } else {
-            $this->Flash->error(__('Área da instituição não excluída. Tente novamente'));
-            return $this->redirect(['action' => 'view', $areainstituicao->id]);
+
+        if ($this->request->is(['post', 'delete'])) {
+            $this->Authorization->authorize($areainstituicao);
+            if ($this->Areainstituicoes->delete($areainstituicao)) {
+                $this->Flash->success(__('Área da instituição excluída.'));
+            } else {
+                $this->Flash->error(__('Área da instituição não excluída. Tente novamente'));
+            }
         }
         return $this->redirect(['action' => 'index']);
     }

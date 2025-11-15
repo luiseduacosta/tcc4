@@ -134,7 +134,7 @@ AuthorizationServiceProviderInterface
 
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface {
         $authenticationService = new AuthenticationService([
-            'unauthenticatedRedirect' => \Cake\Routing\Router::url('/monografias/index'),
+            'unauthenticatedRedirect' => \Cake\Routing\Router::url('/muralestagios/index'),
             'queryParam' => 'redirect',
         ]);
 

@@ -238,7 +238,7 @@ class AlunosController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(["post", "delete"]);
+
         $aluno = $this->Alunos->get($id);
         $this->Authorization->authorize($aluno);
         $estagiarios = $this->Alunos->Estagiarios
@@ -251,12 +251,15 @@ class AlunosController extends AppController
             );
             return $this->redirect(["action" => "view", $id]);
         }
-        if ($this->Alunos->delete($aluno)) {
-            $this->Flash->success(__("Dados do aluno excluídos."));
-            return $this->redirect(["action" => "index"]);
-        } else {
-            $this->Flash->error(__("Dados do aluno não excluídos."));
-            return $this->redirect(["action" => "view", $id]);
+
+        if ($this->request->is(["post", "delete"])) {
+            if ($this->Alunos->delete($aluno)) {
+                $this->Flash->success(__("Dados do aluno excluídos."));
+                return $this->redirect(["action" => "index"]);
+            } else {
+                $this->Flash->error(__("Dados do aluno não excluídos."));
+                    return $this->redirect(["action" => "view", $id]);
+            }
         }
     }
 

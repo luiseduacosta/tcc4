@@ -143,7 +143,6 @@ class QuestionesController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(["post", "delete"]);
         try {
             $questione = $this->Questiones->get($id);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
@@ -151,11 +150,13 @@ class QuestionesController extends AppController
             return $this->redirect(["action" => "index"]);
         }
         $this->Authorization->skipAuthorization();
-        if ($this->Questiones->delete($questione)) {
-            $this->Flash->success(__("Pergunta excluída."));
-        } else {
-            $this->Flash->error(__("Pergunta não excluída. Tente novamente."));
-            return $this->redirect(["action" => "view", $questione->id]);
+        if ($this->request->is(["post", "delete"])) {
+            if ($this->Questiones->delete($questione)) {
+                $this->Flash->success(__("Pergunta excluída."));
+            } else {
+                $this->Flash->error(__("Pergunta não excluída. Tente novamente."));
+                return $this->redirect(["action" => "view", $questione->id]);
+            }
         }
         return $this->redirect(["action" => "index"]);
     }

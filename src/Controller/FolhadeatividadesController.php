@@ -272,7 +272,7 @@ class FolhadeatividadesController extends AppController
     public function delete($id = null)
     {
 
-        $this->request->allowMethod(['post', 'delete']);
+        $this->Authorization->skipAuthorization();
         try {
             $folhadeatividade = $this->Folhadeatividades->get($id);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
@@ -281,13 +281,14 @@ class FolhadeatividadesController extends AppController
         }
         $this->Authorization->authorize($folhadeatividade);
 
-        if ($this->Folhadeatividades->delete($folhadeatividade)) {
-            $this->Flash->success(__('Folha de atividade excluída.'));
-        } else {
-            $this->Flash->error(__('Folha de atividade não excluída.'));
+        if ($this->request->is(['post', 'delete'])) {   
+            if ($this->Folhadeatividades->delete($folhadeatividade)) {
+                $this->Flash->success(__('Folha de atividade excluída.'));
+            } else {
+                $this->Flash->error(__('Folha de atividade não excluída.'));
+            }
+            return $this->redirect(['action' => 'index']);
         }
-
-        return $this->redirect(['action' => 'index']);
     }
 
     public function selecionafolhadeatividades($id = NULL)

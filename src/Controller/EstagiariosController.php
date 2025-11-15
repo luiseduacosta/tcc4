@@ -12,8 +12,8 @@ use Cake\I18n\I18n;
  * Estagiarios Controller
  *
  * @property \App\Model\Table\EstagiariosTable $Estagiarios
- * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Cake\ORM\TableRegistry $Estagiarios
  * @property \Cake\ORM\TableRegistry $Alunos
  * @property \Cake\ORM\TableRegistry $Supervisores
@@ -39,7 +39,7 @@ class EstagiariosController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-        // $this->loadComponent('RequestHandler');
+        $this->loadComponent('RequestHandler');
     }
 
     /**
@@ -688,15 +688,15 @@ class EstagiariosController extends AppController
         }
         $this->Authorization->skipAuthorization();
 
+        try {
         $estagiario = $this->Estagiarios->get($id, [
             "contain" => ['Alunos', 'Instituicoes', 'Professores', 'Supervisores', 'Turmaestagios'],
         ]);
-
-        $this->Authorization->authorize($estagiario);
-        if ($estagiario === null) {
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__("Estagiário não encontrado."));
             return $this->redirect(["action" => "index"]);
         }
+        $this->Authorization->authorize($estagiario);
 
         if ($this->request->is(["patch", "post", "put"])) {
             $estagiario = $this->Estagiarios->patchEntity(
@@ -803,27 +803,29 @@ class EstagiariosController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(["post", "delete"]);
-        $estagiario = $this->Estagiarios->get($id);
-        if (!$estagiario) {
+        try {
+            $estagiario = $this->Estagiarios->get($id);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__("Estagiário não encontrado."));
             return $this->redirect(["action" => "index"]);
         }
         $this->Authorization->authorize($estagiario);
-        $user = $this->getRequest()->getAttribute("identity");
-        if (isset($user) && $user->categoria == "1") {
-            if ($this->Estagiarios->delete($estagiario)) {
-                $this->Flash->success(__("Estagiário excluído."));
-                return $this->redirect(["action" => "index"]);
+        if ($this->request->is(["post", "delete"])) {
+            $user = $this->getRequest()->getAttribute("identity");
+            if (isset($user) && $user->categoria == "1") {
+                if ($this->Estagiarios->delete($estagiario)) {
+                    $this->Flash->success(__("Estagiário excluído."));
+                    return $this->redirect(["action" => "index"]);
+                } else {
+                    $this->Flash->error(
+                        __("Não foi possível excluir o estagiário"),
+                    );
+                }
             } else {
                 $this->Flash->error(
-                    __("Não foi possível excluir o estagiário"),
+                    __("Apenas administradores podem excluir estagiários"),
                 );
             }
-        } else {
-            $this->Flash->error(
-                __("Apenas administradores podem excluir estagiários"),
-            );
         }
         return $this->redirect(["action" => "index"]);
     }

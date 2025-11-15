@@ -17,7 +17,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\InstituicoesTable&\Cake\ORM\Association\BelongsTo $Instituicoes
  * @property \App\Model\Table\AvaliacoesTable&\Cake\ORM\Association\HasOne $Avaliacao
  * @property \App\Model\Table\FolhadeatividadesTable&\Cake\ORM\Association\HasMany $Folhadeatividade
- * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\BelongsTo $Tccestudantes
  *
  * @method \App\Model\Entity\Estagiario get($primaryKey, $options = [])
  * @method \App\Model\Entity\Estagiario newEntity($data = null, array $options = [])

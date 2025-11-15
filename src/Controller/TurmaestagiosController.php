@@ -137,11 +137,14 @@ class TurmaestagiosController extends AppController
             $this->Flash->error(__("Não pode ser excluida porque têm estagiários associados."));
             return $this->redirect(['controller' => 'Turmaestagios', 'action' => 'view', $id]);
         }
-        if ($this->Turmaestagios->delete($turmaestagio)) {
-            $this->Flash->success(__('Turma de estágio excluída.'));
-        } else {
-            $this->Flash->error(__('Turma de estágio não foi excluída. Tente novamente.'));
+        if ($this->request->is(['post', 'delete'])) {
+            if ($this->Turmaestagios->delete($turmaestagio)) {
+                $this->Flash->success(__('Turma de estágio excluída.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('Turma de estágio não foi excluída. Tente novamente.'));
+                return $this->redirect(['action' => 'view', $turmaestagio->id]);
+            }
         }
-        return $this->redirect(['action' => 'index']);
     }
 }

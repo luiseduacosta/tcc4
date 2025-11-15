@@ -223,7 +223,6 @@ class MuralestagiosController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
         try {
             $this->Authorization->skipAuthorization();
             $muralestagio = $this->Muralestagios->get($id);
@@ -233,11 +232,13 @@ class MuralestagiosController extends AppController
         }
         $this->Authorization->authorize($muralestagio);
 
-        if ($this->Muralestagios->delete($muralestagio)) {
-            $this->Flash->success(__('Mural de estágio excluído.'));
-        } else {
-            $this->Flash->error(__('Mural de estágio não foi excluído.'));
-            return $this->redirect(['action' => 'view', $muralestagio->id]);
+        if ($this->request->is(['post', 'delete'])) {
+            if ($this->Muralestagios->delete($muralestagio)) {
+                $this->Flash->success(__('Mural de estágio excluído.'));
+            } else {
+                $this->Flash->error(__('Mural de estágio não foi excluído.'));
+                return $this->redirect(['action' => 'view', $muralestagio->id]);
+            }
         }
         return $this->redirect(['action' => 'index']);
     }

@@ -107,7 +107,7 @@ class QuestionariosController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+
         try {
             $questionario = $this->Questionarios->get($id);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
@@ -115,11 +115,13 @@ class QuestionariosController extends AppController
             return $this->redirect(['action' => 'index']);
         }
         $this->Authorization->skipAuthorization();
-        if ($this->Questionarios->delete($questionario)) {
-            $this->Flash->success(__('Questionário excluído.'));
-        } else {
-            $this->Flash->error(__('Questionário não excluído. Tente novamente.'));
-            return $this->redirect(['action' => 'view', $questionario->id]);
+        if ($this->request->is(['post', 'delete'])) {
+            if ($this->Questionarios->delete($questionario)) {
+                $this->Flash->success(__('Questionário excluído.'));
+            } else {
+                $this->Flash->error(__('Questionário não excluído. Tente novamente.'));
+                return $this->redirect(['action' => 'view', $questionario->id]);
+            }
         }
         return $this->redirect(['action' => 'index']);
     }
