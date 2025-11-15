@@ -40,7 +40,7 @@ class AgendamentotccsController extends AppController
             ->find()
             ->contain([
                 "Alunos",
-                "Professores",
+                "Docentes",
                 "Professorbanca1",
                 "Professorbanca2",
             ]);
@@ -52,7 +52,7 @@ class AgendamentotccsController extends AppController
         $agendamentotccs = $this->paginate($query, [
             "sortableFields" => [
                 "Alunos.nome",
-                "Professores.nome",
+                "Docentes.nome",
                 "Professorbanca1.nome",
                 "Professorbanca2.nome",
                 "Agendamentotccs.data",
@@ -79,7 +79,7 @@ class AgendamentotccsController extends AppController
             $agendamentotcc = $this->Agendamentotccs->get($id, [
                 "contain" => [
                     "Alunos",
-                    "Professores",
+                    "Docentes",
                     "Professorbanca1",
                     "Professorbanca2",
                 ],
@@ -150,7 +150,7 @@ class AgendamentotccsController extends AppController
             $agendamentotcc = $this->Agendamentotccs->get($id, [
                 "contain" => [
                     "Alunos",
-                    "Professores",
+                    "Docentes",
                     "Professorbanca1",
                     "Professorbanca2",
                 ],

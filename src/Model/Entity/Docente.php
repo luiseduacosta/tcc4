@@ -43,8 +43,6 @@ use Cake\ORM\Entity;
  * @property string|null $motivoegresso
  * @property string|null $observacoes
  * 
- * @property \App\Model\Entity\Estagiario[] $estagiarios
- * @property \App\Model\Entity\Muralestagio[] $muralestagios
  * @property \App\Model\Entity\User[] $users
  * @property \App\Model\Entity\Monografia[] $monografias
  * @property \App\Model\Entity\Areamonografia[] $areamonografias
@@ -96,8 +94,6 @@ class Docente extends Entity
         'dataegresso' => true,
         'motivoegresso' => true,
         'observacoes' => true,
-        'estagiarios' => true,
-        'muralestagiarios' => true,
         'users' => true, 
         'monografias' => true,
         'areamonografias' => true,

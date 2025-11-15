@@ -12,8 +12,8 @@ use Cake\Validation\Validator;
 /**
  * Agendamentotccs Model
  *
- * @property \App\Model\Table\AlunosTable&\Cake\ORM\Association\BelongsTo $Alunos
- * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
+ * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
+ * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
  * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professorbanca1
  * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professorbanca2
  *    
@@ -49,25 +49,25 @@ class AgendamentotccsTable extends Table
                 $this->setDisplayField('id');
                 $this->setPrimaryKey('id');
 
-                $this->belongsTo('Alunos', [
+                $this->belongsTo('Estudantes', [
                         'foreignKey' => 'aluno_id',
                         'joinType' => 'LEFT',
                 ]);
-                $this->belongsTo('Professores', [
-                        'className' => 'Professores',
+                $this->belongsTo('Docentes', [
+                        'className' => 'Docentes',
                         'foreignKey' => 'professor_id',
                         'joinType' => 'LEFT',
                 ]);
 
                 $this->belongsTo('Professorbanca1', [
-                        'className' => 'Professores',
+                        'className' => 'Docentes',
                         'propertyName' => 'professorbanca1',
                         'foreignKey' => 'banca1',
                         'joinType' => 'LEFT',
                 ]);
 
                 $this->belongsTo('Professorbanca2', [
-                        'className' => 'Professores',
+                        'className' => 'Docentes',
                         'propertyName' => 'professorbanca2',
                         'foreignKey' => 'banca2',
                         'joinType' => 'LEFT',
@@ -141,7 +141,7 @@ class AgendamentotccsTable extends Table
         public function buildRules(RulesChecker $rules): RulesChecker
         {
                 $rules->add($rules->existsIn(['aluno_id'], 'Alunos'));
-                $rules->add($rules->existsIn(['professor_id'], 'Professores'));
+                $rules->add($rules->existsIn(['professor_id'], 'Docentes'));
 
                 return $rules;
         }

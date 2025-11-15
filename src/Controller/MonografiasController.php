@@ -239,8 +239,6 @@ class MonografiasController extends AppController
             $this->Flash->error(__('Monografia não foi atualizada.'));
         }
 
-        // $estudantes = $this->estudantes();
-
         $docentes = $this->Monografias->Docentes->find('list', [
             'keyField' => 'id',
             'valueField' => 'nome'
@@ -267,6 +265,7 @@ class MonografiasController extends AppController
     {
 
         $this->request->allowMethod(['post', 'delete']);
+
         $monografia = $this->Monografias->get($id);
         $this->Authorization->authorize($monografia);
 
