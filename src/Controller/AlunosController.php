@@ -76,31 +76,62 @@ class AlunosController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+    /**
+     * Visualiza os dados detalhados de um aluno específico
+     * 
+     * Este método exibe as informações completas de um aluno, incluindo:
+     * - Dados pessoais do aluno (nome, registro, email, CPF, etc.)
+     * - Histórico de estágios vinculados ao aluno
+     * - Inscrições em murais de estágio
+     * 
+     * Acesso controlado por autorização - apenas usuários com permissão 
+     * podem visualizar os dados do aluno
+     *
+     * @param string|null $id ID do aluno a ser visualizado
+     * @return \Cake\Http\Response|null|void Redireciona para index se aluno não encontrado ou sem permissão
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException Quando registro não é encontrado
+     */
     public function view($id = null)
     {
+        // Pula autorização inicial para permitir acesso ao método
         $this->Authorization->skipAuthorization();
+        
+        // Busca o aluno com todos os dados relacionados
+        // Inclui estágios vinculados com instituições, supervisores, professores e turmas
+        // Também inclui inscrições em murais de estágio
         $aluno = $this->Alunos
             ->find()
             ->contain([
                 "Estagiarios" => [
-                    "Instituicoes",
-                    "Alunos",
-                    "Supervisores",
-                    "Professores",
-                    "Turmaestagios",
+                    "Instituicoes",      // Instituições onde fez estágio
+                    "Alunos",            // Dados do aluno vinculado ao estágio
+                    "Supervisores",      // Supervisores dos estágios
+                    "Professores",       // Professores orientadores
+                    "Turmaestagios",     // Turmas de estágio
                 ],
-                "Muralinscricoes" => ["Muralestagios"],
+                "Muralinscricoes" => ["Muralestagios"], // Inscrições em murais
             ])
             ->where(["Alunos.id" => $id])
             ->first();
+        
+        // Verifica se o aluno foi encontrado
         if (empty($aluno)) {
+            // Exibe mensagem de erro e redireciona para lista de alunos
             $this->Flash->error(__("Aluno não encontrado"));
             return $this->redirect(["action" => "index"]);
         }
+        
         try {
+            // Verifica autorização do usuário para visualizar este aluno
+            // Pode ser baseada em papéis (admin, professor, etc.) ou 
+            // relacionamento com o aluno (orientador, supervisor, etc.)
             $this->Authorization->authorize($aluno);
+            
+            // Envia os dados do aluno para a view
             $this->set(compact("aluno"));
+            
         } catch (\Authorization\Exception\ForbiddenException $e) {
+            // Usuário não tem permissão para visualizar este aluno
             $this->Flash->error(__("Acesso não autorizado."));
             return $this->redirect(["action" => "index"]);
         }
@@ -986,7 +1017,7 @@ class AlunosController extends AppController
             ->order(["Estagiarios.nivel" => "desc"])
             ->first();
 
-        $configuracao = $this->fetchTable("Configuracao")
+        $configuracao = $this->fetchTable("Configuracoes")
             ->find()
             ->select(["Configuracao.mural_periodo_atual"])
             ->first();
@@ -1042,7 +1073,7 @@ class AlunosController extends AppController
         $id = $this->request->getData("id");
 
         try {
-            $configuracao = $this->fetchTable("Configuracao")
+            $configuracao = $this->fetchTable("Configuracoes")
                 ->find()
                 ->select(["Configuracao.mural_periodo_atual"])
                 ->first();

@@ -14,6 +14,7 @@ use Cake\I18n\I18n;
  * @property \App\Model\Table\EstagiariosTable $Estagiarios
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Cake\ORM\TableRegistry $Configuracoes
  * @property \Cake\ORM\TableRegistry $Estagiarios
  * @property \Cake\ORM\TableRegistry $Alunos
  * @property \Cake\ORM\TableRegistry $Supervisores
@@ -435,7 +436,7 @@ class EstagiariosController extends AppController
                 ->first();
             if ($estagiario) {
                 /** Compara periodo e se é diferente então aumenta o nivel e adiciona um novo estagiario senão edita o estagiario para atualizar a instituição e o supervisor */
-                $configuraperiodoatual = $this->fetchTable("Configuracao")
+                $configuraperiodoatual = $this->fetchTable("Configuracoes")
                     ->find()
                     ->select("mural_periodo_atual")
                     ->first();
@@ -484,7 +485,7 @@ class EstagiariosController extends AppController
                 ->contain(["Alunos", "Supervisores", "Instituicoes"])
                 ->where(["Estagiarios.id" => $id]);
         }
-        $configuracao = $this->fetchTable("Configuracao")
+        $configuracao = $this->fetchTable("Configuracoes")
             ->find()
             ->where(["Configuracao.id" => 1])
             ->first();
