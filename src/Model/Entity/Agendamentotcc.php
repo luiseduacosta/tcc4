@@ -9,8 +9,8 @@ use Cake\ORM\Entity;
  * Agendamentotcc Entity
  *
  * @property int $id
- * @property int $aluno_id
- * @property int $professor_id
+ * @property int $estudante_id
+ * @property int $docente_id
  * @property int $banca1
  * @property int $banca2
  * @property \Cake\I18n\FrozenDate $data
@@ -20,7 +20,7 @@ use Cake\ORM\Entity;
  * @property string $titulo
  * @property string $avaliacao
  *
- * @property \App\Model\Entity\Estudande[] $estudante
+ * @property \App\Model\Entity\Estudante[] $estudante
  * @property \App\Model\Entity\Docente[] $docente
  * @property \App\Model\Entity\Professor[] $professorbanca1
  * @property \App\Model\Entity\Professor[] $professorbanca2
@@ -37,8 +37,8 @@ class Agendamentotcc extends Entity
      * @var array
      */
     protected $_accessible = [
-        'aluno_id' => true,
-        'professor_id' => true,
+        'estudante_id' => true,
+        'docente_id' => true,
         'banca1' => true,
         'banca2' => true,
         'data' => true,

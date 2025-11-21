@@ -50,12 +50,12 @@ class AgendamentotccsTable extends Table
                 $this->setPrimaryKey('id');
 
                 $this->belongsTo('Estudantes', [
-                        'foreignKey' => 'aluno_id',
+                        'foreignKey' => 'estudante_id',
                         'joinType' => 'LEFT',
                 ]);
                 $this->belongsTo('Docentes', [
                         'className' => 'Docentes',
-                        'foreignKey' => 'professor_id',
+                        'foreignKey' => 'docente_id',
                         'joinType' => 'LEFT',
                 ]);
 

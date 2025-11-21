@@ -39,19 +39,19 @@ class AgendamentotccsController extends AppController
         $query = $this->Agendamentotccs
             ->find()
             ->contain([
-                "Alunos",
+                "Estudantes",
                 "Docentes",
                 "Professorbanca1",
                 "Professorbanca2",
             ]);
 
         if ($this->request->getQuery("sort") === null) {
-            $query->order(["Alunos.nome" => "ASC"]);
+            $query->order(["Estudantes.nome" => "ASC"]);
         }
 
         $agendamentotccs = $this->paginate($query, [
             "sortableFields" => [
-                "Alunos.nome",
+                "Estudantes.nome",
                 "Docentes.nome",
                 "Professorbanca1.nome",
                 "Professorbanca2.nome",
@@ -78,7 +78,7 @@ class AgendamentotccsController extends AppController
         try {
             $agendamentotcc = $this->Agendamentotccs->get($id, [
                 "contain" => [
-                    "Alunos",
+                    "Estudantes",
                     "Docentes",
                     "Professorbanca1",
                     "Professorbanca2",
@@ -149,7 +149,7 @@ class AgendamentotccsController extends AppController
         try {
             $agendamentotcc = $this->Agendamentotccs->get($id, [
                 "contain" => [
-                    "Alunos",
+                    "Estudantes",
                     "Docentes",
                     "Professorbanca1",
                     "Professorbanca2",
@@ -184,18 +184,18 @@ class AgendamentotccsController extends AppController
                 __("Agendamento TCC não foi atualizado. Tente novamente."),
             );
         }
-        $alunos = $this->Agendamentotccs->Alunos->find("list", [
+        $estudantes = $this->Agendamentotccs->Estudantes->find("list", [
             "keyField" => "id",
             "valueField" => "nome",
         ]);
-        $alunos->order(["nome" => "asc"]);
-        $professores = $this->Agendamentotccs->Professores->find("list", [
+        $estudantes->order(["nome" => "asc"]);
+        $docentes = $this->Agendamentotccs->Docentes->find("list", [
             "keyField" => "id",
             "valueField" => "nome",
         ]);
-        $professores->order(["nome" => "asc"]);
+        $docentes->order(["nome" => "asc"]);
 
-        $this->set(compact("agendamentotcc", "alunos", "professores"));
+        $this->set(compact("agendamentotcc", "estudantes", "docentes"));
     }
 
     /**

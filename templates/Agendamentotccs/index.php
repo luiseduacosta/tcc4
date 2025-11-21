@@ -32,8 +32,8 @@ $user = $this->getRequest()->getAttribute('identity');
     <table class="table table-striped table-hover table-responsive">
         <thead class="table-dark">
             <tr>
-                <th><?= $this->Paginator->sort('Alunos.nome', 'Estudante') ?></th>
-                <th><?= $this->Paginator->sort('Professores.nome', 'Orientador') ?></th>
+                <th><?= $this->Paginator->sort('Estudantes.nome', 'Estudante') ?></th>
+                <th><?= $this->Paginator->sort('Docentes.nome', 'Orientador') ?></th>
                 <th><?= $this->Paginator->sort('Professores1.nome', 'Banca 1') ?></th>
                 <th><?= $this->Paginator->sort('Professores2.nome', 'Banca 2') ?></th>
                 <th><?= $this->Paginator->sort('Agendamentotccs.data', 'Data') ?></th>
@@ -50,9 +50,9 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php foreach ($agendamentotccs as $agendamentotcc): ?>
                 <?php // pr($agendamentotcc->aluno) ?>
                 <tr>
-                    <td><?= $agendamentotcc->hasValue('aluno') ? $this->Html->link($agendamentotcc->aluno['nome'], ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->aluno['id']]) : '' ?>
+                    <td><?= $agendamentotcc->hasValue('estudante') ? $this->Html->link($agendamentotcc->estudante->nome, ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->estudante->id]) : '' ?>
                     </td>
-                    <td><?= $agendamentotcc->hasValue('professor') ? $this->Html->link($agendamentotcc->professor['nome'], ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professor['id']]) : '' ?>
+                    <td><?= $agendamentotcc->hasValue('docente') ? $this->Html->link($agendamentotcc->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docente->id]) : '' ?>
                     </td>
                     <td><?= $agendamentotcc->hasValue('professorbanca1') ? $this->Html->link($agendamentotcc->professorbanca1['nome'], ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professorbanca1['id']]) : '' ?>
                     </td>

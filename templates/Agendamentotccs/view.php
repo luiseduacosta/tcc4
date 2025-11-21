@@ -41,16 +41,16 @@ $user = $this->getRequest()->getAttribute('identity');
 </nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <h3><?= h($agendamentotcc->aluno['nome']) ?></h3>
+    <h3><?= h($agendamentotcc->estudante->nome) ?></h3>
     <table class="table table-striped table-hover table-responsive">
         <tr>
-            <th><?= __('Aluno') ?></th>
-            <td><?= $agendamentotcc->has('aluno') ? $this->Html->link($agendamentotcc->aluno['nome'], ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->aluno['id']]) : '' ?>
+            <th><?= __('Estudante') ?></th>
+            <td><?= $agendamentotcc->has('estudante') ? $this->Html->link($agendamentotcc->estudante->nome, ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->estudante->id]) : '' ?>
             </td>
         </tr>
         <tr>
             <th><?= __('Docente') ?></th>
-            <td><?= $agendamentotcc->has('professor') ? $this->Html->link($agendamentotcc->professor['nome'], ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professor['id']]) : '' ?>
+            <td><?= $agendamentotcc->has('docente') ? $this->Html->link($agendamentotcc->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docente->id]) : '' ?>
             </td>
         </tr>
         <tr>
@@ -84,7 +84,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <td><?= h($agendamentotcc->horario->i18nFormat('HH:mm:ss')) ?></td>
         </tr>
         <tr>
-            <th><?= __('Avaliacao') ?></th>
+            <th><?= __('Avaliação') ?></th>
             <td><?= h($agendamentotcc->avaliacao) ?></td>
         </tr>
     </table>

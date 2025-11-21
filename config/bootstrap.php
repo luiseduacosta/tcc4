@@ -125,9 +125,11 @@ ini_set("intl.default_locale", Configure::read("App.defaultLocale"));
  */
 $isCli = PHP_SAPI === "cli";
 if ($isCli) {
-    new ErrorTrap(Configure::read("Error"))->register();
+    $errorTrap = new ErrorTrap(Configure::read("Error"));
+    $errorTrap->register();
 } else {
-    new ExceptionTrap(Configure::read("Error"))->register();
+    $exceptionTrap = new ExceptionTrap(Configure::read("Error"));
+    $exceptionTrap->register();
 }
 
 /*
@@ -224,7 +226,7 @@ Inflector::rules(
         '/^(.*)ns$/i' => '\1m',
         '/^(.*)s$/i' => '\1',
     ],
-    true,
+    true
 );
 
 Inflector::rules(
@@ -237,7 +239,7 @@ Inflector::rules(
         '/^(.*)(m|n)$/i' => '\1ns',
         '/^(.*)$/i' => '\1s',
     ],
-    true,
+    true
 );
 
 // Irregular words
@@ -255,14 +257,14 @@ Inflector::rules(
         "avaliacao" => "avaliacoes",
         "questao" => "questoes",
     ],
-    true,
+    true
 );
 
 // Uninflected words
 Inflector::rules(
     "uninflected",
     ["atlas", "lapis", "onibus", "pires", "virus", ".*x"],
-    true,
+    true
 );
 
 /*

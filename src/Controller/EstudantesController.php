@@ -47,7 +47,7 @@ class EstudantesController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
-        $estudantesdetcc = $this->Estudantes->find()->contain([
+        $estudantes = $this->Estudantes->find()->contain([
             "Tccestudantes",
             "Estagiarios" => function (Query $q) {
                 return $q->where([
@@ -58,14 +58,14 @@ class EstudantesController extends AppController
                 ]);
             },
         ]);
-        if ($estudantesdetcc->all()->isEmpty()) {
+        if ($estudantes->all()->isEmpty()) {
             $this->Flash->warning(__("Nenhum estudante de TCC encontrado."));
             return $this->redirect(["action" => "add"]);
         }
         if ($this->request->getQuery("sort") === null) {
-            $estudantesdetcc->order(["Estudantes.nome" => "ASC"]);
+            $estudantes->order(["Estudantes.nome" => "ASC"]);
         }
-        $alunos = $this->paginate($estudantesdetcc);
+        $alunos = $this->paginate($estudantes);
         $this->set("alunos", $alunos);
     }
 
@@ -77,11 +77,11 @@ class EstudantesController extends AppController
     public function index1()
     {
         $this->Authorization->skipAuthorization();
-        $estudantesdetcc = $this->Estudantes->find();
+        $estudantes = $this->Estudantes->find();
         if ($this->request->getQuery("sort") === null) {
-            $estudantesdetcc->order(["Estudantes.nome" => "ASC"]);
+            $estudantes->order(["Estudantes.nome" => "ASC"]);
         }
-        $alunos = $this->paginate($estudantesdetcc);
+        $alunos = $this->paginate($estudantes);
         $this->set(compact("alunos"));
     }
 
@@ -93,11 +93,11 @@ class EstudantesController extends AppController
     public function index2()
     {
         $this->Authorization->skipAuthorization();
-        $estudantesdetcc = $this->Estudantes->find();
+        $estudantes = $this->Estudantes->find();
         if ($this->request->getQuery("sort") === null) {
-            $estudantesdetcc->order(["Estudantes.nome" => "ASC"]);
+            $estudantes->order(["Estudantes.nome" => "ASC"]);
         }
-        $alunos = $this->paginate($estudantesdetcc);
+        $alunos = $this->paginate($estudantes);
         $this->set(compact("alunos"));
     }
 
@@ -114,14 +114,7 @@ class EstudantesController extends AppController
         $estudante = $this->Estudantes
             ->find()
             ->contain([
-                "Estagiarios" => [
-                    "Instituicoes",
-                    "Alunos",
-                    "Supervisores",
-                    "Professores",
-                    "Turmaestagios",
-                ],
-                "Muralinscricoes" => ["Muralestagios"],
+                "Tccestudantes" => ["Monografias"],
             ])
             ->where(["Estudantes.id" => $id])
             ->first();

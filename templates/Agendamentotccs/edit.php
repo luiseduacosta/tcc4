@@ -24,7 +24,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     ) ?>
                 </li>
                 <li class="nav-item">
-                    <?= $this->Html->link(__('Novo Agendamento de Tcc'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                    <?= $this->Html->link(__('Novo Agendamento de Tcc'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
                 </li>
             <?php endif; ?>
         </ul>
@@ -38,10 +38,10 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset class="border p-2">
         <legend><?= __('Editar agendamento de defesa de TCC') ?></legend>
         <?php
-        echo $this->Form->control('aluno_id', ['options' => $alunos]);
-        echo $this->Form->control('professor_id', ['options' => $professores]);
-        echo $this->Form->control('banca1', ['options' => $professores]);
-        echo $this->Form->control('banca2', ['options' => $professores]);
+        echo $this->Form->control('estudante_id', ['options' => $estudantes]);
+        echo $this->Form->control('docente_id', ['options' => $docentes]);
+        echo $this->Form->control('banca1', ['options' => $docentes]);
+        echo $this->Form->control('banca2', ['options' => $docentes]);
         echo $this->Form->control('convidado', ['label' => 'Convidado(a)']);
         echo $this->Form->control('data', ['type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
         echo $this->Form->control('horario', ['type' => 'time', 'templates' => ['dateWidget' => '{{HH}}{{mm}}{{ss}}']]);
@@ -51,7 +51,7 @@ $user = $this->getRequest()->getAttribute('identity');
         ?>
     </fieldset>
     <div class="d-flex justify-content-center">
-        <?= $this->Form->button(__('Confirmar', ['class' => 'btn btn-primary'])) ?>
+        <?= $this->Form->button(__('Confirmar'),['class' => 'btn btn-primary']) ?>
     </div>
     <?= $this->Form->end() ?>
 </div>
