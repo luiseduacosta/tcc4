@@ -110,12 +110,13 @@ class TccestudantesController extends AppController
             $registro = $estudante_id;
 
             /* Nome do aluno */
-            $resultado = $this->fetchTable('Estudantes')->find('all');
-            $resultado->where(['registro' => $estudante_id]);
-            $resultado->select(['nome']);
-            $resultado->first();
+            $resultado = $this->fetchTable('Estudantes')
+                ->find()
+                ->where(['registro' => $estudante_id])
+                ->select(['nome'])
+                ->first();
             $nome = $resultado->nome;
-            // die();
+
             $this->set(compact('registro', 'nome'));
         endif;
 
@@ -133,10 +134,11 @@ class TccestudantesController extends AppController
             $tccaluno = $this->Tccestudantes->patchEntity($tccestudante, $this->request->getData());
             if ($this->Tccestudantes->save($tccaluno)) {
                 $this->Flash->success(__('Estudante autor de TCC inserido!'));
-                return $this->redirect(['action' => 'view', $tccestudante->id]);
+                return $this->redirect(['action' => 'view', $tccaluno->id]);
             }
             $this->Flash->error(__('Estudante autor de TCC não foi inserido. Tente novamento.'));
         }
+
         $estudantes = $this->fetchTable('Estudantes')
             ->find('list')
             ->select(['Estudantes.id', 'Estudantes.nome'])
