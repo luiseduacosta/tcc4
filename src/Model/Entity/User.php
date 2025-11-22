@@ -21,7 +21,6 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $timestamp
  *
  * @property \App\Model\Entity\Aluno[] $alunos
- * @property \App\Model\Entity\Estudante[] $estudantes
  * @property \App\Model\Entity\Supervisor[] $supervisores
  * @property \App\Model\Entity\Professor[] $professores
  *
@@ -47,7 +46,6 @@ class User extends Entity {
         'professor_id' => true,
         'timestamp' => true,
         'alunos' => true,
-        'estudantes' => true,
         'supervisores' => true,
         'professores' => true,
     ];

@@ -10,11 +10,10 @@ use Cake\Validation\Validator;
 /**
  * Docentes Model
  *
- * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
- * @property \App\Model\Table\MuralestagiosTable&\Cake\ORM\Association\HasMany $Muralestagios
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
  * @property \App\Model\Table\MonografiasTable&\Cake\ORM\Association\HasMany $Monografias
  * @property \App\Model\Table\AreamonografiasTable&\Cake\ORM\Association\HasMany $Areamonografias
+ * @property \App\Model\Table\AgendamentotccsTable&\Cake\ORM\Association\HasMany $Agendamentotccs
  *
  * @method \App\Model\Entity\Docente get($primaryKey, $options = [])
  * @method \App\Model\Entity\Docente newEntity($data = null, array $options = [])
@@ -43,14 +42,6 @@ class DocentesTable extends Table
                 $this->setDisplayField('id');
                 $this->setPrimaryKey('id');
 
-                $this->hasMany('Estagiarios', [
-                        'foreignKey' => 'professor_id',
-                ]);
-
-                $this->hasMany('Muralestagios', [
-                        'foreignKey' => 'professor_id',
-                ]);
-
                 $this->hasMany('Users', [
                         'foreignKey' => 'professor_id',
                 ]);
@@ -63,6 +54,10 @@ class DocentesTable extends Table
                         'targetForeignKey' => 'areamonografia_id',
                         'foreignKey' => 'docente_id',
                         'joinTable' => 'areamonografias_docentes'
+                ]);
+
+                $this->hasMany('Agendamentotccs', [
+                        'foreignKey' => 'docente_id',
                 ]);
         }
 

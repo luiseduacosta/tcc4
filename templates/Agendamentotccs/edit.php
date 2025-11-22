@@ -20,11 +20,11 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?= $this->Form->postLink(
                         __('Excluir'),
                         ['action' => 'delete', $agendamentotcc->id],
-                        ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $agendamentotcc->id), 'class' => 'btn btn-danger']
+                        ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $agendamentotcc->id), 'class' => 'btn btn-danger me-1']
                     ) ?>
                 </li>
                 <li class="nav-item">
-                    <?= $this->Html->link(__('Novo Agendamento de Tcc'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                    <?= $this->Html->link(__('Novo Agendamento de Tcc'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
                 </li>
             <?php endif; ?>
         </ul>
@@ -38,10 +38,42 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset class="border p-2">
         <legend><?= __('Editar agendamento de defesa de TCC') ?></legend>
         <?php
-        echo $this->Form->control('aluno_id', ['options' => $alunos]);
-        echo $this->Form->control('professor_id', ['options' => $professores]);
-        echo $this->Form->control('banca1', ['options' => $professores]);
-        echo $this->Form->control('banca2', ['options' => $professores]);
+        echo $this->Form->control('estudante_id', ['options' => $estudantes,
+            'type' => 'select',
+            'div' => false,
+            'class' => 'form-control',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+            ]]);
+        echo $this->Form->control('docente_id', ['options' => $docentes,
+            'type' => 'select',
+            'div' => false,
+            'class' => 'form-control',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+            ]]);
+        echo $this->Form->control('banca1', ['options' => $docentes,
+            'type' => 'select',
+            'div' => false,
+            'class' => 'form-control',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+            ]]);
+        echo $this->Form->control('banca2', ['options' => $docentes,
+            'type' => 'select',
+            'div' => false,
+            'class' => 'form-control',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+            ]]);
         echo $this->Form->control('convidado', ['label' => 'Convidado(a)']);
         echo $this->Form->control('data', ['type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
         echo $this->Form->control('horario', ['type' => 'time', 'templates' => ['dateWidget' => '{{HH}}{{mm}}{{ss}}']]);
@@ -51,7 +83,7 @@ $user = $this->getRequest()->getAttribute('identity');
         ?>
     </fieldset>
     <div class="d-flex justify-content-center">
-        <?= $this->Form->button(__('Confirmar', ['class' => 'btn btn-primary'])) ?>
+        <?= $this->Form->button(__('Confirmar'),['class' => 'btn btn-primary']) ?>
     </div>
     <?= $this->Form->end() ?>
 </div>

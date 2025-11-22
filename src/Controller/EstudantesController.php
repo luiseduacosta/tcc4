@@ -24,16 +24,19 @@ use Cake\I18n\I18n;
  */
 class EstudantesController extends AppController
 {
-
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
-
         parent::beforeFilter($event);
         // Permitir aos usuários se registrarem e efetuar logout.
         // Você não deve adicionar a ação de "login" a lista de permissões.
         // Isto pode causar problemas com o funcionamento normal do AuthComponent.
         // $this->Auth->allow(['logout']);
-        $this->Authentication->addUnauthenticatedActions(['index', 'index1', 'index2', 'view']);
+        $this->Authentication->addUnauthenticatedActions([
+            "index",
+            "index1",
+            "index2",
+            "view",
+        ]);
     }
 
     /**
@@ -43,38 +46,27 @@ class EstudantesController extends AppController
      */
     public function index()
     {
-
         $this->Authorization->skipAuthorization();
-
-        $estudantesdetcc = $this->Estudantes->find()
-            ->contain([
-                 'Tccestudantes',
-                'Estagiarios' => function (Query $q) {
-                    return $q->where(['nivel' => '4']);
-                }
-            ])
-            ->all();
-        // pr($estudantesdetcc);
-        // die();
-        $parameters = $this->request->getQueryParams();
-        if (isset($parameters) && !empty($parameters)):
-            // pr($parameters);
-            if (isset($parameters['page'])):
-                $pagina = $parameters['page'];
-            endif;
-            if (isset($parameters['sort'])):
-                $ordem = $parameters['sort'];
-            endif;
-            if (isset($parameters['direction'])):
-                $direcao = $parameters['direction'];
-            endif;
-        else:
-            $ordem = 'nome';
-            $direcao = 'asc';
-        endif;
-
-        $alunos = $this->paginate($this->Estudantes, ['order' => ['nome' => 'asc']]);
-        $this->set('alunos', $alunos);
+        $estudantes = $this->Estudantes->find()->contain([
+            "Tccestudantes",
+            "Estagiarios" => function (Query $q) {
+                return $q->where([
+                    "or" => [
+                        ["ajuste2020" => 0, "nivel" => "4"],
+                        ["ajuste2020" => 1, "nivel" => "3"],
+                    ],
+                ]);
+            },
+        ]);
+        if ($estudantes->all()->isEmpty()) {
+            $this->Flash->warning(__("Nenhum estudante de TCC encontrado."));
+            return $this->redirect(["action" => "add"]);
+        }
+        if ($this->request->getQuery("sort") === null) {
+            $estudantes->order(["Estudantes.nome" => "ASC"]);
+        }
+        $alunos = $this->paginate($estudantes);
+        $this->set("alunos", $alunos);
     }
 
     /**
@@ -84,28 +76,13 @@ class EstudantesController extends AppController
      */
     public function index1()
     {
-
         $this->Authorization->skipAuthorization();
-
-        $parameters = $this->request->getQueryParams();
-        if (isset($parameters) && !empty($parameters)):
-            // pr($parameters);
-            if (isset($parameters['page'])):
-                $pagina = $parameters['page'];
-            endif;
-            if (isset($parameters['sort'])):
-                $ordem = $parameters['sort'];
-            endif;
-            if (isset($parameters['direction'])):
-                $direcao = $parameters['direction'];
-            endif;
-        else:
-            $ordem = 'nome';
-            $direcao = 'asc';
-        endif;
-
-        $alunos = $this->paginate($this->Estudantes, ['order' => ['registro' => 'asc']]);
-        $this->set(compact('alunos'));
+        $estudantes = $this->Estudantes->find();
+        if ($this->request->getQuery("sort") === null) {
+            $estudantes->order(["Estudantes.nome" => "ASC"]);
+        }
+        $alunos = $this->paginate($estudantes);
+        $this->set(compact("alunos"));
     }
 
     /**
@@ -115,28 +92,13 @@ class EstudantesController extends AppController
      */
     public function index2()
     {
-
         $this->Authorization->skipAuthorization();
-
-        $parameters = $this->request->getQueryParams();
-        if (isset($parameters) && !empty($parameters)):
-            // pr($parameters);
-            if (isset($parameters['page'])):
-                $pagina = $parameters['page'];
-            endif;
-            if (isset($parameters['sort'])):
-                $ordem = $parameters['sort'];
-            endif;
-            if (isset($parameters['direction'])):
-                $direcao = $parameters['direction'];
-            endif;
-        else:
-            $ordem = 'nome';
-            $direcao = 'asc';
-        endif;
-
-        $alunos = $this->paginate($this->Estudantes, ['order' => ['registro' => 'asc']]);
-        $this->set(compact('alunos'));
+        $estudantes = $this->Estudantes->find();
+        if ($this->request->getQuery("sort") === null) {
+            $estudantes->order(["Estudantes.nome" => "ASC"]);
+        }
+        $alunos = $this->paginate($estudantes);
+        $this->set(compact("alunos"));
     }
 
     /**
@@ -148,20 +110,21 @@ class EstudantesController extends AppController
      */
     public function view($id = null)
     {
-
         $this->Authorization->skipAuthorization();
-        $estudante = $this->Estudantes->find()
+        $estudante = $this->Estudantes
+            ->find()
             ->contain([
-                'Estagiarios' => ['Instituicoes', 'Alunos', 'Supervisores', 'Professores', 'Turmaestagios'],
-                'Muralinscricoes' => ['Muralestagios']
+                "Tccestudantes" => ["Monografias"],
             ])
-            ->where(['Estudantes.id' => $id])
+            ->where(["Estudantes.id" => $id])
             ->first();
         if (!$estudante) {
-            $this->Flash->error(__('Usuário estudante cadastrado não encontrado.'));
-            return $this->redirect(['action' => 'index']);
+            $this->Flash->error(
+                __("Usuário estudante cadastrado não encontrado."),
+            );
+            return $this->redirect(["action" => "index"]);
         }
-        $this->set('estudante', $estudante);
+        $this->set("estudante", $estudante);
     }
 
     /**
@@ -171,20 +134,24 @@ class EstudantesController extends AppController
      */
     public function add()
     {
-
         $estudante = $this->Estudantes->newEmptyEntity();
         $this->Authorization->authorize($estudante);
 
-        if ($this->request->is('post')) {
-            $estudante = $this->Estudantes->patchEntity($estudante, $this->request->getData());
+        if ($this->request->is("post")) {
+            $estudante = $this->Estudantes->patchEntity(
+                $estudante,
+                $this->request->getData(),
+            );
             if ($this->Estudantes->save($estudante)) {
-                $this->Flash->success(__('Estudante registrado.'));
+                $this->Flash->success(__("Estudante registrado."));
 
-                return $this->redirect(['action' => 'view', $estudante->id]);
+                return $this->redirect(["action" => "view", $estudante->id]);
             }
-            $this->Flash->error(__('Não foi possível registrar o estudante. Tente novamente.'));
+            $this->Flash->error(
+                __("Não foi possível registrar o estudante. Tente novamente."),
+            );
         }
-        $this->set(compact('estudante'));
+        $this->set(compact("estudante"));
     }
 
     /**
@@ -196,22 +163,28 @@ class EstudantesController extends AppController
      */
     public function edit($id = null)
     {
-
-        $estudante = $this->Estudantes->get($id, [
-            'contain' => [],
-        ]);
-        $this->Authorization->authorize($estudante);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $estudanteatualiza = $this->Estudantes->patchEntity($estudante, $this->request->getData());
-            // debug($estudanteatualiza);
-            if ($this->Estudantes->save($estudanteatualiza)) {
-                $this->Flash->success(__('Estudante atualizado.'));
-
-                return $this->redirect(['action' => 'view', $id]);
-            }
-            $this->Flash->error(__('Estudante não foi atualizado.'));
+        try {
+            $estudante = $this->Estudantes->get($id, [
+                "contain" => [],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__("Registro não encontrado."));
+            return $this->redirect(["action" => "index"]);
         }
-        $this->set(compact('estudante'));
+        $this->Authorization->authorize($estudante);
+        if ($this->request->is(["patch", "post", "put"])) {
+            $estudante = $this->Estudantes->patchEntity(
+                $estudante,
+                $this->request->getData(),
+            );
+            // debug($estudanteatualiza);
+            if ($this->Estudantes->save($estudante)) {
+                $this->Flash->success(__("Estudante atualizado."));
+                return $this->redirect(["action" => "view", $id]);
+            }
+            $this->Flash->error(__("Estudante não foi atualizado."));
+        }
+        $this->set(compact("estudante"));
     }
 
     /**
@@ -223,23 +196,38 @@ class EstudantesController extends AppController
      */
     public function delete($id = null)
     {
-
-        $this->request->allowMethod(['post', 'delete']);
-        $estudantetable = $this->fetchTable('Estudantes');
-        $estudante = $estudantetable->get($id, [
-            'contain' => ['Muralinscricoes', 'Estagiarios', 'Tccestudantes']
-        ]);
-        if ($estudante->muralinscricoes || $estudante->estagiarios || $estudante->tccestudantes) {
-            $this->Flash->error(__('Registro de estudante não excluído. O estudante possui registros de inscriçoes, estágio e/ou TCC.'));
-            return $this->redirect(['action' => 'view', $id]);
+        $this->request->allowMethod(["post", "delete"]);
+        try {
+            $estudante = $this->Estudantes->get($id, [
+                "contain" => [
+                    "Muralinscricoes",
+                    "Estagiarios",
+                    "Tccestudantes",
+                ],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__("Registro não encontrado."));
+            return $this->redirect(["action" => "index"]);
+        }
+        if (
+            $estudante->muralinscricoes ||
+            $estudante->estagiarios ||
+            $estudante->tccestudantes
+        ) {
+            $this->Flash->error(
+                __(
+                    "Registro de estudante não excluído. O estudante possui registros de inscriçoes, estágio e/ou TCC.",
+                ),
+            );
+            return $this->redirect(["action" => "view", $id]);
         }
         $this->Authorization->authorize($estudante);
         if ($this->Estudantes->delete($estudante)) {
-            $this->Flash->success(__('Registro de estudante excluído.'));
+            $this->Flash->success(__("Registro de estudante excluído."));
         } else {
-            $this->Flash->error(__('Registro de estudante não excluído.'));
+            $this->Flash->error(__("Registro de estudante não excluído."));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(["action" => "index"]);
     }
 }

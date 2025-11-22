@@ -92,7 +92,7 @@ class AvaliacoesController extends AppController
             $dre = $user->numero;
         }
         if (empty($cress)) {
-            $this->Flash->error(__('Selecionar estagiário.'));
+            $this->Flash->error(__('Selecionar supervisor(a).'));
             if ($dre):
                 return $this->redirect(['controller' => 'alunos', 'action' => 'view', $dre]);
             else:
@@ -117,12 +117,15 @@ class AvaliacoesController extends AppController
      */
     public function view($id = null)
     {
-
-        $avaliacao = $this->Avaliacoes->get($id, [
-            'contain' => ['Estagiarios' => ['Alunos', 'Professores', 'Instituicoes', 'Supervisores']],
-        ]);
+        try {
+            $avaliacao = $this->Avaliacoes->get($id, [
+                'contain' => ['Estagiarios' => ['Alunos', 'Professores', 'Instituicoes', 'Supervisores']],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($avaliacao);
-
         $this->set(compact('avaliacao'));
     }
 
@@ -135,7 +138,6 @@ class AvaliacoesController extends AppController
      */
     public function add($id = NULL)
     {
-
         $this->Authorization->skipAuthorization();
         $estagiario_id = $this->getRequest()->getQuery('estagiario_id');
         if ($estagiario_id == NULL) {
@@ -182,9 +184,14 @@ class AvaliacoesController extends AppController
      */
     public function edit($id = null)
     {
-        $avaliacao = $this->Avaliacoes->get($id, [
-            'contain' => ['Estagiarios' => ['Alunos', 'Professores', 'Instituicoes', 'Supervisores']],
-        ]);
+        try {
+            $avaliacao = $this->Avaliacoes->get($id, [
+                'contain' => ['Estagiarios' => ['Alunos', 'Professores', 'Instituicoes', 'Supervisores']],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($avaliacao);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $avaliacao = $this->Avaliacoes->patchEntity($avaliacao, $this->request->getData());
@@ -206,16 +213,22 @@ class AvaliacoesController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $avaliacao = $this->Avaliacoes->get($id);
-        $this->Authorization->authorize($avaliacao);
-        if ($this->Avaliacoes->delete($avaliacao)) {
-            $this->Flash->success(__('Avaliação excluída.'));
-        } else {
-            $this->Flash->error(__('Avaliação não excluída.'));
+        $this->Authorization->skipAuthorization();
+        try {
+            $avaliacao = $this->Avaliacoes->get($id);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+            return $this->redirect(['action' => 'index']);
         }
-
-        return $this->redirect(['action' => 'index']);
+        $this->Authorization->authorize($avaliacao);
+        if ($this->request->is(['post', 'delete'])) {
+            if ($this->Avaliacoes->delete($avaliacao)) {
+                $this->Flash->success(__('Avaliação excluída.'));
+            } else {
+                    $this->Flash->error(__('Avaliação não excluída.'));
+            }
+            return $this->redirect(['action' => 'index']);
+        }
     }
 
     /**
@@ -236,16 +249,16 @@ class AvaliacoesController extends AppController
                     ->contain(['Estudantes', 'Supervisores', 'instituicoes'])
                     ->where(['Estagiarios.registro' => $dre])
                     ->first();
-                
+
                 if ($estagiario) {
                     $id = $estagiario->id;
                 } else {
                     $this->Flash->error(__('Selecionar o estudante estagiário'));
-                    return $this->redirect('/estudantes/index');
-                }                
+                    return $this->redirect(['controller' => 'estudantes', 'action' => 'index']);
+                }
             } else {
                 $this->Flash->error(__('Selecionar o estudante estagiário'));
-                return $this->redirect('/estudantes/index');
+                return $this->redirect(['controller' => 'estudantes', 'action' => 'index']);
             }
         } else {
             $estagiario = $this->Avaliacoes->Estagiarios->find()

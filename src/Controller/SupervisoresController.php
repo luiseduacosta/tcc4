@@ -160,14 +160,15 @@ class SupervisoresController extends AppController
         }
         $this->Authorization->authorize($supervisor);
 
-        if ($this->Supervisores->delete($supervisor)) {
-            $this->Flash->success(__('Registro de supervisora excluído com sucesso.'));
-        } else {
-            $this->Flash->error(__('Registro de supervisora não excluído. Tente novamente.'));
-            return $this->redirect(['action' => 'view', $id]);
+        if ($this->request->is(['post', 'delete'])) {
+            if ($this->Supervisores->delete($supervisor)) {
+                $this->Flash->success(__('Registro de supervisora excluído com sucesso.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('Registro de supervisora não excluído. Tente novamente.'));
+                return $this->redirect(['action' => 'view', $id]);
+            }
         }
-
-        return $this->redirect(['action' => 'index']);
     }
 
     /**

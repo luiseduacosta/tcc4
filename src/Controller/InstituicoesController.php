@@ -36,17 +36,16 @@ class InstituicoesController extends AppController
             'contain' => ['Areainstituicoes'],
             'order' => ['Instituicoes.instituicao' => 'ASC']
         ]);
-        if (!$query->toArray()) {
-            $this->Authorization->skipAuthorization();
+        $this->Authorization->skipAuthorization();
+        if ($query) {
+            if ($this->request->getQuery('sort') === null) {
+                $query->order(['Instituicoes.instituicao' => 'ASC']);
+            }
+        } else {
             $this->Flash->error(__('Instituição: ' . $instituicao . ' não encontrada. Tente novamente.'));
             return $this->redirect(['action' => 'index']);
         }
-        if ($this->Authorization->skipAuthorization()) {
-            $instituicoes = $this->paginate($query);
-        } else {
-            $this->Flash->error(__('Acesso não autorizado.'));
-            return $this->redirect(['action' => 'index']);
-        }
+        $instituicoes = $this->paginate($query);
         $this->set(compact('instituicoes'));
     }
 
@@ -147,13 +146,14 @@ class InstituicoesController extends AppController
             $this->Flash->error(__('Instituição não encontrada.'));
             return $this->redirect(['action' => 'index']);
         }
-        $this->request->allowMethod(['post', 'delete']);
-        $this->Authorization->authorize($instituicao);
-        if ($this->Instituicoes->delete($instituicao)) {
-            $this->Flash->success(__('Instituição de estágio excluída.'));
-        } else {
+        if ($this->request->is(['post', 'delete'])) {
+            $this->Authorization->authorize($instituicao);
+            if ($this->Instituicoes->delete($instituicao)) {
+                $this->Flash->success(__('Instituição de estágio excluída.'));
+            } else {
             $this->Flash->error(__('Instituição de estágio não foi excluída.'));
             return $this->redirect(['action' => 'view', $instituicao->id]);
+            }
         }
         return $this->redirect(['action' => 'index']);
     }

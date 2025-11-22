@@ -174,7 +174,7 @@ class MonografiasTable extends Table
          */
         public function buildRules(RulesChecker $rules): RulesChecker
         {
-                $rules->add($rules->existsIn(['professor_id'], 'Professores'));
+                $rules->add($rules->existsIn(['professor_id'], 'Docentes'));
                 $rules->add($rules->existsIn(['areamonografia_id'], 'Areamonografias'));
 
                 return $rules;

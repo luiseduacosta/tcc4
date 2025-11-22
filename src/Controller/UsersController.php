@@ -340,16 +340,22 @@ class UsersController extends AppController
     public function delete($id = null)
     {
 
-        $this->request->allowMethod(['post', 'delete']);
-        $user = $this->Users->get($id);
+        try {
+            $user = $this->Users->get($id);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro de usuário não encontrado.'));
+            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
         $this->Authorization->authorize($user);
 
-        if ($this->Users->delete($user)) {
-            $this->Flash->success(__('Registro de usuário excluído.'));
-            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
-        } else {
-            $this->Flash->error(__('Registro de usuário não excluído.'));
-            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        if ($this->request->is(['post', 'delete'])) {
+            if ($this->Users->delete($user)) {
+                $this->Flash->success(__('Registro de usuário excluído.'));
+                return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+            } else {
+                $this->Flash->error(__('Registro de usuário não excluído.'));
+                return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+            }
         }
     }
 

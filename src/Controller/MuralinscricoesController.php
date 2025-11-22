@@ -31,7 +31,7 @@ class MuralinscricoesController extends AppController
     public function index($periodo = NULL)
     {
         if (empty($periodo)) {
-            $configuracaotable = $this->fetchTable('Configuracao');
+            $configuracaotable = $this->fetchTable('Configuracoes');
             $periodoconfiguracao = $configuracaotable->get(1);
             $periodo = $periodoconfiguracao->mural_periodo_atual;
         }
@@ -153,7 +153,7 @@ class MuralinscricoesController extends AppController
             }
 
             /** Pega o período atual */
-            $periodo = $this->fetchTable('Configuracao')->get(1);
+            $periodo = $this->fetchTable('Configuracoes')->get(1);
             $periodo_atual = $periodo->mural_periodo_atual;
 
             /** Dados para fazer a inscrição */
@@ -291,7 +291,6 @@ class MuralinscricoesController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
         try {
             $muralinscricao = $this->Muralinscricoes->get($id);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
@@ -299,12 +298,15 @@ class MuralinscricoesController extends AppController
             return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'index']);
         }
         $this->Authorization->authorize($muralinscricao);
-        if ($this->Muralinscricoes->delete($muralinscricao)) {
-            $this->Flash->success(__('Inscrição excluída.'));
-            return $this->redirect(['controller' => 'Alunos', 'action' => 'view', $muralinscricao->aluno_id]);
-        } else {
-            $this->Flash->error(__('Não foi possível excluir a inscrição.'));
-            return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'view', $muralinscricao->id]);
-        }
+        if ($this->request->is(['post', 'delete'])) {
+            if ($this->Muralinscricoes->delete($muralinscricao)) {
+                $this->Flash->success(__('Inscrição excluída.'));
+                return $this->redirect(['controller' => 'Alunos', 'action' => 'view', $muralinscricao->aluno_id]);
+            } else {
+                $this->Flash->error(__('Não foi possível excluir a inscrição.'));
+                return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'view', $muralinscricao->id]);
+            }
+        }       
     }
+
 }

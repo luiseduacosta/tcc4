@@ -24,8 +24,12 @@ class RespostasController extends AppController
     {
         $this->Authorization->skipAuthorization();
         $query = $this->Respostas->find()
-            ->contain(['Estagiarios' => ['Alunos']])
-            ->order(['Respostas.id' => 'DESC']);
+            ->contain(['Estagiarios' => ['Alunos']]);
+        if ($query) {
+            if ($this->request->getQuery('sort') === null) {
+                $query->order(['Respostas.id' => 'DESC']);
+            }
+        }
         $respostas = $this->paginate($query);
         $this->set(compact('respostas'));
     }
@@ -39,13 +43,17 @@ class RespostasController extends AppController
      */
     public function view($id = null)
     {
-        $resposta = $this->Respostas->get($id, [
-            'contain' => ['Estagiarios' => ['Alunos']],
-        ]);
+        try {
+            $resposta = $this->Respostas->get($id, [
+                'contain' => ['Estagiarios' => ['Alunos']],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $respostas = json_decode($resposta->response, true);
-        // pr($respostas);
         $avaliacoes = [];
-        // die();
+        $this->Authorization->skipAuthorization();
         foreach ($respostas as $key => $value) {
             // echo substr($key, 0, 9) . ' ' . $value . '<br>';
             if (substr($key, 0, 9) == 'avaliacao') {
@@ -56,8 +64,6 @@ class RespostasController extends AppController
                     foreach ($opcoes as $option_key => $option_value) {
                         if ($option_key == $value) {
                             $avaliacoes[$pergunta->text] = $option_value;
-                            // unset($avaliacoes[$option_key]);
-                            // unset($avaliacoes[$option_value]);
                         }
                     }
                 } else {
@@ -65,7 +71,6 @@ class RespostasController extends AppController
                 }
             }
         }
-        $this->Authorization->skipAuthorization();
         $this->set(compact('resposta', 'avaliacoes'));
     }
 
@@ -77,7 +82,6 @@ class RespostasController extends AppController
     public function add()
     {
         $this->Authorization->skipAuthorization();
-
         $estagiario_id = $this->request->getQuery('estagiario_id');
         if (!$estagiario_id) {
             $this->Flash->error(__('Estagiário não informado.'));
@@ -104,7 +108,6 @@ class RespostasController extends AppController
         $resposta = $this->Respostas->newEmptyEntity();
         if ($this->request->getData()) {
             // pr($this->request->getData('estagiario_id'));
-            //
             // die();
         }
         if ($this->request->is('post')) {
@@ -140,8 +143,13 @@ class RespostasController extends AppController
      */
     public function edit($id = null)
     {
+        try {
+            $resposta = $this->Respostas->get($id);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->skipAuthorization();
-        $resposta = $this->Respostas->get($id);
         $estagiario = $this->fetchTable('Estagiarios')->get($resposta->estagiarios_id, [
             'contain' => ['Alunos']
         ]);
@@ -152,7 +160,7 @@ class RespostasController extends AppController
             if (substr($key, 0, 9) == 'avaliacao') {
                 $pergunta_id = (int) substr($key, 9, 2);
                 $pergunta = $this->fetchTable('Questiones')->get(intval($pergunta_id));
-                $avaliacoes[$i]['pergunta_id'] = $pergunta_id;    
+                $avaliacoes[$i]['pergunta_id'] = $pergunta_id;
                 $avaliacoes[$i]['pergunta'] = $pergunta->text;
                 $avaliacoes[$i]['type'] = $pergunta->type;
                 $avaliacoes[$i]['value'] = $value;
@@ -165,7 +173,6 @@ class RespostasController extends AppController
             }
             $i++;
         }
-        $this->Authorization->skipAuthorization();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $resposta = $this->Respostas->patchEntity($resposta, $this->request->getData());
             $resposta->modified = FrozenTime::now();
@@ -189,14 +196,20 @@ class RespostasController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $resposta = $this->Respostas->get($id);
+        try {
+            $resposta = $this->Respostas->get($id);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->skipAuthorization();
-        if ($this->Respostas->delete($resposta)) {
-            $this->Flash->success(__('Resposta excluída.'));
-        } else {
-            $this->Flash->error(__('Resposta não excluída. Tente novamente.'));
-            return $this->redirect(['action' => 'view', $resposta->id]);
+        if ($this->request->is(["post", "delete"])) {
+            if ($this->Respostas->delete($resposta)) {
+                $this->Flash->success(__('Resposta excluída.'));
+            } else {
+                $this->Flash->error(__('Resposta não excluída. Tente novamente.'));
+                return $this->redirect(['action' => 'view', $resposta->id]);
+            }
         }
         return $this->redirect(['action' => 'index']);
     }

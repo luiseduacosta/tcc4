@@ -41,9 +41,16 @@ class ComplementosController extends AppController
      */
     public function view($id = null)
     {
-        $complemento = $this->Complementos->get($id, [
-            'contain' => ['Estagiarios'],
-        ]);
+        $this->Authorization->skipAuthorization();  
+        try {
+            $complemento = $this->Complementos->get($id, [
+                'contain' => ['Estagiarios'],
+            ]);
+        } catch (\Exception $e) {
+            $this->Flash->error(__('Complemento nao foi encontrado. Tente novamente.'));
+
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($complemento);
         $this->set(compact('complemento'));
     }
@@ -55,8 +62,8 @@ class ComplementosController extends AppController
      */
     public function add()
     {
+        $this->Authorization->skipAuthorization();
         $complemento = $this->Complementos->newEmptyEntity();
-        $this->Authorization->authorize($complemento);
         if ($this->request->is('post')) {
             $complemento = $this->Complementos->patchEntity($complemento, $this->request->getData());
             if ($this->Complementos->save($complemento)) {
@@ -78,9 +85,15 @@ class ComplementosController extends AppController
      */
     public function edit($id = null)
     {
-        $complemento = $this->Complementos->get($id, [
-            'contain' => [],
-        ]);
+        try {
+            $complemento = $this->Complementos->get($id, [
+                'contain' => [],
+            ]);
+        } catch (\Exception $e) {
+            $this->Flash->error(__('Complemento nao foi encontrado. Tente novamente.'));
+
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($complemento);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $complemento = $this->Complementos->patchEntity($complemento, $this->request->getData());
@@ -103,13 +116,21 @@ class ComplementosController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $complemento = $this->Complementos->get($id);
+        try {
+            $complemento = $this->Complementos->get($id);
+        } catch (\Exception $e) {
+            $this->Flash->error(__('Complemento nao foi encontrado. Tente novamente.'));
+
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($complemento);
-        if ($this->Complementos->delete($complemento)) {
-            $this->Flash->success(__('Complemento excluído.'));
-        } else {
-            $this->Flash->error(__('Complemento não excluído.'));
+
+        if ($this->request->is(['post', 'delete'])) {
+            if ($this->Complementos->delete($complemento)) {
+                $this->Flash->success(__('Complemento excluído.'));
+            } else {
+                $this->Flash->error(__('Complemento não excluído.'));
+            }
         }
 
         return $this->redirect(['action' => 'index']);

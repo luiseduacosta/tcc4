@@ -12,10 +12,10 @@ use Cake\Validation\Validator;
 /**
  * Agendamentotccs Model
  *
- * @property \App\Model\Table\AlunosTable&\Cake\ORM\Association\BelongsTo $Alunos
- * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
- * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professorbanca1
- * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professorbanca2
+ * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
+ * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
+ * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentebanca1
+ * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentebanca2
  *    
  * @method \App\Model\Entity\Agendamentotcc newEmptyEntity()
  * @method \App\Model\Entity\Agendamentotcc newEntity(array $data, array $options = [])
@@ -49,26 +49,26 @@ class AgendamentotccsTable extends Table
                 $this->setDisplayField('id');
                 $this->setPrimaryKey('id');
 
-                $this->belongsTo('Alunos', [
-                        'foreignKey' => 'aluno_id',
+                $this->belongsTo('Estudantes', [
+                        'foreignKey' => 'estudante_id',
                         'joinType' => 'LEFT',
                 ]);
-                $this->belongsTo('Professores', [
-                        'className' => 'Professores',
-                        'foreignKey' => 'professor_id',
+                $this->belongsTo('Docentes', [
+                        'className' => 'Docentes',
+                        'foreignKey' => 'docente_id',
                         'joinType' => 'LEFT',
                 ]);
 
-                $this->belongsTo('Professorbanca1', [
-                        'className' => 'Professores',
-                        'propertyName' => 'professorbanca1',
+                $this->belongsTo('Docentebanca1', [
+                        'className' => 'Docentes',
+                        'propertyName' => 'docentebanca1',
                         'foreignKey' => 'banca1',
                         'joinType' => 'LEFT',
                 ]);
 
-                $this->belongsTo('Professorbanca2', [
-                        'className' => 'Professores',
-                        'propertyName' => 'professorbanca2',
+                $this->belongsTo('Docentebanca2', [
+                        'className' => 'Docentes',
+                        'propertyName' => 'docentebanca2',
                         'foreignKey' => 'banca2',
                         'joinType' => 'LEFT',
                 ]);
@@ -140,8 +140,10 @@ class AgendamentotccsTable extends Table
          */
         public function buildRules(RulesChecker $rules): RulesChecker
         {
-                $rules->add($rules->existsIn(['aluno_id'], 'Alunos'));
-                $rules->add($rules->existsIn(['professor_id'], 'Professores'));
+                $rules->add($rules->existsIn(['estudante_id'], 'Estudantes'));
+                $rules->add($rules->existsIn(['docente_id'], 'Docentes'));
+                $rules->add($rules->existsIn(['docentebanca1_id'], 'Docentes'));
+                $rules->add($rules->existsIn(['docentebanca2_id'], 'Docentes'));
 
                 return $rules;
         }

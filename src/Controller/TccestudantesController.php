@@ -41,18 +41,23 @@ class TccestudantesController extends AppController
         if ($this->request->is('post')) {
             if ($this->request->getData()) {
                 $dados = $this->request->getData();
-                $busca = $dados['nome'];
-            
                 $query = $this->Tccestudantes->find()
                     ->contain(['Monografias'])
-                    ->where(['nome LIKE' => "%" . $busca . "%"])
-                    ->order(['nome']);
-                }
+                    ->where(['nome LIKE' => "%" . $dados['nome'] . "%"]);
+            }
         } else {
 
             $query = $this->Tccestudantes->find()
-                ->contain(['Monografias'])
-                ->order(['nome']);    
+                ->contain(['Monografias']);
+        }
+
+        if ($query) {
+            if ($this->request->getQuery('sort') === null) {
+                $query->order('nome');
+            }
+        } else {
+            $this->Flash->error(__('Nenhum registro encontrado.'));
+            return $this->redirect(['action' => 'add']);
         }
 
         $tccestudantes = $this->paginate($query, [
@@ -65,6 +70,7 @@ class TccestudantesController extends AppController
         ]);
 
         $this->set(compact('tccestudantes'));
+
     }
 
     /**
@@ -81,10 +87,9 @@ class TccestudantesController extends AppController
                 'contain' => ['Monografias', 'Estudantes'],
             ]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
-            $this->Flash->error(__('Estudante autor de TCC não foi encontrado.'));
+            $this->Flash->error(__('Registro não encontrado.'));
             return $this->redirect(['action' => 'index']);
         }
-
         $this->Authorization->skipAuthorization();
         $this->set('tccestudante', $tccestudante);
     }
@@ -98,22 +103,23 @@ class TccestudantesController extends AppController
     public function add($estudante_id = null, $monografia_id = null)
     {
 
-        if ($estudante_id):
-            if (strlen($estudante_id) < 9):
+        if ($estudante_id) {
+            if (strlen($estudante_id) < 9) {
                 $this->Flash->error(__('Registro inválido.'));
                 return $this->redirect(['action' => 'index']);
-            endif;
+            }
             $registro = $estudante_id;
 
             /* Nome do aluno */
-            $resultado = $this->fetchTable('Estudantes')->find('all');
-            $resultado->where(['registro' => $estudante_id]);
-            $resultado->select(['nome']);
-            $resultado->first();
+            $resultado = $this->fetchTable('Estudantes')
+                ->find()
+                ->where(['registro' => $estudante_id])
+                ->select(['nome'])
+                ->first();
             $nome = $resultado->nome;
-            // die();
+
             $this->set(compact('registro', 'nome'));
-        endif;
+        }
 
         /* Titulo e id das monografias */
         $monografias = $this->Tccestudantes->Monografias->find(
@@ -129,13 +135,22 @@ class TccestudantesController extends AppController
             $tccaluno = $this->Tccestudantes->patchEntity($tccestudante, $this->request->getData());
             if ($this->Tccestudantes->save($tccaluno)) {
                 $this->Flash->success(__('Estudante autor de TCC inserido!'));
-
-                return $this->redirect(['action' => 'view', $tccestudante->id]);
+                return $this->redirect(['action' => 'view', $tccaluno->id]);
             }
             $this->Flash->error(__('Estudante autor de TCC não foi inserido. Tente novamento.'));
         }
-        $estudantes = $this->fetchTable('Estudantes')->find('list', ['keyField' => 'id', 'valueField' => 'nome']);
-        $estudantes->order(['nome' => 'asc']);
+
+        $estudantes = $this->fetchTable('Estudantes')
+            ->find('list')
+            ->select(['Estudantes.id', 'Estudantes.nome'])
+            ->order(['Estudantes.nome' => 'asc'])
+            ->join([
+                'table' => 'tccestudantes',
+                'alias' => 'Tccestudantes',
+                'type' => 'LEFT',
+                'conditions' => 'Estudantes.registro = Tccestudantes.registro',
+            ]);
+        $estudantes->order(['Estudantes.nome' => 'asc']);
         $this->set(compact('monografia_id', 'estudante_id', 'monografias', 'tccestudante', 'estudantes'));
     }
 
@@ -150,16 +165,15 @@ class TccestudantesController extends AppController
     {
 
         try {
-            $tccestudante = $this->fetchTable('Tccestudantes')->get($id, [
+            $tccestudante = $this->Tccestudantes->get($id, [
                 'contain' => ['Monografias'],
             ]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
-            $this->Flash->error(__('Estudante autor de TCC não foi encontrado.'));
+            $this->Flash->error(__('Registro não encontrado.'));
             return $this->redirect(['action' => 'index']);
         }
 
         $this->Authorization->authorize($tccestudante);
-
         $monografias = $this->fetchTable('Monografias')
             ->find('list', ['keyField' => 'id', 'valueField' => 'titulo'])
             ->order(['titulo' => 'asc']);
@@ -186,19 +200,13 @@ class TccestudantesController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        try {
-            $tccestudante = $this->Tccestudantes->get($id);
-        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
-            $this->Flash->error(__('Estudante autor de TCC não foi encontrado.'));
-            return $this->redirect(['action' => 'index']);
-        }
+        $tccestudante = $this->Tccestudantes->get($id);
         $this->Authorization->authorize($tccestudante);
         if ($this->Tccestudantes->delete($tccestudante)) {
             $this->Flash->success(__('Estudante autor de TCC excluído.'));
         } else {
             $this->Flash->error(__('Estudante autor de TCC não foi excluído.'));
         }
-
         return $this->redirect(['action' => 'index']);
     }
 }

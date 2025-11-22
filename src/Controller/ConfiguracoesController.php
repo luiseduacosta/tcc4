@@ -4,32 +4,22 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\I18n\FrozenTime;
-use Cake\I18n\I18n;
-
 /**
  * Configuracao Controller
  *
- * @property \App\Model\Table\ConfiguracaoTable $Configuracao
- * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
- * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Configuracao
- * 
+ * @property \App\Model\Table\ConfiguracoesTable $Configuracoes
  * @method \App\Model\Entity\Configuracao[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class ConfiguracaoController extends AppController
-{
+class ConfiguracoesController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index()
-    {
+    public function index() {
+        $configuracao = $this->paginate($this->Configuracoes);
 
-        $configuracao = $this->paginate($this->Configuracao);
-        $this->Authorization->authorize($this->Configuracao);
         $this->set(compact('configuracao'));
     }
 
@@ -40,10 +30,10 @@ class ConfiguracaoController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
+
         try {
-            $configuracao = $this->Configuracao->get($id, [
+            $configuracao = $this->Configuracoes->get($id, [
                 'contain' => [],
             ]);
         } catch (\Exception $e) {
@@ -60,18 +50,16 @@ class ConfiguracaoController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
-        $configuracao = $this->Configuracao->newEmptyEntity();
-        $this->Authorization->authorize($configuracao);
+    public function add() {
+        $configuracao = $this->Configuracoes->newEmptyEntity();
         if ($this->request->is('post')) {
-            $configuracao = $this->Configuracao->patchEntity($configuracao, $this->request->getData());
-            if ($this->Configuracao->save($configuracao)) {
-                $this->Flash->success(__('Configuração inserida.'));
+            $configuracao = $this->Configuracoes->patchEntity($configuracao, $this->request->getData());
+            if ($this->Configuracoes->save($configuracao)) {
+                $this->Flash->success(__('Dados de configuração inseridos.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $configuracao->id]);
             }
-            $this->Flash->error(__('Configuração não inserida.'));
+            $this->Flash->error(__('Dados de configuração não foram inseridos. Tente novamente.'));
         }
         $this->set(compact('configuracao'));
     }
@@ -83,10 +71,10 @@ class ConfiguracaoController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
+
         try {
-            $configuracao = $this->Configuracao->get($id, [
+            $configuracao = $this->Configuracoes->get($id, [
                 'contain' => [],
             ]);
         } catch (\Exception $e) {
@@ -96,8 +84,8 @@ class ConfiguracaoController extends AppController
         }
         $this->Authorization->authorize($configuracao);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $configuracao = $this->Configuracao->patchEntity($configuracao, $this->request->getData());
-            if ($this->Configuracao->save($configuracao)) {
+            $configuracao = $this->Configuracoes->patchEntity($configuracao, $this->request->getData());
+            if ($this->Configuracoes->save($configuracao)) {
                 $this->Flash->success(__('Configuração atualizada.'));
 
                 return $this->redirect(['action' => 'view', $id]);
@@ -114,21 +102,22 @@ class ConfiguracaoController extends AppController
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
+
         try {
-            $configuracao = $this->Configuracao->get($id);
+            $configuracao = $this->Configuracoes->get($id);
         } catch (\Exception $e) {
             $this->Flash->error(__('Configuracao nao foi encontrado. Tente novamente.'));
 
             return $this->redirect(['action' => 'index']);
         }
         $this->Authorization->authorize($configuracao);
+        
         if ($this->request->is(['post', 'delete'])) {
-            if ($this->Configuracao->delete($configuracao)) {
-                $this->Flash->success(__('Configuração excluída.'));
+            if ($this->Configuracoes->delete($configuracao)) {
+                $this->Flash->success(__('Dados de configuração excluídos.'));
             } else {
-                $this->Flash->error(__('Configuração não excluída.'));
+                $this->Flash->error(__('Não foi possível excluír os dados de configuração. Tente novamente.'));
             }
         }
 
