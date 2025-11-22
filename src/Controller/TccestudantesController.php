@@ -102,11 +102,11 @@ class TccestudantesController extends AppController
     public function add($estudante_id = null, $monografia_id = null)
     {
 
-        if ($estudante_id):
-            if (strlen($estudante_id) < 9):
+        if ($estudante_id) {
+            if (strlen($estudante_id) < 9) {
                 $this->Flash->error(__('Registro inválido.'));
                 return $this->redirect(['action' => 'index']);
-            endif;
+            }
             $registro = $estudante_id;
 
             /* Nome do aluno */
@@ -118,7 +118,7 @@ class TccestudantesController extends AppController
             $nome = $resultado->nome;
 
             $this->set(compact('registro', 'nome'));
-        endif;
+        }
 
         /* Titulo e id das monografias */
         $monografias = $this->Tccestudantes->Monografias->find(
