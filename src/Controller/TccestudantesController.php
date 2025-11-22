@@ -39,7 +39,6 @@ class TccestudantesController extends AppController
         $this->Authorization->skipAuthorization();
 
         if ($this->request->is('post')) {
-            // echo "Post" . "<br>";
             if ($this->request->getData()) {
                 $dados = $this->request->getData();
                 $busca = $dados['nome'];
@@ -77,17 +76,23 @@ class TccestudantesController extends AppController
      */
     public function view($id = null)
     {
+        try {
+            $tccestudante = $this->Tccestudantes->get($id, [
+                'contain' => ['Monografias', 'Estudantes'],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Estudante autor de TCC não foi encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
 
         $this->Authorization->skipAuthorization();
-        $tccestudante = $this->Tccestudantes->get($id, [
-            'contain' => ['Monografias', 'Estudantes'],
-        ]);
         $this->set('tccestudante', $tccestudante);
     }
 
     /**
      * Add method
-     *
+     * @param string|null $estudante_id Estudante id.
+     * @param string|null $monografia_id Monografia id.
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add($estudante_id = null, $monografia_id = null)
@@ -111,7 +116,7 @@ class TccestudantesController extends AppController
         endif;
 
         /* Titulo e id das monografias */
-        $monografias = $this->fetchTable('Tccestudantes')->Monografias->find(
+        $monografias = $this->Tccestudantes->Monografias->find(
             'list',
             ['keyField' => 'id', 'valueField' => 'titulo']
         );
@@ -122,8 +127,6 @@ class TccestudantesController extends AppController
 
         if ($this->request->is('post')) {
             $tccaluno = $this->Tccestudantes->patchEntity($tccestudante, $this->request->getData());
-            // pr($tccestudante);
-            // die();
             if ($this->Tccestudantes->save($tccaluno)) {
                 $this->Flash->success(__('Estudante autor de TCC inserido!'));
 
@@ -146,9 +149,15 @@ class TccestudantesController extends AppController
     public function edit($id = null)
     {
 
-        $tccestudante = $this->fetchTable('Tccestudantes')->get($id, [
-            'contain' => ['Monografias'],
-        ]);
+        try {
+            $tccestudante = $this->fetchTable('Tccestudantes')->get($id, [
+                'contain' => ['Monografias'],
+            ]);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Estudante autor de TCC não foi encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $this->Authorization->authorize($tccestudante);
 
         $monografias = $this->fetchTable('Monografias')
@@ -160,7 +169,6 @@ class TccestudantesController extends AppController
             $tccestudante = $this->Tccestudantes->patchEntity($tccestudante, $this->request->getData());
             if ($this->Tccestudantes->save($tccestudante)) {
                 $this->Flash->success(__('Estudante de TCC atualizado.'));
-
                 return $this->redirect(['action' => 'view', $tccestudante->id]);
             }
             $this->Flash->error(__('Estudante de TCC não foi atualizado.'));
@@ -177,13 +185,15 @@ class TccestudantesController extends AppController
      */
     public function delete($id = null)
     {
-        // pr($id);
-        // die();
-        $tccestudantetable = $this->fetchTable('Tccestudantes');
         $this->request->allowMethod(['post', 'delete']);
-        $tccestudante = $tccestudantetable->get($id);
+        try {
+            $tccestudante = $this->Tccestudantes->get($id);
+        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+            $this->Flash->error(__('Estudante autor de TCC não foi encontrado.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($tccestudante);
-        if ($tccestudantetable->delete($tccestudante)) {
+        if ($this->Tccestudantes->delete($tccestudante)) {
             $this->Flash->success(__('Estudante autor de TCC excluído.'));
         } else {
             $this->Flash->error(__('Estudante autor de TCC não foi excluído.'));
