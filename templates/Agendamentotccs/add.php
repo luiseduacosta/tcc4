@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Agendamentotcc $agendamentotcc
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($alunos);
+// pr($estudantes);
 ?>
 
 <script>
@@ -43,10 +43,26 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset class="border p-2">
         <legend><?= __('Agendamento de oficina de defesa de TCC') ?></legend>
         <?php
-        echo $this->Form->control('aluno_id', ['label' => 'Estudante', 'options' => $alunos, 'empty' => 'Seleciona']);
-        echo $this->Form->control('professor_id', ['label' => 'Professor(a)', 'options' => $professores, 'empty' => 'Seleciona']);
-        echo $this->Form->control('banca1', ['label' => 'Banca', 'options' => $professores, 'empty' => 'Seleciona']);
-        echo $this->Form->control('banca2', ['label' => 'Banca', 'options' => $professores, 'empty' => 'Seleciona']);
+        echo $this->Form->control('estudante_id', ['label' => 'Estudante', 'options' => $estudantes, 'empty' => 'Seleciona', 'templates' => [
+            'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+            'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+            'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+        ]]);
+        echo $this->Form->control('docente_id', ['label' => 'Professor(a)', 'options' => $docentes, 'empty' => 'Seleciona', 'templates' => [
+            'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+            'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+            'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+        ]]);
+        echo $this->Form->control('banca1', ['label' => 'Banca', 'options' => $docentes, 'empty' => 'Seleciona', 'templates' => [
+            'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+            'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+            'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+        ]]);
+        echo $this->Form->control('banca2', ['label' => 'Banca', 'options' => $docentes, 'empty' => 'Seleciona', 'templates' => [
+            'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+            'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+            'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+        ]]);
         echo $this->Form->control('convidado', ['label' => 'Convidado(a)']);
         echo $this->Form->control('data', ['type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
         echo $this->Form->control('horario', ['type' => 'time', 'templates' => ['dateWidget' => '{{HH}}{{mm}}{{ss}}']]);
@@ -65,7 +81,7 @@ $user = $this->getRequest()->getAttribute('identity');
         ?>
     </fieldset>
     <div class="d-flex justify-content-center">
-        <?= $this->Form->button(__('Confirmar', ['class' => 'btn btn-primary'])) ?>
+        <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
     </div>
     <?= $this->Form->end() ?>
 </div>

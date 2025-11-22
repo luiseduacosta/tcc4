@@ -20,7 +20,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <?= $this->Form->postLink(
                         __('Excluir'),
                         ['action' => 'delete', $agendamentotcc->id],
-                        ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $agendamentotcc->id), 'class' => 'btn btn-danger']
+                        ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $agendamentotcc->id), 'class' => 'btn btn-danger me-1']
                     ) ?>
                 </li>
                 <li class="nav-item">
@@ -38,10 +38,42 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset class="border p-2">
         <legend><?= __('Editar agendamento de defesa de TCC') ?></legend>
         <?php
-        echo $this->Form->control('estudante_id', ['options' => $estudantes]);
-        echo $this->Form->control('docente_id', ['options' => $docentes]);
-        echo $this->Form->control('banca1', ['options' => $docentes]);
-        echo $this->Form->control('banca2', ['options' => $docentes]);
+        echo $this->Form->control('estudante_id', ['options' => $estudantes,
+            'type' => 'select',
+            'div' => false,
+            'class' => 'form-control',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+            ]]);
+        echo $this->Form->control('docente_id', ['options' => $docentes,
+            'type' => 'select',
+            'div' => false,
+            'class' => 'form-control',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+            ]]);
+        echo $this->Form->control('banca1', ['options' => $docentes,
+            'type' => 'select',
+            'div' => false,
+            'class' => 'form-control',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+            ]]);
+        echo $this->Form->control('banca2', ['options' => $docentes,
+            'type' => 'select',
+            'div' => false,
+            'class' => 'form-control',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+            ]]);
         echo $this->Form->control('convidado', ['label' => 'Convidado(a)']);
         echo $this->Form->control('data', ['type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
         echo $this->Form->control('horario', ['type' => 'time', 'templates' => ['dateWidget' => '{{HH}}{{mm}}{{ss}}']]);

@@ -46,6 +46,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\User[] $users
  * @property \App\Model\Entity\Monografia[] $monografias
  * @property \App\Model\Entity\Areamonografia[] $areamonografias
+ * @property \App\Model\Entity\Agendamentotcc[] $agendamentotccs
  */
 class Docente extends Entity
 {
@@ -97,5 +98,6 @@ class Docente extends Entity
         'users' => true, 
         'monografias' => true,
         'areamonografias' => true,
+        'agendamentotccs' => true,
     ];
 }

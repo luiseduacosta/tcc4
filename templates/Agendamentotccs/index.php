@@ -18,7 +18,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <?php if (isset($user) && $user->categoria == '1'): ?>
                 <li class='nav-item'>
-                    <?= $this->Html->link(__('Agendar Oficina TCC'), ['action' => 'add'], ['class' => 'btn btn-primary float-start']) ?>
+                    <?= $this->Html->link(__('Agendar Oficina TCC'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
                 </li>
             <?php endif; ?>
         </ul>
@@ -34,8 +34,8 @@ $user = $this->getRequest()->getAttribute('identity');
             <tr>
                 <th><?= $this->Paginator->sort('Estudantes.nome', 'Estudante') ?></th>
                 <th><?= $this->Paginator->sort('Docentes.nome', 'Orientador') ?></th>
-                <th><?= $this->Paginator->sort('Professores1.nome', 'Banca 1') ?></th>
-                <th><?= $this->Paginator->sort('Professores2.nome', 'Banca 2') ?></th>
+                <th><?= $this->Paginator->sort('Docentebanca1.nome', 'Banca 1') ?></th>
+                <th><?= $this->Paginator->sort('Docentebanca2.nome', 'Banca 2') ?></th>
                 <th><?= $this->Paginator->sort('Agendamentotccs.data', 'Data') ?></th>
                 <th><?= $this->Paginator->sort('Agendamentotccs.horario', 'Horário') ?></th>
                 <th><?= $this->Paginator->sort('Agendamentotccs.sala', 'Sala') ?></th>
@@ -48,15 +48,14 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($agendamentotccs as $agendamentotcc): ?>
-                <?php // pr($agendamentotcc->aluno) ?>
                 <tr>
                     <td><?= $agendamentotcc->hasValue('estudante') ? $this->Html->link($agendamentotcc->estudante->nome, ['controller' => 'Estudantes', 'action' => 'view', $agendamentotcc->estudante->id]) : '' ?>
                     </td>
                     <td><?= $agendamentotcc->hasValue('docente') ? $this->Html->link($agendamentotcc->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docente->id]) : '' ?>
                     </td>
-                    <td><?= $agendamentotcc->hasValue('professorbanca1') ? $this->Html->link($agendamentotcc->professorbanca1['nome'], ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professorbanca1['id']]) : '' ?>
+                    <td><?= $agendamentotcc->hasValue('docentebanca1') ? $this->Html->link($agendamentotcc->docentebanca1->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentebanca1->id]) : '' ?>
                     </td>
-                    <td><?= $agendamentotcc->hasValue('professorbanca2') ? $this->Html->link($agendamentotcc->professorbanca2['nome'], ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professorbanca2['id']]) : '' ?>
+                    <td><?= $agendamentotcc->hasValue('docentebanca2') ? $this->Html->link($agendamentotcc->docentebanca2->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentebanca2->id]) : '' ?>
                     </td>
                     <td><?= h($agendamentotcc->data) ?></td>
                     <td><?= h($agendamentotcc->horario) ?></td>
