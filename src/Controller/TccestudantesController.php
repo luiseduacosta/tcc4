@@ -102,22 +102,23 @@ class TccestudantesController extends AppController
     public function add($estudante_id = null, $monografia_id = null)
     {
 
-        if ($estudante_id):
-            if (strlen($estudante_id) < 9):
+        if ($estudante_id) {
+            if (strlen($estudante_id) < 9) {
                 $this->Flash->error(__('Registro inválido.'));
                 return $this->redirect(['action' => 'index']);
-            endif;
+            }
             $registro = $estudante_id;
 
             /* Nome do aluno */
-            $resultado = $this->fetchTable('Estudantes')->find('all');
-            $resultado->where(['registro' => $estudante_id]);
-            $resultado->select(['nome']);
-            $resultado->first();
+            $resultado = $this->fetchTable('Estudantes')
+                ->find()
+                ->where(['registro' => $estudante_id])
+                ->select(['nome'])
+                ->first();
             $nome = $resultado->nome;
-            // die();
+
             $this->set(compact('registro', 'nome'));
-        endif;
+        }
 
         /* Titulo e id das monografias */
         $monografias = $this->Tccestudantes->Monografias->find(
@@ -133,10 +134,11 @@ class TccestudantesController extends AppController
             $tccaluno = $this->Tccestudantes->patchEntity($tccestudante, $this->request->getData());
             if ($this->Tccestudantes->save($tccaluno)) {
                 $this->Flash->success(__('Estudante autor de TCC inserido!'));
-                return $this->redirect(['action' => 'view', $tccestudante->id]);
+                return $this->redirect(['action' => 'view', $tccaluno->id]);
             }
             $this->Flash->error(__('Estudante autor de TCC não foi inserido. Tente novamento.'));
         }
+
         $estudantes = $this->fetchTable('Estudantes')
             ->find('list')
             ->select(['Estudantes.id', 'Estudantes.nome'])
