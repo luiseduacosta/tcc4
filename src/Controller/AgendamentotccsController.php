@@ -16,6 +16,8 @@ use Cake\I18n\I18n;
  * @property \Cake\ORM\TableRegistry $Agendamentotccs
  * @property \Cake\ORM\TableRegistry $Estudantes
  * @property \Cake\ORM\TableRegistry $Docentes
+ * @property \Cake\ORM\TableRegistry $Docentebanca1
+ * @property \Cake\ORM\TableRegistry $Docentebanca2
  *
  * @method \App\Model\Entity\Agendamentotcc[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -103,10 +105,12 @@ class AgendamentotccsController extends AppController
         $this->Authorization->authorize($agendamentotcc);
         if ($this->request->is("post")) {
             $dados = $this->request->getData();
+            /* Ajusta o horário */
             $horarioarray = explode(":", $dados["horario"]);
             if (empty($horarioarray[2])):
                 $dados["horario"] .= ":00";
             endif;
+            
             $agendamentotcc = $this->Agendamentotccs->patchEntity(
                 $agendamentotcc,
                 $dados,
@@ -187,13 +191,13 @@ class AgendamentotccsController extends AppController
         $estudantes = $this->Agendamentotccs->Estudantes->find("list", [
             "keyField" => "id",
             "valueField" => "nome",
+            "order" => ["nome" => "asc"],
         ]);
-        $estudantes->order(["nome" => "asc"]);
         $docentes = $this->Agendamentotccs->Docentes->find("list", [
             "keyField" => "id",
             "valueField" => "nome",
+            "order" => ["nome" => "asc"],
         ]);
-        $docentes->order(["nome" => "asc"]);
 
         $this->set(compact("agendamentotcc", "estudantes", "docentes"));
     }

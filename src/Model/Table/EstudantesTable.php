@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
  * 
  * @property \App\Model\Table\MuralinscricoesTable&\Cake\ORM\Association\HasMany $Muralinscricoes
  * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
+ * @property \App\Model\Table\AgendamentotccsTable&\Cake\ORM\Association\HasMany $Agendamentotccs
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasOne $Tccestudantes
  *
  * @method \App\Model\Entity\Estudante get($primaryKey, $options = [])
@@ -39,6 +40,7 @@ class EstudantesTable extends Table
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 
+        /** A tabela Muralinscricoes tem um campo aluno_id que se conexta com o id de Estudantes */
         $this->hasMany('Muralinscricoes', [
             'className' => 'Muralinscricoes',
             'targetForeignKey' => 'id',
@@ -51,6 +53,14 @@ class EstudantesTable extends Table
             'className' => 'Estagiarios',
             'targetForeignKey' => 'id',
             'foreignKey' => 'aluno_id',
+            'joinType' => 'INNER'
+        ]);
+
+        /** A tabela Agendamentotcc tem um campo estudante_id que se conexta com o id de Estudantes */
+        $this->hasMany('Agendamentotccs', [
+            'className' => 'Agendamentotccs',
+            'targetForeignKey' => 'id',
+            'foreignKey' => 'estudante_id',
             'joinType' => 'INNER'
         ]);
 
