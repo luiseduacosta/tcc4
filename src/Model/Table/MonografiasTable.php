@@ -55,21 +55,21 @@ class MonografiasTable extends Table
                 ]);
 
                 // Monografia tem um campo banca1
-                $this->belongsTo('Professorbanca1', [
+                $this->belongsTo('Docentebanca1', [
                         'className' => 'Docentes',
-                        'propertyName' => 'professorbanca1',
+                        'propertyName' => 'docentebanca1',
                         'foreignKey' => 'banca1',
                 ]);
 
-                $this->belongsTo('Professorbanca2', [
+                $this->belongsTo('Docentebanca2', [
                         'className' => 'Docentes',
-                        'propertyName' => 'professorbanca2',
+                        'propertyName' => 'docentebanca2',
                         'foreignKey' => 'banca2',
                 ]);
 
-                $this->belongsTo('Professorbanca3', [
+                $this->belongsTo('Docentebanca3', [
                         'className' => 'Docentes',
-                        'propertyName' => 'professorbanca3',
+                        'propertyName' => 'docentebanca3',
                         'foreignKey' => 'banca3',
                 ]);
 
@@ -179,5 +179,4 @@ class MonografiasTable extends Table
 
                 return $rules;
         }
-
 }

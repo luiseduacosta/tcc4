@@ -86,12 +86,10 @@ class MonografiasController extends AppController
     public function view($id = null)
     {
 
-        $this->Authorization->skipAuthorization();
-        $monografiatable = $this->fetchTable('Monografias');
-        $monografia = $monografiatable->get($id, [
-            'contain' => ['Docentes', 'Professorbanca1', 'Professorbanca2', 'Professorbanca3', 'Areamonografias', 'Tccestudantes'],
+        $monografia = $this->Monografias->get($id, [
+            'contain' => ['Docentes', 'Docentebanca1', 'Docentebanca2', 'Docentebanca3', 'Areamonografias', 'Tccestudantes'],
         ]);
-
+        $this->Authorization->authorize($monografia);
         $baseUrl = Router::url('/', true);
         $this->set(compact('monografia', 'baseUrl'));
     }
@@ -104,22 +102,18 @@ class MonografiasController extends AppController
     public function add()
     {
 
-        $monografiatable = $this->fetchModel('Monografias');
-        $monografia = $monografiatable->newEmptyEntity();
+        $monografia = $this->Monografias->newEmptyEntity();
         $this->Authorization->authorize($monografia);
 
-        if ($this->request->is('post')) {
+        if ($this->request->is('post', 'put', 'patch')) {
 
             $dados = $this->request->getData();
             // pr($dados['registro']);
 
             if ($this->request->getUploadedFile('url')->getSize() > 0):
                 $dados['url'] = $this->arquivo($dados);
-                // die();
             endif;
             /* Ajusto o periodo agregando ano e semestre */
-            // pr($dados['ano']);
-            // pr($dados['semestre']);
             $periodo = $dados['ano'] . "-" . $dados['semestre'];
             $dados['periodo'] = $periodo;
 
@@ -144,16 +138,16 @@ class MonografiasController extends AppController
                 $tccestudante = $this->Monografias->Tccestudantes->newEmptyEntity();
 
                 /* Capturo o nome do estudante */
-                $estudantetable = $this->fetchTable('Alunos');
-                $resultado = $estudantetable->find();
-                $resultado->where(['registro' => $dados['registro']]);
-                $resultado->select(['nome']);
-                $resultado->first();
+                $estudante = $this->fetchTable('Estudantes')
+                    ->find()
+                    ->where(['registro' => $dados['registro']])
+                    ->select(['nome'])
+                    ->first();
 
                 /* Array com os dados para inserir */
                 $dadosestudante['monografia_id'] = $monografia->id;
                 $dadosestudante['registro'] = $dados['registro'];
-                $dadosestudante['nome'] = $resultado->first()->nome;
+                $dadosestudante['nome'] = $estudante->nome;
                 // pr($dadosestudante);
                 // die('dadosestudante');
                 $tccestudante = $this->Monografias->Tccestudantes->patchEntity($tccestudante, $dadosestudante);
@@ -196,9 +190,8 @@ class MonografiasController extends AppController
     public function edit($id = null)
     {
 
-        $monografiatable = $this->fetchTable('Monografias');
-        $monografia = $monografiatable->get($id, [
-            'contain' => ['Docentes', 'Professores1', 'Professores2', 'Areamonografias', 'Tccestudantes'],
+        $monografia = $this->Monografias->get($id, [
+            'contain' => ['Docentes', 'Docentebanca1', 'Docentebanca2', 'Docentebanca3', 'Areamonografias', 'Tccestudantes'],
         ]);
 
         $this->Authorization->authorize($monografia);
@@ -234,7 +227,7 @@ class MonografiasController extends AppController
             if ($this->Monografias->save($monografia)) {
                 $this->Flash->success(__('Monografia atualizada.'));
 
-                return $this->redirect(['action' => 'view/' . $id]);
+                return $this->redirect(['action' => 'view', $id]);
             }
             $this->Flash->error(__('Monografia não foi atualizada.'));
         }

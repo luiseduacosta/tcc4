@@ -110,7 +110,6 @@ class EstudantesController extends AppController
      */
     public function view($id = null)
     {
-        $this->Authorization->skipAuthorization();
         $estudante = $this->Estudantes
             ->find()
             ->contain([
@@ -118,6 +117,9 @@ class EstudantesController extends AppController
             ])
             ->where(["Estudantes.id" => $id])
             ->first();
+
+        $this->Authorization->authorize($estudante);
+
         if (!$estudante) {
             $this->Flash->error(
                 __("Usuário estudante cadastrado não encontrado."),
@@ -209,6 +211,9 @@ class EstudantesController extends AppController
             $this->Flash->error(__("Registro não encontrado."));
             return $this->redirect(["action" => "index"]);
         }
+
+        $this->Authorization->authorize($estudante);
+
         if (
             $estudante->muralinscricoes ||
             $estudante->estagiarios ||
@@ -221,7 +226,6 @@ class EstudantesController extends AppController
             );
             return $this->redirect(["action" => "view", $id]);
         }
-        $this->Authorization->authorize($estudante);
         if ($this->Estudantes->delete($estudante)) {
             $this->Flash->success(__("Registro de estudante excluído."));
         } else {

@@ -46,13 +46,13 @@ class AreamonografiasController extends AppController
      */
     public function view($id = null)
     {
-        $this->Authorization->skipAuthorization();
         $areamonografia = $this->Areamonografias->get($id, [
             "contain" => [
                 "Docentes",
                 "Monografias" => ["Tccestudantes", "Docentes"],
             ],
         ]);
+        $this->Authorization->authorize($areamonografia);
 
         $this->set("areamonografia", $areamonografia);
     }
@@ -64,23 +64,23 @@ class AreamonografiasController extends AppController
      */
     public function add()
     {
-        $area = $this->Areamonografias->newEmptyEntity();
-        $this->Authorization->authorize($area);
+        $areamonografia = $this->Areamonografias->newEmptyEntity();
+        $this->Authorization->authorize($areamonografia);
 
         if ($this->request->is("post")) {
-            $area = $this->Areamonografias->patchEntity(
-                $area,
+            $areamonografia = $this->Areamonografias->patchEntity(
+                $areamonografia,
                 $this->request->getData(),
             );
-            if ($this->Areamonografias->save($area)) {
+            if ($this->Areamonografias->save($areamonografia)) {
                 $this->Flash->success(__("Área de monografia inserida."));
 
-                return $this->redirect(["action" => "view", $area->id]);
+                return $this->redirect(["action" => "view", $areamonografia->id]);
             }
             $this->Flash->error(__("Área de monografia não inserida."));
         }
         $docentes = $this->Areamonografias->Docentes->find("list");
-        $this->set(compact("area", "docentes"));
+        $this->set(compact("areamonografia", "docentes"));
     }
 
     /**
@@ -98,14 +98,14 @@ class AreamonografiasController extends AppController
         $this->Authorization->authorize($areamonografia);
 
         if ($this->request->is(["patch", "post", "put"])) {
-            $area = $this->Areamonografias->patchEntity(
+            $areamonografia = $this->Areamonografias->patchEntity(
                 $areamonografia,
                 $this->request->getData(),
             );
-            if ($this->Areamonografias->save($area)) {
+            if ($this->Areamonografias->save($areamonografia)) {
                 $this->Flash->success(__("Área de monografia atualizada."));
 
-                return $this->redirect(["action" => "view", $area->id]);
+                return $this->redirect(["action" => "view", $areamonografia->id]);
             }
             $this->Flash->error(__("Área de monografia não foi atualizada."));
         }
