@@ -103,7 +103,7 @@ class AgendamentotccsController extends AppController
     {
         $agendamentotcc = $this->Agendamentotccs->newEmptyEntity();
         $this->Authorization->authorize($agendamentotcc);
-        if ($this->request->is("post")) {
+        if ($this->request->is("post", "put", "patch")) {
             $dados = $this->request->getData();
             /* Ajusta o horário */
             $horarioarray = explode(":", $dados["horario"]);
