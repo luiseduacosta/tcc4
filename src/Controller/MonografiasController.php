@@ -85,10 +85,14 @@ class MonografiasController extends AppController
      */
     public function view($id = null)
     {
-
-        $monografia = $this->Monografias->get($id, [
-            'contain' => ['Docentes', 'Docentebanca1', 'Docentebanca2', 'Docentebanca3', 'Areamonografias', 'Tccestudantes'],
-        ]);
+        try  {
+            $monografia = $this->Monografias->get($id, [
+                'contain' => ['Docentes', 'Docentebanca1', 'Docentebanca2', 'Docentebanca3', 'Areamonografias', 'Tccestudantes'],
+            ]);
+        } catch (\Exception $e) {
+            $this->Flash->error(__('Monografia não encontrada.'));
+            return $this->redirect(['action' => 'index']);
+        }
         $this->Authorization->authorize($monografia);
         $baseUrl = Router::url('/', true);
         $this->set(compact('monografia', 'baseUrl'));
@@ -110,6 +114,7 @@ class MonografiasController extends AppController
             $dados = $this->request->getData();
             // pr($dados['registro']);
 
+            // Verifica se o arquivo foi enviado com a function arquivo()
             if ($this->request->getUploadedFile('url')->getSize() > 0):
                 $dados['url'] = $this->arquivo($dados);
             endif;
@@ -190,9 +195,14 @@ class MonografiasController extends AppController
     public function edit($id = null)
     {
 
-        $monografia = $this->Monografias->get($id, [
-            'contain' => ['Docentes', 'Docentebanca1', 'Docentebanca2', 'Docentebanca3', 'Areamonografias', 'Tccestudantes'],
-        ]);
+        try {
+            $monografia = $this->Monografias->get($id, [
+                'contain' => ['Docentes', 'Docentebanca1', 'Docentebanca2', 'Docentebanca3', 'Areamonografias', 'Tccestudantes'],
+            ]);
+        } catch (\Exception $e) {
+            $this->Flash->error(__('Monografia não encontrada.'));
+            return $this->redirect(['action' => 'index']);
+        }
 
         $this->Authorization->authorize($monografia);
 
@@ -259,12 +269,15 @@ class MonografiasController extends AppController
 
         $this->request->allowMethod(['post', 'delete']);
 
-        $monografia = $this->Monografias->get($id);
-        $this->Authorization->authorize($monografia);
-
-        if ($this->Monografias->delete($monografia)) {
-            $this->Flash->success(__('Monografia excluída.'));
-        } else {
+        try {
+            $monografia = $this->Monografias->get($id);
+            $this->Authorization->authorize($monografia);
+            if ($this->Monografias->delete($monografia)) {
+                $this->Flash->success(__('Monografia excluída.'));
+            } else {
+                $this->Flash->error(__('Monografia não foi excluída.'));
+            }
+        } catch (\Exception $e) {
             $this->Flash->error(__('Monografia não foi excluída.'));
         }
 
