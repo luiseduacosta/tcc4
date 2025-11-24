@@ -101,8 +101,10 @@ class AgendamentotccsController extends AppController
      */
     public function add()
     {
+
         $agendamentotcc = $this->Agendamentotccs->newEmptyEntity();
         $this->Authorization->authorize($agendamentotcc);
+
         if ($this->request->is("post", "put", "patch")) {
             $dados = $this->request->getData();
             /* Ajusta o horário */
@@ -130,13 +132,14 @@ class AgendamentotccsController extends AppController
         $estudantes = $this->Agendamentotccs->Estudantes->find("list", [
             "keyField" => "id",
             "valueField" => "nome",
+            "order" => ["nome" => "asc"],
         ]);
-        $estudantes->order(["nome" => "asc"]);
+
         $docentes = $this->Agendamentotccs->Docentes->find("list", [
             "keyField" => "id",
             "valueField" => "nome",
+            "order" => ["nome" => "asc"],
         ]);
-        $docentes->order(["nome" => "asc"]);
 
         $this->set(compact("agendamentotcc", "estudantes", "docentes"));
     }
