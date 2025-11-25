@@ -107,35 +107,39 @@ class MonografiasController extends AppController
     {
 
         $monografia = $this->Monografias->newEmptyEntity();
+        // pr($monografia);
+        // die();
         $this->Authorization->authorize($monografia);
 
-        if ($this->request->is('post', 'put', 'patch')) {
+        if ($this->request->is('post')) {
 
             $dados = $this->request->getData();
-            // pr($dados['registro']);
-
-            // Verifica se o arquivo foi enviado com a function arquivo()
-            if ($this->request->getUploadedFile('url')->getSize() > 0):
-                $dados['url'] = $this->arquivo($dados);
+            
+            /* Verifica se o arquivo foi enviado com a function arquivo() */
+            $uploadedFile = $this->request->getUploadedFile('url');
+            if ($uploadedFile instanceof \Psr\Http\Message\UploadedFileInterface && $uploadedFile->getError() === UPLOAD_ERR_OK):
+                $dre = $dados['registro'];            
+                $dados['url'] = $this->arquivo($uploadedFile, $dre);
             endif;
             /* Ajusto o periodo agregando ano e semestre */
+            if (empty($dados['ano'])):
+                $dados['ano'] = date('Y');
+            endif;
+            if (empty($dados['semestre'])):
+                $dados['semestre'] = 1;
+            endif;
             $periodo = $dados['ano'] . "-" . $dados['semestre'];
             $dados['periodo'] = $periodo;
 
             $dados['data'] = $dados['data_de_entrega'];
 
-            /* Data defesa */
-            $dados['data_defesa'] = $dados['data_banca'];
-
             /* Banca1 é o próprio docente orientador */
             if (empty($dados['banca1'])):
-                $dados['banca1'] = $dados['professor_id'];
+                $dados['banca1'] = $dados['professor_id'] ?? null;
             endif;
 
             $monografia = $this->Monografias->patchEntity($monografia, $dados);
             $this->Authorization->authorize($monografia);
-            // pr($monografia);
-            // die();
             if ($this->Monografias->save($monografia)) {
                 $this->Flash->success(__('Monografia inserida.'));
 
@@ -169,20 +173,20 @@ class MonografiasController extends AppController
         $estudantes = $this->estudantes();
         // pr($estudantes);
         /* Deveria ser somente para Docentes ativos */
-        $docentes = $this->Monografias->Docentes->find(
-            'list',
-            ['keyField' => 'id', 'valueField' => 'nome']
-        );
+        $docentes = $this->Monografias->Docentes->find('list', [
+            'keyField' => 'id', 
+            'valueField' => 'nome',
+            'order' => ['nome' => 'asc']
+        ]);
         // $docentes->where(['dataegresso IS NULL']);
-        $docentes->order(['nome']);
         // debug($docentes->toArray());
         // pr($docentes);
-        $areas = $this->Monografias->Areamonografias->find('list', [
+        $areamonografias = $this->Monografias->Areamonografias->find('list', [
             'keyField' => 'id',
-            'valueField' => 'area'
+            'valueField' => 'area',
+            'order' => ['area' => 'asc']
         ]);
-        $areas->order(['area' => 'asc']);
-        $this->set(compact('estudantes', 'monografia', 'docentes', 'areas'));
+        $this->set(compact('estudantes', 'monografia', 'docentes', 'areamonografias'));
     }
 
     /**
@@ -211,7 +215,8 @@ class MonografiasController extends AppController
             $dados = $this->request->getData();
             // pr($dados['url']);
 
-            if ($this->request->getUploadedFile('url')->getSize() > 0):
+            $uploadedFile = $this->request->getUploadedFile('url');
+            if ($uploadedFile && $uploadedFile->getSize() > 0):
                 // echo 'Arquivo PDF';
                 /* Preciso do DRE para inserir uma monografia */
                 $resultado = $this->Monografias->Tccestudantes->find()
@@ -287,39 +292,23 @@ class MonografiasController extends AppController
     /**
      * Arquivo metodo
      *
-     * @param array $dados.
-     * @return $dados['url'].
+     * @param \Psr\Http\Message\UploadedFileInterface $uploadedFile
+     * @param string $dre
+     * @return string|null
      */
-    private function arquivo($dados, $dre = null)
+    private function arquivo($uploadedFile, $dre)
     {
-
         $this->Authorization->skipAuthorization();
-        // pr($dados);
-        if (empty($dados['registro'])):
-            $dados['registro'] = $dre;
-        endif;
-        /* capturo o tipo de arquivo enviado a partir do servidor */
-        /* Verificar error e tamanho do arquivo */
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mime = finfo_file($finfo, $_FILES['url']['tmp_name']);
-        // pr($mime);
-        // pr($_FILES['url']);
-        // die();
-        if ($mime == 'application/pdf'):
-            $nome_arquivo = $dados['registro'] . '.' . 'pdf';
-            // echo $nome_arquivo . '<br>';
-            // die();
-            move_uploaded_file($_FILES['url']['tmp_name'], WWW_ROOT . 'monografias/' . $nome_arquivo);
-            // die();
-            $dados['url'] = $nome_arquivo;
-            // echo $dados['url'];
-            // die();
-        else:
-            $this->Flash->error(__('Somente são permitidos arquivos PDF.'));
-            return $this->redirect(['action' => 'add']);
-        endif;
+        $mime = $uploadedFile->getClientMediaType();
 
-        return $dados['url'];
+        if ($mime == 'application/pdf') {
+            $nome_arquivo = $dre . '.pdf';
+            $uploadedFile->moveTo(WWW_ROOT . 'monografias/' . $nome_arquivo);
+            return $nome_arquivo;
+        } else {
+            $this->Flash->error(__('Somente são permitidos arquivos PDF.'));
+            return null;
+        }
     }
 
     /**

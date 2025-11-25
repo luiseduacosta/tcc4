@@ -107,6 +107,8 @@ class AgendamentotccsController extends AppController
 
         if ($this->request->is("post", "put", "patch")) {
             $dados = $this->request->getData();
+            pr($dados);
+            exit;
             /* Ajusta o horário */
             $horarioarray = explode(":", $dados["horario"]);
             if (empty($horarioarray[2])):

@@ -49,60 +49,250 @@ $user = $this->getRequest()->getAttribute('identity');
     </ul>
 </nav>
 
-<?php $this->element('templates') ?>
-
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <?= $this->Form->create($monografia, ['type' => 'file']) ?>
+    <?php echo $this->Form->create($monografia, ['type' => 'file']) ?>
     <legend><?= __('Inserir nova monografia') ?></legend>
-    <?php
-    echo $this->Form->control('registro', ['options' => $estudantes, 'empty' => 'Seleciona estudante']);
-    echo $this->Form->control('catalogo', ['label' => 'Catalogo', 'type' => 'hidden']);
-    ?>
-    <div class=" form-group row">
-        <label class="col-2 control-label">Título</label>
-        <div class="col-8">
-            <textarea class="form-control" name="titulo" id="titulo" rows="5" maxlength="180" onkeyup="contatitulo()"
-                      placeholder="Digite o título com até 180 carateres"></textarea>
-            <input id="caraterestitulo" />
-        </div>
+
+    <div class=" form-group">
+        <?php echo $this->Form->control('registro', [
+            'label' => 'Estudante',
+            'type' => 'select',
+            'options' => $estudantes, 
+            'empty' => 'Seleciona estudante', 
+            'required' => true,
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>', 
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]
+        ]); ?>
     </div>
 
     <div class=" form-group row">
-        <label class="col-2 control-label">Resumo</label>
-        <div class="col-8">
-            <textarea class="form-control" name="resumo" id="resumo" rows="5" maxlength="7000" onkeyup="contaresumo()"
-                      placeholder="Digite um texto corrido, sem parágrafos"></textarea>
-            <input id="carateresresumo" />
-        </div>
+        <?php echo $this->Form->control('catalogo', [
+            'label' => 'Catalogo', 
+            'type' => 'hidden'
+        ]); ?>
     </div>
 
-    <?php
-    echo $this->Form->control('data_de_entrega', ['label' => 'Data de entrega', 'type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
-    echo $this->Form->control('ano', ['type' => 'year', 'min' => date('Y') - 20, 'max' => date('Y') + 10, 'required' => true]);
-    echo $this->Form->control('semestre', ['options' => ['0' => 'Sem dados', '1' => '1º', '2' => '2º']]);
-    echo $this->Form->control('professor_id', ['label' => 'Orientador(a)', 'options' => $docentes, 'empty' => 'Selecione', 'required' => true]);
-    echo $this->Form->control('co_orienta_id', ['label' => 'Co-orientador(a)', 'options' => $docentes, 'empty' => true, 'required' => false]);
-    echo $this->Form->control('areamonografia_id', ['label' => 'Área', 'options' => $areas, 'empty' => 'Seleciona área', 'required' => false]);
-    echo $this->Form->control('data_banca', ['label' => 'Data da banca', 'type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
-    echo $this->Form->control('banca1', ['label' => 'Banca Professor(a) orientador', 'options' => $docentes, 'empty' => 'Selecione', 'required' => true]);
-    echo $this->Form->control('banca2', ['label' => 'Banca Professor(a)', 'options' => $docentes, 'empty' => true]);
-    echo $this->Form->control('banca3', ['label' => 'Banca Professor(a)', 'options' => $docentes, 'empty' => true]);
-    ?>
+    <div class=" form-group row">
+        <?php echo $this->Form->control('titulo', [
+            'type' => 'textarea',
+            'label' => 'Título', 
+            'required' => true,
+            'rows' => '5', 
+            'maxlength' => '180', 
+            'onkeyup' => 'contatitulo()', 
+            'placeholder' => 'Digite o título com até 180 carateres',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'textarea' => '<div class="col-sm-9"><textarea class="form-control" name="{{name}}"{{attrs}}>{{content}}</textarea></div>'
+            ]]); ?>
+    </div>
+
+    <div class=" form-group row">
+        <?php echo $this->Form->control('caraterestitulo', [
+            'label' => " ", 
+            'placeholder' => 'Carateres restantes',
+            'type' => 'text', 
+            'readonly' => true, 
+            'class' => 'form-control',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
+            ]]); ?>
+    </div>
+
+    <div class=" form-group row">
+        <?php echo $this->Form->control('resumo', [
+            'type' => 'textarea',
+            'label' => 'Resumo', 
+            'required' => false,
+            'rows' => '5', 
+            'maxlength' => '7000', 
+            'onkeyup' => 'contaresumo()', 
+            'placeholder' => 'Digite o resumo com até 7000 carateres',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'textarea' => '<div class="col-sm-9"><textarea class="form-control" name="{{name}}"{{attrs}}>{{content}}</textarea></div>'
+            ]]); ?>
+    </div>
+
+    <div class=" form-group row">
+        <?php echo $this->Form->control('carateresresumo', [
+            'label' => " ", 
+            'placeholder' => 'Quantidade de caracteres restantes',
+            'type' => 'text', 
+            'readonly' => true, 
+            'class' => 'form-control',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
+            ]
+        ]); ?>
+    </div>
+
+    <div class=" form-group row">
+        <?php echo $this->Form->control('data_de_entrega', [
+            'type' => 'date', 
+            'label' => 'Data de entrega', 
+            'required' => true,
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="date"{{attrs}}></div>'
+            ]]); ?>
+    </div>
+
+    <div class=" form-group row">
+        <?php echo $this->Form->control('ano', [
+            'label' => 'Ano',
+            'type' => 'year',
+            'min' => date('Y') - 20, 
+            'max' => date('Y') + 10, 
+            'required' => true,
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]]); ?>
+    </div>
+
+    <div class=" form-group row">
+        <?php echo $this->Form->control('semestre', [
+            'label' => 'Semestre',
+            'type' => 'select',
+            'required' => true,
+            'options' => ['0' => 'Sem dados', '1' => '1º', '2' => '2º'],
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]]); ?>
+    </div>
+
+    <div class=" form-group row">
+        <?php echo $this->Form->control('professor_id', [
+            'label' => 'Orientador(a)', 
+            'type' => 'select',
+            'options' => $docentes, 
+            'empty' => 'Selecione', 
+            'required' => true,
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]]); ?>
+    </div>
+
+    <div class=" form-group row">
+        <?php echo $this->Form->control('co_orienta_id', [
+            'label' => 'Co-orientador(a)', 
+            'type' => 'select',
+            'options' => $docentes, 
+            'empty' => 'Selecione', 
+            'required' => false,
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]]);    ?>
+    </div>
+
+   <div class=" form-group row">
+        <?php echo $this->Form->control('areamonografia_id', [
+            'label' => 'Área da monografia', 
+            'type' => 'select',
+            'options' => $areamonografias, 
+            'empty' => 'Selecione', 
+            'required' => false,
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]]); ?>
+    </div>
+
+    <div class=" form-group row">
+        <?php echo $this->Form->control('data_defesa', [
+            'label' => 'Data da defesa', 
+            'type' => 'date', 
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="date"{{attrs}}></div>'
+            ]]); ?>
+    </div>
+    <div class=" form-group row">
+        <?php echo $this->Form->control('banca1', [
+            'label' => 'Banca Professor(a) orientador', 
+            'type' => 'select',
+            'options' => $docentes, 
+            'empty' => 'Selecione', 
+            'required' => true,
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]]); ?>
+    </div>
+
+    <div class=" form-group row">
+        <?php echo $this->Form->control('banca2', [
+            'label' => 'Banca Professor(a)', 
+            'type' => 'select',
+            'options' => $docentes, 
+            'empty' => 'Selecione', 
+            'required' => false,
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]]); ?>
+    </div>
+
+    <div class=" form-group row">
+        <?php echo $this->Form->control('banca3', [
+            'label' => 'Banca Professor(a)', 
+            'type' => 'select',
+            'options' => $docentes, 
+            'empty' => 'Selecione', 
+            'required' => false,
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]]); ?>
+    </div>
+
     <div class="form-group row">
-        <label class="col-2 control-label">Convidado(a)</label>
-        <div class="col-8">
-            <input class="form-control" type="text" name="convidado" id="convidado" placeholder="Convidado(a)" />
-        </div>
+        <?php echo $this->Form->control('convidado', [
+            'label' => 'Convidado(a)',
+            'type' => 'text',
+            'required' => false,
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
+            ]]); ?>
     </div>
 
     <div class="form-group row">
-        <label class="col-2 control-label">Inserir monografia em PDF</label>
-        <div class="col-8">
-            <input class="form-control" type="file" name="url" id="url" />
-        </div>
+        <?php echo $this->Form->control('url', [
+            'label' => 'Inserir monografia em PDF', 
+            'type' => 'file',
+            'required' => false,
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input type="file" name="{{name}}"{{attrs}}></div>'
+            ]]); ?>
     </div>
 
-</fieldset>
-<?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
-<?= $this->Form->end() ?>
+    <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
+    <?= $this->Form->end() ?>
 </div>

@@ -24,7 +24,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-        aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar">
@@ -43,30 +43,67 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset class="border p-2">
         <legend><?= __('Agendamento de oficina de defesa de TCC') ?></legend>
         <?php
-        echo $this->Form->control('estudante_id', ['label' => 'Estudante', 'options' => $estudantes, 'empty' => 'Seleciona', 'templates' => [
-            'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
-            'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
-            'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+        echo $this->Form->control('estudante_id', [
+            'label' => 'Estudante', 
+            'options' => $estudantes, 
+            'empty' => 'Seleciona', 
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]]);
+        echo $this->Form->control('docente_id', [
+            'label' => 'Professor(a)', 
+            'options' => $docentes, 
+            'empty' => 'Seleciona', 
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
         ]]);
-        echo $this->Form->control('docente_id', ['label' => 'Professor(a)', 'options' => $docentes, 'empty' => 'Seleciona', 'templates' => [
-            'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
-            'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
-            'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
+        echo $this->Form->control('banca1', [
+            'label' => 'Banca', 
+            'options' => $docentes, 
+            'empty' => 'Seleciona', 
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]]);
+        echo $this->Form->control('banca2', [
+            'label' => 'Banca', 
+            'options' => $docentes, 
+            'empty' => 'Seleciona', 
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
         ]]);
-        echo $this->Form->control('banca1', ['label' => 'Banca', 'options' => $docentes, 'empty' => 'Seleciona', 'templates' => [
-            'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
-            'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
-            'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
-        ]]);
-        echo $this->Form->control('banca2', ['label' => 'Banca', 'options' => $docentes, 'empty' => 'Seleciona', 'templates' => [
-            'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
-            'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
-            'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
-        ]]);
-        echo $this->Form->control('convidado', ['label' => 'Convidado(a)']);
-        echo $this->Form->control('data', ['type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
-        echo $this->Form->control('horario', ['type' => 'time', 'templates' => ['dateWidget' => '{{HH}}{{mm}}{{ss}}']]);
-        echo $this->Form->control('sala', ['label' => 'Sala. Colocar 0 se for não-presencial', 'default' => '0']);
+        echo $this->Form->control('convidado', [
+            'label' => 'Convidado(a)', 
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
+            ]]);
+        echo $this->Form->control('data', [
+            'type' => 'date', 
+            'templates' => [
+                'dateWidget' => '{{day}}{{month}}{{year}}'
+            ]]);
+        echo $this->Form->control('horario', [
+            'type' => 'time', 
+            'templates' => [
+                'timeWidget' => '{{HH}}{{mm}}{{ss}}'
+            ]]);
+        echo $this->Form->control('sala', [
+            'label' => 'Sala. Colocar 0 se for não-presencial', 
+            'default' => '0', 
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
+            ]]);
         ?>
         <div class=" form-group row">
             <label class="col-2 control-label">Título</label>
