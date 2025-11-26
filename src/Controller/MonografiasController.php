@@ -85,14 +85,17 @@ class MonografiasController extends AppController
      */
     public function view($id = null)
     {
+        $this->Authorization->skipAuthorization();
         try  {
             $monografia = $this->Monografias->get($id, [
-                'contain' => ['Docentes', 'Docentebanca1', 'Docentebanca2', 'Docentebanca3', 'Areamonografias', 'Tccestudantes'],
+                'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'],
             ]);
         } catch (\Exception $e) {
             $this->Flash->error(__('Monografia não encontrada.'));
             return $this->redirect(['action' => 'index']);
         }
+        // pr($monografia);
+        // die();
         $this->Authorization->authorize($monografia);
         $baseUrl = Router::url('/', true);
         $this->set(compact('monografia', 'baseUrl'));
@@ -131,8 +134,6 @@ class MonografiasController extends AppController
             $periodo = $dados['ano'] . "-" . $dados['semestre'];
             $dados['periodo'] = $periodo;
 
-            $dados['data'] = $dados['data_de_entrega'];
-
             /* Banca1 é o próprio docente orientador */
             if (empty($dados['banca1'])):
                 $dados['banca1'] = $dados['professor_id'] ?? null;
@@ -166,21 +167,20 @@ class MonografiasController extends AppController
                 }
                 $this->Flash->error(__('Estudante de TCC não foi inserido.'));
             }
-            $this->Flash->error(__('Monografia não foi inserida. Tente novamente.'));
+            $this->Flash->error(__('Monografia não foi inserida. Verifique que o nome do arquivo seja válido (sem espaços ou caracteres especiais). Tente novamente.'));
         }
 
         /* Chamo a function estudantes() para fazer o list de seleção */
         $estudantes = $this->estudantes();
-        // pr($estudantes);
-        /* Deveria ser somente para Docentes ativos */
+
+        /* Deveria ser somente para Docentes não falecidos */
         $docentes = $this->Monografias->Docentes->find('list', [
             'keyField' => 'id', 
             'valueField' => 'nome',
             'order' => ['nome' => 'asc']
         ]);
-        // $docentes->where(['dataegresso IS NULL']);
-        // debug($docentes->toArray());
-        // pr($docentes);
+        // $docentes->where(['dataegresso IS NULL']); // Deveria ser somente para Docentes não falecidos
+
         $areamonografias = $this->Monografias->Areamonografias->find('list', [
             'keyField' => 'id',
             'valueField' => 'area',
@@ -199,67 +199,55 @@ class MonografiasController extends AppController
     public function edit($id = null)
     {
 
+        $this->Authorization->skipAuthorization();
         try {
             $monografia = $this->Monografias->get($id, [
-                'contain' => ['Docentes', 'Docentebanca1', 'Docentebanca2', 'Docentebanca3', 'Areamonografias', 'Tccestudantes'],
+                'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'],
             ]);
         } catch (\Exception $e) {
             $this->Flash->error(__('Monografia não encontrada.'));
             return $this->redirect(['action' => 'index']);
         }
-
         $this->Authorization->authorize($monografia);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $dados = $this->request->getData();
-            // pr($dados['url']);
-
-            $uploadedFile = $this->request->getUploadedFile('url');
-            if ($uploadedFile && $uploadedFile->getSize() > 0):
-                // echo 'Arquivo PDF';
-                /* Preciso do DRE para inserir uma monografia */
-                $resultado = $this->Monografias->Tccestudantes->find()
-                    ->where(['Tccestudantes.monografia_id' => $id])
-                    ->order(['Tccestudantes.nome'])
-                    ->first();
-                $dre = $resultado->registro;
-                // $url->moveTo(WWW_ROOT . 'monografias/');
-
-                /* Chamo a função arquivo() com os parámetros do formulário e do $dre */
-                $dados['url'] = $this->arquivo($dados, $dre);
-                // die();
-            elseif (!empty($dados['url_atual'])):
-                $dados['url'] = $dados['url_atual'];
-            else:
-                $dados['url'] = null;
-            endif;
-            // pr($dados['url']);
-            // die();
+//            $uploadedFile = $this->request->getUploadedFile('url');
+//            if ($uploadedFile && $uploadedFile->getSize() > 0):
+//                $dados['url'] = $this->arquivo($uploadedFile, $monografia->registro);
+//            elseif (!empty($dados['url_atual'])):
+//                $dados['url'] = $dados['url_atual'];
+//            else:
+//                $dados['url'] = null;
+//            endif;
 
             $monografia = $this->Monografias->patchEntity($monografia, $dados);
+            //pr($dados);
             // pr($monografia);
+            // die();
             if ($this->Monografias->save($monografia)) {
+                // debug($monografia);
                 $this->Flash->success(__('Monografia atualizada.'));
-
                 return $this->redirect(['action' => 'view', $id]);
             }
+            // debug($monografia);
             $this->Flash->error(__('Monografia não foi atualizada.'));
         }
 
         $docentes = $this->Monografias->Docentes->find('list', [
             'keyField' => 'id',
-            'valueField' => 'nome'
+            'valueField' => 'nome',
+            'order' => ['nome' => 'asc']
         ]);
-        $docentes->order(['nome' => 'asc']);
 
-        $areas = $this->Monografias->Areamonografias->find('list', [
+        $areamonografias = $this->Monografias->Areamonografias->find('list', [
             'keyField' => 'id',
-            'valueField' => 'area'
+            'valueField' => 'area',
+            'order' => ['area' => 'asc']
         ]);
-        $areas->order(['area' => 'asc']);
 
-        $this->set(compact('monografia', 'docentes', 'areas'));
+        $this->set(compact('monografia', 'docentes', 'areamonografias'));
     }
 
     /**
@@ -320,39 +308,24 @@ class MonografiasController extends AppController
     private function estudantes()
     {
 
-        /* Preciso capturar o registro do estudante */
+        /* Capturar o registro do estudante */
         $estudantetable = $this->fetchTable('Alunos');
         $estudantes = $estudantetable->find('all');
         $estudantes->select(['registro', 'nome']);
         $estudantes->order(['nome' => 'asc']);
-        // pr($estudantes);
-        // die();
 
-        /* Tenho que separar os estudantes que já fizeram TCC */
+        /** Separar os estudantes que já fizeram TCC */
         foreach ($estudantes as $c_estudante):
-            // pr($c_estudante);
-            // die('estudante');
             $tcc = $this->Monografias->Tccestudantes->find('all');
             $tcc->where(['Tccestudantes.registro' => $c_estudante->registro]);
             $tcc->select(['registro', 'nome', 'monografia_id']);
-            // pr($tcc->first());
             /* Estudantes sem TCC */
             if ($tcc->first()):
-                // echo "Com monografia" . "<br>";
-                // echo $tcc->first()->monografia_id . " ";
-                // echo $tcc->first()->registro . " ";
-                // echo $tcc->first()->nome . "<br>";
             else:
-                // echo "Sem monografia ";
                 $alunos[$c_estudante->registro] = $c_estudante->nome;
-                // echo "<br>";
             endif;
-            // echo "<br>";
         endforeach;
-        // pr($alunos);
-        // die();
         return $alunos;
-        /* Fim da captura dos registro dos estudantes */
     }
 
     public function lista()
@@ -361,20 +334,16 @@ class MonografiasController extends AppController
         $this->Authorization->skipAuthorization();
         $path = WWW_ROOT . "/monografias/";
         $diretorio = dir($path);
-        // die();
         $i = 0;
         $k = 0;
-        // echo "Lista de arquivos do diretório '<strong>" . $path . "</strong>':<br />";
         while ($arquivo = $diretorio->read()) {
-            // $lista[$k] = $arquivo;
-            // die();
+            $lista[$k] = $arquivo;
             $c_arquivo = explode('.', $arquivo);
-            // echo "DRE " . $c_arquivo[0] . "<br>";
             if (!empty($c_arquivo['0'])):
 
                 $pdfs = $this->Monografias->Tccestudantes->find('all', [
-                    ['contain' => 'Monografias'],
-                    ['fields' => ['Monografias.url', 'Tccestudantes.registro', 'Tccestudantes.id']]
+                    'contain' => 'Monografias',
+                    'fields' => ['Monografias.url', 'Tccestudantes.registro', 'Tccestudantes.id']
                 ]);
                 $pdfs->where(['Tccestudantes.registro' => $c_arquivo[0]]);
                 $monografias = $pdfs->first();
@@ -383,8 +352,6 @@ class MonografiasController extends AppController
                     $arquivospdf[$i]['id'] = $monografias->id;
                     $arquivospdf[$i]['nome'] = $monografias->nome;
                     $arquivospdf[$i]['registro'] = $monografias->registro;
-                    // pr($monografias);
-                    // die();
                 else:
                     $arquivospdf[$i]['pdf'] = $c_arquivo[0];
                     $arquivospdf[$i]['id'] = '';
@@ -397,9 +364,7 @@ class MonografiasController extends AppController
         }
         $diretorio->close();
         sort($arquivospdf);
-        // pr($lista);
         $this->set(compact('arquivospdf'));
-        // die();
     }
 
     /*
@@ -436,9 +401,7 @@ class MonografiasController extends AppController
                     $arraymonografia['url'] = null;
                     $arraymonografia['id'] = $monografia['id'];
                     $tcc = $this->Monografias->get($monografia['id']);
-
                     $atualizatcc = $this->Monografias->patchEntity($tcc, $arraymonografia);
-
                     if ($this->Monografias->save($atualizatcc)):
                         echo $i++ . " " . $arraymonografia['id'] . " atualizada" . "<br />";
                     endif;
@@ -449,7 +412,6 @@ class MonografiasController extends AppController
             endif;
             // pr($valor);
         endforeach;
-        die();
     }
 
     /*
@@ -504,9 +466,7 @@ class MonografiasController extends AppController
                 endif;
             endif;
             $i++;
-            // echo $i . " " . $file . "<br />";
         endforeach;
-        die();
     }
 
     public function download($dre, $id)
@@ -514,25 +474,17 @@ class MonografiasController extends AppController
 
         $this->Authorization->skipAuthorization();
         $this->autoRender = false;
-        // pr($dre);
         $file_path = WWW_ROOT . 'monografias';
         $dir = new Folder($file_path);
         $files = $dir->find('.*\.pdf');
-        // echo $dir->realpath($file_path);
-        // pr($files);
         foreach ($files as $file) {
             $file = new File($dir->pwd() . DS . $file);
-            // pr($file->name . " " . $dre);
-            // die();
             if ($file->name === $dre):
-                // echo "Arquivo achado" . $file->name;
-                // echo $file->name;
                 echo '<a href=' . 'http://' . $_SERVER . '/monografias/' . $file->name . ' target=_blank download= ' . $file->name . '>Clique aqui</a>';
-                // return $this->redirect(['action' => 'view', $id]);
                 exit();
             endif;
         }
-        echo $this->Flash->error(__('Arquivo ' . $dre . ' não encontrado'));
+        $this->Flash->error(__('Arquivo ' . $dre . ' não encontrado'));
         return $this->redirect(['action' => 'view', $id]);
     }
 }

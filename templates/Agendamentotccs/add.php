@@ -105,16 +105,25 @@ $user = $this->getRequest()->getAttribute('identity');
                 'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
             ]]);
         ?>
-        <div class=" form-group row">
-            <label class="col-2 control-label">Título</label>
-            <div class="col-8">
-                <textarea class="form-control" name="titulo" id="titulo" rows="5" maxlength="180"
-                    onkeyup="contatitulo()" placeholder="Digite o título com até 180 carateres"></textarea>
-                <input id="caraterestitulo" />
-            </div>
-        </div>
         <?php
-        echo $this->Form->control('avaliacao', ['type' => 'hidden', 'value' => 's/d']);
+        echo $this->Form->control('titulo', [
+            'label' => 'Título',
+            'placeholder' => 'Digite o título com até 180 carateres',
+            'maxlength' => '180',
+            'rows' => '5',
+            'id' => 'caraterestitulo',
+            'onkeyup' => 'contatitulo()',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'textarea' => '<div class="col-sm-9"><textarea class="form-control" name="{{name}}" id="{{name}}" rows="5" maxlength="180" onkeyup="contatitulo()" placeholder="Digite o título com até 180 carateres"></textarea></div>'
+            ]]);
+        ?>
+        <?php
+        echo $this->Form->control('avaliacao', [
+            'type' => 'hidden',
+            'value' => 's/d'
+        ]);
         ?>
     </fieldset>
     <div class="d-flex justify-content-center">

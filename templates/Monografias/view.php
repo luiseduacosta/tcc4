@@ -5,6 +5,7 @@
  */
 $user = $this->getRequest()->getAttribute('identity');
 // pr($monografia);
+// die();
 ?>
 
 <?= $this->element('menu_monografias') ?>
@@ -59,7 +60,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Professor(a)') ?></th>
-            <td><?= $this->Html->link($monografia->docentes['nome'], ['controller' => 'Docentes', 'action' => 'view', $monografia->professor_id]) ?>
+            <td><?= $this->Html->link($monografia->docentes->nome, ['controller' => 'Docentes', 'action' => 'view', $monografia->professor_id]) ?>
             </td>
         </tr>
         <tr>
@@ -94,15 +95,15 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php endif ?>
         <tr>
             <th scope="row"><?= __('Banca1') ?></th>
-            <td><?= h($monografia->hasValue('professorbanca1') ? $monografia->professorbanca1['nome'] : '') ?></td>
+            <td><?= h($monografia->hasValue('banca1') ? $monografia->docentes1->nome : '') ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Banca2') ?></th>
-            <td><?= h($monografia->hasValue('professorbanca2') ? $monografia->professorbanca2['nome'] : '') ?></td>
+            <td><?= h($monografia->hasValue('banca2') ? $monografia->docentes2->nome : '') ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Banca3') ?></th>
-            <td><?= h($monografia->hasValue('professorbanca3') ? $monografia->professorbanca3['nome'] : '') ?></td>
+            <td><?= h($monografia->hasValue('banca3') ? $monografia->docentes3->nome : '') ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Convidado(a)') ?></th>

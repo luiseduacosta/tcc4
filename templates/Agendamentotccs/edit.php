@@ -23,64 +23,108 @@ $user = $this->getRequest()->getAttribute('identity');
                         ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $agendamentotcc->id), 'class' => 'btn btn-danger me-1']
                     ) ?>
                 </li>
-                <li class="nav-item">
-                    <?= $this->Html->link(__('Novo Agendamento de Tcc'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
-                </li>
             <?php endif; ?>
         </ul>
     </div>
 </nav>
 
-<?php $this->element('templates') ?>
+<?= $this->element('templates') ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <?= $this->Form->create($agendamentotcc) ?>
     <fieldset class="border p-2">
         <legend><?= __('Editar agendamento de defesa de TCC') ?></legend>
         <?php
-        echo $this->Form->control('estudante_id', ['options' => $estudantes,
+        echo $this->Form->control('estudante_id', [
+            'options' => $estudantes,
             'type' => 'select',
             'div' => false,
             'class' => 'form-control',
             'templates' => [
                 'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
                 'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
-                'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
-            ]]);
-        echo $this->Form->control('docente_id', ['options' => $docentes,
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]
+        ]);
+        echo $this->Form->control('docente_id', [
+            'options' => $docentes,
             'type' => 'select',
             'div' => false,
             'class' => 'form-control',
             'templates' => [
                 'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
                 'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
-                'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
-            ]]);
-        echo $this->Form->control('banca1', ['options' => $docentes,
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]
+        ]);
+        echo $this->Form->control('banca1', [
+            'options' => $docentes,
             'type' => 'select',
             'div' => false,
             'class' => 'form-control',
             'templates' => [
                 'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
                 'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
-                'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
-            ]]);
-        echo $this->Form->control('banca2', ['options' => $docentes,
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]
+        ]);
+        echo $this->Form->control('banca2', [
+            'options' => $docentes,
             'type' => 'select',
             'div' => false,
             'class' => 'form-control',
             'templates' => [
                 'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
                 'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
-                'select' => '<div class="col-sm-9"><select class="form-select"{{attrs}}>{{content}}</select></div>'
-            ]]);
-        echo $this->Form->control('convidado', ['label' => 'Convidado(a)']);
-        echo $this->Form->control('data', ['type' => 'date', 'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']]);
-        echo $this->Form->control('horario', ['type' => 'time', 'templates' => ['dateWidget' => '{{HH}}{{mm}}{{ss}}']]);
-        echo $this->Form->control('sala');
-        echo $this->Form->control('titulo');
-        echo $this->Form->control('avaliacao');
-        ?>
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]
+        ]);
+        echo $this->Form->control('convidado', [
+            'label' => 'Convidado(a)',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
+            ]
+        ]);
+        echo $this->Form->control('data', [
+            'type' => 'date', 
+            'templates' => ['dateWidget' => '{{day}}{{month}}{{year}}']
+        ]);
+        echo $this->Form->control('horario', [
+            'type' => 'time', 
+            'templates' => ['timeWidget' => '{{HH}}{{mm}}{{ss}}']
+        ]);
+        echo $this->Form->control('sala', [
+            'label' => 'Sala. Colocar 0 se for não-presencial', 
+            'default' => '0', 
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
+            ]
+        ]);
+        echo $this->Form->control('titulo', [
+            'label' => 'Título',
+            'placeholder' => 'Digite o título com até 180 carateres',
+            'maxlength' => '180',
+            'rows' => '5',
+            'id' => 'caraterestitulo',
+            'onkeyup' => 'contatitulo()',
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'textarea' => '<div class="col-sm-9"><textarea class="form-control" name="{{name}}" id="{{name}}" rows="5" maxlength="180" onkeyup="contatitulo()" placeholder="Digite o título com até 180 carateres"></textarea></div>'
+            ]
+        ]);
+        echo $this->Form->control('avaliacao', [
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
+            ]
+        ]);
+    ?>
     </fieldset>
     <div class="d-flex justify-content-center">
         <?= $this->Form->button(__('Confirmar'),['class' => 'btn btn-primary']) ?>

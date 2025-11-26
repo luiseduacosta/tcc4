@@ -47,7 +47,23 @@ class DocentesTable extends Table
                 ]);
 
                 $this->hasMany('Monografias', [
+                        'className' => 'Monografias',
                         'foreignKey' => 'professor_id',
+                ]);
+
+                $this->hasMany('Monografias1', [
+                        'className' => 'Monografias',
+                        'foreignKey' => 'banca1',
+                ]);
+
+                $this->hasMany('Monografias2', [
+                        'className' => 'Monografias',
+                        'foreignKey' => 'banca2',
+                ]);
+
+                $this->hasMany('Monografias3', [
+                        'className' => 'Monografias',
+                        'foreignKey' => 'banca3',
                 ]);
 
                 $this->belongsToMany('Areamonografias', [

@@ -97,6 +97,9 @@ class Docente extends Entity
         'observacoes' => true,
         'users' => true, 
         'monografias' => true,
+        'monografias1' => true,
+        'monografias2' => true,
+        'monografias3' => true,
         'areamonografias' => true,
         'agendamentotccs' => true,
     ];

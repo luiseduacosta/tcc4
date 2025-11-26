@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Monografia $monografia
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($estudantes);
 ?>
 
 <script>
@@ -50,6 +49,7 @@ $user = $this->getRequest()->getAttribute('identity');
 </nav>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
+
     <?php echo $this->Form->create($monografia, ['type' => 'file']) ?>
     <legend><?= __('Inserir nova monografia') ?></legend>
 
@@ -70,7 +70,6 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <div class=" form-group row">
         <?php echo $this->Form->control('catalogo', [
-            'label' => 'Catalogo', 
             'type' => 'hidden'
         ]); ?>
     </div>
@@ -129,22 +128,22 @@ $user = $this->getRequest()->getAttribute('identity');
             'readonly' => true, 
             'class' => 'form-control',
             'templates' => [
-                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
-                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
-                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
+                'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
+                'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-10"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
             ]
         ]); ?>
     </div>
 
     <div class=" form-group row">
-        <?php echo $this->Form->control('data_de_entrega', [
+        <?php echo $this->Form->control('data', [
             'type' => 'date', 
             'label' => 'Data de entrega', 
             'required' => true,
             'templates' => [
-                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
-                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
-                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="date"{{attrs}}></div>'
+                'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
+                'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-10"><input class="form-control" name="{{name}}" type="date"{{attrs}}></div>'
             ]]); ?>
     </div>
 
@@ -156,9 +155,9 @@ $user = $this->getRequest()->getAttribute('identity');
             'max' => date('Y') + 10, 
             'required' => true,
             'templates' => [
-                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
-                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
-                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+                'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
+                'label' => '<label class="col-sm-2 col-form-label" {{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-10"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
             ]]); ?>
     </div>
 
@@ -169,9 +168,9 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => true,
             'options' => ['0' => 'Sem dados', '1' => '1º', '2' => '2º'],
             'templates' => [
-                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
-                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
-                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+                'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
+                'label' => '<label class="col-sm-2 col-form-label" {{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-10"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
             ]]); ?>
     </div>
 
@@ -200,7 +199,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
                 'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
                 'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
-            ]]);    ?>
+            ]]); ?>
     </div>
 
    <div class=" form-group row">
@@ -243,7 +242,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <div class=" form-group row">
         <?php echo $this->Form->control('banca2', [
-            'label' => 'Banca Professor(a)', 
+            'label' => 'Professor(a)', 
             'type' => 'select',
             'options' => $docentes, 
             'empty' => 'Selecione', 
@@ -257,7 +256,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <div class=" form-group row">
         <?php echo $this->Form->control('banca3', [
-            'label' => 'Banca Professor(a)', 
+            'label' => 'Professor(a)', 
             'type' => 'select',
             'options' => $docentes, 
             'empty' => 'Selecione', 
