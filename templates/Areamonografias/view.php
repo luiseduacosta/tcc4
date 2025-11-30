@@ -57,6 +57,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <th scope="col"><?= __('Titulo') ?></th>
                     <th scope="col"><?= __('Periodo') ?></th>
                     <th scope="col"><?= __('Orientador') ?></th>
+                    <th scope="col"><?= __('Url') ?></th>                    
                 </tr>
             </thead>
             <?php foreach ($areamonografia->monografias as $monografias): ?>
@@ -74,6 +75,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($monografias['periodo']) ?></td>
                     <td><?= $this->Html->link(h($monografias->docentes['nome']), ['controller' => 'Docentes', 'action' => 'view', $monografias->docentes['id']]) ?>
                     </td>
+                    <td><?= $this->Html->link(h($monografias['url']), h($monografias['url']), ['target' => '_blank']) ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>

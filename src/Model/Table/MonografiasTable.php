@@ -42,6 +42,11 @@ class MonografiasTable extends Table
         {
                 parent::initialize($config);
 
+                // Areamonografias tem monografias. Quantas monografias tem uma area
+                $this->addBehavior('CounterCache', [
+                        'Areamonografias' => ['q_monografia'] // Caches monografia count on the 'Areamonografias' table
+                ]);
+
                 $this->setTable('monografias');
                 $this->setAlias('Monografias');
                 $this->setDisplayField('titulo');
@@ -85,7 +90,6 @@ class MonografiasTable extends Table
                         'propertyName' => 'tccestudantes',
                         'className' => 'Tccestudantes',
                         'foreignKey' => 'monografia_id',
-                        // 'conditions' => 'Monografias.id = Tccestudantes.monografia_id',
                         'joinType' => 'LEFT'
                 ]);
         }

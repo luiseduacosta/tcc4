@@ -33,7 +33,7 @@ $user = $this->getRequest()->getAttribute('identity');
         ?>
     </fieldset>
     <div class="d-flex justify-content-center">
-        <?= $this->Form->button(__('Confirmar', ['class' => 'btn btn-primary'])) ?>
+        <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
     </div>
     <?= $this->Form->end() ?>
 </div>

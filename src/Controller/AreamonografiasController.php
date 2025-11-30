@@ -48,7 +48,7 @@ class AreamonografiasController extends AppController
     {
         $areamonografia = $this->Areamonografias->get($id, [
             "contain" => [
-                "Docentes",
+                "Docentes" => ['sort' => 'nome'],
                 "Monografias" => ["Tccestudantes", "Docentes"],
             ],
         ]);
@@ -93,7 +93,7 @@ class AreamonografiasController extends AppController
     public function edit($id = null)
     {
         $areamonografia = $this->Areamonografias->get($id, [
-            "contain" => ["Professores"],
+            "contain" => ["Docentes"],
         ]);
         $this->Authorization->authorize($areamonografia);
 
@@ -125,6 +125,14 @@ class AreamonografiasController extends AppController
         $this->request->allowMethod(["post", "delete"]);
         $areamonografia = $this->Areamonografias->get($id);
         $this->Authorization->authorize($areamonografia);
+
+        $areamonografias = $this->Areamonografias->get($id, [
+            'contain' => ['Monografias']
+        ]);
+        if ($areamonografias) {
+            $this->Flash->error(__('Há monografias assoaciadas a esta área. Desfazer as associações primeiro.'));
+            return $this->redirect(['action' => 'view', $id]);
+        }
 
         if ($this->Areamonografias->delete($areamonografia)) {
             $this->Flash->success(__("Área da mongrafia excluída."));

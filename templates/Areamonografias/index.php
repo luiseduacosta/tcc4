@@ -30,7 +30,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <thead class="table-dark">
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('area', 'Área') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('monografias', 'Monografias') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('q_monografia', 'Monografias') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -39,7 +39,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <tr>
                     <td><?= $this->Html->link(h($area->area), ['controller' => 'Areamonografias', 'action' => 'view', $area->id]) ?>
                     </td>
-                    <td><?= $this->Number->format(count($area->monografias)) ?></td>
+                    <td><?= $this->Number->format($area->q_monografia) ?? $this->Number->format(count($area->monografias)) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

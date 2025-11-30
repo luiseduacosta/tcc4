@@ -56,7 +56,7 @@ $user = $this->getRequest()->getAttribute('identity');
 <?= $this->element('templates'); ?>
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
-    <?= $this->Form->create($monografia, ['type' => 'file', 'enctype' => 'multipart/form-data']) ?>
+    <?= $this->Form->create($monografia) ?>
     <fieldset>
         <legend><?= __('Editar monografia: ' . $monografia->titulo) ?></legend>
 
@@ -100,7 +100,7 @@ $user = $this->getRequest()->getAttribute('identity');
             'type' => 'date', 
             'label' => 'Data de entrega', 
             'value' => $monografia->data,
-            'required' => true,
+            'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
                 'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
@@ -166,7 +166,7 @@ $user = $this->getRequest()->getAttribute('identity');
             'label' => 'Data da defesa', 
             'type' => 'date', 
             'value' => $monografia->data_defesa,
-            'required' => true,
+            'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
                 'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
@@ -177,7 +177,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php echo $this->Form->control('banca1', [
             'label' => 'Banca Professor(a) avaliador', 
             'type' => 'select',
-            'value' => $monografia->banca1->id ?? null,
+            'value' => $monografia->banca1->id ?? $monografia->professor_id,
             'options' => $docentes, 
             'empty' => 'Selecione', 
             'required' => true,
@@ -194,7 +194,7 @@ $user = $this->getRequest()->getAttribute('identity');
             'value' => $monografia->banca2->id ?? null,
             'options' => $docentes, 
             'empty' => 'Selecione', 
-            'required' => true,
+            'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
                 'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',

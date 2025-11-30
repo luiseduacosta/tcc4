@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Monografia $monografia
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($monografia);
+pr($monografia->url);
 // die();
 ?>
 
@@ -72,21 +72,21 @@ $user = $this->getRequest()->getAttribute('identity');
             <td><?= h($monografia->periodo) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Area') ?></th>
-            <td><?= $monografia->has('areamonografia') ? $this->Html->link($monografia->areamonografias['area'], ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografias['id']]) : "" ?>
+            <th scope="row"><?= __('Área') ?></th>
+            <td><?= $monografia->has('areamonografias') ? $this->Html->link($monografia->areamonografias->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografias['id']]) : "" ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><?= __('Data Defesa') ?></th>
             <td><?= h($monografia->data_defesa) ?></td>
         </tr>
-        <?php if (isset($monografia->url) && !empty($monografia->url)): ?>
+        <?php if (!empty($monografia->url)): ?>
             <tr>
                 <th scope="row"><?= __('PDF') ?></th>
                 <td><a href="<?= $baseUrl . 'monografias/' . $monografia->url ?>">Download</a></td>
             </tr>
         <?php endif; ?>
-        <?php if ($monografia->co_orienta_id > 0): ?>
+        <?php if (!empty($monografia->co_orienta_id)): ?>
             <tr>
                 <th scope="row"><?= __('Co Orienta Id', ['label' => 'Co-orientador']) ?></th>
                 <td><?= $monografia->hasValue('co_orienta_id > 0') ? $this->Html->link($monografia->co_orienta_id, ['controller' => 'Professores', 'action' => 'view', $monografia->co_orienta_id]) : '' ?>
@@ -95,15 +95,15 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php endif ?>
         <tr>
             <th scope="row"><?= __('Banca1') ?></th>
-            <td><?= h($monografia->hasValue('banca1') ? $monografia->docentes1->nome : '') ?></td>
+            <td><?= h($monografia->hasValue('docentes1') ? $monografia->docentes1->nome : '') ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Banca2') ?></th>
-            <td><?= h($monografia->hasValue('banca2') ? $monografia->docentes2->nome : '') ?></td>
+            <td><?= h($monografia->hasValue('docentes2') ? $monografia->docentes2->nome : '') ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Banca3') ?></th>
-            <td><?= h($monografia->hasValue('banca3') ? $monografia->docentes3->nome : '') ?></td>
+            <td><?= h($monografia->hasValue('docentes3') ? $monografia->docentes3->nome : '') ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Convidado(a)') ?></th>
