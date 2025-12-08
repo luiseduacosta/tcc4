@@ -64,21 +64,23 @@ $user = $this->getRequest()->getAttribute('identity');
                     </td>
 
                     <td><?= h($monografia->periodo) ?></td>
-
                     <td>
                         <?php
                         if (!(empty($monografia->tccestudantes))):
                             $q_estudantes = count($monografia->tccestudantes);
                             foreach ($monografia->tccestudantes as $tccestudante):
-                                echo $this->Html->link($tccestudante->nome, ['controller' => 'tccestudantes', 'action' => 'view', $tccestudante->id]);
-                                if ($q_estudantes > 1):
-                                    echo ", ";
+                                if (empty($tccestudante->nome) || $tccestudante['nome'] == 'Sem nome do aluno'):
+                                    echo " ";
+                                else:
+                                    echo $this->Html->link($tccestudante->nome, ['controller' => 'tccestudantes', 'action' => 'view', $tccestudante->id]);
+                                    if ($q_estudantes > 1):
+                                        echo ", ";
+                                    endif;
                                 endif;
                             endforeach;
                         endif;
                         ?>
                     </td>
-
                     <td><?= $monografia->hasValue('docentes') ? $this->Html->link($monografia->docentes['nome'], ['controller' => 'Docentes', 'action' => 'view', $monografia->docentes['id']]) : '' ?>
                     </td>
 
@@ -86,7 +88,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     </td>
 
                     <?php if (!empty($monografia->url)): ?>
-                        <td><a href="<?= $baseUrl . 'monografias/' . $monografia->url ?>">Download</a></td>
+                        <td><a href="<?= WWW_ROOT . 'monografias/' . $monografia->url ?>">Download</a></td>
                     <?php endif; ?>
 
                 </tr>

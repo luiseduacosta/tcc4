@@ -75,7 +75,15 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= h($monografias['periodo']) ?></td>
                     <td><?= $this->Html->link(h($monografias->docentes['nome']), ['controller' => 'Docentes', 'action' => 'view', $monografias->docentes['id']]) ?>
                     </td>
-                    <td><?= $this->Html->link(h($monografias['url']), h($monografias['url']), ['target' => '_blank']) ?></td>
+                    <td>
+                        <?php
+                        if (isset($monografias['url']) && !empty($monografias['url'])):
+                            echo $this->Html->link(h($monografias['url']), h($monografias['url']), ['target' => '_blank']); 
+                        else:
+                            echo '';
+                        endif;    
+                        ?>          
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </table>

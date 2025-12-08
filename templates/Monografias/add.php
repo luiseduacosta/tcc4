@@ -15,21 +15,10 @@ $user = $this->getRequest()->getAttribute('identity');
             // document.getElementById('caraterestitulo').value = 'Você atingiu o limite de ' + max + ' caracteres';
         } else {
             var char = max - len;
-            document.getElementById('caraterestitulo').value = char + ' caracteres restantes';
+            document.getElementById('caraterestitulo').value = char + ' caracteres restante';
         }
     }
 
-    function contaresumo() {
-        var max = 7000;
-        var len = document.getElementById('resumo').value.length;
-        if (len >= max) {
-            alert('Você atingiu o limite de ' + max + ' caracteres');
-            // document.getElementById('carateresresumo').value = 'Você atingiu o limite de ' + max + ' caracteres';
-        } else {
-            var char = max - len;
-            document.getElementById('carateresresumo').value = char + ' caracteres restantes';
-        }
-    }
 </script>
 
 <?= $this->element('menu_monografias') ?>
@@ -54,12 +43,42 @@ $user = $this->getRequest()->getAttribute('identity');
     <legend><?= __('Inserir nova monografia') ?></legend>
 
     <div class=" form-group">
-        <?php echo $this->Form->control('registro', [
-            'label' => 'Estudante',
+        <?php echo $this->Form->control('estudantes_ids.0', [
+            'label' => 'Estudante 1',
             'type' => 'select',
             'options' => $estudantes, 
             'empty' => 'Seleciona estudante', 
             'required' => true,
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>', 
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]
+        ]); ?>
+    </div>
+
+    <div class=" form-group">
+        <?php echo $this->Form->control('estudantes_ids.1', [
+            'label' => 'Estudante 2',
+            'type' => 'select',
+            'options' => $estudantes, 
+            'empty' => 'Seleciona estudante', 
+            'required' => false,
+            'templates' => [
+                'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>', 
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+            ]
+        ]); ?>
+    </div>
+
+    <div class=" form-group">
+        <?php echo $this->Form->control('estudantes_ids.2', [
+            'label' => 'Estudante 3',
+            'type' => 'select',
+            'options' => $estudantes, 
+            'empty' => 'Seleciona estudante', 
+            'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
                 'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>', 
@@ -120,19 +139,12 @@ $user = $this->getRequest()->getAttribute('identity');
             ]]); ?>
     </div>
 
-    <div class=" form-group row">
-        <?php echo $this->Form->control('carateresresumo', [
-            'label' => " ", 
-            'placeholder' => 'Quantidade de caracteres restantes',
-            'type' => 'text', 
-            'readonly' => true, 
-            'class' => 'form-control',
-            'templates' => [
-                'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
-                'input' => '<div class="col-sm-10"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
-            ]
-        ]); ?>
+    <div class="form-group row mb-3">
+        <!-- Include a div to hold the word count display -->
+        <label class="col-sm-3 col-form-label"></label> 
+        <div class="col-sm-9">
+            <div id="contacarateres" class="form-control"></div>
+        </div>
     </div>
 
     <div class=" form-group row">
@@ -142,8 +154,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => true,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
-                'input' => '<div class="col-sm-10"><input class="form-control" name="{{name}}" type="date"{{attrs}}></div>'
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="date"{{attrs}}></div>'
             ]]); ?>
     </div>
 
@@ -156,8 +168,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => true,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label" {{attrs}}>{{text}}</label>',
-                'select' => '<div class="col-sm-10"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+                'label' => '<label class="col-sm-3 col-form-label" {{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
             ]]); ?>
     </div>
 
@@ -169,8 +181,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'options' => ['0' => 'Sem dados', '1' => '1º', '2' => '2º'],
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label" {{attrs}}>{{text}}</label>',
-                'select' => '<div class="col-sm-10"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+                'label' => '<label class="col-sm-3 col-form-label" {{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
             ]]); ?>
     </div>
 
@@ -226,6 +238,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="date"{{attrs}}></div>'
             ]]); ?>
     </div>
+
     <div class=" form-group row">
         <?php echo $this->Form->control('banca1', [
             'label' => 'Banca Professor(a) orientador', 
@@ -295,3 +308,59 @@ $user = $this->getRequest()->getAttribute('identity');
     <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
 </div>
+
+<script type="module">
+    import {
+        ClassicEditor,
+        Essentials,
+        Bold,
+        Italic,
+        Strikethrough,
+        Font,
+        Paragraph,
+        Table,
+        TableToolbar,
+        SourceEditing,
+        WordCount
+    } from 'ckeditor5';
+
+    let texto;
+    if (typeof texto !== 'undefined') {
+        texto.destroy();
+    }
+    ClassicEditor
+        .create(document.querySelector('#resumo'), {
+            plugins: [Essentials, Bold, Italic, Strikethrough, Font, Paragraph, Table, TableToolbar, SourceEditing, WordCount],
+            toolbar: [
+                'sourceEditing', 'undo', 'redo', '|', 'bold', 'italic', 'strikethrough', 'insertTable', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+            ],
+            table: {
+                contentToolbar: [
+                    'tableColumn',
+                    'tableRow',
+                    'mergeTableCells'
+                ]
+            },
+            wordCount: {
+                showParagraphs: false, // Optional: show paragraph count
+                showWordCount: true,   // Show word count
+                showCharCount: true,   // Show character count
+                countSpacesAsChars: true, // Count spaces in character count
+                countHTML: false,      // Do not include HTML in character count
+                maxCharCount: 7000,     // Informational max character count
+                maxWordCount: 800      // Informational max word count
+            }
+        })
+        .then(editor => {
+            texto = editor;
+            texto.setData("");
+            const wordCountPlugin = texto.plugins.get( 'WordCount' );
+            const wordCountWrapper = document.getElementById( 'contacarateres' );
+            wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
+            console.log("Resumo editor initialized successfully: ${ wordCountPlugin.wordCountContainer.textContent } characters");
+        })
+        .catch(error => {
+            console.error('Error initializing resumo editor:', error);
+        });
+</script>

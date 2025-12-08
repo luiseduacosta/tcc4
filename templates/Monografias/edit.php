@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Monografia $monografia
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($monografia);
 ?>
 
 <script>
@@ -60,6 +59,66 @@ $user = $this->getRequest()->getAttribute('identity');
     <fieldset>
         <legend><?= __('Editar monografia: ' . $monografia->titulo) ?></legend>
 
+        <?php 
+        // Prepare current students
+        $currentStudents = [];
+        $i = 0;
+        if (!empty($monografia->tccestudantes)) {
+            foreach ($monografia->tccestudantes as $tccStudent) {
+                $currentStudents[] = $tccStudent->registro;
+                $i++;
+            }
+        }
+        ?>
+
+        <div class=" form-group">
+            <?php echo $this->Form->control('estudantes_ids.0', [
+                'label' => 'Estudante 1',
+                'type' => 'select',
+                'options' => $estudantes, 
+                'empty' => 'Seleciona estudante', 
+                'value' => $currentStudents[0] ?? null,
+                'required' => true,
+                'templates' => [
+                    'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                    'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>', 
+                    'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+                ]
+            ]); ?>
+        </div>
+
+        <div class=" form-group">
+            <?php echo $this->Form->control('estudantes_ids.1', [
+                'label' => 'Estudante 2',
+                'type' => 'select',
+                'options' => $estudantes, 
+                'empty' => 'Seleciona estudante', 
+                'value' => $currentStudents[1] ?? null,
+                'required' => false,
+                'templates' => [
+                    'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                    'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>', 
+                    'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+                ]
+            ]); ?>
+        </div>
+
+        <div class=" form-group">
+            <?php echo $this->Form->control('estudantes_ids.2', [
+                'label' => 'Estudante 3',
+                'type' => 'select',
+                'options' => $estudantes, 
+                'empty' => 'Seleciona estudante', 
+                'value' => $currentStudents[2] ?? null,
+                'required' => false,
+                'templates' => [
+                    'inputContainer' => '<div class="row mb-3" {{type}}{{required}}>{{content}}</div>',
+                    'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>', 
+                    'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+                ]
+            ]); ?>
+        </div>
+
         <?= $this->Form->control('catalogo', [
             'type' => 'hidden'
         ]); ?>
@@ -75,8 +134,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'placeholder' => 'Título de até 180 carateres',
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label" {{attrs}}>{{text}}</label>',
-                'textarea' => '<div class="col-sm-10"><textarea class="form-control" name="{{name}}" id="{{name}}"{{attrs}}>{{value}}</textarea><input id="caraterestitulo" /></div>'
+                'label' => '<label class="col-sm-3 col-form-label" {{attrs}}>{{text}}</label>',
+                'textarea' => '<div class="col-sm-9"><textarea class="form-control" name="{{name}}" id="{{name}}"{{attrs}}>{{value}}</textarea><input id="caraterestitulo" /></div>'
             ]
         ]); ?>
 
@@ -91,8 +150,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'placeholder' => 'Resumo de até 7000 carateres',
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label" {{attrs}}>{{text}}</label>',
-                'textarea' => '<div class="col-sm-10"><textarea class="form-control" name="{{name}}" id="{{name}}"{{attrs}}>{{value}}</textarea><input id="caratereresumo" /></div>',
+                'label' => '<label class="col-sm-3 col-form-label" {{attrs}}>{{text}}</label>',
+                'textarea' => '<div class="col-sm-9"><textarea class="form-control" name="{{name}}" id="{{name}}"{{attrs}}>{{value}}</textarea><input id="caratereresumo" /></div>',
             ]
         ]); ?>
 
@@ -103,8 +162,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
-                'input' => '<div class="col-sm-10"><input class="form-control" name="{{name}}" type="date"{{attrs}}>{{value}}</div>'
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="date"{{attrs}}>{{value}}</div>'
             ]
         ]); ?>
 
@@ -115,8 +174,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => true,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label" {{attrs}}>{{text}}</label>',
-                'text' => '<div class="col-sm-10" name="periodo" {{attrs}}>{{value}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label" {{attrs}}>{{text}}</label>',
+                'text' => '<div class="col-sm-9" name="periodo" {{attrs}}>{{value}}</div>',
             ]
         ]); ?>
 
@@ -129,7 +188,7 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => true,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label" {{attrs}}>{{text}}</label>',
+                'label' => '<label class="col-sm-3 col-form-label" {{attrs}}>{{text}}</label>',
                 'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>',
             ]
         ]); ?>
@@ -143,8 +202,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label" {{attrs}}>{{text}}</label>',
-                'select' => '<div class="col-sm-10"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+                'label' => '<label class="col-sm-3 col-form-label" {{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
             ]
         ]); ?>
 
@@ -157,8 +216,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label" {{attrs}}>{{text}}</label>',
-                'select' => '<div class="col-sm-10"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+                'label' => '<label class="col-sm-3 col-form-label" {{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
             ]
         ]); ?>
 
@@ -169,8 +228,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
-                'input' => '<div class="col-sm-10"><input class="form-control" name="{{name}}" type="date"{{attrs}}></div>'
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="date"{{attrs}}></div>'
             ]
         ]); ?>
 
@@ -183,8 +242,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => true,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
-                'select' => '<div class="col-sm-10"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
             ]
         ]); ?>
 
@@ -197,8 +256,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
-                'select' => '<div class="col-sm-10"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
             ]
         ]); ?>
 
@@ -211,8 +270,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
-                'select' => '<div class="col-sm-10"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'select' => '<div class="col-sm-9"><select class="form-select" name="{{name}}"{{attrs}}>{{content}}</select></div>'
             ]
         ]); ?>
 
@@ -223,8 +282,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
-                'input' => '<div class="col-sm-10"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="text"{{attrs}}></div>'
             ]
         ]); ?>
 
@@ -233,12 +292,11 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php echo $this->Form->control('url', [
             'label' => 'Inserir monografia em PDF', 
             'type' => 'file',
-            'value' => $monografia->url,
             'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
-                'input' => '<div class="col-sm-10"><input type="file" name="{{name}}"{{attrs}}></div>'
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input type="file" name="{{name}}"{{attrs}}></div>'
             ]
         ]); ?>
     <?php else: ?>
@@ -249,8 +307,8 @@ $user = $this->getRequest()->getAttribute('identity');
             'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
-                'label' => '<label class="col-sm-2 col-form-label"{{attrs}}>{{text}}</label>',
-                'input' => '<div class="col-sm-10"><input class="form-control" name="{{name}}" type="text"{{attrs}}>{{value}}</div>'
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="text"{{attrs}}>{{value}}</div>'
             ]
         ]); ?>
     <?php endif ?>

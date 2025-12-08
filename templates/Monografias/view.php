@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Monografia $monografia
  */
 $user = $this->getRequest()->getAttribute('identity');
-pr($monografia->url);
+// pr($monografia->url);
 // die();
 ?>
 
@@ -83,7 +83,7 @@ pr($monografia->url);
         <?php if (!empty($monografia->url)): ?>
             <tr>
                 <th scope="row"><?= __('PDF') ?></th>
-                <td><a href="<?= $baseUrl . 'monografias/' . $monografia->url ?>">Download</a></td>
+                <td><a href="<?= WWW_ROOT . 'monografias/' . $monografia->url ?>">Download</a></td>
             </tr>
         <?php endif; ?>
         <?php if (!empty($monografia->co_orienta_id)): ?>
