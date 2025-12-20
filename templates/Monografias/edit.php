@@ -301,14 +301,24 @@ $user = $this->getRequest()->getAttribute('identity');
         ]); ?>
     <?php else: ?>
         <?php echo $this->Form->control('url', [
-            'label' => 'Alterar monografia em PDF', 
-            'type' => 'text',
+            'label' => 'Monografia', 
+            'type' => 'file',
             'value' => $monografia->url,
             'required' => false,
             'templates' => [
                 'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
                 'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
-                'input' => '<div class="col-sm-9"><input class="form-control" name="{{name}}" type="text"{{attrs}}>{{value}}</div>'
+                'input' => '<div class="col-sm-9"><input type="file" name="{{name}}"{{attrs}}></div>'
+            ]
+        ]); ?>
+        <?php echo $this->Form->control('url_nova', [
+            'label' => 'Alterar monografia', 
+            'type' => 'file',
+            'required' => false,
+            'templates' => [
+                'inputContainer' => '<div class="form-group row mb-3">{{content}}</div>',
+                'label' => '<label class="col-sm-3 col-form-label"{{attrs}}>{{text}}</label>',
+                'input' => '<div class="col-sm-9"><input type="file" name="{{name}}"{{attrs}}></div>'
             ]
         ]); ?>
     <?php endif ?>
@@ -323,3 +333,59 @@ $user = $this->getRequest()->getAttribute('identity');
     <?= $this->Form->button(__('Confirmar'), ['class' => 'btn btn-primary']) ?>
     <?= $this->Form->end() ?>
 </div>
+
+<script type="module">
+    import {
+        ClassicEditor,
+        Essentials,
+        Bold,
+        Italic,
+        Strikethrough,
+        Font,
+        Paragraph,
+        Table,
+        TableToolbar,
+        SourceEditing,
+        WordCount
+    } from 'ckeditor5';
+
+    let texto;
+    if (typeof texto !== 'undefined') {
+        texto.destroy();
+    }
+    ClassicEditor
+        .create(document.querySelector('#resumo'), {
+            plugins: [Essentials, Bold, Italic, Strikethrough, Font, Paragraph, Table, TableToolbar, SourceEditing, WordCount],
+            toolbar: [
+                'sourceEditing', 'undo', 'redo', '|', 'bold', 'italic', 'strikethrough', 'insertTable', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+            ],
+            table: {
+                contentToolbar: [
+                    'tableColumn',
+                    'tableRow',
+                    'mergeTableCells'
+                ]
+            },
+            wordCount: {
+                showParagraphs: false, // Optional: show paragraph count
+                showWordCount: true,   // Show word count
+                showCharCount: true,   // Show character count
+                countSpacesAsChars: true, // Count spaces in character count
+                countHTML: false,      // Do not include HTML in character count
+                maxCharCount: 7000,     // Informational max character count
+                maxWordCount: 800      // Informational max word count
+            }
+        })
+        .then(editor => {
+            texto = editor;
+            texto.setData("<?= $monografia->resumo ?>");
+            const wordCountPlugin = texto.plugins.get( 'WordCount' );
+            const wordCountWrapper = document.getElementById( 'contacarateres' );
+            wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
+            console.log("Resumo editor initialized successfully: ${ wordCountPlugin.wordCountContainer.textContent } characters");
+        })
+        .catch(error => {
+            console.error('Error initializing resumo editor:', error);
+        });
+</script>

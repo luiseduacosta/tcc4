@@ -42,7 +42,7 @@ $user = $this->getRequest()->getAttribute('identity');
                 <th scope="row" colspan="2"><?= __('Resumo') ?>
             </tr>
             <tr>
-                <td colspan="2"><?= $this->Text->autoParagraph(h($monografia->resumo)) ?></td>
+                <td colspan="2"><?= $this->Text->autoParagraph($monografia->resumo) ?></td>
             </tr>
         <?php endif; ?>
         <tr>
