@@ -23,7 +23,7 @@ class QuestionariosControllerTest extends TestCase
      */
     protected array $fixtures = [
         'app.Questionarios',
-        'app.Questiones',
+        'app.Questoes',
     ];
 
     /**

@@ -6,9 +6,9 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * QuestionesFixture
+ * QuestoesFixture
  */
-class QuestionesFixture extends TestFixture
+class QuestoesFixture extends TestFixture
 {
     public string $table = 'questoes';
     /**

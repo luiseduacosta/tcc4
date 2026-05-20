@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\QuestionesTable;
+use App\Model\Table\QuestoesTable;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\QuestionesTable Test Case
+ * App\Model\Table\QuestoesTable Test Case
  */
-class QuestionesTableTest extends TestCase
+class QuestoesTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\QuestionesTable
+     * @var \App\Model\Table\QuestoesTable
      */
-    protected $QuestionesTable;
+    protected $QuestoesTable;
 
     /**
      * Fixtures
@@ -24,7 +24,7 @@ class QuestionesTableTest extends TestCase
      * @var array<string>
      */
     protected array $fixtures = [
-        'app.Questiones',
+        'app.Questoes',
         'app.Questionarios',
     ];
 
@@ -36,8 +36,8 @@ class QuestionesTableTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $config = $this->getTableLocator()->exists('Questiones') ? [] : ['className' => QuestionesTable::class];
-        $this->QuestionesTable = $this->getTableLocator()->get('Questiones', $config);
+        $config = $this->getTableLocator()->exists('Questoes') ? [] : ['className' => QuestoesTable::class];
+        $this->QuestoesTable = $this->getTableLocator()->get('Questoes', $config);
     }
 
     /**
@@ -47,7 +47,7 @@ class QuestionesTableTest extends TestCase
      */
     protected function tearDown(): void
     {
-        unset($this->QuestionesTable);
+        unset($this->QuestoesTable);
 
         parent::tearDown();
     }
@@ -56,7 +56,7 @@ class QuestionesTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
-     * @link \App\Model\Table\QuestionesTable::validationDefault()
+     * @link \App\Model\Table\QuestoesTable::validationDefault()
      */
     public function testValidationDefault(): void
     {
@@ -67,7 +67,7 @@ class QuestionesTableTest extends TestCase
      * Test buildRules method
      *
      * @return void
-     * @link \App\Model\Table\QuestionesTable::buildRules()
+     * @link \App\Model\Table\QuestoesTable::buildRules()
      */
     public function testBuildRules(): void
     {

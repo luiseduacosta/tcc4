@@ -3,16 +3,16 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\QuestionesController;
+use App\Controller\QuestoesController;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Controller\QuestionesController Test Case
+ * App\Controller\QuestoesController Test Case
  *
- * @link \App\Controller\QuestionesController
+ * @link \App\Controller\QuestoesController
  */
-class QuestionesControllerTest extends TestCase
+class QuestoesControllerTest extends TestCase
 {
     use IntegrationTestTrait;
 
@@ -22,7 +22,7 @@ class QuestionesControllerTest extends TestCase
      * @var array<string>
      */
     protected array $fixtures = [
-        'app.Questiones',
+        'app.Questoes',
         'app.Questionarios',
     ];
 
@@ -30,7 +30,7 @@ class QuestionesControllerTest extends TestCase
      * Test index method
      *
      * @return void
-     * @link \App\Controller\QuestionesController::index()
+     * @link \App\Controller\QuestoesController::index()
      */
     public function testIndex(): void
     {
@@ -41,7 +41,7 @@ class QuestionesControllerTest extends TestCase
      * Test view method
      *
      * @return void
-     * @link \App\Controller\QuestionesController::view()
+     * @link \App\Controller\QuestoesController::view()
      */
     public function testView(): void
     {
@@ -52,7 +52,7 @@ class QuestionesControllerTest extends TestCase
      * Test add method
      *
      * @return void
-     * @link \App\Controller\QuestionesController::add()
+     * @link \App\Controller\QuestoesController::add()
      */
     public function testAdd(): void
     {
@@ -63,7 +63,7 @@ class QuestionesControllerTest extends TestCase
      * Test edit method
      *
      * @return void
-     * @link \App\Controller\QuestionesController::edit()
+     * @link \App\Controller\QuestoesController::edit()
      */
     public function testEdit(): void
     {
@@ -74,7 +74,7 @@ class QuestionesControllerTest extends TestCase
      * Test delete method
      *
      * @return void
-     * @link \App\Controller\QuestionesController::delete()
+     * @link \App\Controller\QuestoesController::delete()
      */
     public function testDelete(): void
     {

@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
 /**
  * Questionarios Model
  *
- * @property \App\Model\Table\QuestionesTable&\Cake\ORM\Association\HasMany $Questiones
+ * @property \App\Model\Table\QuestoesTable&\Cake\ORM\Association\HasMany $Questoes
  *
  * @method \App\Model\Entity\Questionario newEmptyEntity()
  * @method \App\Model\Entity\Questionario newEntity(array $data, array $options = [])
@@ -47,7 +47,7 @@ class QuestionariosTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('Questiones', [
+        $this->hasMany('Questoes', [
             'foreignKey' => 'questionario_id',
         ]);
     }
@@ -72,17 +72,17 @@ class QuestionariosTable extends Table
 
         $validator
             ->boolean('is_active')
-            ->notEmptyString('is_active');
+            ->requirePresence('is_active', 'create');
 
         $validator
             ->scalar('category')
             ->maxLength('category', 100)
-            ->allowEmptyString('category');
+            ->requirePresence('category', 'create');
 
         $validator
             ->scalar('target_user_type')
             ->maxLength('target_user_type', 50)
-            ->allowEmptyString('target_user_type');
+            ->requirePresence('target_user_type', 'create');
 
         return $validator;
     }

@@ -2,7 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Resposta $resposta
- * @var string[]|\Cake\Collection\CollectionInterface $questiones
+ * @var string[]|\Cake\Collection\CollectionInterface $questoes
  * @var string[]|\Cake\Collection\CollectionInterface $estagiarios
  */
 // pr($avaliacoes);

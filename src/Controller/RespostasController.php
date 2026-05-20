@@ -56,7 +56,7 @@ class RespostasController extends AppController
             // echo substr($key, 0, 9) . ' ' . $value . '<br>';
             if (substr($key, 0, 9) == 'avaliacao') {
                 $pergunta_id = (int) substr($key, 9, 2);
-                $pergunta = $this->fetchTable('Questiones')->get(intval($pergunta_id));
+                $pergunta = $this->fetchTable('Questoes')->get(intval($pergunta_id));
                 if ($pergunta->type == 'select' || $pergunta->type == 'radio' || $pergunta->type == 'checkbox' || $pergunta->type == 'boolean') {
                     $opcoes = json_decode($pergunta->options, true);
                     foreach ($opcoes as $option_key => $option_value) {
@@ -128,8 +128,8 @@ class RespostasController extends AppController
             }
             // return $this->redirect(['action' => 'index']);
         }
-        $questiones = $this->Respostas->Questiones->find()->all();
-        $this->set(compact('resposta', 'questiones', 'estagiario_id'));
+        $questoes = $this->Respostas->Questoes->find()->all();
+        $this->set(compact('resposta', 'questoes', 'estagiario_id'));
     }
 
     /**
@@ -155,7 +155,7 @@ class RespostasController extends AppController
         foreach ($respostas as $key => $value) {
             if (substr($key, 0, 9) == 'avaliacao') {
                 $pergunta_id = (int) substr($key, 9, 2);
-                $pergunta = $this->fetchTable('Questiones')->get(intval($pergunta_id));
+                $pergunta = $this->fetchTable('Questoes')->get(intval($pergunta_id));
                 $avaliacoes[$i]['pergunta_id'] = $pergunta_id;
                 $avaliacoes[$i]['pergunta'] = $pergunta->text;
                 $avaliacoes[$i]['type'] = $pergunta->type;

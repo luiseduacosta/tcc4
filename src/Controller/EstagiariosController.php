@@ -240,7 +240,7 @@ class EstagiariosController extends AppController
                 // echo substr($key, 0, 9) . ' ' . $value . '<br>';
                 if (substr($key, 0, 9) == 'avaliacao') {
                     $pergunta_id = (int) substr($key, 9, 2);
-                    $pergunta = $this->fetchTable('Questiones')->get(intval($pergunta_id));
+                    $pergunta = $this->fetchTable('Questoes')->get(intval($pergunta_id));
                     if ($pergunta->type == 'select' || $pergunta->type == 'radio' || $pergunta->type == 'checkbox' || $pergunta->type == 'boolean') {
                         $opcoes = json_decode($pergunta->options, true);
                         foreach ($opcoes as $option_key => $option_value) {

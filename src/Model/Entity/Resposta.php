@@ -15,7 +15,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\DateTime|null $created
  * @property \Cake\I18n\DateTime|null $modified
  *
- * @property \App\Model\Entity\Questione $questione
+ * @property \App\Model\Entity\Questao $questao
  * @property \App\Model\Entity\Estagiario $estagiario
  */
 class Resposta extends Entity
@@ -35,7 +35,7 @@ class Resposta extends Entity
         'response' => true,
         'created' => true,
         'modified' => true,
-        'questione' => true,
+        'questao' => true,
         'estagiario' => true,
     ];
 }

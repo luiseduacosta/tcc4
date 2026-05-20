@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
 /**
  * Respostas Model
  *
- * @property \App\Model\Table\QuestionesTable&\Cake\ORM\Association\BelongsTo $Questiones
+ * @property \App\Model\Table\QuestoesTable&\Cake\ORM\Association\BelongsTo $Questoes
  * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\BelongsTo $Estagiarios
  *
  * @method \App\Model\Entity\Resposta newEmptyEntity()
@@ -48,7 +48,7 @@ class RespostasTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Questiones', [
+        $this->belongsTo('Questoes', [
             'foreignKey' => 'question_id',
             'joinType' => 'INNER',
         ]);
@@ -90,7 +90,7 @@ class RespostasTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn('question_id', 'Questiones'), ['errorField' => 'question_id']);
+        $rules->add($rules->existsIn('question_id', 'Questoes'), ['errorField' => 'question_id']);
         $rules->add($rules->existsIn('estagiarios_id', 'Estagiarios'), ['errorField' => 'estagiarios_id']);
 
         return $rules;
