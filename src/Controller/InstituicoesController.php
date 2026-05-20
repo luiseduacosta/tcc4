@@ -39,7 +39,7 @@ class InstituicoesController extends AppController
         $this->Authorization->skipAuthorization();
         if ($query) {
             if ($this->request->getQuery('sort') === null) {
-                $query->order(['Instituicoes.instituicao' => 'ASC']);
+                $query->orderBy(['Instituicoes.instituicao' => 'ASC']);
             }
         } else {
             $this->Flash->error(__('Instituição: ' . $instituicao . ' não encontrada. Tente novamente.'));
@@ -60,9 +60,7 @@ class InstituicoesController extends AppController
     {
         $this->Authorization->skipAuthorization();
         try {
-            $instituicao = $this->Instituicoes->get($id, [
-                'contain' => ['Areainstituicoes', 'Supervisores', 'Estagiarios' => ['Alunos', 'Instituicoes', 'Professores', 'Supervisores', 'Turmaestagios'], 'Muralestagios', 'Visitas']
-            ]);
+            $instituicao = $this->Instituicoes->get($id, contain: ['Areainstituicoes', 'Supervisores', 'Estagiarios' => ['Alunos', 'Instituicoes', 'Professores', 'Supervisores', 'Turmaestagios'], 'Muralestagios', 'Visitas']);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Instituição não encontrada.'));
             return $this->redirect(['action' => 'index']);
@@ -108,9 +106,7 @@ class InstituicoesController extends AppController
 
         $this->Authorization->skipAuthorization();
         try {
-            $instituicao = $this->Instituicoes->get($id, [
-                'contain' => ['Supervisores'],
-            ]);
+            $instituicao = $this->Instituicoes->get($id, contain: ['Supervisores'],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Instituição não encontrada.'));
             return $this->redirect(['action' => 'index']);
@@ -185,7 +181,7 @@ class InstituicoesController extends AppController
                 ->matching('Instituicoes', function ($q) use ($instituicao_id) {
                     return $q->where(['Instituicoes.id' => $instituicao_id]);
                 })
-                ->order(['nome' => 'ASC'])
+                ->orderBy(['nome' => 'ASC'])
                 ->toArray();
 
             return $this->response
@@ -213,7 +209,7 @@ class InstituicoesController extends AppController
         if ($instituicao) {
             $query = $this->Instituicoes->find('all');
             $query->where(['instituicao LIKE' => "%{$instituicao}%"]);
-            $query->order(['instituicao' => 'ASC']);
+            $query->orderBy(['instituicao' => 'ASC']);
             if (!$query->toArray()) {
                 $this->Flash->error(__('Nenhum(a) instituição de estágio encontrado com o nome: ' . $instituicao));
                 return $this->redirect([

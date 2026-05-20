@@ -39,22 +39,22 @@ class MuralinscricoesController extends AppController
         if ($periodo) {
             $query = $this->Muralinscricoes->find('all')
                 ->contain(['Alunos', 'Muralestagios'])
-                ->order(['Alunos.nome'])
+                ->orderBy(['Alunos.nome'])
                 ->where(['Muralinscricoes.periodo' => $periodo]);
         } else {
             $query = $this->Muralinscricoes->find('all')
                 ->contain(['Alunos', 'Muralestagios'])
-                ->order(['Alunos.nome']);
+                ->orderBy(['Alunos.nome']);
         }
         $this->Authorization->skipAuthorization();
         $muralinscricoes = $this->paginate($query, [
             'sortableFields' => ['id', 'registro', 'Alunos.nome', 'Muralestagios.instituicao', 'data', 'periodo', 'timestamp']
         ]);
 
-        $periodototal = $this->Muralinscricoes->find('list', [
-            'keyField' => 'periodo',
-            'valueField' => 'periodo'
-        ]);
+        $periodototal = $this->Muralinscricoes->find('list',
+            keyField: 'periodo',
+            valueField: 'periodo'
+        );
         $periodos = $periodototal->toArray();
 
         $this->set(compact('muralinscricoes', 'periodo', 'periodos'));
@@ -71,9 +71,7 @@ class MuralinscricoesController extends AppController
     {
         try {
             $this->Authorization->skipAuthorization();
-            $muralinscricao = $this->Muralinscricoes->get($id, [
-                'contain' => ['Alunos', 'Muralestagios' => ['Instituicoes']]
-            ]);
+            $muralinscricao = $this->Muralinscricoes->get($id, contain: ['Alunos', 'Muralestagios' => ['Instituicoes']]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Nao ha registros de inscrições para esse número!'));
             return $this->redirect(['action' => 'index']);
@@ -122,7 +120,7 @@ class MuralinscricoesController extends AppController
             }
 
             $user = $this->request->getAttribute('identity')->getOriginalData();
-            $hoje = FrozenTime::now();
+            $hoje = \Cake\I18n\DateTime::now();
             if (empty($muralestagio->dataInscricao)) { 
                 $muralestagio->dataInscricao = $hoje->addDays(1);
             }
@@ -183,7 +181,7 @@ class MuralinscricoesController extends AppController
                         'Alunos.nome' => 'identifier'
                     ])
                 ])
-            ->order(['Alunos.nome' => 'ASC'])
+            ->orderBy(['Alunos.nome' => 'ASC'])
             ->all();
         foreach ($estudantes as $a) {
             $alunos[$a->id] = $a->registro_nome;
@@ -199,7 +197,7 @@ class MuralinscricoesController extends AppController
                         'Muralestagios.instituicao' => 'identifier'
                     ])
                 ])
-            ->order(['Muralestagios.periodo' => 'DESC', 'Muralestagios.instituicao' => 'ASC'])
+            ->orderBy(['Muralestagios.periodo' => 'DESC', 'Muralestagios.instituicao' => 'ASC'])
             ->all();
         foreach ($mural as $m) {
             $muralestagios[$m->id] = $m->instituicao_periodo;
@@ -218,9 +216,7 @@ class MuralinscricoesController extends AppController
     {
 
         try {
-            $muralinscricao = $this->Muralinscricoes->get($id, [
-                'contain' => ['Alunos', 'Muralestagios'],
-            ]);
+            $muralinscricao = $this->Muralinscricoes->get($id, contain: ['Alunos', 'Muralestagios'],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro de inscrição não foi encontrado. Tente novamente.'));
             return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'index']);
@@ -229,9 +225,7 @@ class MuralinscricoesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             /** Ajusto o período conforme o mural de estágio selecionado */
-            $mural = $this->Muralinscricoes->get($this->request->getData('id'), [
-                'contain' => ['Muralestagios']
-            ]);
+            $mural = $this->Muralinscricoes->get($this->request->getData('id'), contain: ['Muralestagios']);
             if (!$mural) {
                 $this->Flash->error(__('Mural de estágio não localizado'));
                 return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
@@ -257,7 +251,7 @@ class MuralinscricoesController extends AppController
                         'Muralestagios.instituicao' => 'identifier'
                     ])
                 ])
-            ->order(['Muralestagios.periodo' => 'DESC', 'Muralestagios.instituicao' => 'ASC'])
+            ->orderBy(['Muralestagios.periodo' => 'DESC', 'Muralestagios.instituicao' => 'ASC'])
             ->all();
         foreach ($mural as $m) {
             $muralestagios[$m->id] = $m->instituicao_periodo;
@@ -273,7 +267,7 @@ class MuralinscricoesController extends AppController
                         'Alunos.nome' => 'identifier'
                     ])
                 ])
-            ->order(['Alunos.nome' => 'ASC'])
+            ->orderBy(['Alunos.nome' => 'ASC'])
             ->all();
         foreach ($estudantes as $a) {
             $alunos[$a->id] = $a->registro_nome;

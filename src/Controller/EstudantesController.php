@@ -63,7 +63,7 @@ class EstudantesController extends AppController
             return $this->redirect(["action" => "add"]);
         }
         if ($this->request->getQuery("sort") === null) {
-            $estudantes->order(["Estudantes.nome" => "ASC"]);
+            $estudantes->orderBy(["Estudantes.nome" => "ASC"]);
         }
         $alunos = $this->paginate($estudantes);
         $this->set("alunos", $alunos);
@@ -79,7 +79,7 @@ class EstudantesController extends AppController
         $this->Authorization->skipAuthorization();
         $estudantes = $this->Estudantes->find();
         if ($this->request->getQuery("sort") === null) {
-            $estudantes->order(["Estudantes.nome" => "ASC"]);
+            $estudantes->orderBy(["Estudantes.nome" => "ASC"]);
         }
         $alunos = $this->paginate($estudantes);
         $this->set(compact("alunos"));
@@ -95,7 +95,7 @@ class EstudantesController extends AppController
         $this->Authorization->skipAuthorization();
         $estudantes = $this->Estudantes->find();
         if ($this->request->getQuery("sort") === null) {
-            $estudantes->order(["Estudantes.nome" => "ASC"]);
+            $estudantes->orderBy(["Estudantes.nome" => "ASC"]);
         }
         $alunos = $this->paginate($estudantes);
         $this->set(compact("alunos"));
@@ -166,9 +166,7 @@ class EstudantesController extends AppController
     public function edit($id = null)
     {
         try {
-            $estudante = $this->Estudantes->get($id, [
-                "contain" => [],
-            ]);
+            $estudante = $this->Estudantes->get($id, contain: [],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__("Registro não encontrado."));
             return $this->redirect(["action" => "index"]);
@@ -200,13 +198,11 @@ class EstudantesController extends AppController
     {
         $this->request->allowMethod(["post", "delete"]);
         try {
-            $estudante = $this->Estudantes->get($id, [
-                "contain" => [
+            $estudante = $this->Estudantes->get($id, contain: [
                     "Muralinscricoes",
                     "Estagiarios",
                     "Tccestudantes",
-                ],
-            ]);
+                ],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__("Registro não encontrado."));
             return $this->redirect(["action" => "index"]);

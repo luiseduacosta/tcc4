@@ -26,7 +26,7 @@ use Cake\ORM\Entity;
  * @property string|null $fim_de_semana
  * @property string $localInscricao
  * @property int $convenio
- * @property \Cake\I18n\FrozenDate|null $expira
+ * @property \Cake\I18n\Date|null $expira
  * @property string $seguro
  * @property string $avaliacao
  * @property string|null $observacoes
@@ -48,7 +48,7 @@ class Instituicao extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'instituicao' => true,
         'areainstituicoes_id' => true,
         'area' => true,

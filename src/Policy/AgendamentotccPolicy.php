@@ -56,7 +56,7 @@ class AgendamentotccPolicy
      * @param \App\Model\Entity\Agendamentotcc $agendamentotcc
      * @return bool
      */
-    public function canView(IdentityInterface $user, Agendamentotcc $agendamentotcc)
+    public function canView(?IdentityInterface $user, Agendamentotcc $agendamentotcc)
     {
         if (isset($user->categoria) && $user->categoria == '1') {
             return true;

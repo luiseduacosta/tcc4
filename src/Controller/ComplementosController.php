@@ -43,9 +43,7 @@ class ComplementosController extends AppController
     {
         $this->Authorization->skipAuthorization();  
         try {
-            $complemento = $this->Complementos->get($id, [
-                'contain' => ['Estagiarios'],
-            ]);
+            $complemento = $this->Complementos->get($id, contain: ['Estagiarios'],);
         } catch (\Exception $e) {
             $this->Flash->error(__('Complemento nao foi encontrado. Tente novamente.'));
 
@@ -86,9 +84,7 @@ class ComplementosController extends AppController
     public function edit($id = null)
     {
         try {
-            $complemento = $this->Complementos->get($id, [
-                'contain' => [],
-            ]);
+            $complemento = $this->Complementos->get($id, contain: [],);
         } catch (\Exception $e) {
             $this->Flash->error(__('Complemento nao foi encontrado. Tente novamente.'));
 

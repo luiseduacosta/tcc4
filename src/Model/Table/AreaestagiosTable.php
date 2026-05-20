@@ -57,10 +57,9 @@ class AreaestagiosTable extends Table {
         ]);
     }
 
-    public function beforeFind($event, $query, $options, $primary) {
+    public function beforeFind($event, $query, $options, $primary): void {
 
-        $query->order(['area' => 'ASC']);
-        return $query;
+        $query->orderBy(['area' => 'ASC']);
     }
 
     /**

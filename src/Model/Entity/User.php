@@ -18,12 +18,11 @@ use Cake\ORM\Entity;
  * @property int|null $estudante_id
  * @property int|null $supervisor_id
  * @property int|null $professor_id
- * @property \Cake\I18n\FrozenTime $timestamp
+ * @property \Cake\I18n\DateTime $timestamp
  *
  * @property \App\Model\Entity\Aluno[] $alunos
  * @property \App\Model\Entity\Supervisor[] $supervisores
  * @property \App\Model\Entity\Professor[] $professores
- *
  */
 class User extends Entity {
 
@@ -36,7 +35,7 @@ class User extends Entity {
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'email' => true,
         'password' => true,
         'categoria' => true,
@@ -62,7 +61,7 @@ class User extends Entity {
      *
      * @var array
      */
-    protected $_hidden = [
+    protected array $_hidden = [
         'password',
     ];
 

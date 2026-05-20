@@ -37,7 +37,7 @@ class SupervisoresController extends AppController
             return $this->redirect(['action' => 'add']);
         }
         if ($this->request->getQuery('sort') === null) {
-            $query->order(['nome' => 'ASC']);
+            $query->orderBy(['nome' => 'ASC']);
         }
         $supervisores = $this->paginate($query, [
             'sortableFields' => ['nome', 'cress']
@@ -76,9 +76,7 @@ class SupervisoresController extends AppController
         endif;
         try {
             $this->Authorization->skipAuthorization();
-            $supervisor = $this->Supervisores->get($id, [
-                'contain' => ['Instituicoes' => ['Areainstituicoes'], 'Estagiarios' => ['Alunos', 'Supervisores', 'Professores', 'Instituicoes']],
-            ]);
+            $supervisor = $this->Supervisores->get($id, contain: ['Instituicoes' => ['Areainstituicoes'], 'Estagiarios' => ['Alunos', 'Supervisores', 'Professores', 'Instituicoes']],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Supervisora não encontrada.'));
             return $this->redirect(['action' => 'index']);
@@ -120,9 +118,7 @@ class SupervisoresController extends AppController
     {
         try {
             $this->Authorization->skipAuthorization();
-            $supervisor = $this->Supervisores->get($id, [
-                'contain' => ['Instituicoes'],
-            ]);
+            $supervisor = $this->Supervisores->get($id, contain: ['Instituicoes'],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Supervisora não encontrada.'));
             return $this->redirect(['action' => 'index']);

@@ -13,7 +13,7 @@ namespace App\Controller;
  */
 class QuestionesController extends AppController
 {
-    public $paginate = [
+    public array $paginate = [
         "sortableFields" => [
             "id",
             "type",
@@ -50,9 +50,7 @@ class QuestionesController extends AppController
     public function view($id = null)
     {
         try {
-            $questione = $this->Questiones->get($id, [
-                "contain" => ["Questionarios"],
-            ]);
+            $questione = $this->Questiones->get($id, contain: ["Questionarios"]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__("Registro não encontrado."));
             return $this->redirect(["action" => "index"]);
@@ -71,7 +69,7 @@ class QuestionesController extends AppController
         $questione = $this->Questiones->newEmptyEntity();
         $perguntas = $this->Questiones
             ->find()
-            ->order(["ordem" => "DESC"])
+            ->orderBy(["ordem" => "DESC"])
             ->contain(["Questionarios"])
             ->first();
         if ($perguntas->ordem) {
@@ -91,7 +89,7 @@ class QuestionesController extends AppController
             return $this->redirect(["action" => "index"]);
         }
         $questionarios = $this->Questiones->Questionarios
-            ->find("list", ["limit" => 200])
+            ->find("list", limit: 200)
             ->all();
         $this->set(compact("questione", "questionarios"));
     }
@@ -106,9 +104,7 @@ class QuestionesController extends AppController
     public function edit($id = null)
     {
         try {
-            $questione = $this->Questiones->get($id, [
-                "contain" => [],
-            ]);
+            $questione = $this->Questiones->get($id, contain: []);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__("Registro não encontrado."));
             return $this->redirect(["action" => "index"]);
@@ -129,7 +125,7 @@ class QuestionesController extends AppController
             return $this->redirect(["action" => "index"]);
         }
         $questionarios = $this->Questiones->Questionarios
-            ->find("list", ["limit" => 200])
+            ->find("list", limit: 200)
             ->all();
         $this->set(compact("questione", "questionarios"));
     }

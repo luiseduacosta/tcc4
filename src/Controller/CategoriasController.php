@@ -34,9 +34,7 @@ class CategoriasController extends AppController {
     public function view($id = null) {
         $this->Authorization->skipAuthorization();
         try {   
-            $categoria = $this->Categorias->get($id, [
-                'contain' => [],
-            ]);
+            $categoria = $this->Categorias->get($id, contain: []);
         } catch (\Exception $e) {
             $this->Flash->error(__('Registro categoria nao foi encontrado. Tente novamente.'));
 
@@ -76,9 +74,7 @@ class CategoriasController extends AppController {
     public function edit($id = null) {
         $this->Authorization->skipAuthorization();
         try {
-            $categoria = $this->Categorias->get($id, [
-                'contain' => [],
-            ]);
+            $categoria = $this->Categorias->get($id, contain: []);
         } catch (\Exception $e) {
             $this->Flash->error(__('Registro categoria nao foi encontrado. Tente novamente.'));
 

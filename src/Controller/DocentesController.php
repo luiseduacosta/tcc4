@@ -45,7 +45,7 @@ class DocentesController extends AppController
         $query = $this->Docentes->find();
         if ($query) {
             if ($this->request->getQuery('sort') === null) {
-                $query->order(['nome' => 'ASC']);
+                $query->orderBy(['nome' => 'ASC']);
             }
             $docentes = $this->paginate($query, [
                 'sortableFields' => ['nome', 'siape', 'departamento', 'dataingresso', 'dataegresso']
@@ -74,9 +74,7 @@ class DocentesController extends AppController
         }
 
         try {
-            $docente = $this->Docentes->get($id, [
-                'contain' => ['Monografias' => ['sort' => ['titulo' => 'ASC']], 'Areamonografias']
-            ]);
+            $docente = $this->Docentes->get($id, contain: ['Monografias' => ['sort' => ['titulo' => 'ASC']], 'Areamonografias']);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro docente não encontrado'));
             return $this->redirect(['action' => 'index']);
@@ -143,9 +141,7 @@ class DocentesController extends AppController
 
         $this->Authorization->skipAuthorization();
         try {
-            $docente = $this->Docentes->get($id, [
-                'contain' => [],
-            ]);
+            $docente = $this->Docentes->get($id, contain: [],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro docente não encontrado'));
             return $this->redirect(['action' => 'index']);

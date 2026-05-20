@@ -25,7 +25,7 @@ class Areamonografia extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'area' => true,
         'monografias' => true,
         'docentes' => true,

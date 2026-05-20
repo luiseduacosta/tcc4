@@ -19,6 +19,7 @@ declare(strict_types=1);
  * Configure paths required to find CakePHP + general filepath constants
  */
 require __DIR__ . "/paths.php";
+require CAKE . "functions.php";
 
 /*
  * Bootstrap CakePHP.
@@ -98,7 +99,7 @@ if (file_exists(CONFIG . "app_local.php")) {
  */
 if (Configure::read("debug")) {
     Configure::write("Cache._cake_model_.duration", "+2 minutes");
-    Configure::write("Cache._cake_core_.duration", "+2 minutes");
+    Configure::write("Cache._cake_translations_.duration", "+2 minutes");
     // disable router cache during development
     Configure::write("Cache._cake_routes_.duration", "+2 seconds");
 }
@@ -288,10 +289,8 @@ Type::build('timestamp')
 date_default_timezone_set("America/Sao_Paulo");
 setlocale(LC_ALL, "pt_BR", "pt_BR.utf-8", "pt_BR.utf-8", "portuguese");
 
-\Cake\I18n\Time::setToStringFormat("HH:mm:ss");
+\Cake\I18n\DateTime::setToStringFormat("HH:mm:ss");
 \Cake\I18n\Date::setToStringFormat("dd/MM/yyyy");
-\Cake\I18n\FrozenTime::setToStringFormat("HH:mm:ss");
-\Cake\I18n\FrozenDate::setToStringFormat("dd/MM/yyyy");
 
 /*
  * Configuração do CakePdf

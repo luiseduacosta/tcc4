@@ -37,7 +37,7 @@ class TccestudantesTable extends Table
 
         $this->setTable('tccestudantes');
         $this->setAlias('Tccestudantes');
-        $this->setDisplayField('id');
+        $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 
         // Tccestudantes tem uma monografia
@@ -51,10 +51,8 @@ class TccestudantesTable extends Table
         // Tccestudantes com estudantes para usar em Monografias
         $this->hasOne('Estudantes', [
             'className' => 'Estudantes',
-            'propertyName' => 'estudantes',
-            'foreignKey' => false,
+            'foreignKey' => 'registro',
             'targetForeignKey' => 'registro',
-            'conditions' => 'Tccestudantes.registro = Estudantes.registro',
             'joinType' => 'LEFT'
         ]);
     }
@@ -94,6 +92,7 @@ class TccestudantesTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['monografia_id'], 'Monografias'));
+        $rules->add($rules->existsIn(['registro'], 'Estudantes'));
 
         return $rules;
     }

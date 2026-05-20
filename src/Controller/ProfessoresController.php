@@ -48,7 +48,7 @@ class ProfessoresController extends AppController
             return $this->redirect(['action' => 'add']);
         }
         if ($this->request->getQuery('sort') === null) {
-            $query->order(['nome' => 'ASC']);
+            $query->orderBy(['nome' => 'ASC']);
         }
         $professores = $this->paginate($query, [
             'sortableFields' => ['nome', 'siape', 'departamento', 'dataingresso', 'dataegresso']
@@ -97,12 +97,7 @@ class ProfessoresController extends AppController
 
         /** Têm Professores com muitos estagiários: aumentar a memória */
         ini_set('memory_limit', '2048M');
-        $professor = $this->Professores->get(
-            $id,
-            [
-                'contain' => ['Estagiarios' => ['sort' => ['Estagiarios.periodo DESC'], 'Instituicoes', 'Supervisores', 'Professores', 'Alunos']]
-            ]
-        );
+        $professor = $this->Professores->get($id, contain: ['Estagiarios' => ['sort' => ['Estagiarios.periodo DESC'], 'Instituicoes', 'Supervisores', 'Professores', 'Alunos']]);
 
         if (!isset($professor)) {
             $this->Flash->error(__('Nao ha registros de professor para esse numero!'));
@@ -195,9 +190,7 @@ class ProfessoresController extends AppController
     public function edit($id = null)
     {
 
-        $professor = $this->Professores->get($id, [
-            'contain' => [],
-        ]);
+        $professor = $this->Professores->get($id, contain: [],);
         $this->Authorization->authorize($professor);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -224,9 +217,7 @@ class ProfessoresController extends AppController
 
         $this->Authorization->skipAuthorization();
         try {
-            $professor = $this->Professores->get($id, [
-                'contain' => ['Estagiarios']
-            ]);
+            $professor = $this->Professores->get($id, contain: ['Estagiarios']);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Professor(a) não encontrado.'));
             return $this->redirect(['action' => 'index']);
@@ -256,7 +247,7 @@ class ProfessoresController extends AppController
         if ($nome) {
             $professores = $this->Professores->find('all');
             $professores->where(['nome LIKE' => "%{$nome}%"]);
-            $professores->order(['nome' => 'ASC']);
+            $professores->orderBy(['nome' => 'ASC']);
             if (!$professores->toArray()) {
                 $this->Flash->error(__('Nenhum(a) professor(a) encontrado com o nome: ' . $nome));
                 return $this->redirect(['controller' => 'Professores', 'action' => 'index']);

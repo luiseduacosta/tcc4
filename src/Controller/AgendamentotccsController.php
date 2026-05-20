@@ -45,7 +45,7 @@ class AgendamentotccsController extends AppController
             ]);
 
         if ($this->request->getQuery("sort") === null) {
-            $query->order(["Estudantes.nome" => "ASC"]);
+            $query->orderBy(["Estudantes.nome" => "ASC"]);
         }
 
         $agendamentotccs = $this->paginate($query, [
@@ -75,14 +75,12 @@ class AgendamentotccsController extends AppController
     public function view($id = null)
     {
         try {
-            $agendamentotcc = $this->Agendamentotccs->get($id, [
-                "contain" => [
+            $agendamentotcc = $this->Agendamentotccs->get($id, contain: [
                     "Estudantes",
                     "Docentes",
                     "Docentebanca1",
                     "Docentebanca2",
-                ],
-            ]);
+                ],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__("Agendamento TCC não encontrado."));
             return $this->redirect(["action" => "index"]);
@@ -126,17 +124,17 @@ class AgendamentotccsController extends AppController
             );
         }
 
-        $estudantes = $this->Agendamentotccs->Estudantes->find("list", [
-            "keyField" => "id",
-            "valueField" => "nome",
-            "order" => ["nome" => "asc"],
-        ]);
+        $estudantes = $this->Agendamentotccs->Estudantes->find("list",
+            keyField: "id",
+            valueField: "nome",
+            order: ["nome" => "asc"]
+        );
 
-        $docentes = $this->Agendamentotccs->Docentes->find("list", [
-            "keyField" => "id",
-            "valueField" => "nome",
-            "order" => ["nome" => "asc"],
-        ]);
+        $docentes = $this->Agendamentotccs->Docentes->find("list",
+            keyField: "id",
+            valueField: "nome",
+            order: ["nome" => "asc"]
+        );
 
         $this->set(compact("agendamentotcc", "estudantes", "docentes"));
     }
@@ -151,14 +149,12 @@ class AgendamentotccsController extends AppController
     public function edit($id = null)
     {
         try {
-            $agendamentotcc = $this->Agendamentotccs->get($id, [
-                "contain" => [
+            $agendamentotcc = $this->Agendamentotccs->get($id, contain: [
                     "Estudantes",
                     "Docentes",
                     "Docentebanca1",
                     "Docentebanca2",
-                ],
-            ]);
+                ],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__("Agendamento TCC não encontrado."));
             return $this->redirect(["action" => "index"]);
@@ -188,16 +184,16 @@ class AgendamentotccsController extends AppController
                 __("Agendamento TCC não foi atualizado. Tente novamente."),
             );
         }
-        $estudantes = $this->Agendamentotccs->Estudantes->find("list", [
-            "keyField" => "id",
-            "valueField" => "nome",
-            "order" => ["nome" => "asc"],
-        ]);
-        $docentes = $this->Agendamentotccs->Docentes->find("list", [
-            "keyField" => "id",
-            "valueField" => "nome",
-            "order" => ["nome" => "asc"],
-        ]);
+        $estudantes = $this->Agendamentotccs->Estudantes->find("list",
+            keyField: "id",
+            valueField: "nome",
+            order: ["nome" => "asc"]
+        );
+        $docentes = $this->Agendamentotccs->Docentes->find("list",
+            keyField: "id",
+            valueField: "nome",
+            order: ["nome" => "asc"]
+        );
 
         $this->set(compact("agendamentotcc", "estudantes", "docentes"));
     }

@@ -49,10 +49,9 @@ class AreainstituicoesTable extends Table {
         ]);
     }
 
-    public function beforeFind($event, $query, $options, $primary) {
+    public function beforeFind($event, $query, $options, $primary): void {
 
-        $query->order(['Areainstituicoes.area' => 'ASC']);
-        return $query;
+        $query->orderBy(['Areainstituicoes.area' => 'ASC']);
     }
 
     /**

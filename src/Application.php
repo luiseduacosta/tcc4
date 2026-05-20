@@ -138,18 +138,6 @@ AuthorizationServiceProviderInterface
             'queryParam' => 'redirect',
         ]);
 
-        // Load identifiers, ensure we check email and password fields
-        $authenticationService->loadIdentifier('Authentication.Password', [
-            'resolver' => [
-                'className' => 'Authentication.Orm',
-                'userModel' => 'Users',
-            ],
-            'fields' => [
-                'username' => 'email',
-                'password' => 'password',
-            ]
-        ]);
-
         // Load the authenticators, you want session first
         $authenticationService->loadAuthenticator('Authentication.Session');
         // Configure form data check to pick email and password
@@ -158,7 +146,19 @@ AuthorizationServiceProviderInterface
                 'username' => 'email',
                 'password' => 'password',
             ],
-            'loginUrl' =>  \Cake\Routing\Router::url('/users/login')
+            'loginUrl' =>  \Cake\Routing\Router::url('/users/login'),
+            'identifier' => [
+                'Authentication.Password' => [
+                    'resolver' => [
+                        'className' => 'Authentication.Orm',
+                        'userModel' => 'Users',
+                    ],
+                    'fields' => [
+                        'username' => 'email',
+                        'password' => 'password',
+                    ]
+                ]
+            ]
         ]);
 
         return $authenticationService;

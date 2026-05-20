@@ -26,7 +26,7 @@ class Areaestagio extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'area' => true,
         'estagiarios' => true,
         'muralestagios' => true,

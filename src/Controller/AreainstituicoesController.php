@@ -44,9 +44,7 @@ class AreainstituicoesController extends AppController
     {
         $this->Authorization->skipAuthorization();
         try {
-            $areainstituicao = $this->Areainstituicoes->get($id, [
-                'contain' => ['Instituicoes' => ['sort' => ['instituicao' => 'ASC']]],
-            ]);
+            $areainstituicao = $this->Areainstituicoes->get($id, contain: ['Instituicoes' => ['sort' => ['instituicao' => 'ASC']]],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Área de instituição não encontrada.'));
             return $this->redirect(['action' => 'index']);
@@ -87,9 +85,7 @@ class AreainstituicoesController extends AppController
     {
         $this->Authorization->skipAuthorization();
         try {
-            $areainstituicao = $this->Areainstituicoes->get($id, [
-                'contain' => [],
-            ]);
+            $areainstituicao = $this->Areainstituicoes->get($id, contain: [],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Área de instituição não encontrada.'));
             return $this->redirect(['action' => 'index']);
@@ -119,9 +115,7 @@ class AreainstituicoesController extends AppController
     {
         $this->Authorization->skipAuthorization();
         try {
-            $areainstituicao = $this->Areainstituicoes->get($id, [
-                'contain' => [],
-            ]);
+            $areainstituicao = $this->Areainstituicoes->get($id, contain: [],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Área de instituição não encontrada.'));
             return $this->redirect(['action' => 'index']);

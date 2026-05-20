@@ -45,44 +45,42 @@ class EstagiariomonografiasController extends AppController
 
         $periodo = $this->request->getQuery("periodo");
         $periodos = $this->Estagiariomonografias
-            ->find("list", [
-                "keyField" => "periodo",
-                "valueField" => "periodo",
-            ])
-            ->order(["periodo" => "ASC"]);
+            ->find("list",
+            keyField: "periodo",
+            valueField: "periodo")
+            ->orderBy(["periodo" => "ASC"]);
         $periodos = $periodos->toArray();
         if (empty($periodo)) {
             $periodo = end($periodos); // Pega o último elemento do array
         }
 
-        $estagiariomonografias = $this->Estagiariomonografias->find("all", [
-            "fields" => [
-                "Estudantes.id",
-                "Estudantes.nome",
-                "Estudantes.registro",
-                "Estagiariomonografias.id",
-                "Estagiariomonografias.periodo",
-                "Estagiariomonografias.ajuste2020",
-                "Estagiariomonografias.nivel",
-                "Tccestudantes.monografia_id",
-                "Tccestudantes.registro",
-                "Tccestudantes.id",
-                "Tccestudantes.nome",
-                "Monografias.id",
-                "Monografias.titulo",
-                "Monografias.periodo",
+        $estagiariomonografias = $this->Estagiariomonografias->find("all",
+        fields: [
+            "Estudantes.id",
+            "Estudantes.nome",
+            "Estudantes.registro",
+            "Estagiariomonografias.id",
+            "Estagiariomonografias.periodo",
+            "Estagiariomonografias.ajuste2020",
+            "Estagiariomonografias.nivel",
+            "Tccestudantes.monografia_id",
+            "Tccestudantes.registro",
+            "Tccestudantes.id",
+            "Tccestudantes.nome",
+            "Monografias.id",
+            "Monografias.titulo",
+            "Monografias.periodo",
+        ],
+        conditions: [
+            "or" => [
+                ["ajuste2020" => "0", "nivel" => 4],
+                ["ajuste2020" => "1", "nivel" => 3],
             ],
-            "conditions" => [
-                "or" => [
-                    ["ajuste2020" => "0", "nivel" => 4],
-                    ["ajuste2020" => "1", "nivel" => 3],
-                ],
-                "Estagiariomonografias.periodo" => $periodo,
-            ],
-            "contain" => ["Estudantes", "Tccestudantes" => ["Monografias"]],
-        ]);
+            "Estagiariomonografias.periodo" => $periodo,
+        ],
+        contain: ["Estudantes", "Tccestudantes" => ["Monografias"]]);
         if ($this->request->getQuery("sort") === null) {
-            $estagiariomonografias->order(["Estudantes.nome" => "ASC"]);
+            $estagiariomonografias->orderBy(["Estudantes.nome" => "ASC"]);
         }
         $this->set(compact("estagiariomonografias", "periodo", "periodos"));
     }
@@ -102,11 +100,10 @@ class EstagiariomonografiasController extends AppController
             $periodo = $this->request->getQuery("periodo");
         }
         $periodos = $this->Estagiariomonografias
-            ->find("list", [
-                "keyField" => "periodo",
-                "valueField" => "periodo",
-            ])
-            ->order(["periodo" => "DESC"]);
+            ->find("list",
+            keyField: "periodo",
+            valueField: "periodo")
+            ->orderBy(["periodo" => "DESC"]);
 
         if ($periodo === null) {
             $periodo = end($periodos); // Pega o último elemento do array
@@ -162,9 +159,7 @@ class EstagiariomonografiasController extends AppController
      */
     public function view($id = null)
     {
-        $estagiariomonografia = $this->Estagiariomonografias->get($id, [
-            "contain" => ["Estudantes", "Docentes"],
-        ]);
+        $estagiariomonografia = $this->Estagiariomonografias->get($id, contain: ["Estudantes", "Docentes"],);
         $this->Authorization->authorize($estagiariomonografia);
         $this->set("estagiariomonografia", $estagiariomonografia);
     }
@@ -196,15 +191,15 @@ class EstagiariomonografiasController extends AppController
             );
             $this->redirect(["action" => "index"]);
         }
-        $alunos = $this->Estagiariomonografias->Estudantes->find("list", [
-            "keyField" => "id",
-            "valueField" => "nome",
-        ]);
+        $alunos = $this->Estagiariomonografias->Estudantes->find("list",
+            keyField: "id",
+            valueField: "nome"
+        );
 
-        $professores = $this->Estagiariomonografias->Docentes->find("list", [
-            "keyField" => "id",
-            "valueField" => "nome",
-        ]);
+        $professores = $this->Estagiariomonografias->Docentes->find("list",
+            keyField: "id",
+            valueField: "nome"
+        );
 
         $this->set(compact("estagiariomonografia", "alunos", "professores"));
     }
@@ -219,9 +214,7 @@ class EstagiariomonografiasController extends AppController
     public function edit($id = null)
     {
         // $this->autoRender = false;
-        $estagiariomonografia = $this->Estagiariomonografias->get($id, [
-            "contain" => [],
-        ]);
+        $estagiariomonografia = $this->Estagiariomonografias->get($id, contain: [],);
         $this->Authorization->authorize($estagiariomonografia);
         // pr($estagiario);
         // die();
@@ -239,10 +232,10 @@ class EstagiariomonografiasController extends AppController
                 __("Estagiário não foi atualizado. Tente novamente."),
             );
         }
-        $alunos = $this->Estagiariomonografias->Estudantes->find("list", [
-            "keyField" => "id",
-            "valueField" => "nome",
-        ]);
+        $alunos = $this->Estagiariomonografias->Estudantes->find("list",
+            keyField: "id",
+            valueField: "nome"
+        );
         $docentemonografias = $this->Estagiariomonografias->Docentes->find(
             "list",
             [
@@ -250,10 +243,10 @@ class EstagiariomonografiasController extends AppController
                 "valueField" => "nome",
             ],
         );
-        $areas = $this->Estagiariomonografias->Areaestagios->find("list", [
-            "keyField" => "id",
-            "valueField" => "area",
-        ]);
+        $areas = $this->Estagiariomonografias->Areaestagios->find("list",
+            keyField: "id",
+            valueField: "area"
+        );
 
         $this->set(
             compact(

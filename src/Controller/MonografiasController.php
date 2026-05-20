@@ -59,7 +59,7 @@ class MonografiasController extends AppController
                 ->contain(['Docentes', 'Areamonografias', 'Tccestudantes']);
         }
         if ($this->request->getQuery('sort') === null) {
-            $query->order(['Monografias.titulo' => 'ASC']);
+            $query->orderBy(['Monografias.titulo' => 'ASC']);
         }
         $monografias = $this->paginate($query, [
             'sortableFields' => [
@@ -87,9 +87,7 @@ class MonografiasController extends AppController
     {
         $this->Authorization->skipAuthorization();
         try  {
-            $monografia = $this->Monografias->get($id, [
-                'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'],
-            ]);
+            $monografia = $this->Monografias->get($id, contain: ['Docentes', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'],);
         } catch (\Exception $e) {
             $this->Flash->error(__('Monografia não encontrada.'));
             return $this->redirect(['action' => 'index']);
@@ -161,17 +159,17 @@ class MonografiasController extends AppController
         $estudantes = $this->estudantes();
 
         /* Load Professors */
-        $docentes = $this->Monografias->Docentes->find('list', [
-            'keyField' => 'id',
-            'valueField' => 'nome',
-            'order' => ['nome' => 'asc']
-        ]);
+        $docentes = $this->Monografias->Docentes->find('list',
+            keyField: 'id',
+            valueField: 'nome',
+            order: ['nome' => 'asc']
+        );
 
-        $areamonografias = $this->Monografias->Areamonografias->find('list', [
-            'keyField' => 'id',
-            'valueField' => 'area',
-            'order' => ['area' => 'asc']
-        ]);
+        $areamonografias = $this->Monografias->Areamonografias->find('list',
+            keyField: 'id',
+            valueField: 'area',
+            order: ['area' => 'asc']
+        );
         
         $this->set(compact('estudantes', 'monografia', 'docentes', 'areamonografias'));
     }
@@ -219,9 +217,7 @@ class MonografiasController extends AppController
     {
         $this->Authorization->skipAuthorization();
         try {
-            $monografia = $this->Monografias->get($id, [
-                'contain' => ['Docentes', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'],
-            ]);
+            $monografia = $this->Monografias->get($id, contain: ['Docentes', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'],);
         } catch (\Exception $e) {
             $this->Flash->error(__('Monografia não encontrada.'));
             return $this->redirect(['action' => 'index']);
@@ -249,25 +245,24 @@ class MonografiasController extends AppController
         }
 
         /* Load Students for selection */
-        $estudantes = $this->fetchTable('Estudantes')->find('list', [
-            'keyField' => 'registro',
-            'valueField' => 'nome',
-            'order' => ['nome' => 'asc']
-        ])->toArray();
+        $estudantes = $this->fetchTable('Estudantes')->find('list',
+        keyField: 'registro',
+        valueField: 'nome',
+        order: ['nome' => 'asc'])->toArray();
 
         // Load Docentes for selection
-        $docentes = $this->Monografias->Docentes->find('list', [
-            'keyField' => 'id',
-            'valueField' => 'nome',
-            'order' => ['nome' => 'asc']
-        ]);
+        $docentes = $this->Monografias->Docentes->find('list',
+            keyField: 'id',
+            valueField: 'nome',
+            order: ['nome' => 'asc']
+        );
 
         // Load Areamonografias for selection
-        $areamonografias = $this->Monografias->Areamonografias->find('list', [
-            'keyField' => 'id',
-            'valueField' => 'area',
-            'order' => ['area' => 'asc']
-        ]);
+        $areamonografias = $this->Monografias->Areamonografias->find('list',
+            keyField: 'id',
+            valueField: 'area',
+            order: ['area' => 'asc']
+        );
 
         $this->set(compact('monografia', 'docentes', 'areamonografias', 'estudantes'));
     }
@@ -354,7 +349,7 @@ class MonografiasController extends AppController
         $estudantetable = $this->fetchTable('Alunos');
         $estudantes = $estudantetable->find('all');
         $estudantes->select(['registro', 'nome']);
-        $estudantes->order(['nome' => 'asc']);
+        $estudantes->orderBy(['nome' => 'asc']);
 
         /** Separar os estudantes que já fizeram TCC */
         foreach ($estudantes as $c_estudante):

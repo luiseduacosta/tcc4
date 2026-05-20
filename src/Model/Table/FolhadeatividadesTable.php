@@ -49,10 +49,9 @@ class FolhadeatividadesTable extends Table {
         ]);
     }
 
-    public function beforeFind($event, $query, $options, $primary) {
+    public function beforeFind($event, $query, $options, $primary): void {
 
-        $query->order(['Folhadeatividades.dia' => 'ASC']);
-        return $query;
+        $query->orderBy(['Folhadeatividades.dia' => 'ASC']);
     }
 
     /**

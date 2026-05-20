@@ -30,7 +30,7 @@ use Cake\ORM\Entity;
  * @property string|null $avaliacao13_1
  * @property string $avaliacao14
  * @property string $observacoes
- * @property \Cake\I18n\FrozenTime $TIMESTAMP
+ * @property \Cake\I18n\DateTime $TIMESTAMP
  *
  * @property \App\Model\Entity\Estagiario[] $estagiarios
  */
@@ -45,7 +45,7 @@ class Avaliacao extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'estagiario_id' => true,
         'avaliacao1' => true,
         'avaliacao2' => true,

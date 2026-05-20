@@ -19,7 +19,7 @@ use Cake\ORM\Entity;
  * @property string|null $cpf
  * @property string|null $identidade
  * @property string|null $orgao
- * @property \Cake\I18n\FrozenDate|null $nascimento
+ * @property \Cake\I18n\Date|null $nascimento
  * @property string|null $ingresso
  * @property string|null $turno
  * @property string|null $endereco
@@ -42,7 +42,7 @@ class Aluno extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'nome' => true,
         'registro' => true,
         'codigo_telefone' => true,

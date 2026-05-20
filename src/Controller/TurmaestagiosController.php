@@ -50,9 +50,7 @@ class TurmaestagiosController extends AppController
         try {
             $this->Authorization->skipAuthorization();
             ini_set('memory_limit', '2048M');
-            $turmaestagio = $this->Turmaestagios->get($id, [
-                'contain' => ['Estagiarios' => ['Alunos', 'Professores', 'Supervisores', 'Instituicoes', 'Turmaestagios']],
-            ]);
+            $turmaestagio = $this->Turmaestagios->get($id, contain: ['Estagiarios' => ['Alunos', 'Professores', 'Supervisores', 'Instituicoes', 'Turmaestagios']],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Nao ha registros de turmas de estagio para esse numero!'));
             return $this->redirect(['action' => 'index']);
@@ -94,9 +92,7 @@ class TurmaestagiosController extends AppController
     {
         try {
             $this->Authorization->skipAuthorization();
-            $turmaestagio = $this->Turmaestagios->get($id, [
-                'contain' => [],
-            ]);
+            $turmaestagio = $this->Turmaestagios->get($id, contain: [],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Nao ha registros de turmas de estagio para esse numero!'));
             return $this->redirect(['action' => 'index']);
@@ -125,9 +121,7 @@ class TurmaestagiosController extends AppController
     {
         try {
             $this->Authorization->skipAuthorization();
-            $turmaestagio = $this->Turmaestagios->get($id, [
-                'contain' => ['Estagiarios']
-            ]);
+            $turmaestagio = $this->Turmaestagios->get($id, contain: ['Estagiarios']);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Nao ha registros de turmas de estagio para esse numero!'));
             return $this->redirect(['action' => 'index']);

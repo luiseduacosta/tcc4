@@ -32,16 +32,6 @@ use Cake\I18n\I18n;
  */
 class EstagiariosController extends AppController
 {
-    /**
-     * initialize method
-     *
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-        $this->loadComponent('RequestHandler');
-    }
 
     /**
      * Index method
@@ -76,7 +66,7 @@ class EstagiariosController extends AppController
                     "Instituicoes",
                     "Turmaestagios",
                 ])
-                ->order([
+                ->orderBy([
                     "Alunos.nome" => "ASC",
                 ]);
         } else {
@@ -89,7 +79,7 @@ class EstagiariosController extends AppController
                     "Instituicoes",
                     "Turmaestagios",
                 ])
-                ->order([
+                ->orderBy([
                     "Alunos.nome" => "ASC",
                 ]);
         }
@@ -140,11 +130,11 @@ class EstagiariosController extends AppController
         $estagiarios = $this->paginate($query, $config);
 
         /* Todos os periódos */
-        $periodototal = $this->Estagiarios->find("list", [
-            "keyField" => "periodo",
-            "valueField" => "periodo",
-            "order" => ["periodo" => "asc"],
-        ]);
+        $periodototal = $this->Estagiarios->find("list",
+            keyField: "periodo",
+            valueField: "periodo",
+            order: ["periodo" => "asc"]
+        );
         $periodos = $periodototal->toArray();
 
         $instituicoes = $this->Estagiarios->find("all", [
@@ -222,8 +212,7 @@ class EstagiariosController extends AppController
         /** Restringir */
         $this->Authorization->skipAuthorization();
         // pr($id);
-        $estagiario = $this->Estagiarios->get($id, [
-            "contain" => [
+        $estagiario = $this->Estagiarios->get($id, contain: [
                 "Alunos",
                 "Instituicoes",
                 "Supervisores",
@@ -233,8 +222,7 @@ class EstagiariosController extends AppController
                 "Folhadeatividades" => [
                     "sort" => ["dia" => "desc"],
                 ],
-            ],
-        ]);
+            ],);
 
         if ($estagiario === null) {
             $this->Flash->error(__("Estagiário não encontrado."));
@@ -303,7 +291,7 @@ class EstagiariosController extends AppController
             $estagiario = $this->Estagiarios
                 ->find()
                 ->where(["aluno_id" => $aluno_id])
-                ->order(["nivel" => "desc"])
+                ->orderBy(["nivel" => "desc"])
                 ->first();
             if ($estagiario) {
                 $this->Flash->success(
@@ -380,7 +368,7 @@ class EstagiariosController extends AppController
                 ->first();
             $this->set("aluno", $aluno);
 
-            $alunos = $this->fetchTable("Alunos")->find("list", ['order' => ['nome' => 'asc']]);
+            $alunos = $this->fetchTable("Alunos")->find("list", order: ['nome' => 'asc']);
             $this->set("alunos", $alunos);
         }
         $periodo = $this->fetchTable("Configuracoes")
@@ -389,10 +377,10 @@ class EstagiariosController extends AppController
             ->first();
         $this->set("periodo", $periodo);
 
-        $instituicoes = $this->fetchTable("Instituicoes")->find("list", ['order' => ['instituicao' => 'asc']]);
-        $supervisores = $this->fetchTable("Supervisores")->find("list", ['order' => ['nome' => 'asc']]);
-        $professores = $this->fetchTable("Professores")->find("list", ['order' => ['nome' => 'asc']]);
-        $turmaestagios = $this->fetchTable("Turmaestagios")->find("list", ['order' => ['area' => 'asc']]);
+        $instituicoes = $this->fetchTable("Instituicoes")->find("list", order: ['instituicao' => 'asc']);
+        $supervisores = $this->fetchTable("Supervisores")->find("list", order: ['nome' => 'asc']);
+        $professores = $this->fetchTable("Professores")->find("list", order: ['nome' => 'asc']);
+        $turmaestagios = $this->fetchTable("Turmaestagios")->find("list", order: ['area' => 'asc']);
         $this->set(
             compact(
                 "estagiario",
@@ -432,7 +420,7 @@ class EstagiariosController extends AppController
             $estagiario = $this->Estagiarios
                 ->find()
                 ->where(["aluno_id" => $aluno_id])
-                ->order(["nivel" => "desc"])
+                ->orderBy(["nivel" => "desc"])
                 ->first();
             if ($estagiario) {
                 /** Compara periodo e se é diferente então aumenta o nivel e adiciona um novo estagiario senão edita o estagiario para atualizar a instituição e o supervisor */
@@ -690,9 +678,7 @@ class EstagiariosController extends AppController
         $this->Authorization->skipAuthorization();
 
         try {
-        $estagiario = $this->Estagiarios->get($id, [
-            "contain" => ['Alunos', 'Instituicoes', 'Professores', 'Supervisores', 'Turmaestagios'],
-        ]);
+        $estagiario = $this->Estagiarios->get($id, contain: ['Alunos', 'Instituicoes', 'Professores', 'Supervisores', 'Turmaestagios'],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__("Estagiário não encontrado."));
             return $this->redirect(["action" => "index"]);
@@ -779,10 +765,10 @@ class EstagiariosController extends AppController
         }
 
         $this->set("supervisores", $supervisores ?? []);
-        $alunos = $this->fetchTable("Alunos")->find("list", ['order' => ['nome' => 'asc']]);
-        $instituicoes = $this->fetchTable("Instituicoes")->find("list", ['order' => ['instituicao' => 'asc']]);
-        $professores = $this->fetchTable("Professores")->find("list", ['order' => ['nome' => 'asc']]);
-        $turamestagios = $this->fetchTable("Turmaestagios")->find("list", ['order' => ['area' => 'asc']]);
+        $alunos = $this->fetchTable("Alunos")->find("list", order: ['nome' => 'asc']);
+        $instituicoes = $this->fetchTable("Instituicoes")->find("list", order: ['instituicao' => 'asc']);
+        $professores = $this->fetchTable("Professores")->find("list", order: ['nome' => 'asc']);
+        $turamestagios = $this->fetchTable("Turmaestagios")->find("list", order: ['area' => 'asc']);
         $this->set(
             compact(
                 "estagiario",

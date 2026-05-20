@@ -13,8 +13,8 @@ use Cake\ORM\Entity;
  * @property int $docente_id
  * @property int $banca1
  * @property int $banca2
- * @property \Cake\I18n\FrozenDate $data
- * @property \Cake\I18n\FrozenTime $horario
+ * @property \Cake\I18n\Date $data
+ * @property \Cake\I18n\DateTime $horario
  * @property int $sala
  * @property string $convidado
  * @property string $titulo
@@ -36,7 +36,7 @@ class Agendamentotcc extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'estudante_id' => true,
         'docente_id' => true,
         'banca1' => true,

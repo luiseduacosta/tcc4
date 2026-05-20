@@ -34,9 +34,7 @@ class ConfiguracoesController extends AppController {
     public function view($id = null) {
 
         try {
-            $configuracao = $this->Configuracoes->get($id, [
-                'contain' => [],
-            ]);
+            $configuracao = $this->Configuracoes->get($id, contain: []);
         } catch (\Exception $e) {
             $this->Flash->error(__('Configuracao nao foi encontrado. Tente novamente.'));
 
@@ -76,9 +74,7 @@ class ConfiguracoesController extends AppController {
     public function edit($id = null) {
 
         try {
-            $configuracao = $this->Configuracoes->get($id, [
-                'contain' => [],
-            ]);
+            $configuracao = $this->Configuracoes->get($id, contain: []);
         } catch (\Exception $e) {
             $this->Flash->error(__('Configuracao nao foi encontrado. Tente novamente.'));
 

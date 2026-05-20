@@ -11,11 +11,11 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $mural_periodo_atual
  * @property int $curso_turma_atual
- * @property \Cake\I18n\FrozenDate $curso_abertura_inscricoes
- * @property \Cake\I18n\FrozenDate $curso_encerramento_inscricoes
+ * @property \Cake\I18n\Date $curso_abertura_inscricoes
+ * @property \Cake\I18n\Date $curso_encerramento_inscricoes
  * @property string $termo_compromisso_periodo
- * @property \Cake\I18n\FrozenDate $termo_compromisso_inicio
- * @property \Cake\I18n\FrozenDate $termo_compromisso_final
+ * @property \Cake\I18n\Date $termo_compromisso_inicio
+ * @property \Cake\I18n\Date $termo_compromisso_final
  */
 class Configuracao extends Entity
 {
@@ -28,7 +28,7 @@ class Configuracao extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'mural_periodo_atual' => true,
         'curso_turma_atual' => true,
         'curso_abertura_inscricoes' => true,

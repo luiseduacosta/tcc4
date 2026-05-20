@@ -85,18 +85,17 @@ class EstagiariosTable extends Table
         $this->belongsTo("Tccestudantes", [
             "className" => "Tccestudantes",
             "foreignKey" => false,
-            "conditions" => "Estagiarios.registro = Tccestudantes.registro",
+            "conditions" => ["Estagiarios.registro = Tccestudantes.registro"],
             "joinType" => "LEFT",
         ]);
     }
 
-    public function beforeFind($event, $query, $options, $primary)
+    public function beforeFind($event, $query, $options, $primary): void
     {
-        $query->order([
+        $query->orderBy([
             "Estagiarios.registro" => "ASC",
             "Estagiarios.nivel" => "ASC",
         ]);
-        return $query;
     }
 
     /**

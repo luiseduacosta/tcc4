@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\MonografiasTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -17,18 +16,17 @@ class MonografiasTableTest extends TestCase
      *
      * @var \App\Model\Table\MonografiasTable
      */
-    protected $Monografias;
+    protected $MonografiasTable;
 
     /**
      * Fixtures
      *
-     * @var array
+     * @var array<string>
      */
-    protected $fixtures = [
+    protected array $fixtures = [
         'app.Monografias',
-        'app.Professores',
-        'app.CoOrientas',
-        'app.Areas',
+        'app.Docentes',
+        'app.Areamonografias',
         'app.Tccestudantes',
     ];
 
@@ -37,11 +35,11 @@ class MonografiasTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Monografias') ? [] : ['className' => MonografiasTable::class];
-        $this->Monografias = TableRegistry::getTableLocator()->get('Monografias', $config);
+        $config = $this->getTableLocator()->exists('Monografias') ? [] : ['className' => MonografiasTable::class];
+        $this->MonografiasTable = $this->getTableLocator()->get('Monografias', $config);
     }
 
     /**
@@ -49,27 +47,18 @@ class MonografiasTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
-        unset($this->Monografias);
+        unset($this->MonografiasTable);
 
         parent::tearDown();
-    }
-
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**
      * Test validationDefault method
      *
      * @return void
+     * @link \App\Model\Table\MonografiasTable::validationDefault()
      */
     public function testValidationDefault(): void
     {
@@ -80,6 +69,7 @@ class MonografiasTableTest extends TestCase
      * Test buildRules method
      *
      * @return void
+     * @link \App\Model\Table\MonografiasTable::buildRules()
      */
     public function testBuildRules(): void
     {

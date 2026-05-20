@@ -49,11 +49,11 @@ class FolhadeatividadesController extends AppController
         $query = $this->Folhadeatividades->find()
             ->where(['Folhadeatividades.estagiario_id' => $estagiario_id])
             ->contain(['Estagiarios' => ['Alunos']])
-            ->order(['Folhadeatividades.dia' => 'ASC']);
+            ->orderBy(['Folhadeatividades.dia' => 'ASC']);
 
         if ($query) {
             if ($this->request->getQuery('sort') === null) {
-                $query->order(['Folhadeatividades.dia' => 'ASC']);
+                $query->orderBy(['Folhadeatividades.dia' => 'ASC']);
             }
         } else {
             $this->Flash->error(__('Nenhum registro encontrado.'));
@@ -74,9 +74,7 @@ class FolhadeatividadesController extends AppController
         $this->Authorization->skipAuthorization();
         $user = $this->getRequest()->getAttribute('identity');
         if (isset($user) && $user->categoria == '1') {
-            $folhadeatividade = $this->Folhadeatividades->get($id, [
-                'contain' => ['Estagiarios' => ['Alunos']]
-            ]);
+            $folhadeatividade = $this->Folhadeatividades->get($id, contain: ['Estagiarios' => ['Alunos']]);
         } elseif (isset($user) && $user->categoria == '2') {
             $estagiario = $this->Folhadeatividades->find()
                 ->where(['Folhadeatividades.id' => $id])
@@ -85,9 +83,7 @@ class FolhadeatividadesController extends AppController
             if ($estagiario) {
                 /** Verifica se o estagiário é o mesmo do usuário */
                 if ($user->estudante_id == $estagiario->aluno_id) {
-                    $folhadeatividade = $this->Folhadeatividades->get($id, [
-                        'contain' => ['Estagiarios' => ['Alunos']]
-                    ]);
+                    $folhadeatividade = $this->Folhadeatividades->get($id, contain: ['Estagiarios' => ['Alunos']]);
                 } else {
                     $this->Flash->error(__('Você não tem permissão para acessar esta página'));
                     return $this->redirect(['controller' => 'Alunos', 'action' => 'view', $user->estudante_id]);
@@ -142,7 +138,7 @@ class FolhadeatividadesController extends AppController
                     $estagiario = $this->fetchTable('Estagiarios')->find()
                         ->where(['Estagiarios.id' => $estagiario_id])
                         ->contain(['Alunos'])
-                        ->order(['Estagiarios.id' => 'ASC'])
+                        ->orderBy(['Estagiarios.id' => 'ASC'])
                         ->first();
                     if ($estagiario) {
                         /** Verifica se o estagiário é o mesmo do usuário */
@@ -237,9 +233,7 @@ class FolhadeatividadesController extends AppController
     public function edit($id = null)
     {
         try {
-            $folhadeatividade = $this->Folhadeatividades->get($id, [
-                'contain' => [],
-            ]);
+            $folhadeatividade = $this->Folhadeatividades->get($id, contain: [],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro não encontrado.'));
             return $this->redirect(['action' => 'index']);
@@ -329,7 +323,7 @@ class FolhadeatividadesController extends AppController
         } else {
             $folha = $this->Folhadeatividades->find()
                 ->where(['Folhadeatividades.estagiario_id' => $estagiario_id])
-                ->order(['Folhadeatividades.dia' => 'ASC'])
+                ->orderBy(['Folhadeatividades.dia' => 'ASC'])
                 ->all();
 
             $estagiario = $this->Folhadeatividades->Estagiarios->find()

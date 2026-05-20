@@ -102,7 +102,7 @@ class AvaliacoesController extends AppController
             $estagiario = $this->Avaliacoes->Estagiarios->find()
                 ->contain(['Supervisores', 'Alunos', 'Professores', 'Folhadeatividades'])
                 ->where(['Supervisores.cress' => $cress])
-                ->order(['periodo' => 'desc'])
+                ->orderBy(['periodo' => 'desc'])
                 ->first();
             $this->set('estagiario', $estagiario);
         }
@@ -118,9 +118,7 @@ class AvaliacoesController extends AppController
     public function view($id = null)
     {
         try {
-            $avaliacao = $this->Avaliacoes->get($id, [
-                'contain' => ['Estagiarios' => ['Alunos', 'Professores', 'Instituicoes', 'Supervisores']],
-            ]);
+            $avaliacao = $this->Avaliacoes->get($id, contain: ['Estagiarios' => ['Alunos', 'Professores', 'Instituicoes', 'Supervisores']],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro não encontrado.'));
             return $this->redirect(['action' => 'index']);
@@ -185,9 +183,7 @@ class AvaliacoesController extends AppController
     public function edit($id = null)
     {
         try {
-            $avaliacao = $this->Avaliacoes->get($id, [
-                'contain' => ['Estagiarios' => ['Alunos', 'Professores', 'Instituicoes', 'Supervisores']],
-            ]);
+            $avaliacao = $this->Avaliacoes->get($id, contain: ['Estagiarios' => ['Alunos', 'Professores', 'Instituicoes', 'Supervisores']],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro não encontrado.'));
             return $this->redirect(['action' => 'index']);

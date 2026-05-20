@@ -46,9 +46,7 @@ class VisitasController extends AppController
     {
         try {
             $this->Authorization->skipAuthorization();
-            $visita = $this->Visitas->get($id, [
-                'contain' => ['Instituicoes'],
-            ]);
+            $visita = $this->Visitas->get($id, contain: ['Instituicoes'],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Nao ha registros de visitas para esse numero!'));
             return $this->redirect(['action' => 'index']);
@@ -91,9 +89,7 @@ class VisitasController extends AppController
     {
         try {
             $this->Authorization->skipAuthorization();
-            $visita = $this->Visitas->get($id, [
-                'contain' => ['Instituicoes']
-            ]);
+            $visita = $this->Visitas->get($id, contain: ['Instituicoes']);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Nao ha registros de visitas para esse numero!'));
             return $this->redirect(['action' => 'index']);

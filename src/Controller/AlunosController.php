@@ -61,7 +61,7 @@ class AlunosController extends AppController
             ]);
         }
         if ($this->request->getQuery("sort") === null) {
-            $query->order(["nome" => "ASC"]);
+            $query->orderBy(["nome" => "ASC"]);
         }
         $alunos = $this->paginate($query, [
             "sortableFields" => ["nome", "registro", "nascimento", "ingresso"],
@@ -217,9 +217,7 @@ class AlunosController extends AppController
     public function edit($id = null)
     {
         try {
-            $aluno = $this->Alunos->get($id, [
-                "contain" => [],
-            ]);
+            $aluno = $this->Alunos->get($id, contain: [],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__("Aluno não encontrado"));
             return $this->redirect(["action" => "index"]);
@@ -382,7 +380,7 @@ class AlunosController extends AppController
             $aluno = $this->Alunos
                 ->find()
                 ->where(["Alunos.id" => $user->estudante_id])
-                ->order(["Alunos.id" => "asc"])
+                ->orderBy(["Alunos.id" => "asc"])
                 ->first();
         } elseif (isset($user) && $user->categoria == "1") {
             if ($id === null) {
@@ -397,7 +395,7 @@ class AlunosController extends AppController
                 $aluno = $this->Alunos
                     ->find()
                     ->where(["Alunos.id" => $id])
-                    ->order(["Alunos.id" => "asc"])
+                    ->orderBy(["Alunos.id" => "asc"])
                     ->first();
             }
         } else {
@@ -801,11 +799,11 @@ class AlunosController extends AppController
         $ordem = "Alunos.nome";
 
         /* Todos os periódos */
-        $periodototal = $this->Alunos->Estagiarios->find("list", [
-            "keyField" => "periodo",
-            "valueField" => "periodo",
-            "order" => ["periodo" => "desc"],
-        ]);
+        $periodototal = $this->Alunos->Estagiarios->find("list",
+            keyField: "periodo",
+            valueField: "periodo",
+            order: ["periodo" => "desc"]
+        );
         $periodos = $periodototal->toArray();
         /* Se o periodo não veio anexo como parametro então o período é o último da lista dos períodos */
         if (empty($periodo)) {
@@ -829,7 +827,7 @@ class AlunosController extends AppController
                 "Professores.nome",
             ])
             ->where(["Estagiarios.periodo" => $periodo])
-            ->order(["Alunos.nome"])
+            ->orderBy(["Alunos.nome"])
             ->all();
 
         $this->set("cress", $cress);
@@ -850,11 +848,11 @@ class AlunosController extends AppController
 
         $ordem = "nome";
 
-        $periodototal = $this->Alunos->Estagiarios->find("list", [
-            "keyField" => "periodo",
-            "valueField" => "periodo",
-            "order" => ["periodo" => "desc"],
-        ]);
+        $periodototal = $this->Alunos->Estagiarios->find("list",
+            keyField: "periodo",
+            valueField: "periodo",
+            order: ["periodo" => "desc"]
+        );
         $periodos = $periodototal->toArray();
 
         if (empty($periodo)) {
@@ -877,7 +875,7 @@ class AlunosController extends AppController
                 "Estagiarios.periodo",
                 "Instituicoes.instituicao",
             ])
-            ->order(["Estagiarios.nivel" => "asc"])
+            ->orderBy(["Estagiarios.nivel" => "asc"])
             ->all();
 
         $i = 0;
@@ -1014,7 +1012,7 @@ class AlunosController extends AppController
         $estagiario = $this->Alunos->Estagiarios
             ->find("all")
             ->where(["Estagiarios.aluno_id" => $id])
-            ->order(["Estagiarios.nivel" => "desc"])
+            ->orderBy(["Estagiarios.nivel" => "desc"])
             ->first();
 
         $configuracao = $this->fetchTable("Configuracoes")
@@ -1082,7 +1080,7 @@ class AlunosController extends AppController
             $aluno = $this->Alunos->Estagiarios
                 ->find()
                 ->where(["Estagiarios.aluno_id" => $id])
-                ->order(["Estagiarios.nivel" => "desc"])
+                ->orderBy(["Estagiarios.nivel" => "desc"])
                 ->first();
 
             if ($aluno) {
@@ -1174,7 +1172,7 @@ class AlunosController extends AppController
             $alunos = $this->Alunos
                 ->find()
                 ->where(["Alunos.nome LIKE" => "%{$nome}%"])
-                ->order(["Alunos.nome" => "asc"]);
+                ->orderBy(["Alunos.nome" => "asc"]);
             if (empty($alunos->toArray())) {
                 $this->Flash->error(
                     __("Nenhum aluno encontrado com o nome informado"),

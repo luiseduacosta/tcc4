@@ -31,7 +31,7 @@ class AreamonografiasController extends AppController
         $this->Authorization->skipAuthorization();
         $query = $this->Areamonografias->find()->contain(["Monografias"]);
         if ($this->request->getQuery("sort") === null) {
-            $query->order(["area" => "ASC"]);
+            $query->orderBy(["area" => "ASC"]);
         }
         $areas = $this->paginate($query);
         $this->set(compact("areas"));
@@ -46,12 +46,10 @@ class AreamonografiasController extends AppController
      */
     public function view($id = null)
     {
-        $areamonografia = $this->Areamonografias->get($id, [
-            "contain" => [
+        $areamonografia = $this->Areamonografias->get($id, contain: [
                 "Docentes" => ['sort' => 'nome'],
                 "Monografias" => ["Tccestudantes", "Docentes"],
-            ],
-        ]);
+            ],);
         $this->Authorization->authorize($areamonografia);
 
         $this->set("areamonografia", $areamonografia);
@@ -92,9 +90,7 @@ class AreamonografiasController extends AppController
      */
     public function edit($id = null)
     {
-        $areamonografia = $this->Areamonografias->get($id, [
-            "contain" => ["Docentes"],
-        ]);
+        $areamonografia = $this->Areamonografias->get($id, contain: ["Docentes"],);
         $this->Authorization->authorize($areamonografia);
 
         if ($this->request->is(["patch", "post", "put"])) {
@@ -123,9 +119,7 @@ class AreamonografiasController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(["post", "delete"]);
-        $areamonografia = $this->Areamonografias->get($id, [
-            'contain' => ['Monografias']
-        ]);
+        $areamonografia = $this->Areamonografias->get($id, contain: ['Monografias']);
         $this->Authorization->authorize($areamonografia);
 
         if (!empty($areamonografia->monografias)) {

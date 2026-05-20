@@ -17,13 +17,13 @@ use Cake\ORM\Entity;
  * @property string|null $cpf
  * @property string|null $identidade
  * @property string|null $orgao
- * @property \Cake\I18n\FrozenDate|null $nascimento
+ * @property \Cake\I18n\Date|null $nascimento
  * @property string|null $endereco
  * @property string|null $cep
  * @property string|null $municipio
  * @property string|null $bairro
  * @property string|null $observacoes
- * 
+ *
  * @property \App\Model\Entity\Muralinscricao[] $muralinscricoes
  * @property \App\Model\Entity\Estagiario[] $estagiarios
  * @property \App\Model\Entity\Agendamentotcc[] $agendamentotccs
@@ -40,7 +40,7 @@ class Estudante extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'nome' => true,
         'registro' => true,
         'codigo_telefone' => true,

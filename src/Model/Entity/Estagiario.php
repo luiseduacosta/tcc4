@@ -12,7 +12,7 @@ use Cake\ORM\Entity;
  * @property string $turno
  * @property string $nivel
  * @property int $tc
- * @property \Cake\I18n\FrozenDate|null $tc_solicitacao
+ * @property \Cake\I18n\Date|null $tc_solicitacao
  * @property int $instituicao_id
  * @property int|null $supervisor_id
  * @property int|null $professor_id
@@ -44,7 +44,7 @@ class Estagiario extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         "aluno_id" => true,
         "registro" => true,
         "turno" => true,

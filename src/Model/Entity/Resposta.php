@@ -12,8 +12,8 @@ use Cake\ORM\Entity;
  * @property int $question_id
  * @property int $estagiarios_id
  * @property string|null $response
- * @property \Cake\I18n\FrozenTime|null $created
- * @property \Cake\I18n\FrozenTime|null $modified
+ * @property \Cake\I18n\DateTime|null $created
+ * @property \Cake\I18n\DateTime|null $modified
  *
  * @property \App\Model\Entity\Questione $questione
  * @property \App\Model\Entity\Estagiario $estagiario
@@ -29,7 +29,7 @@ class Resposta extends Entity
      *
      * @var array<string, bool>
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'question_id' => true,
         'estagiarios_id' => true,
         'response' => true,

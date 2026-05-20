@@ -25,7 +25,7 @@ class Tccestudante extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'nome' => true,
         'monografia_id' => true,
         'registro' => true,

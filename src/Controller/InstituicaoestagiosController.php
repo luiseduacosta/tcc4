@@ -36,9 +36,7 @@ class InstituicaoestagiosController extends AppController {
     public function view($id = null) {
 
         try {
-            $instituicaoestagio = $this->Instituicaoestagios->get($id, [
-                'contain' => ['Areainstituicoes', 'Supervisores', 'Estagiarios' => ['Estudantes', 'Instituicaoestagios', 'Docentes', 'Supervisores', 'Areaestagios'], 'Muralestagios', 'Visitas'],
-            ]);
+            $instituicaoestagio = $this->Instituicaoestagios->get($id, contain: ['Areainstituicoes', 'Supervisores', 'Estagiarios' => ['Estudantes', 'Instituicaoestagios', 'Docentes', 'Supervisores', 'Areaestagios'], 'Muralestagios', 'Visitas']);
         } catch (\Exception $e) {
             $this->Flash->error(__('Instituicao de estagio nao foi encontrado. Tente novamente.'));
 
@@ -80,9 +78,7 @@ class InstituicaoestagiosController extends AppController {
     public function edit($id = null) {
 
         try {
-            $instituicaoestagio = $this->Instituicaoestagios->get($id, [
-                'contain' => ['Supervisores'],
-            ]);
+            $instituicaoestagio = $this->Instituicaoestagios->get($id, contain: ['Supervisores']);
         } catch (\Exception $e) {
             $this->Flash->error(__('Instituicao de estagio nao foi encontrado. Tente novamente.'));
 
@@ -114,7 +110,7 @@ class InstituicaoestagiosController extends AppController {
     public function delete($id = null) {
 
         try {
-            $instituicaoestagio = $this->Instituicaoestagios->get($id, ['contain' => ['Muralestagios']]);
+            $instituicaoestagio = $this->Instituicaoestagios->get($id, contain: ['Muralestagios']);
         } catch (\Exception $e) {
             $this->Flash->error(__('Instituicao de estagio nao foi encontrado. Tente novamente.'));
 

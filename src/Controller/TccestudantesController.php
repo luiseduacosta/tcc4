@@ -48,7 +48,7 @@ class TccestudantesController extends AppController
 
         if ($query) {
             if ($this->request->getQuery('sort') === null) {
-                $query->order('nome');
+                $query->orderBy('nome');
             }
         } else {
             $this->Flash->error(__('Nenhum registro encontrado.'));
@@ -78,9 +78,7 @@ class TccestudantesController extends AppController
     public function view($id = null)
     {
         try {
-            $tccestudante = $this->Tccestudantes->get($id, [
-                'contain' => ['Monografias', 'Estudantes'],
-            ]);
+            $tccestudante = $this->Tccestudantes->get($id, contain: ['Monografias', 'Estudantes'],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro não encontrado.'));
             return $this->redirect(['action' => 'index']);
@@ -121,7 +119,7 @@ class TccestudantesController extends AppController
             'list',
             ['keyField' => 'id', 'valueField' => 'titulo']
         );
-        $monografias->order(['titulo' => 'asc']);
+        $monografias->orderBy(['titulo' => 'asc']);
 
         $tccestudante = $this->Tccestudantes->newEmptyEntity();
         $this->Authorization->authorize($tccestudante);
@@ -138,14 +136,14 @@ class TccestudantesController extends AppController
         $estudantes = $this->fetchTable('Estudantes')
             ->find('list')
             ->select(['Estudantes.id', 'Estudantes.nome'])
-            ->order(['Estudantes.nome' => 'asc'])
+            ->orderBy(['Estudantes.nome' => 'asc'])
             ->join([
                 'table' => 'tccestudantes',
                 'alias' => 'Tccestudantes',
                 'type' => 'LEFT',
                 'conditions' => 'Estudantes.registro = Tccestudantes.registro',
             ]);
-        $estudantes->order(['Estudantes.nome' => 'asc']);
+        $estudantes->orderBy(['Estudantes.nome' => 'asc']);
         $this->set(compact('monografia_id', 'estudante_id', 'monografias', 'tccestudante', 'estudantes'));
     }
 
@@ -160,9 +158,7 @@ class TccestudantesController extends AppController
     {
 
         try {
-            $tccestudante = $this->Tccestudantes->get($id, [
-                'contain' => ['Monografias'],
-            ]);
+            $tccestudante = $this->Tccestudantes->get($id, contain: ['Monografias'],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro não encontrado.'));
             return $this->redirect(['action' => 'index']);
@@ -170,13 +166,13 @@ class TccestudantesController extends AppController
 
         $this->Authorization->authorize($tccestudante);
         $monografias = $this->fetchTable('Monografias')
-            ->find('list', ['keyField' => 'id', 'valueField' => 'titulo'])
-            ->order(['titulo' => 'asc']);
+            ->find('list', keyField: 'id', valueField: 'titulo')
+            ->orderBy(['titulo' => 'asc']);
         $monografias = $monografias->toArray();
 
         $estudantes = $this->fetchTable('Estudantes')
-            ->find('list', ['keyField' => 'id', 'valueField' => 'nome'])
-            ->order(['nome' => 'asc'])
+            ->find('list', keyField: 'id', valueField: 'nome')
+            ->orderBy(['nome' => 'asc'])
             ->toArray();
 
         if ($this->request->is(['patch', 'post', 'put'])) {

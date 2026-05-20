@@ -82,16 +82,15 @@ class EstagiariomonografiasTable extends Table
                 $this->belongsTo('Tccestudantes', [
                         'className' => 'Tccestudantes',
                         'foreignKey' => FALSE,
-                        'conditions' => 'Estagiarios.registro = Tccestudantes.registro',
+                        'conditions' => ['Estagiarios.registro = Tccestudantes.registro'],
                         'joinType' => 'LEFT'
                 ]);
 
         }
 
-        public function beforeFind($event, $query, $options, $primary)
+        public function beforeFind($event, $query, $options, $primary): void
         {
-                $query->order(['Estagiariomonografias.registro' => 'ASC', 'Estagiariomonografias.nivel' => 'ASC']);
-                return $query;
+                $query->orderBy(['Estagiariomonografias.registro' => 'ASC', 'Estagiariomonografias.nivel' => 'ASC']);
         }
 
         /**

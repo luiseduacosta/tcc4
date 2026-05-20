@@ -34,9 +34,7 @@ class AreaestagiosController extends AppController {
     public function view($id = null) {
         $this->Authorization->skipAuthorization();
         try {
-            $areaestagio = $this->Areaestagios->get($id, [
-                'contain' => [],
-            ]);
+            $areaestagio = $this->Areaestagios->get($id, contain: []);
         } catch (\Exception $e) {
             $this->Flash->error(__('Registro areaestagio nao foi encontrado. Tente novamente.'));
 
@@ -76,9 +74,7 @@ class AreaestagiosController extends AppController {
     public function edit($id = null) {
         $this->Authorization->skipAuthorization();
         try {
-            $areaestagio = $this->Areaestagios->get($id, [
-                'contain' => [],
-            ]);
+            $areaestagio = $this->Areaestagios->get($id, contain: []);
         } catch (\Exception $e) {
             $this->Flash->error(__('Registro areaestagio nao foi encontrado. Tente novamente.'));
 

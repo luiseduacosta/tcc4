@@ -71,24 +71,24 @@ class MuralestagiosController extends AppController
                 ->where([
                     'Muralestagios.periodo' => $periodo
                 ])
-                ->order(['Muralestagios.dataInscricao' => 'DESC']);
+                ->orderBy(['Muralestagios.dataInscricao' => 'DESC']);
         } else {
             $this->Flash->error(__('Selecionar período.'));
             return $this->redirect(['action' => 'index']);
         }
         /** Todos os períodos */
-        $periodototal = $this->Muralestagios->find('list', [
-            'keyField' => 'periodo',
-            'valueField' => 'periodo',
-            'group' => 'periodo',
-            'sort' => ['periodo' => 'DESC']
-        ]);
+        $periodototal = $this->Muralestagios->find('list',
+            keyField: 'periodo',
+            valueField: 'periodo',
+            group: 'periodo',
+            sort: ['periodo' => 'DESC']
+        );
         $periodos = $periodototal->toArray();
         if ($muralestagios->all()->isEmpty()) {
             $this->Flash->warning(__('Nenhum registro de mural de estágio encontrado para o período selecionado.'));
         } else {
             if ($this->request->getQuery('sort') === null) {
-                $muralestagios->order(['Muralestagios.dataInscricao' => 'DESC']);
+                $muralestagios->orderBy(['Muralestagios.dataInscricao' => 'DESC']);
             }
         }
         $mural = $this->paginate($muralestagios, [
@@ -110,9 +110,7 @@ class MuralestagiosController extends AppController
     {
         try {
             $this->Authorization->skipAuthorization();
-            $muralestagio = $this->Muralestagios->get($id, [
-                'contain' => ['Instituicoes', 'Turmaestagios', 'Professores', 'Muralinscricoes' => ['Alunos', 'Muralestagios']]
-            ]);
+            $muralestagio = $this->Muralestagios->get($id, contain: ['Instituicoes', 'Turmaestagios', 'Professores', 'Muralinscricoes' => ['Alunos', 'Muralestagios']]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Nao ha registros de estagios para esse numero!'));
             return $this->redirect(['action' => 'index']);
@@ -120,11 +118,10 @@ class MuralestagiosController extends AppController
 
         /** Para o administrador selecionar o aluno */
         $alunotable = $this->fetchTable('Alunos');
-        $alunos = $alunotable->find('list', [
-            'keyField' => 'registro',
-            'valueField' => 'nome'
-        ]);
-        $alunos->order(['nome' => 'ASC']);
+        $alunos = $alunotable->find('list',
+        keyField: 'registro',
+        valueField: 'nome');
+        $alunos->orderBy(['nome' => 'ASC']);
         $this->set('alunos', $alunos->toArray());
         $this->set(compact('muralestagio'));
     }
@@ -183,18 +180,16 @@ class MuralestagiosController extends AppController
     {
         try {
             $this->Authorization->skipAuthorization();
-            $muralestagio = $this->Muralestagios->get($id, [
-                'contain' => ['Instituicoes'],
-            ]);
+            $muralestagio = $this->Muralestagios->get($id, contain: ['Instituicoes'],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Nao ha registros de estagios para esse numero!'));
             return $this->redirect(['action' => 'index']);
         }
         /** Todos os periódos */
-        $periodototal = $this->Muralestagios->find('list', [
-            'keyField' => 'periodo',
-            'valueField' => 'periodo'
-        ]);
+        $periodototal = $this->Muralestagios->find('list',
+            keyField: 'periodo',
+            valueField: 'periodo'
+        );
         $periodos = $periodototal->toArray();
 
         $this->Authorization->authorize($muralestagio);

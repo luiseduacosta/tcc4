@@ -27,7 +27,7 @@ class RespostasController extends AppController
             ->contain(['Estagiarios' => ['Alunos']]);
         if ($query) {
             if ($this->request->getQuery('sort') === null) {
-                $query->order(['Respostas.id' => 'DESC']);
+                $query->orderBy(['Respostas.id' => 'DESC']);
             }
         }
         $respostas = $this->paginate($query);
@@ -44,9 +44,7 @@ class RespostasController extends AppController
     public function view($id = null)
     {
         try {
-            $resposta = $this->Respostas->get($id, [
-                'contain' => ['Estagiarios' => ['Alunos']],
-            ]);
+            $resposta = $this->Respostas->get($id, contain: ['Estagiarios' => ['Alunos']]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro não encontrado.'));
             return $this->redirect(['action' => 'index']);
@@ -115,8 +113,8 @@ class RespostasController extends AppController
             $data['question_id'] = $this->request->getData('question_id') ?? 1;
             $data['estagiarios_id'] = $this->request->getData('estagiario_id');
             $data['response'] = json_encode($this->request->getData(), JSON_PRETTY_PRINT);
-            $data['created'] = FrozenTime::now();
-            $data['modified'] = FrozenTime::now();
+            $data['created'] = \Cake\I18n\DateTime::now();
+            $data['modified'] = \Cake\I18n\DateTime::now();
             // pr($data);
             // die();
             $resposta = $this->Respostas->newEmptyEntity();
@@ -150,9 +148,7 @@ class RespostasController extends AppController
             return $this->redirect(['action' => 'index']);
         }
         $this->Authorization->skipAuthorization();
-        $estagiario = $this->fetchTable('Estagiarios')->get($resposta->estagiarios_id, [
-            'contain' => ['Alunos']
-        ]);
+        $estagiario = $this->fetchTable('Estagiarios')->get($resposta->estagiarios_id, contain: ['Alunos']);
         $respostas = json_decode($resposta->response, true);
         $avaliacoes = [];
         $i = 0;
@@ -175,7 +171,7 @@ class RespostasController extends AppController
         }
         if ($this->request->is(['patch', 'post', 'put'])) {
             $resposta = $this->Respostas->patchEntity($resposta, $this->request->getData());
-            $resposta->modified = FrozenTime::now();
+            $resposta->modified = \Cake\I18n\DateTime::now();
             $resposta->response = json_encode($this->request->getData(), JSON_PRETTY_PRINT);
             if ($this->Respostas->save($resposta)) {
                 $this->Flash->success(__('Resposta atualizada.'));

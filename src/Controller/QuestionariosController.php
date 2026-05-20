@@ -35,9 +35,7 @@ class QuestionariosController extends AppController
     public function view($id = null)
     {
         try {
-            $questionario = $this->Questionarios->get($id, [
-                'contain' => ['Questiones'],
-            ]);
+            $questionario = $this->Questionarios->get($id, contain: ['Questiones']);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro não encontrado.'));
             return $this->redirect(['action' => 'index']);
@@ -77,9 +75,7 @@ class QuestionariosController extends AppController
     public function edit($id = null)
     {
         try {
-            $questionario = $this->Questionarios->get($id, [
-                'contain' => [],
-            ]);
+            $questionario = $this->Questionarios->get($id, contain: []);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Registro não encontrado.'));
             return $this->redirect(['action' => 'index']);
