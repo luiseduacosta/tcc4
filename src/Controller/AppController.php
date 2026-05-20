@@ -26,6 +26,8 @@ use Cake\Controller\Controller;
  * Add your application-wide methods in the class below, your controllers
  * will inherit them.
  *
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @link https://book.cakephp.org/4/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {

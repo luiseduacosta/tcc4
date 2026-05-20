@@ -13,12 +13,12 @@ use Cake\I18n\I18n;
  * @property \App\Model\Table\FolhadeatividadesTable $Folhadeatividades
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Folhadeatividades
- * @property \Cake\ORM\TableRegistry $Estagiarios
- * @property \Cake\ORM\TableRegistry $Alunos
- * @property \Cake\ORM\TableRegistry $Supervisores
- * @property \Cake\ORM\TableRegistry $Instituicoes
- * @property \Cake\ORM\TableRegistry $Professores
+ * @property \Cake\ORM\Table $Folhadeatividades
+ * @property \Cake\ORM\Table $Estagiarios
+ * @property \Cake\ORM\Table $Alunos
+ * @property \Cake\ORM\Table $Supervisores
+ * @property \Cake\ORM\Table $Instituicoes
+ * @property \Cake\ORM\Table $Professores
  * 
  * @method \App\Model\Entity\Folhadeatividade[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -72,6 +72,7 @@ class FolhadeatividadesController extends AppController
     public function view($id = null)
     {
         $this->Authorization->skipAuthorization();
+        $folhadeatividade = null;
         $user = $this->getRequest()->getAttribute('identity');
         if (isset($user) && $user->categoria == '1') {
             $folhadeatividade = $this->Folhadeatividades->get($id, contain: ['Estagiarios' => ['Alunos']]);
@@ -291,7 +292,7 @@ class FolhadeatividadesController extends AppController
         $this->Authorization->skipAuthorization();
         /* No login foi capturado o id do estagiário */
         $id = $this->getRequest()->getSession()->read('estagiario_id');
-        $this->layout = false;
+        $this->viewBuilder()->disableAutoLayout();
         if (is_null($id)) {
             $this->Flash->error(__('Selecione o estagiário e o período da folha de atividades'));
             return $this->redirect('/estagiarios/index');
@@ -316,7 +317,7 @@ class FolhadeatividadesController extends AppController
     {
         $estagiario_id = $this->getRequest()->getQuery('estagiario_id');
         $this->Authorization->skipAuthorization();
-        $this->layout = false;
+        $this->viewBuilder()->disableAutoLayout();
         if (is_null($estagiario_id)) {
             $this->Flash->error(__('Selecione o estagiário e o período da folha de atividades'));
             return $this->redirect(['controller' => 'Estagiarios', 'action' => 'index']);

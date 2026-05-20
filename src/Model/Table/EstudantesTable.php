@@ -43,7 +43,6 @@ class EstudantesTable extends Table
         /** A tabela Muralinscricoes tem um campo aluno_id que se conexta com o id de Estudantes */
         $this->hasMany('Muralinscricoes', [
             'className' => 'Muralinscricoes',
-            'targetForeignKey' => 'id',
             'foreignKey' => 'aluno_id',
             'joinType' => 'INNER'
         ]);
@@ -51,7 +50,6 @@ class EstudantesTable extends Table
         /** A tabela Estagiarios tem um campo aluno_id que se conexta com o id de Estudantess */
         $this->hasMany('Estagiarios', [
             'className' => 'Estagiarios',
-            'targetForeignKey' => 'id',
             'foreignKey' => 'aluno_id',
             'joinType' => 'INNER'
         ]);
@@ -59,7 +57,6 @@ class EstudantesTable extends Table
         /** A tabela Agendamentotcc tem um campo estudante_id que se conexta com o id de Estudantes */
         $this->hasMany('Agendamentotccs', [
             'className' => 'Agendamentotccs',
-            'targetForeignKey' => 'id',
             'foreignKey' => 'estudante_id',
             'joinType' => 'INNER'
         ]);

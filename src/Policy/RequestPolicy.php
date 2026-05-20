@@ -15,16 +15,14 @@ use Cake\Http\ServerRequest;
 class RequestPolicy implements RequestPolicyInterface
 {
 
-    /**
-     * Method to check if the request can be accessed
-     *
-     * @param
-     * \ Authorization \ IdentityInterface | null Identity
-     * @param \ Cake \ Http \ ServerRequest $ request
-     * Server Request
-     * @return bool
-     */
-    public function canAccess(?IdentityInterface $user, ServerRequest $request)
+     /**
+      * Method to check if the request can be accessed
+      *
+      * @param \Authorization\IdentityInterface|null $user The identity
+      * @param \Cake\Http\ServerRequest $request The request
+      * @return bool
+      */
+    public function canAccess(?IdentityInterface $user, ServerRequest $request): bool
     {
 
         /*

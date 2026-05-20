@@ -13,9 +13,9 @@ use Cake\I18n\I18n;
  * @property \App\Model\Table\AreamonografiasTable $Areamonografias
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Areamonografias
- * @property \Cake\ORM\TableRegistry $Docentes
- * @property \Cake\ORM\TableRegistry $Monografias
+ * @property \Cake\ORM\Table $Areamonografias
+ * @property \Cake\ORM\Table $Docentes
+ * @property \Cake\ORM\Table $Monografias
  *
  * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */

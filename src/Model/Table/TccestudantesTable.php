@@ -52,7 +52,6 @@ class TccestudantesTable extends Table
         $this->hasOne('Estudantes', [
             'className' => 'Estudantes',
             'foreignKey' => 'registro',
-            'targetForeignKey' => 'registro',
             'joinType' => 'LEFT'
         ]);
     }

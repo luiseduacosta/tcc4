@@ -12,11 +12,11 @@ use Cake\I18n\I18n;
  * @property \App\Model\Table\SupervisoresTable $Supervisores
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Supervisores
- * @property \Cake\ORM\TableRegistry $Instituicoes
- * @property \Cake\ORM\TableRegistry $Estagiarios
- * @property \Cake\ORM\TableRegistry $Alunos
- * @property \Cake\ORM\TableRegistry $Professores
+ * @property \Cake\ORM\Table $Supervisores
+ * @property \Cake\ORM\Table $Instituicoes
+ * @property \Cake\ORM\Table $Estagiarios
+ * @property \Cake\ORM\Table $Alunos
+ * @property \Cake\ORM\Table $Professores
  * 
  * @method \App\Model\Entity\Supervisor[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */

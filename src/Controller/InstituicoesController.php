@@ -13,14 +13,14 @@ use Cake\I18n\I18n;
  * @property \App\Model\Table\InstituicoesTable $Instituicoes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Instituicoes
- * @property \Cake\ORM\TableRegistry $Areainstituicoes
- * @property \Cake\ORM\TableRegistry $Supervisores
- * @property \Cake\ORM\TableRegistry $Estagiarios
- * @property \Cake\ORM\TableRegistry $Muralestagios
- * @property \Cake\ORM\TableRegistry $Visitas
+ * @property \Cake\ORM\Table $Instituicoes
+ * @property \Cake\ORM\Table $Areainstituicoes
+ * @property \Cake\ORM\Table $Supervisores
+ * @property \Cake\ORM\Table $Estagiarios
+ * @property \Cake\ORM\Table $Muralestagios
+ * @property \Cake\ORM\Table $Visitas
  * 
- * @method \App\Model\Entity\Instituicoes[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Instituicao[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class InstituicoesController extends AppController
 {

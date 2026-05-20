@@ -13,14 +13,14 @@ use Cake\I18n\I18n;
  * @property \App\Model\Table\AvaliacoesTable $Avaliacoes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Avaliacoes
- * @property \Cake\ORM\TableRegistry $Estagiarios
- * @property \Cake\ORM\TableRegistry $Alunos
- * @property \Cake\ORM\TableRegistry $Supervisores
- * @property \Cake\ORM\TableRegistry $Instituicoes
- * @property \Cake\ORM\TableRegistry $Professores
+ * @property \Cake\ORM\Table $Avaliacoes
+ * @property \Cake\ORM\Table $Estagiarios
+ * @property \Cake\ORM\Table $Alunos
+ * @property \Cake\ORM\Table $Supervisores
+ * @property \Cake\ORM\Table $Instituicoes
+ * @property \Cake\ORM\Table $Professores
  * 
- * @method \App\Model\Entity\Avaliaco[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Avaliacao[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AvaliacoesController extends AppController
 {
@@ -86,6 +86,8 @@ class AvaliacoesController extends AppController
         /* O submenu_navegacao envia o cress */
         $this->Authorization->skipAuthorization();
         $user = $this->getRequest()->getAttribute('identity');
+        $dre = null;
+        $cress = null;
         if ($user->categoria == '4') {
             $cress = $user->numero;
         } elseif ($user->categoria == '2') {
@@ -150,7 +152,7 @@ class AvaliacoesController extends AppController
             $avaliacaoestagiario = $this->Avaliacoes->find()
                 ->where(['estagiario_id' => $estagiario_id])
                 ->first();
-            if (isset($avaliacaoestagiario) && !is_null($avaliacaoestagiario)) {
+            if ($avaliacaoestagiario !== null) {
                 $this->Flash->error(__('Estagiário já foi avaliado'));
                 return $this->redirect(['controller' => 'avaliacoes', 'action' => 'view', $avaliacaoestagiario->id]);
             }

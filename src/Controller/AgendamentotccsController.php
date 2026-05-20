@@ -10,11 +10,10 @@ namespace App\Controller;
  * @property \App\Model\Table\AgendamentotccsTable $Agendamentotccs
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Agendamentotccs
- * @property \Cake\ORM\TableRegistry $Estudantes
- * @property \Cake\ORM\TableRegistry $Docentes
- * @property \Cake\ORM\TableRegistry $Docentebanca1
- * @property \Cake\ORM\TableRegistry $Docentebanca2
+ * @property \App\Model\Table\EstudantesTable $Estudantes
+ * @property \App\Model\Table\DocentesTable $Docentes
+ * @property \App\Model\Table\DocentesTable $Docentebanca1
+ * @property \App\Model\Table\DocentesTable $Docentebanca2
  *
  * @method \App\Model\Entity\Agendamentotcc[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */

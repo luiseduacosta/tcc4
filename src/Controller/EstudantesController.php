@@ -14,11 +14,11 @@ use Cake\I18n\I18n;
  * @property \App\Model\Table\EstudantesTable $Estudantes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Estudantes
- * @property \Cake\ORM\TableRegistry $Estagiarios
- * @property \Cake\ORM\TableRegistry $Supervisores
- * @property \Cake\ORM\TableRegistry $Instituicoes
- * @property \Cake\ORM\TableRegistry $Docentes
+ * @property \Cake\ORM\Table $Estudantes
+ * @property \Cake\ORM\Table $Estagiarios
+ * @property \Cake\ORM\Table $Supervisores
+ * @property \Cake\ORM\Table $Instituicoes
+ * @property \Cake\ORM\Table $Docentes
  *
  * @method \App\Model\Entity\Estudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */

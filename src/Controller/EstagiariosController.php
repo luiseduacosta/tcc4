@@ -9,26 +9,23 @@ use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
 
 /**
+ * EstagiariosController handles actions related to the management of interns (estagiarios).
+ * It provides functionalities for viewing, adding, editing, and deleting interns,
+ * as well as generating various PDF documents related to intern evaluations and activities.
+ * The controller also manages the filtering and pagination of intern records based on certain criteria.
  * Estagiarios Controller
  *
  * @property \App\Model\Table\EstagiariosTable $Estagiarios
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
- * @property \Cake\ORM\TableRegistry $Configuracoes
- * @property \Cake\ORM\TableRegistry $Estagiarios
- * @property \Cake\ORM\TableRegistry $Alunos
- * @property \Cake\ORM\TableRegistry $Supervisores
- * @property \Cake\ORM\TableRegistry $Instituicoes
- * @property \Cake\ORM\TableRegistry $Professores
- * @property \Cake\ORM\TableRegistry $Turmaestagios
- *
+ * @property \Cake\ORM\Table $Configuracoes
+ * @property \Cake\ORM\Table $Estagiarios
+ * @property \Cake\ORM\Table $Alunos
+ * @property \Cake\ORM\Table $Supervisores
+ * @property \Cake\ORM\Table $Instituicoes
+ * @property \Cake\ORM\Table $Professores
+ * @property \Cake\ORM\Table $Turmaestagios
  * @method \App\Model\Entity\Estagiario[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
-/**
- * EstagiariosController handles actions related to the management of interns (estagiarios).
- * It provides functionalities for viewing, adding, editing, and deleting interns,
- * as well as generating various PDF documents related to intern evaluations and activities.
- * The controller also manages the filtering and pagination of intern records based on certain criteria.
  */
 class EstagiariosController extends AppController
 {
@@ -827,6 +824,7 @@ class EstagiariosController extends AppController
     {
         $this->Authorization->skipAuthorization();
         $user = $this->getRequest()->getAttribute("identity");
+        $siape = null;
         if (isset($user) && $user->categoria == "3") {
             $siape = $user->numero;
         } elseif (isset($user) && $user->categoria == "1") {

@@ -10,10 +10,10 @@ namespace App\Controller;
  * @property \App\Model\Table\TccestudantesTable $Tccestudantes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Tccestudantes
- * @property \Cake\ORM\TableRegistry $Monografias
- * @property \Cake\ORM\TableRegistry $Estudantes
- * @property \Cake\ORM\TableRegistry $Docentes
+ * @property \Cake\ORM\Table $Tccestudantes
+ * @property \Cake\ORM\Table $Monografias
+ * @property \Cake\ORM\Table $Estudantes
+ * @property \Cake\ORM\Table $Docentes
  * 
  * @method \App\Model\Entity\Tccestudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  * 
@@ -33,17 +33,14 @@ class TccestudantesController extends AppController
 
         $this->Authorization->skipAuthorization();
 
-        if ($this->request->is('post')) {
-            if ($this->request->getData()) {
-                $dados = $this->request->getData();
-                $query = $this->Tccestudantes->find()
-                    ->contain(['Monografias'])
-                    ->where(['nome LIKE' => "%" . $dados['nome'] . "%"]);
-            }
-        } else {
+        $query = $this->Tccestudantes->find()
+            ->contain(['Monografias']);
 
-            $query = $this->Tccestudantes->find()
-                ->contain(['Monografias']);
+        if ($this->request->is('post')) {
+            $dados = $this->request->getData();
+            if (!empty($dados['nome'])) {
+                $query->where(['nome LIKE' => "%" . $dados['nome'] . "%"]);
+            }
         }
 
         if ($query) {

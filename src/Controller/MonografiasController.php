@@ -6,8 +6,6 @@ namespace App\Controller;
 
 use Cake\Routing\Router;
 use App\Controller\AppController;
-use Cake\Filesystem\File;
-use Cake\Filesystem\Folder;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
 
@@ -17,10 +15,10 @@ use Cake\I18n\I18n;
  * @property \App\Model\Table\MonografiasTable $Monografias
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Monografias
- * @property \Cake\ORM\TableRegistry $Docentes
- * @property \Cake\ORM\TableRegistry $Areamonografias
- * @property \Cake\ORM\TableRegistry $Tccestudantes
+ * @property \Cake\ORM\Table $Monografias
+ * @property \Cake\ORM\Table $Docentes
+ * @property \Cake\ORM\Table $Areamonografias
+ * @property \Cake\ORM\Table $Tccestudantes
  * 
  * @method \App\Model\Entity\Monografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -334,16 +332,14 @@ class MonografiasController extends AppController
             $this->Flash->error(__('Somente são permitidos arquivos PDF.'));
             return null;
         }
-    }
-
-    /**
-     * Estudantes método
-     *
-     * @param array NULL.
-     * @return array $estudantes
-     */
+    }     /**
+      * Estudantes método
+      *
+      * @return array $estudantes
+      */
     private function estudantes()
     {
+        $alunos = [];
 
         /* Capturar o registro do estudante */
         $estudantetable = $this->fetchTable('Alunos');
@@ -370,36 +366,38 @@ class MonografiasController extends AppController
 
         $this->Authorization->skipAuthorization();
         $path = WWW_ROOT . "/monografias/";
-        $diretorio = dir($path);
-        $i = 0;
-        $k = 0;
-        while ($arquivo = $diretorio->read()) {
-            $lista[$k] = $arquivo;
-            $c_arquivo = explode('.', $arquivo);
-            if (!empty($c_arquivo['0'])):
+        $arquivospdf = [];
+        if (is_dir($path)) {
+            $diretorio = dir($path);
+            $i = 0;
+            $k = 0;
+            while (($arquivo = $diretorio->read()) !== false) {
+                $c_arquivo = explode('.', $arquivo);
+                if (!empty($c_arquivo[0])):
 
-                $pdfs = $this->Monografias->Tccestudantes->find('all', [
-                    'contain' => 'Monografias',
-                    'fields' => ['Monografias.url', 'Tccestudantes.registro', 'Tccestudantes.id']
-                ]);
-                $pdfs->where(['Tccestudantes.registro' => $c_arquivo[0]]);
-                $monografias = $pdfs->first();
-                if ($monografias):
-                    $arquivospdf[$i]['pdf'] = $c_arquivo[0];
-                    $arquivospdf[$i]['id'] = $monografias->id;
-                    $arquivospdf[$i]['nome'] = $monografias->nome;
-                    $arquivospdf[$i]['registro'] = $monografias->registro;
-                else:
-                    $arquivospdf[$i]['pdf'] = $c_arquivo[0];
-                    $arquivospdf[$i]['id'] = '';
-                    $arquivospdf[$i]['nome'] = '';
-                    $arquivospdf[$i]['registro'] = '';
+                    $pdfs = $this->Monografias->Tccestudantes->find('all', [
+                        'contain' => 'Monografias',
+                        'fields' => ['Monografias.url', 'Tccestudantes.registro', 'Tccestudantes.id']
+                    ]);
+                    $pdfs->where(['Tccestudantes.registro' => $c_arquivo[0]]);
+                    $monografias = $pdfs->first();
+                    if ($monografias):
+                        $arquivospdf[$i]['pdf'] = $c_arquivo[0];
+                        $arquivospdf[$i]['id'] = $monografias->id;
+                        $arquivospdf[$i]['nome'] = $monografias->nome;
+                        $arquivospdf[$i]['registro'] = $monografias->registro;
+                    else:
+                        $arquivospdf[$i]['pdf'] = $c_arquivo[0];
+                        $arquivospdf[$i]['id'] = '';
+                        $arquivospdf[$i]['nome'] = '';
+                        $arquivospdf[$i]['registro'] = '';
+                    endif;
+                    $i++;
+                    $k++;
                 endif;
-                $i++;
-                $k++;
-            endif;
+            }
+            $diretorio->close();
         }
-        $diretorio->close();
         sort($arquivospdf);
         $this->set(compact('arquivospdf'));
     }
@@ -413,8 +411,10 @@ class MonografiasController extends AppController
 
         $this->Authorization->skipAuthorization();
         $file_path = WWW_ROOT . 'monografias';
-        $dir = new Folder($file_path);
-        $files = $dir->find('.*\.pdf');
+        $files = [];
+        if (is_dir($file_path)) {
+            $files = array_map('basename', glob($file_path . DS . '*.pdf') ?: []);
+        }
         $monografias = $this->Monografias->find('all', ['fields' => ['url', 'id']]);
 
         $i = 0;
@@ -422,7 +422,7 @@ class MonografiasController extends AppController
 
             if ($monografia['url']):
                 $valor = array_search($monografia['url'], $files, true);
-                if ($valor):
+                if ($valor !== false):
                     echo 'exits ' . $monografia['url'] . "<br />";
 
                     $arraymonografia['url'] = $monografia['url'];
@@ -447,7 +447,6 @@ class MonografiasController extends AppController
             else:
                 $valor = null;
             endif;
-            // pr($valor);
         endforeach;
     }
 
@@ -460,26 +459,23 @@ class MonografiasController extends AppController
 
         $this->Authorization->skipAuthorization();
         $file_path = WWW_ROOT . 'monografias';
-        $dir = new Folder($file_path);
-        $files = $dir->find('.*\.pdf');
+        $files = [];
+        if (is_dir($file_path)) {
+            $files = array_map('basename', glob($file_path . DS . '*.pdf') ?: []);
+        }
         echo $total = count($files) . "<br>";
         $i = 0;
         $tccestudantetable = $this->fetchTable("Tccestudantes");
         foreach ($files as $file):
             $parte = explode(".", $file);
-            // echo $file . "<br />";
             $estudantes = $tccestudantetable->find();
             $estudantes->where(['registro' => $parte[0]]);
             $estudantes->select(['id', 'registro', 'monografia_id']);
             $estudantes->first();
             $estudantes->enableHydration(false);
-            // debug($monografias);
-            // die();
             $resultado_estudantes = $estudantes->toArray();
-            // pr($resultado_estudantes);
             if (sizeof($resultado_estudantes) == 0):
                 echo "Monografia não localizada na tabela Tccestudantes" . $file . '<br >';
-                // die();
             else:
                 $monografias = $this->Monografias->find();
                 $monografias->where(['id' => $resultado_estudantes[0]['monografia_id']]);
@@ -487,7 +483,6 @@ class MonografiasController extends AppController
                 $monografias->first();
                 $monografias->enableHydration(false);
                 $resultado_monografias = $monografias->toArray();
-                // pr($resultado_monografias);
 
                 if (empty($resultado_monografias[0]['url'])):
 
@@ -495,8 +490,6 @@ class MonografiasController extends AppController
                     $arraymonografia['id'] = $resultado_monografias[0]['id'];
                     $tcc = $this->Monografias->get($resultado_monografias[0]['id']);
                     $atualizatcc = $this->Monografias->patchEntity($tcc, $arraymonografia);
-                    // pr($atualizatcc);
-                    // die('atualiza ' . $file);
                     if ($this->Monografias->save($atualizatcc)):
                         echo $i++ . " " . $arraymonografia['id'] . " " . $arraymonografia['url'] . " atualizada" . "<br />";
                     endif;
@@ -511,16 +504,10 @@ class MonografiasController extends AppController
 
         $this->Authorization->skipAuthorization();
         $this->autoRender = false;
-        $file_path = WWW_ROOT . 'monografias';
-        $dir = new Folder($file_path);
-        $files = $dir->find('.*\.pdf');
-        foreach ($files as $file) {
-            $file = new File($dir->pwd() . DS . $file);
-            if ($file->name === $dre):
-                $filePath = $file->path;
-                $this->response = $this->response->withFile($filePath, ['download' => true, 'name' => $file->name]);
-                return $this->response;
-            endif;
+        $filePath = WWW_ROOT . 'monografias' . DS . $dre . '.pdf';
+        if (file_exists($filePath)) {
+            $this->response = $this->response->withFile($filePath, ['download' => true, 'name' => $dre . '.pdf']);
+            return $this->response;
         }
         $this->Flash->error(__('Arquivo ' . $dre . ' não encontrado'));
         return $this->redirect(['action' => 'view', $id]);

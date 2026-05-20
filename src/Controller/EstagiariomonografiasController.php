@@ -10,12 +10,12 @@ namespace App\Controller;
  * @property \App\Model\Table\EstagiariomonografiasTable $Estagiariomonografias
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\Query $Estagiariomonografias
- * @property \Cake\ORM\Query $Estudantes
- * @property \Cake\ORM\Query $Docentes
- * @property \Cake\ORM\Query $Areaestagios
- * @property \Cake\ORM\Query $Monografias
- * @property \Cake\ORM\Query $Tccestudantes
+ * @property \Cake\ORM\Table $Estagiariomonografias
+ * @property \Cake\ORM\Table $Estudantes
+ * @property \Cake\ORM\Table $Docentes
+ * @property \Cake\ORM\Table $Areaestagios
+ * @property \Cake\ORM\Table $Monografias
+ * @property \Cake\ORM\Table $Tccestudantes
  *
  * @method \App\Model\Entity\Estagiariomonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -189,7 +189,7 @@ class EstagiariomonografiasController extends AppController
             $this->Flash->error(
                 __("Registro estagiário não foi inserido. Tente novamente."),
             );
-            $this->redirect(["action" => "index"]);
+            return $this->redirect(["action" => "index"]);
         }
         $alunos = $this->Estagiariomonografias->Estudantes->find("list",
             keyField: "id",

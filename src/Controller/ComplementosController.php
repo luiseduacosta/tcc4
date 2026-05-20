@@ -13,8 +13,8 @@ use Cake\I18n\I18n;
  * @property \App\Model\Table\ComplementosTable $Complementos
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Complementos
- * @property \Cake\ORM\TableRegistry $Estagiarios
+ * @property \Cake\ORM\Table $Complementos
+ * @property \Cake\ORM\Table $Estagiarios
  * 
  * @method \App\Model\Entity\Complemento[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */

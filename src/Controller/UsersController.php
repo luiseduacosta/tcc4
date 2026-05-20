@@ -10,10 +10,10 @@ namespace App\Controller;
  * @property \App\Model\Table\UsersTable $Users
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Users
- * @property \Cake\ORM\TableRegistry $Alunos
- * @property \Cake\ORM\TableRegistry $Professores
- * @property \Cake\ORM\TableRegistry $Supervisores
+ * @property \Cake\ORM\Table $Users
+ * @property \Cake\ORM\Table $Alunos
+ * @property \Cake\ORM\Table $Professores
+ * @property \Cake\ORM\Table $Supervisores
  * 
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -40,19 +40,26 @@ class UsersController extends AppController
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
+            /** @var \App\Model\Entity\User $identity */
+            $identity = $result->getData();
+
+            $controller = 'muralestagios';
+            $action = 'index';
+            $id = null;
+
             /**Verifica se o aluno está cadastrado */
-            switch ($result->getData()->categoria) {
+            switch ($identity->categoria) {
                 case '2':
-                    $estudante_id = $result->getData()->estudante_id;
+                    $estudante_id = $identity->estudante_id;
                     if (empty($estudante_id)) {
                         $estudante = $this->fetchTable('Alunos')->find()
-                            ->where(['Alunos.email' => $result->getData()->email])
+                            ->where(['Alunos.email' => $identity->email])
                             ->first();
                         if (empty($estudante)) {
                             $this->Flash->error(__('Aluno não encontrado. Por favor, cadastre-se.'));
-                            return $this->redirect(['controller' => 'Alunos', 'action' => 'add', '?' => ['dre' => $result->getData()->numero, 'email' => $result->getData()->email]]);
+                            return $this->redirect(['controller' => 'Alunos', 'action' => 'add', '?' => ['dre' => $identity->numero, 'email' => $identity->email]]);
                         } else {
-                            $user = $this->Users->get($result->getData()->id);
+                            $user = $this->Users->get($identity->id);
                             $data['estudante_id'] = $estudante->id;
                             $user = $this->Users->patchEntity($user, $data);
                             if ($this->Users->save($user)) {
@@ -66,9 +73,9 @@ class UsersController extends AppController
                             ->first();
                         if (empty($alunos)) {
                             $this->Flash->error(__('Aluno não encontrado. Por favor, cadastre-se.'));
-                            return $this->redirect(['controller' => 'Alunos', 'action' => 'add', '?' => ['dre' => $result->getData()->numero, 'email' => $result->getData()->email]]);
+                            return $this->redirect(['controller' => 'Alunos', 'action' => 'add', '?' => ['dre' => $identity->numero, 'email' => $identity->email]]);
                         } else {
-                            $user = $this->Users->get($result->getData()->id);
+                            $user = $this->Users->get($identity->id);
                             $data['numero'] = $alunos->registro;
                             $data['estudante_id'] = $alunos->id;
                             $user = $this->Users->patchEntity($user, $data);
@@ -83,15 +90,15 @@ class UsersController extends AppController
                     break;
 
                 case '3':
-                    $professor_id = $result->getData()->professor_id;
+                    $professor_id = $identity->professor_id;
                     if (empty($professor_id)) {
                         $professor = $this->fetchTable('Professores')->find()
-                            ->where(['Professores.email' => $result->getData()->email])
+                            ->where(['Professores.email' => $identity->email])
                             ->first();
                         if (empty($professor)) {
-                            return $this->redirect(['controller' => 'Professores', 'action' => 'add', '?' => ['siape' => $result->getData()->numero, 'email' => $result->getData()->email]]);
+                            return $this->redirect(['controller' => 'Professores', 'action' => 'add', '?' => ['siape' => $identity->numero, 'email' => $identity->email]]);
                         } else {
-                            $user = $this->Users->get($result->getData()->id);
+                            $user = $this->Users->get($identity->id);
                             $data['professor_id'] = $professor->id;
                             $data['numero'] = $professor->siape;
                             $user = $this->Users->patchEntity($user, $data);
@@ -99,7 +106,6 @@ class UsersController extends AppController
                                 $this->Flash->success(__('Registro do(a) usuário(a) atualizado.'));
                             }
                             $professor_id = $professor->id;
-
                         }
                     }
                     $controller = 'Professores';
@@ -108,15 +114,15 @@ class UsersController extends AppController
                     break;
 
                 case '4':
-                    $supervisor_id = $result->getData()->supervisor_id;
+                    $supervisor_id = $identity->supervisor_id;
                     if (empty($supervisor_id)) {
                         $supervisor = $this->fetchTable('Supervisores')->find()
-                            ->where(['Supervisores.email' => $result->getData()->email])
+                            ->where(['Supervisores.email' => $identity->email])
                             ->first();
                         if (empty($supervisor)) {
-                            return $this->redirect(['controller' => 'Supervisores', 'action' => 'add', '?' => ['cress' => $result->getData()->numero, 'email' => $result->getData()->email]]);
+                            return $this->redirect(['controller' => 'Supervisores', 'action' => 'add', '?' => ['cress' => $identity->numero, 'email' => $identity->email]]);
                         } else {
-                            $user = $this->Users->get($result->getData()->id);
+                            $user = $this->Users->get($identity->id);
                             $data['supervisor_id'] = $supervisor->id;
                             $data['numero'] = $supervisor->cress;
                             $user = $this->Users->patchEntity($user, $data);
@@ -140,14 +146,10 @@ class UsersController extends AppController
                     return $this->redirect(['controller' => 'Users', 'action' => 'login']);
             }
             $this->Flash->success(__('Login realizado com sucesso'));
-            // pr($controller);
-            // pr($action);
-            // pr($id);
-            // die();
             return $this->redirect(['controller' => $controller, 'action' => $action, $id]);
         }
         // display error if user submitted and authentication failed
-        if ($this->request->is('post') && !$result->isValid()) {
+        if ($this->request->is('post')) {
             $this->Flash->error(__('Usuário ou senha inválidos'));
             return $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
@@ -219,6 +221,7 @@ class UsersController extends AppController
                 $this->Flash->success(__('Usuário cadastrado.'));
                 switch ($user->categoria) {
                     case '2':
+                        $aluno = null;
                         if (isset($user->numero) || !empty($user->numero)) {
                             $aluno = $this->fetchTable('Alunos')->find()
                                 ->where(['Alunos.registro' => $user->numero])
@@ -238,9 +241,9 @@ class UsersController extends AppController
                             $this->Flash->error(__('Ingresse para continuar com o cadastro do(a) aluno(a).'));
                             return $this->redirect(['controller' => 'Alunos', 'action' => 'add', '?' => ['dre' => $user->numero, 'email' => $user->email]]);
                         }
-                        break;
 
                     case '3':
+                        $professor = null;
                         if (isset($user->numero) || !empty($user->numero)) {
                             $professor = $this->fetchTable('Professores')->find()
                                 ->where(['Professores.siape' => $user->numero])
@@ -260,9 +263,9 @@ class UsersController extends AppController
                             $this->Flash->error(__('Ingresse para continuar com o cadastro do(a) professor(a).'));
                             return $this->redirect(['controller' => 'Professores', 'action' => 'add', '?' => ['siape' => $user->numero, 'email' => $user->email]]);
                         }
-                        break;
 
                     case '4':
+                        $supervisor = null;
                         if (isset($user->numero) || !empty($user->numero)) {
                             $supervisor = $this->fetchTable('Supervisores')->find()
                                 ->where(['Supervisores.cress' => $user->numero])
@@ -282,7 +285,6 @@ class UsersController extends AppController
                             $this->Flash->error(__('Ingresse novamente para continar com o cadastro do(a) supervisor(a).'));
                             return $this->redirect(['controller' => 'Supervisores', 'action' => 'add', '?' => ['cress' => $user->numero, 'email' => $user->email]]);
                         }
-                        break;
 
                     default:
                         $this->Flash->error(__('Categoria inválida.'));

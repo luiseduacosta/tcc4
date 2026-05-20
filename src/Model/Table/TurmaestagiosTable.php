@@ -24,7 +24,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Turmaestagio patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Turmaestagio[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Turmaestagio|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Turmaaestagio saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Turmaestagio saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Turmaestagio[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\Turmaestagio[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method \App\Model\Entity\Turmaestagio[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])

@@ -55,7 +55,7 @@ class AreamonografiasTable extends Table
             'targetForeignKey' => 'docente_id',
             'foreignKey' => 'areamonografia_id',
             'joinTable' => 'areamonografias_docentes',
-            'trough' => 'AreamonografiasDocentes'
+            'through' => 'AreamonografiasDocentes'
         ]);
     }
 

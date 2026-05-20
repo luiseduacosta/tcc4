@@ -8,7 +8,10 @@ use Cake\I18n\FrozenTime;
 use Cake\I18n\I18n;
 
 /**
- * Alunos Controller
+ * AlunosController handles actions related to the management of students (alunos).
+ * It provides functionalities for viewing, adding, editing, and deleting students,
+ * as well as generating various PDF documents related to student evaluations and activities.
+ * The controller also manages the filtering and pagination of student records based on certain criteria.
  *
  * @property \App\Model\Table\AlunosTable $Alunos
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
@@ -19,13 +22,6 @@ use Cake\I18n\I18n;
  * @property \Cake\ORM\Table $Professores
  *
  * @method \App\Model\Entity\Aluno[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
-
-/**
- * AlunosController handles actions related to the management of students (alunos).
- * It provides functionalities for viewing, adding, editing, and deleting students,
- * as well as generating various PDF documents related to student evaluations and activities.
- * The controller also manages the filtering and pagination of student records based on certain criteria.
  */
 class AlunosController extends AppController
 {
@@ -429,9 +425,10 @@ class AlunosController extends AppController
             /**
              * Calculo o total de semestres multiplicando o número de anos por 2.
              */
-            $semestres = ($atual[0] - $inicial[0] + 1) * 2;
+            $semestres = ((int)$atual[0] - (int)$inicial[0] + 1) * 2;
             // pr($semestres);
             // die();
+            $totalperiodos = 0;
             /** Verifica se o período está completo: ano e semestre */
             if (sizeof($inicial) < 2) {
                 $inicial[1] = 0;
@@ -552,7 +549,8 @@ class AlunosController extends AppController
             $atual = explode("-", $periodo_atual);
 
             /** Calculo o total de semestres */
-            $semestres = ($atual[0] - $inicial[0] + 1) * 2;
+            $semestres = ((int)$atual[0] - (int)$inicial[0] + 1) * 2;
+            $totalperiodos = 0;
 
             /** Se começa no semestre 1 e finaliza no 2 então são anos inteiros */
             if ($inicial[1] == 1 && $atual[1] == 2) {
@@ -673,7 +671,8 @@ class AlunosController extends AppController
             /**
              * Calculo o total de semestres
              */
-            $semestres = ($atual[0] - $inicial[0] + 1) * 2;
+            $semestres = ((int)$atual[0] - (int)$inicial[0] + 1) * 2;
+            $totalperiodos = 0;
 
             /** Se começa no semestre 1 e finaliza no 2 então são anos inteiros */
             if ($inicial[1] == 1 && $atual[1] == 2) {
@@ -878,12 +877,16 @@ class AlunosController extends AppController
             ->orderBy(["Estagiarios.nivel" => "asc"])
             ->all();
 
+        $t_seguro = [];
+        $criterio = [];
         $i = 0;
         foreach ($seguro as $c_seguro) {
+            $inicio = '';
+            $final = '';
             /** Calcula quando iniciou o estágio para cada nivel */
             $semestre = explode("-", $c_seguro->periodo);
-            $ano = $semestre[0];
-            $indicasemestre = $semestre[1];
+            $ano = (int)$semestre[0];
+            $indicasemestre = (int)$semestre[1];
 
             if ($c_seguro->nivel == 1) {
                 // Início
@@ -942,8 +945,8 @@ class AlunosController extends AppController
 
             // Final = $inicio + 3 ou 4 semestres
             $iniciodoestagio = explode("-", $inicio);
-            $anoinicio = $iniciodoestagio[0];
-            $semestreinicio = $iniciodoestagio[1];
+            $anoinicio = isset($iniciodoestagio[0]) ? (int)$iniciodoestagio[0] : 0;
+            $semestreinicio = isset($iniciodoestagio[1]) ? (int)$iniciodoestagio[1] : 0;
             if ($c_seguro->ajuste2020 == 0) {
                 // 4 semestres de estágio
                 if ($semestreinicio == 1) {
@@ -1036,7 +1039,6 @@ class AlunosController extends AppController
                         }
                         break;
                     default:
-                        $nivel;
                         break;
                 }
             } else {
@@ -1094,8 +1096,6 @@ class AlunosController extends AppController
                         if ($nivel > 4) {
                             $nivel = 9;
                         }
-                    } else {
-                        $nivel;
                     }
                 } else {
                     $nivel = $aluno->nivel;

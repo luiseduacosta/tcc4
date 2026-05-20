@@ -13,10 +13,10 @@ use Cake\I18n\I18n;
  * @property \App\Model\Table\MuralinscricoesTable $Muralinscricoes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Muralinscricoes
- * @property \Cake\ORM\TableRegistry $Alunos
- * @property \Cake\ORM\TableRegistry $Muralestagios
- * @property \Cake\ORM\TableRegistry $Instituicoes
+ * @property \Cake\ORM\Table $Muralinscricoes
+ * @property \Cake\ORM\Table $Alunos
+ * @property \Cake\ORM\Table $Muralestagios
+ * @property \Cake\ORM\Table $Instituicoes
  *
  * @method \App\Model\Entity\Muralinscricao[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -90,6 +90,8 @@ class MuralinscricoesController extends AppController
     public function add($id = NULL, $registro = NULL)
     {
         $this->Authorization->skipAuthorization();
+        $alunos = [];
+        $muralestagios = [];
         $muralinscricao = $this->Muralinscricoes->newEmptyEntity();
         $this->Authorization->authorize($muralinscricao);
 
@@ -221,6 +223,8 @@ class MuralinscricoesController extends AppController
             $this->Flash->error(__('Registro de inscrição não foi encontrado. Tente novamente.'));
             return $this->redirect(['controller' => 'muralinscricoes', 'action' => 'index']);
         }
+        $alunos = [];
+        $muralestagios = [];
         $this->Authorization->authorize($muralinscricao);
         if ($this->request->is(['patch', 'post', 'put'])) {
 

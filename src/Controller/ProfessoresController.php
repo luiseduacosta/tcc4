@@ -10,11 +10,11 @@ namespace App\Controller;
  * @property \App\Model\Table\ProfessoresTable $Professores
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Professores
- * @property \Cake\ORM\TableRegistry $Estagiarios
- * @property \Cake\ORM\TableRegistry $Alunos
- * @property \Cake\ORM\TableRegistry $Supervisores
- * @property \Cake\ORM\TableRegistry $Instituicoes
+ * @property \Cake\ORM\Table $Professores
+ * @property \Cake\ORM\Table $Estagiarios
+ * @property \Cake\ORM\Table $Alunos
+ * @property \Cake\ORM\Table $Supervisores
+ * @property \Cake\ORM\Table $Instituicoes
  * 
  * @method \App\Model\Entity\Professor[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */

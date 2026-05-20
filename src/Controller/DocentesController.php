@@ -10,9 +10,9 @@ namespace App\Controller;
  * @property \App\Model\Table\DocentesTable $Docentes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Docentes
- * @property \Cake\ORM\TableRegistry $Monografias
- * @property \Cake\ORM\TableRegistry $Areamonografias
+ * @property \Cake\ORM\Table $Docentes
+ * @property \Cake\ORM\Table $Monografias
+ * @property \Cake\ORM\Table $Areamonografias
  * 
  * @method \App\Model\Entity\Docente[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -155,7 +155,6 @@ class DocentesController extends AppController
                 return $this->redirect(['action' => 'view', $docente->id]);
             }
             $this->Flash->error(__('Registro docente não atualizado.'));
-            debug($docente->getErrors());
             return $this->redirect(['action' => 'view', $docente->id]);
         }
 

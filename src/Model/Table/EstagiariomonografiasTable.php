@@ -76,7 +76,7 @@ class EstagiariomonografiasTable extends Table
 
                 $this->hasMany('Folhadeatividades', [
                         'foreignKey' => 'estagiario_id',
-                        'order' => ['Folhadeatividades.dia' => 'ASC'],
+                        'sort' => ['Folhadeatividades.dia' => 'ASC'],
                 ]);
 
                 $this->belongsTo('Tccestudantes', [
@@ -122,7 +122,7 @@ class EstagiariomonografiasTable extends Table
                         ->notEmptyString('nivel');
 
                 $validator
-                        ->multipleOptions('tc', ['0' => '0', '1' => '1'])
+                        ->inList('tc', ['0', '1'])
                         ->notEmptyString('tc');
 
                 $validator

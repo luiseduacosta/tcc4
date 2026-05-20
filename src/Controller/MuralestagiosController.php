@@ -14,12 +14,12 @@ use Cake\ORM\TableRegistry;
  * @property \App\Model\Table\MuralestagiosTable $Muralestagios
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Muralestagios
- * @property \Cake\ORM\TableRegistry $Instituicoes
- * @property \Cake\ORM\TableRegistry $Turmaestagios
- * @property \Cake\ORM\TableRegistry $Professores
- * @property \Cake\ORM\TableRegistry $Muralinscricoes
- * @property \Cake\ORM\TableRegistry $Alunos
+ * @property \Cake\ORM\Table $Muralestagios
+ * @property \Cake\ORM\Table $Instituicoes
+ * @property \Cake\ORM\Table $Turmaestagios
+ * @property \Cake\ORM\Table $Professores
+ * @property \Cake\ORM\Table $Muralinscricoes
+ * @property \Cake\ORM\Table $Alunos
  * 
  * @method \App\Model\Entity\Muralestagio[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -133,13 +133,11 @@ class MuralestagiosController extends AppController
      */
     public function add()
     {
-        if (empty($periodo)) {
-            $configuracaotable = $this->fetchTable('Configuracoes');
-            $periodoconfiguracao = $configuracaotable->find()
-                ->select(['mural_periodo_atual'])
-                ->first();
-            $periodo = $periodoconfiguracao->mural_periodo_atual;
-        }
+        $configuracaotable = $this->fetchTable('Configuracoes');
+        $periodoconfiguracao = $configuracaotable->find()
+            ->select(['mural_periodo_atual'])
+            ->first();
+        $periodo = $periodoconfiguracao->mural_periodo_atual;
 
         $muralestagio = $this->Muralestagios->newEmptyEntity();
         $this->Authorization->authorize($muralestagio);

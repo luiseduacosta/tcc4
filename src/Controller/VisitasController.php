@@ -12,8 +12,8 @@ use Cake\I18n\I18n;
  * @property \App\Model\Table\VisitasTable $Visitas
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\TableRegistry $Visitas
- * @property \Cake\ORM\TableRegistry $Instituicoes
+ * @property \Cake\ORM\Table $Visitas
+ * @property \Cake\ORM\Table $Instituicoes
  * 
  * @method \App\Model\Entity\Visita[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */

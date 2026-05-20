@@ -79,7 +79,7 @@ class EstagiariosTable extends Table
 
         $this->hasMany("Folhadeatividades", [
             "foreignKey" => "estagiario_id",
-            "order" => ["Folhadeatividades.dia" => "ASC"],
+            "sort" => ["Folhadeatividades.dia" => "ASC"],
         ]);
 
         $this->belongsTo("Tccestudantes", [
@@ -131,7 +131,7 @@ class EstagiariosTable extends Table
             ->notEmptyString("nivel");
 
         $validator
-            ->multipleOptions("tc", ["0" => "0", "1" => "1"])
+            ->inList("tc", ["0", "1"])
             ->notEmptyString("tc");
 
         $validator->date("tc_solicitacao")->allowEmptyDate("tc_solicitacao");
