@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Controller\AppController;
-use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
-use Cake\I18n\FrozenTime;
-use Cake\I18n\I18n;
-
 /**
  * Professores Controller
  *
@@ -30,7 +24,6 @@ class ProfessoresController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-        $this->loadComponent('Authorization.Authorization');
     }
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
@@ -147,7 +140,7 @@ class ProfessoresController extends AppController
 
             if ($professorcadastrado):
                 $this->Flash->error(__('Siape do(a) professor(a) já cadastrado'));
-                return $this->redirect(['view' => $professorcadastrado->id]);
+                return $this->redirect(['action' => 'view', $professorcadastrado->id]);
             endif;
         }
 
@@ -158,7 +151,7 @@ class ProfessoresController extends AppController
 
             if ($professorcadastrado):
                 $this->Flash->error(__('E-mail do(a) professor(a) já cadastrado'));
-                return $this->redirect(['view' => $professorcadastrado->id]);
+                return $this->redirect(['action' => 'view', $professorcadastrado->id]);
             endif;
         }
 

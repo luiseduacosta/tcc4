@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Controller\AppController;
-use Cake\Event\Event;
-use Cake\I18n\FrozenTime;
-use Cake\I18n\I18n;
-
 /**
  * Tccestudantes Controller
  *
@@ -178,6 +173,11 @@ class TccestudantesController extends AppController
             ->find('list', ['keyField' => 'id', 'valueField' => 'titulo'])
             ->order(['titulo' => 'asc']);
         $monografias = $monografias->toArray();
+
+        $estudantes = $this->fetchTable('Estudantes')
+            ->find('list', ['keyField' => 'id', 'valueField' => 'nome'])
+            ->order(['nome' => 'asc'])
+            ->toArray();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $tccestudante = $this->Tccestudantes->patchEntity($tccestudante, $this->request->getData());

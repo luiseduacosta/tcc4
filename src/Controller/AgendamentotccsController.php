@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\I18n\FrozenTime;
-use Cake\I18n\I18n;
-
 /**
  * Agendamentotccs Controller
  *
@@ -107,8 +104,6 @@ class AgendamentotccsController extends AppController
 
         if ($this->request->is("post", "put", "patch")) {
             $dados = $this->request->getData();
-            pr($dados);
-            exit;
             /* Ajusta o horário */
             $horarioarray = explode(":", $dados["horario"]);
             if (empty($horarioarray[2])):

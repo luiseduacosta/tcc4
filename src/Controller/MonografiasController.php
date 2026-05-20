@@ -522,8 +522,9 @@ class MonografiasController extends AppController
         foreach ($files as $file) {
             $file = new File($dir->pwd() . DS . $file);
             if ($file->name === $dre):
-                echo '<a href=' . 'http://' . WWW_ROOT . 'monografias/' . $file->name . ' target=_blank download= ' . $file->name . '>Clique aqui</a>';
-                exit();
+                $filePath = $file->path;
+                $this->response = $this->response->withFile($filePath, ['download' => true, 'name' => $file->name]);
+                return $this->response;
             endif;
         }
         $this->Flash->error(__('Arquivo ' . $dre . ' não encontrado'));

@@ -18,6 +18,7 @@ class CategoriasController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index() {
+        $this->Authorization->skipAuthorization();
         $categorias = $this->paginate($this->Categorias);
 
         $this->set(compact('categorias'));
@@ -31,7 +32,7 @@ class CategoriasController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
-
+        $this->Authorization->skipAuthorization();
         try {   
             $categoria = $this->Categorias->get($id, [
                 'contain' => [],
@@ -51,7 +52,7 @@ class CategoriasController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add() {
-
+        $this->Authorization->skipAuthorization();
         $categoria = $this->Categorias->newEmptyEntity();
         if ($this->request->is('post')) {
             $categoria = $this->Categorias->patchEntity($categoria, $this->request->getData());
@@ -73,7 +74,7 @@ class CategoriasController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null) {
-
+        $this->Authorization->skipAuthorization();
         try {
             $categoria = $this->Categorias->get($id, [
                 'contain' => [],
@@ -102,7 +103,7 @@ class CategoriasController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
-
+        $this->Authorization->skipAuthorization();
         try {
             $categoria = $this->Categorias->get($id);
         } catch (\Exception $e) {

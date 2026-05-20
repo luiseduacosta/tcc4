@@ -18,6 +18,7 @@ class AreaestagiosController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index() {
+        $this->Authorization->skipAuthorization();
         $areaestagios = $this->paginate($this->Areaestagios);
 
         $this->set(compact('areaestagios'));
@@ -31,7 +32,7 @@ class AreaestagiosController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
-        
+        $this->Authorization->skipAuthorization();
         try {
             $areaestagio = $this->Areaestagios->get($id, [
                 'contain' => [],
@@ -51,7 +52,7 @@ class AreaestagiosController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add() {
-
+        $this->Authorization->skipAuthorization();
         $areaestagio = $this->Areaestagios->newEmptyEntity();
         if ($this->request->is('post')) {
             $areaestagio = $this->Areaestagios->patchEntity($areaestagio, $this->request->getData());
@@ -73,7 +74,7 @@ class AreaestagiosController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null) {
-        
+        $this->Authorization->skipAuthorization();
         try {
             $areaestagio = $this->Areaestagios->get($id, [
                 'contain' => [],
@@ -103,7 +104,7 @@ class AreaestagiosController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
-
+        $this->Authorization->skipAuthorization();
         try {
             $areaestagio = $this->Areaestagios->get($id);
         } catch (\Exception $e) {

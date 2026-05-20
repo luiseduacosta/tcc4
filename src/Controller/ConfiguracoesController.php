@@ -18,6 +18,7 @@ class ConfiguracoesController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index() {
+        $this->Authorization->skipAuthorization();
         $configuracao = $this->paginate($this->Configuracoes);
 
         $this->set(compact('configuracao'));
@@ -52,6 +53,7 @@ class ConfiguracoesController extends AppController {
      */
     public function add() {
         $configuracao = $this->Configuracoes->newEmptyEntity();
+        $this->Authorization->authorize($configuracao);
         if ($this->request->is('post')) {
             $configuracao = $this->Configuracoes->patchEntity($configuracao, $this->request->getData());
             if ($this->Configuracoes->save($configuracao)) {

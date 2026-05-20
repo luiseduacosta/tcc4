@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Controller\AppController;
-use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
-use Cake\I18n\FrozenTime;
-use Cake\I18n\I18n;
-
 /**
  * Docentes Controller
  *
@@ -29,7 +23,6 @@ class DocentesController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-        $this->loadComponent('Authorization.Authorization');
     }
 
 

@@ -128,7 +128,7 @@ class MuralinscricoesController extends AppController
             }
             /** Verifica se o período de inscrição está aberto para o aluno fazer inscrição */
             if ($user->categoria == 2 && $muralestagio->dataInscricao < $hoje) {
-                $this->Flash->error(__('Período de inscrição encerrado em {0}. Não é possível fazer inscrição.', $muralestagio->dataInscricaoo));
+                $this->Flash->error(__('Período de inscrição encerrado em {0}. Não é possível fazer inscrição.', $muralestagio->dataInscricao));
                 return $this->redirect(['controller' => 'muralestagios', 'action' => 'index']);
             }
             /** Verifica se já fez inscricações para essa mesma vaga de estágio */

@@ -123,13 +123,12 @@ class AreamonografiasController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(["post", "delete"]);
-        $areamonografia = $this->Areamonografias->get($id);
-        $this->Authorization->authorize($areamonografia);
-
-        $areamonografias = $this->Areamonografias->get($id, [
+        $areamonografia = $this->Areamonografias->get($id, [
             'contain' => ['Monografias']
         ]);
-        if ($areamonografias) {
+        $this->Authorization->authorize($areamonografia);
+
+        if (!empty($areamonografia->monografias)) {
             $this->Flash->error(__('Há monografias assoaciadas a esta área. Desfazer as associações primeiro.'));
             return $this->redirect(['action' => 'view', $id]);
         }

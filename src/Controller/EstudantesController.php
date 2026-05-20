@@ -118,14 +118,14 @@ class EstudantesController extends AppController
             ->where(["Estudantes.id" => $id])
             ->first();
 
-        $this->Authorization->authorize($estudante);
-
         if (!$estudante) {
             $this->Flash->error(
                 __("Usuário estudante cadastrado não encontrado."),
             );
             return $this->redirect(["action" => "index"]);
         }
+
+        $this->Authorization->authorize($estudante);
         $this->set("estudante", $estudante);
     }
 

@@ -18,7 +18,7 @@ class InstituicaoestagiosController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index() {
-        
+        $this->Authorization->skipAuthorization();
         $query = $this->Instituicaoestagios->find('all')->contain(['Areainstituicoes', 'Areaestagios']);
 
         $instituicaoestagios = $this->paginate($query);
@@ -56,6 +56,7 @@ class InstituicaoestagiosController extends AppController {
     public function add() {
 
         $instituicaoestagio = $this->Instituicaoestagios->newEmptyEntity();
+        $this->Authorization->authorize($instituicaoestagio);
         if ($this->request->is('post')) {
             $instituicaoestagio = $this->Instituicaoestagios->patchEntity($instituicaoestagio, $this->request->getData());
             if ($this->Instituicaoestagios->save($instituicaoestagio)) {
@@ -65,9 +66,8 @@ class InstituicaoestagiosController extends AppController {
             $this->Flash->error(__('Não foi possível inserir o registro instituicaoestagio. Tente novamente.'));
         }
         $areainstituicoes = $this->Instituicaoestagios->Areainstituicoes->find('list');
-        // $areaestagios = $this->Instituicaoestagios->Areaestagios->find('list');
         $supervisores = $this->Instituicaoestagios->Supervisores->find('list');
-        $this->set(compact('instituicaoestagio', 'areainstituicoes', 'areaestagios', 'supervisores'));
+        $this->set(compact('instituicaoestagio', 'areainstituicoes', 'supervisores'));
     }
 
     /**
