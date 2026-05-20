@@ -1,0 +1,37 @@
+includes:
+    - vendor/cakedc/cakephp-phpstan/extension.neon
+
+parameters:
+    level: 5
+    paths:
+        - src/
+    bootstrapFiles:
+        - config/bootstrap.php
+    treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        # CakePHP 5 supports named argument `contain:`, but stubs may not reflect this
+        - '#Unknown parameter \$contain in call to method .*get\(\)\.#'
+        # Table::get() throws RecordNotFoundException, but PHPStan stubs may lack @throws annotation
+        - '#Dead catch - Cake\\Datasource\\Exception\\RecordNotFoundException is never thrown in the try block\.#'
+        # AuthorizationComponent::authorize() may return void, but result usage is ignored
+        - '#Result of method Authorization\\Controller\\Component\\AuthorizationComponent::authorize\(\) \(void\) is used\.#'
+        # Controller::render() call style rule
+        - '#Method `render\(\)` must be used to prevent unreachable code\.#'
+        # CakePHP dynamic entity properties (like $entity->id) are magic, and EntityInterface doesn't declare them explicitly
+        - '#Access to an undefined property Cake\\Datasource\\EntityInterface::.*#'
+        # CakePHP dynamic table associations (like $this->Table->AssociatedTable) are magic
+        - '#Access to an undefined property Cake\\ORM\\Table::.*#'
+        # CakePHP query result iteration yields elements of union type (array|EntityInterface), which triggers property access warnings on the array part
+        - '#Cannot access property .* on (array\|Cake\\Datasource\\EntityInterface|Cake\\Datasource\\EntityInterface\|array)\.#'
+        # Controller actions do not always need to return a Response (they render automatically)
+        - '#Method .* should return .* but return statement is missing\.#'
+        # Ignore cosmetic docblock parameter comment name mismatches
+        - '#PHPDoc tag @param references unknown parameter: .*#'
+        # Ignore entity $_accessible covariance PHPdoc warning
+        - '#PHPDoc type array of property .*::\$_accessible is not covariant with PHPDoc type array<string, bool> of overridden property Cake\\ORM\\Entity::\$_accessible\.#'
+        # Ignore entity $_hidden covariance PHPdoc warning
+        - '#PHPDoc type array of property App\\Model\\Entity\\User::\$_hidden is not covariant with PHPDoc type array<string> of overridden property Cake\\ORM\\Entity::\$_hidden\.#'
+        # Ignore dynamic property access on IdentityInterface (proxies to User entity)
+        - '#Access to an undefined property (Authentication|Authorization)\\IdentityInterface::.*#'
+        # Ignore policy isset check warnings
+        - '#Variable \$user in isset\(\) always exists and is not nullable\.#'
