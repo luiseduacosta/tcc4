@@ -9,8 +9,6 @@ use Cake\Validation\Validator;
 /**
  * Estudantes Model (clone de Alunos para usar com Monografias)
  * 
- * @property \App\Model\Table\MuralinscricoesTable&\Cake\ORM\Association\HasMany $Muralinscricoes
- * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
  * @property \App\Model\Table\AgendamentotccsTable&\Cake\ORM\Association\HasMany $Agendamentotccs
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasOne $Tccestudantes
  *
@@ -40,20 +38,6 @@ class EstudantesTable extends Table
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
 
-        /** A tabela Muralinscricoes tem um campo aluno_id que se conexta com o id de Estudantes */
-        $this->hasMany('Muralinscricoes', [
-            'className' => 'Muralinscricoes',
-            'foreignKey' => 'aluno_id',
-            'joinType' => 'INNER'
-        ]);
-
-        /** A tabela Estagiarios tem um campo aluno_id que se conexta com o id de Estudantess */
-        $this->hasMany('Estagiarios', [
-            'className' => 'Estagiarios',
-            'foreignKey' => 'aluno_id',
-            'joinType' => 'INNER'
-        ]);
-
         /** A tabela Agendamentotcc tem um campo estudante_id que se conexta com o id de Estudantes */
         $this->hasMany('Agendamentotccs', [
             'className' => 'Agendamentotccs',
@@ -71,8 +55,8 @@ class EstudantesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -166,8 +150,8 @@ class EstudantesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

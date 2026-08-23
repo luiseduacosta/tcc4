@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Docente[]|\Cake\Collection\CollectionInterface $Docentes
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($docentes);
 ?>
 
 <?= $this->element('menu_monografias') ?>

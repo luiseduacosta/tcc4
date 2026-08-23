@@ -28,7 +28,7 @@ if (!Configure::read('debug')):
     );
 endif;
 
-$cakeDescription = 'Banco de TCCs e de ofertas de vagas de estágio da ESS/UFRJ. Feito com o framework CakePHP';
+$cakeDescription = 'Banco de TCCs da ESS/UFRJ. Feito com o framework CakePHP';
 ?>
 <!DOCTYPE html>
 <html>
@@ -86,6 +86,5 @@ Cake 4.0
 <?php
 
 header("location: monografias/index/");
-// header("location: muralestagios/index/");
 
 die();

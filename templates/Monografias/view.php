@@ -4,8 +4,6 @@
  * @var \App\Model\Entity\Monografia $monografia
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($monografia->url);
-// die();
 ?>
 
 <?= $this->element('menu_monografias') ?>
@@ -50,17 +48,33 @@ $user = $this->getRequest()->getAttribute('identity');
             <?php
             if (isset($monografia->tccestudantes) && !empty($monografia->tccestudantes)):
                 echo '<td>';
-                foreach ($monografia->tccestudantes as $tccestudantes):
-                    echo $this->Html->link($tccestudantes->nome, ['controller' => 'tccestudantes', 'action' => 'view', $tccestudantes->id]);
-                    echo ", ";
+                $nomes = [];
+                foreach ($monografia->tccestudantes as $tccestudante):
+                    if (is_string($tccestudante->nome) && $tccestudante->nome !== '') {
+                        $nomes[] = $this->Html->link($tccestudante->nome, ['controller' => 'tccestudantes', 'action' => 'view', $tccestudante->id]);
+                    }
                 endforeach;
+                echo implode(', ', $nomes);
                 echo '</td>';
+            else:
+                echo '<td></td>';
             endif;
             ?>
         </tr>
         <tr>
             <th scope="row"><?= __('Professor(a)') ?></th>
-            <td><?= $this->Html->link($monografia->docentes->nome, ['controller' => 'Docentes', 'action' => 'view', $monografia->professor_id]) ?>
+            <td><?= $monografia->has('docentes') && is_string($monografia->docentes->nome) && $monografia->docentes->nome !== '' ? $this->Html->link($monografia->docentes->nome, ['controller' => 'Docentes', 'action' => 'view', $monografia->num_prof]) : '' ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Co-orientador') ?></th>
+            <td><?php
+                if ($monografia->has('docentes_coorienta') && is_string($monografia->docentes_coorienta->nome) && $monografia->docentes_coorienta->nome !== '') {
+                    echo $this->Html->link($monografia->docentes_coorienta->nome, ['controller' => 'Docentes', 'action' => 'view', $monografia->num_co_orienta]);
+                } else {
+                    echo is_string($monografia->num_co_orienta) || is_numeric($monografia->num_co_orienta) ? h($monografia->num_co_orienta) : '';
+                }
+                ?>
             </td>
         </tr>
         <tr>
@@ -73,7 +87,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Área') ?></th>
-            <td><?= $monografia->has('areamonografias') ? $this->Html->link($monografia->areamonografias->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografias['id']]) : "" ?>
+            <td><?= $monografia->has('areamonografias') && is_string($monografia->areamonografias->area) && $monografia->areamonografias->area !== '' ? $this->Html->link($monografia->areamonografias->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografias->id]) : '' ?>
             </td>
         </tr>
         <tr>
@@ -86,13 +100,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 <td><a href="<?= WWW_ROOT . 'monografias/' . $monografia->url ?>">Download</a></td>
             </tr>
         <?php endif; ?>
-        <?php if (!empty($monografia->co_orienta_id)): ?>
-            <tr>
-                <th scope="row"><?= __('Co Orienta Id', ['label' => 'Co-orientador']) ?></th>
-                <td><?= $monografia->hasValue('co_orienta_id > 0') ? $this->Html->link($monografia->co_orienta_id, ['controller' => 'Professores', 'action' => 'view', $monografia->co_orienta_id]) : '' ?>
-                </td>
-            </tr>
-        <?php endif ?>
         <tr>
             <th scope="row"><?= __('Banca1') ?></th>
             <td><?= h($monografia->hasValue('docentes1') ? $monografia->docentes1->nome : '') ?></td>

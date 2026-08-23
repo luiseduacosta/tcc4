@@ -48,7 +48,6 @@ $user = $this->getRequest()->getAttribute('identity');
             </tr>
         </thead>
         <?php foreach ($cress as $c_cress): ?>
-            <?php // pr($c_cress); ?>
             <tr>
                 <td><?php echo isset($c_cress->estudante->nome) ? $this->Html->link($c_cress->estudante->nome, ['controller' => 'estudantes', 'action' => 'view', $c_cress->estudante->id]) : 'Sem informação'; ?>
                 </td>

@@ -4,8 +4,6 @@
  * @var \App\Model\Entity\Monografia[]|\Cake\Collection\CollectionInterface $monografias
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($monografias);
-// die();
 ?>
 
 <?= $this->element('menu_monografias') ?>
@@ -53,8 +51,6 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($monografias as $monografia): ?>
-                <?php // pr($monografia); ?>
-                <?php // die(pr($monografia->titulo)); ?>
                 <tr>
 
                     <td>

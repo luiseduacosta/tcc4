@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Docente $docente 
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($docente);
 ?>
 
 <?= $this->element('menu_monografias') ?>
@@ -176,8 +175,6 @@ $user = $this->getRequest()->getAttribute('identity');
     </div>
 <?php endif; ?>
 
-<?php // pr($docente->monografias) ?>
-
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h4><?= __('Monografias') ?></h4>
     <?php if (!empty($docente->monografias)): ?>
@@ -190,7 +187,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 </tr>
             </thead>
             <?php foreach ($docente->monografias as $monografias): ?>
-                <?php // pr($monografias); ?>
                 <tr>
                     <td><?= $this->Html->link($monografias->titulo, ['controller' => 'monografias', 'action' => 'view', $monografias->id]) ?>
                     </td>
@@ -206,7 +202,6 @@ $user = $this->getRequest()->getAttribute('identity');
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h4><?= __('Áreas') ?></h4>
     <?php if (!empty($docente->areamonografias)): ?>
-        <?php // pr($docente->areas); ?>
         <table class="table table-striped table-hover table-responsive">
             <thead class="table-dark">
                 <tr>
@@ -214,7 +209,6 @@ $user = $this->getRequest()->getAttribute('identity');
                 </tr>
             </thead>
             <?php foreach ($docente->areamonografias as $professoresAreas): ?>
-                <?php // pr($ProfessoresAreas); ?>
                 <tr>
                     <td><?= $this->Html->link($professoresAreas->area, ['controller' => 'areamonografias', 'action' => 'view', $professoresAreas->id]) ?>
                     </td>

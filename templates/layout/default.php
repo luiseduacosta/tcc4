@@ -13,7 +13,7 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @var \App\View\AppView $this
  */
-$cakeDescription = 'Mural e TCC da Escola de Serviço Social da UFRJ';
+$cakeDescription = 'TCC da Escola de Serviço Social da UFRJ';
 ?>
 <!DOCTYPE html>
 <html>

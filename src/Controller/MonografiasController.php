@@ -85,14 +85,11 @@ class MonografiasController extends AppController
     {
         $this->Authorization->skipAuthorization();
         try  {
-            $monografia = $this->Monografias->get($id, contain: ['Docentes', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'],);
+            $monografia = $this->Monografias->get($id, contain: ['Docentes', 'DocentesCoorienta', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'],);
         } catch (\Exception $e) {
             $this->Flash->error(__('Monografia não encontrada.'));
             return $this->redirect(['action' => 'index']);
         }
-        // pr($monografia);
-        // die();
-        $this->Authorization->authorize($monografia);
         $baseUrl = Router::url('/', true);
         $this->set(compact('monografia', 'baseUrl'));
     }
@@ -134,7 +131,7 @@ class MonografiasController extends AppController
 
             /* Banca1 is the advisor */
             if (empty($dados['banca1'])) {
-                 $dados['banca1'] = $dados['professor_id'] ?? null;
+                 $dados['banca1'] = $dados['num_prof'] ?? null;
             }
 
             $monografia = $this->Monografias->patchEntity($monografia, $dados);
@@ -215,7 +212,7 @@ class MonografiasController extends AppController
     {
         $this->Authorization->skipAuthorization();
         try {
-            $monografia = $this->Monografias->get($id, contain: ['Docentes', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'],);
+            $monografia = $this->Monografias->get($id, contain: ['Docentes', 'DocentesCoorienta', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'],);
         } catch (\Exception $e) {
             $this->Flash->error(__('Monografia não encontrada.'));
             return $this->redirect(['action' => 'index']);

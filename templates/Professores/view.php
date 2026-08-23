@@ -272,7 +272,6 @@ use Cake\I18n\FrozenDate;
                     <?php endif; ?>
                 </tr>
                 <?php foreach ($professor->estagiarios as $estagiarios): ?>
-                    <?php // pr($estagiarios->aluno) ?>
                     <tr>
                         <?php if (isset($user) && $user->categoria == '1'): ?>
                             <td><?= h($estagiarios->id) ?></td>
@@ -329,7 +328,6 @@ use Cake\I18n\FrozenDate;
                     <?php endif; ?>
                 </tr>
                 <?php foreach ($professor->estagiarios as $estagiarios): ?>
-                    <?php // pr($estagiarios->folhadeatividade) ?>
                     <tr>
                         <?php if (isset($user) && $user->categoria == '1'): ?>
                             <td><?= h($estagiarios->id) ?></td>

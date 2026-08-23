@@ -52,8 +52,6 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         </thead>
         <?php foreach ($t_seguro as $cada_aluno): ?>
-            <?php // pr($cada_aluno);  ?>
-            <?php // die(); ?>
             <tr>
                 <td>
                     <?php echo $this->Html->link($cada_aluno['nome'], ['controller' => 'estudantes', 'action' => 'view', $cada_aluno['id']]); ?>

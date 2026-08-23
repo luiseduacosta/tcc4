@@ -41,31 +41,9 @@ $user = $this->getRequest()->getAttribute('identity');
                         <?= $this->Html->link(__('Trajetórias'), ['controller' => 'Estagiariomonografias', 'action' => 'index'], ['class' => 'nav-link']) ?>
                     </li>
                 <?php endif; ?>
-            </ul>
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class='nav-item'>
-                    <?= $this->Html->link(__('Mural'), ['controller' => 'Muralestagios', 'action' => 'index'], ['class' => 'btn btn-info me-1']) ?>
+                <li class="nav-item">
+                    <?= $this->Html->link(__('Entrar'), ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link']) ?>
                 </li>
-                <?php if (isset($user) && !empty($user)): ?>
-                    <?php if ($user->categoria == 2):
-                        $estudante = TableRegistry::getTableLocator()->get('Estudantes')->find()->where(['Estudantes.id' => $user->estudante_id])->first();
-                        ?>
-                        <li class='nav-item'>
-                            <?= $this->Html->link($user->email, ['controller' => 'Estudantes', 'action' => 'view', $user->estudante_id], ['class' => 'btn btn-primary me-1']) ?>
-                        </li>
-                    <?php endif; ?>
-                <?php else: ?>
-                    <li class='nav-item ms-auto'><span class="btn btn-secondary"><?= 'Visitante' ?></span></li>
-                <?php endif; ?>
-                <?php if (isset($user) && !empty($user)): ?>
-                    <li class="nav-item">
-                        <?= $this->Html->link(__('Sair'), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'nav-link']) ?>
-                    </li>
-                <?php else: ?>
-                    <li class="nav-item">
-                        <?= $this->Html->link(__('Entrar'), ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link']) ?>
-                    </li>
-                <?php endif; ?>
             </ul>
         </div>
     </div>

@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Agendamentotcc[]|\Cake\Collection\CollectionInterface $agendamentotccs
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($agendamentotccs);
 ?>
 
 <?php echo $this->element('menu_monografias') ?>

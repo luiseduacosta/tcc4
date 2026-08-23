@@ -35,7 +35,6 @@ $user = $this->getRequest()->getAttribute('identity');
         </thead>
         <tbody>
             <?php foreach ($areas as $area): ?>
-                <?php // pr(count($area->monografias)); ?>
                 <tr>
                     <td><?= $this->Html->link(h($area->area), ['controller' => 'Areamonografias', 'action' => 'view', $area->id]) ?>
                     </td>

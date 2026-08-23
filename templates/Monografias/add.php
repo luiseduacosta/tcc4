@@ -187,7 +187,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </div>
 
     <div class=" form-group row">
-        <?php echo $this->Form->control('professor_id', [
+        <?php echo $this->Form->control('num_prof', [
             'label' => 'Orientador(a)', 
             'type' => 'select',
             'options' => $docentes, 
@@ -201,7 +201,7 @@ $user = $this->getRequest()->getAttribute('identity');
     </div>
 
     <div class=" form-group row">
-        <?php echo $this->Form->control('co_orienta_id', [
+        <?php echo $this->Form->control('num_co_orienta', [
             'label' => 'Co-orientador(a)', 
             'type' => 'select',
             'options' => $docentes, 

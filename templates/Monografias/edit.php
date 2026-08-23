@@ -179,9 +179,9 @@ $user = $this->getRequest()->getAttribute('identity');
             ]
         ]); ?>
 
-        <?php echo $this->Form->control('professor_id', [
+        <?php echo $this->Form->control('num_prof', [
             'type' => 'select',
-            'selected' => $monografia->professor_id,
+            'selected' => $monografia->num_prof,
             'label' => 'Docente',
             'options' => $docentes,
             'empty' => 'Seleciona docente',
@@ -193,11 +193,11 @@ $user = $this->getRequest()->getAttribute('identity');
             ]
         ]); ?>
 
-        <?php echo $this->Form->control('co_orienta_id', [
+        <?php echo $this->Form->control('num_co_orienta', [
             'label' => 'Co-orientador(a)', 
             'type' => 'select',
             'options' => $docentes, 
-            'selected' => $monografia->co_orienta_id,
+            'selected' => $monografia->num_co_orienta,
             'empty' => 'Selecione', 
             'required' => false,
             'templates' => [
@@ -236,7 +236,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php echo $this->Form->control('banca1', [
             'label' => 'Banca Professor(a) avaliador', 
             'type' => 'select',
-            'value' => $monografia->banca1->id ?? $monografia->professor_id,
+            'value' => $monografia->banca1->id ?? $monografia->num_prof,
             'options' => $docentes, 
             'empty' => 'Selecione', 
             'required' => true,

@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Tccestudante $tccestudante
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($tccestudante);
 ?>
 
 <?php echo $this->element('menu_monografias') ?>

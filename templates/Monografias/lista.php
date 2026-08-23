@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Monografia[]|\Cake\Collection\CollectionInterface $monografias
  */
 $user = $this->getRequest()->getAttribute('identity');
-// pr($arquivospdf); 
 ?>
 
 <?= $this->element('menu_monografias') ?>

@@ -52,11 +52,17 @@ class MonografiasTable extends Table
                 $this->setDisplayField('titulo');
                 $this->setPrimaryKey('id');
 
-                // Monografia tem um campo professor_id
                 $this->belongsTo('Docentes', [
                         'className' => 'Docentes',
                         'propertyName' => 'docentes',
-                        'foreignKey' => 'professor_id',
+                        'foreignKey' => 'num_prof',
+                ]);
+
+                $this->belongsTo('DocentesCoorienta', [
+                        'className' => 'Docentes',
+                        'foreignKey' => 'num_co_orienta',
+                        'propertyName' => 'docentes_coorienta',
+                        'joinType' => 'LEFT',
                 ]);
 
                 $this->belongsTo('Docentes1', [
@@ -77,7 +83,6 @@ class MonografiasTable extends Table
                         'propertyName' => 'docentes3',
                 ]);
 
-                // Monografia tem um campo areamonografia_id
                 $this->belongsTo('Areamonografias', [
                         'propertyName' => 'areamonografias',
                         'className' => 'Areamonografias',
@@ -119,16 +124,19 @@ class MonografiasTable extends Table
                         ->scalar('resumo')
                         ->maxLength('resumo', 7398)
                         ->allowEmptyString('resumo');
-                /*
-                  $validator
-                  ->scalar('data')
-                  ->maxLength('data', 10)
-                  ->allowEmptyString('data');
-                 */
+
                 $validator
                         ->scalar('periodo')
                         ->maxLength('periodo', 6)
                         ->allowEmptyString('periodo');
+
+                $validator
+                        ->integer('num_prof')
+                        ->allowEmptyString('num_prof');
+
+                $validator
+                        ->integer('num_co_orienta')
+                        ->allowEmptyString('num_co_orienta');
 
                 $validator
                         ->integer('areamonografia_id')
@@ -160,11 +168,7 @@ class MonografiasTable extends Table
                         ->scalar('url')
                         ->maxLength('url', 13)
                         ->allowEmptyString('url');
-                /*
-                  $validator
-                  ->dateTime('timestamp')
-                  ->allowEmptyDateTime('timestamp');
-                 */
+
                 return $validator;
         }
 
@@ -177,7 +181,7 @@ class MonografiasTable extends Table
          */
         public function buildRules(RulesChecker $rules): RulesChecker
         {
-                $rules->add($rules->existsIn(['professor_id'], 'Docentes'));
+                $rules->add($rules->existsIn(['num_prof'], 'Docentes'));
                 $rules->add($rules->existsIn(['areamonografia_id'], 'Areamonografias'));
 
                 return $rules;
