@@ -1,0 +1,6 @@
+- Each domain resource follows a triple pattern: an Entity class in `Model/Entity/`, a Table class in `Model/Table/`, and a corresponding Policy class in `Policy/` sharing the same singular name.
+- Table classes declare table metadata (`setTable`, `setAlias`, `setDisplayField`, `setPrimaryKey`) and define validation via `validationDefault(Validator)` and referential integrity via `buildRules(RulesChecker)`.
+- Policies implement method names matching authorization verbs (e.g. `canIndex`, `canEdit`) taking an `IdentityInterface` user as the first argument and returning a boolean decision.
+- Entities expose mass-assignment through a protected `$_accessible` array and hide sensitive fields like `password` via a protected `$_hidden` array.
+- Password handling is centralized in entities by overriding `_setPassword` to hash values with `DefaultPasswordHasher` before persistence.
+- Controllers inherit from `AppController`, which centralizes component loading (Flash, Authentication, Authorization) and action whitelisting via `beforeFilter`.

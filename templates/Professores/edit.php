@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <!-- jQuery Mask -->
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('#cpf').mask('000.000.000-00');
         $('#cep').mask('00000-000');
         $('#ddd_telefone').mask('00');
@@ -18,7 +18,7 @@ $user = $this->getRequest()->getAttribute('identity');
     });
 </script>
 
-<?= $this->element('menu_mural') ?>
+<?= $this->element('menu_monografias') ?>
 
 <?= $this->element('templates') ?>
 
@@ -75,7 +75,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('bairro', ['label' => ['text' => 'Bairro']]);
         echo $this->Form->control('cidade', ['label' => ['text' => 'Cidade']]);
         echo $this->Form->control('estado', ['label' => ['text' => 'Estado']]);
-        echo $this->Form->control('cep', ['label' => ['text' => 'CEP'], 'pattern' => '\d{5}-\d{3}', 'placeholder' => '00000-000', 'keypress()','required' => false]);
+        echo $this->Form->control('cep', ['label' => ['text' => 'CEP'], 'pattern' => '\d{5}-\d{3}', 'placeholder' => '00000-000', 'keypress()', 'required' => false]);
         echo $this->Form->control('pais', ['label' => ['text' => 'País']]);
         /** Dados de contato */
         echo $this->Form->control('ddd_telefone', ['label' => ['text' => 'DDD do Telefone']]);

@@ -1,0 +1,1 @@
+PHPUnit driven by CakePHP's `Cake\TestSuite\TestCase` and `IntegrationTestTrait`, with SQLite used as the test database via `ConnectionManager::setConfig('test_debug_kit', ...)`.

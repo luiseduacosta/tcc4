@@ -84,8 +84,8 @@ class MonografiasController extends AppController
     public function view($id = null)
     {
         $this->Authorization->skipAuthorization();
-        try  {
-            $monografia = $this->Monografias->get($id, contain: ['Docentes', 'DocentesCoorienta', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'],);
+        try {
+            $monografia = $this->Monografias->get($id, contain: ['Docentes', 'DocentesCoorienta', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'], );
         } catch (\Exception $e) {
             $this->Flash->error(__('Monografia não encontrada.'));
             return $this->redirect(['action' => 'index']);
@@ -116,7 +116,7 @@ class MonografiasController extends AppController
                 $dados['url'] = $this->arquivo($uploadedFile, $filePrefix);
                 if ($dados['url'] === null) {
                     // Flash error is handled in arquivo method, but we should stop saving if file is invalid
-                     // Ideally we should validations here. For now, proceeding as legacy code did but being safer.
+                    // Ideally we should validations here. For now, proceeding as legacy code did but being safer.
                 }
             }
 
@@ -131,7 +131,7 @@ class MonografiasController extends AppController
 
             /* Banca1 is the advisor */
             if (empty($dados['banca1'])) {
-                 $dados['banca1'] = $dados['num_prof'] ?? null;
+                $dados['banca1'] = $dados['professor_id'] ?? null;
             }
 
             $monografia = $this->Monografias->patchEntity($monografia, $dados);
@@ -154,18 +154,20 @@ class MonografiasController extends AppController
         $estudantes = $this->estudantes();
 
         /* Load Professors */
-        $docentes = $this->Monografias->Docentes->find('list',
+        $docentes = $this->Monografias->Docentes->find(
+            'list',
             keyField: 'id',
             valueField: 'nome',
             order: ['nome' => 'asc']
         );
 
-        $areamonografias = $this->Monografias->Areamonografias->find('list',
+        $areamonografias = $this->Monografias->Areamonografias->find(
+            'list',
             keyField: 'id',
             valueField: 'area',
             order: ['area' => 'asc']
         );
-        
+
         $this->set(compact('estudantes', 'monografia', 'docentes', 'areamonografias'));
     }
 
@@ -176,7 +178,8 @@ class MonografiasController extends AppController
     {
         $estudantesTable = $this->fetchTable('Estudantes');
         foreach ($estudantesIds as $registro) {
-            if (empty($registro)) continue;
+            if (empty($registro))
+                continue;
 
             $estudante = $estudantesTable->find()
                 ->where(['registro' => $registro])
@@ -190,11 +193,11 @@ class MonografiasController extends AppController
                     'registro' => $registro,
                     'nome' => $estudante->nome
                 ];
-                
+
                 // Check if already exists to avoid duplicates if re-submitting? 
                 // Table schema doesn't seem to have unique constraint on monografia_id + registro, 
                 // but let's assume standard insertion.
-                
+
                 $tccEstudante = $this->Monografias->Tccestudantes->patchEntity($tccEstudante, $dadosEstudante);
                 $this->Monografias->Tccestudantes->save($tccEstudante);
             }
@@ -212,7 +215,7 @@ class MonografiasController extends AppController
     {
         $this->Authorization->skipAuthorization();
         try {
-            $monografia = $this->Monografias->get($id, contain: ['Docentes', 'DocentesCoorienta', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'],);
+            $monografia = $this->Monografias->get($id, contain: ['Docentes', 'DocentesCoorienta', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'], );
         } catch (\Exception $e) {
             $this->Flash->error(__('Monografia não encontrada.'));
             return $this->redirect(['action' => 'index']);
@@ -226,7 +229,7 @@ class MonografiasController extends AppController
             $monografia = $this->Monografias->patchEntity($monografia, $dados);
 
             if ($this->Monografias->save($monografia)) {
-                
+
                 // Update associated students if provided
                 if (isset($dados['estudantes_ids'])) {
                     // Sync students (remove old, add new only if changed)
@@ -240,20 +243,24 @@ class MonografiasController extends AppController
         }
 
         /* Load Students for selection */
-        $estudantes = $this->fetchTable('Estudantes')->find('list',
-        keyField: 'registro',
-        valueField: 'nome',
-        order: ['nome' => 'asc'])->toArray();
+        $estudantes = $this->fetchTable('Estudantes')->find(
+            'list',
+            keyField: 'registro',
+            valueField: 'nome',
+            order: ['nome' => 'asc']
+        )->toArray();
 
         // Load Docentes for selection
-        $docentes = $this->Monografias->Docentes->find('list',
+        $docentes = $this->Monografias->Docentes->find(
+            'list',
             keyField: 'id',
             valueField: 'nome',
             order: ['nome' => 'asc']
         );
 
         // Load Areamonografias for selection
-        $areamonografias = $this->Monografias->Areamonografias->find('list',
+        $areamonografias = $this->Monografias->Areamonografias->find(
+            'list',
             keyField: 'id',
             valueField: 'area',
             order: ['area' => 'asc']
@@ -267,19 +274,19 @@ class MonografiasController extends AppController
      */
     private function syncTccEstudantes($monografiaId, $estudantesIds)
     {
-         // Get current associations
-         $currentTccs = $this->Monografias->Tccestudantes->find()
+        // Get current associations
+        $currentTccs = $this->Monografias->Tccestudantes->find()
             ->where(['monografia_id' => $monografiaId])
             ->all();
 
-         // Delete all current (simplest strategy to ensure sync, albeit slightly destructive if ID matters)
-         // Since Tccestudante ID seems just auto-increment, this is likely fine.
-         foreach ($currentTccs as $tcc) {
-             $this->Monografias->Tccestudantes->delete($tcc);
-         }
-         
-         // Re-add selected
-         $this->saveTccEstudantes($monografiaId, $estudantesIds);
+        // Delete all current (simplest strategy to ensure sync, albeit slightly destructive if ID matters)
+        // Since Tccestudante ID seems just auto-increment, this is likely fine.
+        foreach ($currentTccs as $tcc) {
+            $this->Monografias->Tccestudantes->delete($tcc);
+        }
+
+        // Re-add selected
+        $this->saveTccEstudantes($monografiaId, $estudantesIds);
     }
 
     /**
@@ -330,16 +337,16 @@ class MonografiasController extends AppController
             return null;
         }
     }     /**
-      * Estudantes método
-      *
-      * @return array $estudantes
-      */
+          * Estudantes método
+          *
+          * @return array $estudantes
+          */
     private function estudantes()
     {
         $alunos = [];
 
         /* Capturar o registro do estudante */
-        $estudantetable = $this->fetchTable('Alunos');
+        $estudantetable = $this->fetchTable('Estudantes');
         $estudantes = $estudantetable->find('all');
         $estudantes->select(['registro', 'nome']);
         $estudantes->orderBy(['nome' => 'asc']);

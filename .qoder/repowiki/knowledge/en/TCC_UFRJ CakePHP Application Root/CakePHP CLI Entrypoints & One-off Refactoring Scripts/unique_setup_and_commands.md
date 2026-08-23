@@ -1,0 +1,1 @@
+Run the app's CLI via `./bin/cake <command>` on Unix-like systems or `bin\cake.bat <command>` on Windows; the shell wrapper auto-detects a CLI-capable PHP executable (`php`, `php-cli`, `/usr/local/bin/php`). Scratch scripts are executed directly with `python scratch/<script>.py` and operate on absolute paths under `/home/luis/Html/tcc5/...`.

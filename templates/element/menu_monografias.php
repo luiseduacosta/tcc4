@@ -8,7 +8,6 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Monografia $monografia
  */
-use Cake\ORM\TableRegistry;
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
@@ -20,7 +19,7 @@ $user = $this->getRequest()->getAttribute('identity');
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarPrincipal">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav">
                 <li class='nav-item'>
                     <?= $this->Html->link(__('Agenda TCC'), ['controller' => 'Agendamentotccs', 'action' => 'index'], ['class' => 'nav-link']) ?>
                 </li>
@@ -37,12 +36,13 @@ $user = $this->getRequest()->getAttribute('identity');
                     <li class='nav-item'>
                         <?= $this->Html->link(__('Áreas'), ['controller' => 'Areamonografias', 'action' => 'index'], ['class' => 'nav-link']) ?>
                     </li>
-                    <li class='nav-item'>
-                        <?= $this->Html->link(__('Trajetórias'), ['controller' => 'Estagiariomonografias', 'action' => 'index'], ['class' => 'nav-link']) ?>
-                    </li>
                 <?php endif; ?>
                 <li class="nav-item">
-                    <?= $this->Html->link(__('Entrar'), ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link']) ?>
+                    <?php if (isset($user)): ?>
+                        <?= $this->Html->link(__('Sair'), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'nav-link']) ?>
+                    <?php else: ?>
+                        <?= $this->Html->link(__('Entrar'), ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link']) ?>
+                    <?php endif; ?>
                 </li>
             </ul>
         </div>

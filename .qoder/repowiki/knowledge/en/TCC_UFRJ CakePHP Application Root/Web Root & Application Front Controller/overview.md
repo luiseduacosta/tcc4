@@ -1,0 +1,1 @@
+Public web root that serves static assets and routes all HTTP requests through CakePHP's index.php front controller into the application.

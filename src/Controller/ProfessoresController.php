@@ -10,11 +10,6 @@ namespace App\Controller;
  * @property \App\Model\Table\ProfessoresTable $Professores
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\Table $Professores
- * @property \Cake\ORM\Table $Estagiarios
- * @property \Cake\ORM\Table $Alunos
- * @property \Cake\ORM\Table $Supervisores
- * @property \Cake\ORM\Table $Instituicoes
  * 
  * @method \App\Model\Entity\Professor[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -74,17 +69,17 @@ class ProfessoresController extends AppController
                     $query = $this->Professores->find()
                         ->where(['siape' => $siape])
                         ->first();
-                    $id = $query->id;
+                    $id = $query?->id;
                 } else {
                     if ($user->categoria == '3') { // Professor
-                        // Se for professor, pega o siape do usuário logado
-                        // e busca o professor correspondente
-                        $siape = $user->numero;
-                        if (isset($siape)) {
+                        // Se for professor, usa o vínculo do usuário logado
+                        // e, na falta dele, procura pelo siape (identificacao)
+                        $id = $user->professor_id;
+                        if (empty($id) && !empty($user->identificacao)) {
                             $query = $this->Professores->find()
-                                ->where(['siape' => $siape])
+                                ->where(['siape' => $user->identificacao])
                                 ->first();
-                            $id = $query->id;
+                            $id = $query?->id;
                         }
                     }
                 }
@@ -95,14 +90,12 @@ class ProfessoresController extends AppController
             return $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
 
-        /** Têm Professores com muitos estagiários: aumentar a memória */
-        ini_set('memory_limit', '2048M');
-        $professor = $this->Professores->get($id, contain: ['Estagiarios' => ['sort' => ['Estagiarios.periodo DESC'], 'Instituicoes', 'Supervisores', 'Professores', 'Alunos']]);
-
-        if (!isset($professor)) {
+        if ($id === null) {
             $this->Flash->error(__('Nao ha registros de professor para esse numero!'));
             return $this->redirect(['action' => 'index']);
         }
+
+        $professor = $this->Professores->get($id);
 
         $this->set(compact('professor'));
     }
@@ -158,7 +151,7 @@ class ProfessoresController extends AppController
             /** Busca se já está cadastrado como user */
             $siape = $this->request->getData('siape');
             $usercadastrado = $this->Professores->Users->find()
-                ->where(['categoria' => 3, 'numero' => $siape])
+                ->where(['categoria' => 3, 'identificacao' => $siape])
                 ->first();
             if (empty($usercadastrado)):
                 $this->Flash->error(__('Professor(a) não cadastrado(a) como usuário(a)'));
@@ -217,16 +210,34 @@ class ProfessoresController extends AppController
 
         $this->Authorization->skipAuthorization();
         try {
-            $professor = $this->Professores->get($id, contain: ['Estagiarios']);
+            $professor = $this->Professores->get($id);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__('Professor(a) não encontrado.'));
             return $this->redirect(['action' => 'index']);
         }
 
         $this->Authorization->authorize($professor);
-        if (sizeof($professor->estagiarios) > 0) {
-            $this->Flash->error(__('Professor(a) tem estagiários associados'));
-            return $this->redirect(['controller' => 'Professores', 'action' => 'view', $id]);
+
+        /**
+         * Um(a) professor(a) pode estar ligado(a) a uma monografia como
+         * orientador(a), coorientador(a) ou membro de banca. Excluir o registro
+         * deixaria essas referências órfãs.
+         */
+        $monografias = $this->Professores->Monografias->find()
+            ->where([
+                'OR' => [
+                    'professor_id' => $professor->id,
+                    'num_co_orienta' => $professor->id,
+                    'banca1' => $professor->id,
+                    'banca2' => $professor->id,
+                    'banca3' => $professor->id,
+                ],
+            ])
+            ->count();
+
+        if ($monografias > 0) {
+            $this->Flash->error(__('Professor(a) tem {0} monografia(s) associada(s) como orientador(a), coorientador(a) ou membro de banca.', $monografias));
+            return $this->redirect(['action' => 'view', $professor->id]);
         }
 
         if ($this->request->is(['post', 'delete'])) {  

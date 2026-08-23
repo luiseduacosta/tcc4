@@ -1,0 +1,1 @@
+Tests require running from the project root so `bootstrap.php` can resolve `vendor/autoload.php` and `config/bootstrap.php`; DebugKit is configured to use `TMP . 'debug_kit.sqlite'` and aliased to the `debug_kit` connection name before any request handling.

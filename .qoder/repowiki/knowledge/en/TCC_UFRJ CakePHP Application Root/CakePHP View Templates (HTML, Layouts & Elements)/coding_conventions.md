@@ -1,0 +1,6 @@
+- Each controller namespace maps to a `templates/<Controller>/` directory with the standard set of `add.php`, `edit.php`, `index.php`, `view.php` files for CRUD screens.
+- Shared UI fragments are extracted into `templates/element/*.php` and included via `$this->element('name')` rather than duplicated across action templates.
+- Action templates access the current user through `$this->getRequest()->getAttribute('identity')` and gate admin-only UI behind checks like `$user->categoria == '1'`.
+- User-supplied data is always escaped via the `h()` helper before output, while form inputs use `$this->Form->control()` with inline options instead of raw `<input>` tags.
+- Flash messages are rendered through `$this->Flash->render()` in the layout and customized per type via `templates/element/flash/{default,error,success}.php`.
+- Paginator markup is centralized in `templates/element/paginator.php` using `$this->Paginator->setTemplates()` to produce Bootstrap-styled pagination links.

@@ -179,9 +179,9 @@ $user = $this->getRequest()->getAttribute('identity');
             ]
         ]); ?>
 
-        <?php echo $this->Form->control('num_prof', [
+        <?php echo $this->Form->control('professor_id', [
             'type' => 'select',
-            'selected' => $monografia->num_prof,
+            'selected' => $monografia->professor_id,
             'label' => 'Docente',
             'options' => $docentes,
             'empty' => 'Seleciona docente',
@@ -236,7 +236,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php echo $this->Form->control('banca1', [
             'label' => 'Banca Professor(a) avaliador', 
             'type' => 'select',
-            'value' => $monografia->banca1->id ?? $monografia->num_prof,
+            'value' => $monografia->banca1 ?? $monografia->professor_id,
             'options' => $docentes, 
             'empty' => 'Selecione', 
             'required' => true,
@@ -250,7 +250,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php echo $this->Form->control('banca2', [
             'label' => 'Banca Professor(a) orientador', 
             'type' => 'select',
-            'value' => $monografia->banca2->id ?? null,
+            'value' => $monografia->banca2 ?? null,
             'options' => $docentes, 
             'empty' => 'Selecione', 
             'required' => false,
@@ -264,7 +264,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php echo $this->Form->control('banca3', [
             'label' => 'Professor(a)', 
             'type' => 'select',
-            'value' => $monografia->banca3->id ?? null,
+            'value' => $monografia->banca3 ?? null,
             'options' => $docentes, 
             'empty' => 'Selecione', 
             'required' => false,

@@ -1,0 +1,23 @@
+schema_version: 1
+module_path: ""
+title: TCC/UFRJ CakePHP Application Root
+scope:
+    - README.md
+    - AGENTS.md
+    - Notas.txt
+    - Tarefas.txt
+    - composer.json
+    - composer.lock
+    - phpunit.xml.dist
+    - phpstan.neon
+    - .editorconfig
+    - .gitignore
+    - .gitattributes
+    - .phpactor.json
+    - index.php
+    - .htaccess
+    - tccess.sql
+    - templates_help.php
+source_files: []
+depends_on: []
+related_to: []

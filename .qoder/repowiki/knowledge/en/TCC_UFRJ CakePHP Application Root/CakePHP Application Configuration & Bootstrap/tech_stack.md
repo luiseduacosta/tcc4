@@ -1,0 +1,1 @@
+CakePHP 4.x application configuration; MySQL driver via `Cake\Database\Driver\Mysql`; file-based caching via `Cake\Cache\Engine\FileEngine`; PDF generation via `CakePdf.DomPdf`; locale set to Brazilian Portuguese (`pt_BR`, `America/Sao_Paulo`).

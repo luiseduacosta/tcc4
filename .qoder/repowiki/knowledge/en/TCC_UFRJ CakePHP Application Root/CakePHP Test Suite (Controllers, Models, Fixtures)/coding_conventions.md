@@ -1,0 +1,5 @@
+- Each domain entity has a paired `Fixture/*Fixture.php` class extending `TestFixture` that defines the target `$table` and seed `records` in its `init()` method.
+- Controller tests declare required fixtures via a `$fixtures` array using the `app.<Entity>` naming convention (e.g., `'app.Users'`, `'app.Alunos'`).
+- Table tests acquire their subject through `$this->getTableLocator()->get('<Entity>', ['className' => EntityTable::class])` after calling `parent::setUp()`.
+- Stubs for unimplemented behavior are expressed as `testXxx(): void` methods containing `markTestIncomplete('Not implemented yet.')` rather than being omitted.
+- Test classes follow the CakePHP convention of mirroring the production namespace structure (`App\Test\TestCase\Controller`, `App\Test\TestCase\Model\Table`) and extending `Cake\TestSuite\TestCase`.

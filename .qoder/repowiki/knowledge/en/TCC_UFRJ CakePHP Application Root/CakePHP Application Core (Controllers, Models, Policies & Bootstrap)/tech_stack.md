@@ -1,0 +1,1 @@
+CakePHP 4 framework with `cakephp/authentication` (Session + Form authenticators using `Authentication.Password` resolver over the `Users` model) and `cakephp/authorization` (ORM resolver with per-table policies); additionally uses `CakePdf`, `DebugKit`, `Bake`, and `Migrations` plugins.

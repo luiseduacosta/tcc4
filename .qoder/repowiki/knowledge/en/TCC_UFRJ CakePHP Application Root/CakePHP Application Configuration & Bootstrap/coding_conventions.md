@@ -1,0 +1,5 @@
+- Environment-sensitive values are read through `env('KEY', default)` inside config arrays so defaults stay in source while production values come from the environment.
+- Per-environment overrides are layered by loading `app.php` first and then conditionally loading `app_local.php` via `Configure::load`, keeping secrets out of version control.
+- Configuration is organized as top-level keys (`App`, `Security`, `Cache`, `Datasources`, `EmailTransport`, `Email`, `Log`, `Session`) returned as associative arrays from PHP files.
+- Path constants are centralized in `paths.php` and referenced elsewhere via uppercase constants (ROOT, CONFIG, WWW_ROOT, LOGS, CACHE, RESOURCES) rather than hard-coded strings.
+- CLI-specific behavior is isolated in `bootstrap_cli.php` and only required when `PHP_SAPI === 'cli'`, allowing separate log file names and base URL handling.

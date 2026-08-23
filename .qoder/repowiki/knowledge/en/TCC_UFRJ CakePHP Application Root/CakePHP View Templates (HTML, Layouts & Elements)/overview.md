@@ -1,0 +1,1 @@
+CakePHP view templates providing HTML pages, shared layouts, reusable elements, flash messages, and email views for the TCC/UFRJ student management application.

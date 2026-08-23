@@ -4,11 +4,11 @@
  * @var \App\Model\Entity\Professor $professor
  */
 use Cake\I18n\FrozenDate;
- 
+
 // $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<?php echo $this->element('menu_mural') ?>
+<?php echo $this->element('menu_monografias') ?>
 
 <div class="d-flex justify-content-start">
     <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">
@@ -49,14 +49,6 @@ use Cake\I18n\FrozenDate;
             <a class="nav-link active" data-bs-toggle="tab" href="#professor" role="tab" aria-controls="professor"
                 aria-selected="true">Professor(a)</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#estagiarios" role="tab" aria-controls="estagiarios"
-                aria-selected="false">Estagiários</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#notas" role="tab" aria-controls="estagiarios"
-                aria-selected="false">Atividades de estágio</a>
-        </li>
     </ul>
 </div>
 
@@ -94,7 +86,7 @@ use Cake\I18n\FrozenDate;
                     case '2':
                         echo 'Não informado';
                         break;
-                    }
+                }
                 ?>
             </dd>
             <dt class="col-sm-3"><?= __('Data nascimento') ?></dt>
@@ -189,7 +181,9 @@ use Cake\I18n\FrozenDate;
 
         <dl class="row">
             <dt class="col-sm-3"><?= __('Curriculo lattes') ?></dt>
-            <dd class="col-sm-9"><?= $professor->curriculolattes ? $this->Html->link($professor->curriculolattes, 'https://lattes.cnpq.br/'. $professor->curriculolattes, ['target' => '_blank', 'full' => true]) : '' ?></dd>
+            <dd class="col-sm-9">
+                <?= $professor->curriculolattes ? $this->Html->link($professor->curriculolattes, 'https://lattes.cnpq.br/' . $professor->curriculolattes, ['target' => '_blank', 'full' => true]) : '' ?>
+            </dd>
 
             <dt class="col-sm-3"><?= __('Atualização lattes') ?></dt>
             <dd class="col-sm-9">
@@ -248,124 +242,4 @@ use Cake\I18n\FrozenDate;
 
     </div>
 
-    <div id="estagiarios" class="tab-pane container fade">
-        <h4><?= __('Estagiarios') ?></h4>
-        <?php if (!empty($professor->estagiarios)): ?>
-            <table class="table table-striped table-hover table-responsive">
-                <tr>
-                    <?php if (isset($user) && $user->categoria == '1'): ?>
-                        <th><?= __('Id') ?></th>
-                    <?php endif; ?>
-                    <th><?= __('Aluno') ?></th>
-                    <th><?= __('Registro') ?></th>
-                    <th><?= __('Ajuste 2020') ?></th>
-                    <th><?= __('Turno') ?></th>
-                    <th><?= __('Nivel') ?></th>
-                    <th><?= __('Instituição') ?></th>
-                    <th><?= __('Supervisora') ?></th>
-                    <th><?= __('Periodo') ?></th>
-                    <?php if (isset($user) && $user->categoria == '1'): ?>
-                        <th><?= __('Nota') ?></th>
-                        <th><?= __('CH') ?></th>
-                        <th><?= __('Observações') ?></th>
-                        <th><?= __('Ações') ?></th>
-                    <?php endif; ?>
-                </tr>
-                <?php foreach ($professor->estagiarios as $estagiarios): ?>
-                    <tr>
-                        <?php if (isset($user) && $user->categoria == '1'): ?>
-                            <td><?= h($estagiarios->id) ?></td>
-                        <?php endif; ?>
-                        <td><?= $estagiarios->hasValue('aluno') ? $estagiarios->aluno->nome : "" ?>
-                        </td>
-                        <td><?= h($estagiarios->registro) ?></td>
-                        <td><?= h($estagiarios->ajuste2020) ?></td>
-                        <td><?= h($estagiarios->turno) ?></td>
-                        <td><?= h($estagiarios->nivel) ?></td>
-                        <td><?= $estagiarios->hasValue('instituicao') ? $estagiarios->instituicao->instituicao : ' ' ?>
-                        </td>
-                        <td><?= $estagiarios->hasValue('supervisor') ? $estagiarios->supervisor->nome : ' ' ?>
-                        </td>
-                        <td><?= h($estagiarios->periodo) ?></td>
-                        <?php if (isset($user) && $user->categoria == '1'): ?>
-                            <td><?= h($estagiarios->nota) ?></td>
-                            <td><?= h($estagiarios->ch) ?></td>
-                            <td><?= h($estagiarios->observacoes) ?></td>
-                            <td>
-                                <?= $this->Html->link(__('Ver'), ['controller' => 'Estagiarios', 'action' => 'view', $estagiarios->id]) ?>
-                                <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
-                                <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiarios->id)]) ?>
-                            </td>
-                        <?php endif; ?>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-        <?php endif; ?>
-    </div>
-
-    <div id="notas" class="tab-pane container fade">
-        <h4><?= __('Atividades') ?></h4>
-        <?php if (!empty($professor->estagiarios)): ?>
-            <table class="table table-striped table-hover table-responsive">
-                <tr>
-                    <?php if (isset($user) && $user->categoria == '1'): ?>
-                        <th><?= __('Id') ?></th>
-                    <?php endif; ?>
-                    <th><?= __('Aluno') ?></th>
-                    <th><?= __('Registro') ?></th>
-                    <th><?= __('Atividades') ?></th>
-                    <th><?= __('Avaliação estágio') ?></th>
-                    <th><?= __('Turno') ?></th>
-                    <th><?= __('Nivel') ?></th>
-                    <th><?= __('Instituição') ?></th>
-                    <th><?= __('Supervisora') ?></th>
-                    <th><?= __('Periodo') ?></th>
-                    <?php if (isset($user) && $user->categoria == '1'): ?>
-                        <th><?= __('Nota') ?></th>
-                        <th><?= __('CH') ?></th>
-                        <th><?= __('Observações') ?></th>
-                        <th><?= __('Ações') ?></th>
-                    <?php endif; ?>
-                </tr>
-                <?php foreach ($professor->estagiarios as $estagiarios): ?>
-                    <tr>
-                        <?php if (isset($user) && $user->categoria == '1'): ?>
-                            <td><?= h($estagiarios->id) ?></td>
-                        <?php endif; ?>
-                        <td><?= $estagiarios->hasValue('aluno') ? $estagiarios->aluno->nome : "" ?>
-                        </td>
-                        <td><?= h($estagiarios->registro) ?></td>
-                        <?php if (isset($user) && $user->categoria == '1'): ?>
-                            <td><?= $estagiarios->hasValue('folhadeatividade') ? $this->Html->link('Atividades de estágio', ['controller' => 'folhadeatividades', 'action' => 'index', $estagiarios->id]) : $this->Html->link('Cadastrar atividades de estágio', ['controller' => 'folhadeatividades', 'action' => 'add', '?' => ['estagiario_id' => $estagiarios->id]]) ?>
-                            </td>
-                        <?php else: ?>
-                            <td><?= $estagiarios->hasValue('folhadeatividade') ? $this->Html->link('Atividades de estágio', ['controller' => 'folhadeatividades', 'action' => 'index', $estagiarios->id]) : "Sem atividades cadastradas" ?>
-                            </td>
-                        <?php endif; ?>
-                        <td><?= $estagiarios->hasValue('avaliacao') ? $this->Html->link('Avaliacao de estágio', ['controller' => 'avaliacoes', 'action' => 'view', '?' => ['estagiario_id' => $estagiarios->id]]) : 'Sem avaliações cadastradas' ?>
-                        </td>
-                        <td><?= h($estagiarios->turno) ?></td>
-                        <td><?= h($estagiarios->nivel) ?></td>
-                        <td><?= $estagiarios->hasValue('instituicao') ? $estagiarios->instituicao->instituicao : "" ?>
-                        </td>
-                        <td><?= $estagiarios->hasValue('supervisor') ? $this->Html->link($estagiarios->supervisor->nome, ['controller' => 'supervisores', 'action' => 'view', $estagiarios->supervisor->id]) : "" ?>
-                        </td>
-                        <td><?= h($estagiarios->periodo) ?></td>
-                        <?php if (isset($user) && $user->categoria == '1'): ?>
-                            <td><?= h($estagiarios->nota) ?></td>
-                            <td><?= h($estagiarios->ch) ?></td>
-                            <td><?= h($estagiarios->observacoes) ?></td>
-                            <td>
-                                <?= $this->Html->link(__('Atividades'), ['controller' => 'Folhadeatividades', 'action' => 'index', '?' => ['estagiario_id' => $estagiarios->id]]) ?>
-                                <?php if (isset($user) && $user->categoria == '1'): ?>
-                                    <?= $this->Html->link(__('Editar'), ['controller' => 'Estagiarios', 'action' => 'edit', $estagiarios->id]) ?>
-                                    <?= $this->Form->postLink(__('Excluir'), ['controller' => 'Estagiarios', 'action' => 'delete', $estagiarios->id], ['confirm' => __('Tem certeza que quer excluir o registro # {0}?', $estagiarios->id)]) ?>
-                                <?php endif; ?>
-                            </td>
-                        <?php endif; ?>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-        <?php endif; ?>
-    </div>
 </div>

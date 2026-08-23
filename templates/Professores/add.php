@@ -8,7 +8,7 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <!-- jQuery Mask -->
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('#cpf').mask('000.000.000-00');
         $('#cep').mask('00000-000');
         $('#ddd_telefone').mask('00');
@@ -18,7 +18,7 @@ $user = $this->getRequest()->getAttribute('identity');
     });
 </script>
 
-<?= $this->element('menu_mural') ?>
+<?= $this->element('menu_monografias') ?>
 <?= $this->element('templates') ?>
 
 <div class="d-flex justify-content-start">
@@ -57,7 +57,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('dataingresso', ['empty' => true, 'label' => ['text' => 'Data de Ingresso na UFRJ/ESS']]);
         echo $this->Form->control('formaingresso', ['label' => ['text' => 'Forma de Ingresso'], 'options' => ['Concurso público' => 'Concurso público', 'Livre-docente' => 'Livre-docente', 'outro' => 'Outro']]);
         echo $this->Form->control('tipocargo', ['label' => ['text' => 'Tipo de Cargo'], 'options' => ['efetivo' => 'Efetivo(a)', 'substituto' => 'Substituto(a)', 'temporario' => 'Temporário(a)', 'outro' => 'Outro']]);
-        echo $this->Form->control('categoria', ['label' => ['text' => 'Categoria'], 'options' => ['auxiliar' => 'Auxiliar' , 'assistente' => 'Assistente', 'adjunto' => 'Adjuno', 'associado' => 'Associado', 'titular' => 'Titular', 'outro' => 'Outro']]);
+        echo $this->Form->control('categoria', ['label' => ['text' => 'Categoria'], 'options' => ['auxiliar' => 'Auxiliar', 'assistente' => 'Assistente', 'adjunto' => 'Adjuno', 'associado' => 'Associado', 'titular' => 'Titular', 'outro' => 'Outro']]);
         echo $this->Form->control('regimetrabalho', ['label' => ['text' => 'Regime de Trabalho'], 'options' => ['20' => '20 horas', '40' => '40 horas', '40DE' => 'Dedicação Exclusiva', 'outro' => 'Outro']]);
         echo $this->Form->control('departamento', ['label' => ['text' => 'Departamento'], 'options' => ['Fundamentos' => 'Fundamentos', 'Métodos e técnicas' => 'Métodos e técnicas', 'Política social' => 'Política social', 'Outro' => 'Outro']]);
         echo $this->Form->control('dataegresso', ['empty' => true, 'label' => ['text' => 'Data de Egresso']]);
@@ -79,7 +79,7 @@ $user = $this->getRequest()->getAttribute('identity');
         echo $this->Form->control('bairro', ['label' => ['text' => 'Bairro']]);
         echo $this->Form->control('cidade', ['label' => ['text' => 'Cidade']]);
         echo $this->Form->control('estado', ['label' => ['text' => 'Estado']]);
-        echo $this->Form->control('cep', ['label' => ['text' => 'CEP'], 'pattern' => '\d{5}-\d{3}', 'placeholder' => '00000-000', 'keypress()','required' => false]);
+        echo $this->Form->control('cep', ['label' => ['text' => 'CEP'], 'pattern' => '\d{5}-\d{3}', 'placeholder' => '00000-000', 'keypress()', 'required' => false]);
         echo $this->Form->control('pais', ['label' => ['text' => 'País']]);
         /** Dados de currículos */
         echo $this->Form->control('curriculolattes', ['label' => ['text' => 'Currículo Lattes']]);

@@ -1,0 +1,2 @@
+- Static assets are organized by type into dedicated subdirectories (css/, js/, font/, img/) rather than mixed together.
+- All dynamic traffic is funneled through a single front controller (index.php) with no other executable PHP files in the web root.

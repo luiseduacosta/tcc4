@@ -63,7 +63,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Professor(a)') ?></th>
-            <td><?= $monografia->has('docentes') && is_string($monografia->docentes->nome) && $monografia->docentes->nome !== '' ? $this->Html->link($monografia->docentes->nome, ['controller' => 'Docentes', 'action' => 'view', $monografia->num_prof]) : '' ?>
+            <td><?= $monografia->has('docentes') && is_string($monografia->docentes->nome) && $monografia->docentes->nome !== '' ? $this->Html->link($monografia->docentes->nome, ['controller' => 'Docentes', 'action' => 'view', $monografia->professor_id]) : '' ?>
             </td>
         </tr>
         <tr>

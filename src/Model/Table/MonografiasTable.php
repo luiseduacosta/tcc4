@@ -55,7 +55,7 @@ class MonografiasTable extends Table
                 $this->belongsTo('Docentes', [
                         'className' => 'Docentes',
                         'propertyName' => 'docentes',
-                        'foreignKey' => 'num_prof',
+                        'foreignKey' => 'professor_id',
                 ]);
 
                 $this->belongsTo('DocentesCoorienta', [
@@ -131,8 +131,8 @@ class MonografiasTable extends Table
                         ->allowEmptyString('periodo');
 
                 $validator
-                        ->integer('num_prof')
-                        ->allowEmptyString('num_prof');
+                        ->integer('professor_id')
+                        ->allowEmptyString('professor_id');
 
                 $validator
                         ->integer('num_co_orienta')
@@ -181,7 +181,7 @@ class MonografiasTable extends Table
          */
         public function buildRules(RulesChecker $rules): RulesChecker
         {
-                $rules->add($rules->existsIn(['num_prof'], 'Docentes'));
+                $rules->add($rules->existsIn(['professor_id'], 'Docentes'));
                 $rules->add($rules->existsIn(['areamonografia_id'], 'Areamonografias'));
 
                 return $rules;

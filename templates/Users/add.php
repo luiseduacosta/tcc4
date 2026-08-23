@@ -43,7 +43,7 @@ $user = $this->getRequest()->getAttribute('identity');
             'empty' => '-- Selecione a categoria --',
             'required' => true
         ]);
-        echo $this->Form->control('numero', [
+        echo $this->Form->control('identificacao', [
             'label' => 'Número de DRE, CRESS ou SIAPE respectivamente',
             'class' => 'col-sm-2 form-label',
             'type' => 'number',

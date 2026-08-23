@@ -1,0 +1,4 @@
+- CLI entry points delegate all logic to `cake.php`; platform-specific wrappers (`cake`, `cake.bat`) only handle path resolution and process invocation.
+- Shell wrapper resolves the real path of its own executable (following symlinks) before locating `cake.php`, ensuring correct behavior when invoked through symlinks.
+- Scratch scripts follow a uniform pattern: define target directories, iterate with `os.walk`, read files as UTF-8, compute a transformed version, and write back only if the content actually changed.
+- File-level refactors use simple string replacement or targeted regex substitutions rather than AST parsing, keeping each script focused on a single transformation task.

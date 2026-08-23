@@ -1,0 +1,1 @@
+CakePHP framework (App\Application + Cake\Http\Server) on top of PHP; Apache mod_rewrite for URL rewriting; includes Bootstrap, jQuery, Popper.js, and jQuery Autocomplete as frontend libraries.

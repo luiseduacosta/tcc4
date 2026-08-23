@@ -48,7 +48,7 @@ class DocentesTable extends Table
 
                 $this->hasMany('Monografias', [
                         'className' => 'Monografias',
-                        'foreignKey' => 'num_prof',
+                        'foreignKey' => 'professor_id',
                 ]);
 
                 $this->hasMany('Monografias1', [

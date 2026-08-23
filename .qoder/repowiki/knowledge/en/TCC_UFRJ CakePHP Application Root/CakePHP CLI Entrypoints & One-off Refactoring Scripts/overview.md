@@ -1,0 +1,1 @@
+Provides the CakePHP console entry scripts and a collection of disposable Python utilities used to refactor, rename, and fix annotations in the project's PHP source tree.

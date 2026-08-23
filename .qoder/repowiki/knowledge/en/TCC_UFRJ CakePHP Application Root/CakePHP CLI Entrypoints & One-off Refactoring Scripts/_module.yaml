@@ -1,0 +1,10 @@
+schema_version: 1
+module_path: bin_and_scripts
+title: CakePHP CLI Entrypoints & One-off Refactoring Scripts
+scope:
+    - bin/
+    - scratch/
+source_files: []
+depends_on: []
+related_to:
+    - path: application_src

@@ -1,0 +1,3 @@
+- PSR-4 autoloading maps `App\` to `src/` and `App\Test\` to `tests/` via composer autoload sections.
+- Development tooling (PHPUnit, PHPStan, CodeSniffer) is invoked exclusively through Composer script aliases rather than direct binary calls.
+- PHPStan ignores are centralized in `phpstan.neon` to accommodate CakePHP's dynamic property and magic-method patterns instead of being suppressed inline.

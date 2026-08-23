@@ -1,0 +1,1 @@
+`composer install` runs `App\Console\Installer::postInstall`; `composer check` runs both `@test` and `@cs-check`; `composer stan` runs PHPStan over `src/`; `composer test` invokes PHPUnit against `tests/TestCase/` using `tests/bootstrap.php` as the bootstrapper.

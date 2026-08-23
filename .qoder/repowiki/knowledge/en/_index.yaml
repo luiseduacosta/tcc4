@@ -1,0 +1,100 @@
+# 知识卡导出索引文件
+schema_version: 1
+locale: en-US
+branch: master
+nodes_managed: true
+exported_at: "2026-08-23T22:26:58Z"
+modules:
+    "":
+        dir_name: TCC_UFRJ CakePHP Application Root
+        title: TCC/UFRJ CakePHP Application Root
+        scope:
+            - README.md
+            - AGENTS.md
+            - Notas.txt
+            - Tarefas.txt
+            - composer.json
+            - composer.lock
+            - phpunit.xml.dist
+            - phpstan.neon
+            - .editorconfig
+            - .gitignore
+            - .gitattributes
+            - .phpactor.json
+            - index.php
+            - .htaccess
+            - tccess.sql
+            - templates_help.php
+        source_files: []
+        children:
+            - application_src
+            - bin_and_scripts
+            - config
+            - templates
+            - tests
+            - webroot
+        depends_on: []
+        related_to: []
+    application_src:
+        dir_name: CakePHP Application Core (Controllers, Models, Policies & Bootstrap)
+        title: CakePHP Application Core (Controllers, Models, Policies & Bootstrap)
+        scope:
+            - src/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: bin_and_scripts
+            - path: config
+            - path: tests
+            - path: webroot
+    bin_and_scripts:
+        dir_name: CakePHP CLI Entrypoints & One-off Refactoring Scripts
+        title: CakePHP CLI Entrypoints & One-off Refactoring Scripts
+        scope:
+            - bin/
+            - scratch/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: application_src
+    config:
+        dir_name: CakePHP Application Configuration & Bootstrap
+        title: CakePHP Application Configuration & Bootstrap
+        scope:
+            - config/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: application_src
+    templates:
+        dir_name: CakePHP View Templates (HTML, Layouts & Elements)
+        title: CakePHP View Templates (HTML, Layouts & Elements)
+        scope:
+            - templates/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to: []
+    tests:
+        dir_name: CakePHP Test Suite (Controllers, Models, Fixtures)
+        title: CakePHP Test Suite (Controllers, Models, Fixtures)
+        scope:
+            - tests/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: application_src
+    webroot:
+        dir_name: Web Root & Application Front Controller
+        title: Web Root & Application Front Controller
+        scope:
+            - webroot/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: application_src

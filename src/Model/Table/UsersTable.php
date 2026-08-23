@@ -3,15 +3,18 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Userestagios Model
+ * Users Model
  *
- * @property \App\Model\Table\AlunosTable&\Cake\ORM\Association\BelongsTo $Alunos
+ * Tabela `users` compartilhada pelas aplicações do ess_apps. As associações
+ * Supervisores/professor_id/supervisor_id são mantidas porque o mural5 depende
+ * delas, ainda que o tcc5 só use Estudantes e Professores.
+ *
+ * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
  * @property \App\Model\Table\SupervisoresTable&\Cake\ORM\Association\BelongsTo $Supervisores
  * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
  *
@@ -46,10 +49,11 @@ class UsersTable extends Table {
         $this->setDisplayField('email');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Alunos', [
-            'foreignKey' => 'estudante_id',
+        $this->belongsTo('Estudantes', [
+            'foreignKey' => 'aluno_id',
         ]);
-        
+
+        /** Mantido para o mural5: supervisor_id é usado por aquela aplicação */
         $this->belongsTo('Supervisores', [
             'foreignKey' => 'supervisor_id',
         ]);
@@ -87,12 +91,12 @@ class UsersTable extends Table {
             ->inList('categoria', ['1', '2', '3', '4'], 'Categoria inválida.');
 
         $validator
-            ->numeric('numero')
-            ->allowEmptyString('numero');
+            ->numeric('identificacao')
+            ->allowEmptyString('identificacao');
 
         $validator
-            ->integer('estudante_id')
-            ->allowEmptyString('estudante_id');
+            ->integer('aluno_id')
+            ->allowEmptyString('aluno_id');
         
         $validator
             ->integer('supervisor_id')
@@ -101,9 +105,6 @@ class UsersTable extends Table {
         $validator
             ->integer('professor_id')
             ->allowEmptyString('professor_id');
-        
-        $validator
-            ->notEmptyDateTime('timestamp');
 
         return $validator;
     }
@@ -117,7 +118,7 @@ class UsersTable extends Table {
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['estudante_id'], 'Estudantes'), ['errorField' => 'estudante_id']);
+        $rules->add($rules->existsIn(['aluno_id'], 'Estudantes'), ['errorField' => 'aluno_id']);
         $rules->add($rules->existsIn(['supervisor_id'], 'Supervisores'), ['errorField' => 'supervisor_id']);
         $rules->add($rules->existsIn(['professor_id'], 'Professores'), ['errorField' => 'professor_id']);
 

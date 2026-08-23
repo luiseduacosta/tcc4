@@ -1,0 +1,1 @@
+No build or runtime commands are required — templates are served directly by the CakePHP framework based on controller/action naming conventions. A `.bash_profile` exists at the template root but is not part of the app runtime.

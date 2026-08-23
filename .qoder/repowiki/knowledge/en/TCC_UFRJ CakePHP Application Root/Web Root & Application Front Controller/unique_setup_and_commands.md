@@ -1,0 +1,1 @@
+When using PHP's built-in development server, index.php contains special handling that sets $_SERVER['PHP_SELF'] and short-circuits serving of existing files under webroot so static assets work without a separate web server.

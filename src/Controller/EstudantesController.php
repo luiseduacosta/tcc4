@@ -4,21 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\ORM\Query;
-use Cake\I18n\FrozenTime;
-use Cake\I18n\I18n;
-
 /**
  * Estudantes Controller
  *
  * @property \App\Model\Table\EstudantesTable $Estudantes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Cake\ORM\Table $Estudantes
- * @property \Cake\ORM\Table $Estagiarios
- * @property \Cake\ORM\Table $Supervisores
- * @property \Cake\ORM\Table $Instituicoes
- * @property \Cake\ORM\Table $Docentes
  *
  * @method \App\Model\Entity\Estudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -47,17 +38,7 @@ class EstudantesController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
-        $estudantes = $this->Estudantes->find()->contain([
-            "Tccestudantes",
-            "Estagiarios" => function (Query $q) {
-                return $q->where([
-                    "or" => [
-                        ["ajuste2020" => 0, "nivel" => "4"],
-                        ["ajuste2020" => 1, "nivel" => "3"],
-                    ],
-                ]);
-            },
-        ]);
+        $estudantes = $this->Estudantes->find()->contain(["Tccestudantes"]);
         if ($estudantes->all()->isEmpty()) {
             $this->Flash->warning(__("Nenhum estudante de TCC encontrado."));
             return $this->redirect(["action" => "add"]);
@@ -198,11 +179,7 @@ class EstudantesController extends AppController
     {
         $this->request->allowMethod(["post", "delete"]);
         try {
-            $estudante = $this->Estudantes->get($id, contain: [
-                    "Muralinscricoes",
-                    "Estagiarios",
-                    "Tccestudantes",
-                ],);
+            $estudante = $this->Estudantes->get($id, contain: ["Tccestudantes"]);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__("Registro não encontrado."));
             return $this->redirect(["action" => "index"]);
@@ -210,14 +187,10 @@ class EstudantesController extends AppController
 
         $this->Authorization->authorize($estudante);
 
-        if (
-            $estudante->muralinscricoes ||
-            $estudante->estagiarios ||
-            $estudante->tccestudantes
-        ) {
+        if ($estudante->tccestudante) {
             $this->Flash->error(
                 __(
-                    "Registro de estudante não excluído. O estudante possui registros de inscriçoes, estágio e/ou TCC.",
+                    "Registro de estudante não excluído. O estudante possui registro de TCC.",
                 ),
             );
             return $this->redirect(["action" => "view", $id]);

@@ -8,21 +8,28 @@ use Authentication\PasswordHasher\DefaultPasswordHasher; // Add this line
 use Cake\ORM\Entity;
 
 /**
- * Userestagio Entity
+ * User Entity
+ *
+ * Tabela compartilhada entre as aplicações do ess_apps. Os campos
+ * `supervisor_id` e `professor_id` são usados pelo mural5 e devem ser
+ * preservados mesmo quando o tcc5 não os utiliza.
  *
  * @property int $id
  * @property string|null $email
  * @property string|null $password
+ * @property string|null $nome
+ * @property string|null $role
  * @property numeric|null $categoria
- * @property numeric|null $numero
- * @property int|null $estudante_id
+ * @property int|null $identificacao Registro do aluno, SIAPE do professor ou CRESS do supervisor
+ * @property bool|null $ativo
+ * @property int|null $aluno_id
  * @property int|null $supervisor_id
  * @property int|null $professor_id
- * @property \Cake\I18n\DateTime $timestamp
+ * @property \Cake\I18n\DateTime $criado_em
+ * @property \Cake\I18n\DateTime $atualizado_em
  *
- * @property \App\Model\Entity\Aluno[] $alunos
- * @property \App\Model\Entity\Supervisor[] $supervisores
- * @property \App\Model\Entity\Professor[] $professores
+ * @property \App\Model\Entity\Estudante $estudante
+ * @property \App\Model\Entity\Professor $professor
  */
 class User extends Entity {
 
@@ -38,15 +45,16 @@ class User extends Entity {
     protected array $_accessible = [
         'email' => true,
         'password' => true,
+        'nome' => true,
+        'role' => true,
         'categoria' => true,
-        'numero' => true,
-        'estudante_id' => true,
+        'identificacao' => true,
+        'ativo' => true,
+        'aluno_id' => true,
         'supervisor_id' => true,
         'professor_id' => true,
-        'timestamp' => true,
-        'alunos' => true,
-        'supervisores' => true,
-        'professores' => true,
+        'estudante' => true,
+        'professor' => true,
     ];
 
     // Add this method

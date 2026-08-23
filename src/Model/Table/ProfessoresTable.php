@@ -10,8 +10,7 @@ use Cake\Validation\Validator;
 /**
  * Professor Model
  *
- * @property \App\Model\Table\EstagiariosTable&\Cake\ORM\Association\HasMany $Estagiarios
- * @property \App\Model\Table\MuralestagiosTable&\Cake\ORM\Association\HasMany $Muralestagios
+ * @property \App\Model\Table\MonografiasTable&\Cake\ORM\Association\HasMany $Monografias
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
  * 
  * @method \App\Model\Entity\Professor get($primaryKey, $options = [])
@@ -41,11 +40,9 @@ class ProfessoresTable extends Table
                 $this->setDisplayField('nome');
                 $this->setPrimaryKey('id');
 
-                $this->hasMany('Estagiarios', [
-                        'foreignKey' => 'professor_id',
-                ]);
-
-                $this->hasMany('Muralestagios', [
+                /** monografias.professor_id aponta para o(a) orientador(a) */
+                $this->hasMany('Monografias', [
+                        'className' => 'Monografias',
                         'foreignKey' => 'professor_id',
                 ]);
 
