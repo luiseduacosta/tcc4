@@ -11,9 +11,7 @@ namespace App\Controller;
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @property \App\Model\Table\EstudantesTable $Estudantes
- * @property \App\Model\Table\DocentesTable $Docentes
- * @property \App\Model\Table\DocentesTable $Docentebanca1
- * @property \App\Model\Table\DocentesTable $Docentebanca2
+ * @property \App\Model\Table\ProfessoresTable $Professores
  *
  * @method \App\Model\Entity\Agendamentotcc[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -38,9 +36,9 @@ class AgendamentotccsController extends AppController
             ->find()
             ->contain([
                 "Estudantes",
-                "Docentes",
-                "Docentebanca1",
-                "Docentebanca2",
+                "Professores",
+                "ProfessoresBanca1",
+                "ProfessoresBanca2",
             ]);
 
         if ($this->request->getQuery("sort") === null) {
@@ -50,9 +48,9 @@ class AgendamentotccsController extends AppController
         $agendamentotccs = $this->paginate($query, [
             "sortableFields" => [
                 "Estudantes.nome",
-                "Docentes.nome",
-                "Docentebanca1.nome",
-                "Docentebanca2.nome",
+                "Professores.nome",
+                "ProfessoresBanca1.nome",
+                "ProfessoresBanca2.nome",
                 "Agendamentotccs.data",
                 "Agendamentotccs.horario",
                 "Agendamentotccs.sala",
@@ -76,9 +74,9 @@ class AgendamentotccsController extends AppController
         try {
             $agendamentotcc = $this->Agendamentotccs->get($id, contain: [
                     "Estudantes",
-                    "Docentes",
-                    "Docentebanca1",
-                    "Docentebanca2",
+                    "Professores",
+                    "ProfessoresBanca1",
+                    "ProfessoresBanca2",
                 ],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__("Agendamento TCC não encontrado."));
@@ -129,13 +127,13 @@ class AgendamentotccsController extends AppController
             order: ["nome" => "asc"]
         );
 
-        $docentes = $this->Agendamentotccs->Docentes->find("list",
+        $professores = $this->Agendamentotccs->Professores->find("list",
             keyField: "id",
             valueField: "nome",
             order: ["nome" => "asc"]
         );
 
-        $this->set(compact("agendamentotcc", "estudantes", "docentes"));
+        $this->set(compact("agendamentotcc", "estudantes", "professores"));
     }
 
     /**
@@ -150,9 +148,9 @@ class AgendamentotccsController extends AppController
         try {
             $agendamentotcc = $this->Agendamentotccs->get($id, contain: [
                     "Estudantes",
-                    "Docentes",
-                    "Docentebanca1",
-                    "Docentebanca2",
+                    "Professores",
+                    "ProfessoresBanca1",
+                    "ProfessoresBanca2",
                 ],);
         } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
             $this->Flash->error(__("Agendamento TCC não encontrado."));
@@ -188,13 +186,13 @@ class AgendamentotccsController extends AppController
             valueField: "nome",
             order: ["nome" => "asc"]
         );
-        $docentes = $this->Agendamentotccs->Docentes->find("list",
+        $professores = $this->Agendamentotccs->Professores->find("list",
             keyField: "id",
             valueField: "nome",
             order: ["nome" => "asc"]
         );
 
-        $this->set(compact("agendamentotcc", "estudantes", "docentes"));
+        $this->set(compact("agendamentotcc", "estudantes", "professores"));
     }
 
     /**

@@ -15,6 +15,13 @@
 - [add.php](file://templates/Tccestudantes/add.php)
 </cite>
 
+## Update Summary
+**Changes Made**
+- Removed references to internship-related spreadsheet generation functionality
+- Updated student management focus to core thesis enrollment workflow only
+- Simplified entity relationships by removing internship associations
+- Updated architecture diagrams to reflect current TCC-only functionality
+
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Project Structure](#project-structure)
@@ -28,21 +35,22 @@
 10. [Appendices](#appendices)
 
 ## Introduction
-This document explains the student management system for academic history tracking and thesis program enrollment. It focuses on the Estudante (student) and Tccestudante (thesis student enrollment) entities, their relationships with Monografia (monograph/thesis), and the end-to-end workflow from admission to graduation. It also covers profile management, academic record maintenance, integration with the monograph system, data validation, enrollment status tracking, and reporting capabilities for monitoring academic progress.
+This document explains the student management system for academic history tracking and thesis program enrollment. The system has been streamlined to focus exclusively on thesis (TCC) management, with all internship-related features removed. It focuses on the Estudante (student) and Tccestudante (thesis student enrollment) entities, their relationships with Monografia (monograph/thesis), and the end-to-end workflow from admission to graduation. The system now provides a clean, focused interface for managing student profiles, academic records, and thesis enrollments without the complexity of internship tracking.
 
 ## Project Structure
-The system is implemented using a CakePHP MVC structure:
+The system is implemented using a CakePHP MVC structure with a simplified focus on thesis management:
 - Entities define domain models (Estudante, Tccestudante, Monografia).
-- Tables define associations, validations, and rules.
-- Controllers handle HTTP requests for CRUD operations and workflows.
-- Templates render user interfaces for viewing and editing records.
-- The database schema defines tables and constraints that enforce referential integrity.
+- Tables define associations, validations, and rules specific to thesis enrollment.
+- Controllers handle HTTP requests for CRUD operations and thesis enrollment workflows.
+- Templates render user interfaces for viewing and editing student and thesis records.
+- The database schema defines tables and constraints that enforce referential integrity for thesis data only.
 
 ```mermaid
 graph TB
 subgraph "Controllers"
 EC["EstudantesController"]
 TC["TccestudantesController"]
+MC["MonografiasController"]
 end
 subgraph "Tables"
 ET["EstudantesTable"]
@@ -61,6 +69,7 @@ DB_MONO["monografias"]
 end
 EC --> ET
 TC --> TT
+MC --> MT
 ET --> E
 TT --> T
 MT --> M
@@ -72,34 +81,34 @@ TT --> |hasOne via registro| DB_ALUNOS
 ```
 
 **Diagram sources**
-- [EstudantesController.php:47-130](file://src/Controller/EstudantesController.php#L47-L130)
-- [TccestudantesController.php:31-145](file://src/Controller/TccestudantesController.php#L31-L145)
+- [EstudantesController.php:38-83](file://src/Controller/EstudantesController.php#L38-L83)
+- [TccestudantesController.php:31-66](file://src/Controller/TccestudantesController.php#L31-L66)
 - [EstudantesTable.php:32-53](file://src/Model/Table/EstudantesTable.php#L32-L53)
 - [TccestudantesTable.php:34-57](file://src/Model/Table/TccestudantesTable.php#L34-L57)
-- [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
-- [schema.sql:53-71](file://config/Migrations/schema.sql#L53-L71)
-- [schema.sql:437-456](file://config/Migrations/schema.sql#L437-L456)
-- [schema.sql:621-626](file://config/Migrations/schema.sql#L621-L626)
+- [schema.sql:103-130](file://config/Migrations/schema.sql#L103-L130)
+- [schema.sql:155-174](file://config/Migrations/schema.sql#L155-L174)
+- [schema.sql:201-244](file://config/Migrations/schema.sql#L201-L244)
 
 **Section sources**
-- [EstudantesController.php:47-130](file://src/Controller/EstudantesController.php#L47-L130)
-- [TccestudantesController.php:31-145](file://src/Controller/TccestudantesController.php#L31-L145)
+- [EstudantesController.php:38-83](file://src/Controller/EstudantesController.php#L38-L83)
+- [TccestudantesController.php:31-66](file://src/Controller/TccestudantesController.php#L31-L66)
 - [EstudantesTable.php:32-53](file://src/Model/Table/EstudantesTable.php#L32-L53)
 - [TccestudantesTable.php:34-57](file://src/Model/Table/TccestudantesTable.php#L34-L57)
-- [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
-- [schema.sql:53-71](file://config/Migrations/schema.sql#L53-L71)
-- [schema.sql:437-456](file://config/Migrations/schema.sql#L437-L456)
-- [schema.sql:621-626](file://config/Migrations/schema.sql#L621-L626)
+- [schema.sql:103-130](file://config/Migrations/schema.sql#L103-L130)
+- [schema.sql:155-174](file://config/Migrations/schema.sql#L155-L174)
+- [schema.sql:201-244](file://config/Migrations/schema.sql#L201-L244)
 
 ## Core Components
-- Estudante: Represents a registered student with personal and contact details.
-- Tccestudante: Represents a student’s enrollment in a specific monograph (thesis).
-- Monografia: Represents a thesis project including metadata, supervisor(s), and defense information.
+- **Estudante**: Represents a registered student with personal and contact details, now focused solely on thesis enrollment context.
+- **Tccestudante**: Represents a student's enrollment in a specific monograph (thesis), with simplified validation and relationships.
+- **Monografia**: Represents a thesis project including metadata, supervisor(s), and defense information.
 
 Key responsibilities:
 - Estudante entity/table manages student profiles and enforces uniqueness on registration number and email.
 - Tccestudante entity/table links students to monographs and validates existence of referenced monograph and student.
 - Monografia entity/table manages thesis metadata and relationships to supervisors and enrolled students.
+
+**Updated** Removed internship-related associations and simplified the student management focus to thesis enrollment only.
 
 **Section sources**
 - [Estudante.php:9-31](file://src/Model/Entity/Estudante.php#L9-L31)
@@ -107,14 +116,13 @@ Key responsibilities:
 - [Monografia.php:11-33](file://src/Model/Entity/Monografia.php#L11-L33)
 - [EstudantesTable.php:61-163](file://src/Model/Table/EstudantesTable.php#L61-L163)
 - [TccestudantesTable.php:65-97](file://src/Model/Table/TccestudantesTable.php#L65-L97)
-- [MonografiasTable.php:108-188](file://src/Model/Table/MonografiasTable.php#L108-L188)
 
 ## Architecture Overview
-The system follows a layered architecture:
-- Controllers orchestrate user interactions and delegate to Tables.
-- Tables encapsulate business rules, associations, and validations.
-- Entities represent domain objects with accessible fields.
-- Database schema enforces referential integrity and indexes.
+The system follows a streamlined layered architecture focused on thesis management:
+- Controllers orchestrate user interactions and delegate to Tables for thesis enrollment operations.
+- Tables encapsulate business rules, associations, and validations specific to thesis processes.
+- Entities represent domain objects with accessible fields for student and thesis data.
+- Database schema enforces referential integrity and indexes for thesis-related data only.
 
 ```mermaid
 sequenceDiagram
@@ -138,8 +146,7 @@ C-->>U : Redirect to view or show error
 **Diagram sources**
 - [TccestudantesController.php:93-145](file://src/Controller/TccestudantesController.php#L93-L145)
 - [TccestudantesTable.php:34-97](file://src/Model/Table/TccestudantesTable.php#L34-L97)
-- [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
-- [schema.sql:621-626](file://config/Migrations/schema.sql#L621-L626)
+- [schema.sql:201-244](file://config/Migrations/schema.sql#L201-L244)
 
 ## Detailed Component Analysis
 
@@ -195,7 +202,7 @@ EstudantesTable --> Estudante : "manages"
 **Section sources**
 - [Estudante.php:9-64](file://src/Model/Entity/Estudante.php#L9-L64)
 - [EstudantesTable.php:32-163](file://src/Model/Table/EstudantesTable.php#L32-L163)
-- [schema.sql:53-71](file://config/Migrations/schema.sql#L53-L71)
+- [schema.sql:103-130](file://config/Migrations/schema.sql#L103-L130)
 
 ### Tccestudante Entity and Table
 - Fields include name, monograph ID, and registration number linking back to the student.
@@ -231,7 +238,7 @@ TccestudantesTable --> Tccestudante : "manages"
 **Section sources**
 - [Tccestudante.php:9-35](file://src/Model/Entity/Tccestudante.php#L9-L35)
 - [TccestudantesTable.php:34-97](file://src/Model/Table/TccestudantesTable.php#L34-L97)
-- [schema.sql:621-626](file://config/Migrations/schema.sql#L621-L626)
+- [schema.sql:201-244](file://config/Migrations/schema.sql#L201-L244)
 
 ### Monografia Entity and Table
 - Fields include catalog number, title, summary, dates, period, professor ID, co-supervisor count, area ID, classification ID, defense date, committee IDs, guest, URL, timestamp.
@@ -284,10 +291,10 @@ MonografiasTable --> Monografia : "manages"
 **Section sources**
 - [Monografia.php:11-70](file://src/Model/Entity/Monografia.php#L11-L70)
 - [MonografiasTable.php:41-188](file://src/Model/Table/MonografiasTable.php#L41-L188)
-- [schema.sql:437-456](file://config/Migrations/schema.sql#L437-L456)
+- [schema.sql:155-174](file://config/Migrations/schema.sql#L155-L174)
 
 ### Enrollment Workflow (Admission to Graduation)
-The enrollment workflow connects a student to a monograph and supports subsequent steps such as scheduling defenses and recording outcomes.
+The enrollment workflow connects a student to a monograph and supports subsequent steps such as scheduling defenses and recording outcomes. The system now focuses exclusively on this core thesis process.
 
 ```mermaid
 flowchart TD
@@ -310,7 +317,7 @@ Graduate --> End(["End"])
 ### Student Profile Management
 - View: Displays student details and actions based on user role.
 - Add/Edit: Validates and persists student data.
-- Delete: Prevents deletion if related records exist (inscriptions, internships, thesis enrollments).
+- Delete: Prevents deletion if related thesis enrollment records exist.
 
 ```mermaid
 sequenceDiagram
@@ -333,18 +340,20 @@ EC-->>U : Flash message + redirect
 ```
 
 **Diagram sources**
-- [EstudantesController.php:111-187](file://src/Controller/EstudantesController.php#L111-L187)
+- [EstudantesController.php:118-169](file://src/Controller/EstudantesController.php#L118-L169)
 - [EstudantesTable.php:32-163](file://src/Model/Table/EstudantesTable.php#L32-L163)
-- [schema.sql:53-71](file://config/Migrations/schema.sql#L53-L71)
+- [schema.sql:103-130](file://config/Migrations/schema.sql#L103-L130)
 
 **Section sources**
-- [EstudantesController.php:111-187](file://src/Controller/EstudantesController.php#L111-L187)
+- [EstudantesController.php:118-169](file://src/Controller/EstudantesController.php#L118-L169)
 - [view.php:1-97](file://templates/Estudantes/view.php#L1-L97)
 
 ### Academic Record Maintenance
 - Student records maintain personal and contact information with strict validation.
 - Thesis enrollment records link students to monographs and ensure referential integrity.
 - Monograph records track metadata, supervision, and defense details.
+
+**Updated** Simplified to focus only on thesis-related academic records, removing internship tracking capabilities.
 
 **Section sources**
 - [EstudantesTable.php:61-163](file://src/Model/Table/EstudantesTable.php#L61-L163)
@@ -358,7 +367,6 @@ EC-->>U : Flash message + redirect
 
 **Section sources**
 - [TccestudantesTable.php:34-57](file://src/Model/Table/TccestudantesTable.php#L34-L57)
-- [MonografiasTable.php:93-100](file://src/Model/Table/MonografiasTable.php#L93-L100)
 - [TccestudantesController.php:114-145](file://src/Controller/TccestudantesController.php#L114-L145)
 
 ### Data Validation Examples
@@ -377,7 +385,7 @@ EC-->>U : Flash message + redirect
 - Filters allow searching by name and sorting by key fields for administrative reporting.
 
 **Section sources**
-- [EstudantesController.php:47-102](file://src/Controller/EstudantesController.php#L47-L102)
+- [EstudantesController.php:38-83](file://src/Controller/EstudantesController.php#L38-L83)
 - [TccestudantesController.php:31-66](file://src/Controller/TccestudantesController.php#L31-L66)
 - [view.php:1-97](file://templates/Estudantes/view.php#L1-L97)
 
@@ -409,43 +417,40 @@ int professor_id
 ```
 
 **Diagram sources**
-- [schema.sql:53-71](file://config/Migrations/schema.sql#L53-L71)
-- [schema.sql:437-456](file://config/Migrations/schema.sql#L437-L456)
-- [schema.sql:621-626](file://config/Migrations/schema.sql#L621-L626)
+- [schema.sql:103-130](file://config/Migrations/schema.sql#L103-L130)
+- [schema.sql:155-174](file://config/Migrations/schema.sql#L155-L174)
+- [schema.sql:201-244](file://config/Migrations/schema.sql#L201-L244)
 
 **Section sources**
 - [EstudantesTable.php:32-53](file://src/Model/Table/EstudantesTable.php#L32-L53)
 - [TccestudantesTable.php:34-57](file://src/Model/Table/TccestudantesTable.php#L34-L57)
-- [MonografiasTable.php:93-100](file://src/Model/Table/MonografiasTable.php#L93-L100)
-- [schema.sql:53-71](file://config/Migrations/schema.sql#L53-L71)
-- [schema.sql:437-456](file://config/Migrations/schema.sql#L437-L456)
-- [schema.sql:621-626](file://config/Migrations/schema.sql#L621-L626)
+- [schema.sql:103-130](file://config/Migrations/schema.sql#L103-L130)
+- [schema.sql:155-174](file://config/Migrations/schema.sql#L155-L174)
+- [schema.sql:201-244](file://config/Migrations/schema.sql#L201-L244)
 
 ## Performance Considerations
 - Use pagination and sorting on index endpoints to avoid loading large datasets.
 - Leverage contains to eagerly load necessary associations (e.g., Tccestudantes.Monografias) to reduce N+1 queries.
 - Ensure database indexes on frequently queried columns (registration number, monograph ID) to speed up lookups.
 - Avoid unnecessary joins; use targeted queries in controllers for filtering and sorting.
-
-[No sources needed since this section provides general guidance]
+- **Updated** Simplified query patterns due to removal of internship-related joins and complex relationships.
 
 ## Troubleshooting Guide
 Common issues and resolutions:
 - Duplicate registration number or email: Validation will reject duplicates; ensure unique values before saving.
 - Invalid monograph or student reference: Tccestudante save fails if references do not exist; verify IDs before enrollment.
-- Deletion blocked due to related records: Student cannot be deleted if associated with inscriptions, internships, or thesis enrollments; remove dependencies first.
+- Deletion blocked due to related records: Student cannot be deleted if associated with thesis enrollments; remove dependencies first.
 - Empty results on index: Check filters and sorting parameters; ensure data exists and query conditions are correct.
+- **Updated** No longer need to check for internship-related conflicts when deleting students.
 
 **Section sources**
-- [EstudantesController.php:197-232](file://src/Controller/EstudantesController.php#L197-L232)
+- [EstudantesController.php:178-205](file://src/Controller/EstudantesController.php#L178-L205)
 - [TccestudantesController.php:193-204](file://src/Controller/TccestudantesController.php#L193-L204)
 - [EstudantesTable.php:156-163](file://src/Model/Table/EstudantesTable.php#L156-L163)
 - [TccestudantesTable.php:91-97](file://src/Model/Table/TccestudantesTable.php#L91-L97)
 
 ## Conclusion
-The student management system provides robust support for managing student profiles, tracking academic history, and enrolling students into thesis programs. Through well-defined entities, tables, and controllers, it ensures data integrity via validation and referential constraints. The workflow from admission to graduation is supported by clear enrollment processes, scheduling, and monitoring capabilities. Administrators can generate reports and track progress using indexed queries and paginated views.
-
-[No sources needed since this section summarizes without analyzing specific files]
+The student management system provides streamlined support for managing student profiles, tracking academic history, and enrolling students into thesis programs. With the removal of internship-related functionality, the system now offers a focused, efficient interface for thesis management. Through well-defined entities, tables, and controllers, it ensures data integrity via validation and referential constraints. The workflow from admission to graduation is supported by clear enrollment processes, scheduling, and monitoring capabilities. Administrators can generate reports and track progress using indexed queries and paginated views, all within the simplified thesis-focused scope.
 
 ## Appendices
 
@@ -453,15 +458,17 @@ The student management system provides robust support for managing student profi
 - Students table stores personal and contact information with unique registration numbers.
 - Thesis enrollments link students to monographs and validate references.
 - Monographs store thesis metadata, supervision, and defense details.
+- **Updated** Internship-related tables are explicitly out of scope for TCC5 application.
 
 **Section sources**
-- [schema.sql:53-71](file://config/Migrations/schema.sql#L53-L71)
-- [schema.sql:437-456](file://config/Migrations/schema.sql#L437-L456)
-- [schema.sql:621-626](file://config/Migrations/schema.sql#L621-L626)
+- [schema.sql:103-130](file://config/Migrations/schema.sql#L103-L130)
+- [schema.sql:155-174](file://config/Migrations/schema.sql#L155-L174)
+- [schema.sql:201-244](file://config/Migrations/schema.sql#L201-L244)
 
 ### User Interface References
 - Student view template displays profile details and actions.
 - Thesis enrollment form allows selecting monographs and students.
+- **Updated** All templates now focus exclusively on thesis management functionality.
 
 **Section sources**
 - [view.php:1-97](file://templates/Estudantes/view.php#L1-L97)

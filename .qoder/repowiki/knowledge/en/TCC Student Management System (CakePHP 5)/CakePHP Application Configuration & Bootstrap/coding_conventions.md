@@ -3,3 +3,4 @@
 - Configuration is organized as top-level keys (`App`, `Security`, `Cache`, `Datasources`, `EmailTransport`, `Email`, `Log`, `Session`) returned as associative arrays from PHP files.
 - Path constants are centralized in `paths.php` and referenced elsewhere via uppercase constants (ROOT, CONFIG, WWW_ROOT, LOGS, CACHE, RESOURCES) rather than hard-coded strings.
 - CLI-specific behavior is isolated in `bootstrap_cli.php` and only required when `PHP_SAPI === 'cli'`, allowing separate log file names and base URL handling.
+- Runtime requirements are enforced at startup in `requirements.php` using `version_compare` and `extension_loaded` checks that `trigger_error` with `E_USER_ERROR`.

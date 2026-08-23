@@ -23,7 +23,7 @@ class MonografiasControllerTest extends TestCase
      */
     protected array $fixtures = [
         'app.Monografias',
-        'app.Docentes',
+        'app.Professores',
         'app.Areamonografias',
         'app.Tccestudantes',
     ];

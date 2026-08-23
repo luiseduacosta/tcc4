@@ -3,7 +3,6 @@
 <cite>
 **Referenced Files in This Document**
 - [schema.sql](file://config/Migrations/schema.sql)
-- [tccess.sql](file://tccess.sql)
 - [UsersTable.php](file://src/Model/Table/UsersTable.php)
 - [EstudantesTable.php](file://src/Model/Table/EstudantesTable.php)
 - [ProfessoresTable.php](file://src/Model/Table/ProfessoresTable.php)
@@ -12,9 +11,15 @@
 - [TccestudantesTable.php](file://src/Model/Table/TccestudantesTable.php)
 - [AreamonografiasTable.php](file://src/Model/Table/AreamonografiasTable.php)
 - [DocentesTable.php](file://src/Model/Table/DocentesTable.php)
-- [i18n.sql](file://config/schema/i18n.sql)
-- [sessions.sql](file://config/schema/sessions.sql)
 </cite>
+
+## Update Summary
+**Changes Made**
+- Updated schema documentation to reflect streamlined 243-line reference schema
+- Removed all references to internship-related tables and functionality
+- Updated entity relationships to focus on core TCC5 application tables
+- Revised architecture diagrams to show current simplified structure
+- Updated validation rules and constraints based on new schema design
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -26,19 +31,19 @@
 7. [Performance Considerations](#performance-considerations)
 8. [Troubleshooting Guide](#troubleshooting-guide)
 9. [Conclusion](#conclusion)
-10. [Appendices](#appendices)
+9. [Appendices](#appendices)
 
 ## Introduction
-This document provides comprehensive data model documentation for the TCC5 academic database (database name: tccess). It focuses on the core entities Users, Students, Professors, Monographs, and Scheduling, detailing entity relationships, primary and foreign keys, indexes, constraints, validation rules enforced at the application layer, indexing strategy, migration management procedures, data integrity constraints, optimization techniques, backup strategies, and maintenance procedures.
+This document provides comprehensive data model documentation for the TCC5 academic database (database name: tccess). The schema has been completely refactored from a 1080-line phpMyAdmin dump to a streamlined 243-line reference schema that focuses exclusively on TCC5 application functionality. All internship-related tables have been removed, leaving only the core academic entities: Users, Students, Professors, Monographs, Scheduling, Areas, and Student-Monograph links.
 
-The schema supports academic workflows including student records, professor profiles, monograph registration and defense scheduling, and user access control. The CakePHP ORM models define associations and validation rules that complement the underlying SQL schema.
+The schema supports essential academic workflows including student records, professor profiles, monograph registration and defense scheduling, and user access control. The CakePHP ORM models define associations and validation rules that complement the underlying SQL schema.
 
 ## Project Structure
-The database is defined by SQL dumps and managed via migrations. The application layer uses CakePHP ORM tables to define relationships and validation rules.
+The database is defined by a streamlined reference schema and managed via migrations. The application layer uses CakePHP ORM tables to define relationships and validation rules for the focused TCC5 domain.
 
 ```mermaid
 graph TB
-subgraph "Database"
+subgraph "TCC5 Core Database"
 A["users"]
 B["alunos (students)"]
 C["professores (professors)"]
@@ -66,8 +71,7 @@ AG --> E
 T --> G
 AR --> F
 Dc --> C
-A -.->|estudante_id| B
-A -.->|supervisor_id| C
+A -.->|aluno_id| B
 A -.->|professor_id| C
 D -.->|professor_id| C
 D -.->|areamonografia_id| F
@@ -82,26 +86,19 @@ H -.->|areamonografia_id| F
 ```
 
 **Diagram sources**
-- [schema.sql:33-45](file://config/Migrations/schema.sql#L33-L45)
-- [schema.sql:327-346](file://config/Migrations/schema.sql#L327-L346)
-- [schema.sql:529-567](file://config/Migrations/schema.sql#L529-L567)
-- [schema.sql:438-457](file://config/Migrations/schema.sql#L438-L457)
-- [schema.sql:621-627](file://config/Migrations/schema.sql#L621-L627)
-- [schema.sql:118-136](file://config/Migrations/schema.sql#L118-L136)
-- [UsersTable.php:40-59](file://src/Model/Table/UsersTable.php#L40-L59)
-- [EstudantesTable.php:32-53](file://src/Model/Table/EstudantesTable.php#L32-L53)
-- [ProfessoresTable.php:35-55](file://src/Model/Table/ProfessoresTable.php#L35-L55)
-- [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
-- [AgendamentotccsTable.php:43-75](file://src/Model/Table/AgendamentotccsTable.php#L43-L75)
-- [TccestudantesTable.php:34-57](file://src/Model/Table/TccestudantesTable.php#L34-L57)
-- [AreamonografiasTable.php:41-60](file://src/Model/Table/AreamonografiasTable.php#L41-L60)
-- [DocentesTable.php:36-78](file://src/Model/Table/DocentesTable.php#L36-L78)
+- [schema.sql:82-99](file://config/Migrations/schema.sql#L82-L99)
+- [schema.sql:100-131](file://config/Migrations/schema.sql#L100-L131)
+- [schema.sql:132-151](file://config/Migrations/schema.sql#L132-L151)
+- [schema.sql:152-175](file://config/Migrations/schema.sql#L152-L175)
+- [schema.sql:176-203](file://config/Migrations/schema.sql#L176-L203)
+- [schema.sql:204-215](file://config/Migrations/schema.sql#L204-L215)
+- [schema.sql:216-236](file://config/Migrations/schema.sql#L216-L236)
 
 **Section sources**
-- [schema.sql:1-1081](file://config/Migrations/schema.sql#L1-L1081)
-- [UsersTable.php:1-127](file://src/Model/Table/UsersTable.php#L1-L127)
+- [schema.sql:1-244](file://config/Migrations/schema.sql#L1-L244)
+- [UsersTable.php:1-128](file://src/Model/Table/UsersTable.php#L1-L128)
 - [EstudantesTable.php:1-165](file://src/Model/Table/EstudantesTable.php#L1-L165)
-- [ProfessoresTable.php:1-247](file://src/Model/Table/ProfessoresTable.php#L1-L247)
+- [ProfessoresTable.php:1-244](file://src/Model/Table/ProfessoresTable.php#L1-L244)
 - [MonografiasTable.php:1-190](file://src/Model/Table/MonografiasTable.php#L1-L190)
 - [AgendamentotccsTable.php:1-152](file://src/Model/Table/AgendamentotccsTable.php#L1-L152)
 - [TccestudantesTable.php:1-100](file://src/Model/Table/TccestudantesTable.php#L1-L100)
@@ -109,43 +106,43 @@ H -.->|areamonografia_id| F
 - [DocentesTable.php:1-272](file://src/Model/Table/DocentesTable.php#L1-L272)
 
 ## Core Components
-This section summarizes the core academic entities and their responsibilities:
+This section summarizes the core academic entities and their responsibilities in the streamlined TCC5 schema:
 
-- Users: Authentication and role-based access; links to students, supervisors, and professors.
-- Students (alunos): Personal and contact information; unique student registration number.
-- Professors (professores): Academic staff details; linked to monographs as advisor or committee member; linked to scheduling.
-- Monographs (monografias): Academic works with title, abstract, period, advisor, co-advisor, area, and defense details.
-- Scheduling (agendamentotccs): Defense scheduling linking students, advisors, and committee members with date/time and room.
+- **Users**: Authentication and role-based access; links to students and professors through aluno_id and professor_id fields.
+- **Students (alunos)**: Personal and contact information; unique student registration number with comprehensive contact details.
+- **Professors (professores)**: Academic staff details with simplified profile fields; linked to monographs as advisor or committee member; linked to scheduling.
+- **Monographs (monografias)**: Academic works with title, abstract, period, advisor, co-advisor, area, and defense details.
+- **Scheduling (agendamentotccs)**: Defense scheduling linking students, advisors, and committee members with date/time and room.
+- **Areas (areamonografias)**: Academic areas for monograph classification with counter cache for monograph counts.
+- **Student-Monograph Links (tccestudantes)**: Links between students and monographs via monografia_id and registro.
 
 Key relationships:
-- Users belongs to Estudantes, Supervisores, and Professores.
+- Users belongs to Estudantes and Professores through aluno_id and professor_id.
 - Monografias belongs to Docentes (advisor), Areamonografias (area), and multiple Docentes (committee).
 - Agendamentotccs belongs to Estudantes and Docentes (advisor and committee).
 - Tccestudantes links monographs to students via monografia_id and registro.
 
 Validation and constraints:
 - Application-level validation ensures required fields, formats, and uniqueness (e.g., email, registro).
-- Database-level primary keys are defined; some unique constraints exist (e.g., alunos.registro, estudantes.registro).
-- Foreign key enforcement is not explicitly declared in the provided SQL; referential integrity relies on application rules and ORM checks.
+- Database-level primary keys are defined; unique constraints exist for student registrations.
+- Foreign key enforcement relies primarily on application rules and ORM checks.
 
 **Section sources**
-- [schema.sql:33-45](file://config/Migrations/schema.sql#L33-L45)
-- [schema.sql:327-346](file://config/Migrations/schema.sql#L327-L346)
-- [schema.sql:529-567](file://config/Migrations/schema.sql#L529-L567)
-- [schema.sql:438-457](file://config/Migrations/schema.sql#L438-L457)
-- [schema.sql:621-627](file://config/Migrations/schema.sql#L621-L627)
-- [UsersTable.php:67-108](file://src/Model/Table/UsersTable.php#L67-L108)
-- [EstudantesTable.php:61-147](file://src/Model/Table/EstudantesTable.php#L61-L147)
-- [ProfessoresTable.php:63-231](file://src/Model/Table/ProfessoresTable.php#L63-L231)
-- [MonografiasTable.php:108-173](file://src/Model/Table/MonografiasTable.php#L108-L173)
-- [AgendamentotccsTable.php:83-132](file://src/Model/Table/AgendamentotccsTable.php#L83-L132)
-- [TccestudantesTable.php:65-82](file://src/Model/Table/TccestudantesTable.php#L65-L82)
+- [schema.sql:82-236](file://config/Migrations/schema.sql#L82-L236)
+- [UsersTable.php:43-127](file://src/Model/Table/UsersTable.php#L43-L127)
+- [EstudantesTable.php:32-165](file://src/Model/Table/EstudantesTable.php#L32-L165)
+- [ProfessoresTable.php:34-244](file://src/Model/Table/ProfessoresTable.php#L34-L244)
+- [MonografiasTable.php:41-190](file://src/Model/Table/MonografiasTable.php#L41-L190)
+- [AgendamentotccsTable.php:43-152](file://src/Model/Table/AgendamentotccsTable.php#L43-L152)
+- [TccestudantesTable.php:34-100](file://src/Model/Table/TccestudantesTable.php#L34-L100)
+- [AreamonografiasTable.php:41-82](file://src/Model/Table/AreamonografiasTable.php#L41-L82)
+- [DocentesTable.php:36-272](file://src/Model/Table/DocentesTable.php#L36-L272)
 
 ## Architecture Overview
-The system follows a layered architecture:
-- Presentation: Controllers and templates render UI for managing users, students, professors, monographs, and scheduling.
-- Application: CakePHP ORM tables define associations, validation, and business rules.
-- Data: MariaDB stores entities with primary keys and limited indexes; referential integrity is enforced primarily at the application level.
+The system follows a streamlined layered architecture focused on TCC5 core functionality:
+- **Presentation**: Controllers and templates render UI for managing users, students, professors, monographs, and scheduling.
+- **Application**: CakePHP ORM tables define associations, validation, and business rules for the focused domain.
+- **Data**: MariaDB stores entities with primary keys and minimal indexes; referential integrity is enforced primarily at the application level.
 
 ```mermaid
 sequenceDiagram
@@ -161,27 +158,25 @@ ORM-->>UI : Persisted entity or error message
 ```
 
 **Diagram sources**
-- [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
-- [MonografiasTable.php:108-173](file://src/Model/Table/MonografiasTable.php#L108-L173)
-- [MonografiasTable.php:182-188](file://src/Model/Table/MonografiasTable.php#L182-L188)
-- [schema.sql:438-457](file://config/Migrations/schema.sql#L438-L457)
+- [MonografiasTable.php:41-190](file://src/Model/Table/MonografiasTable.php#L41-L190)
+- [schema.sql:152-175](file://config/Migrations/schema.sql#L152-L175)
 
 ## Detailed Component Analysis
 
 ### Users
-- Table: users
-- Primary Key: id
-- Notable Fields: email, password, categoria (enum), numero, timestamp, estudante_id, supervisor_id, docente_id
-- Relationships:
-  - BelongsTo Estudantes via estudante_id
-  - BelongsTo Supervisores via supervisor_id
+- **Table**: users
+- **Primary Key**: id
+- **Notable Fields**: email, password, nome, role, categoria, identificacao, entidade_id, ativo, criado_em, atualizado_em, aluno_id, supervisor_id, professor_id
+- **Relationships**:
+  - BelongsTo Estudantes via aluno_id
+  - BelongsTo Supervisores via supervisor_id (maintained for mural5 compatibility)
   - BelongsTo Professores via professor_id
-- Validation:
+- **Validation**:
   - Email required and valid format
   - Password required and length-limited
-  - Categoria must be one of allowed values
-  - Numeric checks for numero and IDs
-- Rules:
+  - Categoria must be one of allowed values (1, 2, 3, 4)
+  - Numeric checks for identificacao and IDs
+- **Rules**:
   - existsIn checks ensure referenced IDs exist in related tables
 
 ```mermaid
@@ -190,12 +185,17 @@ class Users {
 +int id
 +string email
 +string password
++string nome
++enum role
 +enum categoria
-+int numero
-+timestamp timestamp
-+int estudante_id
++int identificacao
++int entidade_id
++boolean ativo
++timestamp criado_em
++timestamp atualizado_em
++int aluno_id
 +int supervisor_id
-+int docente_id
++int professor_id
 }
 class Estudantes {
 +int id
@@ -207,30 +207,28 @@ class Professores {
 +string nome
 +string cpf
 }
-Users --> Estudantes : "estudante_id"
+Users --> Estudantes : "aluno_id"
 Users --> Professores : "professor_id"
 ```
 
 **Diagram sources**
-- [schema.sql:647-658](file://config/Migrations/schema.sql#L647-L658)
-- [UsersTable.php:40-59](file://src/Model/Table/UsersTable.php#L40-L59)
-- [UsersTable.php:67-108](file://src/Model/Table/UsersTable.php#L67-L108)
-- [UsersTable.php:118-125](file://src/Model/Table/UsersTable.php#L118-L125)
+- [schema.sql:216-236](file://config/Migrations/schema.sql#L216-L236)
+- [UsersTable.php:43-127](file://src/Model/Table/UsersTable.php#L43-L127)
 
 **Section sources**
-- [schema.sql:647-658](file://config/Migrations/schema.sql#L647-L658)
-- [UsersTable.php:40-125](file://src/Model/Table/UsersTable.php#L40-L125)
+- [schema.sql:216-236](file://config/Migrations/schema.sql#L216-L236)
+- [UsersTable.php:43-127](file://src/Model/Table/UsersTable.php#L43-L127)
 
 ### Students (Alunos/Estudantes)
-- Table: alunos (used by EstudantesTable)
-- Primary Key: id
-- Unique Constraint: registro (unique per student)
-- Notable Fields: nome, registro, telefone, celular, email, cpf, identidade, orgao, nascimento, endereco, cep, municipio, bairro, observacoes
-- Relationships:
+- **Table**: alunos (used by EstudantesTable)
+- **Primary Key**: id
+- **Unique Constraint**: registro (unique per student)
+- **Notable Fields**: nome, nomesocial, registro, codigo_telefone, telefone, codigo_celular, celular, email, cpf, identidade, orgao, nascimento, endereco, cep, municipio, bairro, ingresso, turno, turno_id, user_id, inscricao_count, estagiario_count, observacoes
+- **Relationships**:
   - HasMany Agendamentotccs via estudante_id
   - HasOne Tccestudantes via registro
-- Validation:
-  - Required name, phone codes
+- **Validation**:
+  - Required name and phone codes
   - Length limits for text fields
   - Unique email and registro enforced at application level
 
@@ -239,6 +237,7 @@ classDiagram
 class Estudantes {
 +int id
 +string nome
++string nomesocial
 +int registro
 +string email
 +string cpf
@@ -266,33 +265,31 @@ Estudantes --> Tccestudantes : "hasOne registro"
 ```
 
 **Diagram sources**
-- [schema.sql:53-72](file://config/Migrations/schema.sql#L53-L72)
-- [schema.sql:327-346](file://config/Migrations/schema.sql#L327-L346)
-- [schema.sql:621-627](file://config/Migrations/schema.sql#L621-L627)
-- [EstudantesTable.php:32-53](file://src/Model/Table/EstudantesTable.php#L32-L53)
-- [EstudantesTable.php:61-147](file://src/Model/Table/EstudantesTable.php#L61-L147)
-- [EstudantesTable.php:156-163](file://src/Model/Table/EstudantesTable.php#L156-L163)
+- [schema.sql:100-131](file://config/Migrations/schema.sql#L100-L131)
+- [schema.sql:82-99](file://config/Migrations/schema.sql#L82-L99)
+- [schema.sql:204-215](file://config/Migrations/schema.sql#L204-L215)
+- [EstudantesTable.php:32-165](file://src/Model/Table/EstudantesTable.php#L32-L165)
 
 **Section sources**
-- [schema.sql:53-72](file://config/Migrations/schema.sql#L53-L72)
-- [schema.sql:327-346](file://config/Migrations/schema.sql#L327-L346)
-- [schema.sql:621-627](file://config/Migrations/schema.sql#L621-L627)
-- [EstudantesTable.php:32-163](file://src/Model/Table/EstudantesTable.php#L32-L163)
+- [schema.sql:100-131](file://config/Migrations/schema.sql#L100-L131)
+- [schema.sql:82-99](file://config/Migrations/schema.sql#L82-L99)
+- [schema.sql:204-215](file://config/Migrations/schema.sql#L204-L215)
+- [EstudantesTable.php:32-165](file://src/Model/Table/EstudantesTable.php#L32-L165)
 
 ### Professors (Professores/Docentes)
-- Table: professores (aliased as Docentes in ORM)
-- Primary Key: id
-- Notable Fields: nome, cpf, siape, datanascimento, localnascimento, sexo, ddd_telefone, telefone, ddd_celular, celular, email, homepage, redesocial, curriculolattes, atualizacaolattes, curriculosigma, pesquisadordgp, formacaoprofissional, universidadedegraduacao, anoformacao, mestradoarea, mestradouniversidade, mestradoanoconclusao, doutoradoarea, doutoradouniversidade, doutoradoanoconclusao, dataingresso, formaingresso, tipocargo, categoria, regimetrabalho, departamento, dataegresso, motivoegresso, observacoes
-- Relationships:
+- **Table**: professores (aliased as Docentes in ORM)
+- **Primary Key**: id
+- **Notable Fields**: nome, cpf, siape, cress, regiao, codigo_telefone, telefone, codigo_celular, celular, email, curriculolattes, atualizacaolattes, dataingresso, departamento, dataegresso, motivoegresso, status, observacoes, user_id, estagiarios_count
+- **Relationships**:
   - HasMany Users via professor_id
   - HasMany Monografias via professor_id (advisor)
   - HasMany Monografias via banca1/banca2/banca3 (committee)
   - BelongsToMany Areamonografias via areamonografias_docentes
   - HasMany Agendamentotccs via docente_id
-- Validation:
+- **Validation**:
   - Required name and phone codes
   - Length limits for text fields
-  - Date validations for birth, entry, graduation dates
+  - Date validations for entry dates
 
 ```mermaid
 classDiagram
@@ -300,8 +297,8 @@ class Professores {
 +int id
 +string nome
 +string cpf
-+date datanascimento
 +string email
++string status
 }
 class Monografias {
 +int id
@@ -328,34 +325,33 @@ Professores --> Agendamentotccs : "hasMany docente_id"
 ```
 
 **Diagram sources**
-- [schema.sql:529-567](file://config/Migrations/schema.sql#L529-L567)
-- [schema.sql:438-457](file://config/Migrations/schema.sql#L438-L457)
-- [schema.sql:33-45](file://config/Migrations/schema.sql#L33-L45)
-- [schema.sql:118-136](file://config/Migrations/schema.sql#L118-L136)
-- [ProfessoresTable.php:35-55](file://src/Model/Table/ProfessoresTable.php#L35-L55)
-- [DocentesTable.php:36-78](file://src/Model/Table/DocentesTable.php#L36-L78)
-- [ProfessoresTable.php:63-231](file://src/Model/Table/ProfessoresTable.php#L63-L231)
+- [schema.sql:176-203](file://config/Migrations/schema.sql#L176-L203)
+- [schema.sql:152-175](file://config/Migrations/schema.sql#L152-L175)
+- [schema.sql:132-151](file://config/Migrations/schema.sql#L132-L151)
+- [schema.sql:82-99](file://config/Migrations/schema.sql#L82-L99)
+- [ProfessoresTable.php:34-244](file://src/Model/Table/ProfessoresTable.php#L34-L244)
+- [DocentesTable.php:36-272](file://src/Model/Table/DocentesTable.php#L36-L272)
 
 **Section sources**
-- [schema.sql:529-567](file://config/Migrations/schema.sql#L529-L567)
-- [ProfessoresTable.php:35-231](file://src/Model/Table/ProfessoresTable.php#L35-L231)
-- [DocentesTable.php:36-78](file://src/Model/Table/DocentesTable.php#L36-L78)
+- [schema.sql:176-203](file://config/Migrations/schema.sql#L176-L203)
+- [ProfessoresTable.php:34-244](file://src/Model/Table/ProfessoresTable.php#L34-L244)
+- [DocentesTable.php:36-272](file://src/Model/Table/DocentesTable.php#L36-L272)
 
 ### Monographs (Monografias)
-- Table: monografias
-- Primary Key: id
-- Notable Fields: catalogo, titulo, resumo, data, periodo, professor_id, co_orienta_id (mapped via num_co_orienta in ORM), areamonografia_id, classificamonografia_id, data_defesa, banca1, banca2, banca3, convidado, url, timestamp
-- Relationships:
+- **Table**: monografias
+- **Primary Key**: id
+- **Notable Fields**: catalogo, titulo, resumo, data, periodo, professor_id, num_co_orienta, areamonografia_id, areamonografia, data_defesa, banca1, banca2, banca3, convidado, url, timestamp
+- **Relationships**:
   - BelongsTo Docentes (advisor) via professor_id
   - BelongsTo Docentes (co-advisor) via num_co_orienta
   - BelongsTo Docentes (committee) via banca1/banca2/banca3
   - BelongsTo Areamonografias via areamonografia_id
   - HasMany Tccestudantes via monografia_id
-- Validation:
+- **Validation**:
   - Length limits for title, abstract, URL, etc.
   - Period string length limit
   - Committee IDs validated as integers
-- CounterCache behavior used to cache monograph counts per area
+- **CounterCache behavior** used to cache monograph counts per area
 
 ```mermaid
 classDiagram
@@ -390,24 +386,22 @@ Monografias --> Tccestudantes : "hasMany"
 ```
 
 **Diagram sources**
-- [schema.sql:438-457](file://config/Migrations/schema.sql#L438-L457)
-- [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
-- [MonografiasTable.php:108-173](file://src/Model/Table/MonografiasTable.php#L108-L173)
-- [MonografiasTable.php:182-188](file://src/Model/Table/MonografiasTable.php#L182-L188)
+- [schema.sql:152-175](file://config/Migrations/schema.sql#L152-L175)
+- [MonografiasTable.php:41-190](file://src/Model/Table/MonografiasTable.php#L41-L190)
 
 **Section sources**
-- [schema.sql:438-457](file://config/Migrations/schema.sql#L438-L457)
-- [MonografiasTable.php:41-188](file://src/Model/Table/MonografiasTable.php#L41-L188)
+- [schema.sql:152-175](file://config/Migrations/schema.sql#L152-L175)
+- [MonografiasTable.php:41-190](file://src/Model/Table/MonografiasTable.php#L41-L190)
 
 ### Scheduling (Agendamentotccs)
-- Table: agendamentotccs
-- Primary Key: id
-- Notable Fields: estudante_id, docente_id, banca1, banca2, data, horario, sala, convidado, titulo, avaliacao
-- Relationships:
+- **Table**: agendamentotccs
+- **Primary Key**: id
+- **Notable Fields**: estudante_id, docente_id, banca1, banca2, data, horario, sala, convidado, titulo, avaliacao
+- **Relationships**:
   - BelongsTo Estudantes via estudante_id
   - BelongsTo Docentes via docente_id (advisor)
   - BelongsTo Docentes via banca1/banca2 (committee)
-- Validation:
+- **Validation**:
   - Required date, time, room, title
   - Committee IDs required on create
   - Length limits for strings
@@ -422,26 +416,26 @@ Save --> Done(["Scheduling created"])
 ```
 
 **Diagram sources**
-- [schema.sql:33-45](file://config/Migrations/schema.sql#L33-L45)
-- [AgendamentotccsTable.php:43-75](file://src/Model/Table/AgendamentotccsTable.php#L43-L75)
-- [AgendamentotccsTable.php:83-132](file://src/Model/Table/AgendamentotccsTable.php#L83-L132)
-- [AgendamentotccsTable.php:141-149](file://src/Model/Table/AgendamentotccsTable.php#L141-L149)
+- [schema.sql:82-99](file://config/Migrations/schema.sql#L82-L99)
+- [AgendamentotccsTable.php:43-152](file://src/Model/Table/AgendamentotccsTable.php#L43-L152)
 
 **Section sources**
-- [schema.sql:33-45](file://config/Migrations/schema.sql#L33-L45)
-- [AgendamentotccsTable.php:43-149](file://src/Model/Table/AgendamentotccsTable.php#L43-L149)
+- [schema.sql:82-99](file://config/Migrations/schema.sql#L82-L99)
+- [AgendamentotccsTable.php:43-152](file://src/Model/Table/AgendamentotccsTable.php#L43-L152)
 
 ### Area-Monograph and Area-Professor Mapping
-- Tables: areamonografias, areamonografias_docentes
-- Relationships:
+- **Tables**: areamonografias, areamonografias_docentes
+- **Relationships**:
   - Monografias belong to Areamonografias via areamonografia_id
   - Docentes and Areamonografias are linked via a many-to-many join table
+- **Counter Cache**: Areamonografias.q_monografia field caches monograph counts
 
 ```mermaid
 classDiagram
 class Areamonografias {
 +int id
 +string area
++int q_monografia
 }
 class Docentes {
 +int id
@@ -456,28 +450,28 @@ Docentes <--> Areamonografias : "belongsToMany via areamonografias_docentes"
 ```
 
 **Diagram sources**
-- [schema.sql:118-136](file://config/Migrations/schema.sql#L118-L136)
-- [AreamonografiasTable.php:41-60](file://src/Model/Table/AreamonografiasTable.php#L41-L60)
+- [schema.sql:132-151](file://config/Migrations/schema.sql#L132-L151)
+- [AreamonografiasTable.php:41-82](file://src/Model/Table/AreamonografiasTable.php#L41-L82)
 - [MonografiasTable.php:86-91](file://src/Model/Table/MonografiasTable.php#L86-L91)
 - [DocentesTable.php:69-73](file://src/Model/Table/DocentesTable.php#L69-L73)
 
 **Section sources**
-- [schema.sql:118-136](file://config/Migrations/schema.sql#L118-L136)
-- [AreamonografiasTable.php:41-60](file://src/Model/Table/AreamonografiasTable.php#L41-L60)
+- [schema.sql:132-151](file://config/Migrations/schema.sql#L132-L151)
+- [AreamonografiasTable.php:41-82](file://src/Model/Table/AreamonografiasTable.php#L41-L82)
 - [MonografiasTable.php:86-91](file://src/Model/Table/MonografiasTable.php#L86-L91)
 - [DocentesTable.php:69-73](file://src/Model/Table/DocentesTable.php#L69-L73)
 
 ## Dependency Analysis
-Key dependency chains:
-- Users depend on Estudantes, Supervisores, and Professores for identity linkage.
+Key dependency chains in the streamlined TCC5 schema:
+- Users depend on Estudantes and Professores for identity linkage.
 - Monografias depend on Docentes (advisor/co-advisor/committee) and Areamonografias (area).
 - Agendamentotccs depend on Estudantes and Docentes (advisor/committee).
 - Tccestudantes link Monografias to Estudantes via monografia_id and registro.
 
 Indexing and constraints:
 - Primary keys are defined for all core tables.
-- Unique constraints exist for aluno and estudante registros.
-- Additional indexes are minimal; consider adding composite indexes for frequent queries (e.g., monografias.professor_id, monografias.areamonografia_id, agendamentotccs.estudante_id, agendamentotccs.data).
+- Unique constraints exist for student registrations (alunos.registro).
+- Additional indexes are minimal; consider adding composite indexes for frequent queries.
 
 ```mermaid
 graph LR
@@ -492,93 +486,84 @@ Tccestudantes --> Estudantes
 ```
 
 **Diagram sources**
-- [UsersTable.php:40-59](file://src/Model/Table/UsersTable.php#L40-L59)
-- [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
-- [AgendamentotccsTable.php:43-75](file://src/Model/Table/AgendamentotccsTable.php#L43-L75)
-- [TccestudantesTable.php:34-57](file://src/Model/Table/TccestudantesTable.php#L34-L57)
+- [UsersTable.php:43-127](file://src/Model/Table/UsersTable.php#L43-L127)
+- [MonografiasTable.php:41-190](file://src/Model/Table/MonografiasTable.php#L41-L190)
+- [AgendamentotccsTable.php:43-152](file://src/Model/Table/AgendamentotccsTable.php#L43-L152)
+- [TccestudantesTable.php:34-100](file://src/Model/Table/TccestudantesTable.php#L34-L100)
 
 **Section sources**
-- [UsersTable.php:40-59](file://src/Model/Table/UsersTable.php#L40-L59)
-- [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
-- [AgendamentotccsTable.php:43-75](file://src/Model/Table/AgendamentotccsTable.php#L43-L75)
-- [TccestudantesTable.php:34-57](file://src/Model/Table/TccestudantesTable.php#L34-L57)
+- [UsersTable.php:43-127](file://src/Model/Table/UsersTable.php#L43-L127)
+- [MonografiasTable.php:41-190](file://src/Model/Table/MonografiasTable.php#L41-L190)
+- [AgendamentotccsTable.php:43-152](file://src/Model/Table/AgendamentotccsTable.php#L43-L152)
+- [TccestudantesTable.php:34-100](file://src/Model/Table/TccestudantesTable.php#L34-L100)
 
 ## Performance Considerations
-- Indexing Strategy:
+- **Indexing Strategy**:
   - Add composite indexes on frequently queried columns:
     - monografias: (professor_id, areamonografia_id), (banca1), (banca2), (banca3)
     - agendamentotccs: (estudante_id, data), (docente_id, data)
     - tccestudantes: (monografia_id), (registro)
   - Ensure character set/collation consistency to avoid implicit conversions during joins.
-- Query Optimization:
+- **Query Optimization**:
   - Use eager loading for associated entities to reduce N+1 queries.
   - Limit result sets with pagination and selective field retrieval.
-- Storage:
+- **Storage**:
   - Use appropriate data types (e.g., DATE/TIME for dates/times) to leverage index efficiency.
   - Avoid excessive TEXT fields in high-frequency queries.
 
-[No sources needed since this section provides general guidance]
-
 ## Troubleshooting Guide
 Common issues and resolutions:
-- Referential Integrity Errors:
+- **Referential Integrity Errors**:
   - Ensure referenced IDs exist before saving (application-level existsIn rules).
   - Validate foreign key references in controllers/services.
-- Validation Failures:
+- **Validation Failures**:
   - Check required fields and formats in validationDefault methods.
   - Confirm unique constraints (email, registro) are respected.
-- Migration Issues:
+- **Migration Issues**:
   - Verify schema.sql matches current database state.
   - Use migration tools to apply incremental changes safely.
 
 **Section sources**
-- [UsersTable.php:118-125](file://src/Model/Table/UsersTable.php#L118-L125)
-- [EstudantesTable.php:156-163](file://src/Model/Table/EstudantesTable.php#L156-L163)
-- [MonografiasTable.php:182-188](file://src/Model/Table/MonografiasTable.php#L182-L188)
-- [AgendamentotccsTable.php:141-149](file://src/Model/Table/AgendamentotccsTable.php#L141-L149)
+- [UsersTable.php:119-127](file://src/Model/Table/UsersTable.php#L119-L127)
+- [EstudantesTable.php:156-165](file://src/Model/Table/EstudantesTable.php#L156-L165)
+- [MonografiasTable.php:182-190](file://src/Model/Table/MonografiasTable.php#L182-L190)
+- [AgendamentotccsTable.php:141-152](file://src/Model/Table/AgendamentotccsTable.php#L141-L152)
 
 ## Conclusion
-The TCC5 database schema supports academic workflows through well-defined entities and relationships. While primary keys and some unique constraints are present, referential integrity relies heavily on application-level validation and ORM rules. Enhancing indexing and enforcing foreign key constraints at the database level will improve performance and data integrity. Proper migration management and regular maintenance will ensure long-term reliability.
-
-[No sources needed since this section summarizes without analyzing specific files]
+The streamlined TCC5 database schema supports essential academic workflows through well-defined entities and relationships. The refactoring from a 1080-line dump to a focused 243-line reference schema has eliminated complexity while maintaining core functionality. While primary keys and some unique constraints are present, referential integrity relies heavily on application-level validation and ORM rules. Enhancing indexing and enforcing foreign key constraints at the database level will improve performance and data integrity. Proper migration management and regular maintenance will ensure long-term reliability.
 
 ## Appendices
 
 ### Sample Data Structures
-- Users: id, email, password, categoria, numero, timestamp, estudante_id, supervisor_id, docente_id
-- Students: id, nome, registro, telefone, celular, email, cpf, identidade, orgao, nascimento, endereco, cep, municipio, bairro, observacoes
-- Professors: id, nome, cpf, siape, datanascimento, localnascimento, sexo, ddd_telefone, telefone, ddd_celular, celular, email, homepage, redesocial, curriculolattes, atualizacaolattes, curriculosigma, pesquisadordgp, formacaoprofissional, universidadedegraduacao, anoformacao, mestradoarea, mestradouniversidade, mestradoanoconclusao, doutoradoarea, doutoradouniversidade, doutoradoanoconclusao, dataingresso, formaingresso, tipocargo, categoria, regimetrabalho, departamento, dataegresso, motivoegresso, observacoes
-- Monographs: id, catalogo, titulo, resumo, data, periodo, professor_id, co_orienta_id, areamonografia_id, classificamonografia_id, data_defesa, banca1, banca2, banca3, convidado, url, timestamp
-- Scheduling: id, estudante_id, docente_id, banca1, banca2, data, horario, sala, convidado, titulo, avaliacao
+- **Users**: id, email, password, nome, role, categoria, identificacao, entidade_id, ativo, criado_em, atualizado_em, aluno_id, supervisor_id, professor_id
+- **Students**: id, nome, nomesocial, registro, codigo_telefone, telefone, codigo_celular, celular, email, cpf, identidade, orgao, nascimento, endereco, cep, municipio, bairro, ingresso, turno, turno_id, user_id, inscricao_count, estagiario_count, observacoes
+- **Professors**: id, nome, cpf, siape, cress, regiao, codigo_telefone, telefone, codigo_celular, celular, email, curriculolattes, atualizacaolattes, dataingresso, departamento, dataegresso, motivoegresso, status, observacoes, user_id, estagiarios_count
+- **Monographs**: id, catalogo, titulo, resumo, data, periodo, professor_id, num_co_orienta, areamonografia_id, areamonografia, data_defesa, banca1, banca2, banca3, convidado, url, timestamp
+- **Scheduling**: id, estudante_id, docente_id, banca1, banca2, data, horario, sala, convidado, titulo, avaliacao
+- **Areas**: id, area, q_monografia
+- **Student-Monograph Links**: id, nome, monografia_id, registro
 
 **Section sources**
-- [schema.sql:33-45](file://config/Migrations/schema.sql#L33-L45)
-- [schema.sql:327-346](file://config/Migrations/schema.sql#L327-L346)
-- [schema.sql:529-567](file://config/Migrations/schema.sql#L529-L567)
-- [schema.sql:438-457](file://config/Migrations/schema.sql#L438-L457)
-- [schema.sql:621-627](file://config/Migrations/schema.sql#L621-L627)
+- [schema.sql:82-236](file://config/Migrations/schema.sql#L82-L236)
 
 ### Migration Management Procedures
-- Initialize database using schema.sql or migration scripts.
+- Initialize database using the streamlined schema.sql reference file.
 - Apply incremental changes via versioned migration files.
 - Validate schema against ORM definitions to ensure consistency.
 - Backup before applying migrations; rollback if necessary.
 
 **Section sources**
 - [schema.sql:1-25](file://config/Migrations/schema.sql#L1-L25)
-- [i18n.sql:8-18](file://config/schema/i18n.sql#L8-L18)
-- [sessions.sql:8-15](file://config/schema/sessions.sql#L8-L15)
 
 ### Data Integrity Constraints
-- Primary Keys: All core tables have primary keys.
-- Unique Constraints: Student registrations (alunos.registro, estudantes.registro) are unique.
-- Application-Level Constraints: Email uniqueness, required fields, and reference existence checks via ORM rules.
+- **Primary Keys**: All core tables have primary keys.
+- **Unique Constraints**: Student registrations (alunos.registro) are unique.
+- **Application-Level Constraints**: Email uniqueness, required fields, and reference existence checks via ORM rules.
 
 **Section sources**
-- [schema.sql:688-692](file://config/Migrations/schema.sql#L688-L692)
-- [schema.sql:774-778](file://config/Migrations/schema.sql#L774-L778)
-- [EstudantesTable.php:156-163](file://src/Model/Table/EstudantesTable.php#L156-L163)
-- [UsersTable.php:118-125](file://src/Model/Table/UsersTable.php#L118-L125)
+- [schema.sql:128-129](file://config/Migrations/schema.sql#L128-L129)
+- [EstudantesTable.php:156-165](file://src/Model/Table/EstudantesTable.php#L156-L165)
+- [UsersTable.php:119-127](file://src/Model/Table/UsersTable.php#L119-L127)
 
 ### Backup Strategies
 - Regular full backups of the tccess database.
@@ -586,12 +571,8 @@ The TCC5 database schema supports academic workflows through well-defined entiti
 - Test restore procedures periodically.
 - Version-controlled schema and seed data for reproducibility.
 
-[No sources needed since this section provides general guidance]
-
 ### Maintenance Procedures
 - Analyze and optimize tables regularly.
 - Rebuild indexes if fragmentation occurs.
 - Monitor query performance and adjust indexes accordingly.
 - Review and update validation rules as business requirements evolve.
-
-[No sources needed since this section provides general guidance]

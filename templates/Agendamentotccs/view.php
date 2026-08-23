@@ -48,18 +48,18 @@ $user = $this->getRequest()->getAttribute('identity');
             </td>
         </tr>
         <tr>
-            <th><?= __('Docente') ?></th>
-            <td><?= $agendamentotcc->has('docente') ? $this->Html->link($agendamentotcc->docente->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docente->id]) : '' ?>
+            <th><?= __('Professor(a)') ?></th>
+            <td><?= $agendamentotcc->has('professor') ? $this->Html->link($agendamentotcc->professor->nome, ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professor->id]) : '' ?>
             </td>
         </tr>
         <tr>
             <th><?= __('Banca1') ?></th>
-            <td><?= $agendamentotcc->has('docentebanca1') ? $this->Html->link($agendamentotcc->docentebanca1->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentebanca1->id]) : '' ?>
+            <td><?= $agendamentotcc->has('professor_banca1') ? $this->Html->link($agendamentotcc->professor_banca1->nome, ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professor_banca1->id]) : '' ?>
             </td>
         </tr>
         <tr>
             <th><?= __('Banca2') ?></th>
-            <td><?= $agendamentotcc->has('docentebanca2') ? $this->Html->link($agendamentotcc->docentebanca2->nome, ['controller' => 'Docentes', 'action' => 'view', $agendamentotcc->docentebanca2->id]) : '' ?>
+            <td><?= $agendamentotcc->has('professor_banca2') ? $this->Html->link($agendamentotcc->professor_banca2->nome, ['controller' => 'Professores', 'action' => 'view', $agendamentotcc->professor_banca2->id]) : '' ?>
             </td>
         </tr>
         <tr>

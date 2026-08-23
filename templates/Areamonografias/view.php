@@ -73,7 +73,7 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= $this->Html->link(h($monografias->titulo), ['controller' => 'Monografias', 'action' => 'view', $monografias->id]) ?>
                     </td>
                     <td><?= h($monografias['periodo']) ?></td>
-                    <td><?= $this->Html->link(h($monografias->docentes['nome']), ['controller' => 'Docentes', 'action' => 'view', $monografias->docentes['id']]) ?>
+                    <td><?= $monografias->hasValue('professor') ? $this->Html->link(h($monografias->professor['nome']), ['controller' => 'Professores', 'action' => 'view', $monografias->professor['id']]) : '' ?>
                     </td>
                     <td>
                         <?php
@@ -92,16 +92,16 @@ $user = $this->getRequest()->getAttribute('identity');
 
 <div class="container col-lg-8 shadow p-3 mb-5 bg-white rounded">
     <h4><?= __('Professores da área') ?></h4>
-    <?php if (!empty($areamonografia->docentes)): ?>
+    <?php if (!empty($areamonografia->professores)): ?>
         <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col"><?= __('Docente') ?></th>
+                    <th scope="col"><?= __('Professor(a)') ?></th>
                 </tr>
             </thead>
-            <?php foreach ($areamonografia->docentes as $docentes): ?>
+            <?php foreach ($areamonografia->professores as $professores): ?>
                 <tr>
-                    <td><?= $this->Html->link(h($docentes['nome']), ['controller' => 'Docentes', 'action' => 'view', $docentes['id']]) ?>
+                    <td><?= $this->Html->link(h($professores['nome']), ['controller' => 'Professores', 'action' => 'view', $professores['id']]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

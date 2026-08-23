@@ -7,3 +7,5 @@ source_files: []
 depends_on: []
 related_to:
     - path: application_src
+    - path: bin_and_scripts
+    - path: config

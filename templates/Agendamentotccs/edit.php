@@ -47,7 +47,7 @@ $user = $this->getRequest()->getAttribute('identity');
             ]
         ]);
         echo $this->Form->control('docente_id', [
-            'options' => $docentes,
+            'options' => $professores,
             'type' => 'select',
             'div' => false,
             'class' => 'form-control',
@@ -58,7 +58,7 @@ $user = $this->getRequest()->getAttribute('identity');
             ]
         ]);
         echo $this->Form->control('banca1', [
-            'options' => $docentes,
+            'options' => $professores,
             'type' => 'select',
             'div' => false,
             'class' => 'form-control',
@@ -69,7 +69,7 @@ $user = $this->getRequest()->getAttribute('identity');
             ]
         ]);
         echo $this->Form->control('banca2', [
-            'options' => $docentes,
+            'options' => $professores,
             'type' => 'select',
             'div' => false,
             'class' => 'form-control',

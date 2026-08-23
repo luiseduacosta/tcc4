@@ -190,7 +190,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php echo $this->Form->control('professor_id', [
             'label' => 'Orientador(a)', 
             'type' => 'select',
-            'options' => $docentes, 
+            'options' => $professores, 
             'empty' => 'Selecione', 
             'required' => true,
             'templates' => [
@@ -204,7 +204,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php echo $this->Form->control('num_co_orienta', [
             'label' => 'Co-orientador(a)', 
             'type' => 'select',
-            'options' => $docentes, 
+            'options' => $professores, 
             'empty' => 'Selecione', 
             'required' => false,
             'templates' => [
@@ -243,7 +243,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php echo $this->Form->control('banca1', [
             'label' => 'Banca Professor(a) orientador', 
             'type' => 'select',
-            'options' => $docentes, 
+            'options' => $professores, 
             'empty' => 'Selecione', 
             'required' => true,
             'templates' => [
@@ -257,7 +257,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php echo $this->Form->control('banca2', [
             'label' => 'Professor(a)', 
             'type' => 'select',
-            'options' => $docentes, 
+            'options' => $professores, 
             'empty' => 'Selecione', 
             'required' => false,
             'templates' => [
@@ -271,7 +271,7 @@ $user = $this->getRequest()->getAttribute('identity');
         <?php echo $this->Form->control('banca3', [
             'label' => 'Professor(a)', 
             'type' => 'select',
-            'options' => $docentes, 
+            'options' => $professores, 
             'empty' => 'Selecione', 
             'required' => false,
             'templates' => [

@@ -26,7 +26,7 @@ class AreamonografiasTableTest extends TestCase
     protected array $fixtures = [
         'app.Areamonografias',
         'app.Monografias',
-        'app.Docentes',
+        'app.Professores',
     ];
 
     /**

@@ -13,7 +13,6 @@ namespace App\Controller;
  * @property \Cake\ORM\Table $Tccestudantes
  * @property \Cake\ORM\Table $Monografias
  * @property \Cake\ORM\Table $Estudantes
- * @property \Cake\ORM\Table $Docentes
  * 
  * @method \App\Model\Entity\Tccestudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  * 

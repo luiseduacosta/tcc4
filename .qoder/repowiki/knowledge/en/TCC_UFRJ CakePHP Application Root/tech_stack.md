@@ -1,1 +1,0 @@
-CakePHP 5 with authentication/authorization/migrations plugins; PHP ≥8.1; PHPUnit 10 for testing; PHPStan level 5 with cakedc/cakephp-phpstan extension; CakePHP CodeSniffer; dompdf/friendsofcake/cakepdf for PDF generation; mobiledetectlib for device detection.

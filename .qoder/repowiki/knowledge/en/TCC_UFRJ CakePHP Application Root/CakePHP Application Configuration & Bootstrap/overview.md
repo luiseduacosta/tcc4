@@ -1,1 +1,0 @@
-Application-wide configuration, bootstrap, routing, and database schema/migrations for the CakePHP project, including per-environment overrides and CLI-specific setup.

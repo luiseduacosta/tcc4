@@ -19,6 +19,14 @@
 - [schema.sql](file://config/Migrations/schema.sql)
 </cite>
 
+## Update Summary
+**Changes Made**
+- Updated Professor controller section to reflect removal of internship-related functionality
+- Enhanced delete validation section with new monograph association checks
+- Improved null safety and error handling documentation
+- Removed references to internship (estagiarios) data loading and display
+- Updated workflow descriptions to focus solely on academic supervision
+
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Project Structure](#project-structure)
@@ -31,7 +39,7 @@
 9. [Conclusion](#conclusion)
 
 ## Introduction
-This document explains how the system manages professors and supervisors for academic supervision, including faculty database administration, supervisor assignment workflows, committee member coordination, and evaluation score collection. It focuses on the Professor and Docente entities, their relationships with students and monographs, and the scheduling and evaluation processes that support TCC (Thesis/Project) activities.
+This document explains how the system manages professors and supervisors for academic supervision, including faculty database administration, supervisor assignment workflows, committee member coordination, and evaluation score collection. It focuses on the Professor and Docente entities, their relationships with students and monographs, and the scheduling and evaluation processes that support TCC (Thesis/Project) activities. **Updated**: The Professor controller has been significantly simplified by removing all internship-related functionality, focusing exclusively on academic supervision management.
 
 ## Project Structure
 The application follows a typical MVC structure:
@@ -82,18 +90,18 @@ AT --- S
 ```
 
 **Diagram sources**
-- [Professor.php:1-119](file://src/Model/Entity/Professor.php#L1-L119)
+- [Professor.php:1-116](file://src/Model/Entity/Professor.php#L1-L116)
 - [Docente.php:1-107](file://src/Model/Entity/Docente.php#L1-L107)
 - [Monografia.php:1-73](file://src/Model/Entity/Monografia.php#L1-L73)
 - [Estudante.php:1-66](file://src/Model/Entity/Estudante.php#L1-L66)
 - [Tccestudante.php:1-36](file://src/Model/Entity/Tccestudante.php#L1-L36)
 - [Agendamentotcc.php:1-56](file://src/Model/Entity/Agendamentotcc.php#L1-L56)
-- [ProfessoresTable.php:1-247](file://src/Model/Table/ProfessoresTable.php#L1-L247)
+- [ProfessoresTable.php:1-244](file://src/Model/Table/ProfessoresTable.php#L1-L244)
 - [DocentesTable.php:1-272](file://src/Model/Table/DocentesTable.php#L1-L272)
 - [MonografiasTable.php:1-190](file://src/Model/Table/MonografiasTable.php#L1-L190)
 - [TccestudantesTable.php:1-100](file://src/Model/Table/TccestudantesTable.php#L1-L100)
 - [AgendamentotccsTable.php:1-152](file://src/Model/Table/AgendamentotccsTable.php#L1-L152)
-- [ProfessoresController.php:1-264](file://src/Controller/ProfessoresController.php#L1-L264)
+- [ProfessoresController.php:1-275](file://src/Controller/ProfessoresController.php#L1-L275)
 - [DocentesController.php:1-190](file://src/Controller/DocentesController.php#L1-L190)
 - [AgendamentotccsController.php:1-230](file://src/Controller/AgendamentotccsController.php#L1-L230)
 - [schema.sql:437-456](file://config/Migrations/schema.sql#L437-L456)
@@ -104,7 +112,7 @@ AT --- S
 - [schema.sql:32-45](file://config/Migrations/schema.sql#L32-L45)
 
 ## Core Components
-- Professor entity and table: Represents faculty members with personal, academic, and employment details; linked to users and internships.
+- Professor entity and table: Represents faculty members with personal, academic, and employment details; linked to users and monographs for academic supervision. **Updated**: No longer includes internship (estagiarios) associations.
 - Docente entity and table: Unified view over the same professor table used for supervision and committee roles; includes many-to-many with research areas and one-to-many with scheduled defenses.
 - Monografia entity and table: Represents a thesis/project with fields for title, period, area, defense date, and committee members (banca1, banca2, banca3), plus co-supervisor reference.
 - Estudante entity: Student records referenced by TCC enrollment.
@@ -118,20 +126,20 @@ Key responsibilities:
 - Scheduling and evaluation: agendamentotccs store defense logistics and evaluation results.
 
 **Section sources**
-- [Professor.php:1-119](file://src/Model/Entity/Professor.php#L1-L119)
+- [Professor.php:1-116](file://src/Model/Entity/Professor.php#L1-L116)
 - [Docente.php:1-107](file://src/Model/Entity/Docente.php#L1-L107)
 - [Monografia.php:1-73](file://src/Model/Entity/Monografia.php#L1-L73)
 - [Estudante.php:1-66](file://src/Model/Entity/Estudante.php#L1-L66)
 - [Tccestudante.php:1-36](file://src/Model/Entity/Tccestudante.php#L1-L36)
 - [Agendamentotcc.php:1-56](file://src/Model/Entity/Agendamentotcc.php#L1-L56)
-- [ProfessoresTable.php:35-55](file://src/Model/Table/ProfessoresTable.php#L35-L55)
+- [ProfessoresTable.php:35-52](file://src/Model/Table/ProfessoresTable.php#L35-L52)
 - [DocentesTable.php:36-78](file://src/Model/Table/DocentesTable.php#L36-L78)
 - [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
 - [TccestudantesTable.php:34-57](file://src/Model/Table/TccestudantesTable.php#L34-L57)
 - [AgendamentotccsTable.php:43-75](file://src/Model/Table/AgendamentotccsTable.php#L43-L75)
 
 ## Architecture Overview
-The system uses CakePHP’s ORM to model relationships between professors/docentes, monographs, students, and schedules. Controllers coordinate user interactions and persist changes via tables. The database schema enforces referential integrity and indexes for performance.
+The system uses CakePHP's ORM to model relationships between professors/docentes, monographs, students, and schedules. Controllers coordinate user interactions and persist changes via tables. The database schema enforces referential integrity and indexes for performance.
 
 ```mermaid
 classDiagram
@@ -201,7 +209,7 @@ Estudante <.. Agendamentotcc : "defense participant"
 
 **Diagram sources**
 - [Docente.php:1-107](file://src/Model/Entity/Docente.php#L1-L107)
-- [Professor.php:1-119](file://src/Model/Entity/Professor.php#L1-L119)
+- [Professor.php:1-116](file://src/Model/Entity/Professor.php#L1-L116)
 - [Monografia.php:1-73](file://src/Model/Entity/Monografia.php#L1-L73)
 - [Estudante.php:1-66](file://src/Model/Entity/Estudante.php#L1-L66)
 - [Tccestudante.php:1-36](file://src/Model/Entity/Tccestudante.php#L1-L36)
@@ -210,7 +218,7 @@ Estudante <.. Agendamentotcc : "defense participant"
 ## Detailed Component Analysis
 
 ### Faculty Database Administration (Professors and Docentes)
-- ProfessoresController provides index, view, add, edit, delete, and search for professors. It enforces authorization and handles duplicate checks for siape and email during creation.
+- ProfessoresController provides index, view, add, edit, delete, and search for professors. It enforces authorization and handles duplicate checks for siape and email during creation. **Updated**: Significantly simplified by removing all internship-related functionality and no longer loads or displays intern (Estagiarios) data.
 - DocentesController mirrors similar CRUD operations for docentes, which map to the same underlying table but are used in supervision contexts.
 - ProfessoresTable and DocentesTable configure associations to Users, Monografias, and research areas, enabling rich queries for profiles and workloads.
 
@@ -218,15 +226,17 @@ Implementation highlights:
 - Duplicate prevention for siape and email when adding new faculty.
 - Pagination and sorting for lists.
 - Authorization gating for sensitive actions.
+- **Enhanced**: Better null safety using nullsafe operator and improved error handling throughout the controller methods.
 
 **Section sources**
-- [ProfessoresController.php:42-108](file://src/Controller/ProfessoresController.php#L42-L108)
-- [ProfessoresController.php:115-181](file://src/Controller/ProfessoresController.php#L115-L181)
-- [ProfessoresController.php:190-241](file://src/Controller/ProfessoresController.php#L190-L241)
+- [ProfessoresController.php:37-52](file://src/Controller/ProfessoresController.php#L37-L52)
+- [ProfessoresController.php:61-101](file://src/Controller/ProfessoresController.php#L61-L101)
+- [ProfessoresController.php:108-174](file://src/Controller/ProfessoresController.php#L108-L174)
+- [ProfessoresController.php:183-199](file://src/Controller/ProfessoresController.php#L183-L199)
 - [DocentesController.php:41-84](file://src/Controller/DocentesController.php#L41-L84)
 - [DocentesController.php:91-130](file://src/Controller/DocentesController.php#L91-L130)
 - [DocentesController.php:139-188](file://src/Controller/DocentesController.php#L139-L188)
-- [ProfessoresTable.php:35-55](file://src/Model/Table/ProfessoresTable.php#L35-L55)
+- [ProfessoresTable.php:35-52](file://src/Model/Table/ProfessoresTable.php#L35-L52)
 - [DocentesTable.php:36-78](file://src/Model/Table/DocentesTable.php#L36-L78)
 
 ### Supervisor Assignment Workflow
@@ -262,6 +272,46 @@ Coordination process:
 - [MonografiasTable.php:68-84](file://src/Model/Table/MonografiasTable.php#L68-L84)
 - [DocentesTable.php:54-67](file://src/Model/Table/DocentesTable.php#L54-L67)
 - [schema.sql:437-456](file://config/Migrations/schema.sql#L437-L456)
+
+### Enhanced Delete Validation and Data Integrity
+**New Section**: The Professor controller now includes comprehensive validation before deletion to prevent orphaned references in monograph records.
+
+Delete validation process:
+- Before deleting a professor, the system checks if they are still associated with any monographs as advisor, co-advisor, or committee member.
+- Uses OR conditions to check professor_id, num_co_orienta, banca1, banca2, and banca3 fields.
+- If any associations exist, deletion is prevented with appropriate error messaging.
+- Provides clear feedback about the number of associated monographs preventing deletion.
+
+```mermaid
+sequenceDiagram
+participant User as "User"
+participant Controller as "ProfessoresController"
+participant Table as "ProfessoresTable"
+participant DB as "Database"
+User->>Controller : DELETE /professores/{id}
+Controller->>Controller : Check monograph associations
+Controller->>Table : Count monographs with professor references
+Table->>DB : Query for professor_id, num_co_orienta, banca1/2/3
+DB-->>Table : Return count
+Table-->>Controller : Association count
+alt No associations found
+Controller->>Table : Delete professor
+Table->>DB : Execute delete
+DB-->>Table : Success
+Table-->>Controller : Deletion successful
+else Associations exist
+Controller->>Controller : Show error message
+Controller-->>User : Redirect with flash message
+end
+```
+
+**Diagram sources**
+- [ProfessoresController.php:208-252](file://src/Controller/ProfessoresController.php#L208-L252)
+- [ProfessoresTable.php:44-47](file://src/Model/Table/ProfessoresTable.php#L44-L47)
+
+**Section sources**
+- [ProfessoresController.php:208-252](file://src/Controller/ProfessoresController.php#L208-L252)
+- [ProfessoresTable.php:44-47](file://src/Model/Table/ProfessoresTable.php#L44-L47)
 
 ### Scheduling and Evaluation Score Collection
 - Agendamentotccs represent scheduled TCC defenses with fields for student, primary supervisor, committee members, date/time, room, guest, title, and evaluation result.
@@ -359,10 +409,10 @@ AT -.-> S
 ```
 
 **Diagram sources**
-- [ProfessoresController.php:1-264](file://src/Controller/ProfessoresController.php#L1-L264)
+- [ProfessoresController.php:1-275](file://src/Controller/ProfessoresController.php#L1-L275)
 - [DocentesController.php:1-190](file://src/Controller/DocentesController.php#L1-L190)
 - [AgendamentotccsController.php:1-230](file://src/Controller/AgendamentotccsController.php#L1-L230)
-- [ProfessoresTable.php:1-247](file://src/Model/Table/ProfessoresTable.php#L1-L247)
+- [ProfessoresTable.php:1-244](file://src/Model/Table/ProfessoresTable.php#L1-L244)
 - [DocentesTable.php:1-272](file://src/Model/Table/DocentesTable.php#L1-L272)
 - [MonografiasTable.php:1-190](file://src/Model/Table/MonografiasTable.php#L1-L190)
 - [TccestudantesTable.php:1-100](file://src/Model/Table/TccestudantesTable.php#L1-L100)
@@ -370,7 +420,7 @@ AT -.-> S
 - [schema.sql:437-456](file://config/Migrations/schema.sql#L437-L456)
 
 **Section sources**
-- [ProfessoresTable.php:35-55](file://src/Model/Table/ProfessoresTable.php#L35-L55)
+- [ProfessoresTable.php:35-52](file://src/Model/Table/ProfessoresTable.php#L35-L52)
 - [DocentesTable.php:36-78](file://src/Model/Table/DocentesTable.php#L36-L78)
 - [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
 - [TccestudantesTable.php:34-57](file://src/Model/Table/TccestudantesTable.php#L34-L57)
@@ -381,6 +431,7 @@ AT -.-> S
 - Leverage CounterCache behavior on MonografiasTable to maintain counts on related areas for faster listing.
 - Ensure proper indexing on frequently queried columns (e.g., professor_id, banca1/2/3, estudante_id) as defined in the schema.
 - Avoid unnecessary memory spikes by limiting deep joins; prefer targeted queries in controllers.
+- **Updated**: Simplified controller logic reduces overhead by eliminating internship-related data loading operations.
 
 [No sources needed since this section provides general guidance]
 
@@ -390,20 +441,23 @@ Common issues and resolutions:
 - Missing required fields in schedules: Validation rules enforce presence of date, time, room, title, and committee members.
 - Referential integrity errors: RulesChecker ensures foreign keys exist before saving; fix invalid IDs in forms.
 - Not found exceptions: Controllers catch missing records and redirect with flash messages.
+- **New**: Professor deletion blocked due to active monograph associations: Check if professor is still serving as advisor, co-advisor, or committee member before attempting deletion.
 
 Operational tips:
 - Verify association names and foreign keys match schema definitions.
 - Check validationDefault methods for required fields and formats.
 - Inspect controller error handling paths for user feedback and redirects.
+- **Enhanced**: Utilize improved null safety patterns and better error handling throughout the application.
 
 **Section sources**
-- [ProfessoresController.php:115-181](file://src/Controller/ProfessoresController.php#L115-L181)
+- [ProfessoresController.php:108-174](file://src/Controller/ProfessoresController.php#L108-L174)
 - [DocentesController.php:91-130](file://src/Controller/DocentesController.php#L91-L130)
 - [AgendamentotccsTable.php:83-131](file://src/Model/Table/AgendamentotccsTable.php#L83-L131)
 - [AgendamentotccsTable.php:141-148](file://src/Model/Table/AgendamentotccsTable.php#L141-L148)
 - [AgendamentotccsController.php:74-89](file://src/Controller/AgendamentotccsController.php#L74-L89)
+- [ProfessoresController.php:208-252](file://src/Controller/ProfessoresController.php#L208-L252)
 
 ## Conclusion
-The system provides robust mechanisms for managing professors and supervisors, assigning supervision roles, forming committees, scheduling defenses, and collecting evaluations. The separation of concerns across entities, tables, and controllers ensures clear responsibilities and maintainability. By leveraging CakePHP’s ORM features and schema-defined constraints, the application supports reliable academic supervision workflows while offering extensibility for future enhancements such as advanced workload balancing and automated conflict detection.
+The system provides robust mechanisms for managing professors and supervisors, assigning supervision roles, forming committees, scheduling defenses, and collecting evaluations. **Updated**: The Professor controller has been significantly streamlined by removing all internship-related functionality, focusing exclusively on academic supervision management. The enhanced delete validation prevents orphaned references and maintains data integrity. The separation of concerns across entities, tables, and controllers ensures clear responsibilities and maintainability. By leveraging CakePHP's ORM features and schema-defined constraints, the application supports reliable academic supervision workflows while offering extensibility for future enhancements such as advanced workload balancing and automated conflict detection.
 
 [No sources needed since this section summarizes without analyzing specific files]

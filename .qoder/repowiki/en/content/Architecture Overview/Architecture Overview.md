@@ -5,19 +5,27 @@
 - [Application.php](file://src/Application.php)
 - [routes.php](file://config/routes.php)
 - [AppController.php](file://src/Controller/AppController.php)
-- [UsersController.php](file://src/Controller/UsersController.php)
-- [UsersTable.php](file://src/Model/Table/UsersTable.php)
-- [User.php](file://src/Model/Entity/User.php)
+- [MonografiasController.php](file://src/Controller/MonografiasController.php)
+- [TccestudantesController.php](file://src/Controller/TccestudantesController.php)
+- [AreamonografiasController.php](file://src/Controller/AreamonografiasController.php)
+- [AgendamentotccsController.php](file://src/Controller/AgendamentotccsController.php)
+- [MonografiasTable.php](file://src/Model/Table/MonografiasTable.php)
+- [TccestudantesTable.php](file://src/Model/Table/TccestudantesTable.php)
+- [Monografia.php](file://src/Model/Entity/Monografia.php)
 - [AppView.php](file://src/View/AppView.php)
-- [login.php](file://templates/Users/login.php)
+- [menu_monografias.php](file://templates/element/menu_monografias.php)
+- [index.php (Monografias template)](file://templates/Monografias/index.php)
 - [app.php](file://config/app.php)
 - [composer.json](file://composer.json)
-- [bootstrap.php](file://config/bootstrap.php)
-- [MonografiasController.php](file://src/Controller/MonografiasController.php)
-- [default.php (email html template)](file://templates/email/html/default.php)
-- [UserPolicy.php](file://src/Policy/UserPolicy.php)
-- [UsersTablePolicy.php](file://src/Policy/UsersTablePolicy.php)
 </cite>
+
+## Update Summary
+**Changes Made**
+- Updated architecture documentation to reflect the specialized monograph/TCC management focus
+- Replaced broad internship management system references with TCC-specific components
+- Updated navigation menu references from menu_mural to menu_monografias
+- Enhanced MVC layer descriptions to focus on monograph, student, and scheduling management
+- Added detailed analysis of TCC-specific controllers and models
 
 ## Table of Contents
 1. Introduction
@@ -31,15 +39,15 @@
 9. Conclusion
 
 ## Introduction
-This document describes the TCC5 system’s MVC architecture built on CakePHP 5. It explains how HTTP requests flow through routing, middleware (authentication and authorization), controllers, models, and views. It also documents technical decisions around adopting CakePHP, using its plugin architecture for authentication and authorization, and integrating external services such as PDF generation and email delivery.
+This document describes the TCC5 system's specialized MVC architecture built on CakePHP 5, focused on monograph and TCC (Trabalho de Conclusão de Curso) management. It explains how HTTP requests flow through routing, middleware (authentication and authorization), controllers, models, and views. The system has been refocused from a broad internship management system to a specialized tool for managing academic monographs, student associations, and defense scheduling.
 
 ## Project Structure
-TCC5 follows a standard CakePHP layout:
+TCC5 follows a standard CakePHP layout with specialized TCC management components:
 - Application bootstrap and middleware are defined in src/Application.php.
-- Routing is configured in config/routes.php.
-- Controllers live under src/Controller with an application base controller AppController.
+- Routing is configured in config/routes.php with TCC-specific routes.
+- Controllers live under src/Controller with TCC-focused functionality including Monografias, Tccestudantes, Areamonografias, and Agendamentotccs.
 - Models use CakePHP ORM: Tables under src/Model/Table and Entities under src/Model/Entity.
-- Views are templates under templates, with a base view class in src/View/AppView.php.
+- Views are templates under templates, with a specialized navigation menu in templates/element/menu_monografias.php.
 - Configuration lives under config/app.php and other files.
 - Plugins include Authentication, Authorization, CakePdf, Migrations, and DebugKit.
 
@@ -48,7 +56,7 @@ graph TB
 Client["Client Browser"] --> Router["Routing Middleware<br/>config/routes.php"]
 Router --> AuthMW["Authentication Middleware<br/>src/Application.php"]
 AuthMW --> AuthzMW["Authorization Middleware<br/>src/Application.php"]
-AuthzMW --> Controller["Controllers<br/>src/Controller/*"]
+AuthzMW --> Controller["TCC Controllers<br/>src/Controller/*"]
 Controller --> Model["ORM Tables & Entities<br/>src/Model/Table/*<br/>src/Model/Entity/*"]
 Controller --> View["Templates<br/>templates/*"]
 Model --> DB["Database<br/>config/app.php Datasources"]
@@ -68,14 +76,14 @@ Controller --> PDF["PDF Generation<br/>CakePdf Plugin"]
 
 ## Core Components
 - Application bootstrap registers plugins (DebugKit, CakePdf, Authorization, Authentication) and builds the middleware pipeline.
-- Routing maps URLs to controllers/actions and applies CSRF protection at the route scope.
+- Routing maps URLs to TCC-specific controllers/actions and applies CSRF protection at the route scope.
 - Controllers extend AppController, which loads Flash, Authentication, and Authorization components and exposes the current identity to views.
-- Models define ORM tables and entities with validation rules and relationships.
+- Models define ORM tables and entities with validation rules and relationships specific to TCC management.
 - Views render HTML using templates and helpers; email templates provide default HTML formatting.
 - Policies enforce fine-grained authorization per entity or table.
 
 Key responsibilities:
-- Request lifecycle: HTTP request → Error handling → Assets → Routing → Authentication → Authorization → Controller action → Model operations → View rendering → Response.
+- Request lifecycle: HTTP request → Error handling → Assets → Routing → Authentication → Authorization → TCC Controller action → Model operations → View rendering → Response.
 - Security: Session-based login, form authenticator, CSRF protection, policy checks.
 - Integrations: CakePdf for PDFs, MailTransport for emails.
 
@@ -84,16 +92,12 @@ Key responsibilities:
 - [Application.php:91-113](file://src/Application.php#L91-L113)
 - [routes.php:48-88](file://config/routes.php#L48-L88)
 - [AppController.php:44-67](file://src/Controller/AppController.php#L44-L67)
-- [UsersTable.php:40-59](file://src/Model/Table/UsersTable.php#L40-L59)
-- [User.php:38-58](file://src/Model/Entity/User.php#L38-L58)
-- [AppView.php:38-40](file://src/View/AppView.php#L38-L40)
-- [default.php (email html template):17-21](file://templates/email/html/default.php#L17-L21)
 
 ## Architecture Overview
-The system uses CakePHP’s MVC pattern with explicit separation:
-- Model: ORM tables/entities encapsulate data access, validation, and relationships.
-- View: Templates render responses; email templates format messages.
-- Controller: Orchestrates business logic, delegates to models, and selects views.
+The system uses CakePHP's MVC pattern with explicit separation, specialized for TCC management:
+- Model: ORM tables/entities encapsulate data access for monographs, students, areas, and scheduling.
+- View: Templates render responses with specialized navigation menu; email templates format messages.
+- Controller: Orchestrates TCC business logic, delegates to models, and selects views.
 - Middleware: Centralizes cross-cutting concerns like error handling, asset serving, routing, authentication, and authorization.
 
 ```mermaid
@@ -103,7 +107,7 @@ participant MW as "Middleware Pipeline"
 participant R as "Router"
 participant A as "Authentication"
 participant Z as "Authorization"
-participant Ctrl as "Controller"
+participant Ctrl as "TCC Controller"
 participant Mod as "Model (Table/Entity)"
 participant V as "View (Template)"
 participant DB as "Database"
@@ -113,21 +117,20 @@ R-->>A : Pass request
 A->>A : Authenticate (Session/Form)
 A-->>Z : Identity set
 Z->>Z : Authorize (Policies)
-Z-->>Ctrl : Invoke action
-Ctrl->>Mod : Load/Save data
+Z-->>Ctrl : Invoke TCC action
+Ctrl->>Mod : Load/Save TCC data
 Mod->>DB : Query/Write
 DB-->>Mod : Result
 Mod-->>Ctrl : Entity/ResultSet
-Ctrl->>V : Render template
+Ctrl->>V : Render template with menu_monografias
 V-->>C : HTTP Response
 ```
 
 **Diagram sources**
 - [Application.php:91-113](file://src/Application.php#L91-L113)
 - [routes.php:48-88](file://config/routes.php#L48-L88)
-- [UsersController.php:34-156](file://src/Controller/UsersController.php#L34-L156)
-- [UsersTable.php:40-59](file://src/Model/Table/UsersTable.php#L40-L59)
-- [User.php:53-58](file://src/Model/Entity/User.php#L53-L58)
+- [MonografiasController.php:33-39](file://src/Controller/MonografiasController.php#L33-L39)
+- [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
 
 ## Detailed Component Analysis
 
@@ -143,7 +146,7 @@ Err --> Assets["AssetMiddleware"]
 Assets --> Routes["RoutingMiddleware"]
 Routes --> Auth["AuthenticationMiddleware"]
 Auth --> Authz["AuthorizationMiddleware"]
-Authz --> End(["Dispatch to Controller"])
+Authz --> End(["Dispatch to TCC Controller"])
 ```
 
 **Diagram sources**
@@ -157,14 +160,14 @@ Authz --> End(["Dispatch to Controller"])
 
 ### Routing
 - Uses dashed routes and applies CSRF protection within the root scope.
-- Connects home page and pages routes; includes fallbacks for dynamic controllers/actions.
+- Connects home page, pages routes, and TCC-specific routes; includes fallbacks for dynamic controllers/actions.
 
 ```mermaid
 flowchart TD
 Req["Incoming URL"] --> Scope["Root Scope"]
 Scope --> CSRF["CSRF Protection"]
 CSRF --> Match{"Route Match?"}
-Match --> |Yes| CtrlAct["Controller::Action"]
+Match --> |Yes| CtrlAct["TCC Controller::Action"]
 Match --> |No| Fallback["Fallbacks"]
 ```
 
@@ -177,7 +180,7 @@ Match --> |No| Fallback["Fallbacks"]
 ### Authentication and Authorization
 - Authentication:
   - Session authenticator first, then Form authenticator using email/password via Orm resolver.
-  - Redirects unauthenticated users to a specific index and supports redirect query parameter.
+  - Redirects unauthenticated users to login and supports redirect query parameter.
 - Authorization:
   - Uses OrmResolver with policies per entity/table.
   - Policies restrict actions based on user category.
@@ -190,9 +193,6 @@ class UserPolicy {
 +canDelete(user, resource) bool
 +canView(user, resource) bool
 }
-class UsersTablePolicy {
-+canIndex(user, table) bool
-}
 class UsersController {
 +login()
 +logout()
@@ -203,117 +203,125 @@ class UsersController {
 +delete(id)
 }
 UsersController --> UserPolicy : "authorize()"
-UsersController --> UsersTablePolicy : "authorize()"
 ```
 
 **Diagram sources**
 - [UserPolicy.php:21-61](file://src/Policy/UserPolicy.php#L21-L61)
-- [UsersTablePolicy.php:22-24](file://src/Policy/UsersTablePolicy.php#L22-L24)
 - [UsersController.php:34-156](file://src/Controller/UsersController.php#L34-L156)
 
 **Section sources**
 - [Application.php:135-171](file://src/Application.php#L135-L171)
 - [AppController.php:44-67](file://src/Controller/AppController.php#L44-L67)
-- [UserPolicy.php:21-61](file://src/Policy/UserPolicy.php#L21-L61)
-- [UsersTablePolicy.php:22-24](file://src/Policy/UsersTablePolicy.php#L22-L24)
 
-### Controller Layer
-- AppController loads Flash, Authentication, and Authorization components and injects the current user into views.
-- UsersController implements login/logout flows, registration, listing, viewing, editing, and deletion with appropriate authorization checks and redirects.
+### TCC-Specific Controller Layer
+- **MonografiasController**: Manages monograph CRUD operations, PDF file handling, student associations, and search functionality.
+- **TccestudantesController**: Handles student-monograph associations and student management.
+- **AreamonografiasController**: Manages academic areas and their relationships with monographs.
+- **AgendamentotccsController**: Handles TCC defense scheduling and coordination.
+- All controllers extend AppController and implement proper authorization checks.
 
 ```mermaid
 sequenceDiagram
 participant U as "User"
-participant UC as "UsersController"
+participant MC as "MonografiasController"
 participant AU as "Authentication"
 participant AZ as "Authorization"
-participant UT as "UsersTable"
-participant UE as "User Entity"
-participant V as "Login Template"
-U->>UC : GET /users/login
-UC->>AU : getResult()
+participant MT as "MonografiasTable"
+participant ME as "Monografia Entity"
+participant V as "Template"
+U->>MC : GET /monografias
+MC->>AU : getResult()
 alt Valid credentials
-AU-->>UC : Identity
-UC->>AZ : skipAuthorization() for login/add/logout
-UC->>UT : fetch related records if needed
-UT-->>UC : Records
-UC->>UE : patch/save user
-UE-->>UC : Success/Failure
-UC-->>U : Redirect to role-specific page
+AU-->>MC : Identity
+MC->>AZ : skipAuthorization() for public actions
+MC->>MT : fetch monografias with relations
+MT-->>MC : ResultSet
+MC->>ME : patch/save monografia
+ME-->>MC : Success/Failure
+MC->>V : Render with menu_monografias
+V-->>U : Response with specialized navigation
 else Invalid
-UC-->>U : Flash error and redirect to login
+MC-->>U : Flash error and redirect to login
 end
 ```
 
 **Diagram sources**
-- [UsersController.php:34-156](file://src/Controller/UsersController.php#L34-L156)
-- [UsersTable.php:40-59](file://src/Model/Table/UsersTable.php#L40-L59)
-- [User.php:53-58](file://src/Model/Entity/User.php#L53-L58)
-- [login.php:13-35](file://templates/Users/login.php#L13-L35)
+- [MonografiasController.php:33-39](file://src/Controller/MonografiasController.php#L33-L39)
+- [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
+- [Monografia.php:46-70](file://src/Model/Entity/Monografia.php#L46-L70)
+- [menu_monografias.php:14-50](file://templates/element/menu_monografias.php#L14-L50)
 
 **Section sources**
 - [AppController.php:44-67](file://src/Controller/AppController.php#L44-L67)
-- [UsersController.php:34-156](file://src/Controller/UsersController.php#L34-L156)
-- [login.php:13-35](file://templates/Users/login.php#L13-L35)
+- [MonografiasController.php:33-39](file://src/Controller/MonografiasController.php#L33-L39)
+- [menu_monografias.php:14-50](file://templates/element/menu_monografias.php#L14-L50)
 
-### Model Layer
-- UsersTable defines table mapping, primary key, display field, and relationships to Alunos, Supervisores, Professores.
-- Validation enforces required fields and constraints.
-- RulesChecker ensures referential integrity for foreign keys.
-- User entity mass-assignable fields and password hashing via DefaultPasswordHasher.
+### TCC-Specific Model Layer
+- **MonografiasTable**: Defines relationships with Docentes (advisors/co-advisors), Areamonografias (academic areas), and Tccestudantes (student associations).
+- **TccestudantesTable**: Manages student-monograph associations and links to Estudantes.
+- **Monografia Entity**: Mass-assignable fields for all monograph properties and relationships.
+- Validation enforces required fields and constraints for TCC data integrity.
 
 ```mermaid
 classDiagram
-class UsersTable {
+class MonografiasTable {
 +initialize(config)
 +validationDefault(validator)
 +buildRules(rules)
 }
-class User {
-+_setPassword(password) string
-+_accessible array
-+_hidden array
+class TccestudantesTable {
++initialize(config)
++validationDefault(validator)
++buildRules(rules)
 }
-UsersTable --> User : "creates/updates"
+class Monografia {
++_accessible array
++relationships
+}
+MonografiasTable --> Monografia : "creates/updates"
+MonografiasTable --> TccestudantesTable : "hasMany relationship"
 ```
 
 **Diagram sources**
-- [UsersTable.php:40-59](file://src/Model/Table/UsersTable.php#L40-L59)
-- [UsersTable.php:67-125](file://src/Model/Table/UsersTable.php#L67-L125)
-- [User.php:38-58](file://src/Model/Entity/User.php#L38-L58)
+- [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
+- [MonografiasTable.php:108-188](file://src/Model/Table/MonografiasTable.php#L108-L188)
+- [TccestudantesTable.php:34-97](file://src/Model/Table/TccestudantesTable.php#L34-L97)
+- [Monografia.php:46-70](file://src/Model/Entity/Monografia.php#L46-L70)
 
 **Section sources**
-- [UsersTable.php:40-59](file://src/Model/Table/UsersTable.php#L40-L59)
-- [UsersTable.php:67-125](file://src/Model/Table/UsersTable.php#L67-L125)
-- [User.php:38-58](file://src/Model/Entity/User.php#L38-L58)
+- [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
+- [MonografiasTable.php:108-188](file://src/Model/Table/MonografiasTable.php#L108-L188)
+- [TccestudantesTable.php:34-97](file://src/Model/Table/TccestudantesTable.php#L34-L97)
+- [Monografia.php:46-70](file://src/Model/Entity/Monografia.php#L46-L70)
 
-### View Layer
-- AppView provides a base view class for common initialization.
-- Login template renders a form for email/password and links to registration.
-- Email templates provide default HTML formatting for outgoing messages.
+### Specialized View Layer
+- **menu_monografias.php**: Specialized navigation menu providing access to TCC-specific features including monograph management, student administration, area management, and scheduling.
+- **AppView**: Base view class for common initialization.
+- Templates render HTML with role-based navigation and TCC-specific functionality.
 
 ```mermaid
 flowchart TD
-Ctrl["Controller Action"] --> SetVars["Set variables"]
+Ctrl["TCC Controller Action"] --> SetVars["Set variables"]
 SetVars --> Render["Render Template"]
-Render --> Layout["Layout (if any)"]
+Render --> Menu["Include menu_monografias"]
+Menu --> Layout["Layout (if any)"]
 Layout --> Resp["HTTP Response"]
 ```
 
 **Diagram sources**
 - [AppView.php:38-40](file://src/View/AppView.php#L38-L40)
-- [login.php:13-35](file://templates/Users/login.php#L13-L35)
-- [default.php (email html template):17-21](file://templates/email/html/default.php#L17-L21)
+- [menu_monografias.php:14-50](file://templates/element/menu_monografias.php#L14-L50)
+- [index.php:9](file://templates/Monografias/index.php#L9)
 
 **Section sources**
 - [AppView.php:38-40](file://src/View/AppView.php#L38-L40)
-- [login.php:13-35](file://templates/Users/login.php#L13-L35)
-- [default.php (email html template):17-21](file://templates/email/html/default.php#L17-L21)
+- [menu_monografias.php:14-50](file://templates/element/menu_monografias.php#L14-L50)
+- [index.php:9](file://templates/Monografias/index.php#L9)
 
 ### External Integrations: PDF and Email
 - PDF Generation:
   - CakePdf plugin is loaded in Application bootstrap.
-  - MonografiasController includes utilities to verify and update PDF file references and to serve downloads.
+  - MonografiasController handles PDF file uploads, storage, and downloads.
 - Email:
   - Email transport configured in app.php using MailTransport.
   - Email templates under templates/email provide default HTML structure.
@@ -329,12 +337,12 @@ App --> SMTP["MailTransport"]
 
 **Diagram sources**
 - [Application.php:79-82](file://src/Application.php#L79-L82)
-- [MonografiasController.php:406-512](file://src/Controller/MonografiasController.php#L406-L512)
+- [MonografiasController.php:326-339](file://src/Controller/MonografiasController.php#L326-L339)
 - [app.php:206-246](file://config/app.php#L206-L246)
 
 **Section sources**
 - [Application.php:79-82](file://src/Application.php#L79-L82)
-- [MonografiasController.php:406-512](file://src/Controller/MonografiasController.php#L406-L512)
+- [MonografiasController.php:326-339](file://src/Controller/MonografiasController.php#L326-L339)
 - [app.php:206-246](file://config/app.php#L206-L246)
 
 ## Dependency Analysis
@@ -355,8 +363,8 @@ App["Application.php"] --> AuthP
 App --> AuthzP
 App --> PdfP
 Routes["routes.php"] --> Core
-Controllers["Controllers"] --> AuthzP
-Models["Models"] --> Core
+Controllers["TCC Controllers"] --> AuthzP
+Models["TCC Models"] --> Core
 ```
 
 **Diagram sources**
@@ -371,7 +379,7 @@ Models["Models"] --> Core
 ## Performance Considerations
 - Enable route caching in production by configuring the RoutingMiddleware with a cache config name to reduce route resolution overhead.
 - Use database connection settings appropriately (e.g., enable query logging only when needed).
-- Prefer pagination for large datasets in controllers.
+- Prefer pagination for large datasets in TCC controllers.
 - Avoid unnecessary contains in ORM queries to prevent N+1 issues.
 - Ensure assets have appropriate cache headers via AssetMiddleware configuration.
 
@@ -389,16 +397,18 @@ Models["Models"] --> Core
   - Validate MailTransport configuration and network access to mail server.
 - PDF download errors:
   - Confirm file paths exist and permissions allow reading from webroot.
+- Navigation menu issues:
+  - Verify menu_monografias element is properly included in templates.
+  - Check user role conditions in navigation menu.
 
 **Section sources**
 - [app.php:398-400](file://config/app.php#L398-L400)
 - [Application.php:135-164](file://src/Application.php#L135-L164)
-- [UserPolicy.php:34-61](file://src/Policy/UserPolicy.php#L34-L61)
 - [routes.php:48-88](file://config/routes.php#L48-L88)
 - [app.php:206-246](file://config/app.php#L206-L246)
-- [MonografiasController.php:499-512](file://src/Controller/MonografiasController.php#L499-L512)
+- [menu_monografias.php:29-46](file://templates/element/menu_monografias.php#L29-L46)
 
 ## Conclusion
-TCC5 adopts a clean MVC architecture on CakePHP 5 with robust authentication and authorization via dedicated plugins. The middleware pipeline centralizes cross-cutting concerns, while controllers orchestrate business logic using well-defined models and policies. Integrations for PDF generation and email are modular and configurable. This design promotes maintainability, security, and scalability for the TCC5 system.
+TCC5 adopts a clean MVC architecture on CakePHP 5 with robust authentication and authorization via dedicated plugins, specifically focused on monograph and TCC management. The middleware pipeline centralizes cross-cutting concerns, while specialized controllers orchestrate TCC business logic using well-defined models and policies. The system features a specialized navigation menu (menu_monografias) that provides focused access to TCC-related functionality. Integrations for PDF generation and email are modular and configurable. This design promotes maintainability, security, and scalability for the specialized TCC5 system.
 
 [No sources needed since this section summarizes without analyzing specific files]

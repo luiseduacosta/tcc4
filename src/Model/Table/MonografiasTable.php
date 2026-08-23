@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
 /**
  * Monografias Model
  *
- * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsTo $Docentes
+ * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasMany $Tccestudantes
  * @property \App\Model\Table\AreamonografiasTable&\Cake\ORM\Association\BelongsTo $Areamonografias
  *
@@ -52,35 +52,35 @@ class MonografiasTable extends Table
                 $this->setDisplayField('titulo');
                 $this->setPrimaryKey('id');
 
-                $this->belongsTo('Docentes', [
-                        'className' => 'Docentes',
-                        'propertyName' => 'docentes',
+                $this->belongsTo('Professores', [
+                        'className' => 'Professores',
+                        'propertyName' => 'professor',
                         'foreignKey' => 'professor_id',
                 ]);
 
-                $this->belongsTo('DocentesCoorienta', [
-                        'className' => 'Docentes',
+                $this->belongsTo('ProfessoresCoorienta', [
+                        'className' => 'Professores',
                         'foreignKey' => 'num_co_orienta',
-                        'propertyName' => 'docentes_coorienta',
+                        'propertyName' => 'professor_coorienta',
                         'joinType' => 'LEFT',
                 ]);
 
-                $this->belongsTo('Docentes1', [
-                        'className' => 'Docentes',
+                $this->belongsTo('ProfessoresBanca1', [
+                        'className' => 'Professores',
                         'foreignKey' => 'banca1',
-                        'propertyName' => 'docentes1',
+                        'propertyName' => 'professor_banca1',
                 ]);
 
-                $this->belongsTo('Docentes2', [
-                        'className' => 'Docentes',
+                $this->belongsTo('ProfessoresBanca2', [
+                        'className' => 'Professores',
                         'foreignKey' => 'banca2',
-                        'propertyName' => 'docentes2',
+                        'propertyName' => 'professor_banca2',
                 ]);
 
-                $this->belongsTo('Docentes3', [
-                        'className' => 'Docentes',
+                $this->belongsTo('ProfessoresBanca3', [
+                        'className' => 'Professores',
                         'foreignKey' => 'banca3',
-                        'propertyName' => 'docentes3',
+                        'propertyName' => 'professor_banca3',
                 ]);
 
                 $this->belongsTo('Areamonografias', [
@@ -181,7 +181,7 @@ class MonografiasTable extends Table
          */
         public function buildRules(RulesChecker $rules): RulesChecker
         {
-                $rules->add($rules->existsIn(['professor_id'], 'Docentes'));
+                $rules->add($rules->existsIn(['professor_id'], 'Professores'));
                 $rules->add($rules->existsIn(['areamonografia_id'], 'Areamonografias'));
 
                 return $rules;

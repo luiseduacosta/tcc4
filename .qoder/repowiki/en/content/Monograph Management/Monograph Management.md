@@ -14,7 +14,16 @@
 - [schema.sql](file://config/Migrations/schema.sql)
 - [view.php](file://templates/Monografias/view.php)
 - [add.php](file://templates/Monografias/add.php)
+- [edit.php](file://templates/Monografias/edit.php)
 </cite>
+
+## Update Summary
+**Changes Made**
+- Updated student synchronization logic with enhanced Tccestudantes association handling
+- Corrected field name usage from `num_prof` to `professor_id` for consistency
+- Improved formatting consistency across controller methods and templates
+- Enhanced student management with better validation and error handling
+- Updated template files to align with controller changes
 
 ## Table of Contents
 1. Introduction
@@ -84,7 +93,7 @@ VA --> MC
 ```
 
 **Diagram sources**
-- [MonografiasController.php:1-513](file://src/Controller/MonografiasController.php#L1-L513)
+- [MonografiasController.php:1-520](file://src/Controller/MonografiasController.php#L1-L520)
 - [MonografiasTable.php:1-190](file://src/Model/Table/MonografiasTable.php#L1-L190)
 - [TccestudantesTable.php:1-100](file://src/Model/Table/TccestudantesTable.php#L1-L100)
 - [AgendamentotccsController.php:1-230](file://src/Controller/AgendamentotccsController.php#L1-L230)
@@ -98,7 +107,7 @@ VA --> MC
 - [schema.sql:33-45](file://config/Migrations/schema.sql#L33-L45)
 
 **Section sources**
-- [MonografiasController.php:1-513](file://src/Controller/MonografiasController.php#L1-L513)
+- [MonografiasController.php:1-520](file://src/Controller/MonografiasController.php#L1-L520)
 - [MonografiasTable.php:1-190](file://src/Model/Table/MonografiasTable.php#L1-L190)
 - [TccestudantesTable.php:1-100](file://src/Model/Table/TccestudantesTable.php#L1-L100)
 - [AgendamentotccsController.php:1-230](file://src/Controller/AgendamentotccsController.php#L1-L230)
@@ -132,7 +141,7 @@ Key responsibilities:
 - [TccestudantesTable.php:1-100](file://src/Model/Table/TccestudantesTable.php#L1-L100)
 - [Agendamentotcc.php:1-56](file://src/Model/Entity/Agendamentotcc.php#L1-L56)
 - [AgendamentotccsTable.php:1-152](file://src/Model/Table/AgendamentotccsTable.php#L1-L152)
-- [MonografiasController.php:1-513](file://src/Controller/MonografiasController.php#L1-L513)
+- [MonografiasController.php:1-520](file://src/Controller/MonografiasController.php#L1-L520)
 - [AgendamentotccsController.php:1-230](file://src/Controller/AgendamentotccsController.php#L1-L230)
 - [MonografiaPolicy.php:1-63](file://src/Policy/MonografiaPolicy.php#L1-L63)
 
@@ -161,8 +170,8 @@ C-->>U : Redirect to view
 ```
 
 **Diagram sources**
-- [MonografiasController.php:102-170](file://src/Controller/MonografiasController.php#L102-L170)
-- [MonografiasController.php:319-331](file://src/Controller/MonografiasController.php#L319-L331)
+- [MonografiasController.php:102-172](file://src/Controller/MonografiasController.php#L102-L172)
+- [MonografiasController.php:326-339](file://src/Controller/MonografiasController.php#L326-L339)
 - [MonografiasTable.php:41-100](file://src/Model/Table/MonografiasTable.php#L41-L100)
 - [schema.sql:434-456](file://config/Migrations/schema.sql#L434-L456)
 - [schema.sql:617-627](file://config/Migrations/schema.sql#L617-L627)
@@ -239,6 +248,8 @@ Monografia "1" -- "1" Areamonografia : "belongsTo (areamonografia_id)"
 - HasOne association to Estudantes for lookup by registration.
 - Validation ensures presence of name and length constraints.
 
+**Updated** Enhanced student synchronization logic with improved Tccestudantes association handling and better validation.
+
 ```mermaid
 flowchart TD
 Start(["Associate Students"]) --> Load["Load selected estudante_ids"]
@@ -251,14 +262,14 @@ Next --> |No| End(["Done"])
 ```
 
 **Diagram sources**
-- [MonografiasController.php:175-202](file://src/Controller/MonografiasController.php#L175-L202)
+- [MonografiasController.php:177-205](file://src/Controller/MonografiasController.php#L177-L205)
 - [TccestudantesTable.php:34-57](file://src/Model/Table/TccestudantesTable.php#L34-L57)
 - [schema.sql:617-627](file://config/Migrations/schema.sql#L617-L627)
 
 **Section sources**
 - [Tccestudante.php:1-36](file://src/Model/Entity/Tccestudante.php#L1-L36)
 - [TccestudantesTable.php:1-100](file://src/Model/Table/TccestudantesTable.php#L1-L100)
-- [MonografiasController.php:175-202](file://src/Controller/MonografiasController.php#L175-L202)
+- [MonografiasController.php:177-205](file://src/Controller/MonografiasController.php#L177-L205)
 
 ### File Upload and Storage (PDF)
 - The add form includes a file input for PDF upload.
@@ -286,15 +297,15 @@ end
 ```
 
 **Diagram sources**
-- [MonografiasController.php:107-121](file://src/Controller/MonografiasController.php#L107-L121)
-- [MonografiasController.php:319-331](file://src/Controller/MonografiasController.php#L319-L331)
-- [MonografiasController.php:499-511](file://src/Controller/MonografiasController.php#L499-L511)
+- [MonografiasController.php:110-121](file://src/Controller/MonografiasController.php#L110-L121)
+- [MonografiasController.php:326-339](file://src/Controller/MonografiasController.php#L326-L339)
+- [MonografiasController.php:506-518](file://src/Controller/MonografiasController.php#L506-L518)
 - [add.php:296-306](file://templates/Monografias/add.php#L296-L306)
 
 **Section sources**
-- [MonografiasController.php:107-121](file://src/Controller/MonografiasController.php#L107-L121)
-- [MonografiasController.php:319-331](file://src/Controller/MonografiasController.php#L319-L331)
-- [MonografiasController.php:499-511](file://src/Controller/MonografiasController.php#L499-L511)
+- [MonografiasController.php:110-121](file://src/Controller/MonografiasController.php#L110-L121)
+- [MonografiasController.php:326-339](file://src/Controller/MonografiasController.php#L326-L339)
+- [MonografiasController.php:506-518](file://src/Controller/MonografiasController.php#L506-L518)
 - [add.php:296-306](file://templates/Monografias/add.php#L296-L306)
 
 ### Version Control for Document Revisions
@@ -388,6 +399,8 @@ AC-->>U : Redirect to view
 - Evaluation Committees: Represented by banca1/2/3 referencing docentes.
 - Area: Referenced via areamonografia_id.
 
+**Updated** Field name consistency improved with proper use of `professor_id` instead of legacy `num_prof` field naming.
+
 ```mermaid
 erDiagram
 MONOGRAFIAS {
@@ -464,7 +477,7 @@ MP["MonografiaPolicy"] --> MC
 ```
 
 **Diagram sources**
-- [MonografiasController.php:1-513](file://src/Controller/MonografiasController.php#L1-L513)
+- [MonografiasController.php:1-520](file://src/Controller/MonografiasController.php#L1-L520)
 - [MonografiasTable.php:1-190](file://src/Model/Table/MonografiasTable.php#L1-L190)
 - [TccestudantesTable.php:1-100](file://src/Model/Table/TccestudantesTable.php#L1-L100)
 - [AgendamentotccsController.php:1-230](file://src/Controller/AgendamentotccsController.php#L1-L230)
@@ -472,7 +485,7 @@ MP["MonografiaPolicy"] --> MC
 - [MonografiaPolicy.php:1-63](file://src/Policy/MonografiaPolicy.php#L1-L63)
 
 **Section sources**
-- [MonografiasController.php:1-513](file://src/Controller/MonografiasController.php#L1-L513)
+- [MonografiasController.php:1-520](file://src/Controller/MonografiasController.php#L1-L520)
 - [AgendamentotccsController.php:1-230](file://src/Controller/AgendamentotccsController.php#L1-L230)
 - [MonografiaPolicy.php:1-63](file://src/Policy/MonografiaPolicy.php#L1-L63)
 
@@ -505,14 +518,17 @@ MP["MonografiaPolicy"] --> MC
   - Editing and deleting require user category '1'; verify identity and policy enforcement.
 - Schedule conflicts:
   - Validate overlapping dates/times for rooms and committee members when creating schedules.
+- Student association issues:
+  - Verify student registration numbers exist in the database before attempting associations.
+  - Check for duplicate student entries when synchronizing associations.
 
 **Section sources**
-- [MonografiasController.php:319-331](file://src/Controller/MonografiasController.php#L319-L331)
-- [MonografiasController.php:406-448](file://src/Controller/MonografiasController.php#L406-L448)
+- [MonografiasController.php:326-339](file://src/Controller/MonografiasController.php#L326-L339)
+- [MonografiasController.php:413-455](file://src/Controller/MonografiasController.php#L413-L455)
 - [MonografiaPolicy.php:21-48](file://src/Policy/MonografiaPolicy.php#L21-L48)
 
 ## Conclusion
-The monograph management module provides robust capabilities for registering thesis documents, associating students, managing advisors and committees, uploading and serving PDFs, and scheduling defenses. While the current implementation lacks explicit workflow status and versioning, it offers a solid foundation for extending these features. Security is enforced via policies, and performance is optimized through pagination, containment, and configurable sorting. Future enhancements should introduce status tracking, version control, metadata extraction, and stronger integration between monographs and defense schedules.
+The monograph management module provides robust capabilities for registering thesis documents, associating students, managing advisors and committees, uploading and serving PDFs, and scheduling defenses. Recent improvements have enhanced the student synchronization logic through better Tccestudantes association handling and corrected field name usage for consistency. While the current implementation lacks explicit workflow status and versioning, it offers a solid foundation for extending these features. Security is enforced via policies, and performance is optimized through pagination, containment, and configurable sorting. Future enhancements should introduce status tracking, version control, metadata extraction, and stronger integration between monographs and defense schedules.
 
 [No sources needed since this section summarizes without analyzing specific files]
 
@@ -522,6 +538,9 @@ The monograph management module provides robust capabilities for registering the
 - Add/Edit forms include fields for student selection, title, summary, dates, period, advisor/co-advisor, area, defense date, committee members, guest, and PDF upload.
 - View displays monograph details, associated students, advisor, co-advisor, area, defense date, PDF link, committee members, and guest.
 
+**Updated** Template files have been updated for consistency with controller changes, particularly in student field handling and form structure.
+
 **Section sources**
 - [add.php:42-306](file://templates/Monografias/add.php#L42-L306)
+- [edit.php:62-331](file://templates/Monografias/edit.php#L62-L331)
 - [view.php:32-121](file://templates/Monografias/view.php#L32-L121)

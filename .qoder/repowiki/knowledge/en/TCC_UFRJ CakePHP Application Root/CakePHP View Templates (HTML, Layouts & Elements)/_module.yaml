@@ -1,8 +1,0 @@
-schema_version: 1
-module_path: templates
-title: CakePHP View Templates (HTML, Layouts & Elements)
-scope:
-    - templates/
-source_files: []
-depends_on: []
-related_to: []

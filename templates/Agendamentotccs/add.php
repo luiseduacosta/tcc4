@@ -53,7 +53,7 @@ $user = $this->getRequest()->getAttribute('identity');
             ]]);
         echo $this->Form->control('docente_id', [
             'label' => 'Professor(a)', 
-            'options' => $docentes, 
+            'options' => $professores, 
             'empty' => 'Seleciona', 
             'templates' => [
                 'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
@@ -62,7 +62,7 @@ $user = $this->getRequest()->getAttribute('identity');
         ]]);
         echo $this->Form->control('banca1', [
             'label' => 'Banca', 
-            'options' => $docentes, 
+            'options' => $professores, 
             'empty' => 'Seleciona', 
             'templates' => [
                 'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',
@@ -71,7 +71,7 @@ $user = $this->getRequest()->getAttribute('identity');
             ]]);
         echo $this->Form->control('banca2', [
             'label' => 'Banca', 
-            'options' => $docentes, 
+            'options' => $professores, 
             'empty' => 'Seleciona', 
             'templates' => [
                 'inputContainer' => '<div class="row mb-3" {{type}}{{required}}">{{content}}</div>',

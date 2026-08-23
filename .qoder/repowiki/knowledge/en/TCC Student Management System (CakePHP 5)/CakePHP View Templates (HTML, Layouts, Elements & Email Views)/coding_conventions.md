@@ -3,4 +3,4 @@
 - Action templates access the current user through `$this->getRequest()->getAttribute('identity')` and gate admin-only UI behind checks like `$user->categoria == '1'`.
 - User-supplied data is always escaped via the `h()` helper before output, while form inputs use `$this->Form->control()` with inline options instead of raw `<input>` tags.
 - Flash messages are rendered through `$this->Flash->render()` in the layout and customized per type via `templates/element/flash/{default,error,success}.php`.
-- Paginator markup is centralized in `templates/element/paginator.php` using `$this->Paginator->setTemplates()` to produce Bootstrap-styled pagination links.
+- Global helper markup is centralized in `templates/element/templates.php` using `$this->Form->setTemplates()`, `$this->Paginator->setTemplates()`, and `$this->Html->setTemplates()` so all views share consistent Bootstrap-styled output.

@@ -22,14 +22,16 @@
 --                             num_co_orienta, areamonografia_id, banca1..banca3
 --   tccestudantes             TccestudantesTable. FK monografia_id
 --   areamonografias           AreamonografiasTable. Counter cache q_monografia
---   areamonografias_docentes  belongsToMany join, Areamonografias <-> Docentes
+--   areamonografias_docentes  belongsToMany join, Areamonografias <-> Professores.
+--                             Despite the name, `docente_id` holds `professores.id`
+--                             (docentes and professores share the same id space)
 --   agendamentotccs           AgendamentotccsTable. TCC defence scheduling
 --
 -- -----------------------------------------------------------------------------
 -- Shared with the other four apps -- treat as read-mostly
 -- -----------------------------------------------------------------------------
---   professores               ProfessoresTable AND DocentesTable both map here;
---                             canonical table for teaching staff -- see below
+--   professores               ProfessoresTable. Canonical table for teaching
+--                             staff -- see below
 --   alunos                    EstudantesTable, via setTable('alunos')
 --   users                     UsersTable, authentication
 --
@@ -53,10 +55,19 @@
 -- -----------------------------------------------------------------------------
 -- `professores` is canonical -- `docentes` is retired
 -- -----------------------------------------------------------------------------
--- The legacy `docentes` table is deliberately NOT part of this schema. All
--- teaching-staff data lives in `professores`, which DocentesTable already maps
--- via setTable('professores'). The narrower column set of `professores` is
--- intentional: the academic-CV fields that `docentes` carried (datanascimento,
+-- The legacy `docentes` table is deliberately NOT part of this schema. The
+-- Docentes module (DocentesController, DocentesTable, Docente entity, policies
+-- and templates) was removed from tcc5; every association now targets
+-- `professores` through ProfessoresTable. The `docentes` table itself stays in
+-- ess_apps because planejamento5, extensao and balcao still use it.
+--
+-- No data migration was needed: docentes and professores share the same id
+-- space (same id = same person), so monografias.professor_id, banca1..3 and
+-- areamonografias_docentes.docente_id already hold professores ids. A backup
+-- of the join table is kept as areamonografias_docentes_bak_20260823.
+--
+-- The narrower column set of `professores` is intentional: the academic-CV
+-- fields that `docentes` carried (datanascimento,
 -- localnascimento, sexo, homepage, redesocial, curriculosigma, pesquisadordgp,
 -- formacaoprofissional, universidadedegraduacao, anoformacao, mestrado*,
 -- doutorado*, formaingresso, tipocargo, categoria, regimetrabalho) are dropped,
@@ -66,9 +77,9 @@
 -- `professores.status` varchar(10) NOT NULL DEFAULT 'ativo' carries the active/
 -- inactive flag ('ativo' / 'inativo').
 --
--- The App\Model\Entity\Docente entity and templates/Docentes/* still declare
--- the dropped fields; they resolve to null until that module is trimmed to the
--- column list below.
+-- App\Model\Entity\Professor::$_accessible, ProfessoresTable::validationDefault()
+-- and templates/Professores/* still declare some of the dropped CV fields;
+-- they resolve to null until those are trimmed to the column list below.
 --
 -- AUTO_INCREMENT counters are stripped so regeneration yields no diff noise.
 -- =============================================================================

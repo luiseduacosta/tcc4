@@ -16,7 +16,7 @@ use Cake\I18n\I18n;
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @property \Cake\ORM\Table $Monografias
- * @property \Cake\ORM\Table $Docentes
+ * @property \App\Model\Table\ProfessoresTable $Professores
  * @property \Cake\ORM\Table $Areamonografias
  * @property \Cake\ORM\Table $Tccestudantes
  * 
@@ -51,10 +51,10 @@ class MonografiasController extends AppController
             $titulo = $this->request->getData()['titulo'];
             $query = $this->Monografias->find()
                 ->where(['titulo LIKE' => "%" . $titulo . "%"])
-                ->contain(['Docentes', 'Areamonografias', 'Tccestudantes']);
+                ->contain(['Professores', 'Areamonografias', 'Tccestudantes']);
         } else {
             $query = $this->Monografias->find()
-                ->contain(['Docentes', 'Areamonografias', 'Tccestudantes']);
+                ->contain(['Professores', 'Areamonografias', 'Tccestudantes']);
         }
         if ($this->request->getQuery('sort') === null) {
             $query->orderBy(['Monografias.titulo' => 'ASC']);
@@ -65,7 +65,7 @@ class MonografiasController extends AppController
                 'Monografias.periodo',
                 'Monografias.url',
                 'Tccestudantes.nome',
-                'Docentes.nome',
+                'Professores.nome',
                 'Areamonografias.area'
             ]
         ]);
@@ -85,7 +85,7 @@ class MonografiasController extends AppController
     {
         $this->Authorization->skipAuthorization();
         try {
-            $monografia = $this->Monografias->get($id, contain: ['Docentes', 'DocentesCoorienta', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'], );
+            $monografia = $this->Monografias->get($id, contain: ['Professores', 'ProfessoresCoorienta', 'ProfessoresBanca1', 'ProfessoresBanca2', 'ProfessoresBanca3', 'Areamonografias', 'Tccestudantes'], );
         } catch (\Exception $e) {
             $this->Flash->error(__('Monografia não encontrada.'));
             return $this->redirect(['action' => 'index']);
@@ -154,7 +154,7 @@ class MonografiasController extends AppController
         $estudantes = $this->estudantes();
 
         /* Load Professors */
-        $docentes = $this->Monografias->Docentes->find(
+        $professores = $this->Monografias->Professores->find(
             'list',
             keyField: 'id',
             valueField: 'nome',
@@ -168,7 +168,7 @@ class MonografiasController extends AppController
             order: ['area' => 'asc']
         );
 
-        $this->set(compact('estudantes', 'monografia', 'docentes', 'areamonografias'));
+        $this->set(compact('estudantes', 'monografia', 'professores', 'areamonografias'));
     }
 
     /**
@@ -215,7 +215,7 @@ class MonografiasController extends AppController
     {
         $this->Authorization->skipAuthorization();
         try {
-            $monografia = $this->Monografias->get($id, contain: ['Docentes', 'DocentesCoorienta', 'Docentes1', 'Docentes2', 'Docentes3', 'Areamonografias', 'Tccestudantes'], );
+            $monografia = $this->Monografias->get($id, contain: ['Professores', 'ProfessoresCoorienta', 'ProfessoresBanca1', 'ProfessoresBanca2', 'ProfessoresBanca3', 'Areamonografias', 'Tccestudantes'], );
         } catch (\Exception $e) {
             $this->Flash->error(__('Monografia não encontrada.'));
             return $this->redirect(['action' => 'index']);
@@ -250,8 +250,8 @@ class MonografiasController extends AppController
             order: ['nome' => 'asc']
         )->toArray();
 
-        // Load Docentes for selection
-        $docentes = $this->Monografias->Docentes->find(
+        // Load Professores for selection
+        $professores = $this->Monografias->Professores->find(
             'list',
             keyField: 'id',
             valueField: 'nome',
@@ -266,7 +266,7 @@ class MonografiasController extends AppController
             order: ['area' => 'asc']
         );
 
-        $this->set(compact('monografia', 'docentes', 'areamonografias', 'estudantes'));
+        $this->set(compact('monografia', 'professores', 'areamonografias', 'estudantes'));
     }
 
     /**

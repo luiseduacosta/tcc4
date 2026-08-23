@@ -24,7 +24,7 @@ class AgendamentotccsControllerTest extends TestCase
     protected array $fixtures = [
         'app.Agendamentotccs',
         'app.Estudantes',
-        'app.Docentes',
+        'app.Professores',
     ];
 
     /**

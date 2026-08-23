@@ -14,7 +14,7 @@ use Cake\I18n\I18n;
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @property \Cake\ORM\Table $Areamonografias
- * @property \Cake\ORM\Table $Docentes
+ * @property \App\Model\Table\ProfessoresTable $Professores
  * @property \Cake\ORM\Table $Monografias
  *
  * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
@@ -47,8 +47,8 @@ class AreamonografiasController extends AppController
     public function view($id = null)
     {
         $areamonografia = $this->Areamonografias->get($id, contain: [
-                "Docentes" => ['sort' => 'nome'],
-                "Monografias" => ["Tccestudantes", "Docentes"],
+                "Professores" => ['sort' => 'nome'],
+                "Monografias" => ["Tccestudantes", "Professores"],
             ],);
         $this->Authorization->authorize($areamonografia);
 
@@ -77,8 +77,8 @@ class AreamonografiasController extends AppController
             }
             $this->Flash->error(__("Área de monografia não inserida."));
         }
-        $docentes = $this->Areamonografias->Docentes->find("list");
-        $this->set(compact("areamonografia", "docentes"));
+        $professores = $this->Areamonografias->Professores->find("list");
+        $this->set(compact("areamonografia", "professores"));
     }
 
     /**
@@ -90,7 +90,7 @@ class AreamonografiasController extends AppController
      */
     public function edit($id = null)
     {
-        $areamonografia = $this->Areamonografias->get($id, contain: ["Docentes"],);
+        $areamonografia = $this->Areamonografias->get($id, contain: ["Professores"],);
         $this->Authorization->authorize($areamonografia);
 
         if ($this->request->is(["patch", "post", "put"])) {
@@ -105,8 +105,8 @@ class AreamonografiasController extends AppController
             }
             $this->Flash->error(__("Área de monografia não foi atualizada."));
         }
-        $docentes = $this->Areamonografias->Docentes->find("list");
-        $this->set(compact("areamonografia", "docentes"));
+        $professores = $this->Areamonografias->Professores->find("list");
+        $this->set(compact("areamonografia", "professores"));
     }
 
     /**

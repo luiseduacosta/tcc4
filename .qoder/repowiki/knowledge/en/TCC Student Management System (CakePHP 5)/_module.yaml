@@ -1,6 +1,6 @@
 schema_version: 1
 module_path: ""
-title: TCC/UFRJ CakePHP Application Root
+title: TCC Student Management System (CakePHP 5)
 scope:
     - README.md
     - AGENTS.md

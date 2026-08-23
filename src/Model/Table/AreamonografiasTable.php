@@ -13,7 +13,7 @@ use Cake\Validation\Validator;
  * Areamonografias Model
  *
  * @property \App\Model\Table\MonografiasTable&\Cake\ORM\Association\HasMany $Monografias
- * @property \App\Model\Table\DocentesTable&\Cake\ORM\Association\BelongsToMany $Docentes
+ * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsToMany $Professores
  *
  * @method \App\Model\Entity\Areamonografia newEmptyEntity()
  * @method \App\Model\Entity\Areamonografia newEntity(array $data, array $options = [])
@@ -51,11 +51,10 @@ class AreamonografiasTable extends Table
             'foreignKey' => 'areamonografia_id',
         ]);
 
-        $this->belongsToMany('Docentes', [
+        $this->belongsToMany('Professores', [
             'targetForeignKey' => 'docente_id',
             'foreignKey' => 'areamonografia_id',
             'joinTable' => 'areamonografias_docentes',
-            'through' => 'AreamonografiasDocentes'
         ]);
     }
 

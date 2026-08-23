@@ -3,11 +3,11 @@ schema_version: 1
 locale: en-US
 branch: master
 nodes_managed: true
-exported_at: "2026-08-23T22:26:58Z"
+exported_at: "2026-08-23T23:33:59Z"
 modules:
     "":
-        dir_name: TCC_UFRJ CakePHP Application Root
-        title: TCC/UFRJ CakePHP Application Root
+        dir_name: TCC Student Management System (CakePHP 5)
+        title: TCC Student Management System (CakePHP 5)
         scope:
             - README.md
             - AGENTS.md
@@ -36,8 +36,8 @@ modules:
         depends_on: []
         related_to: []
     application_src:
-        dir_name: CakePHP Application Core (Controllers, Models, Policies & Bootstrap)
-        title: CakePHP Application Core (Controllers, Models, Policies & Bootstrap)
+        dir_name: TCC Management Application (CakePHP MVC Source)
+        title: TCC Management Application (CakePHP MVC Source)
         scope:
             - src/
         source_files: []
@@ -46,6 +46,7 @@ modules:
         related_to:
             - path: bin_and_scripts
             - path: config
+            - path: templates
             - path: tests
             - path: webroot
     bin_and_scripts:
@@ -59,6 +60,7 @@ modules:
         depends_on: []
         related_to:
             - path: application_src
+            - path: tests
     config:
         dir_name: CakePHP Application Configuration & Bootstrap
         title: CakePHP Application Configuration & Bootstrap
@@ -69,15 +71,17 @@ modules:
         depends_on: []
         related_to:
             - path: application_src
+            - path: tests
     templates:
-        dir_name: CakePHP View Templates (HTML, Layouts & Elements)
-        title: CakePHP View Templates (HTML, Layouts & Elements)
+        dir_name: CakePHP View Templates (HTML, Layouts, Elements & Email Views)
+        title: CakePHP View Templates (HTML, Layouts, Elements & Email Views)
         scope:
             - templates/
         source_files: []
         children: []
         depends_on: []
-        related_to: []
+        related_to:
+            - path: application_src
     tests:
         dir_name: CakePHP Test Suite (Controllers, Models, Fixtures)
         title: CakePHP Test Suite (Controllers, Models, Fixtures)
@@ -88,6 +92,8 @@ modules:
         depends_on: []
         related_to:
             - path: application_src
+            - path: bin_and_scripts
+            - path: config
     webroot:
         dir_name: Web Root & Application Front Controller
         title: Web Root & Application Front Controller

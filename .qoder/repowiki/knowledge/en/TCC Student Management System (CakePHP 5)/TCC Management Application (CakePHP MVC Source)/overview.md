@@ -1,0 +1,1 @@
+CakePHP 4 application source implementing the TCC management system's MVC controllers, ORM entities/tables, authorization policies, CLI installer, and HTTP bootstrapping entry point.
