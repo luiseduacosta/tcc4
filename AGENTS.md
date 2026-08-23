@@ -4,7 +4,7 @@ This file provides guidance to the AI agent when working with code in this repos
 
 ## Project Overview
 
-CakePHP 4.x academic management system (TCC/internship tracking) for a Brazilian university. Portuguese-language UI and flash messages.
+CakePHP 5.4.x academic management system (TCC/internship tracking) for a Brazilian university. Portuguese-language UI and flash messages.
 
 ## Commands
 
