@@ -1,0 +1,1 @@
+PHPUnit-based test suite for the CakePHP application providing controller integration tests, Table model unit tests, and database fixtures covering every domain entity.

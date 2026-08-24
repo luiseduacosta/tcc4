@@ -113,7 +113,8 @@ class TccestudantesController extends AppController
         /* Titulo e id das monografias */
         $monografias = $this->Tccestudantes->Monografias->find(
             'list',
-            ['keyField' => 'id', 'valueField' => 'titulo']
+            keyField: 'id',
+            valueField: 'titulo'
         );
         $monografias->orderBy(['titulo' => 'asc']);
 

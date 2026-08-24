@@ -1,6 +1,6 @@
 schema_version: 1
 module_path: application_src
-title: TCC Management Application (CakePHP MVC Source)
+title: CakePHP TCC Management Application Source
 scope:
     - src/
 source_files: []

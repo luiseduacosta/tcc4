@@ -4,6 +4,13 @@
  * @var \App\Model\Entity\Professor[]|\Cake\Collection\CollectionInterface $professores
  */
 $user = $this->getRequest()->getAttribute('identity');
+
+// Load DataTables Bootstrap 5 CSS and JS in layout blocks
+$this->Html->css('https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css', ['block' => true]);
+$this->Html->script([
+    'https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js',
+    'https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js'
+], ['block' => true]);
 ?>
 
 <?= $this->element('menu_monografias') ?>
@@ -81,20 +88,20 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="tab-content">
         <div id="professor1" class="tab-pane container active show">
             <h3><?= __('Dados funcionais') ?></h3>
-            <table class="table table-striped table-hover table-responsive">
+            <table class="table table-striped table-hover table-responsive professores-table">
                 <thead class="table-dark">
                     <tr>
-                        <th><?= $this->Paginator->sort('id') ?></th>
-                        <th><?= $this->Paginator->sort('nome') ?></th>
-                        <th><?= $this->Paginator->sort('siape', 'SIAPE') ?></th>
-                        <th><?= $this->Paginator->sort('departamento', 'Departamento') ?></th>
-                        <th><?= $this->Paginator->sort('dataingresso', 'Data de ingresso') ?></th>
-                        <th><?= $this->Paginator->sort('formaingresso', 'Forma de ingresso') ?></th>
-                        <th><?= $this->Paginator->sort('tipocargo', 'Tipo de cargo') ?></th>
-                        <th><?= $this->Paginator->sort('categoria', 'Categoria') ?></th>
-                        <th><?= $this->Paginator->sort('regimetrabalho', 'Regime de trabalho') ?></th>
-                        <th><?= $this->Paginator->sort('dataegresso', 'Data de egresso') ?></th>
-                        <th><?= $this->Paginator->sort('motivoegresso', 'Motivo de egresso') ?></th>
+                        <th><?= __('ID') ?></th>
+                        <th><?= __('Nome') ?></th>
+                        <th><?= __('SIAPE') ?></th>
+                        <th><?= __('Departamento') ?></th>
+                        <th><?= __('Data de ingresso') ?></th>
+                        <th><?= __('Forma de ingresso') ?></th>
+                        <th><?= __('Tipo de cargo') ?></th>
+                        <th><?= __('Categoria') ?></th>
+                        <th><?= __('Regime de trabalho') ?></th>
+                        <th><?= __('Data de egresso') ?></th>
+                        <th><?= __('Motivo de egresso') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -124,17 +131,17 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="tab-content">
         <div id="professor2" class="tab-pane container fade">
             <h3><?= __('Dados pessoais') ?></h3>
-            <table class="table table-striped table-hover table-responsive">
+            <table class="table table-striped table-hover table-responsive professores-table">
                 <thead class="table-dark">
                     <tr>
-                        <th><?= $this->Paginator->sort('id', 'ID') ?></th>
-                        <th><?= $this->Paginator->sort('nome', 'Nome') ?></th>
-                        <th><?= $this->Paginator->sort('cpf', 'CPF') ?></th>
-                        <th><?= $this->Paginator->sort('rg', 'RG') ?></th>
-                        <th><?= $this->Paginator->sort('orgaoexpedidor', 'Órgão expedidor') ?></th>
-                        <th><?= $this->Paginator->sort('sexo', 'Sexo') ?></th>
-                        <th><?= $this->Paginator->sort('datanascimento', 'Data de nascimento') ?></th>
-                        <th><?= $this->Paginator->sort('localnascimento', 'Local de nascimento') ?></th>
+                        <th><?= __('ID') ?></th>
+                        <th><?= __('Nome') ?></th>
+                        <th><?= __('CPF') ?></th>
+                        <th><?= __('RG') ?></th>
+                        <th><?= __('Órgão expedidor') ?></th>
+                        <th><?= __('Sexo') ?></th>
+                        <th><?= __('Data de nascimento') ?></th>
+                        <th><?= __('Local de nascimento') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -168,17 +175,17 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="tab-content">
         <div id="professor3" class="tab-pane container fade">
             <h3><?= __('Dados endereço') ?></h3>
-            <table class="table table-striped table-hover table-responsive">
+            <table class="table table-striped table-hover table-responsive professores-table">
                 <thead class="table-dark">
                     <tr>
-                        <th><?= $this->Paginator->sort('id', 'ID') ?></th>
-                        <th><?= $this->Paginator->sort('nome', 'Nome') ?></th>
-                        <th><?= $this->Paginator->sort('endereco', 'Endereço') ?></th>
-                        <th><?= $this->Paginator->sort('bairro', 'Bairro') ?></th>
-                        <th><?= $this->Paginator->sort('cidade', 'Cidade') ?></th>
-                        <th><?= $this->Paginator->sort('estado', 'Estado') ?></th>
-                        <th><?= $this->Paginator->sort('cep', 'CEP') ?></th>
-                        <th><?= $this->Paginator->sort('pais', 'País') ?></th>
+                        <th><?= __('ID') ?></th>
+                        <th><?= __('Nome') ?></th>
+                        <th><?= __('Endereço') ?></th>
+                        <th><?= __('Bairro') ?></th>
+                        <th><?= __('Cidade') ?></th>
+                        <th><?= __('Estado') ?></th>
+                        <th><?= __('CEP') ?></th>
+                        <th><?= __('País') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -203,18 +210,18 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="tab-content">
         <div id="professor4" class="tab-pane container fade">
             <h3><?= __('Comunicação') ?></h3>
-            <table class="table table-striped table-hover table-responsive">
+            <table class="table table-striped table-hover table-responsive professores-table">
                 <thead class="table-dark">
                     <tr>
-                        <th><?= $this->Paginator->sort('id', 'ID') ?></th>
-                        <th><?= $this->Paginator->sort('nome', 'Nome') ?></th>
-                        <th><?= $this->Paginator->sort('ddd_telefone', 'Telefone') ?></th>
-                        <th><?= $this->Paginator->sort('telefone') ?></th>
-                        <th><?= $this->Paginator->sort('ddd_celular', 'Celular') ?></th>
-                        <th><?= $this->Paginator->sort('celular') ?></th>
-                        <th><?= $this->Paginator->sort('email', 'E-mail') ?></th>
-                        <th><?= $this->Paginator->sort('homepage', 'Homepage') ?></th>
-                        <th><?= $this->Paginator->sort('redesocial', 'Rede social') ?></th>
+                        <th><?= __('ID') ?></th>
+                        <th><?= __('Nome') ?></th>
+                        <th><?= __('Telefone') ?></th>
+                        <th><?= __('Telefone') ?></th>
+                        <th><?= __('Celular') ?></th>
+                        <th><?= __('Celular') ?></th>
+                        <th><?= __('E-mail') ?></th>
+                        <th><?= __('Homepage') ?></th>
+                        <th><?= __('Rede social') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -243,15 +250,15 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="tab-content">
         <div id="professor5" class="tab-pane container fade">
             <h3><?= __('Currículo') ?></h3>
-            <table class="table table-striped table-hover table-responsive">
+            <table class="table table-striped table-hover table-responsive professores-table">
                 <thead class="table-dark">
                     <tr>
-                        <th><?= $this->Paginator->sort('id', 'ID') ?></th>
-                        <th><?= $this->Paginator->sort('nome', 'Nome') ?></th>
-                        <th><?= $this->Paginator->sort('curriculolattes', 'Lattes') ?></th>
-                        <th><?= $this->Paginator->sort('atualizacaolattes', 'Última atualização') ?></th>
-                        <th><?= $this->Paginator->sort('curriculosigma', 'Sigma') ?></th>
-                        <th><?= $this->Paginator->sort('pesquisadordgp', 'DGP') ?></th>
+                        <th><?= __('ID') ?></th>
+                        <th><?= __('Nome') ?></th>
+                        <th><?= __('Lattes') ?></th>
+                        <th><?= __('Última atualização') ?></th>
+                        <th><?= __('Sigma') ?></th>
+                        <th><?= __('DGP') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -278,15 +285,15 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="tab-content">
         <div id="professor6" class="tab-pane container fade">
             <h3><?= __('Graduação') ?></h3>
-            <table class="table table-striped table-hover table-responsive">
+            <table class="table table-striped table-hover table-responsive professores-table">
                 <thead class="table-dark">
                     <tr>
-                        <th><?= $this->Paginator->sort('id', 'ID') ?></th>
-                        <th><?= $this->Paginator->sort('nome', 'Nome') ?></th>
-                        <th><?= $this->Paginator->sort('formacaoprofissional', 'Formação') ?></th>
-                        <th><?= $this->Paginator->sort('graduacaoarea', 'Área de graduação') ?></th>
-                        <th><?= $this->Paginator->sort('universidadedegraduacao', 'Universidade de graduação') ?></th>
-                        <th><?= $this->Paginator->sort('anoformacao', 'Ano de formação') ?></th>
+                        <th><?= __('ID') ?></th>
+                        <th><?= __('Nome') ?></th>
+                        <th><?= __('Formação') ?></th>
+                        <th><?= __('Área de graduação') ?></th>
+                        <th><?= __('Universidade de graduação') ?></th>
+                        <th><?= __('Ano de formação') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -296,6 +303,7 @@ $user = $this->getRequest()->getAttribute('identity');
                             <td><?= $this->Html->link(h($professor->nome), ['controller' => 'Professores', 'action' => 'view', $professor->id]) ?>
                             </td>
                             <td><?= h($professor->formacaoprofissional) ?></td>
+                            <td><?= h($professor->graduacaoarea) ?></td>
                             <td><?= h($professor->universidadedegraduacao) ?></td>
                             <td><?= h($professor->anoformacao) ?></td>
                         </tr>
@@ -308,17 +316,17 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="tab-content">
         <div id="professor7" class="tab-pane container fade">
             <h3><?= __('Pós-graduação') ?></h3>
-            <table class="table table-striped table-hover table-responsive">
+            <table class="table table-striped table-hover table-responsive professores-table">
                 <thead class="table-dark">
                     <tr>
-                        <th><?= $this->Paginator->sort('id', 'ID') ?></th>
-                        <th><?= $this->Paginator->sort('nome', 'Nome') ?></th>
-                        <th><?= $this->Paginator->sort('mestradoarea', 'Área de mestrado') ?></th>
-                        <th><?= $this->Paginator->sort('mestradouniversidade', 'Universidade do mestrado') ?></th>
-                        <th><?= $this->Paginator->sort('mestradoanoconclusao', 'Ano de conclusão do mestrado') ?></th>
-                        <th><?= $this->Paginator->sort('doutoradoarea', 'Área de doutorado') ?></th>
-                        <th><?= $this->Paginator->sort('doutoradouniversidade', 'Universidade de doutorado') ?></th>
-                        <th><?= $this->Paginator->sort('doutoradoanoconclusao', 'Ano de conclusão do doutorado') ?></th>
+                        <th><?= __('ID') ?></th>
+                        <th><?= __('Nome') ?></th>
+                        <th><?= __('Área de mestrado') ?></th>
+                        <th><?= __('Universidade do mestrado') ?></th>
+                        <th><?= __('Ano de conclusão do mestrado') ?></th>
+                        <th><?= __('Área de doutorado') ?></th>
+                        <th><?= __('Universidade de doutorado') ?></th>
+                        <th><?= __('Ano de conclusão do doutorado') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -343,12 +351,12 @@ $user = $this->getRequest()->getAttribute('identity');
     <div class="tab-content">
         <div id="professor8" class="tab-pane container fade">
             <h3><?= __('Outras informações') ?></h3>
-            <table class="table table-striped table-hover table-responsive">
+            <table class="table table-striped table-hover table-responsive professores-table">
                 <thead class="table-dark">
                     <tr>
-                        <th><?= $this->Paginator->sort('id', 'ID') ?></th>
-                        <th><?= $this->Paginator->sort('nome', 'Nome') ?></th>
-                        <th><?= $this->Paginator->sort('observacoes', 'Observações') ?></th>
+                        <th><?= __('ID') ?></th>
+                        <th><?= __('Nome') ?></th>
+                        <th><?= __('Observações') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -367,17 +375,17 @@ $user = $this->getRequest()->getAttribute('identity');
 
     <?= $this->element('templates') ?>
 
-    <div class="d-flex justify-content-center">
-        <div class="paginator">
-            <ul class="pagination">
-                <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
-                <?= $this->Paginator->prev('< ' . __('anterior')) ?>
-                <?= $this->Paginator->numbers() ?>
-                <?= $this->Paginator->next(__('próximo') . ' >') ?>
-                <?= $this->Paginator->last(__('último') . ' >>') ?>
-            </ul>
-            <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) de um total de {{count}}.')) ?>
-            </p>
-        </div>
-    </div>
 </div>
+
+<?php $this->Html->scriptStart(['block' => true]); ?>
+$(document).ready(function() {
+    $('.professores-table').DataTable({
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json"
+        },
+        "pageLength": 25,
+        "ordering": true,
+        "stateSave": true
+    });
+});
+<?php $this->Html->scriptEnd(); ?>

@@ -1,1 +1,0 @@
-Root of a CakePHP 5 application that wires MVC source, templates, configuration, tests, CLI scripts, and the webroot into a single TCC/UFRJ student management system.

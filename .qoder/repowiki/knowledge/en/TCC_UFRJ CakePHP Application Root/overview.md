@@ -1,0 +1,1 @@
+CakePHP 5 application root that wires MVC source, templates, configuration, tests, CLI scripts, and the public webroot into a single TCC student management system.

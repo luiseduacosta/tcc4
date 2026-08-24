@@ -17,7 +17,6 @@ use Cake\ORM\Entity;
  * @property int|null $professor_id
  * @property int|null $num_co_orienta
  * @property int|null $areamonografia_id
- * @property int|null $classificamonografia_id
  * @property string|null $data_defesa
  * @property int|null $banca1
  * @property int|null $banca2
@@ -55,7 +54,6 @@ class Monografia extends Entity
         'professor_id' => true,
         'num_co_orienta' => true,
         'areamonografia_id' => true,
-        'classificamonografia_id' => true,
         'data_defesa' => true,
         'banca1' => true,
         'banca2' => true,

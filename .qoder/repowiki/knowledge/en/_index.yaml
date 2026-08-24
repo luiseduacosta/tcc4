@@ -3,11 +3,11 @@ schema_version: 1
 locale: en-US
 branch: master
 nodes_managed: true
-exported_at: "2026-08-23T23:33:59Z"
+exported_at: "2026-08-24T00:03:18Z"
 modules:
     "":
-        dir_name: TCC Student Management System (CakePHP 5)
-        title: TCC Student Management System (CakePHP 5)
+        dir_name: TCC_UFRJ CakePHP Application Root
+        title: TCC/UFRJ CakePHP Application Root
         scope:
             - README.md
             - AGENTS.md
@@ -36,8 +36,8 @@ modules:
         depends_on: []
         related_to: []
     application_src:
-        dir_name: TCC Management Application (CakePHP MVC Source)
-        title: TCC Management Application (CakePHP MVC Source)
+        dir_name: CakePHP TCC Management Application Source
+        title: CakePHP TCC Management Application Source
         scope:
             - src/
         source_files: []
@@ -73,8 +73,8 @@ modules:
             - path: application_src
             - path: tests
     templates:
-        dir_name: CakePHP View Templates (HTML, Layouts, Elements & Email Views)
-        title: CakePHP View Templates (HTML, Layouts, Elements & Email Views)
+        dir_name: CakePHP View Templates for TCC_UFRJ Student Management
+        title: CakePHP View Templates for TCC/UFRJ Student Management
         scope:
             - templates/
         source_files: []
@@ -83,8 +83,8 @@ modules:
         related_to:
             - path: application_src
     tests:
-        dir_name: CakePHP Test Suite (Controllers, Models, Fixtures)
-        title: CakePHP Test Suite (Controllers, Models, Fixtures)
+        dir_name: CakePHP Test Suite (Controller, Table & Fixtures)
+        title: CakePHP Test Suite (Controller, Table & Fixtures)
         scope:
             - tests/
         source_files: []

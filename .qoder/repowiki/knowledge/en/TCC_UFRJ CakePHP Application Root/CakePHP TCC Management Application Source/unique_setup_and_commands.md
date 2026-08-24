@@ -1,0 +1,1 @@
+Composer `post-install-cmd` invokes `App\Console\Installer::postInstall`, which copies `config/app_local.example.php` to `config/app_local.php`, creates writable `tmp/*` and `logs` directories, optionally sets world-writable permissions interactively, and injects a generated `security.salt` into the local config file by replacing the `__SALT__` placeholder.

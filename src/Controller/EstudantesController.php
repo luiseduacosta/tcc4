@@ -24,8 +24,6 @@ class EstudantesController extends AppController
         // $this->Auth->allow(['logout']);
         $this->Authentication->addUnauthenticatedActions([
             "index",
-            "index1",
-            "index2",
             "view",
         ]);
     }
@@ -43,43 +41,8 @@ class EstudantesController extends AppController
             $this->Flash->warning(__("Nenhum estudante de TCC encontrado."));
             return $this->redirect(["action" => "add"]);
         }
-        if ($this->request->getQuery("sort") === null) {
-            $estudantes->orderBy(["Estudantes.nome" => "ASC"]);
-        }
-        $alunos = $this->paginate($estudantes);
+        $alunos = $estudantes->orderBy(["Estudantes.nome" => "ASC"])->all();
         $this->set("alunos", $alunos);
-    }
-
-    /**
-     * Index2 method
-     *
-     * @return \Cake\Http\Response|null
-     */
-    public function index1()
-    {
-        $this->Authorization->skipAuthorization();
-        $estudantes = $this->Estudantes->find();
-        if ($this->request->getQuery("sort") === null) {
-            $estudantes->orderBy(["Estudantes.nome" => "ASC"]);
-        }
-        $alunos = $this->paginate($estudantes);
-        $this->set(compact("alunos"));
-    }
-
-    /**
-     * Index2 method
-     *
-     * @return \Cake\Http\Response|null
-     */
-    public function index2()
-    {
-        $this->Authorization->skipAuthorization();
-        $estudantes = $this->Estudantes->find();
-        if ($this->request->getQuery("sort") === null) {
-            $estudantes->orderBy(["Estudantes.nome" => "ASC"]);
-        }
-        $alunos = $this->paginate($estudantes);
-        $this->set(compact("alunos"));
     }
 
     /**

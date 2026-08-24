@@ -123,15 +123,13 @@ class AgendamentotccsController extends AppController
 
         $estudantes = $this->Agendamentotccs->Estudantes->find("list",
             keyField: "id",
-            valueField: "nome",
-            order: ["nome" => "asc"]
-        );
+            valueField: "nome"
+        )->orderBy(["nome" => "asc"]);
 
         $professores = $this->Agendamentotccs->Professores->find("list",
             keyField: "id",
-            valueField: "nome",
-            order: ["nome" => "asc"]
-        );
+            valueField: "nome"
+        )->orderBy(["nome" => "asc"]);
 
         $this->set(compact("agendamentotcc", "estudantes", "professores"));
     }
@@ -183,14 +181,12 @@ class AgendamentotccsController extends AppController
         }
         $estudantes = $this->Agendamentotccs->Estudantes->find("list",
             keyField: "id",
-            valueField: "nome",
-            order: ["nome" => "asc"]
-        );
+            valueField: "nome"
+        )->orderBy(["nome" => "asc"]);
         $professores = $this->Agendamentotccs->Professores->find("list",
             keyField: "id",
-            valueField: "nome",
-            order: ["nome" => "asc"]
-        );
+            valueField: "nome"
+        )->orderBy(["nome" => "asc"]);
 
         $this->set(compact("agendamentotcc", "estudantes", "professores"));
     }

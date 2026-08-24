@@ -1,1 +1,0 @@
-CakePHP 4.x view layer using PHP templates, Bootstrap 5.3 CSS/JS via CDN, Bootstrap Icons, jQuery 3.7, jQuery Mask plugin, and CKEditor 5 loaded via importmap; internationalization via the `__()` helper.

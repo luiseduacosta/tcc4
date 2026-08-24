@@ -51,27 +51,7 @@ class EstudantesControllerTest extends TestCase
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-    /**
-     * Test index1 method
-     *
-     * @return void
-     * @link \App\Controller\EstudantesController::index1()
-     */
-    public function testIndex1(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
 
-    /**
-     * Test index2 method
-     *
-     * @return void
-     * @link \App\Controller\EstudantesController::index2()
-     */
-    public function testIndex2(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
 
     /**
      * Test view method

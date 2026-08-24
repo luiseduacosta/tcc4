@@ -1,0 +1,1 @@
+CakePHP 4 application source implementing the TCC (academic thesis) management system with MVC controllers, ORM entities/tables, authorization policies, CLI installer, and HTTP bootstrapping.

@@ -42,12 +42,7 @@ class ProfessoresController extends AppController
             $this->Flash->error(__('Nenhum(a) professor(a) encontrado.'));
             return $this->redirect(['action' => 'add']);
         }
-        if ($this->request->getQuery('sort') === null) {
-            $query->orderBy(['nome' => 'ASC']);
-        }
-        $professores = $this->paginate($query, [
-            'sortableFields' => ['nome', 'siape', 'departamento', 'dataingresso', 'dataegresso']
-        ]);
+        $professores = $query->orderBy(['nome' => 'ASC'])->all();
         $this->set(compact('professores'));
     }
 
@@ -259,12 +254,12 @@ class ProfessoresController extends AppController
             $professores = $this->Professores->find('all');
             $professores->where(['nome LIKE' => "%{$nome}%"]);
             $professores->orderBy(['nome' => 'ASC']);
-            if (!$professores->toArray()) {
+            $resultado = $professores->all();
+            if ($resultado->isEmpty()) {
                 $this->Flash->error(__('Nenhum(a) professor(a) encontrado com o nome: ' . $nome));
                 return $this->redirect(['controller' => 'Professores', 'action' => 'index']);
             }
-            $professores = $this->paginate($professores);
-            $this->set('professores', $professores);
+            $this->set('professores', $resultado);
             $this->render('index');
         } else {
             $this->Flash->error(__('Digite um nome para buscar'));

@@ -1,0 +1,1 @@
+PHPUnit driven by CakePHP's `Cake\TestSuite\TestCase` and `IntegrationTestTrait`, with an in-memory SQLite database (`Cake\Database\Driver\Sqlite`) configured as `test_debug_kit` and aliased to `debug_kit` for DebugKit during CLI runs.

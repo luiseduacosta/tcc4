@@ -153,20 +153,17 @@ class MonografiasController extends AppController
         /* Load Students for selection */
         $estudantes = $this->estudantes();
 
-        /* Load Professors */
         $professores = $this->Monografias->Professores->find(
             'list',
             keyField: 'id',
-            valueField: 'nome',
-            order: ['nome' => 'asc']
-        );
+            valueField: 'nome'
+        )->orderBy(['nome' => 'asc']);
 
         $areamonografias = $this->Monografias->Areamonografias->find(
             'list',
             keyField: 'id',
-            valueField: 'area',
-            order: ['area' => 'asc']
-        );
+            valueField: 'area'
+        )->orderBy(['area' => 'asc']);
 
         $this->set(compact('estudantes', 'monografia', 'professores', 'areamonografias'));
     }
@@ -242,29 +239,25 @@ class MonografiasController extends AppController
             $this->Flash->error(__('Monografia não foi atualizada.'));
         }
 
-        /* Load Students for selection */
         $estudantes = $this->fetchTable('Estudantes')->find(
             'list',
             keyField: 'registro',
-            valueField: 'nome',
-            order: ['nome' => 'asc']
-        )->toArray();
+            valueField: 'nome'
+        )->orderBy(['nome' => 'asc'])->toArray();
 
         // Load Professores for selection
         $professores = $this->Monografias->Professores->find(
             'list',
             keyField: 'id',
-            valueField: 'nome',
-            order: ['nome' => 'asc']
-        );
+            valueField: 'nome'
+        )->orderBy(['nome' => 'asc']);
 
         // Load Areamonografias for selection
         $areamonografias = $this->Monografias->Areamonografias->find(
             'list',
             keyField: 'id',
-            valueField: 'area',
-            order: ['area' => 'asc']
-        );
+            valueField: 'area'
+        )->orderBy(['area' => 'asc']);
 
         $this->set(compact('monografia', 'professores', 'areamonografias', 'estudantes'));
     }

@@ -1,0 +1,1 @@
+Tests must be executed from the project root so `bootstrap.php` can resolve `vendor/autoload.php` and `config/bootstrap.php`; DebugKit's SQLite file is written to `TMP . 'debug_kit.sqlite'` before any request handling.

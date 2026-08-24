@@ -1,6 +1,6 @@
 schema_version: 1
 module_path: templates
-title: CakePHP View Templates (HTML, Layouts, Elements & Email Views)
+title: CakePHP View Templates for TCC/UFRJ Student Management
 scope:
     - templates/
 source_files: []
