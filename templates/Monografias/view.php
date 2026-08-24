@@ -63,13 +63,13 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Professor(a)') ?></th>
-            <td><?= $monografia->has('professor') && is_string($monografia->professor->nome) && $monografia->professor->nome !== '' ? $this->Html->link($monografia->professor->nome, ['controller' => 'Professores', 'action' => 'view', $monografia->professor_id]) : '' ?>
+            <td><?= $monografia->hasValue('professor') && is_string($monografia->professor->nome) && $monografia->professor->nome !== '' ? $this->Html->link($monografia->professor->nome, ['controller' => 'Professores', 'action' => 'view', $monografia->professor_id]) : '' ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><?= __('Co-orientador') ?></th>
             <td><?php
-                if ($monografia->has('professor_coorienta') && is_string($monografia->professor_coorienta->nome) && $monografia->professor_coorienta->nome !== '') {
+                if ($monografia->hasValue('professor_coorienta') && is_string($monografia->professor_coorienta->nome) && $monografia->professor_coorienta->nome !== '') {
                     echo $this->Html->link($monografia->professor_coorienta->nome, ['controller' => 'Professores', 'action' => 'view', $monografia->num_co_orienta]);
                 } else {
                     echo is_string($monografia->num_co_orienta) || is_numeric($monografia->num_co_orienta) ? h($monografia->num_co_orienta) : '';
@@ -87,7 +87,7 @@ $user = $this->getRequest()->getAttribute('identity');
         </tr>
         <tr>
             <th scope="row"><?= __('Área') ?></th>
-            <td><?= $monografia->has('areamonografias') && is_string($monografia->areamonografias->area) && $monografia->areamonografias->area !== '' ? $this->Html->link($monografia->areamonografias->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografias->id]) : '' ?>
+            <td><?= $monografia->hasValue('areamonografias') && is_string($monografia->areamonografias->area) && $monografia->areamonografias->area !== '' ? $this->Html->link($monografia->areamonografias->area, ['controller' => 'Areamonografias', 'action' => 'view', $monografia->areamonografias->id]) : '' ?>
             </td>
         </tr>
         <tr>

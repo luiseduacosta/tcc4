@@ -6,7 +6,7 @@
 $user = $this->getRequest()->getAttribute('identity');
 ?>
 
-<?php echo $this->element('menu_monografias') ?>
+<?= $this->element('menu_monografias') ?>
 
 <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light" id="actions-sidebar">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerTccEstudantes"
@@ -55,8 +55,15 @@ $user = $this->getRequest()->getAttribute('identity');
                     <td><?= $this->Number->format($tccestudante->id) ?></td>
                     <td><?= h($tccestudante->registro) ?></td>
                     <td><?= $this->Html->link(h($tccestudante->nome), ['controller' => 'tccestudantes', 'action' => 'view', $tccestudante->id]) ?>
-                     </td>
-                    <td><?= $tccestudante->has('monografia') ? $this->Html->link(h($tccestudante->monografia['titulo']), ['controller' => 'monografias', 'action' => 'view', $tccestudante->monografia['id']]) : "" ?>
+                    </td>
+                    <td>
+                        <?php
+                        if ($tccestudante->has('monografias') && !empty($tccestudante->monografias)) {
+                            echo $this->Html->link(h($tccestudante->monografias->titulo), ['controller' => 'monografias', 'action' => 'view', $tccestudante->monografias->id]) . "<br>";
+                        } else {
+                            echo "";
+                        }
+                        ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
