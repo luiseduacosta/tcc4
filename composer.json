@@ -9,7 +9,7 @@
         "cakephp/authentication": "^3.0",
         "cakephp/authorization": "^3.0",
         "cakephp/cakephp": "^5.0",
-        "cakephp/migrations": "^4.0",
+        "cakephp/migrations": "^5.0",
         "dompdf/dompdf": "^3.1",
         "friendsofcake/cakepdf": "^5.0",
         "mobiledetect/mobiledetectlib": "^4.8"
