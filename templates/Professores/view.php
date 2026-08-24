@@ -69,54 +69,24 @@ use Cake\I18n\FrozenDate;
 
             <dt class="col-sm-3"><?= __('CPF') ?></dt>
             <dd class="col-sm-9"><?= h($professor->cpf) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Local nascimento') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->localnascimento) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Sexo') ?></dt>
-            <dd class="col-sm-9">
-                <?php
-                switch ($professor->sexo) {
-                    case '0':
-                        echo 'Feminino';
-                        break;
-                    case '1':
-                        echo 'Masculino';
-                        break;
-                    case '2':
-                        echo 'Não informado';
-                        break;
-                }
-                ?>
-            </dd>
-            <dt class="col-sm-3"><?= __('Data nascimento') ?></dt>
-            <dd class="col-sm-9">
-                <?= $professor->datanascimento ? $professor->datanascimento->i18nFormat('dd-MM-yyyy') : 's/d' ?>
-            </dd>
         </dl>
 
         <h4><?= __('Dados funcionais do(a) Professor(a)') ?></h4>
 
         <dl class="row">
-            <dt class="col-sm-3"><?= __('Siape') ?></dt>
+            <dt class="col-sm-3"><?= __('SIAPE') ?></dt>
             <dd class="col-sm-9"><?= $professor->siape ?></dd>
 
-            <dt class="col-sm-3"><?= __('Forma de ingresso') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->formaingresso) ?></dd>
+            <dt class="col-sm-3"><?= __('CRESS') ?></dt>
+            <dd class="col-sm-9"><?= h($professor->cress) ?></dd>
+
+            <dt class="col-sm-3"><?= __('Região') ?></dt>
+            <dd class="col-sm-9"><?= h($professor->regiao) ?></dd>
 
             <dt class="col-sm-3"><?= __('Data de ingresso') ?></dt>
             <dd class="col-sm-9">
                 <?= $professor->dataingresso ? $professor->dataingresso->i18nFormat('dd-MM-yyyy') : ' ' ?>
             </dd>
-
-            <dt class="col-sm-3"><?= __('Tipo de cargo') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->tipocargo) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Categoria') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->categoria) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Regime de trabalho') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->regimetrabalho) ?></dd>
 
             <dt class="col-sm-3"><?= __('Departamento') ?></dt>
             <dd class="col-sm-9"><?= h($professor->departamento) ?></dd>
@@ -128,108 +98,44 @@ use Cake\I18n\FrozenDate;
 
             <dt class="col-sm-3"><?= __('Motivo egresso') ?></dt>
             <dd class="col-sm-9"><?= h($professor->motivoegresso) ?></dd>
+
+            <dt class="col-sm-3"><?= __('Status') ?></dt>
+            <dd class="col-sm-9"><?= h($professor->status) ?></dd>
         </dl>
 
         <h4><?= __('Dados de contato do(a) Professor(a)') ?></h4>
 
         <dl class="row">
-            <dt class="col-sm-3"><?= __('Ddd Telefone') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->ddd_telefone) ?></dd>
+            <dt class="col-sm-3"><?= __('Código Telefone') ?></dt>
+            <dd class="col-sm-9"><?= h($professor->codigo_telefone) ?></dd>
 
             <dt class="col-sm-3"><?= __('Telefone') ?></dt>
             <dd class="col-sm-9"><?= h($professor->telefone) ?></dd>
 
-            <dt class="col-sm-3"><?= __('Ddd Celular') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->ddd_celular) ?></dd>
+            <dt class="col-sm-3"><?= __('Código Celular') ?></dt>
+            <dd class="col-sm-9"><?= h($professor->codigo_celular) ?></dd>
 
             <dt class="col-sm-3"><?= __('Celular') ?></dt>
             <dd class="col-sm-9"><?= h($professor->celular) ?></dd>
 
             <dt class="col-sm-3"><?= __('E-mail') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->email) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Home page') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->homepage) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Rede social') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->redesocial) ?></dd>
-        </dl>
-
-        <h4><?= __('Endereço do(a) Professor(a)') ?></h4>
-
-        <dl class="row">
-            <dt class="col-sm-3"><?= __('Endereço') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->endereco) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Bairro') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->bairro) ?></dd>
-
-            <dt class="col-sm-3"><?= __('CEP') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->cep) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Cidade') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->cidade) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Estado') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->estado) ?></dd>
-
-            <dt class="col-sm-3"><?= __('País') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->pais) ?></dd>
+            <dd class="col-sm-9">
+                <?= $professor->email ? $this->Html->link($professor->email, 'mailto:' . $professor->email) : '' ?>
+            </dd>
         </dl>
 
         <h4><?= __('Dados acadêmicos do(a) Professor(a)') ?></h4>
 
         <dl class="row">
-            <dt class="col-sm-3"><?= __('Curriculo lattes') ?></dt>
+            <dt class="col-sm-3"><?= __('Currículo Lattes') ?></dt>
             <dd class="col-sm-9">
                 <?= $professor->curriculolattes ? $this->Html->link($professor->curriculolattes, 'https://lattes.cnpq.br/' . $professor->curriculolattes, ['target' => '_blank', 'full' => true]) : '' ?>
             </dd>
 
-            <dt class="col-sm-3"><?= __('Atualização lattes') ?></dt>
+            <dt class="col-sm-3"><?= __('Atualização Lattes') ?></dt>
             <dd class="col-sm-9">
                 <?= $professor->atualizacaolattes ? $professor->atualizacaolattes->i18nFormat('dd-MM-yyyy') : ' ' ?>
             </dd>
-
-            <dt class="col-sm-3"><?= __('Curriculo sigma') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->curriculosigma) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Pesquisador dgp') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->pesquisadordgp) ?></dd>
-        </dl>
-
-        <h4><?= __('Dados da formação do(a) Professor(a)') ?></h4>
-
-        <dl class="row">
-            <dt class="col-sm-3"><?= __('Formacao profissional') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->formacaoprofissional) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Universidade de graduacao') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->universidadedegraduacao) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Ano formação') ?></dt>
-            <dd class="col-sm-9"><?= $professor->anoformacao ?></dd>
-        </dl>
-
-        <h4><?= __('Dados de posgraduação do(a) Professor(a)') ?></h4>
-
-        <dl class="row">
-            <dt class="col-sm-3"><?= __('Mestrado area') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->mestradoarea) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Mestrado universidade') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->mestradouniversidade) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Mestrado ano conclusão') ?></dt>
-            <dd class="col-sm-9"><?= $professor->mestradoanoconclusao ?></dd>
-
-            <dt class="col-sm-3"><?= __('Doutorado area') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->doutoradoarea) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Doutorado universidade') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->doutoradouniversidade) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Doutorado ano conclusão') ?></dt>
-            <dd class="col-sm-9"><?= $professor->doutoradoanoconclusao ?></dd>
         </dl>
 
         <h4><?= __('Outras informações do(a) Professor(a)') ?></h4>

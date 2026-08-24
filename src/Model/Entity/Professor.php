@@ -10,46 +10,22 @@ use Cake\ORM\Entity;
  * @property string $nome
  * @property string|null $cpf
  * @property int|null $siape
- * @property int|null $rg
- * @property string|null $orgaoexpedidor
- * @property \Cake\I18n\Date|null $datanascimento
- * @property string|null $localnascimento
- * @property string|null $sexo
- * @property string $ddd_telefone
+ * @property string|null $cress
+ * @property string|null $regiao
+ * @property int|null $codigo_telefone
  * @property string|null $telefone
- * @property string $ddd_celular
+ * @property int|null $codigo_celular
  * @property string|null $celular
  * @property string|null $email
- * @property string|null $homepage
- * @property string|null $redesocial
- * @property string|null $endereco
- * @property string|null $bairro
- * @property string|null $cep
- * @property string|null $cidade
- * @property string|null $estado
- * @property string|null $pais
  * @property string|null $curriculolattes
  * @property \Cake\I18n\Date|null $atualizacaolattes
- * @property string|null $curriculosigma
- * @property string|null $pesquisadordgp
- * @property string|null $formacaoprofissional
- * @property string|null $universidadedegraduacao
- * @property int|null $anoformacao
- * @property string|null $mestradoarea
- * @property string|null $mestradouniversidade
- * @property int|null $mestradoanoconclusao
- * @property string|null $doutoradoarea
- * @property string|null $doutoradouniversidade
- * @property int|null $doutoradoanoconclusao
  * @property \Cake\I18n\Date|null $dataingresso
- * @property string|null $formaingresso
- * @property string|null $tipocargo
- * @property string|null $categoria
- * @property string|null $regimetrabalho
  * @property string|null $departamento
  * @property \Cake\I18n\Date|null $dataegresso
  * @property string|null $motivoegresso
+ * @property string $status
  * @property string|null $observacoes
+ * @property int|null $user_id
  *
  * @property \App\Model\Entity\Monografia[] $monografias
  * @property \App\Model\Entity\User[] $users
@@ -70,46 +46,23 @@ class Professor extends Entity
         'nome' => true,
         'cpf' => true,
         'siape' => true,
-        'rg' => true,
-        'orgaoexpedidor' => true,
-        'datanascimento' => true,
-        'localnascimento' => true,
-        'sexo' => true,
-        'ddd_telefone' => true,
+        'cress' => true,
+        'regiao' => true,
+        'codigo_telefone' => true,
         'telefone' => true,
-        'ddd_celular' => true,
+        'codigo_celular' => true,
         'celular' => true,
         'email' => true,
-        'homepage' => true,
-        'redesocial' => true,
-        'endereco' => true,
-        'bairro' => true,
-        'cep' => true,
-        'cidade' => true,
-        'estado' => true,
-        'pais' => true,
         'curriculolattes' => true,
         'atualizacaolattes' => true,
-        'curriculosigma' => true,
-        'pesquisadordgp' => true,
-        'formacaoprofissional' => true,
-        'universidadedegraduacao' => true,
-        'anoformacao' => true,
-        'mestradoarea' => true,
-        'mestradouniversidade' => true,
-        'mestradoanoconclusao' => true,
-        'doutoradoarea' => true,
-        'doutoradouniversidade' => true,
-        'doutoradoanoconclusao' => true,
         'dataingresso' => true,
-        'formaingresso' => true,
-        'tipocargo' => true,
-        'categoria' => true,
-        'regimetrabalho' => true,
         'departamento' => true,
         'dataegresso' => true,
         'motivoegresso' => true,
+        'status' => true,
         'observacoes' => true,
+        'user_id' => true,
+        'monografias' => true,
         'users' => true,
     ];
 }

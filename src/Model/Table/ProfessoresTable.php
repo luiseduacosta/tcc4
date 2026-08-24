@@ -54,8 +54,8 @@ class ProfessoresTable extends Table
         /**
          * Default validation rules.
          *
-         * @param \Cake\Validation\Validator $validator Validator instance.
-         * @return \Cake\Validation\Validator
+         * @param Validator $validator Validator instance.
+         * @return Validator
          */
         public function validationDefault(Validator $validator): Validator
         {
@@ -70,7 +70,7 @@ class ProfessoresTable extends Table
 
                 $validator
                         ->scalar('cpf')
-                        ->maxLength('cpf', 14)
+                        ->maxLength('cpf', 15)
                         ->allowEmptyString('cpf');
 
                 $validator
@@ -78,22 +78,18 @@ class ProfessoresTable extends Table
                         ->allowEmptyString('siape');
 
                 $validator
-                        ->date('datanascimento')
-                        ->allowEmptyDate('datanascimento');
+                        ->scalar('cress')
+                        ->maxLength('cress', 10)
+                        ->allowEmptyString('cress');
 
                 $validator
-                        ->scalar('localnascimento')
-                        ->maxLength('localnascimento', 30)
-                        ->allowEmptyString('localnascimento');
+                        ->scalar('regiao')
+                        ->maxLength('regiao', 2)
+                        ->allowEmptyString('regiao');
 
                 $validator
-                        ->scalar('sexo')
-                        ->allowEmptyString('sexo');
-
-                $validator
-                        ->scalar('ddd_telefone')
-                        ->maxLength('ddd_telefone', 2)
-                        ->notEmptyString('ddd_telefone');
+                        ->integer('codigo_telefone')
+                        ->allowEmptyString('codigo_telefone');
 
                 $validator
                         ->scalar('telefone')
@@ -101,9 +97,8 @@ class ProfessoresTable extends Table
                         ->allowEmptyString('telefone');
 
                 $validator
-                        ->scalar('ddd_celular')
-                        ->maxLength('ddd_celular', 2)
-                        ->notEmptyString('ddd_celular');
+                        ->integer('codigo_celular')
+                        ->allowEmptyString('codigo_celular');
 
                 $validator
                         ->scalar('celular')
@@ -112,17 +107,8 @@ class ProfessoresTable extends Table
 
                 $validator
                         ->email('email')
+                        ->maxLength('email', 255)
                         ->allowEmptyString('email');
-
-                $validator
-                        ->scalar('homepage')
-                        ->maxLength('homepage', 120)
-                        ->allowEmptyString('homepage');
-
-                $validator
-                        ->scalar('redesocial')
-                        ->maxLength('redesocial', 50)
-                        ->allowEmptyString('redesocial');
 
                 $validator
                         ->scalar('curriculolattes')
@@ -134,81 +120,12 @@ class ProfessoresTable extends Table
                         ->allowEmptyDate('atualizacaolattes');
 
                 $validator
-                        ->scalar('curriculosigma')
-                        ->maxLength('curriculosigma', 7)
-                        ->allowEmptyString('curriculosigma');
-
-                $validator
-                        ->scalar('pesquisadordgp')
-                        ->maxLength('pesquisadordgp', 20)
-                        ->allowEmptyString('pesquisadordgp');
-
-                $validator
-                        ->scalar('formacaoprofissional')
-                        ->maxLength('formacaoprofissional', 30)
-                        ->allowEmptyString('formacaoprofissional');
-
-                $validator
-                        ->scalar('universidadedegraduacao')
-                        ->maxLength('universidadedegraduacao', 50)
-                        ->allowEmptyString('universidadedegraduacao');
-
-                $validator
-                        ->integer('anoformacao')
-                        ->allowEmptyString('anoformacao');
-
-                $validator
-                        ->scalar('mestradoarea')
-                        ->maxLength('mestradoarea', 40)
-                        ->allowEmptyString('mestradoarea');
-
-                $validator
-                        ->scalar('mestradouniversidade')
-                        ->maxLength('mestradouniversidade', 50)
-                        ->allowEmptyString('mestradouniversidade');
-
-                $validator
-                        ->integer('mestradoanoconclusao')
-                        ->allowEmptyString('mestradoanoconclusao');
-
-                $validator
-                        ->scalar('doutoradoarea')
-                        ->maxLength('doutoradoarea', 40)
-                        ->allowEmptyString('doutoradoarea');
-
-                $validator
-                        ->scalar('doutoradouniversidade')
-                        ->maxLength('doutoradouniversidade', 50)
-                        ->allowEmptyString('doutoradouniversidade');
-
-                $validator
-                        ->integer('doutoradoanoconclusao')
-                        ->allowEmptyString('doutoradoanoconclusao');
-
-                $validator
                         ->date('dataingresso')
                         ->allowEmptyDate('dataingresso');
 
                 $validator
-                        ->scalar('formaingresso')
-                        ->maxLength('formaingresso', 100)
-                        ->allowEmptyString('formaingresso');
-
-                $validator
-                        ->scalar('tipocargo')
-                        ->allowEmptyString('tipocargo');
-
-                $validator
-                        ->scalar('categoria')
-                        ->maxLength('categoria', 10)
-                        ->allowEmptyString('categoria');
-
-                $validator
-                        ->scalar('regimetrabalho')
-                        ->allowEmptyString('regimetrabalho');
-
-                $validator
                         ->scalar('departamento')
+                        ->maxLength('departamento', 30)
                         ->allowEmptyString('departamento');
 
                 $validator
@@ -221,6 +138,11 @@ class ProfessoresTable extends Table
                         ->allowEmptyString('motivoegresso');
 
                 $validator
+                        ->scalar('status')
+                        ->maxLength('status', 10)
+                        ->notEmptyString('status');
+
+                $validator
                         ->scalar('observacoes')
                         ->allowEmptyString('observacoes');
 
@@ -231,8 +153,8 @@ class ProfessoresTable extends Table
          * Returns a rules checker object that will be used for validating
          * application integrity.
          *
-         * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-         * @return \Cake\ORM\RulesChecker
+         * @param RulesChecker $rules The rules object to be modified.
+         * @return RulesChecker
          */
         public function buildRules(RulesChecker $rules): RulesChecker
         {
