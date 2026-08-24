@@ -1,8 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
+
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\EventInterface;
 
 /**
  * Professores Controller
@@ -10,24 +12,21 @@ namespace App\Controller;
  * @property \App\Model\Table\ProfessoresTable $Professores
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * 
  * @method \App\Model\Entity\Professor[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ProfessoresController extends AppController
 {
-
     public function initialize(): void
     {
         parent::initialize();
     }
 
-    public function beforeFilter(\Cake\Event\EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
 
         parent::beforeFilter($event);
         $this->Authentication->addUnauthenticatedActions(['index', 'view']);
     }
-
 
     /**
      * Index method
@@ -40,6 +39,7 @@ class ProfessoresController extends AppController
         $query = $this->Professores->find('all');
         if (!$query) {
             $this->Flash->error(__('Nenhum(a) professor(a) encontrado.'));
+
             return $this->redirect(['action' => 'add']);
         }
         $professores = $query->orderBy(['nome' => 'ASC'])->all();
@@ -53,10 +53,11 @@ class ProfessoresController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null)
     {
         $this->Authorization->skipAuthorization();
-        $user = $this->Authentication->getIdentity();
+        /** @var \App\Model\Entity\User|null $user */
+        $user = $this->Authentication->getIdentity()?->getOriginalData();
         if (isset($user) && ($user->categoria == '1' || $user->categoria == '3')) {
             if ($id === null) {
                 $siape = $this->getRequest()->getQuery('siape');
@@ -79,14 +80,15 @@ class ProfessoresController extends AppController
                     }
                 }
             }
-            ;
         } else {
             $this->Flash->error(__('Acesso não autorizado para este recurso.'));
+
             return $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
 
         if ($id === null) {
             $this->Flash->error(__('Nao ha registros de professor para esse numero!'));
+
             return $this->redirect(['action' => 'index']);
         }
 
@@ -107,11 +109,11 @@ class ProfessoresController extends AppController
         $email = $this->getRequest()->getQuery('email');
 
         /** Para o formulário */
-        if ($siape):
+        if ($siape) :
             $this->set('siape', $siape);
         endif;
 
-        if ($email):
+        if ($email) :
             $this->set('email', $email);
         endif;
 
@@ -121,8 +123,9 @@ class ProfessoresController extends AppController
                 ->where(['siape' => $siape])
                 ->first();
 
-            if ($professorcadastrado):
+            if ($professorcadastrado) :
                 $this->Flash->error(__('Siape do(a) professor(a) já cadastrado'));
+
                 return $this->redirect(['action' => 'view', $professorcadastrado->id]);
             endif;
         }
@@ -132,8 +135,9 @@ class ProfessoresController extends AppController
                 ->where(['email' => $email])
                 ->first();
 
-            if ($professorcadastrado):
+            if ($professorcadastrado) :
                 $this->Flash->error(__('E-mail do(a) professor(a) já cadastrado'));
+
                 return $this->redirect(['action' => 'view', $professorcadastrado->id]);
             endif;
         }
@@ -148,7 +152,7 @@ class ProfessoresController extends AppController
             $usercadastrado = $this->Professores->Users->find()
                 ->where(['categoria' => 3, 'identificacao' => $siape])
                 ->first();
-            if (empty($usercadastrado)):
+            if (empty($usercadastrado)) :
                 $this->Flash->error(__('Professor(a) não cadastrado(a) como usuário(a)'));
                 // return $this->redirect('/users/add'); // Não é obrigatório cadastrar como usuário
             endif;
@@ -156,12 +160,13 @@ class ProfessoresController extends AppController
             $professorresultado = $this->Professores->patchEntity($professor, $this->request->getData());
             if ($this->Professores->save($professorresultado)) {
                 $this->Flash->success(__('Registro do(a) professor(a) inserido.'));
+
                 return $this->redirect(['action' => 'view', $professorresultado->id]);
             }
             $this->Flash->error(__('Registro do(a) professor(a) não inserido. Tente novamente.'));
-            if ($siape && $email):
+            if ($siape && $email) :
                 return $this->redirect(['action' => 'add', '?' => ['siape' => $siape, 'email' => $email]]);
-            else:
+            else :
                 return $this->redirect(['action' => 'add']);
             endif;
         }
@@ -175,10 +180,10 @@ class ProfessoresController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null)
     {
 
-        $professor = $this->Professores->get($id, contain: [],);
+        $professor = $this->Professores->get($id, contain: []);
         $this->Authorization->authorize($professor);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -200,14 +205,15 @@ class ProfessoresController extends AppController
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null)
     {
 
         $this->Authorization->skipAuthorization();
         try {
             $professor = $this->Professores->get($id);
-        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
+        } catch (RecordNotFoundException $e) {
             $this->Flash->error(__('Professor(a) não encontrado.'));
+
             return $this->redirect(['action' => 'index']);
         }
 
@@ -232,10 +238,11 @@ class ProfessoresController extends AppController
 
         if ($monografias > 0) {
             $this->Flash->error(__('Professor(a) tem {0} monografia(s) associada(s) como orientador(a), coorientador(a) ou membro de banca.', $monografias));
+
             return $this->redirect(['action' => 'view', $professor->id]);
         }
 
-        if ($this->request->is(['post', 'delete'])) {  
+        if ($this->request->is(['post', 'delete'])) {
             if ($this->Professores->delete($professor)) {
                 $this->Flash->success(__('Registro professor(a) excluído.'));
             } else {
@@ -257,12 +264,14 @@ class ProfessoresController extends AppController
             $resultado = $professores->all();
             if ($resultado->isEmpty()) {
                 $this->Flash->error(__('Nenhum(a) professor(a) encontrado com o nome: ' . $nome));
+
                 return $this->redirect(['controller' => 'Professores', 'action' => 'index']);
             }
             $this->set('professores', $resultado);
             $this->render('index');
         } else {
             $this->Flash->error(__('Digite um nome para buscar'));
+
             return $this->redirect(['controller' => 'Professores', 'action' => 'index']);
         }
     }
