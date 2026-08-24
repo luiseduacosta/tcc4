@@ -11,6 +11,8 @@
 - [Agendamentotcc.php](file://src/Model/Entity/Agendamentotcc.php)
 - [AgendamentotccsTable.php](file://src/Model/Table/AgendamentotccsTable.php)
 - [AgendamentotccsController.php](file://src/Controller/AgendamentotccsController.php)
+- [ProfessoresTable.php](file://src/Model/Table/ProfessoresTable.php)
+- [AreamonografiasTable.php](file://src/Model/Table/AreamonografiasTable.php)
 - [schema.sql](file://config/Migrations/schema.sql)
 - [view.php](file://templates/Monografias/view.php)
 - [add.php](file://templates/Monografias/add.php)
@@ -19,11 +21,11 @@
 
 ## Update Summary
 **Changes Made**
-- Updated student synchronization logic with enhanced Tccestudantes association handling
-- Corrected field name usage from `num_prof` to `professor_id` for consistency
-- Improved formatting consistency across controller methods and templates
-- Enhanced student management with better validation and error handling
-- Updated template files to align with controller changes
+- Updated MonografiasController query building patterns to use modern CakePHP 4.x best practices
+- Modernized order specifications by moving from find() method parameters to separate orderBy() method calls
+- Improved consistency across controller methods for loading students, professors, and research areas
+- Enhanced readability while maintaining existing functionality
+- Updated documentation to reflect the new query building patterns
 
 ## Table of Contents
 1. Introduction
@@ -59,6 +61,8 @@ subgraph "Models"
 MT["MonografiasTable"]
 TT["TccestudantesTable"]
 AT["AgendamentotccsTable"]
+PT["ProfessoresTable"]
+AT2["AreamonografiasTable"]
 end
 subgraph "Entities"
 ME["Monografia"]
@@ -80,6 +84,8 @@ DB["MariaDB: monografias, tccestudantes, agendamentotccs"]
 end
 MC --> MT
 MC --> TT
+MC --> PT
+MC --> AT2
 MC --> FS
 MC --> DB
 AC --> AT
@@ -93,7 +99,7 @@ VA --> MC
 ```
 
 **Diagram sources**
-- [MonografiasController.php:1-520](file://src/Controller/MonografiasController.php#L1-L520)
+- [MonografiasController.php:1-513](file://src/Controller/MonografiasController.php#L1-L513)
 - [MonografiasTable.php:1-190](file://src/Model/Table/MonografiasTable.php#L1-L190)
 - [TccestudantesTable.php:1-100](file://src/Model/Table/TccestudantesTable.php#L1-L100)
 - [AgendamentotccsController.php:1-230](file://src/Controller/AgendamentotccsController.php#L1-L230)
@@ -107,7 +113,7 @@ VA --> MC
 - [schema.sql:33-45](file://config/Migrations/schema.sql#L33-L45)
 
 **Section sources**
-- [MonografiasController.php:1-520](file://src/Controller/MonografiasController.php#L1-L520)
+- [MonografiasController.php:1-513](file://src/Controller/MonografiasController.php#L1-L513)
 - [MonografiasTable.php:1-190](file://src/Model/Table/MonografiasTable.php#L1-L190)
 - [TccestudantesTable.php:1-100](file://src/Model/Table/TccestudantesTable.php#L1-L100)
 - [AgendamentotccsController.php:1-230](file://src/Controller/AgendamentotccsController.php#L1-L230)
@@ -141,7 +147,7 @@ Key responsibilities:
 - [TccestudantesTable.php:1-100](file://src/Model/Table/TccestudantesTable.php#L1-L100)
 - [Agendamentotcc.php:1-56](file://src/Model/Entity/Agendamentotcc.php#L1-L56)
 - [AgendamentotccsTable.php:1-152](file://src/Model/Table/AgendamentotccsTable.php#L1-L152)
-- [MonografiasController.php:1-520](file://src/Controller/MonografiasController.php#L1-L520)
+- [MonografiasController.php:1-513](file://src/Controller/MonografiasController.php#L1-L513)
 - [AgendamentotccsController.php:1-230](file://src/Controller/AgendamentotccsController.php#L1-L230)
 - [MonografiaPolicy.php:1-63](file://src/Policy/MonografiaPolicy.php#L1-L63)
 
@@ -454,10 +460,59 @@ MONOGRAFIAS }o--|| AREAMONOGRAFIAS : "area"
 - [schema.sql:434-456](file://config/Migrations/schema.sql#L434-L456)
 - [schema.sql:617-627](file://config/Migrations/schema.sql#L617-L627)
 
+### Query Building Patterns and Modernization
+**Updated** The MonografiasController has been modernized to follow CakePHP 4.x best practices by moving order specifications from find() method parameters to separate orderBy() method calls. This change affects multiple locations where students, professors, and research areas are loaded for selection dropdowns.
+
+The modernized query patterns are applied in several key areas:
+
+1. **Professor Selection Dropdowns**: In both add() and edit() methods, professors are now loaded using:
+   ```php
+   $professores = $this->Monografias->Professores->find(
+       'list',
+       keyField: 'id',
+       valueField: 'nome'
+   )->orderBy(['nome' => 'asc']);
+   ```
+
+2. **Research Area Selection Dropdowns**: Areas are loaded with consistent ordering:
+   ```php
+   $areamonografias = $this->Monografias->Areamonografias->find(
+       'list',
+       keyField: 'id',
+       valueField: 'area'
+   )->orderBy(['area' => 'asc']);
+   ```
+
+3. **Student Selection**: Students are loaded with alphabetical ordering:
+   ```php
+   $estudantes = $this->fetchTable('Estudantes')->find(
+       'list',
+       keyField: 'registro',
+       valueField: 'nome'
+   )->orderBy(['nome' => 'asc'])->toArray();
+   ```
+
+4. **Index Method Ordering**: Default sorting is applied using separate orderBy() calls:
+   ```php
+   if ($this->request->getQuery('sort') === null) {
+       $query->orderBy(['Monografias.titulo' => 'ASC']);
+   }
+   ```
+
+These changes improve code readability, maintainability, and consistency across the application while preserving all existing functionality.
+
+**Section sources**
+- [MonografiasController.php:156-166](file://src/Controller/MonografiasController.php#L156-L166)
+- [MonografiasController.php:249-260](file://src/Controller/MonografiasController.php#L249-L260)
+- [MonografiasController.php:242-246](file://src/Controller/MonografiasController.php#L242-L246)
+- [MonografiasController.php:59-61](file://src/Controller/MonografiasController.php#L59-L61)
+
 ## Dependency Analysis
 - MonografiasController depends on:
   - MonografiasTable for persistence and associations.
   - TccestudantesTable for student associations.
+  - ProfessoresTable for professor data.
+  - AreamonografiasTable for research area data.
   - Filesystem for PDF storage.
   - Database for all persisted data.
 - AgendamentotccsController depends on:
@@ -469,6 +524,8 @@ MONOGRAFIAS }o--|| AREAMONOGRAFIAS : "area"
 graph LR
 MC["MonografiasController"] --> MT["MonografiasTable"]
 MC --> TT["TccestudantesTable"]
+MC --> PT["ProfessoresTable"]
+MC --> AT2["AreamonografiasTable"]
 MC --> FS["Filesystem"]
 MC --> DB["Database"]
 AC["AgendamentotccsController"] --> AT["AgendamentotccsTable"]
@@ -477,15 +534,17 @@ MP["MonografiaPolicy"] --> MC
 ```
 
 **Diagram sources**
-- [MonografiasController.php:1-520](file://src/Controller/MonografiasController.php#L1-L520)
+- [MonografiasController.php:1-513](file://src/Controller/MonografiasController.php#L1-L513)
 - [MonografiasTable.php:1-190](file://src/Model/Table/MonografiasTable.php#L1-L190)
 - [TccestudantesTable.php:1-100](file://src/Model/Table/TccestudantesTable.php#L1-L100)
+- [ProfessoresTable.php:1-244](file://src/Model/Table/ProfessoresTable.php#L1-L244)
+- [AreamonografiasTable.php:1-81](file://src/Model/Table/AreamonografiasTable.php#L1-L81)
 - [AgendamentotccsController.php:1-230](file://src/Controller/AgendamentotccsController.php#L1-L230)
 - [AgendamentotccsTable.php:1-152](file://src/Model/Table/AgendamentotccsTable.php#L1-L152)
 - [MonografiaPolicy.php:1-63](file://src/Policy/MonografiaPolicy.php#L1-L63)
 
 **Section sources**
-- [MonografiasController.php:1-520](file://src/Controller/MonografiasController.php#L1-L520)
+- [MonografiasController.php:1-513](file://src/Controller/MonografiasController.php#L1-L513)
 - [AgendamentotccsController.php:1-230](file://src/Controller/AgendamentotccsController.php#L1-L230)
 - [MonografiaPolicy.php:1-63](file://src/Policy/MonografiaPolicy.php#L1-L63)
 
@@ -521,6 +580,9 @@ MP["MonografiaPolicy"] --> MC
 - Student association issues:
   - Verify student registration numbers exist in the database before attempting associations.
   - Check for duplicate student entries when synchronizing associations.
+- Query performance issues:
+  - Monitor database queries for inefficient sorting or missing indexes.
+  - Ensure orderBy() clauses are properly indexed for optimal performance.
 
 **Section sources**
 - [MonografiasController.php:326-339](file://src/Controller/MonografiasController.php#L326-L339)
@@ -528,7 +590,7 @@ MP["MonografiaPolicy"] --> MC
 - [MonografiaPolicy.php:21-48](file://src/Policy/MonografiaPolicy.php#L21-L48)
 
 ## Conclusion
-The monograph management module provides robust capabilities for registering thesis documents, associating students, managing advisors and committees, uploading and serving PDFs, and scheduling defenses. Recent improvements have enhanced the student synchronization logic through better Tccestudantes association handling and corrected field name usage for consistency. While the current implementation lacks explicit workflow status and versioning, it offers a solid foundation for extending these features. Security is enforced via policies, and performance is optimized through pagination, containment, and configurable sorting. Future enhancements should introduce status tracking, version control, metadata extraction, and stronger integration between monographs and defense schedules.
+The monograph management module provides robust capabilities for registering thesis documents, associating students, managing advisors and committees, uploading and serving PDFs, and scheduling defenses. Recent improvements have enhanced the student synchronization logic through better Tccestudantes association handling and corrected field name usage for consistency. The modernization of query building patterns to follow CakePHP 4.x best practices improves code maintainability and readability while preserving all existing functionality. While the current implementation lacks explicit workflow status and versioning, it offers a solid foundation for extending these features. Security is enforced via policies, and performance is optimized through pagination, containment, and configurable sorting. Future enhancements should introduce status tracking, version control, metadata extraction, and stronger integration between monographs and defense schedules.
 
 [No sources needed since this section summarizes without analyzing specific files]
 

@@ -56,12 +56,6 @@ $cakeDescription = 'TCC da Escola de Serviço Social da UFRJ';
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
 
-    <?=
-        $this->Html->script([
-            'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'
-        ])
-        ?>
-
     <!-- Include stylesheet ckeditor -->
     <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" />
     <!-- Include the ckeditor library -->
