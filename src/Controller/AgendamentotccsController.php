@@ -82,7 +82,7 @@ class AgendamentotccsController extends AppController
             $this->Flash->error(__("Agendamento TCC não encontrado."));
             return $this->redirect(["action" => "index"]);
         }
-        $this->Authorization->authorize($agendamentotcc);
+        $this->Authorization->skipAuthorization();
         $this->set("agendamentotcc", $agendamentotcc);
     }
 

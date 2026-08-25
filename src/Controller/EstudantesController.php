@@ -69,7 +69,7 @@ class EstudantesController extends AppController
             return $this->redirect(["action" => "index"]);
         }
 
-        $this->Authorization->authorize($estudante);
+        $this->Authorization->skipAuthorization();
         $this->set("estudante", $estudante);
     }
 

@@ -217,8 +217,6 @@ class ProfessoresController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $this->Authorization->authorize($professor);
-
         /**
          * Um(a) professor(a) pode estar ligado(a) a uma monografia como
          * orientador(a), coorientador(a) ou membro de banca. Excluir o registro

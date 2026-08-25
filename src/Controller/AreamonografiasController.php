@@ -50,7 +50,7 @@ class AreamonografiasController extends AppController
                 "Professores" => ['sort' => 'nome'],
                 "Monografias" => ["Tccestudantes", "Professores"],
             ],);
-        $this->Authorization->authorize($areamonografia);
+        $this->Authorization->skipAuthorization();
 
         $this->set("areamonografia", $areamonografia);
     }

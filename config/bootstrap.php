@@ -121,6 +121,10 @@ mb_internal_encoding(Configure::read("App.encoding"));
  */
 ini_set("intl.default_locale", Configure::read("App.defaultLocale"));
 
+if (Configure::read("debug")) {
+    ini_set("memory_limit", "512M");
+}
+
 /*
  * Register application error and exception handlers.
  */
