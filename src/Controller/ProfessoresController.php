@@ -225,7 +225,7 @@ class ProfessoresController extends AppController
         $monografias = $this->Professores->Monografias->find()
             ->where([
                 'OR' => [
-                    'professor_id' => $professor->id,
+                    'num_prof' => $professor->id,
                     'num_co_orienta' => $professor->id,
                     'banca1' => $professor->id,
                     'banca2' => $professor->id,

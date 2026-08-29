@@ -40,10 +40,9 @@ class ProfessoresTable extends Table
                 $this->setDisplayField('nome');
                 $this->setPrimaryKey('id');
 
-                /** monografias.professor_id aponta para o(a) orientador(a) */
                 $this->hasMany('Monografias', [
                         'className' => 'Monografias',
-                        'foreignKey' => 'professor_id',
+                        'foreignKey' => 'num_prof',
                 ]);
 
                 $this->hasMany('Users', [
@@ -143,6 +142,14 @@ class ProfessoresTable extends Table
                         ->notEmptyString('status');
 
                 $validator
+                        ->integer('user_id')
+                        ->allowEmptyString('user_id');
+
+                $validator
+                        ->integer('estagiarios_count')
+                        ->allowEmptyString('estagiarios_count');
+
+                $validator
                         ->scalar('observacoes')
                         ->allowEmptyString('observacoes');
 
@@ -158,8 +165,6 @@ class ProfessoresTable extends Table
          */
         public function buildRules(RulesChecker $rules): RulesChecker
         {
-                // $rules->add($rules->isUnique(['email']));
-
                 return $rules;
         }
 }
