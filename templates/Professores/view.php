@@ -1,151 +1,141 @@
 <?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Professor $professor
- */
-use Cake\I18n\FrozenDate;
-
-// $user = $this->getRequest()->getAttribute('identity');
+declare(strict_types=1);
 ?>
-
-<?php echo $this->element('menu_monografias') ?>
-
-<div class="d-flex justify-content-start">
-    <nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerProfessor"
-            aria-controls="navbarTogglerProfessor" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerProfessor">
-            <ul class="navbar-nav ms-auto mt-lg-0">
-                <?php if (isset($user) && $user->categoria == '1'): ?>
-                    <li class="nav-item">
-                        <?= $this->Html->link(__('Editar Professor(a)'), ['action' => 'edit', $professor->id], ['class' => 'btn btn-primary me-1']) ?>
-                    </li>
-                    <li class="nav-item">
-                        <?= $this->Form->postLink(__('Excluir Professor(a)'), ['action' => 'delete', $professor->id], ['confirm' => __('Tem certeza que deseja excluir este registo # {0}?', $professor->id), 'class' => 'btn btn-danger me-1']) ?>
-                    </li>
-                    <li class="nav-item">
-                        <?= $this->Html->link(__('Listar Professore(a)s'), ['action' => 'index'], ['class' => 'btn btn-primary me-1']) ?>
-                    </li>
-                    <li class="nav-item">
-                        <?= $this->Html->link(__('Novo(a) Professor(a)'), ['action' => 'add'], ['class' => 'btn btn-primary me-1']) ?>
-                    </li>
-                <?php endif; ?>
-
-                <?php if (isset($user) && $user->categoria == '3'): ?>
-                    <li class="nav-item">
-                        <?= $this->Html->link(__('Editar Professor'), ['action' => 'edit', $professor->id], ['class' => 'btn btn-primary me-1']) ?>
-                    </li>
-                <?php endif; ?>
-            </ul>
+<div class="container">
+    <div class="col-auto mb-3">
+        <?= $this->Html->link(__('Professores'), ['controller' => 'Professores', 'action' => 'index'], ['class' => 'btn btn-primary']) ?>
+    </div>
+    <h3><?= h($professor->nome) ?></h3>
+    <?php
+    $statusLabels = [
+        'ativo' => __('Ativo'),
+        'aposentado' => __('Aposentado'),
+        'inativo' => __('Inativo'),
+    ];
+    ?>
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <tr>
+                    <th><?= __('ID') ?></th>
+                    <td><?= $this->Number->format($professor->id) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Nome') ?></th>
+                    <td><?= h($professor->nome) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('CPF') ?></th>
+                    <td><?= h($professor->cpf) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('SIAPE') ?></th>
+                    <td><?= h($professor->siape) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('CRESS') ?></th>
+                    <td><?= h($professor->cress) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Região') ?></th>
+                    <td><?= h($professor->regiao) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Telefone') ?></th>
+                    <td><?= $professor->codigo_telefone ? '(' . h($professor->codigo_telefone) . ') ' : '' ?><?= h($professor->telefone) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Celular') ?></th>
+                    <td><?= $professor->codigo_celular ? '(' . h($professor->codigo_celular) . ') ' : '' ?><?= h($professor->celular) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Departamento') ?></th>
+                    <td><?= h($professor->departamento) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Email') ?></th>
+                    <td><?= h($professor->email) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Currículo Lattes') ?></th>
+                    <td><?= h($professor->curriculolattes) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Atualização do Lattes') ?></th>
+                    <td><?= h($professor->atualizacaolattes?->format('d/m/Y')) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Data de Ingresso') ?></th>
+                    <td><?= h($professor->dataingresso?->format('d/m/Y')) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Tipo de Cargo') ?></th>
+                    <td><?= h($professor->tipocargo ?? '-') ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Data de Egresso') ?></th>
+                    <td><?= h($professor->dataegresso?->format('d/m/Y')) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Motivo de Egresso') ?></th>
+                    <td><?= h($professor->motivoegresso) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Status') ?></th>
+                    <td><?= h($statusLabels[$professor->status] ?? $professor->status) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Observações') ?></th>
+                    <td><?= $professor->observacoes ? nl2br(h($professor->observacoes)) : '-' ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Criado') ?></th>
+                    <td><?= h($professor->created) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Modificado') ?></th>
+                    <td><?= h($professor->modified) ?></td>
+                </tr>
+            </table>
         </div>
-    </nav>
-</div>
-
-<div class="row">
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link active" data-bs-toggle="tab" href="#professor" role="tab" aria-controls="professor"
-                aria-selected="true">Professor(a)</a>
-        </li>
-    </ul>
-</div>
-
-<div class="tab-content">
-
-    <div id="professor" class="tab-pane container active show">
-
-        <h3><?= h($professor->nome) ?></h3>
-
-        <h4><?= __('Dados pessoais do(a) Professor(a)') ?></h4>
-
-        <dl class="row">
-            <dt class="col-sm-3"><?= __('Id') ?></dt>
-            <dd class="col-sm-9"><?= $professor->id ?></dd>
-
-            <dt class="col-sm-3"><?= __('Nome') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->nome) ?></dd>
-
-            <dt class="col-sm-3"><?= __('CPF') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->cpf) ?></dd>
-        </dl>
-
-        <h4><?= __('Dados funcionais do(a) Professor(a)') ?></h4>
-
-        <dl class="row">
-            <dt class="col-sm-3"><?= __('SIAPE') ?></dt>
-            <dd class="col-sm-9"><?= $professor->siape ?></dd>
-
-            <dt class="col-sm-3"><?= __('CRESS') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->cress) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Região') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->regiao) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Data de ingresso') ?></dt>
-            <dd class="col-sm-9">
-                <?= $professor->dataingresso ? $professor->dataingresso->i18nFormat('dd-MM-yyyy') : ' ' ?>
-            </dd>
-
-            <dt class="col-sm-3"><?= __('Departamento') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->departamento) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Data de egresso') ?></dt>
-            <dd class="col-sm-9">
-                <?= $professor->dataegresso ? $professor->dataegresso->i18nFormat('dd-MM-yyyy') : ' ' ?>
-            </dd>
-
-            <dt class="col-sm-3"><?= __('Motivo egresso') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->motivoegresso) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Status') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->status) ?></dd>
-        </dl>
-
-        <h4><?= __('Dados de contato do(a) Professor(a)') ?></h4>
-
-        <dl class="row">
-            <dt class="col-sm-3"><?= __('Código Telefone') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->codigo_telefone) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Telefone') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->telefone) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Código Celular') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->codigo_celular) ?></dd>
-
-            <dt class="col-sm-3"><?= __('Celular') ?></dt>
-            <dd class="col-sm-9"><?= h($professor->celular) ?></dd>
-
-            <dt class="col-sm-3"><?= __('E-mail') ?></dt>
-            <dd class="col-sm-9">
-                <?= $professor->email ? $this->Html->link($professor->email, 'mailto:' . $professor->email) : '' ?>
-            </dd>
-        </dl>
-
-        <h4><?= __('Dados acadêmicos do(a) Professor(a)') ?></h4>
-
-        <dl class="row">
-            <dt class="col-sm-3"><?= __('Currículo Lattes') ?></dt>
-            <dd class="col-sm-9">
-                <?= $professor->curriculolattes ? $this->Html->link($professor->curriculolattes, 'https://lattes.cnpq.br/' . $professor->curriculolattes, ['target' => '_blank', 'full' => true]) : '' ?>
-            </dd>
-
-            <dt class="col-sm-3"><?= __('Atualização Lattes') ?></dt>
-            <dd class="col-sm-9">
-                <?= $professor->atualizacaolattes ? $professor->atualizacaolattes->i18nFormat('dd-MM-yyyy') : ' ' ?>
-            </dd>
-        </dl>
-
-        <h4><?= __('Outras informações do(a) Professor(a)') ?></h4>
-
-        <dl class="row">
-            <dt class="col-sm-3"><?= __('Observações') ?></dt>
-            <dd class="col-sm-9"><?= $this->Text->autoParagraph(h($professor->observacoes)); ?>
-            </dd>
-        </dl>
-
     </div>
 
+    <?php if (!empty($professor->monografias)): ?>
+    <div class="row mt-4">
+        <div class="col">
+            <h4><?= __('Monografias Associadas') ?></h4>
+            <div class="table-responsive mt-2">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th><?= __('ID') ?></th>
+                            <th><?= __('Título') ?></th>
+                            <th><?= __('Ano') ?></th>
+                            <th class="text-nowrap"><?= __('Ações') ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($professor->monografias as $monografia): ?>
+                            <tr>
+                                <td><?= $this->Number->format($monografia->id) ?></td>
+                                <td><?= h($monografia->titulo) ?></td>
+                                <td><?= h($monografia->ano) ?></td>
+                                <td class="text-nowrap">
+                                    <?= $this->Html->link(__('Ver'), ['controller' => 'Monografias', 'action' => 'view', $monografia->id], ['class' => 'btn btn-sm btn-info']) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <div class="row mt-3">
+        <div class="col">
+            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $professor->id], ['class' => 'btn btn-warning']) ?>
+            <?= $this->Html->link(__('Voltar'), ['action' => 'index'], ['class' => 'btn btn-secondary']) ?>
+        </div>
+    </div>
 </div>

@@ -11,7 +11,12 @@
     </testsuite>
     <!-- Add plugin test suites here. -->
   </testsuites>
-  <!-- Setup a listener for fixtures -->
+
+  <!-- Load extension for fixtures -->
+  <extensions>
+    <bootstrap class="Cake\TestSuite\Fixture\Extension\PHPUnitExtension"/>
+  </extensions>
+
   <!-- Ignore vendor tests in code coverage reports -->
   <source>
     <include>

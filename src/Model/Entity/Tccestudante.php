@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -9,10 +11,9 @@ use Cake\ORM\Entity;
  * @property string $nome
  * @property int $monografia_id
  * @property string|null $registro
- * 
+ *
  * @property \App\Model\Entity\Monografia[] $monografias
  * @property \App\Model\Entity\Estudante[] $estudantes
- * 
  */
 class Tccestudante extends Entity
 {

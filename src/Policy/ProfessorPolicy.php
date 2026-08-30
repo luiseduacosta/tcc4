@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
-use \Authorization\IdentityInterface;
-use \App\Model\Entity\Professor;
+use App\Model\Entity\Professor;
+use Authorization\IdentityInterface;
 
 /**
  * Professor policy
@@ -18,7 +18,7 @@ class ProfessorPolicy
      * @param \App\Model\Entity\Professor $professsor
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, Professor $professor)
+    public function canAdd(IdentityInterface $user, Professor $professor): bool
     {
         return isset($user->categoria) && $user->categoria == '1';
     }
@@ -30,7 +30,7 @@ class ProfessorPolicy
      * @param \App\Model\Entity\Professor $professor'
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, Professor $professor)
+    public function canEdit(IdentityInterface $user, Professor $professor): bool
     {
         return isset($user->categoria) && $user->categoria == '1';
     }
@@ -42,7 +42,7 @@ class ProfessorPolicy
      * @param \App\Model\Entity\Professor $professor
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, Professor $professor)
+    public function canDelete(IdentityInterface $user, Professor $professor): bool
     {
         return isset($user->categoria) && $user->categoria == '1';
     }
@@ -54,9 +54,8 @@ class ProfessorPolicy
      * @param \App\Model\Entity\Professor $professor
      * @return bool
      */
-    public function canView(IdentityInterface $user, Professor $professor)
+    public function canView(IdentityInterface $user, Professor $professor): bool
     {
         return true;
     }
-    
 }

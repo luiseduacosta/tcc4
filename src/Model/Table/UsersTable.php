@@ -17,7 +17,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\EstudantesTable&\Cake\ORM\Association\BelongsTo $Estudantes
  * @property \App\Model\Table\SupervisoresTable&\Cake\ORM\Association\BelongsTo $Supervisores
  * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsTo $Professores
- *
  * @method \App\Model\Entity\User newEmptyEntity()
  * @method \App\Model\Entity\User newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
@@ -32,8 +31,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
-class UsersTable extends Table {
-
+class UsersTable extends Table
+{
     /**
      * Initialize method
      *
@@ -97,11 +96,11 @@ class UsersTable extends Table {
         $validator
             ->integer('aluno_id')
             ->allowEmptyString('aluno_id');
-        
+
         $validator
             ->integer('supervisor_id')
             ->allowEmptyString('supervisor_id');
-        
+
         $validator
             ->integer('professor_id')
             ->allowEmptyString('professor_id');
@@ -113,8 +112,8 @@ class UsersTable extends Table {
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

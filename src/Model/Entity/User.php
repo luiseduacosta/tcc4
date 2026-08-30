@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -28,12 +27,12 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\DateTime $criado_em
  * @property \Cake\I18n\DateTime $atualizado_em
  *
- * @property Estudante $estudante
- * @property Supervisor $supervisor
- * @property Professor $professor
+ * @property \App\Model\Entity\Estudante $estudante
+ * @property \App\Model\Entity\Supervisor $supervisor
+ * @property \App\Model\Entity\Professor $professor
  */
-class User extends Entity {
-
+class User extends Entity
+{
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -61,10 +60,13 @@ class User extends Entity {
     ];
 
     // Add this method
-    protected function _setPassword(string $password): ?string {
+
+    protected function _setPassword(string $password): ?string
+    {
         if (strlen($password) > 0) {
             return (new DefaultPasswordHasher())->hash($password);
         }
+
         return $password;
     }
 
@@ -76,5 +78,4 @@ class User extends Entity {
     protected array $_hidden = [
         'password',
     ];
-
 }

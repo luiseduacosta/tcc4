@@ -1,11 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\I18n\FrozenTime;
-use Cake\I18n\I18n;
+use Cake\Http\Response;
 
 /**
  * Areamonografias Controller
@@ -16,7 +14,6 @@ use Cake\I18n\I18n;
  * @property \Cake\ORM\Table $Areamonografias
  * @property \App\Model\Table\ProfessoresTable $Professores
  * @property \Cake\ORM\Table $Monografias
- *
  * @method \App\Model\Entity\Areamonografia[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AreamonografiasController extends AppController
@@ -26,15 +23,15 @@ class AreamonografiasController extends AppController
      *
      * @return \Cake\Http\Response|null
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->Authorization->skipAuthorization();
-        $query = $this->Areamonografias->find()->contain(["Monografias"]);
-        if ($this->request->getQuery("sort") === null) {
-            $query->orderBy(["area" => "ASC"]);
+        $query = $this->Areamonografias->find()->contain(['Monografias']);
+        if ($this->request->getQuery('sort') === null) {
+            $query->orderBy(['area' => 'ASC']);
         }
         $areas = $this->paginate($query);
-        $this->set(compact("areas"));
+        $this->set(compact('areas'));
     }
 
     /**
@@ -44,15 +41,15 @@ class AreamonografiasController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): ?Response
     {
         $areamonografia = $this->Areamonografias->get($id, contain: [
-                "Professores" => ['sort' => 'nome'],
-                "Monografias" => ["Tccestudantes", "Professores"],
+                'Professores' => ['sort' => 'nome'],
+                'Monografias' => ['Tccestudantes', 'Professores'],
             ],);
         $this->Authorization->skipAuthorization();
 
-        $this->set("areamonografia", $areamonografia);
+        $this->set('areamonografia', $areamonografia);
     }
 
     /**
@@ -60,25 +57,25 @@ class AreamonografiasController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $areamonografia = $this->Areamonografias->newEmptyEntity();
         $this->Authorization->authorize($areamonografia);
 
-        if ($this->request->is("post")) {
+        if ($this->request->is('post')) {
             $areamonografia = $this->Areamonografias->patchEntity(
                 $areamonografia,
                 $this->request->getData(),
             );
             if ($this->Areamonografias->save($areamonografia)) {
-                $this->Flash->success(__("Área de monografia inserida."));
+                $this->Flash->success(__('Área de monografia inserida.'));
 
-                return $this->redirect(["action" => "view", $areamonografia->id]);
+                return $this->redirect(['action' => 'view', $areamonografia->id]);
             }
-            $this->Flash->error(__("Área de monografia não inserida."));
+            $this->Flash->error(__('Área de monografia não inserida.'));
         }
-        $professores = $this->Areamonografias->Professores->find("list");
-        $this->set(compact("areamonografia", "professores"));
+        $professores = $this->Areamonografias->Professores->find('list');
+        $this->set(compact('areamonografia', 'professores'));
     }
 
     /**
@@ -88,25 +85,25 @@ class AreamonografiasController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
-        $areamonografia = $this->Areamonografias->get($id, contain: ["Professores"],);
+        $areamonografia = $this->Areamonografias->get($id, contain: ['Professores']);
         $this->Authorization->authorize($areamonografia);
 
-        if ($this->request->is(["patch", "post", "put"])) {
+        if ($this->request->is(['patch', 'post', 'put'])) {
             $areamonografia = $this->Areamonografias->patchEntity(
                 $areamonografia,
                 $this->request->getData(),
             );
             if ($this->Areamonografias->save($areamonografia)) {
-                $this->Flash->success(__("Área de monografia atualizada."));
+                $this->Flash->success(__('Área de monografia atualizada.'));
 
-                return $this->redirect(["action" => "view", $areamonografia->id]);
+                return $this->redirect(['action' => 'view', $areamonografia->id]);
             }
-            $this->Flash->error(__("Área de monografia não foi atualizada."));
+            $this->Flash->error(__('Área de monografia não foi atualizada.'));
         }
-        $professores = $this->Areamonografias->Professores->find("list");
-        $this->set(compact("areamonografia", "professores"));
+        $professores = $this->Areamonografias->Professores->find('list');
+        $this->set(compact('areamonografia', 'professores'));
     }
 
     /**
@@ -116,23 +113,24 @@ class AreamonografiasController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
-        $this->request->allowMethod(["post", "delete"]);
+        $this->request->allowMethod(['post', 'delete']);
         $areamonografia = $this->Areamonografias->get($id, contain: ['Monografias']);
         $this->Authorization->authorize($areamonografia);
 
         if (!empty($areamonografia->monografias)) {
             $this->Flash->error(__('Há monografias assoaciadas a esta área. Desfazer as associações primeiro.'));
+
             return $this->redirect(['action' => 'view', $id]);
         }
 
         if ($this->Areamonografias->delete($areamonografia)) {
-            $this->Flash->success(__("Área da mongrafia excluída."));
+            $this->Flash->success(__('Área da mongrafia excluída.'));
         } else {
-            $this->Flash->error(__("Área da monografia não excluída."));
+            $this->Flash->error(__('Área da monografia não excluída.'));
         }
 
-        return $this->redirect(["action" => "index"]);
+        return $this->redirect(['action' => 'index']);
     }
 }

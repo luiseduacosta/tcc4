@@ -1,8 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
+
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\EventInterface;
+use Cake\Http\Response;
 
 /**
  * Estudantes Controller
@@ -10,12 +13,11 @@ namespace App\Controller;
  * @property \App\Model\Table\EstudantesTable $Estudantes
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- *
  * @method \App\Model\Entity\Estudante[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EstudantesController extends AppController
 {
-    public function beforeFilter(\Cake\Event\EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         // Permitir aos usuários se registrarem e efetuar logout.
@@ -23,8 +25,8 @@ class EstudantesController extends AppController
         // Isto pode causar problemas com o funcionamento normal do AuthComponent.
         // $this->Auth->allow(['logout']);
         $this->Authentication->addUnauthenticatedActions([
-            "index",
-            "view",
+            'index',
+            'view',
         ]);
     }
 
@@ -33,16 +35,17 @@ class EstudantesController extends AppController
      *
      * @return \Cake\Http\Response|null
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->Authorization->skipAuthorization();
-        $estudantes = $this->Estudantes->find()->contain(["Tccestudantes"]);
+        $estudantes = $this->Estudantes->find()->contain(['Tccestudantes']);
         if ($estudantes->all()->isEmpty()) {
-            $this->Flash->warning(__("Nenhum estudante de TCC encontrado."));
-            return $this->redirect(["action" => "add"]);
+            $this->Flash->warning(__('Nenhum estudante de TCC encontrado.'));
+
+            return $this->redirect(['action' => 'add']);
         }
-        $alunos = $estudantes->orderBy(["Estudantes.nome" => "ASC"])->all();
-        $this->set("alunos", $alunos);
+        $alunos = $estudantes->orderBy(['Estudantes.nome' => 'ASC'])->all();
+        $this->set('alunos', $alunos);
     }
 
     /**
@@ -52,25 +55,26 @@ class EstudantesController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): ?Response
     {
         $estudante = $this->Estudantes
             ->find()
             ->contain([
-                "Tccestudantes" => ["Monografias"],
+                'Tccestudantes' => ['Monografias'],
             ])
-            ->where(["Estudantes.id" => $id])
+            ->where(['Estudantes.id' => $id])
             ->first();
 
         if (!$estudante) {
             $this->Flash->error(
-                __("Usuário estudante cadastrado não encontrado."),
+                __('Usuário estudante cadastrado não encontrado.'),
             );
-            return $this->redirect(["action" => "index"]);
+
+            return $this->redirect(['action' => 'index']);
         }
 
         $this->Authorization->skipAuthorization();
-        $this->set("estudante", $estudante);
+        $this->set('estudante', $estudante);
     }
 
     /**
@@ -78,26 +82,26 @@ class EstudantesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $estudante = $this->Estudantes->newEmptyEntity();
         $this->Authorization->authorize($estudante);
 
-        if ($this->request->is("post")) {
+        if ($this->request->is('post')) {
             $estudante = $this->Estudantes->patchEntity(
                 $estudante,
                 $this->request->getData(),
             );
             if ($this->Estudantes->save($estudante)) {
-                $this->Flash->success(__("Estudante registrado."));
+                $this->Flash->success(__('Estudante registrado.'));
 
-                return $this->redirect(["action" => "view", $estudante->id]);
+                return $this->redirect(['action' => 'view', $estudante->id]);
             }
             $this->Flash->error(
-                __("Não foi possível registrar o estudante. Tente novamente."),
+                __('Não foi possível registrar o estudante. Tente novamente.'),
             );
         }
-        $this->set(compact("estudante"));
+        $this->set(compact('estudante'));
     }
 
     /**
@@ -107,28 +111,30 @@ class EstudantesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
         try {
-            $estudante = $this->Estudantes->get($id, contain: [],);
-        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
-            $this->Flash->error(__("Registro não encontrado."));
-            return $this->redirect(["action" => "index"]);
+            $estudante = $this->Estudantes->get($id, contain: []);
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+
+            return $this->redirect(['action' => 'index']);
         }
         $this->Authorization->authorize($estudante);
-        if ($this->request->is(["patch", "post", "put"])) {
+        if ($this->request->is(['patch', 'post', 'put'])) {
             $estudante = $this->Estudantes->patchEntity(
                 $estudante,
                 $this->request->getData(),
             );
             // debug($estudanteatualiza);
             if ($this->Estudantes->save($estudante)) {
-                $this->Flash->success(__("Estudante atualizado."));
-                return $this->redirect(["action" => "view", $id]);
+                $this->Flash->success(__('Estudante atualizado.'));
+
+                return $this->redirect(['action' => 'view', $id]);
             }
-            $this->Flash->error(__("Estudante não foi atualizado."));
+            $this->Flash->error(__('Estudante não foi atualizado.'));
         }
-        $this->set(compact("estudante"));
+        $this->set(compact('estudante'));
     }
 
     /**
@@ -138,14 +144,15 @@ class EstudantesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
-        $this->request->allowMethod(["post", "delete"]);
+        $this->request->allowMethod(['post', 'delete']);
         try {
-            $estudante = $this->Estudantes->get($id, contain: ["Tccestudantes"]);
-        } catch (\Cake\Datasource\Exception\RecordNotFoundException $e) {
-            $this->Flash->error(__("Registro não encontrado."));
-            return $this->redirect(["action" => "index"]);
+            $estudante = $this->Estudantes->get($id, contain: ['Tccestudantes']);
+        } catch (RecordNotFoundException $e) {
+            $this->Flash->error(__('Registro não encontrado.'));
+
+            return $this->redirect(['action' => 'index']);
         }
 
         $this->Authorization->authorize($estudante);
@@ -153,17 +160,18 @@ class EstudantesController extends AppController
         if ($estudante->tccestudante) {
             $this->Flash->error(
                 __(
-                    "Registro de estudante não excluído. O estudante possui registro de TCC.",
+                    'Registro de estudante não excluído. O estudante possui registro de TCC.',
                 ),
             );
-            return $this->redirect(["action" => "view", $id]);
+
+            return $this->redirect(['action' => 'view', $id]);
         }
         if ($this->Estudantes->delete($estudante)) {
-            $this->Flash->success(__("Registro de estudante excluído."));
+            $this->Flash->success(__('Registro de estudante excluído.'));
         } else {
-            $this->Flash->error(__("Registro de estudante não excluído."));
+            $this->Flash->error(__('Registro de estudante não excluído.'));
         }
 
-        return $this->redirect(["action" => "index"]);
+        return $this->redirect(['action' => 'index']);
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Policy;
@@ -10,8 +9,8 @@ use Authorization\IdentityInterface;
 /**
  * Aluno policy
  */
-class EstudantePolicy {
-
+class EstudantePolicy
+{
     /**
      * Check if $user can create Aluno
      *
@@ -19,7 +18,8 @@ class EstudantePolicy {
      * @param \App\Model\Entity\Estudante $estudante
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, Estudante $estudante) {
+    public function canAdd(IdentityInterface $user, Estudante $estudante): bool
+    {
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -30,7 +30,8 @@ class EstudantePolicy {
      * @param \App\Model\Entity\Estudante $estudante
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, Estudante $estudante) {
+    public function canEdit(IdentityInterface $user, Estudante $estudante): bool
+    {
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -41,7 +42,8 @@ class EstudantePolicy {
      * @param \App\Model\Entity\Estudante $estudante
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, Estudante $estudante) {
+    public function canDelete(IdentityInterface $user, Estudante $estudante): bool
+    {
         return isset($user->categoria) && $user->categoria == '1';
     }
 
@@ -52,8 +54,8 @@ class EstudantePolicy {
      * @param \App\Model\Entity\Estudante $estudante
      * @return bool
      */
-    public function canView(IdentityInterface $user, Estudante $estudante) {
+    public function canView(IdentityInterface $user, Estudante $estudante): bool
+    {
         return true;
     }
-
 }

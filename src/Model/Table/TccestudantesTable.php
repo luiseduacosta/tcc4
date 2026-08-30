@@ -1,8 +1,8 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -12,7 +12,6 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\BelongsTo $Monografias
  * @property \Cake\ORM\Association\HasOne $Estudantes
- * 
  * @method \App\Model\Entity\Tccestudante get($primaryKey, $options = [])
  * @method \App\Model\Entity\Tccestudante newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Tccestudante[] newEntities(array $data, array $options = [])
@@ -24,7 +23,6 @@ use Cake\Validation\Validator;
  */
 class TccestudantesTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -45,14 +43,14 @@ class TccestudantesTable extends Table
             'foreignKey' => 'monografia_id',
             'className' => 'Monografias',
             'propertyName' => 'monografias',
-            'joinType' => 'LEFT'
+            'joinType' => 'LEFT',
         ]);
 
         // Tccestudantes com estudantes para usar em Monografias
         $this->hasOne('Estudantes', [
             'className' => 'Estudantes',
             'foreignKey' => 'registro',
-            'joinType' => 'LEFT'
+            'joinType' => 'LEFT',
         ]);
     }
 
@@ -95,5 +93,4 @@ class TccestudantesTable extends Table
 
         return $rules;
     }
-
 }

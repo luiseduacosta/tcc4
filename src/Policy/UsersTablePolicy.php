@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Policy;
@@ -10,8 +9,8 @@ use Authorization\IdentityInterface;
 /**
  * Users policy
  */
-class UsersTablePolicy {
-
+class UsersTablePolicy
+{
     /**
      * Check if $user can index Users
      *
@@ -19,8 +18,8 @@ class UsersTablePolicy {
      * @param \App\Model\Table\UsersTable $users
      * @return bool
      */
-    public function canIndex(IdentityInterface $user, UsersTable $users) {
+    public function canIndex(IdentityInterface $user, UsersTable $users): bool
+    {
         return isset($user->categoria) && $user->categoria == '1';
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -22,6 +21,16 @@ declare(strict_types=1);
 
 namespace App;
 
+// In src/Application.php add the following imports
+use Authentication\AuthenticationService;
+use Authentication\AuthenticationServiceInterface;
+use Authentication\AuthenticationServiceProviderInterface;
+use Authentication\Middleware\AuthenticationMiddleware;
+use Authorization\AuthorizationService;
+use Authorization\AuthorizationServiceInterface;
+use Authorization\AuthorizationServiceProviderInterface;
+use Authorization\Middleware\AuthorizationMiddleware;
+use Authorization\Policy\OrmResolver;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
@@ -29,19 +38,8 @@ use Cake\Http\BaseApplication;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
-// In src/Application.php add the following imports
-use Authentication\AuthenticationService;
-use Authentication\AuthenticationServiceInterface;
-use Authentication\AuthenticationServiceProviderInterface;
-use Authentication\Middleware\AuthenticationMiddleware;
+use Cake\Routing\Router;
 use Psr\Http\Message\ServerRequestInterface;
-
-use Authorization\AuthorizationService;
-use Authorization\AuthorizationServiceInterface;
-use Authorization\AuthorizationServiceProviderInterface;
-use Authorization\Middleware\AuthorizationMiddleware;
-use Authorization\Policy\OrmResolver;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Application setup class.
@@ -49,17 +47,17 @@ use Psr\Http\Message\ResponseInterface;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication 
-implements AuthenticationServiceProviderInterface, 
-AuthorizationServiceProviderInterface
+class Application extends BaseApplication implements
+    AuthenticationServiceProviderInterface,
+    AuthorizationServiceProviderInterface
 {
-
     /**
      * Load all the application configuration and bootstrap logic.
      *
      * @return void
      */
-    public function bootstrap(): void {
+    public function bootstrap(): void
+    {
         // Call parent to load bootstrap from files.
         parent::bootstrap();
 
@@ -88,7 +86,8 @@ AuthorizationServiceProviderInterface
      * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
      * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
      */
-    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue {
+    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
+    {
         $middlewareQueue
                 // Catch any exceptions in the lower layers,
                 // and make an error page/response
@@ -120,7 +119,8 @@ AuthorizationServiceProviderInterface
      *
      * @return void
      */
-    protected function bootstrapCli(): void {
+    protected function bootstrapCli(): void
+    {
         try {
             $this->addPlugin('Bake');
         } catch (MissingPluginException $e) {
@@ -132,9 +132,10 @@ AuthorizationServiceProviderInterface
         // Load more plugins here
     }
 
-    public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface {
+    public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
+    {
         $authenticationService = new AuthenticationService([
-            'unauthenticatedRedirect' => \Cake\Routing\Router::url('/users/login'),
+            'unauthenticatedRedirect' => Router::url('/users/login'),
             'queryParam' => 'redirect',
         ]);
 
@@ -146,7 +147,7 @@ AuthorizationServiceProviderInterface
                 'username' => 'email',
                 'password' => 'password',
             ],
-            'loginUrl' =>  \Cake\Routing\Router::url('/users/login'),
+            'loginUrl' => Router::url('/users/login'),
             'identifier' => [
                 'Authentication.Password' => [
                     'resolver' => [
@@ -156,18 +157,18 @@ AuthorizationServiceProviderInterface
                     'fields' => [
                         'username' => 'email',
                         'password' => 'password',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ]);
 
         return $authenticationService;
     }
 
-    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface {
+    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
+    {
         $resolver = new OrmResolver();
 
         return new AuthorizationService($resolver);
     }
-
 }

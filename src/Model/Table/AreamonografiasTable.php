@@ -1,11 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -14,7 +11,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\MonografiasTable&\Cake\ORM\Association\HasMany $Monografias
  * @property \App\Model\Table\ProfessoresTable&\Cake\ORM\Association\BelongsToMany $Professores
- *
  * @method \App\Model\Entity\Areamonografia newEmptyEntity()
  * @method \App\Model\Entity\Areamonografia newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Areamonografia[] newEntities(array $data, array $options = [])
@@ -31,7 +27,6 @@ use Cake\Validation\Validator;
  */
 class AreamonografiasTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -61,8 +56,8 @@ class AreamonografiasTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -76,5 +71,4 @@ class AreamonografiasTable extends Table
 
         return $validator;
     }
-
 }

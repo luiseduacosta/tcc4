@@ -69,5 +69,4 @@ class Monografia extends Entity
         'areamonografias' => true,
         'tccestudantes' => true,
     ];
-
 }

@@ -12,14 +12,22 @@ class MonografiasFixture extends TestFixture
 {
     public string $table = 'monografias';
 
-    /**
-     * Init method
-     *
-     * @return void
-     */
-    public function init(): void
-    {
-        $this->records = [];
-        parent::init();
-    }
+    public array $fields = [
+        'id' => ['type' => 'integer', 'autoIncrement' => true],
+        'catalogo' => ['type' => 'integer', 'null' => false, 'default' => 0],
+        'titulo' => ['type' => 'string', 'length' => 160, 'null' => false],
+        'resumo' => ['type' => 'text', 'null' => true],
+        'data' => ['type' => 'date', 'null' => true],
+        'periodo' => ['type' => 'string', 'length' => 6, 'null' => true],
+        'professor_id' => ['type' => 'integer', 'null' => true],
+        'num_co_orienta' => ['type' => 'integer', 'null' => true],
+        'banca1' => ['type' => 'integer', 'null' => true],
+        'banca2' => ['type' => 'integer', 'null' => true],
+        'banca3' => ['type' => 'integer', 'null' => true],
+        '_constraints' => [
+            'primary' => ['type' => 'primary', 'columns' => ['id']],
+        ],
+    ];
+
+    public array $records = [];
 }

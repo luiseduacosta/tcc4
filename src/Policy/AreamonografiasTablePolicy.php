@@ -9,8 +9,8 @@ use Authorization\IdentityInterface;
 /**
  * Areamonografia policy
  */
-class AreamonografiasTablePolicy {
-
+class AreamonografiasTablePolicy
+{
     /**
      * Check if $user can index Areamonografias
      *
@@ -18,8 +18,8 @@ class AreamonografiasTablePolicy {
      * @param \App\Model\Table\AreamonografiasTable $areamonografias
      * @return bool
      */
-    public function canIndex(IdentityInterface $user, AreamonografiasTable $areamonografias) {
+    public function canIndex(IdentityInterface $user, AreamonografiasTable $areamonografias): bool
+    {
         return isset($user->categoria) && $user->categoria == '1';
     }
-    
 }

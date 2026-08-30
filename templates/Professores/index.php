@@ -1,189 +1,124 @@
 <?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Professor[]|\Cake\Collection\CollectionInterface $professores
- */
-$user = $this->getRequest()->getAttribute('identity');
-
-// Load DataTables Bootstrap 5 CSS and JS in layout blocks
-$this->Html->css('https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css', ['block' => true]);
-$this->Html->script([
-    'https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js',
-    'https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js'
-], ['block' => true]);
+declare(strict_types=1);
 ?>
-
-<?= $this->element('menu_monografias') ?>
-
-<nav class="navbar navbar-expand-lg py-2 navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerProfessor"
-        aria-controls="navbarTogglerProfessor" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <ul class="navbar-nav collapse navbar-collapse" id="navbarTogglerProfessor">
-        <?php if (isset($user) && $user->categoria == '1'): ?>
-            <li class="nav-item me-1">
-                <?= $this->Html->link(__('Nova professora'), ['action' => 'add'], ['class' => 'btn btn-primary float-end']) ?>
-            </li>
-            <div class="col-sm-2">
-                <?= $this->Form->create(null, ['url' => ['controller' => 'Professores', 'action' => 'buscaprofessor'], 'class' => 'form-inline']) ?>
-                <?= $this->Form->control('nome', [
-                    'type' => 'text',
-                    'label' => false,
-                    'placeholder' => 'Busca professor(a)',
-                    'class' => 'form-control'
-                ])
-                    ?>
-            </div>
-            <div class="col-sm-1 me-1">
-                <?= $this->Form->button(__("Buscar"), [
-                    'type' => 'submit',
-                    'class' => 'btn btn-primary',
-                ]) ?>
-            </div>
-            <?= $this->Form->end() ?>
-        <?php endif; ?>
-    </ul>
-</nav>
-
-<div class="container col-lg-12 shadow p-3 mb-5 bg-white rounded">
-
+<div class="container">
+    <?php
+    $statusLabels = [
+        'ativo' => __('Ativo'),
+        'aposentado' => __('Aposentado'),
+        'inativo' => __('Inativo'),
+    ];
+    ?>
     <div class="row">
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#professor1" role="tab" aria-controls="professor1"
-                    aria-selected="true">Dados funcionais</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#professor4" role="tab" aria-controls="professor4"
-                    aria-selected="true">Comunicação</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#professor5" role="tab" aria-controls="professor5"
-                    aria-selected="true">Curriculo</a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="tab-content">
-        <div id="professor1" class="tab-pane container active show">
-            <h3><?= __('Dados funcionais') ?></h3>
-            <table class="table table-striped table-hover table-responsive professores-table">
-                <thead class="table-dark">
-                    <tr>
-                        <th><?= __('ID') ?></th>
-                        <th><?= __('Nome') ?></th>
-                        <th><?= __('CPF') ?></th>
-                        <th><?= __('SIAPE') ?></th>
-                        <th><?= __('CRESS') ?></th>
-                        <th><?= __('Região') ?></th>
-                        <th><?= __('Departamento') ?></th>
-                        <th><?= __('Data de ingresso') ?></th>
-                        <th><?= __('Data de egresso') ?></th>
-                        <th><?= __('Motivo de egresso') ?></th>
-                        <th><?= __('Status') ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($professores as $professor): ?>
-                        <tr>
-                            <td><?= $professor->id ?></td>
-                            <td><?= $this->Html->link(h($professor->nome), ['controller' => 'Professores', 'action' => 'view', $professor->id]) ?>
-                            </td>
-                            <td><?= h($professor->cpf) ?></td>
-                            <td><?= $professor->siape ?></td>
-                            <td><?= h($professor->cress) ?></td>
-                            <td><?= h($professor->regiao) ?></td>
-                            <td><?= h($professor->departamento) ?></td>
-                            <td><?= $professor->dataingresso ? $professor->dataingresso->i18nFormat('dd-MM-yyyy') : '' ?>
-                            </td>
-                            <td><?= $professor->dataegresso ? $professor->dataegresso->i18nFormat('dd-MM-yyyy') : '' ?>
-                            </td>
-                            <td><?= h($professor->motivoegresso) ?></td>
-                            <td><?= h($professor->status) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+        <div class="col">
+            <h3><?= __('Professores') ?></h3>
+            <?php if (!empty($statusFilter) || !empty($departamentoFilter)): ?>
+                <small class="text-muted">
+                    <?= __('Filtros ativos:') ?>
+                    <?php if (!empty($statusFilter)): ?>
+                        <span class="badge bg-primary"><?= __('Status') ?>: <?= h($statusFilterLabel) ?></span>
+                    <?php endif; ?>
+                    <?php if (!empty($departamentoFilter)): ?>
+                        <span class="badge bg-primary"><?= __('Departamento') ?>: <?= h($departamentoFilter) ?></span>
+                    <?php endif; ?>
+                </small>
+            <?php endif; ?>
+        </div>
+        <div class="col-auto mb-3">
+            <?= $this->Html->link(__('Novo Professor'), ['action' => 'add'], ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
 
-    <div class="tab-content">
-        <div id="professor4" class="tab-pane container fade">
-            <h3><?= __('Comunicação') ?></h3>
-            <table class="table table-striped table-hover table-responsive professores-table">
-                <thead class="table-dark">
-                    <tr>
-                        <th><?= __('ID') ?></th>
-                        <th><?= __('Nome') ?></th>
-                        <th><?= __('Código de telefone') ?></th>
-                        <th><?= __('Telefone') ?></th>
-                        <th><?= __('Código de celular') ?></th>
-                        <th><?= __('Celular') ?></th>
-                        <th><?= __('E-mail') ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($professores as $professor): ?>
-                        <tr>
-                            <td><?= $professor->id ?></td>
-                            <td><?= $this->Html->link(h($professor->nome), ['controller' => 'Professores', 'action' => 'view', $professor->id]) ?>
-                            </td>
-                            <td><?= h($professor->codigo_telefone) ?></td>
-                            <td><?= h($professor->telefone) ?></td>
-                            <td><?= h($professor->codigo_celular) ?></td>
-                            <td><?= h($professor->celular) ?></td>
-                            <td><?= $professor->email ? $this->Html->link($professor->email, 'mailto:' . $professor->email) : '' ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>    
+    <!-- Filters -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <?= $this->Form->create(null, ['type' => 'get', 'class' => 'row g-3 align-items-end']) ?>
+
+            <!-- Status Filter -->
+            <div class="col-auto">
+                <?= $this->Form->control('status', [
+                    'label' => __('Status'),
+                    'options' => ['' => __('Todos')] + ($statusList ?? []),
+                    'default' => $statusFilter ?? null,
+                    'empty' => false
+                ]) ?>
+            </div>
+
+            <!-- Departamento Filter -->
+            <div class="col-auto">
+                <?= $this->Form->control('departamento', [
+                    'label' => __('Departamento'),
+                    'options' => ['' => __('Todos')] + ($departamentosList ?? []),
+                    'default' => $departamentoFilter ?? null,
+                    'empty' => false
+                ]) ?>
+            </div>
+
+            <!-- Filter Button -->
+            <div class="col-auto">
+                <?= $this->Form->button(__('Filtrar'), ['class' => 'btn btn-secondary']) ?>
+            </div>
+
+            <!-- Clear Filters Button -->
+            <?php if (!empty($statusFilter) || !empty($departamentoFilter)): ?>
+                <div class="col-auto">
+                    <?= $this->Html->link(
+                        __('Limpar Filtros'),
+                        ['action' => 'index'],
+                        ['class' => 'btn btn-outline-secondary']
+                    ) ?>
+                </div>
+            <?php endif; ?>
+
+            <?= $this->Form->end() ?>
+        </div>
     </div>
 
-    <div class="tab-content">
-        <div id="professor5" class="tab-pane container fade">
-            <h3><?= __('Curriculo') ?></h3>
-            <table class="table table-striped table-hover table-responsive professores-table">
-                <thead class="table-dark">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th><?= $this->Paginator->sort('id', __('ID')) ?></th>
+                    <th><?= $this->Paginator->sort('nome', __('Nome')) ?></th>
+                    <th><?= $this->Paginator->sort('siape', __('SIAPE')) ?></th>
+                    <th><?= $this->Paginator->sort('departamento', __('Departamento')) ?></th>
+                    <th><?= $this->Paginator->sort('status', __('Status')) ?></th>
+                    <th><?= $this->Paginator->sort('email', __('Email')) ?></th>
+                    <th class="text-nowrap"><?= __('Ações') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($professores as $professor): ?>
                     <tr>
-                        <th><?= __('ID') ?></th>
-                        <th><?= __('Nome') ?></th>
-                        <th><?= __('Curriculo') ?></th>
-                        <th><?= __('Atualização') ?></th>
+                        <td><?= $this->Number->format($professor->id) ?></td>
+                        <td><?= h($professor->nome) ?></td>
+                        <td><?= h($professor->siape) ?></td>
+                        <td><?= h($professor->departamento) ?></td>
+                        <td><?= h($statusLabels[$professor->status] ?? $professor->status) ?></td>
+                        <td><?= h($professor->email) ?></td>
+                        <td class="text-nowrap">
+                            <?= $this->Html->link(__('Ver'), ['action' => 'view', $professor->id], ['class' => 'btn btn-sm btn-info']) ?>
+                            <?= $this->Html->link(__('Editar'), ['action' => 'edit', $professor->id], ['class' => 'btn btn-sm btn-warning']) ?>
+                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $professor->id], [
+                                'confirm' => __('Tem certeza que deseja excluir {0}?', $professor->nome),
+                                'class' => 'btn btn-sm btn-danger'
+                            ]) ?>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($professores as $professor): ?>
-                        <tr>
-                            <td><?= $professor->id ?></td>
-                            <td><?= $this->Html->link(h($professor->nome), ['controller' => 'Professores', 'action' => 'view', $professor->id]) ?>
-                            </td>
-                            <td><?= h($professor->curriculolattes) ?></td>
-                            <td><?= h($professor->atualizacaolattes) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>    
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 
-    <?= $this->element('templates') ?>
-
+    <!-- Paginator -->
+    <nav aria-label="Paginação">
+        <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . __('primeiro')) ?>
+            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next(__('próximo') . ' >') ?>
+            <?= $this->Paginator->last(__('último') . ' >>') ?>
+        </ul>
+        <p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} registro(s) de {{count}} total')) ?></p>
+    </nav>
 </div>
-
-<?php $this->Html->scriptStart(['block' => true]); ?>
-$(document).ready(function() {
-    $('.professores-table').DataTable({
-        "language": {
-            "url": "https://cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json"
-        },
-        "pageLength": 25,
-        "ordering": true,
-        "stateSave": true
-    });
-});
-<?php $this->Html->scriptEnd(); ?>

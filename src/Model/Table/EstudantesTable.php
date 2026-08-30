@@ -1,17 +1,17 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
  * Estudantes Model (clone de Alunos para usar com Monografias)
- * 
+ *
  * @property \App\Model\Table\AgendamentotccsTable&\Cake\ORM\Association\HasMany $Agendamentotccs
  * @property \App\Model\Table\TccestudantesTable&\Cake\ORM\Association\HasOne $Tccestudantes
- *
  * @method \App\Model\Entity\Estudante get($primaryKey, $options = [])
  * @method \App\Model\Entity\Estudante newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Estudante[] newEntities(array $data, array $options = [])
@@ -42,21 +42,21 @@ class EstudantesTable extends Table
         $this->hasMany('Agendamentotccs', [
             'className' => 'Agendamentotccs',
             'foreignKey' => 'estudante_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
 
         /** A tabela Tccestudantes tem um campo registro que se conexta com o registro */
         $this->hasOne('Tccestudantes', [
             'className' => 'Tccestudantes',
-            'foreignKey' => 'registro'
+            'foreignKey' => 'registro',
         ]);
     }
 
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -150,8 +150,8 @@ class EstudantesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

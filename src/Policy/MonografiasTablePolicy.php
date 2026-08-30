@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Policy;
@@ -10,8 +9,8 @@ use Authorization\IdentityInterface;
 /**
  * Monografias policy
  */
-class MonografiasTablePolicy {
-
+class MonografiasTablePolicy
+{
     /**
      * Check if $user can index Monografia
      *
@@ -19,8 +18,8 @@ class MonografiasTablePolicy {
      * @param \App\Model\Table\MonografiasTable $monografias
      * @return bool
      */
-    public function canIndex(IdentityInterface $user, MonografiasTable $monografias) {
+    public function canIndex(IdentityInterface $user, MonografiasTable $monografias): bool
+    {
         return isset($user->categoria) && $user->categoria == '1';
     }
-
 }
