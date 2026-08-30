@@ -73,7 +73,7 @@ class ProfessoresTable extends Table
 
         $validator
             ->scalar('cpf')
-            ->maxLength('cpf', 14)
+            ->maxLength('cpf', 15)
             ->allowEmptyString('cpf');
 
         $validator

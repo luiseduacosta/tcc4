@@ -59,6 +59,9 @@ class ProfessoresControllerTest extends TestCase
         $this->get('/professores/view/' . $target->id);
         $this->assertResponseOk();
         $this->assertResponseContains(h($target->nome));
+        $this->assertResponseContains(h($target->cpf));
+        $this->assertResponseContains(h($target->curriculolattes));
+        $this->assertResponseContains($target->atualizacaolattes->format('d/m/Y'));
     }
 
     public function testAddRequiresLogin(): void

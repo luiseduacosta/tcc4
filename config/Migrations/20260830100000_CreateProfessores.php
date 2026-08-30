@@ -1,10 +1,16 @@
 <?php
 declare(strict_types=1);
 
+use Cake\Database\Schema\TableSchema;
 use Migrations\BaseMigration;
 
 class CreateProfessores extends BaseMigration
 {
+    /**
+     * Creates the professores table matching the live ess_apps schema.
+     *
+     * @return void
+     */
     public function change(): void
     {
         $table = $this->table('professores');
@@ -17,7 +23,7 @@ class CreateProfessores extends BaseMigration
             ])
             ->addColumn('cpf', 'string', [
                 'default' => null,
-                'limit' => 14,
+                'limit' => 15,
                 'null' => true,
             ])
             ->addColumn('siape', 'string', [
@@ -35,7 +41,7 @@ class CreateProfessores extends BaseMigration
                 'limit' => 2,
                 'null' => true,
             ])
-            ->addColumn('codigo_telefone', 'string', [
+            ->addColumn('codigo_telefone', 'char', [
                 'default' => '21',
                 'limit' => 2,
                 'null' => true,
@@ -45,7 +51,7 @@ class CreateProfessores extends BaseMigration
                 'limit' => 15,
                 'null' => true,
             ])
-            ->addColumn('codigo_celular', 'string', [
+            ->addColumn('codigo_celular', 'char', [
                 'default' => '21',
                 'limit' => 2,
                 'null' => true,
@@ -92,30 +98,34 @@ class CreateProfessores extends BaseMigration
                 'limit' => 100,
                 'null' => true,
             ])
-            ->addColumn('observacoes', 'text', [
-                'default' => null,
-                'null' => true,
+            ->addColumn('status', 'string', [
+                'default' => 'ativo',
+                'limit' => 10,
+                'null' => false,
             ])
             ->addColumn('user_id', 'integer', [
                 'default' => null,
                 'null' => true,
+                'signed' => false,
             ])
             ->addColumn('estagiarios_count', 'integer', [
                 'default' => 0,
                 'null' => true,
+                'signed' => false,
             ])
-            ->addColumn('status', 'string', [
-                'default' => 'ativo',
-                'limit' => 10,
+            ->addColumn('observacoes', 'text', [
+                'default' => null,
+                'length' => TableSchema::LENGTH_MEDIUM,
                 'null' => true,
             ])
             ->addColumn('created', 'datetime', [
-                'default' => null,
+                'default' => 'CURRENT_TIMESTAMP',
                 'null' => false,
             ])
             ->addColumn('modified', 'datetime', [
-                'default' => null,
+                'default' => 'CURRENT_TIMESTAMP',
                 'null' => false,
+                'update' => 'CURRENT_TIMESTAMP',
             ])
             ->create();
     }
